@@ -1,0 +1,6 @@
+
+The org-mode of Emacs (http://orgmode.org/) is a good tool for keeping
+notes, project planning, tasks management, etc. This is my choice for
+keeping this project organized.
+
+
