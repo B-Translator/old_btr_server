@@ -1,2 +1,6 @@
 name = l10n suggestions
+description =  The functionality of http://open-tran.eu/, extended with feedback and suggestions from people.
+package = l10n suggestions
+core = 7.x
 
+files[] = l10n_suggestions.test

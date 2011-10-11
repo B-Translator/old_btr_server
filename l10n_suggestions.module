@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Module file for l10n_suggestions.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function l10n_suggestions_menu() {
+  $items['l10n_suggestions'] = array(
+    'title'           => 'Get l10n Translation Suggestions',
+    'description'     => 'Get l10n Translation Suggestions',
+    'page callback'   => '_l10n_suggestions_page',
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+function _l10n_suggestions_page() {
+  $page =  t("A simple page for l10n_suggestions, just to start.");
+  return $page;
+}
+?>

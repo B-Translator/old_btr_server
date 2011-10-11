@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * @file
+ * Test cases for the module l10n_suggestions.
+ */
+
+/**
+ * l10n_suggestions test cases
+ */
+class L10nSuggestionsTestCase extends DrupalWebTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'l10n_suggestions',
+      'description' => 'Test the functionality of module l10n_suggestions.',
+      'group' => 'l10n',
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('l10n_suggestions');
+  }
+
+  // Test Case1
+  public function testL10nSuggestionsCase1() {
+    // nothing yet
+  }
+
+  // Test Case2
+  public function testL10nSuggestionsCase2() {
+    // nothing yet
+  }
+}
+
+/**
+ * l10n_suggestions unit testing
+ */
+class L10nSuggestionsUnitTestCase extends DrupalUnitTestCase {
+
+  public static function getInfo() {
+    return array(
+      'name' => 'l10n_suggestions unit tests',
+      'description' => 'Unit testing for module ll10n_suggestions.',
+      'group' => 'l10n',
+    );
+  }
+
+  function setUp() {
+    drupal_load('module', 'l10n_suggestions');
+    parent::setUp();
+  }
+
+  public function testL10nSuggestionsUnitTestCase1() {
+    // nothing yet
+  }
+}
+?>

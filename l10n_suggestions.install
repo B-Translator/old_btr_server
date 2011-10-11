@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file l10n_suggestion.install
+ * Contains install and update functions for l10n_suggestions.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function l10n_suggestions_install() {
+  // nothing yet
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function l10n_suggestions_uninstall() {
+  // nothing yet
+}
+
+/**
+ * Implements hook_schema().
+ */
+/*
+function l10n_suggestions_schema() {
+
+  $schema['l10n_suggestions_table1'] = array(
+    // nothing yet
+  );
+
+  return $schema;
+}
+*/
+?>
