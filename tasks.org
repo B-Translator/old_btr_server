@@ -3,27 +3,157 @@ This file is used to keep the project organized. It is based on the
 org-mode of Emacs (http://orgmode.org/), which is a good tool for
 keeping notes, project planning, tasks management, etc.
 
-* TODO Functional requirements
+* Initial Plan
+
+** TODO Design DB schema
+   Design a propper DB schema for l10n_suggestions. In general, it is
+   going to be reacher than the open-tran.eu schema, since it is going
+   to keep data about votes/evaluations/promotions of different
+   suggestions.
+
+** DONE Get open-tran.eu data
+   Download it from: http://open-tran.eu/dev.html
+
+** TODO Import data
+   Write a script for importing the open-tran.eu data into the
+   l10n_suggestions DB (MySQL). It should:
+   1. dump the data from the SQLite db
+   2. import them into MySQL
+   3. rearrange them to fit the new schema requirements
+   4. take care of both an initial import and an update (in the case of
+      update it should be carefull not to overwrite any existing data)
+
+** TODO Implement the UI and other requirements of the module
+
+* Functional requirements
   Describe the desired functionality of the module. Then define the
   requirements in terms of forms and other UI elements, permissions,
   etc.
 
-* TODO Design DB schema
-  Design a propper DB schema for l10n_suggestions. In general, it is
-  going to be reacher than the open-tran.eu schema, since it is going
-  to keep data about votes/evaluations/promotions of different
-  suggestions.
+** Desired Functionality
 
-* DONE Get open-tran.eu data
-  Download it from: http://open-tran.eu/dev.html
+*** Open access
+    Everybody will be able to use the system for the purpose of getting
+    translation suggestions for a certain string, even unauthenticated
+    (anonymous/guest) users (just like open-tran.eu).
+    Furthermore, it should be possible to use an API (web services), so
+    that these suggestions can be retrieved and used even by external
+    applications.
 
-* TODO Import data
-  Write a script for importing the open-tran.eu data into the
-  l10n_suggestions DB (MySQL). It should:
-  1. dump the data from the SQLite db
-  2. import them into MySQL
-  3. rearrange them to fit the new schema requirements
-  4. take care of both an initial import and an update (in the case of
-     update it should be carefull not to overwrite any existing data)
+*** Authenticated voting
+    Submitting votes or new suggestions will be allowed only for the
+    subscribed users (which have agreed to help and contribute). No
+    contributions from anonymous/guests will be accepted.
 
-* TODO Implement the UI and other requirements of the module
+*** Tracking votes
+    Votes and suggestions will not be anonymous. For each vote or
+    suggestion, the user who submitted it will be recorded and
+    saved. This will allow the user to see all the strings that he has
+    already voted for, and also to change any of the votes, if he later
+    changed his mind. At the same time it will prevent multiple votes
+    by the same user for the same translation.
+
+*** Highly customizable
+    The system will have a flexible configuration and customization
+    page. This means that the user should be able to customize how much
+    he would like to help and contribute. For example:
+     - how many translation votes per day (an upper limit)
+     - which communication means he preferes (email, facebook, google+,
+       twitter, website, android app, iPhone app, etc.)
+     - which projects or packages he would like to focus on (for
+       example, if the user selects the package KDE, only strings that
+       belong to a project on this package will be sent to him for
+       review and feedback)
+     - which languages he would like to use as primary and secondary
+       source languages (for example a user that is not confident in
+       English, may choose to use French as a primary language and
+       Italian+Spanish as secondary/helper languages)
+     - sequential or random selection of strings (random is the
+       default, but if the user is interested in just one or a few
+       projects, he may prefer to review the strings sequentially)
+
+*** Evaluation Algorithms
+    The contribution and performance of the users should be measured
+    and evaluated using certain algorithms and/or heuristics. The users
+    will be awarded points based on their performance. Probably some
+    rewarding mechanizms can be integrated later for the top
+    contributers.
+
+*** Detailed and comprehensive reporting and statistics
+    Different kinds of reports and statistics related to users,
+    projects, activity etc. should be supported and provided.
+    (What are exactly these reports? To be elaborated.)
+
+*** Integration with other modules
+    It should be possible to integrate with other l10n modules, like
+    l10n_server, etc. When a new project is added on l10n_server, the
+    strings that need to be translated can get some suggestions
+    automatically from l10n_suggestions. Or they can be submitted to
+    l10n_suggestions so that people can supply translation and
+    suggestions for them, to vote on these suggestions, etc.
+
+    The manager of the project on l10n_server may also adjust some
+    configuration parameters related to the suggestions. For example a
+    suggestion can be accepted as a correct translation only if it got
+    75% of all the votes about all the suggestions, otherwise it
+    should be considered as fuzzy translation and needs to be reviewed
+    by the package manager.
+
+
+** Required forms
+
+*** Query interface
+    On this form anybody (registered user or anonymous) can
+    supply a string in English, and the system will return the
+    translation suggestions related to it and the corresponding votes
+    that each suggestion has.
+
+    If the English string does not have an exact match on the DB, a
+    list of similar strings will be returned and the user will choose
+    toc check one of them.
+
+    This functionality of querying suggestions will be offered also by
+    a web service (XMLRPC) so that it can be used by any external
+    programs.
+
+*** Suggestion interface
+    This is the form where the (authenticated) user is presented with
+    an English string and several translation suggestions for it, and
+    he votes on one of them as the best, or provides another
+    suggestion which he thinks is better.
+
+    The string to be translated is selected randomly, unless the user
+    has selected 'sequential' on his settings. The selection of the
+    string is also done so that it complies with the restrictions
+    imposed by the user on his settings (for example only from a
+    certain package).
+
+    The selection of the string should be also influenced by certain
+    algoriths and heuristics, which should try to give more exposure
+    to the strings that need more votes. For example if a string
+    already got 10 votes and another one got just 2 votes, the second
+    one should be more likely to be selected.
+
+    This interface should be able to integrate somehow with facebook,
+    email, google+, etc.
+
+*** User configuration interface
+    Here the user customizes his setings, as described in the section
+    'Desired Functionality' above.
+
+*** Admin interfaces
+    The admin should be able to customize the overall behaviour of the
+    module, to check activity, to get reports and statistics, to
+    maintain the data (backup, restore, update) etc.
+
+*** Other modules interfaces
+    In case of integration with other modules (for example with
+    l10n_server), l10n_suggestions should alter their forms and
+    interfaces to add the neccessary options and settings.
+
+
+* Design
+
+** DB Schema
+
+* Implementation Plan
