@@ -1,6 +1,29 @@
 
-The org-mode of Emacs (http://orgmode.org/) is a good tool for keeping
-notes, project planning, tasks management, etc. This is my choice for
-keeping this project organized.
+This file is used to keep the project organized. It is based on the
+org-mode of Emacs (http://orgmode.org/), which is a good tool for
+keeping notes, project planning, tasks management, etc.
 
+* TODO Functional requirements
+  Describe the desired functionality of the module. Then define the
+  requirements in terms of forms and other UI elements, permissions,
+  etc.
 
+* TODO Design DB schema
+  Design a propper DB schema for l10n_suggestions. In general, it is
+  going to be reacher than the open-tran.eu schema, since it is going
+  to keep data about votes/evaluations/promotions of different
+  suggestions.
+
+* DONE Get open-tran.eu data
+  Download it from: http://open-tran.eu/dev.html
+
+* TODO Import data
+  Write a script for importing the open-tran.eu data into the
+  l10n_suggestions DB (MySQL). It should:
+  1. dump the data from the SQLite db
+  2. import them into MySQL
+  3. rearrange them to fit the new schema requirements
+  4. take care of both an initial import and an update (in the case of
+     update it should be carefull not to overwrite any existing data)
+
+* TODO Implement the UI and other requirements of the module
