@@ -18,7 +18,24 @@ keeping notes, project planning, tasks management, etc.
    Write a script for importing the open-tran.eu data into the
    l10n_suggestions DB (MySQL). It should:
    1. dump the data from the SQLite db
+      http://sqlfairy.sourceforge.net/
+      http://search.cpan.org/dist/SQL-Translator/
+
+      aptitude install sqlfairy libdbd-sqlite3-perl
+      sqlt -f DBI --dsn dbi:SQLite:../.open-tran/ten-sq.db -t MySQL --add-drop-table > mysql-ten-sq.sql
+      sqlt -f DBI --dsn dbi:SQLite:../.open-tran/ten-sq.db -t Dumper --use-same-auth > sqlite2mysql-dumper.pl
+      chmod +x sqlite2mysql-dumper.pl
+      ./sqlite2mysql-dumper.pl --help
+      ./sqlite2mysql-dumper.pl --add-truncate --mysql-loadfile > mysql-dump.sql
+      sed -e 's/LOAD DATA INFILE/LOAD DATA LOCAL INFILE/' -i mysql-dump.sql
+
    2. import them into MySQL
+
+      echo 'drop database `ten-sq`' | mysql -p -u root
+      echo 'create database `ten-sq` charset utf8' | mysql -p -u root
+      mysql -p -u root -D ten-sq < mysql-ten-sq.sql
+      mysql -p -u root -D ten-sq < mysql-dump.sql
+
    3. rearrange them to fit the new schema requirements
    4. take care of both an initial import and an update (in the case of
       update it should be carefull not to overwrite any existing data)
