@@ -173,4 +173,50 @@ keeping notes, project planning, tasks management, etc.
 
 ** DB Schema
 
+   The DB tables and their fields:
+
+   + Phrases
+     - id : int
+     - phrase : string
+     - length : int
+     - plurals : string      # list of ids of the plural phrases
+     - multiplicity : int    # how often this phrase is encountered in all the projects
+
+   + Translations
+     - id : int
+     - phraseid : int
+     - translation : string
+     - lng : string          # language code (en, fr, sq, etc.)
+     - votes : int           # count of votes received so far
+     - author : int          # id of the user that initially proposed it
+
+   + Votes
+     - id : int
+     - translationid : int
+     - userid : int
+     - timestamp : datetime
+
+   + Users
+     - points : int          # number of points rewarded for his activity
+     - config : string       # serialized configuration variables
+
+   --------------------
+
+   + Locations
+     - locationid : int
+     - phraseid : int
+     - projectid : int        # id of the project where this phrase is found
+     - packageid : int        # id of the package to which the project belongs
+     - project : string
+     - flags : int
+
+   + Words
+     - id : int
+     - word : string
+
+   + Word-Phrases
+     - wordid : int
+     - phraseid : int
+     - count : int
+
 * Implementation Plan
