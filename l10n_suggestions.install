@@ -21,14 +21,232 @@ function l10n_suggestions_uninstall() {
 /**
  * Implements hook_schema().
  */
-/*
 function l10n_suggestions_schema() {
 
-  $schema['l10n_suggestions_table1'] = array(
-    // nothing yet
+  debug('l10n_suggestions_schema()');
+
+  //Translatable strings and phrases that are extracted from projects.
+  $schema['l10n_suggestions_phrases'] = array(
+    'description' => 'Translatable strings and phrases that are extracted from projects. They are only in English.',
+    'fields' => array(
+      'pid' => array(
+        'description' => 'Internal numeric identifier for a phrase.',
+        'type' => 'serial',
+        'not null' => true,
+      ),
+      'phrase' => array(
+        'description' => 'The (English) phrase to be translated.',
+        'type' => 'varchar',
+        'length' => '1000',
+        'not null' => true,
+      ),
+      'length' => array(
+        'description' => 'Length of the phrase (inherited by open-trans.eu).',
+        'type' => 'int',
+        'size' => 'tiny',
+      ),
+      'plural' => array(
+        'description' => 'If this is the plural form of another phrase, then this field keeps the id of the singular phrase. Otherwise it is NULL.',
+        'type' => 'int',
+      ),
+      'pcount' => array(
+        'description' => 'How often this phrase is encountered in all the projects. Can be useful for any heuristics that try to find out which phrases need to be translated first.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'default' => 1,
+      ),
+    ),
+    'primary key' => array('pid'),
+    'indexes' => array(
+      'phrase' => array('phrase', 100),
+    ),
+    'unique keys' => array(
+      'phrase' => array('phrase'),
+    ),
+  );
+
+  //Translations/suggestions of the phrases (strings).
+  //For each phrase/string there can be translations for different
+  //languages, and more than one translation for each language.
+  $schema['l10n_suggestions_translations'] = array(
+    'description' => 'Translations/suggestions of the phrases (strings). For each phrase/string there can be translations for different languages, and more than one translation for each language.',
+    'fields' => array(
+      'tid' => array(
+        'description' => 'Internal numeric identifier for a translation.',
+        'type' => 'serial',
+        'not null' => true,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the id of the phrase that is translated.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'lng' => array(
+        'description' => 'Language code (en, fr, sq_AL, etc.)',
+        'type' => 'varchar',
+        'length' => '5',
+        'not null' => true,
+      ),
+      'translation' => array(
+        'description' => 'The (suggested) translation of the phrase.',
+        'type' => 'varchar',
+        'length' => '1000',
+        'not null' => true,
+      ),
+      'vcount' => array(
+        'description' => 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'default' => 1,
+      ),
+      'author' => array(
+        'description' => 'id of the user that initially proposed this translation',
+        'type' => 'int',
+      ),
+    ),
+    'primary key' => array('tid'),
+  );
+
+  //Votes for each translation/suggestion.
+  $schema['l10n_suggestions_votes'] = array(
+    'description' => 'Votes for each translation/suggestion.',
+    'fields' => array(
+      'vid' => array(
+        'description' => 'Internal numeric identifier for a vote.',
+        'type' => 'serial',
+        'not null' => true,
+      ),
+      'tid' => array(
+        'description' => 'Reference to the id of the translation which is voted.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'uid' => array(
+        'description' => 'Reference to the id of the user that submitted the vote.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'vtime' => array(
+        'description' => 'Timestamp of the voting time.',
+        'mysql_type' => 'DATETIME',
+        'pgsql_type' => 'timestamp without time zone',
+      ),
+    ),
+    'primary key' => array('vid'),
+    'indexes' => array(
+      'tid' => array('tid'),
+      'uid' => array('uid'),
+    ),
+    'unique keys' => array(
+      'tid_uid' => array('tid', 'uid'),
+    ),
+  );
+
+  //Users that contribute translations/suggestions/votes.
+  $schema['l10n_suggestions_users'] = array(
+    'description' => 'Users that contribute translations/suggestions/votes.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'The numeric identifier of the user.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'points' => array(
+        'description' => 'Number of points rewarded for his activity.',
+        'type' => 'int',
+        'default' => 0,
+      ),
+      'config' => array(
+        'description' => 'Serialized configuration variables.',
+        'type' => 'varchar',
+        'length' => '250',
+      ),
+    ),
+    'primary key' => array('uid'),
+  );
+
+  //Locations (lines) where a phrase (string) is found.
+  $schema['l10n_suggestions_locations'] = array(
+    'description' => 'Locations (lines) where a phrase (string) is found.',
+    'fields' => array(
+      'lid' => array(
+        'description' => 'Internal numeric identifier of a line.',
+        'type' => 'serial',
+        'not null' => true,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the id of the phrase contained in this line.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'projectid' => array(
+        'description' => 'Reference to the id of the project that contains this line.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'packageid' => array(
+        'description' => 'Reference to the id of the package that contains the project.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'projectname' => array(
+        'description' => 'The name of the project containing this line.',
+        'type' => 'varchar',
+        'length' => '100',
+      ),
+      'flags' => array(
+        'description' => 'Copied from open-trans.eu',
+        'type' => 'int',
+      ),
+    ),
+    'primary key' => array('lid'),
+    'indexes' => array(
+      'pid' => array('pid'),
+    ),
+  );
+
+  //Words in all the phrases.
+  $schema['l10n_suggestions_words'] = array(
+    'description' => 'Words in all the phrases.',
+    'fields' => array(
+      'wid' => array(
+        'description' => 'Internal numeric identifier for a word.',
+        'type' => 'serial',
+        'not null' => true,
+      ),
+      'word' => array(
+        'description' => 'The word itself.',
+        'type' => 'varchar',
+        'length' => '30',
+        'not null' => true,
+      ),
+    ),
+    'primary key' => array('wid'),
+  );
+
+  //Relations between words and phrases.
+  $schema['l10n_suggestions_wordphrases'] = array(
+    'description' => 'Relations between words and phrases.',
+    'fields' => array(
+      'wid' => array(
+        'description' => 'Reference to the id of the word.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the id of the phrase.',
+        'type' => 'int',
+        'not null' => true,
+      ),
+      'count' => array(
+        'description' => 'The count of the word in the phrase.',
+        'type' => 'int',
+        'size' => 'tiny',
+      ),
+    ),
+    'primary key' => array('wid', 'pid'),
   );
 
   return $schema;
 }
-*/
 ?>
