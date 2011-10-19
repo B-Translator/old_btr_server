@@ -159,49 +159,73 @@ keeping notes, project planning, tasks management, etc.
 
    The DB tables and their fields:
 
-   + Phrases
-     - id : int
-     - phrase : string
-     - length : int
-     - plurals : string      # list of ids of the plural phrases
-     - multiplicity : int    # how often this phrase is encountered in all the projects
+   + Phrases :: Translatable strings and phrases that are extracted
+                from projects.
+     - pid : serial :: Internal numeric identifier for a phrase.
+     - phrase : text :: The (English) phrase to be translated.
+     - hash : binary(20) :: Will be used for a more efficient and
+          reliable text comparison, searching, indexing, etc. hash =
+          UNHEX(SHA1(TRIM(phrase)))
+     - length : int/tiny :: Length of the phrase (inherited by
+          open-trans.eu).
+     - plural : int :: If this is the plural form of another phrase,
+          then this field keeps the id of the singular
+          phrase. Otherwise it is NULL.
+     - pcount : int/tiny :: How often this phrase is encountered in
+          all the projects. Can be useful for any heuristics that try
+          to find out which phrases need to be translated first.
 
-   + Translations
-     - id : int
-     - phraseid : int
-     - translation : string
-     - lng : string          # language code (en, fr, sq, etc.)
-     - votes : int           # count of votes received so far
-     - author : int          # id of the user that initially proposed it
+   + Translations :: Translations/suggestions of the phrases
+                     (strings). For each phrase/string there can be
+                     translations for different languages, and more
+                     than one translation for each language.
+     - tid : serial :: Internal numeric identifier for a translation.
+     - pid : int :: Reference to the id of the phrase that is
+                    translated.
+     - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
+     - translation : varchar(1000) :: The (suggested) translation of
+          the phrase.
+     - votes : int/tiny :: Count of votes received so far. This can be
+          counted on the table Votes, but for convenience is stored
+          here as well.
+     - author : int :: id of the user that initially proposed this
+                        translation
 
-   + Votes
-     - id : int
-     - translationid : int
-     - userid : int
-     - timestamp : datetime
+   + Votes :: Votes for each translation/suggestion.
+     - vid : serial :: Internal numeric identifier for a vote.
+     - tid : int :: Reference to the id of the translation which is
+                    voted.
+     - uid : int :: Reference to the id of the user that submitted the
+                    vote.
+     - vtime : datetime :: Timestamp of the voting time.
 
-   + Users
-     - points : int          # number of points rewarded for his activity
-     - config : string       # serialized configuration variables
+   + Users :: Users that contribute translations/suggestions/votes.
+     - uid : int :: The numeric identifier of the user.
+     - points : int :: Number of points rewarded for his activity.
+     - config : varchar(250) :: Serialized configuration variables.
 
    --------------------
 
-   + Locations
-     - locationid : int
-     - phraseid : int
-     - projectid : int        # id of the project where this phrase is found
-     - packageid : int        # id of the package to which the project belongs
-     - project : string
-     - flags : int
+   + Locations :: Locations (lines) where a phrase (string) is found.
+     - lid : serial :: Internal numeric identifier of a line.
+     - pid : int :: Reference to the id of the phrase contained in
+                    this line.
+     - projectid : int :: Reference to the id of the project that
+          contains this line.
+     - packageid : int :: Reference to the id of the package that
+          contains the project.
+     - projectname : varchar(100) :: The name of the project
+          containing this line.
+     - flags : int :: Copied from open-trans.eu
 
-   + Words
-     - id : int
-     - word : string
+   + Words :: Words in all the phrases.
+     - wid : serial :: Internal numeric identifier for a word.
+     - word : varchar(100) :: The word itself.
 
-   + Word-Phrases
-     - wordid : int
-     - phraseid : int
-     - count : int
+   + WordPhrases :: Relations between words and phrases.
+     - wid : int :: Reference to the id of the word.
+     - pid : int :: Reference to the id of the phrase.
+     - count : int/tiny :: The count of the word in the phrase.
 
 *** Issues
     - Store multiple plurals in different records or in one record?
