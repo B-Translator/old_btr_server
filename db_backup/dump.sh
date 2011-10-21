@@ -11,7 +11,7 @@ else
 fi
 
 ### make this 'true' for a full dump of the database
-dump='true'
+dump='false'
 
 ### dump only the schema of the database
 mysqldump --user=root --no-data --compact --password --database $db_name \

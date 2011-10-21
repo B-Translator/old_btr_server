@@ -10,7 +10,7 @@ CREATE TABLE `l10n_suggestions_phrases` (
   PRIMARY KEY (`pid`),
   UNIQUE KEY `hash` (`hash`),
   KEY `phrase` (`phrase`(100))
-) ENGINE=InnoDB AUTO_INCREMENT=851956 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings and phrases that are extracted from...';
+) ENGINE=InnoDB AUTO_INCREMENT=810801 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings and phrases that are extracted from...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -19,14 +19,15 @@ CREATE TABLE `l10n_suggestions_words` (
   `word` varchar(100) COLLATE utf8_bin NOT NULL COMMENT 'The word itself.',
   PRIMARY KEY (`wid`),
   UNIQUE KEY `word` (`word`)
-) ENGINE=InnoDB AUTO_INCREMENT=65536 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Words in all the phrases.';
+) ENGINE=InnoDB AUTO_INCREMENT=53341 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Words in all the phrases.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_wordphrases` (
   `wid` int(11) NOT NULL COMMENT 'Reference to the id of the word.',
   `pid` int(11) NOT NULL COMMENT 'Reference to the id of the phrase.',
-  `count` tinyint(4) DEFAULT NULL COMMENT 'The count of the word in the phrase.'
+  `count` tinyint(4) DEFAULT NULL COMMENT 'The count of the word in the phrase.',
+  PRIMARY KEY (`wid`,`pid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Relations between words and phrases.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -40,7 +41,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   `flags` int(11) DEFAULT NULL COMMENT 'Copied from open-trans.eu',
   PRIMARY KEY (`lid`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1179631 DEFAULT CHARSET=utf8 COMMENT='Locations (lines) where a phrase (string) is found.';
+) ENGINE=InnoDB AUTO_INCREMENT=1149986 DEFAULT CHARSET=utf8 COMMENT='Locations (lines) where a phrase (string) is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -49,10 +50,12 @@ CREATE TABLE `l10n_suggestions_translations` (
   `pid` int(11) NOT NULL COMMENT 'Reference to the id of the phrase that is translated.',
   `lng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'Language code (en, fr, sq_AL, etc.)',
   `translation` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The (suggested) translation of the phrase.',
+  `hash` binary(20) DEFAULT NULL,
   `vcount` tinyint(4) DEFAULT '1' COMMENT 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
   `author` int(11) DEFAULT NULL COMMENT 'id of the user that initially proposed this translation',
-  PRIMARY KEY (`tid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the phrases (strings). For...';
+  PRIMARY KEY (`tid`),
+  KEY `hash` (`hash`)
+) ENGINE=InnoDB AUTO_INCREMENT=616017 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the phrases (strings). For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

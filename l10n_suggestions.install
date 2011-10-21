@@ -99,6 +99,12 @@ function l10n_suggestions_schema() {
         'length' => '1000',
         'not null' => TRUE,
       ),
+      'hash' => array(
+        'description' => 'hash = UNHEX(SHA1(TRIM(translation))) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
+        'type' => 'binary',
+        'length' => '20',
+        'not null' => FALSE,
+      ),
       'vcount' => array(
         'description' => 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
         'type' => 'int',
@@ -113,6 +119,9 @@ function l10n_suggestions_schema() {
       ),
     ),
     'primary key' => array('tid'),
+    'indexes' => array(
+      'hash' => array('hash'),
+    ),
   );
 
   //Votes for each translation/suggestion.
@@ -260,6 +269,7 @@ function l10n_suggestions_schema() {
         'not null' => FALSE,
       ),
     ),
+    'primary key' => array('wid', 'pid'),
   );
 
   return $schema;
