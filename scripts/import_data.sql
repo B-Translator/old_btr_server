@@ -136,10 +136,6 @@ alter table l10n_suggestions_wordphrases drop column old_pid;
 /** let's create a primary key on (wid,pid) */
 alter table l10n_suggestions_wordphrases add primary key wordphrase (wid,pid);
 
-select *, count(*) from l10n_suggestions_wordphrases
-group by wid, pid having count(*) > 1 order by count(*) desc;
-
-
 /** drop the columns old_id of words and phrases */
 alter table l10n_suggestions_phrases drop key old_id;
 alter table l10n_suggestions_phrases drop column old_id;

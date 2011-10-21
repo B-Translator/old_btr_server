@@ -1,12 +1,19 @@
 
+--use en;
+use sq;
+--use de;
+--use fr;
+--use it;
+--use es;
+
 /** collate utf8_bin makes the column word case sensitive */
-alter table en.words modify column word varchar(1000) collate utf8_bin;
+alter table words modify column word varchar(100) collate utf8_bin;
 
 /** remove the spaces at the beginning and end, just in case */
-update en.words set word = trim(word);
+update words set word = trim(word);
 
 /** check for doublicate words */
-select *, count(*) from en.words 
+select *, count(*) from words 
 group by word having count(*) > 1
 order by count(*) desc;
 
@@ -15,12 +22,12 @@ order by count(*) desc;
  * so, we use a hash value of the trimmed phrase in order to
  * make comparisons and to ensure uniqueness of the phrases
  */
-alter table en.phrases add column hash binary(20);
-update en.phrases set hash = unhex(sha1(trim(phrase)));
---select * from en.phrases limit 10;
+alter table phrases add column hash binary(20);
+update phrases set hash = unhex(sha1(trim(phrase)));
+--select * from phrases limit 10;
 
 /** check for doublicate phrases */
-select *, count(*) from en.phrases 
+select *, count(*) from phrases 
 group by hash having count(*) > 1
 order by count(*) desc;
 
@@ -30,33 +37,44 @@ order by count(*) desc;
 /**
  * check the table wp for dangling relationships and clean them
  */
-select * from en.phrases p
-right join en.wp wp on (wp.phraseid = p.id)
-where p.id is null;
+select * from phrases
+right join wp on (wp.phraseid = phrases.id)
+where phrases.id is null;
 
-drop table if exists en.wp_1;
-create table en.wp_1 like en.wp;
+drop table if exists wp_1;
+create table wp_1 like wp;
 
-insert into en.wp_1
-  (select wp.* from en.phrases p
-   right join en.wp wp on (wp.phraseid = p.id)
-   where p.id is null);
---select * from en.wp_1;
+insert into wp_1
+  (select wp.* from phrases
+   right join wp on (wp.phraseid = phrases.id)
+   where phrases.id is null);
+--select * from wp_1;
 
-delete from en.wp where phraseid in (select wp1.phraseid from en.wp_1 wp1);
-drop table en.wp_1;
+delete from wp where phraseid in (select phraseid from wp_1);
+drop table wp_1;
 
-select * from en.words w
-right join en.wp wp on (wp.wordid = w.id)
-where w.id is null;
+select * from words
+right join wp on (wp.wordid = words.id)
+where words.id is null;
 
-drop table if exists en.wp_1;
-create table en.wp_1 like en.wp;
-insert into en.wp_1
-  (select wp.* from en.words w
-   right join en.wp wp on (wp.wordid = w.id)
-   where w.id is null);
---select * from en.wp_1;
-delete from en.wp where wordid in (select wp1.wordid from en.wp_1 wp1);
-drop table en.wp_1;
+drop table if exists wp_1;
+create table wp_1 like wp;
+insert into wp_1
+  (select wp.* from words
+   right join wp on (wp.wordid = words.id)
+   where words.id is null);
+--select * from wp_1;
+delete from wp where wordid in (select wordid from wp_1);
+drop table wp_1;
 
+/** check the table wp for douplicate (phraseid,wordid) records */
+select *, count(*) from wp
+group by wordid, phraseid 
+having count(*) > 1;
+
+/** clean the table wp from douplicate (phraseid,wordid) records */
+drop table if exists wp_1;
+create table wp_1 like wp;
+insert into wp_1 select * from wp group by wordid, phraseid;
+drop table wp;
+rename table wp_1 to wp;
