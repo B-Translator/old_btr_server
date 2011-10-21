@@ -10,27 +10,39 @@ else
   exit 1
 fi
 
-### make a full dump of the database
-mysqldump --user=root --extended-insert=false --comments=false \
-          --single-transaction --password --database $db_name \
-          --tables \
-          l10n_suggestions_phrases l10n_suggestions_words \
-          l10n_suggestions_wordphrases l10n_suggestions_locations \
-          l10n_suggestions_translations l10n_suggestions_votes \
-          l10n_suggestions_users > l10n_suggestions_dump.sql
+### make this 'true' for a full dump of the database
+dump='true'
 
-### dump only the structure (tables) of the database
+### dump only the schema of the database
 mysqldump --user=root --no-data --compact --password --database $db_name \
           --tables \
           l10n_suggestions_phrases l10n_suggestions_words \
           l10n_suggestions_wordphrases l10n_suggestions_locations \
           l10n_suggestions_translations l10n_suggestions_votes \
-          l10n_suggestions_users > l10n_suggestions_structure.sql
+          l10n_suggestions_users > l10n_suggestions_schema.sql
+
+### make a full dump of the database
+if [ "$dump" = 'true' ]
+then
+  mysqldump --user=root --extended-insert=false --comments=false \
+            --single-transaction --password --database $db_name \
+            --tables \
+            l10n_suggestions_phrases l10n_suggestions_words \
+            l10n_suggestions_wordphrases l10n_suggestions_locations \
+            l10n_suggestions_translations l10n_suggestions_votes \
+            l10n_suggestions_users > l10n_suggestions_dump.sql
+fi
 
 ### fix a little bit the dump files
-sed -e '/^SET /d' -i l10n_suggestions_dump.sql
-sed -e '/^SET /d' -i l10n_suggestions_structure.sql
+sed -e '/^SET /d' -i l10n_suggestions_schema.sql
+if [ "$dump" = 'true' ]
+then
+  sed -e '/^SET /d' -i l10n_suggestions_dump.sql
+fi
 
-### zip the backup
-gzip l10n_suggestions_dump.sql
+### compress the full dump
+if [ "$dump" = 'true' ]
+then
+  gzip l10n_suggestions_dump.sql
+fi
 
