@@ -5,7 +5,7 @@ keeping notes, project planning, tasks management, etc.
 
 * Initial Plan
 
-** TODO Design DB schema
+** DONE Design DB schema
    Design a propper DB schema for l10n_suggestions. In general, it is
    going to be reacher than the open-tran.eu schema, since it is going
    to keep data about votes/evaluations/promotions of different
@@ -19,12 +19,10 @@ keeping notes, project planning, tasks management, etc.
    l10n_suggestions DB (MySQL). It should:
    1. [X] dump the data from the SQLite db
    2. [X] import them into MySQL
-   3. [ ] rearrange them to fit the new schema requirements
+   3. [X] rearrange them to fit the new schema requirements
    4. [ ] take care of both an initial import and an update (in the
       case of update it should be carefull not to overwrite any
       existing data)
-
-** TODO Implement the UI and other requirements of the module
 
 * Functional requirements
   Describe the desired functionality of the module. Then define the
@@ -234,4 +232,81 @@ keeping notes, project planning, tasks management, etc.
     - Store multiple plurals in different records or in one record?
     -
 
+** UI
+
+*** translations/get [/<hash>/<lng>/<exact>]
+
+    An interface for suggesting translations to a phrase.  Gets as
+    input
+    - the phrase to be translated (textarea)
+    - the language to which will be translated (listbox)
+    - and whether the phrase should be matched exactly (checkbox)
+
+    Returns a list of translation suggestions of the given phrase.
+
+    If exact match is required, the given phrase will be matched
+    exactly on the database, and if no match empty result will be
+    returned.  Otherwise the best matching phrase will be found and
+    its translations will be returned.
+
+    If the phrase and language are known beforehand, then they can be
+    passed as additional parameters (on the url). The phrase will be
+    identified by its hash.
+
+    This interface should be accessible by anybody.
+
+    There should be also a corresponding XML-RPC interface, so that it
+    can be accessed from external programs.
+
+*** translations/vote [/<hash>/<lng1>,<lng2>]
+
+    This interface will select a random phrase and will present it and
+    its available translations to the user. The user will vote one of
+    them as the best translation, or will provide a new translation
+    that he thinks is better.
+
+    The original phrase is usually presented in English, but
+    additional languages can be presented as well, if the user is not
+    confident with English. (He can select these options on the user
+    settings page as well.)
+
+    If the phrase and the additional languages are known beforehand,
+    they can be passed as parameters to the menu path.
+
+*** translations/user_settings
+    The user can set:
+    - the prefered source language(s)
+    - how many votes a day is willing to give
+    - etc.
+
+*** translations/admin
+    + translations/admin/config
+    + translations/admin/dashboard
+    + translations/admin/reports
+    + translations/admin/stats
+
 * Implementation Plan
+  1. Implement the interface *translations/get* with forms.
+  2. Implement the interface *translations/get* with xml-rpc.
+  3. Implement *translations/vote* with forms and a simple random phrase
+     selection.
+  4. Implement a simple *translations/user_settings*
+  5. Improve the random phrase selection for *translations/vote* to take
+     into account the user settings.
+  6. Implement a simple *translations/admin/config* interface.
+  7. Make a basic *integration with facebook* (for voting).
+  8. Put it online.
+  9. Add a basic *email interface* (for voting).
+  10. Add a *mobile interface* (or theme).
+  11. Build the pages for admin dashboard, reports and stats.
+  12. Integrate with projects and packages from l10n_server
+  13. Add an API for external applications.
+  14. Integration with google+, twitter, diaspora, etc.
+  15. Android app that can be used for voting.
+
+* Tasks
+** DB
+*** TODO Write scripts for updating data from open-tran.eu
+    Take care to preserve the data that already exist in the DB.
+** UI
+*** TODO Implement the interface *translations/get* with forms.
