@@ -310,3 +310,12 @@ keeping notes, project planning, tasks management, etc.
     Take care to preserve the data that already exist in the DB.
 ** UI
 *** TODO Implement the interface *translations/get* with forms.
+    + Finish the form filter
+      - Improve the layout (theme), make it more compact
+      - Add helper languages
+      - Add a permanent link checkbox
+      - Make a separate menu translate/get/%/%
+      - Find phrases similar to a given phrase
+    + Translation Form
+    + XML-RPC interface
+    + translation/vote form

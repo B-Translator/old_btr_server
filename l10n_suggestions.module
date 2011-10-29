@@ -6,20 +6,127 @@
  */
 
 /**
+ * Implements hook_help().
+ */
+function l10n_suggestions_help($path, $args) {
+  switch($path)
+    {
+      case 'translation/get':
+        $help = t('Get translation suggestions for a given phrase.');
+        break;
+
+      case 'translation/vote':
+        $help = t('Vote the best translation for a phrase, or suggest a better translation.');
+        break;
+    }
+
+  return $help;
+}
+
+
+/**
  * Implements hook_menu().
  */
 function l10n_suggestions_menu() {
-  $items['l10n_suggestions'] = array(
+  $items['translation/get'] = array(
     'title'           => 'Get l10n Translation Suggestions',
-    'description'     => 'Get l10n Translation Suggestions',
-    'page callback'   => '_l10n_suggestions_page',
+    'description'     => 'Get translation suggestions for a given phrase.',
+    'page callback'   => 'l10n_suggestions_get',
+    'file'            => 'translation.inc',
     'access callback' => TRUE,
   );
+
+  $items['translation/vote'] = array(
+    'title'           => 'Vote l10n Translation Suggestions',
+    'description'     => 'Vote the best translation for a phrase, or suggest a better translation.',
+    'page callback'   => 'l10n_suggestions_vote',
+    'file'            => 'translation.inc',
+    'access callback' => TRUE,
+  );
+
+  // Autocomplete callback for project textfields.
+  $items['translation/project-autocomplete'] = array(
+    'title' => 'Project autocomplete',
+    'page callback' => 'l10n_suggestions_project_autocomplete',
+    //'access arguments' => array('access localization community'),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
-function _l10n_suggestions_page() {
-  $page =  t("A simple page for l10n_suggestions, just to start.");
-  return $page;
+/**
+ * Implements hook_theme().
+ */
+function l10n_suggestions_theme($existing, $type, $theme, $path) {
+  return array(
+    // translate.inc
+    'l10n_suggestions_filter_form_element' => array(
+      'render element' => 'element',
+    ),
+    'l10n_suggestions_translate_translation' => array(
+      'render element' => 'element',
+    ),
+    'l10n_suggestions_translate_actions' => array(
+      'render element' => 'element',
+    ),
+    'l10n_suggestions_in_context' => array(
+      'variables' => array('source' => NULL),
+    ),
+    'l10n_suggestions_translate_radio' => array(
+      'render element' => 'element',
+    ),
+    'l10n_suggestions_translate_source' => array(
+      'render element' => 'element',
+    ),
+    'l10n_suggestions_translate_translation_list' => array(
+      'render element' => 'element',
+    ),
+    'l10n_suggestions_translate_table' => array(
+      'render element' => 'element',
+    ),
+  );
+}
+
+/**
+ * Implements hook_init().
+ *
+ * Add stylesheets and block search engines from web application pages.
+ */
+function l10n_suggestions_init() {
+  if (arg(0) == 'translation') {
+    drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/l10n_suggestions.css');
+    // For the translation overview pages. This is used to present admin page like panels.
+    drupal_add_css(drupal_get_path('module', 'system') . '/admin.css');
+  }
+
+  /*
+  // Check if language is RTL
+  if (array_key_exists(arg(2), locale_language_list())) {
+    $langcode = arg(2);
+    $language = l10n_suggestions_get_language($langcode);
+
+    // Add RTL style if the current language's direction is RTL
+    if ($language->direction == LANGUAGE_RTL) {
+      drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/l10n_suggestions-rtl.css');
+    }
+  }
+  */
+}
+
+/**
+ * Retrieve a pipe delimited string of autocomplete suggestions for projects.
+ */
+function l10n_suggestions_project_autocomplete($string = '') {
+  $matches = array();
+  if ($string) {
+    $result = db_query_range("SELECT DISTINCT projectname FROM {l10n_suggestions_locations} WHERE projectname LIKE :str ORDER BY projectname", 0, 10, array(':str' => $string.'%'));
+    foreach ($result as $project) {
+      $matches[$project->projectname] = check_plain($project->projectname);
+    }
+  }
+  print drupal_json_encode($matches);
+  exit();
 }
 ?>
