@@ -5,10 +5,10 @@
  */
 
 /**
- * Menu callback: translation/get
- * Get translation suggestions for a given phrase.
+ * Menu callback: translation/search
+ * Search phrases and translations using various filters.
  */
-function l10n_suggestions_get($lng =NULL, $string_hash =NULL) {
+function l10n_suggestions_search($lng =NULL, $string_hash =NULL) {
   drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
@@ -48,6 +48,15 @@ function l10n_suggestions_get($lng =NULL, $string_hash =NULL) {
   }
 
   return $output;
+}
+
+/**
+ * Menu callback: translation/get
+ * Get translation suggestions for a given phrase.
+ */
+function l10n_suggestions_get($lng =NULL, $string_hash =NULL) {
+  $page = "lng='$lng' hash='$string_hash'";
+  return $page;
 }
 
 /**
