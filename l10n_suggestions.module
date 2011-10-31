@@ -32,7 +32,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Get l10n Translation',
     'description'     => 'Get translation suggestions for a given phrase.',
     'page callback'   => 'l10n_suggestions_get',
-    'file'            => 'translation_get.inc',
+    'file'            => 'includes/translation_get.inc',
     'access callback' => TRUE,
   );
 
@@ -40,7 +40,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Vote l10n Translation',
     'description'     => 'Vote the best translation for a phrase, or suggest a better translation.',
     'page callback'   => 'l10n_suggestions_vote',
-    'file'            => 'translation_vote.inc',
+    'file'            => 'includes/translation_vote.inc',
     'access callback' => TRUE,
   );
 
@@ -48,7 +48,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Search l10n Translations',
     'description'     => 'Search phrases and translations using various filters.',
     'page callback'   => 'l10n_suggestions_search',
-    'file'            => 'translation.inc',
+    'file'            => 'includes/translation_search.inc',
     'access callback' => TRUE,
   );
 
@@ -56,7 +56,7 @@ function l10n_suggestions_menu() {
   $items['translation/project-autocomplete'] = array(
     'title'           => 'Project autocomplete',
     'page callback'   => 'l10n_suggestions_project_autocomplete',
-    'file'            => 'ajax_callbacks.inc',
+    'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
     'type'            => MENU_CALLBACK,

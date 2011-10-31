@@ -7,9 +7,9 @@
 /**
  * Include utility and theme functions.
  */
-require_once dirname(__FILE__) . '/utility_functions.inc';
-require_once dirname(__FILE__) . '/theme_functions.inc';
-require_once dirname(__FILE__) . '/ajax_callbacks.inc';
+require_once dirname(__FILE__) . '/includes/utility_functions.inc';
+require_once dirname(__FILE__) . '/includes/theme_functions.inc';
+require_once dirname(__FILE__) . '/includes/ajax_callbacks.inc';
 
 
 /**
