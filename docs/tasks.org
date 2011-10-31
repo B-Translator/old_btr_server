@@ -319,3 +319,12 @@ keeping notes, project planning, tasks management, etc.
     + Translation Form
     + XML-RPC interface
     + translation/vote form
+
+* Notes
+
+** How to create TAGS for Emacs
+
+   find . -type f | etags -
+   find . -type f \( -name "*.module" -o -name "*.install" -o -name "*.inc" \) | etags -a --language=php -
+
+   See: http://drupal.org/node/59868

@@ -32,7 +32,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Get l10n Translation',
     'description'     => 'Get translation suggestions for a given phrase.',
     'page callback'   => 'l10n_suggestions_get',
-    'file'            => 'translation.inc',
+    'file'            => 'translation_get.inc',
     'access callback' => TRUE,
   );
 

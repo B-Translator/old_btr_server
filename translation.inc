@@ -15,7 +15,7 @@ function l10n_suggestions_search($lng =NULL, $string_hash =NULL) {
 
   $filter = l10n_suggestions_build_filter($lng, $string_hash);
   $strings = l10n_suggestions_get_strings($filter);
-  $arr_strings = l10n_suggestions_arrange_strings($strings);
+  $arr_strings = l10n_suggestions_convert_to_hierarchical_array($strings);
   if (empty($arr_strings)) dpm('no strings'); else dpm($arr_strings);  //debug
 
   /*
@@ -51,15 +51,6 @@ function l10n_suggestions_search($lng =NULL, $string_hash =NULL) {
 }
 
 /**
- * Menu callback: translation/get
- * Get translation suggestions for a given phrase.
- */
-function l10n_suggestions_get($lng =NULL, $string_hash =NULL) {
-  $page = "lng='$lng' hash='$string_hash'";
-  return $page;
-}
-
-/**
  * Menu callback: translation/vote
  * Vote the best translation for a phrase, or suggest a better translation.
  */
@@ -67,7 +58,6 @@ function l10n_suggestions_vote($lng =NULL, $string_hash =NULL) {
   $page = "lng='$lng' hash='$string_hash'";
   return $page;
 }
-
 
 // = Filter form handling ======================================================
 
@@ -93,7 +83,7 @@ function l10n_suggestions_build_filter($lng, $string_hash) {
     //get filter values from $params
     $filter['exact_match'] = isset($params['exact_match']) && in_array($params['exact_match'], array('true', 'yes','1')) ? true : false;
     $filter['lng'] = isset($params['lng']) && in_array($params['lng'], array('sq', 'fr')) ? $params['lng'] : 'sq';
-    $filter['l10n_string'] = isset($params['l10n_string']) ? $params['l10n_string'] : '';
+    $FILTER['l10n_string'] = isset($params['l10n_string']) ? $params['l10n_string'] : '';
     $filter['project'] = isset($params['project']) ? trim($params['project']) : '';
     $filter['limit'] = (isset($params['limit']) && in_array($params['limit'], array(5, 10, 20, 30, 50))) ? (int) $params['limit'] : 5;
   }
@@ -952,7 +942,7 @@ function l10n_suggestions_get_strings($filter) {
  *   string has an array of translations on the key 'translations'.
  *   Each translation is an associative array.
  */
-function l10n_suggestions_arrange_strings($strings) {
+function l10n_suggestions_convert_to_hierarchical_array($strings) {
   $arr_strings = array();
   $current_pid = '';
   foreach ($strings as $string) {
