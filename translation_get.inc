@@ -5,11 +5,12 @@
  */
 
 /**
- * We need to include this file because we use some utility functions
- * from it. Also the theme functions are in it (the same theme functions
- * are used for both pages.
+ * Include utility and theme functions.
  */
-require_once dirname(__FILE__) . '/translation.inc';
+require_once dirname(__FILE__) . '/utility_functions.inc';
+require_once dirname(__FILE__) . '/theme_functions.inc';
+require_once dirname(__FILE__) . '/ajax_callbacks.inc';
+
 
 /**
  * Menu callback: translation/get/lng/hash

@@ -40,7 +40,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Vote l10n Translation',
     'description'     => 'Vote the best translation for a phrase, or suggest a better translation.',
     'page callback'   => 'l10n_suggestions_vote',
-    'file'            => 'translation.inc',
+    'file'            => 'translation_vote.inc',
     'access callback' => TRUE,
   );
 
@@ -54,11 +54,12 @@ function l10n_suggestions_menu() {
 
   // Autocomplete callback for project textfields.
   $items['translation/project-autocomplete'] = array(
-    'title' => 'Project autocomplete',
-    'page callback' => 'l10n_suggestions_project_autocomplete',
+    'title'           => 'Project autocomplete',
+    'page callback'   => 'l10n_suggestions_project_autocomplete',
+    'file'            => 'ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
+    'type'            => MENU_CALLBACK,
   );
 
   return $items;
@@ -69,7 +70,6 @@ function l10n_suggestions_menu() {
  */
 function l10n_suggestions_theme($existing, $type, $theme, $path) {
   return array(
-    // translate.inc
     'l10n_suggestions_filter_form_element' => array(
       'render element' => 'element',
     ),
@@ -123,18 +123,4 @@ function l10n_suggestions_init() {
   */
 }
 
-/**
- * Retrieve a pipe delimited string of autocomplete suggestions for projects.
- */
-function l10n_suggestions_project_autocomplete($string = '') {
-  $matches = array();
-  if ($string) {
-    $result = db_query_range("SELECT DISTINCT projectname FROM {l10n_suggestions_locations} WHERE projectname LIKE :str ORDER BY projectname", 0, 10, array(':str' => $string.'%'));
-    foreach ($result as $project) {
-      $matches[$project->projectname] = check_plain($project->projectname);
-    }
-  }
-  print drupal_json_encode($matches);
-  exit();
-}
 ?>
