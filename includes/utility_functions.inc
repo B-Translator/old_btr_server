@@ -4,6 +4,29 @@
  */
 
 /**
+ * Returns an array of languages and their details.
+ */
+function l10n_suggestions_get_languages() {
+
+  $arr_langs = array(
+    'fr' => array(
+      'code' => 'fr',
+      'name' => 'French',
+      'encoding' => 'latin1',
+      'rtl'  => false,
+    ),
+    'sq' => array(
+      'code' => 'sq',
+      'name' => 'Albanian',
+      'encoding' => 'latin1',
+      'rtl'  => false,
+    ),
+  );
+
+  return $arr_langs;
+}
+
+/**
  * Arrange the string/translation data returned from the DB
  * in another structure of arrays.
  *

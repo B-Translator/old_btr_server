@@ -7,6 +7,7 @@
 /**
  * Include utility and theme functions.
  */
+require_once dirname(__FILE__) . '/search_filter.inc';
 require_once dirname(__FILE__) . '/utility_functions.inc';
 require_once dirname(__FILE__) . '/theme_functions.inc';
 require_once dirname(__FILE__) . '/ajax_callbacks.inc';
@@ -16,15 +17,15 @@ require_once dirname(__FILE__) . '/ajax_callbacks.inc';
  * Menu callback: translation/search
  * Search phrases and translations using various filters.
  */
-function l10n_suggestions_search($lng =NULL, $string_hash =NULL) {
+function l10n_suggestions_search() {
   drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
 
-  $filter = l10n_suggestions_build_filter($lng, $string_hash);
-  $strings = l10n_suggestions_get_strings($filter);
-  $arr_strings = l10n_suggestions_convert_to_hierarchical_array($strings);
-  if (empty($arr_strings)) dpm('no strings'); else dpm($arr_strings);  //debug
+  $filter = l10n_suggestions_build_filter();
+  //$strings = l10n_suggestions_get_strings($filter);
+  //$arr_strings = l10n_suggestions_convert_to_hierarchical_array($strings);
+  //if (empty($arr_strings)) dpm('no strings'); else dpm($arr_strings);  //debug
 
   /*
   // Add RTL style if the current language's direction is RTL
@@ -38,7 +39,7 @@ function l10n_suggestions_search($lng =NULL, $string_hash =NULL) {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Get Translation'), 'translation/get'),
+      l(t('Search Translations'), 'translation/search'),
     )
   );
 
@@ -58,154 +59,6 @@ function l10n_suggestions_search($lng =NULL, $string_hash =NULL) {
   return $output;
 }
 
-// = Filter form handling ======================================================
-
-/**
- * Check and sanitize arguments and build the filter array.
- *
- * @param $lng
- *   The language code given in the path (translation/get/lng/hash).
- * @param $string_hash
- *   The string hash given in the path (translation/get/lng/hash).
- */
-function l10n_suggestions_build_filter($lng, $string_hash) {
-
-  //if $string_hash is given in the path, then we try to make an exact match
-  if ($string_hash != NULL) {
-    $filter['exact_match'] = true;
-    $filter['string_hash'] = $string_hash;
-    //$lng is given in the path as well
-    $filter['lng'] = in_array($lng, array('sq','fr')) ? $lng : 'sq';
-  }
-  else {
-    $params = $_REQUEST;
-    //get filter values from $params
-    $filter['exact_match'] = isset($params['exact_match']) && in_array($params['exact_match'], array('true', 'yes','1')) ? true : false;
-    $filter['lng'] = isset($params['lng']) && in_array($params['lng'], array('sq', 'fr')) ? $params['lng'] : 'sq';
-    $FILTER['l10n_string'] = isset($params['l10n_string']) ? $params['l10n_string'] : '';
-    $filter['project'] = isset($params['project']) ? trim($params['project']) : '';
-    $filter['limit'] = (isset($params['limit']) && in_array($params['limit'], array(5, 10, 20, 30, 50))) ? (int) $params['limit'] : 5;
-  }
-
-  return $filter;
-}
-
-/**
- * Translation form filter.
- *
- * @param $filters
- *   Array of filter options.
- */
-function l10n_suggestions_filter_form($form, &$form_state, $filters) {
-
-  //set some initial default values
-  if (empty($form_state['values'])) {
-    $form_state['values'] = array(
-      'l10n_string' => '',
-      'exact_match' => false,
-      'lng' => 'fr',
-      'project' => '',
-      'limit' => 5,
-    );
-  }
-
-  $form = array(
-    '#prefix' => '<div class="l10n-suggestions-filter clear-block">',
-    '#suffix' => '</div>',
-  );
-
-  $form['lng'] = array(
-    '#type' => 'select',
-    '#title' => t('Translation language'),
-    '#options' => array('sq'=>'Albanian', 'fr'=>'French'),
-    '#default_value' => $form_state['values']['lng'],
-  );
-
-  $form['l10n_string'] = array(
-    '#type' => 'textarea',
-    '#title' => t('The string to be searched for'),
-    '#rows' => '2',
-    '#default_value' => $form_state['values']['l10n_string'],
-  );
-
-  $form['exact_match'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('When checked, only an exact string will be matched (no similar strings).'),
-    '#default_value' => $form_state['values']['exact_match'],
-  );
-
-  $form['project'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Project'),
-    '#default_value' => $form_state['values']['project'],
-    '#autocomplete_path' => 'translation/project-autocomplete',
-    '#size' => 20,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="exact_match"]' => array('checked' => false),
-      ),
-    ),
-  );
-
-  $form['limit'] = array(
-    '#type' => 'select',
-    '#title' => t('Limit'),
-    '#options' => drupal_map_assoc(array(5, 10, 20, 30, 50)),
-    '#default_value' => $form_state['values']['limit'],
-    '#display_none' => $form_state['values']['limit'] == 10,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="exact_match"]' => array('checked' => false),
-      ),
-    ),
-  );
-
-  $form['buttons'] = array(
-    '#prefix' => '<div class="filter-submit">',
-    '#suffix' => '</div>',
-  );
-  $form['buttons']['submit'] = array(
-    '#value' => t('Filter'),
-    '#type' => 'submit',
-  );
-  $form['buttons']['reset'] = array(
-    '#type' => 'markup',
-    '#markup' => '<div class="reset-link">' . l(t('Clear all filters'), 'translation/get', array('attributes' => array('class' => array('filter-exclude')))) . '</div>',
-  );
-
-  return $form;
-}
-
-/**
- * Theme function for l10n_suggestions_filter_form elements.
- */
-function theme_l10n_suggestions_filter_form_element($variables) {
-  $element = $variables['element'];
-
-  // Bubble up a js-hide class to the container.
-  $class = '';
-  if (!empty($element['#display_none'])) {
-    $class = ' js-hide';
-  }
-  return '<div class="filter-widget' . $class . '">' . $element['#children'] . '</div>';
-}
-
-/**
- * Submission handler for filtering form.
- */
-function l10n_suggestions_filter_form_submit($form, &$form_state) {
-
-  if ($form_state['values']['op'] == t('Reset')) {
-    // Just go with the redirection flow => removes URL params.
-    return;
-  }
-
-  if ($form_state['values']['op'] == t('Filter')) {
-    // Build the same form again, keeping the current values
-    $form_state['rebuild'] = true;
-    return;
-  }
-}
 
 // = Translation form building =================================================
 

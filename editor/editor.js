@@ -69,10 +69,12 @@
     }
 
     // If we did hide items, add a link to show all.
+      /*
     if ($('#l10n-suggestions-filter-form .filter-widget:hidden')) {
       $('#l10n-suggestions-filter-form').append('<a href="#" class="reveal-link">' + Drupal.t('Reveal more filters') + '</a>');
       $('#l10n-suggestions-filter-form .reveal-link').click(showAllFilters);
     }
+      */
 
      // Add title to all decline buttons. Will be modified dynamically.
      $('.actions .declined label').attr('title', Drupal.t('Decline'));
