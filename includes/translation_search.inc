@@ -7,8 +7,9 @@
 /**
  * Include utility and theme functions.
  */
-require_once dirname(__FILE__) . '/search_filter.inc';
 require_once dirname(__FILE__) . '/utility_functions.inc';
+require_once dirname(__FILE__) . '/search_filter.inc';
+require_once dirname(__FILE__) . '/search_query.inc';
 require_once dirname(__FILE__) . '/theme_functions.inc';
 require_once dirname(__FILE__) . '/ajax_callbacks.inc';
 
@@ -18,14 +19,21 @@ require_once dirname(__FILE__) . '/ajax_callbacks.inc';
  * Search phrases and translations using various filters.
  */
 function l10n_suggestions_search() {
+
+  $filter = l10n_suggestions_build_filter();
+  if (!$filter)  return;
+
   drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
 
-  $filter = l10n_suggestions_build_filter();
-  //$strings = l10n_suggestions_get_strings($filter);
-  //$arr_strings = l10n_suggestions_convert_to_hierarchical_array($strings);
-  //if (empty($arr_strings)) dpm('no strings'); else dpm($arr_strings);  //debug
+  $strings = array();
+  $query = l10n_suggestions_build_query($filter);
+  if ($query) {
+    $arr_recs = $query->execute()->fetchAll();
+    $strings = l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
+    dpm($strings, '$strings');  //debug
+  }
 
   /*
   // Add RTL style if the current language's direction is RTL
@@ -53,7 +61,7 @@ function l10n_suggestions_search() {
     drupal_set_message(t('No strings found. Try adjusting the filter options.'));
   }
   else {
-    $output[] = drupal_get_form('l10n_suggestions_translate_form', $filter, $arr_strings);
+    $output[] = drupal_get_form('l10n_suggestions_translate_form', $filter, $strings);
   }
 
   return $output;
@@ -113,7 +121,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $filter, $strings)
     $form['strings'][$pid] = _l10n_suggestions_translate_form_item($form_state, $string, $filter);
   }
 
-  dpm($form);  //debug
+  dpm($form, '$form');  //debug
   return $form;
 }
 
@@ -367,155 +375,6 @@ function l10n_suggestions_translate_form_submit($form, &$form_state) {
   $redirect_args = $form_state['values']['target'];
   unset($redirect_args['q']);
   $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
-}
-
-// = API functions =============================================================
-
-
-/**
- * Get strings that match the given filter.
- *
- * @param $filter
- *   Filter conditions that should be matched.
- *   - 'string_hash'
- *     The hash of the string to be translated.
- *   - 'l10n_string'
- *     L10n string to be looked for, either by exact match or fuzzy match.
- *   - 'exact_match'
- *     True if 'l10n_string' should be matched exactly.
- *   - 'project'
- *     Limit string searching only to the matching projects.
- *   - 'lng'
- *     Language code of the translations to be returned.
- *   - 'limit'
- *     Number of the strings to be returned (displayed) for page.
- * @return
- *   An array of string records from database.
- */
-function l10n_suggestions_get_strings($filter) {
-
-  $lng = $filter['lng'];
-  $l10n_string = $filter['l10n_string'];
-  $string_hash = $filter['string_hash'];
-
-  //if l10n_string is empty, there is nothing to search for
-  if (trim($l10n_string) == '') {
-    return array();
-  }
-
-  //the query for an exact match is done by checking for an equal hash
-  $get_string_by_hash =
-    " SELECT p.pid, p.phrase, hex(p.hash) AS p_hash,
-             t.tid, t.lng, t.translation, hex(t.hash) AS t_hash,
-             t.time_entered, t.uid_entered, u.name AS username, t.vcount
-      FROM {l10n_suggestions_phrases} p
-      LEFT JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
-      LEFT OUTER JOIN {users} u ON u.uid = t.uid_entered
-      WHERE p.hash = unhex(:hash) AND t.lng = :lng
-      ORDER BY p.pid ASC, t.vcount DESC";
-
-  //trying to find strings similar to $l10n_string
-  $query = db_select('l10n_suggestions_phrases', 'p');
-  $query->leftJoin('l10n_suggestions_translations', 't', 'p.pid = t.pid');
-  $query->fields('p', array());
-
-  return array();
-  //---------- end of function -----------------
-
-  /*
-  $query = db_select('l10n_server_string', 's')->distinct();
-  $query->leftJoin('l10n_server_status_flag', 'ts',
-    's.sid = ts.sid AND ts.language = :language', array(':language' => $lng));
-  $query->leftJoin('l10n_server_translation', 't',
-    'ts.sid = t.sid AND ts.language = t.language AND t.is_active = 1');
-  $query->leftJoin('users', 'u', 'u.uid = t.uid_entered');
-  $query
-    ->fields('s', array('sid', 'value', 'context'))
-    ->fields('t', array('tid', 'language', 'translation', 'uid_entered',
-        'time_entered', 'time_changed', 'is_suggestion', 'is_active'))
-    ->fields('ts', array('has_suggestion', 'has_translation'));
-  $query->addField('u', 'name', 'username');
-
-  // Add sid filtering.
-  if (!empty($filters['sid'])) {
-    $query->condition('s.sid', $filters['sid']);
-  }
-
-  // Add submitted by condition
-  if (!empty($filters['author'])) {
-    $query->condition('t.uid_entered', $filters['author']->uid);
-  }
-
-  // Release restriction.
-  $release = empty($filters['release']) || $filters['release'] === 'all' ? NULL : $filters['release'];
-  $project = $filters['project'];
-  if ($release || $project) {
-    $query->innerJoin('l10n_server_line', 'l', 's.sid = l.sid');
-    // If we have a release we ignore the project
-    if ($release) {
-      // Release restriction.
-      $query->condition('l.rid', $release);
-    }
-    elseif ($project) {
-      $query->condition('l.pid', $project->pid);
-    }
-  }
-
-  // Context based filtering.
-  if (isset($filters['context']) && $filters['context'] != 'all') {
-    // We use 'none' for no context, so '' can be the defaut (for all contexts).
-    $context = $filters['context'] == 'none' ? '' : $filters['context'];
-    $query->condition('s.context', $context);
-  }
-
-  if (!empty($filters['search'])) {
-    // Search in the source or target strings.
-    $search = $filters['search'];
-    $query->condition(db_or()
-      ->condition('s.value', '%' . db_like($search) . '%', 'LIKE')
-      ->condition('t.translation', '%' . db_like($search) . '%', 'LIKE'));
-  }
-
-  // We either need a pager or a full result.
-  if (isset($pager)) {
-    $strings = $query->extend('PagerDefault')->limit($pager)->execute();
-  }
-  else {
-    $strings = $query->execute();
-  }
-  $result = array();
-  foreach ($strings as $string) {
-    if ($string->is_suggestion) {
-      // This string is not a translation, but we need that as a "parent" to display.
-      if (!$string->has_translation) {
-        // No parent translation. Pretend this does not exist.
-        // The display code will call for the suggestions.
-        $string->translation = '';
-      }
-      else {
-	$q = db_select('l10n_server_translation', 't');
-	$q->leftJoin('users', 'u', 'u.uid = t.uid_entered');
-	$q->fields('t', array('tid', 'translation', 'uid_entered', 'time_entered', 'time_changed', 'is_suggestion', 'is_active'));
-	$q->addField('u', 'name', 'username');
-	$q->condition('t.language',  $string->language)
-	  ->condition('t.sid', $string->sid)
-	  ->condition('t.is_active', 1)
-	  ->condition('t.is_suggestion', 0);
-	$translation = $q->execute()->fetchAssoc();
-
-	if (!empty($translation))
-	  {
-	    // It does have a translation however, so let's load it, and override.
-	    foreach ($translation as $key => $value) {
-	      $string->$key = $value;
-	    }
-	  }
-      }
-    }
-    $result[] = $string;
-  }
-  return $result;
-  */
 }
 
 ?>
