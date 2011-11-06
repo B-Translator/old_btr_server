@@ -20,28 +20,21 @@ require_once dirname(__FILE__) . '/ajax_callbacks.inc';
  */
 function l10n_suggestions_search() {
 
-  $filter = l10n_suggestions_build_filter();
-  if (!$filter)  return;
-
+  // Add the the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
 
-  $strings = array();
-  $query = l10n_suggestions_build_query($filter);
-  if ($query) {
-    $arr_recs = $query->execute()->fetchAll();
-    $strings = l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
-    dpm($strings, '$strings');  //debug
-  }
+  // Build the filter from the GET request parameters.
+  $filter = l10n_suggestions_build_filter();
+  dpm($filter, '$filter');  //debug
 
-  /*
   // Add RTL style if the current language's direction is RTL
-  $language = l10n_suggestions_get_language($filter['lng']);
-  if ($language->direction == LANGUAGE_RTL) {
+  $lng = $filter['lng'];
+  $languages = l10n_suggestions_get_languages();
+  if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
     drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');
   }
-  */
 
   // Add missing breadcrumb.
   drupal_set_breadcrumb(
@@ -55,6 +48,18 @@ function l10n_suggestions_search() {
   $output = array(
     drupal_get_form('l10n_suggestions_filter_form', $filter)
   );
+
+  // Get an array of strings and translations.
+  $strings = array();
+  $query = l10n_suggestions_build_query($filter);
+  if ($query) dpq($query);  //debug
+  /*
+  if ($query) {
+    $arr_recs = $query->execute()->fetchAll();
+    $strings = l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
+    dpm($strings, '$strings');  //debug
+  }
+  */
 
   // Output the actual strings.
   if (empty($strings)) {

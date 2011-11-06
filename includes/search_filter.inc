@@ -21,30 +21,35 @@ function l10n_suggestions_build_filter() {
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
   $filter['lng'] = in_array($lng, $lng_codes) ? $lng : 'fr';
 
-  //strings can be searched either by the similarity of the given phrase
-  //or whether they contain the given words; 'search' keeps the kind of search
-  $filter['phrase'] = isset($request['phrase']) ? $request['phrase'] : '';
+  //number of results to be displayed
+  $limit = isset($request['limit']) ? (int)trim($request['limit']) : 0;
+  list($limit_options, $default_limit) = _l10n_suggestions_get_filter_options('limit');
+  $filter['limit'] = in_array($limit, $limit_options) ? $limit : $default_limit;
+
+  //search can be done either by similarity of phrases (natural search),
+  //or by matching words according to a certain logic (boolean search);
+  //search can be performed either on l10n strings or on the translations
+  $mode = isset($request['mode']) ? $request['mode'] : '';
+  list($search_mode_options, $default_search_mode) = _l10n_suggestions_get_filter_options('mode');
+  $filter['mode'] = in_array($mode, $search_mode_options) ? $mode : $default_search_mode;
   $filter['words'] = isset($request['words']) ? $request['words'] : '';
-  $search = isset($request['search']) ? $request['search'] : '';
-  $filter['search'] = in_array($search, array('phrase', 'words')) ? $search :
-    $filter['phrase']!='' && $filter['words']=='' ? 'phrase' : 'words';
 
   //searching can be limited only to certain packages, projects or releases
   //$filter['package'] = isset($request['package']) ? trim($request['package']) : '';
   $filter['project'] = isset($request['project']) ? trim($request['project']) : '';
   //$filter['release'] = isset($request['release']) ? trim($request['release']) : '';
 
+  //limit search only to the strings touched (translated or voted) by the current user
+  $filter['only_mine'] = isset($request['only_mine']) && (int)$request['only_mine'] ? 1 : 0;
+
   //limit search by the editing users (used by admins)
   $filter['translated_by'] = isset($request['translated_by']) ? trim($request['translated_by']) : '';
   $filter['voted_by'] = isset($request['voted_by']) ? trim($request['voted_by']) : '';
 
-  //limit search only to the strings touched (translated or voted) by the current user
-  $filter['only_mine'] = isset($request['only_mine']) && (int)$request['only_mine'] ? 1 : 0;
-
   //limit by date of string, translation or voting (used by admins)
   $date_filter = isset($request['date_filter']) ? trim($request['date_filter']) : '';
-  $filter['date_filter'] = in_array($date_filter, array('strings', 'translations', 'votes')) ?
-    $date_filter : 'translations';
+  list($date_filter_options, $default_date_filter) = _l10n_suggestions_get_filter_options('date_filter');
+  $filter['date_filter'] = in_array($date_filter, $date_filter_options) ? $date_filter : $default_date_filter;
 
   //from_date
   $from_date = isset($request['from_date']) ? trim($request['from_date']) : '';
@@ -60,11 +65,6 @@ function l10n_suggestions_build_filter() {
     array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
     array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
 
-  //number of results to be displayed
-  $limit = isset($request['limit']) ? (int)trim($request['limit']) : 5;
-  $filter['limit'] = in_array($limit, array(5, 10, 20, 30, 50)) ? $limit : 5;
-
-  dpm($filter);  //debug
   return $filter;
 }
 
@@ -106,14 +106,6 @@ function l10n_suggestions_get_query_values($form_values) {
   if (in_array($lng, $lng_codes))
     $query['lng'] = $lng;
 
-  //search, words, phrase
-  if ($form_values['search'] == 'phrase')  //default: 'words'
-    $query['search'] = $form_values['search'];
-  if (trim($form_values['words']) != '' )
-    $query['words'] = $form_values['words'];
-  if (trim($form_values['phrase']) != '' )
-    $query['phrase'] = $form_values['phrase'];
-
   //package, project, release
   if (trim($form_values['project']) != '' )
     $query['project'] = $form_values['project'];
@@ -137,8 +129,12 @@ function l10n_suggestions_get_query_values($form_values) {
   }
 
   //date_filter
-  if (in_array($form_values['date_filter'], array('strings', 'votes')))  //default: 'translations'
-    $query['date_filter'] = $form_values['date_filter'];
+  list($date_filter_options, $default_date_filter) = _l10n_suggestions_get_filter_options('date_filter');
+  if ( in_array($form_values['date_filter'], $date_filter_options)
+    && $form_values['date_filter'] != $default_date_filter )
+    {
+      $query['date_filter'] = $form_values['date_filter'];
+    }
 
   //from_date
   $arr_date = $form_values['from_date'];
@@ -153,8 +149,22 @@ function l10n_suggestions_get_query_values($form_values) {
     $query['to_date'] = $str_date;
 
   //limit
-  if (in_arraY($form_values['limit'], array(10, 20, 30, 50)))  //default: 5
-    $query['limit'] = $form_values['limit'];
+  list($limit_options, $default_limit) = _l10n_suggestions_get_filter_options('limit');
+  if ( in_array($form_values['limit'], $limit_options)
+    && $form_values['limit'] != $default_limit )
+    {
+      $query['limit'] = $form_values['limit'];
+    }
+
+  //search mode and words
+  list($search_mode_options, $default_search_mode) = _l10n_suggestions_get_filter_options('mode');
+  if ( in_array($form_values['mode'], $search_mode_options)
+    && $form_values['mode'] != $default_search_mode )
+    {
+      $query['mode'] = $form_values['mode'];
+    }
+  if (trim($form_values['words']) != '' )
+    $query['words'] = $form_values['words'];
 
   return $query;
 }
@@ -183,7 +193,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   $form['lng'] = array(
     '#type' => 'select',
-    '#title' => t('Language'),
+    '#title' => t('Language of Translation'),
     '#description' => t('Select the language of the translations to be searched and displayed.'),
     '#options' => $lang_options,
     '#default_value' => $form_state['values']['lng'],
@@ -199,49 +209,28 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#collapsed' => FALSE,
   );
 
-  $form['basic_search']['search'] = array(
+  list($search_mode_options, $default) = _l10n_suggestions_get_filter_options('mode', 'assoc');
+  $form['basic_search']['mode'] = array(
     '#type' => 'select',
     '#title' => t('Search Mode'),
-    '#description' => t('Choose between one of the two modes for string searching.'),
-    '#options' => array(
-      'phrase' => t('Search for strings similar to the given phrase.'),
-      'words' => t('Search for strings or translations matching the given words.'),
-    ),
-    '#default_value' => $form_state['values']['search'],
-  );
-
-  $form['basic_search']['phrase'] = array(
-    '#type' => 'textarea',
-    '#title' => t('The Phrase To Be Searched For'),
-    '#description' => t('Strings that are as similar as possible to the given phrase will be searched and displayed.'),
-    '#rows' => 3,
-    '#cols' => 50,
-    '#default_value' => $form_state['values']['phrase'],
-    '#states' => array(
-      'visible' => array(
-        ':input[name="search"]' => array('value' => 'phrase'),
-      ),
-    ),
+    '#options' => $search_mode_options,
+    '#default_value' => $form_state['values']['mode'],
   );
 
   $form['basic_search']['words'] = array(
-    '#type' => 'textfield',
-    '#title' => t('The Words To Be Matched'),
-    '#description' => t('Strings or translations that contain any of the given words will be displayed. If some words start with + (plus), then only the strings (or translations) that contain all of these words will be matcched. If some words start with - (minus), then only the strings (or translations) that contain none of these words will be matched.'),
+    '#type' => 'textarea',
+    '#title' => t('The Phrase Or Words To Be Searched'),
+    '#description' => t('Search for l10n strings or translations that contain the given words. The <emphasized>natural</emphasized> search will try to find phrases similar to the given one (see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-natural-language.html">Natural Language Full-Text Searches</a>). The <emphasized>boolean</emphasized> search will try to match words according to logical rules. The words can be preceded by + (plus), - (minus), etc. (for more details see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-boolean.html">Boolean Full-Text Searches</a>).'),
     '#default_value' => $form_state['values']['words'],
-    '#size' => 50,
-    '#states' => array(
-      'visible' => array(
-        ':input[name="search"]' => array('value' => 'words'),
-      ),
-    ),
+    '#rows' => 2,
   );
 
+  list($limit_options, $default) = _l10n_suggestions_get_filter_options('limit', 'assoc');
   $form['limit'] = array(
     '#type' => 'select',
     '#title' => t('Limit'),
     '#description' => t('The number of the results (strings) that can be displayed on a page.'),
-    '#options' => drupal_map_assoc(array(5, 10, 20, 30, 50)),
+    '#options' => $limit_options,
     '#default_value' => $form_state['values']['limit'],
   );
 
@@ -343,15 +332,12 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#collapsed' => TRUE,
   );
 
+  list($date_filter_options, $default) = _l10n_suggestions_get_filter_options('date_filter', 'assoc');
   $form['advanced_search']['date']['date_filter'] = array(
     '#type' => 'select',
     '#title' => t('What to Filter'),
     '#description' => t('Select what to filter by date (strings, translations, or votes).'),
-    '#options' => array(
-      'strings' => t('Filter Strings By Date'),
-      'translations' => t('Filter Translations By Date'),
-      'votes' => t('Filter Votes By Date'),
-    ),
+    '#options' => $date_filter_options,
     '#default_value' => $form_state['values']['date_filter'],
   );
 
@@ -370,8 +356,8 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
   // --------------------------------------------
 
   $form['buttons'] = array(
-    '#prefix' => '<div class="filter-submit-1">',
-    '#suffix' => '</div>',
+    //'#prefix' => '<div class="filter-submit">',
+    //'#suffix' => '</div>',
   );
   $form['buttons']['submit'] = array(
     '#value' => t('Filter'),
@@ -395,18 +381,51 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
   return $form;
 }
 
+// ----------------------- utility functions ----------------------------
+
 /**
- * Theme function for l10n_suggestions_filter_form elements.
+ * Utility function that returns an array of options for the given field
+ * and the default value. If being associative ($assoc) is not required
+ * then only the keys are retrned.
  */
-function theme_l10n_suggestions_filter_form_element($variables) {
-  $element = $variables['element'];
+function _l10n_suggestions_get_filter_options($field, $assoc =FALSE) {
 
-  // Bubble up a js-hide class to the container.
-  $class = '';
-  if (!empty($element['#display_none'])) {
-    $class = ' js-hide';
+  switch ($field) {
+
+    case 'limit':
+      //number of results to be displayed per page
+      $options = array(
+        '5'  => '5',
+        '10' => '10',
+        '20' => '20',
+        '30' => '30',
+        '50' => '50'
+      );
+      $default = 5;
+      break;
+
+    case 'mode':
+      //search mode
+      $options = array(
+        'natural-strings' => t('Natural search on strings.'),
+        'natural-translations' => t('Natural search on translations.'),
+        'boolean-strings' => t('Boolean search on strings.'),
+        'boolean-translations' => t('Boolean search on translations.'),
+      );
+      $default = 'natural-strings';
+      break;
+
+    case 'date_filter':
+      //which date to filter
+      $options = array(
+        'strings' => t('Filter Strings By Date'),
+        'translations' => t('Filter Translations By Date'),
+        'votes' => t('Filter Votes By Date'),
+      );
+      $default = 'translations';
+      break;
   }
-  return '<div class="filter-widget' . $class . '">' . $element['#children'] . '</div>';
+  if (!$assoc) $options = array_keys($options);
+  return array($options, $default);
 }
-
 ?>

@@ -3,6 +3,9 @@
  * Utility functions that are common for all the pages.
  */
 
+define('LANGUAGE_RTL', 'LANGUAGE-DIRECTION_RIGHT-TO-LEFT');
+define('LANGUAGE_LTR', 'LANGUAGE-DIRECTION_LEFT-TO-RIGHT');
+
 /**
  * Returns an array of languages and their details.
  */
@@ -13,13 +16,13 @@ function l10n_suggestions_get_languages() {
       'code' => 'fr',
       'name' => 'French',
       'encoding' => 'latin1',
-      'rtl'  => false,
+      'direction' => LANGUAGE_LTR,
     ),
     'sq' => array(
       'code' => 'sq',
       'name' => 'Albanian',
       'encoding' => 'latin1',
-      'rtl'  => false,
+      'direction' => LANGUAGE_LTR,
     ),
   );
 

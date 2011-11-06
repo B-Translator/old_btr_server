@@ -13,7 +13,7 @@ function l10n_suggestions_build_query($filter) {
 
   //extract filter parameters as variables:
   /*
-     $lng, $seach, $phrase, $words, $limit
+     $lng, $mode, $words, $limit
      $project, $package, $release
      $only_mine, $translated_by, $voted_by
      $date_filter, $from_date, $to_date
@@ -44,7 +44,7 @@ function l10n_suggestions_build_query($filter) {
   $query->addField('u', 'name', 'username');
   $query->orderBy('p.pid', 'ASC')->orderBy('t.vcount', 'DESC');
 
-  _l10n_suggestions_filter_by_content($query, $search, $phrase, $words);
+  _l10n_suggestions_filter_by_content($query, $mode, $words);
   _l10n_suggestions_filter_by_project($query, $project, $package, $release);
   _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, $voted_by);
   _l10n_suggestions_filter_by_date($query, $date_filter, $from_date, $to_date);
@@ -63,41 +63,44 @@ function l10n_suggestions_build_query($filter) {
   }
 
   //if nothing has been selected yet, then return false
-  dpm($query->conditions(), 'query_conditions');  //debug
+  //dpm($query->conditions(), 'query_conditions');  //debug
   if (sizeof($query->conditions()) == 1) return false;
 
   //filter translations by the given language
   $query->condition('t.lng', $lng);
 
-  dpq($query);  //debug
   return $query;
 }
 
 /**
  * Apply to the query conditions related to the content
- * (of strings and translations). Depending on the search type,
- * we look either for strings similar to the given phase,
- * or for strings/translations matching the given words.
+ * (of strings and translations). Depending on the search_mode,
+ * we look either for strings/translations similar to the given phase,
+ * or for strings/translations matching the given words,
  * The first parameter, $query, is an object, so it is
  * passed by reference.
  */
-function _l10n_suggestions_filter_by_content($query, $search, $phrase, $words) {
+function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words) {
 
-  //search for strings similar to the given phase
-  if ($search == 'phrase' and trim($phrase) != '') {
-    //TODO: find similar phrases and add a suitable condition
-
-    return;
+  switch ($search_mode) {
+    case 'natural-strings':
+      $match = 'MATCH (p.phrase) AGAINST (:words)';
+      break;
+    case 'natural-translations':
+      $match = 'MATCH (t.translation) AGAINST (:words)';
+      break;
+    case 'boolean-strings':
+      $match = 'MATCH (p.phrase) AGAINST (:words IN BOOLEAN MODE)';
+      break;
+    case 'boolean-translations':
+      $match = 'MATCH (t.translation) AGAINST (:words IN BOOLEAN MODE)';
+      break;
   }
 
-  //otherwise, search for strings/translations matching the given words
-  if (trim($words) != '') {
-    //TODO: write suitable conditions for strings and translations
-    //      counting also for words starting with + and -
-    $query->condition(db_or()
-      ->condition('p.phrase', '%'.db_like($words).'%', 'LIKE')
-      ->condition('t.translation', '%'.db_like($words).'%', 'LIKE')
-    );
+  //perform a full-text search against the given words
+  if (trim($search_words) != '') {
+    $query->addExpression($match, 'score');
+    $query->where($match, array(':words' => $search_words));
   }
 }
 
