@@ -5,9 +5,12 @@
  * Module file for l10n_suggestions.
  */
 
+require_once dirname(__FILE__) . '/includes/utility_functions.inc';
+
 /**
  * Implements hook_help().
  */
+                               /*
 function l10n_suggestions_help($path, $args) {
   switch($path)
     {
@@ -22,7 +25,7 @@ function l10n_suggestions_help($path, $args) {
 
   return $help;
 }
-
+                               */
 
 /**
  * Implements hook_menu().
@@ -109,18 +112,15 @@ function l10n_suggestions_init() {
     drupal_add_css(drupal_get_path('module', 'system') . '/admin.css');
   }
 
-  /*
   // Check if language is RTL
-  if (array_key_exists(arg(2), locale_language_list())) {
-    $langcode = arg(2);
-    $language = l10n_suggestions_get_language($langcode);
-
+  $languages = l10n_suggestions_get_languages();
+  $lng = arg(2);
+  if (array_key_exists($lng, $languages)) {
     // Add RTL style if the current language's direction is RTL
-    if ($language->direction == LANGUAGE_RTL) {
+    if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
       drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/l10n_suggestions-rtl.css');
     }
   }
-  */
 }
 
 ?>
