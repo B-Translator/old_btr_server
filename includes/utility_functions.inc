@@ -3,9 +3,6 @@
  * Utility functions that are common for all the pages.
  */
 
-define('LANGUAGE_RTL', 'LANGUAGE-DIRECTION_RIGHT-TO-LEFT');
-define('LANGUAGE_LTR', 'LANGUAGE-DIRECTION_LEFT-TO-RIGHT');
-
 /**
  * Returns an array of languages and their details.
  */
@@ -46,15 +43,28 @@ function l10n_suggestions_convert_to_hierarchical_array($strings) {
   $arr_strings = array();
   $current_pid = '';
   foreach ($strings as $string) {
-    extract($string);
-    if ($pid != $current_pid) {
-      $current_pid = $pid;
-      $str = compact('pid', 'phrase', 'p_hash');
-      $str['translations'] = array();
+
+    if ($string->pid != $current_pid) {
+      $current_pid = $string->pid;
+      $str = array(
+        'pid' => $string->pid,
+        'phrase' => $string->phrase,
+        'p_hash' => $string->p_hash,
+        'translations' => array(),
+      );
       $arr_strings[] = $str;
     }
-    $translation = compact('tid', 'lng', 'translation', 't_hash',
-                   'time_entered', 'uid_entered', 'username', 'vcount');
+
+    $translation = array(
+      'tid' => $string->tid,
+      'lng' => $string->lng,
+      'translation' => $string->translation,
+      't_hash' => $string->t_hash,
+      'time_entered' => $string->time_entered,
+      'uid_entered' => $string->uid_entered,
+      'username' => $string->username,
+      'vcount' => $string->vcount,
+    );
     $i = sizeof($arr_strings) - 1;
     $arr_strings[$i]['translations'][] = $translation;
   }

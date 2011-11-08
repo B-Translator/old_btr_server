@@ -53,13 +53,11 @@ function l10n_suggestions_search() {
   $strings = array();
   $query = l10n_suggestions_build_query($filter);
   if ($query) dpq($query);  //debug
-  /*
   if ($query) {
     $arr_recs = $query->execute()->fetchAll();
     $strings = l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
-    dpm($strings, '$strings');  //debug
+    //dpm($strings, '$strings');  //debug
   }
-  */
 
   // Output the actual strings.
   if (empty($strings)) {

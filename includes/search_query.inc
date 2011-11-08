@@ -27,11 +27,12 @@ function l10n_suggestions_build_query($filter) {
       SELECT p.pid, p.phrase, hex(p.hash) AS p_hash,
              t.tid, t.lng, t.translation, hex(t.hash) AS t_hash,
              t.time_entered, t.uid_entered, u.name AS username, t.vcount
+             MATCH (p.phrase) AGAINST (:words) AS score
       FROM {l10n_suggestions_phrases} p
       LEFT JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
       LEFT JOIN {users} u ON u.uid = t.uid_entered
       WHERE . . . . .
-      ORDER BY p.pid ASC, t.vcount DESC
+      ORDER BY score DESC, t.vcount DESC
   */
   $query = db_select('l10n_suggestions_phrases', 'p')
     ->extend('PagerDefault')->limit($limit);
@@ -42,7 +43,6 @@ function l10n_suggestions_build_query($filter) {
   $query->fields('t', array('tid', 'lng', 'translation', 'time_entered', 'uid_entered', 'vcount'))
     ->addExpression('HEX(t.hash)', 't_hash');
   $query->addField('u', 'name', 'username');
-  $query->orderBy('p.pid', 'ASC')->orderBy('t.vcount', 'DESC');
 
   _l10n_suggestions_filter_by_content($query, $mode, $words);
   _l10n_suggestions_filter_by_project($query, $project, $package, $release);
@@ -82,26 +82,40 @@ function l10n_suggestions_build_query($filter) {
  */
 function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words) {
 
+  //if there are no words to be searched for, no condition can be added
+  if (trim($search_words) == '') {
+    $query->orderBy('p.pid', 'ASC')->orderBy('t.vcount', 'DESC');
+    return;
+  }
+  //get the match condition and the score field
+  //according to the search mode
   switch ($search_mode) {
     case 'natural-strings':
       $match = 'MATCH (p.phrase) AGAINST (:words)';
+      $score = 'MATCH (p.phrase) AGAINST (:words)';
+      $query->orderBy('score', 'DESC')->orderBy('t.vcount', 'DESC');
       break;
     case 'natural-translations':
       $match = 'MATCH (t.translation) AGAINST (:words)';
+      $score = 'MATCH (t.translation) AGAINST (:words)';
+      $query->orderBy('score', 'DESC');
       break;
     case 'boolean-strings':
       $match = 'MATCH (p.phrase) AGAINST (:words IN BOOLEAN MODE)';
+      $score = 'MATCH (p.phrase) AGAINST (:words)';
+      $query->orderBy('score', 'DESC')->orderBy('t.vcount', 'DESC');
       break;
     case 'boolean-translations':
       $match = 'MATCH (t.translation) AGAINST (:words IN BOOLEAN MODE)';
+      $score = 'MATCH (t.translation) AGAINST (:words)';
+      $query->orderBy('score', 'DESC');
       break;
   }
 
+  //add the score field
+  $query->addExpression($score, 'score');
   //perform a full-text search against the given words
-  if (trim($search_words) != '') {
-    $query->addExpression($match, 'score');
-    $query->where($match, array(':words' => $search_words));
-  }
+  $query->where($match, array(':words' => $search_words));
 }
 
 /**

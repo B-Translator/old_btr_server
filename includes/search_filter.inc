@@ -35,9 +35,9 @@ function l10n_suggestions_build_filter() {
   $filter['words'] = isset($request['words']) ? $request['words'] : '';
 
   //searching can be limited only to certain packages, projects or releases
-  //$filter['package'] = isset($request['package']) ? trim($request['package']) : '';
+  $filter['package'] = isset($request['package']) ? trim($request['package']) : '';
   $filter['project'] = isset($request['project']) ? trim($request['project']) : '';
-  //$filter['release'] = isset($request['release']) ? trim($request['release']) : '';
+  $filter['release'] = isset($request['release']) ? trim($request['release']) : '';
 
   //limit search only to the strings touched (translated or voted) by the current user
   $filter['only_mine'] = isset($request['only_mine']) && (int)$request['only_mine'] ? 1 : 0;
@@ -109,12 +109,10 @@ function l10n_suggestions_get_query_values($form_values) {
   //package, project, release
   if (trim($form_values['project']) != '' )
     $query['project'] = $form_values['project'];
-  /*
   if (trim($form_values['package']) != '' )
     $query['package'] = $form_values['pakage'];
   if (trim($form_values['release']) != '' )
     $query['release'] = $form_values['release'];
-  */
 
   //only_mine
   if ($form_values['only_mine'] == 1) {
