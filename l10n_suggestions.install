@@ -25,7 +25,7 @@ function l10n_suggestions_schema() {
 
   //Translatable strings and phrases that are extracted from projects.
   $schema['l10n_suggestions_phrases'] = array(
-    'description' => 'Translatable strings and phrases that are extracted from projects. They are only in English.',
+    'description' => 'Translatable strings and phrases that are extracted from...',
     'fields' => array(
       'pid' => array(
         'description' => 'Internal numeric identifier for a phrase.',
@@ -43,15 +43,14 @@ function l10n_suggestions_schema() {
         'length' => '20',
         'not null' => FALSE,
       ),
-      'length' => array(
-        'description' => 'Length of the phrase (inherited by open-trans.eu).',
+      'uid_entered' => array(
+        'description' => 'ID of the user that inserted this string on the DB.',
         'type' => 'int',
-        'size' => 'tiny',
         'not null' => FALSE,
       ),
-      'plural' => array(
-        'description' => 'If this is the plural form of another phrase, then this field keeps the id of the singular phrase. Otherwise it is NULL.',
-        'type' => 'int',
+      'time_entered' => array(
+        'description' => 'The time that this string was entered on the DB.',
+        'type' => 'datetime',
         'not null' => FALSE,
       ),
       'pcount' => array(
@@ -68,6 +67,8 @@ function l10n_suggestions_schema() {
     ),
     'indexes' => array(
       'phrase' => array(array('phrase', 100)),
+      'phrase_text' => array('phrase'),
+      'uid_entered' => array('uid_entered', 'time_entered'),
     ),
   );
 
@@ -75,7 +76,7 @@ function l10n_suggestions_schema() {
   //For each phrase/string there can be translations for different
   //languages, and more than one translation for each language.
   $schema['l10n_suggestions_translations'] = array(
-    'description' => 'Translations/suggestions of the phrases (strings). For each phrase/string there can be translations for different languages, and more than one translation for each language.',
+    'description' => 'Translations/suggestions of the phrases (strings). For...',
     'fields' => array(
       'tid' => array(
         'description' => 'Internal numeric identifier for a translation.',
@@ -112,15 +113,25 @@ function l10n_suggestions_schema() {
         'not null' => FALSE,
         'default' => 1,
       ),
-      'author' => array(
-        'description' => 'id of the user that initially proposed this translation',
+      'uid_entered' => array(
+        'description' => 'The uid of the user that initially proposed this translation',
         'type' => 'int',
         'not null' => FALSE,
+      ),
+      'time_entered' => array(
+        'description' => 'Unix timestamp of when the string was entered into the database.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
       ),
     ),
     'primary key' => array('tid'),
     'indexes' => array(
       'hash' => array('hash'),
+      'pid' => array('pid'),
+      'time' => array('time_entered'),
+      'translation_text' => array('translation'),
+      'uid' => array('uid_entered'),
     ),
   );
 
@@ -155,6 +166,7 @@ function l10n_suggestions_schema() {
     ),
     'indexes' => array(
       'tid' => array('tid'),
+      'time' => array('vtime'),
       'uid' => array('uid'),
     ),
   );
@@ -223,53 +235,8 @@ function l10n_suggestions_schema() {
     'primary key' => array('lid'),
     'indexes' => array(
       'pid' => array('pid'),
+      'projectname' => array(array('projectname', 5)),
     ),
-  );
-
-  //Words in all the phrases.
-  $schema['l10n_suggestions_words'] = array(
-    'description' => 'Words in all the phrases.',
-    'fields' => array(
-      'wid' => array(
-        'description' => 'Internal numeric identifier for a word.',
-        'type' => 'serial',
-        'not null' => TRUE,
-      ),
-      'word' => array(
-        'description' => 'The word itself.',
-        'type' => 'varchar',
-        'length' => '100',
-        'not null' => TRUE,
-      ),
-    ),
-    'primary key' => array('wid'),
-    'unique keys' => array(
-      'word' => array('word')
-    ),
-  );
-
-  //Relations between words and phrases.
-  $schema['l10n_suggestions_wordphrases'] = array(
-    'description' => 'Relations between words and phrases.',
-    'fields' => array(
-      'wid' => array(
-        'description' => 'Reference to the id of the word.',
-        'type' => 'int',
-        'not null' => TRUE,
-      ),
-      'pid' => array(
-        'description' => 'Reference to the id of the phrase.',
-        'type' => 'int',
-        'not null' => TRUE,
-      ),
-      'count' => array(
-        'description' => 'The count of the word in the phrase.',
-        'type' => 'int',
-        'size' => 'tiny',
-        'not null' => FALSE,
-      ),
-    ),
-    'primary key' => array('wid', 'pid'),
   );
 
   return $schema;

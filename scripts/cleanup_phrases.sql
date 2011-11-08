@@ -9,8 +9,8 @@
  * However, before doing this, we should replace the
  * phraseid of the phrases that are going to be removed
  * with the phraseid of the remaining phrase (which is
- * the same as the removed phrases), on the other tables
- * (locations.phraseid and wp.phraseid).
+ * the same as the removed phrases), on the table
+ * locations.phraseid.
  */
 
 --use en;
@@ -19,14 +19,14 @@ use sq;
 --use fr;
 --use it;
 --use es;
- 
+
 /** trim column phrase */
 update phrases set phrase = trim(phrase);
 /** create an index on column hash for more efficient processing */
 create index hash on phrases (hash);
 
-/** 
- * Create a table phrase_1 that contains the phrases 
+/**
+ * Create a table phrase_1 that contains the phrases
  * that occour more than once on phrase.
  */
 drop table if exists phrases_1;
@@ -49,7 +49,7 @@ alter table phrases add column (id_2 int);
 update phrases
 set id_2 = (select id from phrases_1 where phrases_1.hash = phrases.hash);
 
-update phrases 
+update phrases
 set id_2 = id
 where id_2 is null;
 
@@ -58,22 +58,13 @@ drop table phrases_1;
 
 
 /**
- * replace each phraseid on table locations 
+ * replace each phraseid on table locations
  * with the unique id of the phrase
  */
 update locations
 set phraseid = (select id_2 from phrases where phrases.id = locations.phraseid);
 --select count(*) from locations where phraseid is null;
 --delete from from locations where phraseid is null;
-
-/**
- * replace each phraseid on table wp 
- * with the unique id of the phrase
- */
-update wp
-set phraseid = (select id_2 from phrases where phrases.id = wp.phraseid);
---select count(*) from wp where phraseid is null;
---delete from from wp where phraseid is null;
 
 /** remove from table phrases extra occurencies */
 --select count(*) from phrases where id != id_2;
