@@ -15,33 +15,27 @@ dump='false'
 
 
 ### dump only the schema of the database
-mysqldump --user=root --no-data --compact --password --database $db_name \
-          --tables \
+mysqldump --user=root --password --no-data --compact \
+          --database $db_name --tables \
           l10n_suggestions_phrases l10n_suggestions_locations \
           l10n_suggestions_translations l10n_suggestions_votes \
           l10n_suggestions_users > l10n_suggestions_schema.sql
 
+### fix a little bit the file
+sed -e '/^SET /d' -i l10n_suggestions_schema.sql
+
 ### make a full dump of the database
 if [ "$dump" = 'true' ]
 then
-  mysqldump --user=root --extended-insert=false --comments=false \
-            --single-transaction --password --database $db_name \
-            --tables \
+  date=$(date +%Y%m%d)
+  dump_file=l10n_suggestions_dump_$date.sql
+
+  mysqldump --user=root --password --opt --hex-blob  \
+            --database $db_name --tables \
             l10n_suggestions_phrases l10n_suggestions_locations \
             l10n_suggestions_translations l10n_suggestions_votes \
-            l10n_suggestions_users > l10n_suggestions_dump.sql
-fi
+            l10n_suggestions_users > $dump_file
 
-### fix a little bit the dump files
-sed -e '/^SET /d' -i l10n_suggestions_schema.sql
-if [ "$dump" = 'true' ]
-then
-  sed -e '/^SET /d' -i l10n_suggestions_dump.sql
-fi
-
-### compress the full dump
-if [ "$dump" = 'true' ]
-then
-  gzip l10n_suggestions_dump.sql
+  gzip $dump_file
 fi
 
