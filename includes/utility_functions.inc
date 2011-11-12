@@ -30,43 +30,37 @@ function l10n_suggestions_get_languages() {
  * Arrange the string/translation data returned from the DB
  * in another structure of arrays.
  *
- * @param $strings
- *   An array of associative arrays, which are the query results
- *   returned from the DB
+ * @param $records
+ *   An array of records, which are the query results
+ *   returned from the DB (ordered by pid).
  *
  * @return
- *   An array of strings (as associative arrays), where each
- *   string has an array of translations on the key 'translations'.
- *   Each translation is an associative array.
+ *   A hierarchical associative array of strings and the corresponding
+ *   translations.
  */
-function l10n_suggestions_convert_to_hierarchical_array($strings) {
+function l10n_suggestions_convert_to_hierarchical_array($records) {
   $arr_strings = array();
-  $current_pid = '';
-  foreach ($strings as $string) {
-
-    if ($string->pid != $current_pid) {
-      $current_pid = $string->pid;
-      $str = array(
-        'pid' => $string->pid,
-        'phrase' => $string->phrase,
-        'p_hash' => $string->p_hash,
+  $pid = '';
+  foreach ($records as $rec) {
+    if ($rec->pid != $pid) {
+      $pid = $rec->pid;
+      $arr_strings[$pid] = array(
+        'pid' => $rec->pid,
+        'phrase' => $rec->phrase,
+        'p_hash' => $rec->p_hash,
         'translations' => array(),
       );
-      $arr_strings[] = $str;
     }
-
-    $translation = array(
-      'tid' => $string->tid,
-      'lng' => $string->lng,
-      'translation' => $string->translation,
-      't_hash' => $string->t_hash,
-      'time_entered' => $string->time_entered,
-      'uid_entered' => $string->uid_entered,
-      'username' => $string->username,
-      'vcount' => $string->vcount,
+    $arr_strings[$pid]['translations'][$rec->tid] = array(
+      'tid' => $rec->tid,
+      'lng' => $rec->lng,
+      'translation' => $rec->translation,
+      't_hash' => $rec->t_hash,
+      'time_entered' => $rec->time_entered,
+      'uid_entered' => $rec->uid_entered,
+      'username' => $rec->username,
+      'vcount' => $rec->vcount,
     );
-    $i = sizeof($arr_strings) - 1;
-    $arr_strings[$i]['translations'][] = $translation;
   }
   return $arr_strings;
 }

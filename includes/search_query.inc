@@ -1,8 +1,28 @@
 <?php
 
 /**
- * Build a query for selecting strings and translations,
- * based on the settings of the given filter.
+ * Build the query that selects the strings that match
+ * the given filter. This query should return only the id-s
+ * of the matching phrases and the matching scores, ordered by
+ * the score in decreasing order.
+ *
+ * It should be something like this:
+ *
+ *    SELECT p.pid,
+ *           MAX(MATCH (t.translation) AGAINST (:words)) AS score
+ *    FROM {l10n_suggestions_phrases} p
+ *    LEFT JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
+ *    LEFT JOIN . . . . .
+ *    . . . . . . . . . .
+ *    WHERE (t.lng = :lng)
+ *      AND (MATCH (t.translation) AGAINST (:words IN BOOLEAN MODE))
+ *    . . . . . . . . . .
+ *    GROUP BY p.pid
+ *    ORDER BY score DESC
+ *    LIMIT :limit;
+ *
+ * Tables that are joined and the select conditions are based
+ * on the values of the filter.
  *
  * @param $filter
  *   Filter conditions that should be matched.
@@ -11,63 +31,24 @@
  */
 function l10n_suggestions_build_query($filter) {
 
-  //extract filter parameters as variables:
-  /*
-     $lng, $mode, $words, $limit
-     $project, $package, $release
-     $only_mine, $translated_by, $voted_by
-     $date_filter, $from_date, $to_date
-  */
-  extract($filter);
-
-  //start building the select query
-  /*
-      It should be something like this:
-
-      SELECT p.pid, p.phrase, hex(p.hash) AS p_hash,
-             t.tid, t.lng, t.translation, hex(t.hash) AS t_hash,
-             t.time_entered, t.uid_entered, u.name AS username, t.vcount
-             MATCH (p.phrase) AGAINST (:words) AS score
-      FROM {l10n_suggestions_phrases} p
-      LEFT JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
-      LEFT JOIN {users} u ON u.uid = t.uid_entered
-      WHERE . . . . .
-      ORDER BY score DESC, t.vcount DESC
-  */
   $query = db_select('l10n_suggestions_phrases', 'p')
-    ->extend('PagerDefault')->limit($limit);
-  $query->leftJoin('l10n_suggestions_translations', 't', 'p.pid = t.pid');
-  $query->leftJoin('users', 'u', 'u.uid = t.uid_entered');
-  $query->fields('p', array('pid', 'phrase'))
-    ->addExpression('HEX(p.hash)', 'p_hash');
-  $query->fields('t', array('tid', 'lng', 'translation', 'time_entered', 'uid_entered', 'vcount'))
-    ->addExpression('HEX(t.hash)', 't_hash');
-  $query->addField('u', 'name', 'username');
+    ->extend('PagerDefault')->limit($filter['limit']);
+  $query->addField('p', 'pid');
+  $query->groupBy('p.pid');
 
-  _l10n_suggestions_filter_by_content($query, $mode, $words);
-  _l10n_suggestions_filter_by_project($query, $project, $package, $release);
-  _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, $voted_by);
-  _l10n_suggestions_filter_by_date($query, $date_filter, $from_date, $to_date);
-
-  //depending on the requirements of the above filters,
-  //we may need to join with the table of votes or locations;
-  //in such a case we also need to group by translations
-  if ($query->hasTag('join-with-votes')) {
-    $query->leftJoin('l10n_suggestions_votes', 'v', 'v.tid = t.tid');
-  }
-  if ($query->hasTag('join-with-locations')) {
-    $query->leftJoin('l10n_suggestions_locations', 'l', 'p.pid = l.pid');
-  }
-  if ($query->hasAnyTag('join-with-votes', 'join-with-locations')) {
-    $query->groupBy('t.tid');
-  }
+  _l10n_suggestions_filter_by_content($query, $filter['mode'], $filter['words']);
+  _l10n_suggestions_filter_by_project($query, $filter['project'], $filter['package'], $filter['release']);
+  _l10n_suggestions_filter_by_author($query, $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
+  _l10n_suggestions_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
 
   //if nothing has been selected yet, then return false
   //dpm($query->conditions(), 'query_conditions');  //debug
   if (sizeof($query->conditions()) == 1) return false;
 
-  //filter translations by the given language
-  $query->condition('t.lng', $lng);
+  //if translations are joined, then filter by the language as well
+  if ($query->hasTag('join-translations')) {
+    $query->condition('t.lng', $filter['lng']);
+  }
 
   return $query;
 }
@@ -84,38 +65,32 @@ function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words
 
   //if there are no words to be searched for, no condition can be added
   if (trim($search_words) == '') {
-    $query->orderBy('p.pid', 'ASC')->orderBy('t.vcount', 'DESC');
+    $query->addExpression('1', 'score');
     return;
   }
+
   //get the match condition and the score field
   //according to the search mode
-  switch ($search_mode) {
-    case 'natural-strings':
-      $match = 'MATCH (p.phrase) AGAINST (:words)';
-      $score = 'MATCH (p.phrase) AGAINST (:words)';
-      $query->orderBy('score', 'DESC')->orderBy('t.vcount', 'DESC');
-      break;
-    case 'natural-translations':
-      $match = 'MATCH (t.translation) AGAINST (:words)';
-      $score = 'MATCH (t.translation) AGAINST (:words)';
-      $query->orderBy('score', 'DESC');
-      break;
-    case 'boolean-strings':
-      $match = 'MATCH (p.phrase) AGAINST (:words IN BOOLEAN MODE)';
-      $score = 'MATCH (p.phrase) AGAINST (:words)';
-      $query->orderBy('score', 'DESC')->orderBy('t.vcount', 'DESC');
-      break;
-    case 'boolean-translations':
-      $match = 'MATCH (t.translation) AGAINST (:words IN BOOLEAN MODE)';
-      $score = 'MATCH (t.translation) AGAINST (:words)';
-      $query->orderBy('score', 'DESC');
-      break;
+  list($mode, $content) = explode('-', $search_mode);
+  $in_boolean_mode = ($mode=='boolean' ? ' IN BOOLEAN MODE' : '');
+  if ($content=='strings') {
+    $query->addExpression('MATCH (p.phrase) AGAINST (:words)', 'score');
+    $query->where(
+      'MATCH (p.phrase) AGAINST (:words' . $in_boolean_mode . ')',
+      array(':words' => $search_words)
+    );
+  }
+  else {   // ($content=='translations')
+    _l10n_suggestions_join_table($query, 'translations');
+    $query->addExpression('MAX(MATCH (t.translation) AGAINST (:words))', 'score');
+    $query->where(
+      'MATCH (t.translation) AGAINST (:words' . $in_boolean_mode . ')',
+      array(':words' => $search_words)
+    );
   }
 
-  //add the score field
-  $query->addExpression($score, 'score');
-  //perform a full-text search against the given words
-  $query->where($match, array(':words' => $search_words));
+  //order results by the field score
+  $query->orderBy('score', 'DESC');
 }
 
 /**
@@ -126,7 +101,7 @@ function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words
 function _l10n_suggestions_filter_by_project($query, $project, $package, $release) {
   //filter by project
   if ($project != '') {
-    if (!$query->hasTag('join-with-locations'))  $query->addTag('join-with-locations');
+    _l10n_suggestions_join_table($query, 'locations');
     $query->condition('l.projectname', '?/' . db_like($project) . '%', 'LIKE');
   }
 }
@@ -139,9 +114,8 @@ function _l10n_suggestions_filter_by_project($query, $project, $package, $releas
 function _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
 
   if ($only_mine) {
+    _l10n_suggestions_join_table($query, 'votes');
     global $user;
-
-    if (!$query->hasTag('join-with-votes'))  $query->addTag('join-with-votes');
     $query->condition(db_or()
       ->condition('t.uid_entered', $user->uid)
       ->condition('v.uid', $user->uid)
@@ -153,14 +127,14 @@ function _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, 
   //get the uid $translated_by and $voted_by
   $get_uid = 'SELECT uid FROM {users} WHERE name = :name';
   $t_uid = ($translated_by == '') ? '' :
-    db_query($get_uid, array(':name'=>$translated_by))->execute()->fetchField();
+    db_query($get_uid, array(':name'=>$translated_by))->fetchField();
   $v_uid = ($voted_by == '') ? '' :
-    db_query($get_uid, array(':name'=>$voted_by))->execute()->fetchField();
+    db_query($get_uid, array(':name'=>$voted_by))->fetchField();
 
   //if it is the same user, then search for strings
   //translated OR voted by this user
   if ($t_uid==$v_uid and $t_uid!='') {
-    if (!$query->hasTag('join-with-votes'))  $query->addTag('join-with-votes');
+    _l10n_suggestions_join_table($query, 'votes');
     $query->condition(db_or()
       ->condition('t.uid_entered', $t_uid)
       ->condition('v.uid', $t_uid)
@@ -171,10 +145,11 @@ function _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, 
   //if the users are different, then search for strings
   //translated by $t_uid AND voted by $v_uid
   if ($t_uid != '') {
+    _l10n_suggestions_join_table($query, 'translations');
     $query->condition('t.uid_entered', $t_uid);
   }
   if ($v_uid != '') {
-    if (!$query->hasTag('join-with-votes'))  $query->addTag('join-with-votes');
+    _l10n_suggestions_join_table($query, 'votes');
     $query->condition('v.uid', $v_uid);
   }
 }
@@ -198,17 +173,22 @@ function _l10n_suggestions_filter_by_date($query, $date_filter, $from_date, $to_
   //get the current date in the standard string format 'YYYY-MM-DD'
   $today_str = date('Y-m-d');
 
-  //if the date of votes has to be checked, then the table of votes must be joined
-  if ( ($date_filter == 'votes')
-    && !($from_date_str == $today_str && $to_date_str == $today_str)) {
-    if (!$query->hasTag('join-with-votes'))  $query->addTag('join-with-votes');
+  //if both dates are equal to today, there is no condition to be added
+  if ($from_date_str == $today_str && $to_date_str == $today_str)  return;
+
+  //if the date of translations or votes has to be checked,
+  //then the corresponding tables must be joined
+  if ($date_filter == 'translations') {
+    _l10n_suggestions_join_table($query, 'translations');
+  }
+  else if ($date_filter == 'votes') {
+    _l10n_suggestions_join_table($query, 'votes');
   }
 
   //get the alias (name) of the date field that has to be checked
-  $field =
-    ($date_filter=='strings') ? 'p.registration_time' :
-    ($date_filter=='votes')   ? 'v.vtime' :
-    't.time_entered';
+  if      ($date_filter=='strings')  $field = 'p.time_entered';
+  elseif  ($date_filter=='votes')    $field = 'v.vtime';
+  else                               $field = 't.time_entered';
 
   //add to query the propper date condition;
   //if none of the dates are given, no condition is added
@@ -227,4 +207,30 @@ function _l10n_suggestions_filter_by_date($query, $date_filter, $from_date, $to_
 
 }
 
+/**
+ * Add a join for the given table to the $query.
+ * Make sure that the join is added only once (by using tags).
+ * $table can be one of: translations, votes, locations
+ */
+function _l10n_suggestions_join_table($query, $table) {
+  $tag = "join-$table";
+  if ($query->hasTag($tag))  return;
+  $query->addTag($tag);
+
+  switch ($table) {
+    case 'translations':
+      $query->leftJoin("l10n_suggestions_translations", 't', 'p.pid = t.pid');
+      break;
+    case 'votes':
+      _l10n_suggestions_join_table($query, 'translations', 't', 'p.pid = t.pid');
+      $query->leftJoin("l10n_suggestions_votes", 'v', 'v.tid = t.tid');
+      break;
+    case 'locations':
+      $query->leftJoin("l10n_suggestions_locations", 'l', 'p.pid = l.pid');
+      break;
+    default:
+      debug("Error: _l10n_suggestions_join_table(): table '$table' is unknown.");
+      break;
+  }
+}
 ?>

@@ -1,3 +1,4 @@
 *~
 .emacs*
 TAGS
+*.sql.gz

@@ -49,27 +49,78 @@ function l10n_suggestions_search() {
     drupal_get_form('l10n_suggestions_filter_form', $filter)
   );
 
-  // Get an array of strings and translations.
-  $strings = array();
+  // Get a query for selecting strings that match the filter.
   $query = l10n_suggestions_build_query($filter);
-  if ($query) dpq($query);  //debug
-  if ($query) {
-    $arr_recs = $query->execute()->fetchAll();
-    $strings = l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
-    //dpm($strings, '$strings');  //debug
+  if (!$query) {
+    drupal_set_message(t('Filter is empty. Put something on the filter options.'));
+    return $output;
   }
+  dpq($query);  //debug
 
-  // Output the actual strings.
+  // Get the strings selected by the filter and the corresponding translations.
+  $strings = _l10n_suggestions_get_strings($query, $lng);
+
+  // Output the strings.
   if (empty($strings)) {
     drupal_set_message(t('No strings found. Try adjusting the filter options.'));
   }
   else {
+    dpm($strings, '$strings');  //debug
     $output[] = drupal_get_form('l10n_suggestions_translate_form', $filter, $strings);
   }
 
   return $output;
 }
 
+/**
+ * Get the strings selected by the filter and the corresponding translations.
+ * The query returns the fields 'pid' and 'score' (ordered by the score desc).
+ * Another query is built and run, in order to fetch the other details of the
+ * strings and the corresponding translations.
+ *
+ * @param $query
+ *   The query built from the filter parameters.
+ * @return
+ *   An array of strings, where each string is an associative array,
+ *   with translations as nested associative arrays.
+ */
+function _l10n_suggestions_get_strings($filter_query, $lng) {
+  //get the pid-s of the strings that are selected by the query
+  $ordered_arr_pids = $filter_query->execute()->fetchAllAssoc('pid', PDO::FETCH_ASSOC);
+  if (empty($ordered_arr_pids))  return array();
+  $arr_pids = array_keys($ordered_arr_pids);
+  dpm($arr_pids, '$arr_pids');        //debug
+
+  //the query for retriving the strings and translations
+  $get_selected_strings =
+    " SELECT p.pid, p.phrase, hex(p.hash) AS p_hash,
+             t.tid, t.lng, t.translation, hex(t.hash) AS t_hash,
+             t.time_entered, t.uid_entered, u.name AS username, t.vcount
+      FROM {l10n_suggestions_phrases} p
+      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
+      LEFT OUTER JOIN {users} u ON u.uid = t.uid_entered
+      WHERE (t.lng = :lng OR t.lng IS NULL)
+        AND p.pid IN (:pids)
+      ORDER BY p.pid ASC, t.vcount DESC";
+
+  //run the query and get the records
+  $result = db_query($get_selected_strings, array(':lng' => $lng, ':pids' => $arr_pids));
+  $arr_recs = $result->fetchAll();
+
+  //convert them to a structured associative array, indexed by pid
+  $arr_strings = l10n_suggestions_convert_to_hierarchical_array($arr_recs);
+
+  //put them in the order returned by the filter query
+  foreach ($ordered_arr_pids as $pid => $value) {
+    $ordered_arr_strings[$pid] = $arr_strings[$pid];
+  }
+
+  dpm($ordered_arr_pids, '$ordered_arr_pids');        //debug
+  dpm($arr_strings, '$arr_strings');                  //debug
+  dpm($ordered_arr_strings, '$ordered_arr_strings');  //debug
+
+  return $ordered_arr_strings;
+}
 
 // = Translation form building =================================================
 

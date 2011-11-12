@@ -109,10 +109,12 @@ function l10n_suggestions_get_query_values($form_values) {
   //package, project, release
   if (trim($form_values['project']) != '' )
     $query['project'] = $form_values['project'];
+  /*
   if (trim($form_values['package']) != '' )
     $query['package'] = $form_values['pakage'];
   if (trim($form_values['release']) != '' )
     $query['release'] = $form_values['release'];
+  */
 
   //only_mine
   if ($form_values['only_mine'] == 1) {
