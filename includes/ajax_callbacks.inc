@@ -3,14 +3,33 @@
 // = AJAX callbacks ============================================================
 
 /**
- * Retrieve a pipe delimited string of autocomplete suggestions for projects.
+ * Retrieve a JSON list of autocomplete suggestions for projects.
  */
 function l10n_suggestions_project_autocomplete($string = '') {
   $matches = array();
   if ($string) {
-    $result = db_query_range("SELECT DISTINCT projectname FROM {l10n_suggestions_locations} WHERE projectname LIKE :str ORDER BY projectname", 0, 10, array(':str' => $string.'%'));
+    $query = "SELECT DISTINCT SUBSTRING(projectname,3) AS project
+              FROM {l10n_suggestions_locations}
+              WHERE projectname LIKE :str ORDER BY project";
+    $result = db_query_range($query, 0, 10, array(':str' => '_/'.$string.'%'));
     foreach ($result as $project) {
-      $matches[$project->projectname] = check_plain($project->projectname);
+      $matches[$project->project] = check_plain($project->project);
+    }
+  }
+  print drupal_json_encode($matches);
+  exit();
+}
+
+/**
+ * Retrieve a JSON list of autocomplete suggestions for users.
+ */
+function l10n_suggestions_user_autocomplete($string = '') {
+  $matches = array();
+  if ($string) {
+    $query = "SELECT name FROM {users} WHERE name LIKE :str ORDER BY name";
+    $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
+    foreach ($result as $user) {
+      $matches[$user->name] = check_plain($user->name);
     }
   }
   print drupal_json_encode($matches);

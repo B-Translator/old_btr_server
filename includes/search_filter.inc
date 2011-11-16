@@ -267,7 +267,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Project'),
     '#description' => t('Search only the strings belonging to the matching project.'),
     '#default_value' => $form_state['values']['project'],
-    '#autocomplete_path' => 'translation/project-autocomplete',
+    '#autocomplete_path' => 'translation/autocomplete/project',
   );
 
   /*
@@ -303,7 +303,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Translated By'),
     '#description' => t('Search only the strings with translations suggested by the selected user.'),
     '#default_value' => $form_state['values']['translated_by'],
-    '#autocomplete_path' => 'translation/user-autocomplete',
+    '#autocomplete_path' => 'translation/autocomplete/user',
     '#states' => array(
       'visible' => array(
         ':input[name="only_mine"]' => array('checked' => false),
@@ -316,7 +316,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Voted By'),
     '#description' => t('Search only the strings with translations voted by the selected user.'),
     '#default_value' => $form_state['values']['voted_by'],
-    '#autocomplete_path' => 'translation/user-autocomplete',
+    '#autocomplete_path' => 'translation/autocomplete/user',
     '#states' => array(
       'visible' => array(
         ':input[name="only_mine"]' => array('checked' => false),

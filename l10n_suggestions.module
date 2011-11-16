@@ -56,9 +56,19 @@ function l10n_suggestions_menu() {
   );
 
   // Autocomplete callback for project textfields.
-  $items['translation/project-autocomplete'] = array(
+  $items['translation/autocomplete/project'] = array(
     'title'           => 'Project autocomplete',
     'page callback'   => 'l10n_suggestions_project_autocomplete',
+    'file'            => 'includes/ajax_callbacks.inc',
+    //'access arguments' => array('access localization community'),
+    'access callback' => TRUE,
+    'type'            => MENU_CALLBACK,
+  );
+
+  // Autocomplete callback for user textfields.
+  $items['translation/autocomplete/user'] = array(
+    'title'           => 'User autocomplete',
+    'page callback'   => 'l10n_suggestions_user_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,

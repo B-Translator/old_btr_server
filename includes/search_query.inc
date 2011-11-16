@@ -102,7 +102,7 @@ function _l10n_suggestions_filter_by_project($query, $project, $package, $releas
   //filter by project
   if ($project != '') {
     _l10n_suggestions_join_table($query, 'locations');
-    $query->condition('l.projectname', '?/' . db_like($project) . '%', 'LIKE');
+    $query->condition('l.projectname', '_/' . db_like($project) . '%', 'LIKE');
   }
 }
 
