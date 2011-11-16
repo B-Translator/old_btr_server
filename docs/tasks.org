@@ -3,7 +3,7 @@ This file is used to keep the project organized. It is based on the
 org-mode of Emacs (http://orgmode.org/), which is a good tool for
 keeping notes, project planning, tasks management, etc.
 
-* Initial Plan
+* Initial Plan							    :ARCHIVE:
 
 ** DONE Design DB schema
    Design a propper DB schema for l10n_suggestions. In general, it is
@@ -224,31 +224,30 @@ keeping notes, project planning, tasks management, etc.
 
 ** UI
 
-*** translations/get [/<hash>/<lng>/<exact>]
+*** translations/get/<lng>/<hash>
 
     An interface for suggesting translations to a phrase.  Gets as
     input
-    - the phrase to be translated (textarea)
-    - the language to which will be translated (listbox)
-    - and whether the phrase should be matched exactly (checkbox)
+    - the language code to which will be translated
+    - the hash of the phrase to be translated
 
     Returns a list of translation suggestions of the given phrase.
-
-    If exact match is required, the given phrase will be matched
-    exactly on the database, and if no match empty result will be
-    returned.  Otherwise the best matching phrase will be found and
-    its translations will be returned.
-
-    If the phrase and language are known beforehand, then they can be
-    passed as additional parameters (on the url). The phrase will be
-    identified by its hash.
-
     This interface should be accessible by anybody.
-
     There should be also a corresponding XML-RPC interface, so that it
     can be accessed from external programs.
 
-*** translations/vote [/<hash>/<lng1>,<lng2>]
+*** translations/search?lng=..&limit=..&mode=..&words=..
+
+    Displays a list of strings and the corresponding suggestions, which
+    match some filter conditions. Filter conditions can be modified on
+    the interface. Search can be done by the content of the strings and
+    suggestions, and can be limited in scope by the project, by the author
+    of suggestions, by the submition date, etc.
+
+    From the displayed list, it is also possible to view details (for
+    string or suggestion), to submit votes, etc.
+
+*** translations/vote
 
     This interface will select a random phrase and will present it and
     its available translations to the user. The user will vote one of
@@ -259,9 +258,6 @@ keeping notes, project planning, tasks management, etc.
     additional languages can be presented as well, if the user is not
     confident with English. (He can select these options on the user
     settings page as well.)
-
-    If the phrase and the additional languages are known beforehand,
-    they can be passed as parameters to the menu path.
 
 *** translations/user_settings
     The user can set:
@@ -276,49 +272,84 @@ keeping notes, project planning, tasks management, etc.
     + translations/admin/stats
 
 * Implementation Plan
-  1. Implement the interface *translations/get* with forms.
-  2. Implement the interface *translations/get* with xml-rpc.
-  3. Implement *translations/vote* with forms and a simple random phrase
-     selection.
-  4. Implement a simple *translations/user_settings*
-  5. Improve the random phrase selection for *translations/vote* to take
-     into account the user settings.
-  6. Implement a simple *translations/admin/config* interface.
-  7. Make a basic *integration with facebook* (for voting).
-  8. Put it online.
-  9. Add a basic *email interface* (for voting).
-  10. Add a *mobile interface* (or theme).
-  11. Build the pages for admin dashboard, reports and stats.
-  12. Integrate with projects and packages from l10n_server
-  13. Add an API for external applications.
-  14. Integration with google+, twitter, diaspora, etc.
-  15. Android app that can be used for voting.
+  1. Make *voting* work (without permissions, user setting, admin
+     config, etc.)
+  2. Release an initial drupal package and prepare a test/demo site.
+  3. Add *admin config*, *user settings*, *permissions*, permission
+     checking, etc.
+  4. Make a basic *integration with facebook* (for voting).
+  5. Put it online.
+  6. Add a basic *email interface* (for voting).
+  7. Add a *mobile interface* (or theme).
+  8. Build the pages for admin dashboard, reports and stats.
+  9. Integrate with projects and packages from l10n_server
+  10. Add an API for external applications.
+  11. Integration with google+, twitter, diaspora, etc.
+  12. Android app that can be used for voting.
 
 * Tasks
+
 ** DB
+
 *** TODO Write scripts for updating data from open-tran.eu
     Take care to preserve the data that already exist in the DB.
+
+*** Misc
+    + Check the plurals (how they are handled?).
+    + There are cases of strings where exaclty the same translation
+      is stored several times. Checkout why it happens, and try to
+      fix it.
+    + The function that generates the hash of a string (phrase)
+      probably should be changed and improved.
+
 ** UI
 
-*** Interface *translation/get*
-    + Add helper languages
-
-*** Interface *translation/search*
-    + Autocomplete field for projects and users
-    + The form that displays the strings and translations
-    + Callback functions for the details of strings and translations
+*** List of *string-->translations*
+    + Define and implement suitable access rights.
     + Some of the advanced filtering options should be available
       only if the user has propper access rights.
+    + Some editing options should be available only if the user has
+      propper access rights.
+    + For each suggestion, the admin (or moderators) should be able to apply
+      additional actions (for example remove the suggestion).
+
+    + For each l10n string, display details like: submitted by, submitted when,
+      in which projects it occurs (related locations), etc.
+    + For each l10n string, display also the corresponding translations
+      (best suggestions) in auxiliary (helper) languages. For example,
+      besides the original l10n string (in English), the French and German
+      translations may be displayed as well, if these are selected on
+      the display options of the filter.
+
+    + For each suggestion, add a Like (or +1) button. When it is clicked,
+      the vote is submitted through an AJAX call. The voted (or liked,
+      or +1'd) suggestion should be visibly distinguished from the rest.
+    + For each suggestion, display details like: suggested by, suggested
+      when, number of votes, some of the latest voters (and all the voters
+      when clicked).
+    + For each suggestion add a Flag (or -1) button. A suggestion is flagged
+      when it is totally irrelevant to the string, or is spam, or is abusive, etc.
+      In general, when a suggestion is flagged, it is something that should be
+      removed. When flagging a suggestion, a reason/explanation may be given as
+      well. When a suggestion is flagged, it has to be reviwed and removed
+      by an admin/moderator. The admin may also take some action on the user that
+      submitted the offending suggestion (or on the user that submitted the flag,
+      if the suggestion is ok).
 
 *** XML-RPC interface
+    Or some other web-service (API) interface.
 
 *** Interface *translation/vote*
+    This is almost the same as the search interface. However, instead of
+    using a filter to select strings, they are selected randomly, based
+    on user preferencies, and also on the priorities of translation.
 
 ** Misc
    - rename phrases to strings, pid to sid, etc.
      (to be consistent with the terminology used in l10n_server)
    - Start with simple tests (l10n_suggestions.test)
-   - Install to the server l10n-sq.org
+   - Improve instalation.
+   - Make an initial package.
 
 * Notes
 
