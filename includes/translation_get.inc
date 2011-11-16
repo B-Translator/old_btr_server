@@ -8,6 +8,7 @@
  * Include utility and theme functions.
  */
 require_once dirname(__FILE__) . '/utility_functions.inc';
+require_once dirname(__FILE__) . '/form_functions.inc';
 require_once dirname(__FILE__) . '/theme_functions.inc';
 require_once dirname(__FILE__) . '/ajax_callbacks.inc';
 
@@ -18,6 +19,11 @@ require_once dirname(__FILE__) . '/ajax_callbacks.inc';
  * 'lng' and 'hash' are passed as parameters to the function.
  */
 function l10n_suggestions_get($lng =NULL, $hash =NULL) {
+
+  // Add the the CSS and JS files.
+  drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
 
   //get languages and language codes
   $languages = l10n_suggestions_get_languages();
@@ -66,11 +72,11 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   );
 
   // Get the matching string and its translations.
-  $arr_strings = l10n_suggestions_get_translations($lng, $hash);
-  //if ($arr_strings) dpm($arr_strings[0]);  //debug
+  $strings = l10n_suggestions_get_translations($lng, $hash);
+  //if ($strings) dpm($strings[0]);  //debug
 
   // If no strings were returned, display an empty message.
-  if (!$arr_strings) {
+  if (!$strings) {
     drupal_set_message(t("No strings with hash '<strong>!hash</strong>' found.", array('!hash'=>$hash)), 'error');
     $output = array(
       '#markup' => t("No strings with hash '<strong>!hash</strong>' found. <br/> Try instead to search with: !search_path",
@@ -83,7 +89,7 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   }
 
   // Output the string and its translations.
-  $output = drupal_get_form('l10n_suggestions_translation_get_form', $arr_strings[0], $lng);
+  $output = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
 
   return $output;
 }
@@ -110,7 +116,7 @@ function l10n_suggestions_get_translations($lng, $hash) {
       FROM {l10n_suggestions_phrases} p
       LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
       LEFT OUTER JOIN {users} u ON u.uid = t.uid_entered
-      WHERE p.hash = unhex(:hash) AND t.lng = :lng
+      WHERE p.hash = unhex(:hash) AND (t.lng = :lng OR t.lng IS NULL)
       ORDER BY t.vcount DESC";
 
   $params = array(':hash' => $hash, ':lng' => $lng);
@@ -124,88 +130,6 @@ function l10n_suggestions_get_translations($lng, $hash) {
   //convert the results to a hierarchical array format that is
   //more suitable for displaying and handling, and return them
   return l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
-}
-
-/**
- * Form callback: List translations and suggestions.
- *
- * @param $form_state
- *   The form state array.
- * @param $string
- *   The array of the string andt its translations that are to be rendered.
- * @param $lng
- *   The language code of the translations.
- * @return
- *   A render array of the page (which actually doesn't have to be a form).
- */
-function l10n_suggestions_translation_get_form($form, &$form_state, $string, $lng) {
-
-  $string['phrase'] = l10n_suggestions_unpack_string($string['phrase']);
-  $pid = $string['pid'];
-
-  $form = array(
-    'strings' => array(
-      '#tree' => TRUE,
-      '#theme' => 'l10n_suggestions_translate_table',
-      $pid => array(
-        '#string' => $string,
-        '#langcode' => $lng,
-        'source' => array(
-          'string' => array('#markup' => _l10n_suggestions_translate_render_textarray($string['phrase'])),
-        ),
-      ),
-    ),
-  );
-
-  //--------- Add data to the form for each translation ------------
-
-  $translations = $string['translations'];
-
-  // If there is no translation yet, simulate with a visible placeholder.
-  if (empty($translations)) {
-    $translations[] = array('tid' => '0', 'translation' => array(t('(not translated)')));
-  }
-
-  foreach ($translations as $translation) {
-
-    $translation['translation'] = l10n_suggestions_unpack_string($translation['translation']);
-
-    // Add the translation to the list.
-    $tid = $translation['tid'];
-
-    $form['strings'][$pid][$tid] = array(
-      '#theme' => 'l10n_suggestions_translate_translation',
-      'original' => array(
-        '#type' => 'value',
-        '#value' => $translation,
-      ),
-      'active' => array(
-        '#type' => 'radio',
-        '#theme' => 'l10n_suggestions_translate_radio',
-        '#theme_wrappers' => array(),
-        '#title' => _l10n_suggestions_translate_render_textarray($translation['translation'], FALSE),
-        '#return_value' => $tid,
-        '#default_value' => false,
-        '#parents' => array('strings', $pid, 'active'),
-        '#disabled' => true,
-        '#attributes' => array('class' => array('selector')),
-      ),
-    );
-
-    // Add the author of the translation.
-    if (isset($translation['username'])) {
-      $title = l10n_suggestions_translate_byline($translation['username'], $translation['uid_entered'], $translation['time_entered'], -1, -1, FALSE);
-
-      $form['strings'][$pid][$tid]['author'] = array(
-        '#markup' => $title,
-        '#prefix' => '<div class="l10n-byline"><a href="' . url('translation/translation-details/' . $tid) . '" class="l10n-more-link" title="' . t('Show full history for translation.') . '">',
-        '#suffix' => '</a><div class="l10n-more-info"></div></div>',
-      );
-    }
-  }
-
-  //dpm($form);  //debug
-  return $form;
 }
 
 ?>
