@@ -39,7 +39,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
     ),
 
     // The submit buttons will appear only when the user has
-    // permissions to submit suggestions.
+    // permissions to submit votes and suggestions.
     'submit' => array(
       '#type' => 'submit',
       '#value' => t('Save changes'),
@@ -53,8 +53,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
   );
 
   // Fill in string values for the editor.
-  foreach ($strings as $string) {
-    $pid = $string['pid'];
+  foreach ($strings as $pid => $string) {
     $form['strings'][$pid] = _l10n_suggestions_translate_form_item($form_state, $string, $lng);
   }
 
@@ -67,14 +66,14 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
  */
 function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
 
-  $string_unpacked = $string['phrase'];
-  $string['phrase'] = l10n_suggestions_unpack_string($string['phrase']);
+  $string_unpacked = $string->phrase;
+  $string->phrase = l10n_suggestions_unpack_string($string->phrase);
 
   $form = array(
     '#string' => $string,
     '#langcode' => $lng,
     'source' => array(
-      'string' => array('#markup' => _l10n_suggestions_translate_render_textarray($string['phrase'])),
+      'string' => array('#markup' => _l10n_suggestions_translate_render_textarray($string->phrase)),
     ),
   );
 
@@ -88,24 +87,23 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
 
   //---------------- Add translations. --------------------
 
-  // Translations are stored in a sub-array of the string.
-  $translations = $string['translations'];
+  // Translations are stored in an array.
+  $translations = $string->translations;
 
   // If there is no translation yet, display a visible placeholder.
-  if (isset($translations['0'])) {
-    $translations['0']['translation'] = t('(not translated)');
+  if (empty($translations)) {
+    $translations['0']->translation = t('(not translated)');
   }
 
-  foreach ($translations as $translation) {
+  foreach ($translations as $tid => $translation) {
     // Add the translation to the list.
-    $tid = $translation['tid'];
-    $form[$tid] = _l10n_suggestions_translate_translation($translation, $string['pid'], $lng);
+    $form[$tid] = _l10n_suggestions_translate_translation($translation, $string->pid, $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('submit suggestions')) {
     $textarea = _l10n_suggestions_translate_translation_textarea($string, $lng);
-    $form[$textarea['tid']] = _l10n_suggestions_translate_translation($textarea, $string['pid'], $lng);
+    $form[$textarea->tid] = _l10n_suggestions_translate_translation($textarea, $string->pid, $lng);
   }
 
   return $form;
@@ -121,16 +119,16 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
   // need to fill in with a number adequate for this language.
   $languages = l10n_suggestions_get_languages();
   $nplurals = $languages[$lng]['plurals'];
-  $arr_translations = array_fill(0, count($string['phrase']) > 1 ? $nplurals : 1, '');
+  $arr_translations = array_fill(0, count($string->phrase) > 1 ? $nplurals : 1, '');
   $translation = implode('\0', $arr_translations);
 
-  return array(
-    'pid' => $string['pid'],
+  return (object) array(
+    'pid' => $string->pid,
     'tid' => 'new',
+    'lng' => $lng,
     'translation' => $translation,
-    'is_active' => '1',
-    'is_suggestion' => '1',
     'uid_entered' => $user->uid,
+    'votes' => array(),
   );
 }
 
@@ -140,12 +138,11 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
 function _l10n_suggestions_translate_translation($translation, $string_pid, $lng) {
   global $user;
 
-  $translation['translation'] = l10n_suggestions_unpack_string($translation['translation']);
+  $translation->translation = l10n_suggestions_unpack_string($translation->translation);
 
-  $is_own = ($user->uid == $translation['uid_entered']);
-  //$is_active = $translation->is_active && !$translation->is_suggestion;
-  $is_active = user_access('submit vote');
-  $is_new = ($translation['tid'] == 'new');
+  $is_own = ($user->uid == $translation->uid_entered);
+  $is_active = in_array($user->uid, array_keys($translation->votes));
+  $is_new = ($translation->tid == 'new');
   $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
 
   $form = array(
@@ -156,18 +153,15 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
     ),
   );
 
-  // Active radio box is used to pick the approved translation.
+  // Active radio box is used to pick the approved (voted/liked) translation.
   $form['active'] = array(
     '#type' => 'radio',
     '#theme' => 'l10n_suggestions_translate_radio',
     '#theme_wrappers' => array(),
-    '#title' => _l10n_suggestions_translate_render_textarray($translation['translation'], $is_new ? t('(empty)') : FALSE),
-    '#return_value' => $translation['tid'],
-    '#default_value' => false,
+    '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
+    '#return_value' => $translation->tid,
+    '#checked' => $is_active,
     '#parents' => array('strings', $string_pid, 'active'),
-    // Let a moderator roll back to the current translation even if they
-    // would otherwise not have permission to approve such a string.
-    '#disabled' => !$may_moderate && !$is_active,
     '#attributes' => array('class' => array('selector')),
   );
 
@@ -175,14 +169,13 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
     $form['declined'] = array(
       '#type' => 'checkbox',
       '#title' => t('Decline'),
-      /* '#default_value' => !($translation['is_active'] || $translation['is_suggestion']), */
-      '#default_value' => true,
+      '#default_value' => false,
     );
   }
   if ($is_new) {
     // Fill in with as many textareas as required to enter translation
     // for this string.
-    $form['value'] = array_fill(0, count($translation['translation']), array(
+    $form['value'] = array_fill(0, count($translation->translation), array(
                        '#type' => 'textarea',
                        '#cols' => 60,
                        '#rows' => 3,
@@ -198,12 +191,12 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
         '#suffix' => '</label>',
       );
     }
-    if (isset($translation['username'])) {
-      $title = l10n_suggestions_translate_byline($translation['username'], $translation['uid_entered'], $translation['time_entered'], -1, -1, FALSE);
+    if (isset($translation->author)) {
+      $title = l10n_suggestions_translate_byline($translation->author, $translation->uid_entered, $translation->time_entered, -1, -1, FALSE);
 
       $form['author'] = array(
         '#markup' => $title,
-        '#prefix' => '<div class="l10n-byline"><a href="' . url('translate/translation-details/' . $translation['tid']) . '" class="l10n-more-link" title="' . t('Show full history for translation.') . '">',
+        '#prefix' => '<div class="l10n-byline"><a href="' . url('translate/translation-details/' . $translation->tid) . '" class="l10n-more-link" title="' . t('Show full history for translation.') . '">',
         '#suffix' => '</a><div class="l10n-more-info"></div></div>',
       );
     }
@@ -279,79 +272,5 @@ function l10n_suggestions_translate_byline($name, $uid, $time, $medium, $type, $
   }
 }
 
-// = Translation form submission ===============================================
 
-/**
- * Form submit callback for l10n_suggestions_translate_form().
- *
- * @see l10n_suggestions_translate_form().
- */
-function l10n_suggestions_translate_form_submit($form, &$form_state) {
-  global $user;
-
-  $lng = $form_state['values']['lng'];
-
-  // Iterate outer structure built in l10n_suggestions_translate_form().
-  foreach ($form_state['values']['strings'] as $sid => $string) {
-
-    // Iterate inner structure built in _l10n_suggestions_translate_form_item().
-    // Form items have numeric $tid values and other keys here.
-    foreach ($string as $tid => $options) {
-
-      // Store new suggestion.
-      $empty_values = 0;
-      // $options['value'] is the result of (a series of) textareas.
-      if (isset($options['value']) && is_array($options['value'])) {
-        foreach ($options['value'] as $key => $value) {
-          if ($value === t('<New translation>')) {
-            $options['value'] = '';
-            $empty_values++;
-          }
-        }
-        // If we had value in any of the textareas, add new suggestion.
-        if ($tid === 'new' && count($options['value']) > $empty_values) {
-          $tid = l10n_suggestions_add_suggestion($sid, l10n_suggestions_pack_string($options['value']), $lng, $user->uid, $user->uid, L10N_SERVER_MEDIUM_WEB);
-          if ($tid) {
-            if ($string['active'] === 'new') {
-              // This new string was selected to be approved, so remember $tid
-              // for later, so we can save this as an approved translation.
-              $string['active'] = $tid;
-              l10n_suggestions_counter(L10N_COUNT_ADDED);
-            }
-            else {
-              l10n_suggestions_counter(L10N_COUNT_SUGGESTED);
-            }
-          }
-          elseif ($tid === FALSE) {
-            // We found this as an active string already in the DB.
-            l10n_suggestions_counter(L10N_COUNT_DUPLICATE);
-          }
-        }
-      }
-
-      if (is_numeric($tid) && $tid > 0) {
-        if ($tid == $string['active']) {
-          if ($options['original']->is_suggestion) {
-            // $tid is a suggestion that was made active.
-            l10n_suggestions_approve_string($lng, $sid, $tid);
-            l10n_suggestions_counter(L10N_COUNT_APPROVED);
-          }
-        }
-        elseif (!empty($options['declined'])) {
-          // The decline checkbox for this suggestion was checked.
-          l10n_suggestions_counter($options['original']->is_suggestion ? L10N_COUNT_SUGGESTION_DECLINED : L10N_COUNT_DECLINED);
-          l10n_suggestions_decline_string($lng, $sid, $tid, $user->uid);
-        }
-      }
-    }
-  }
-
-  // Tell the user what happened.
-  l10n_suggestions_update_message();
-
-  // Keep existing filters and other query arguments on form submission.
-  $redirect_args = $form_state['values']['target'];
-  unset($redirect_args['q']);
-  $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
-}
 ?>

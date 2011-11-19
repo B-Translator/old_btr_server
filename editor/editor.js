@@ -61,21 +61,6 @@
       return false;
     });
 
-    // Callback to show all filters.
-    var showAllFilters = function() {
-      $('#l10n-suggestions-filter-form .reveal-link').hide();
-      $('#l10n-suggestions-filter-form .filter-widget:hidden').removeClass('js-hide').fadeIn();
-      return false;
-    }
-
-    // If we did hide items, add a link to show all.
-      /*
-    if ($('#l10n-suggestions-filter-form .filter-widget:hidden')) {
-      $('#l10n-suggestions-filter-form').append('<a href="#" class="reveal-link">' + Drupal.t('Reveal more filters') + '</a>');
-      $('#l10n-suggestions-filter-form .reveal-link').click(showAllFilters);
-    }
-      */
-
      // Add title to all decline buttons. Will be modified dynamically.
      $('.actions .declined label').attr('title', Drupal.t('Decline'));
 
@@ -176,8 +161,12 @@
         translation.find('> .selector').click(function() {
           // Set this undeclined.
           setStatus(translation, 'declined', false);
+
+	    /*
           // Mark the previously active translation declined, if that is possible.
           setStatus(translation.siblings('.is-active.is-declinable:not(.new-translation)'), 'declined', true);
+	    */
+
           // Move active mark to this one.
           setStatus(translation.siblings('.is-active'), 'active', false);
           translation.addClass('is-active');
@@ -189,12 +178,14 @@
         });
 
         if (isTranslation) {
+	    /*
           // Add doubleclick behavior to decline all other suggestions.
           translation.filter('.is-selectable').find('.l10n-string').dblclick(function() {
             translation.siblings('.is-declinable').each(function () {
               setStatus($(this), 'declined', true);
             });
           });
+	    */
 
           // Add hover behavior to update and remove diffs.
           translation

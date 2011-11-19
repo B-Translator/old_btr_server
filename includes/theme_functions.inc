@@ -22,7 +22,7 @@ function theme_l10n_suggestions_translate_table($variables) {
 
   foreach (element_children($element) as $key) {
     $lng = $element[$key]['#langcode'];
-    $hash = $element[$key]['#string']['p_hash'];
+    $hash = $element[$key]['#string']->hash;
     $rows[] = array(
       array(
         'class' => array('sid'),
@@ -51,7 +51,7 @@ function theme_l10n_suggestions_translate_source($variables) {
   $output .= '<label class="l10n-string' . ($element['filters_match']['#value'] ? ' filter-match' : ' filter-no-match') . '">' . drupal_render($element['source']['string']) . '</label>';
   $output .= theme('l10n_suggestions_in_context', array('source' => $element['#string']));
 
-  $output .= '<div class="l10n-usage"><a href="' . url('translation/source-details/' . $element['#string']['pid']) . '" class="l10n-more-link" title="' . t('Show list of projects and releases where this text is used.') . '">' . t('Show related projects') . '</a><div class="l10n-more-info"></div></div>';
+  $output .= '<div class="l10n-usage"><a href="' . url('translation/source-details/' . $element['#string']->pid) . '" class="l10n-more-link" title="' . t('Show list of projects and releases where this text is used.') . '">' . t('Show related projects') . '</a><div class="l10n-more-info"></div></div>';
   return $output;
 }
 
@@ -150,7 +150,7 @@ function theme_l10n_suggestions_translate_radio($variables) {
   $output .= 'id="' . $element['#id'] . '" ';
   $output .= 'name="' . $element['#name'] . '" ';
   $output .= 'value="' . $element['#return_value'] . '" ';
-  $output .= (check_plain($element['#value']) == $element['#return_value']) ? ' checked="checked" ' : ' ';
+  $output .= $element['#checked'] ? ' checked="checked" ' : ' ';
   $output .= drupal_attributes($element['#attributes']) . ' />';
 
   if (isset($element['#title'])) {

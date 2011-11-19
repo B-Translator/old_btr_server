@@ -10,6 +10,7 @@
 require_once dirname(__FILE__) . '/utility_functions.inc';
 require_once dirname(__FILE__) . '/form_functions.inc';
 require_once dirname(__FILE__) . '/theme_functions.inc';
+require_once dirname(__FILE__) . '/form_submit.inc';
 require_once dirname(__FILE__) . '/ajax_callbacks.inc';
 
 
@@ -72,7 +73,10 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   );
 
   // Get the matching string and its translations.
-  $strings = l10n_suggestions_get_translations($lng, $hash);
+  $query = db_select('l10n_suggestions_phrases', 'p')
+    ->fields('p', array('pid'))
+    ->where('p.hash = unhex(:hash)', array(':hash' => $hash));
+  $strings = l10n_suggestions_get_strings($query, $lng);
   //if ($strings) dpm($strings[0]);  //debug
 
   // If no strings were returned, display an empty message.
@@ -92,44 +96,6 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   $output = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
 
   return $output;
-}
-
-
-/**
- * Get the string that has a given hash, and its translations in
- * a given language.
- *
- * @param $lng
- *   The language code of the translations that are to be returned.
- * @param $hash
- *   The hash (sha1) of the l10n string to be returned.
- * @return
- *   An array of string and translation records from the database.
- */
-function l10n_suggestions_get_translations($lng, $hash) {
-
-  //get the matching string and the corresponding translations
-  $get_string_by_hash =
-    " SELECT p.pid, p.phrase, hex(p.hash) AS p_hash,
-             t.tid, t.lng, t.translation, hex(t.hash) AS t_hash,
-             t.time_entered, t.uid_entered, u.name AS username, t.vcount
-      FROM {l10n_suggestions_phrases} p
-      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
-      LEFT OUTER JOIN {users} u ON u.uid = t.uid_entered
-      WHERE p.hash = unhex(:hash) AND (t.lng = :lng OR t.lng IS NULL)
-      ORDER BY t.vcount DESC";
-
-  $params = array(':hash' => $hash, ':lng' => $lng);
-  //$params = array(':hash' => '5cead848f38540b70c048428225c04440fa4c641', ':lng' => $lng);  //debug
-  $result = db_query($get_string_by_hash, $params);
-  $arr_recs = $result->fetchAll();
-
-  //if there are no results return false
-  if (!$arr_recs)  return false;
-
-  //convert the results to a hierarchical array format that is
-  //more suitable for displaying and handling, and return them
-  return l10n_suggestions_convert_to_hierarchical_array($arr_recs);;
 }
 
 ?>

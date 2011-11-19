@@ -336,6 +336,16 @@ keeping notes, project planning, tasks management, etc.
       submitted the offending suggestion (or on the user that submitted the flag,
       if the suggestion is ok).
 
+    + Voting mode can be 'single' or 'multiple', and it can be selected by admin
+      (during installation). On mode 'single' at most one vote per string is allowed.
+      On mode 'multiple' at most one vote for translation is allowed (user can
+      approve more than one translation for the same string).
+    + For the 'multiple' mode, an Unlike button should be available as well (in order
+      to change the voting at any time).
+    + When the votes are changed, the old (removed) votes should be stored on
+      an archive table, in order to keep the history of changing votes as well.
+
+
 *** XML-RPC interface
     Or some other web-service (API) interface.
 
