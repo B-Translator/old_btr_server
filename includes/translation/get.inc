@@ -7,12 +7,9 @@
 /**
  * Include utility and theme functions.
  */
-require_once dirname(__FILE__) . '/utility_functions.inc';
-require_once dirname(__FILE__) . '/form_functions.inc';
-require_once dirname(__FILE__) . '/theme_functions.inc';
-require_once dirname(__FILE__) . '/form_submit.inc';
-require_once dirname(__FILE__) . '/ajax_callbacks.inc';
-
+require_once(dirname(__FILE__) . '/list/list.inc');
+require_once(dirname(__FILE__) . '/utils.inc');
+//require_once(dirname(__FILE__) . '/../ajax_callbacks.inc');
 
 /**
  * Menu callback: translation/get/lng/hash

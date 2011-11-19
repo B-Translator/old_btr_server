@@ -48,7 +48,9 @@ function theme_l10n_suggestions_translate_table($variables) {
 function theme_l10n_suggestions_translate_source($variables) {
   $element = $variables['element'];
   $output = theme('l10n_suggestions_translate_actions', array('element' => $element['source']));
-  $output .= '<label class="l10n-string' . ($element['filters_match']['#value'] ? ' filter-match' : ' filter-no-match') . '">' . drupal_render($element['source']['string']) . '</label>';
+  //$filter_match = ($element['filters_match']['#value'] ? ' filter-match' : ' filter-no-match');
+  $filter_match = ' filter-no-match';
+  $output .= '<label class="l10n-string' . $filter_match . '">' . drupal_render($element['source']['string']) . '</label>';
   $output .= theme('l10n_suggestions_in_context', array('source' => $element['#string']));
 
   $output .= '<div class="l10n-usage"><a href="' . url('translation/source-details/' . $element['#string']->pid) . '" class="l10n-more-link" title="' . t('Show list of projects and releases where this text is used.') . '">' . t('Show related projects') . '</a><div class="l10n-more-info"></div></div>';
@@ -100,9 +102,9 @@ function theme_l10n_suggestions_translate_translation($variables) {
   $element['#attributes']['class'][] = 'translation';
 
   // Add is-selectable and is-declinable helpers for JS.
-  if (!$element['active']['#disabled']) {
+  //if (!$element['active']['#disabled']) {
     $element['#attributes']['class'][] = 'is-selectable';
-  }
+    //}
   if (isset($element['declined'])) {
     $element['#attributes']['class'][] = 'is-declinable';
   }

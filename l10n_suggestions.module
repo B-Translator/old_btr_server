@@ -5,7 +5,7 @@
  * Module file for l10n_suggestions.
  */
 
-require_once dirname(__FILE__) . '/includes/utility_functions.inc';
+require_once(dirname(__FILE__) . '/includes/common.inc');
 
 /**
  * Implements hook_help().
@@ -35,7 +35,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Get l10n Translation',
     'description'     => 'Get translation suggestions for a given phrase.',
     'page callback'   => 'l10n_suggestions_get',
-    'file'            => 'includes/translation_get.inc',
+    'file'            => 'includes/translation/get.inc',
     'access callback' => TRUE,
   );
 
@@ -43,7 +43,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Vote l10n Translation',
     'description'     => 'Vote the best translation for a phrase, or suggest a better translation.',
     'page callback'   => 'l10n_suggestions_vote',
-    'file'            => 'includes/translation_vote.inc',
+    'file'            => 'includes/translation/vote.inc',
     'access callback' => TRUE,
   );
 
@@ -51,7 +51,7 @@ function l10n_suggestions_menu() {
     'title'           => 'Search l10n Translations',
     'description'     => 'Search phrases and translations using various filters.',
     'page callback'   => 'l10n_suggestions_search',
-    'file'            => 'includes/translation_search.inc',
+    'file'            => 'includes/translation/search.inc',
     'access callback' => TRUE,
   );
 

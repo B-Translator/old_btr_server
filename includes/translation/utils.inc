@@ -1,32 +1,7 @@
 <?php
 /**
- * Utility functions that are common for all the pages.
+ * Functions that are common for all the translation pages.
  */
-
-/**
- * Returns an array of languages and their details.
- */
-function l10n_suggestions_get_languages() {
-
-  $arr_langs = array(
-    'fr' => array(
-      'code' => 'fr',
-      'name' => 'French',
-      'encoding' => 'latin1',
-      'direction' => LANGUAGE_LTR,
-      'plurals' => 2,
-    ),
-    'sq' => array(
-      'code' => 'sq',
-      'name' => 'Albanian',
-      'encoding' => 'latin1',
-      'direction' => LANGUAGE_LTR,
-      'plurals' => 2,
-    ),
-  );
-
-  return $arr_langs;
-}
 
 /**
  * Get the details of strings, translations and votes and return them
