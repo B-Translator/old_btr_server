@@ -141,7 +141,7 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
   $translation->translation = l10n_suggestions_unpack_string($translation->translation);
 
   $is_own = ($user->uid == $translation->uid_entered);
-  $is_active = in_array($user->uid, array_keys($translation->votes));
+  $is_approved = in_array($user->uid, array_keys($translation->votes));
   $is_new = ($translation->tid == 'new');
   $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
 
@@ -153,15 +153,16 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
     ),
   );
 
-  // Active radio box is used to pick the approved (voted/liked) translation.
-  $form['active'] = array(
+  // Approved radio box is used to pick the approved (voted/liked) translation.
+  $form['approved'] = array(
     '#type' => 'radio',
     '#theme' => 'l10n_suggestions_translate_radio',
     '#theme_wrappers' => array(),
     '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tid,
-    '#checked' => $is_active,
-    '#parents' => array('strings', $string_pid, 'active'),
+    '#checked' => $is_approved,
+    '#disabled' => !user_access('submit votes'),
+    '#parents' => array('strings', $string_pid, 'approved'),
     '#attributes' => array('class' => array('selector')),
   );
 

@@ -10,8 +10,6 @@
 function l10n_suggestions_translate_form_submit($form, &$form_state) {
   global $user;
 
-  //TODO: rename 'active' to something related to voting
-
   $form_values = $form_state['values'];
   dpm($form_values, '$form_values');  //debug
 
@@ -20,19 +18,19 @@ function l10n_suggestions_translate_form_submit($form, &$form_state) {
   // Iterate outer structure built in l10n_suggestions_translate_form().
   foreach ($form_values['strings'] as $sid => $string) {
 
-    $tid_voted = $string['active'];
-    if (!$tid_voted)  continue;
+    $tid_approved = $string['approved'];
+    if (!$tid_approved)  continue;
 
-    if (is_numeric($tid_voted) && $tid_voted > 0) {
+    if (is_numeric($tid_approved) && $tid_approved > 0) {
       // This translation is voted by the user.
       // If this is not an existing vote,
       // then add a new vote for this translation.
-      $previous_votes = $string[$tid_voted]['original']->votes;
+      $previous_votes = $string[$tid_approved]['original']->votes;
       if (!in_array($user->uid, array_keys($previous_votes))) {
-        l10n_suggestions_add_vote($tid_voted, $user->uid);
+        l10n_suggestions_add_vote($tid_approved, $user->uid);
       }
     }
-    else if ($tid_voted == 'new') {
+    else if ($tid_approved == 'new') {
       //add a new suggestion
       $values = $string['new']['value'];
       $suggestion = l10n_suggestions_pack_string($values);

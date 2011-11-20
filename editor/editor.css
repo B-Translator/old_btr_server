@@ -97,7 +97,7 @@ td li.translation > .selector {
   float: right; /* LTR */
   margin: 0;
 }
-  li.translation.is-active > .actions li.declined { display: none; }
+  li.translation.is-approved > .actions li.declined { display: none; }
   .l10n-table ul.actions {
     overflow: hidden;
     float: right; /* LTR */
@@ -184,7 +184,7 @@ li.translation > .author {
   }
 
 
-  li.new-translation:not(.focused):not(.has-content):not(.is-active) > .l10n-string {
+  li.new-translation:not(.focused):not(.has-content):not(.is-approved) > .l10n-string {
     display: none;
   }
   li.new-translation.has-content > .actions {

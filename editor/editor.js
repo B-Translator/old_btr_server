@@ -142,7 +142,7 @@
         var updateDiff = function() {
           removeDiff();
           if (isTranslation) {
-            var orig = siblings.filter('.is-active');
+            var orig = siblings.filter('.is-approved');
             if (!orig.length) {
               orig = siblings.filter('.default');
             }
@@ -159,17 +159,17 @@
         };
 
         translation.find('> .selector').click(function() {
+	    /*
           // Set this undeclined.
           setStatus(translation, 'declined', false);
 
-	    /*
-          // Mark the previously active translation declined, if that is possible.
-          setStatus(translation.siblings('.is-active.is-declinable:not(.new-translation)'), 'declined', true);
+          // Mark the previously approved translation declined, if that is possible.
+          setStatus(translation.siblings('.is-approved.is-declinable:not(.new-translation)'), 'declined', true);
 	    */
 
-          // Move active mark to this one.
-          setStatus(translation.siblings('.is-active'), 'active', false);
-          translation.addClass('is-active');
+          // Move approved mark to this one.
+          setStatus(translation.siblings('.is-approved'), 'approved', false);
+          translation.addClass('is-approved');
         });
 
         // Update decline status based on checkbox values.

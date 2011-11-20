@@ -102,19 +102,21 @@ function theme_l10n_suggestions_translate_translation($variables) {
   $element['#attributes']['class'][] = 'translation';
 
   // Add is-selectable and is-declinable helpers for JS.
-  //if (!$element['active']['#disabled']) {
+  if (!$element['approved']['#disabled']) {
     $element['#attributes']['class'][] = 'is-selectable';
-    //}
+  }
   if (isset($element['declined'])) {
     $element['#attributes']['class'][] = 'is-declinable';
   }
 
   // Add information on whether this matched the filter.
-  if ((int) $element['active']['#return_value'] > 0) {
-    $element['#attributes']['class'][] = ($element['filters_match']['#value']) ? 'filter-match' : 'filter-no-match';
+  if ((int) $element['approved']['#return_value'] > 0) {
+    //$filters_match = ($element['filters_match']['#value']) ? 'filter-match' : 'filter-no-match';
+    $filters_match = 'filter-no-match';
+    $element['#attributes']['class'][] = $filters_match;
   }
 
-  switch ($element['active']['#return_value']) {
+  switch ($element['approved']['#return_value']) {
     case 'new':
       $element['#attributes']['class'][] = 'new-translation';
       break;
@@ -122,15 +124,15 @@ function theme_l10n_suggestions_translate_translation($variables) {
       $element['#attributes']['class'][] = 'no-translation';
       // Fallthrough.
     default:
-      if ($element['active']['#value'] !== '') {
-        $element['#attributes']['class'][] = 'is-active default';
+      if ($element['approved']['#value'] !== '') {
+        $element['#attributes']['class'][] = 'is-approved default';
       }
   }
 
   $output = '<li' . drupal_attributes($element['#attributes']) . '>';
   $output .= theme('l10n_suggestions_translate_actions', array('element' => $element));
-  // Add the radio box to pick the active translation.
-  $output .= drupal_render($element['active']);
+  // Add the radio box to pick the approved translation.
+  $output .= drupal_render($element['approved']);
 
   if (isset($element['author'])) {
     $output .= '<div class="author">' . drupal_render($element['author']) . '</div>';
@@ -143,7 +145,7 @@ function theme_l10n_suggestions_translate_translation($variables) {
 }
 
 /**
- * Theme a radio button to pick the active translation.
+ * Theme a radio button to pick the approved translation.
  */
 function theme_l10n_suggestions_translate_radio($variables) {
   $element = $variables['element'];
