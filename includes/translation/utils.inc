@@ -51,23 +51,27 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   else {
     $get_votes =
       " SELECT t.tid, v.vid, v.uid, u.name, v.vtime
-      FROM {l10n_suggestions_translations} t
-      LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tid = t.tid)
-      LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
-      WHERE t.tid IN (:arr_tid)
-      ORDER BY v.vtime DESC";
+        FROM {l10n_suggestions_translations} t
+        LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tid = t.tid)
+        LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
+        WHERE t.tid IN (:arr_tid)
+        ORDER BY v.vtime DESC";
     $result = db_query($get_votes, array(':arr_tid' => $arr_tid));
     $arr_votes = $result->fetchAllAssoc('vid');
   }
 
   //get alternatives (from other languages)
+  //they are the best translations (max vcount) from the alternative languages
   $get_alternatives =
-    " SELECT DISTINCT p.pid, t.tid, t.lng, t.translation, t.vcount
-      FROM {l10n_suggestions_phrases} p
-      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
-      WHERE t.lng IN (:arr_lng) AND p.pid IN (:arr_sid)
-      GROUP BY p.pid, t.lng
-      HAVING t.vcount = MAX(t.vcount)";
+    " SELECT DISTINCT t.pid, t.tid, t.lng, t.translation, t.vcount
+      FROM (SELECT pid, lng, MAX(vcount) AS max_vcount
+	    FROM l10n_suggestions_translations
+	    WHERE lng IN (:arr_lng) AND pid IN (:arr_sid)
+	    GROUP BY pid, lng
+	    ) AS m
+      INNER JOIN l10n_suggestions_translations AS t
+	    ON m.pid = t.pid AND m.lng = t.lng AND m.max_vcount = t.vcount
+      GROUP BY t.pid, t.lng, t.vcount";
   $arr_lng = array('fr', 'sq');
   $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sid' => $arr_sid));
   $arr_alternatives = $result->fetchAllAssoc('tid');
