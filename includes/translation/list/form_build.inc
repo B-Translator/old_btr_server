@@ -85,6 +85,26 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
     );
   }
 
+  // Add alternative strings (in other languages).
+  /*******
+   * TODO: Improve alternatives in other languages.
+  $arr_items = array();
+  foreach ($string->alternatives as $langcode => $phrase) {
+    $phrase = l10n_suggestions_unpack_string($phrase);
+    $rendered_phrase = _l10n_suggestions_translate_render_textarray($phrase);
+    $arr_items = array(
+      '#markup' => "<strong>$langcode:</strong><label class='l10n-string'>$rendered_phrase</label>",
+    );
+  }
+  $form['alternatives'] = array(
+    '#theme' => 'item_list',
+    '#title' => t('Alternatives in other languages:'),
+    '#items' => $arr_items,
+    '#prefix' => '<div class="l10n-usage">',
+    '#suffix' => '</div>',
+  );
+  */
+
   //---------------- Add translations. --------------------
 
   // Translations are stored in an array.
@@ -92,7 +112,14 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
 
   // If there is no translation yet, display a visible placeholder.
   if (empty($translations)) {
-    $translations['0']->translation = t('(not translated)');
+    $translations['0'] = (object) array(
+      'pid' => $string->pid,
+      'tid' => '0',
+      'lng' => $lng,
+      'translation' => t('(not translated)'),
+      'uid_entered' => 0,
+      'votes' => array(),
+    );
   }
 
   foreach ($translations as $tid => $translation) {
@@ -143,6 +170,7 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
   $is_own = ($user->uid == $translation->uid_entered);
   $is_approved = in_array($user->uid, array_keys($translation->votes));
   $is_new = ($translation->tid == 'new');
+  $no_translation = ($translation->tid == '0');
   $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
 
   $form = array(
@@ -161,19 +189,23 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
     '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tid,
     '#checked' => $is_approved,
-    '#disabled' => !user_access('submit votes'),
+    '#disabled' => !user_access('submit votes') || $no_translation,
     '#parents' => array('strings', $string_pid, 'approved'),
     '#attributes' => array('class' => array('selector')),
   );
 
-  if ($may_moderate && !$is_new) {
+  if ($may_moderate && !$is_new && !$no_translation) {
     $form['declined'] = array(
       '#type' => 'checkbox',
       '#title' => t('Decline'),
       '#default_value' => false,
     );
   }
-  if ($is_new) {
+
+  if ($no_translation) {
+    //nothing else to add
+  }
+  elseif ($is_new) {
     // Fill in with as many textareas as required to enter translation
     // for this string.
     $form['value'] = array_fill(0, count($translation->translation), array(
@@ -199,6 +231,24 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
         '#markup' => $title,
         '#prefix' => '<div class="l10n-byline"><a href="' . url('translate/translation-details/' . $translation->tid) . '" class="l10n-more-link" title="' . t('Show full history for translation.') . '">',
         '#suffix' => '</a><div class="l10n-more-info"></div></div>',
+      );
+    }
+    //TODO: Improve displaying of vote count and the voters.
+    if ($translation->vcount != '0') {
+      $voters = array();
+      foreach ($translation->votes as $uid=>$vote) {
+        $voters[] = $vote->name;  //theme('username', array('account' => $uid, 'name' => $vote->name));
+      }
+      $form['votes'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Number of Votes: @vcount', array('@vcount' => $translation->vcount)),
+        //'#prefix' => '<div class="l10n-more-info">',
+        //'#suffix' => '</div>',
+        '#collapsible' => true,
+        '#collapsed' => true,
+        'voters' => array(
+          '#markup' => implode(', ', $voters),
+        ),
       );
     }
   }

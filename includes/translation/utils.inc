@@ -45,15 +45,33 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
 
   //get votes
   $arr_tid = array_keys($arr_translations);
-  $get_votes =
-    " SELECT t.tid, v.vid, v.uid, u.name, v.vtime
+  if (empty($arr_tid)) {
+    $arr_votes = array();
+  }
+  else {
+    $get_votes =
+      " SELECT t.tid, v.vid, v.uid, u.name, v.vtime
       FROM {l10n_suggestions_translations} t
       LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tid = t.tid)
       LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
       WHERE t.tid IN (:arr_tid)
       ORDER BY v.vtime DESC";
-  $result = db_query($get_votes, array(':arr_tid' => $arr_tid));
-  $arr_votes = $result->fetchAllAssoc('vid');
+    $result = db_query($get_votes, array(':arr_tid' => $arr_tid));
+    $arr_votes = $result->fetchAllAssoc('vid');
+  }
+
+  //get alternatives (from other languages)
+  $get_alternatives =
+    " SELECT DISTINCT p.pid, t.tid, t.lng, t.translation, t.vcount
+      FROM {l10n_suggestions_phrases} p
+      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
+      WHERE t.lng IN (:arr_lng) AND p.pid IN (:arr_sid)
+      GROUP BY p.pid, t.lng
+      HAVING t.vcount = MAX(t.vcount)";
+  $arr_lng = array('fr', 'sq');
+  $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sid' => $arr_sid));
+  $arr_alternatives = $result->fetchAllAssoc('tid');
+  //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
   // Put votes as nested arrays inside translations.
   // Votes are already ordered by vtime (desc).
@@ -68,10 +86,16 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   // Make sure that each translation has an array of votes
   // (even though it may be empty).
   foreach ($arr_translations as $tid => $translation) {
-    $pid = $translation->pid;
-    $tid = $translation->tid;
     if (!isset($translation->votes))  $translation->votes = array();
+    $pid = $translation->pid;
     $arr_strings[$pid]->translations[$tid] = $translation;
+  }
+
+  // Put alternatives nested under strings.
+  foreach ($arr_alternatives as $tid => $alternative) {
+    $pid = $alternative->pid;
+    $lng = $alternative->lng;
+    $arr_strings[$pid]->alternatives[$lng] = $alternative->translation;
   }
 
   // Put strings in the same order as $arr_sid.
@@ -80,6 +104,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   foreach ($arr_sid as $pid) {
     $string = $arr_strings[$pid];
     if (!isset($string->translations)) $string->translations = array();
+    if (!isset($string->alternatives)) $string->alternatives = array();
     $strings[$pid] = $string;
   }
 

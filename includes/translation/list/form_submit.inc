@@ -93,6 +93,14 @@ function l10n_suggestions_add_vote($tid, $uid) {
       ))
     ->execute();
 
+  // Update vote count of the translation.
+  $sql = 'SELECT COUNT(*) FROM {l10n_suggestions_votes} WHERE tid = :tid';
+  $vcount = db_query($sql, array(':tid' => $tid))->fetchField();
+  db_update('l10n_suggestions_translations')
+    ->fields(array('vcount' => $vcount))
+    ->condition('tid', $tid)
+    ->execute();
+
   return $vid;
 }
 

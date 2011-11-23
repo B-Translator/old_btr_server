@@ -9,7 +9,6 @@
  */
 require_once(dirname(__FILE__) . '/list/list.inc');
 require_once(dirname(__FILE__) . '/utils.inc');
-//require_once(dirname(__FILE__) . '/../ajax_callbacks.inc');
 
 /**
  * Menu callback: translation/get/lng/hash

@@ -54,6 +54,11 @@ function theme_l10n_suggestions_translate_source($variables) {
   $output .= theme('l10n_suggestions_in_context', array('source' => $element['#string']));
 
   $output .= '<div class="l10n-usage"><a href="' . url('translation/source-details/' . $element['#string']->pid) . '" class="l10n-more-link" title="' . t('Show list of projects and releases where this text is used.') . '">' . t('Show related projects') . '</a><div class="l10n-more-info"></div></div>';
+
+  /** TODO: Improve alternatives in other languages.
+  $output .= drupal_render($element['alternatives']);
+  */
+
   return $output;
 }
 
@@ -136,6 +141,10 @@ function theme_l10n_suggestions_translate_translation($variables) {
 
   if (isset($element['author'])) {
     $output .= '<div class="author">' . drupal_render($element['author']) . '</div>';
+  }
+  //TODO: Improve displaying of vote count and the voters.
+  if (isset($element['votes'])) {
+    $output .= '<div class="votes">' . drupal_render($element['votes']) . '</div>';
   }
 
   if (isset($element['value'])) {
