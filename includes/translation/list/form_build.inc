@@ -181,18 +181,23 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
     ),
   );
 
-  // Approved radio box is used to pick the approved (voted/liked) translation.
+  // The 'approved' radio/checkbox is used to pick the approved (voted/liked) translation(s).
+  $voting_mode = variable_get('l10n_suggestions_voting_mode', 'single');
+  $type = ($voting_mode == 'single') ? 'radio' : 'checkbox';
   $form['approved'] = array(
-    '#type' => 'radio',
+    '#type' => $type,
     '#theme' => 'l10n_suggestions_translate_radio',
     '#theme_wrappers' => array(),
     '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tid,
-    '#checked' => $is_approved,
+    '#default_value' => $is_approved ? $translation->tid : '',
     '#disabled' => !user_access('submit votes') || $no_translation,
-    '#parents' => array('strings', $string_pid, 'approved'),
     '#attributes' => array('class' => array('selector')),
   );
+  if ($voting_mode == 'single') {
+    $form['approved']['#checked'] = $is_approved;
+    $form['approved']['#parents'] = array('strings', $string_pid, 'approved');
+  }
 
   if ($may_moderate && !$is_new && !$no_translation) {
     $form['declined'] = array(
@@ -229,15 +234,15 @@ function _l10n_suggestions_translate_translation($translation, $string_pid, $lng
 
       $form['author'] = array(
         '#markup' => $title,
-        '#prefix' => '<div class="l10n-byline"><a href="' . url('translate/translation-details/' . $translation->tid) . '" class="l10n-more-link" title="' . t('Show full history for translation.') . '">',
-        '#suffix' => '</a><div class="l10n-more-info"></div></div>',
+        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translation/details/' . $translation->tid) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
+        //'#suffix' => '</a><div class="l10n-more-info"></div></div>',
       );
     }
     //TODO: Improve displaying of vote count and the voters.
     if ($translation->vcount != '0') {
       $voters = array();
       foreach ($translation->votes as $uid=>$vote) {
-        $voters[] = $vote->name;  //theme('username', array('account' => $uid, 'name' => $vote->name));
+        $voters[] = theme('username', array('account' => (object) array('name' => $vote->name, 'uid' => $uid)));
       }
       $form['votes'] = array(
         '#type' => 'fieldset',

@@ -8,43 +8,27 @@
  * @see l10n_suggestions_translate_form().
  */
 function l10n_suggestions_translate_form_submit($form, &$form_state) {
-  global $user;
-
   $form_values = $form_state['values'];
-  dpm($form_values, '$form_values');  //debug
-
   $lng = $form_values['langcode'];
+  // Get the voting mode.
+  $voting_mode = variable_get('l10n_suggestions_voting_mode', 'single');
 
   // Iterate outer structure built in l10n_suggestions_translate_form().
   foreach ($form_values['strings'] as $sid => $string) {
 
-    $tid_approved = $string['approved'];
-    if (!$tid_approved)  continue;
-
-    if (is_numeric($tid_approved) && $tid_approved > 0) {
-      // This translation is voted by the user.
-      // If this is not an existing vote,
-      // then add a new vote for this translation.
-      $previous_votes = $string[$tid_approved]['original']->votes;
-      if (!in_array($user->uid, array_keys($previous_votes))) {
-        l10n_suggestions_add_vote($tid_approved, $user->uid);
-      }
-    }
-    else if ($tid_approved == 'new') {
-      //add a new suggestion
-      $values = $string['new']['value'];
-      $suggestion = l10n_suggestions_pack_string($values);
-      $suggestion = str_replace(t('<New translation>'), '', $suggestion);
-      if (trim($suggestion) != '') {
-        l10n_suggestions_add_suggestion($sid, $lng, $suggestion, $user->uid);
-      }
+    if ($voting_mode == 'single') {
+      $tid = $string['approved'];
+      _l10n_suggestions_translate_form_submit_single($sid, $lng, $string);
     }
 
     // Iterate inner structure built in _l10n_suggestions_translate_form_item().
     // Form items have numeric $tid values and other keys here.
-    foreach ($string as $tid => $options) {
-      if (!empty($options['declined'])) {
-        //do something for declined translations
+    foreach ($string as $tid => $translation) {
+      if ($voting_mode == 'multiple') {
+	_l10n_suggestions_translate_form_submit_multiple($sid, $tid, $lng, $translation);
+      }
+      if (is_numeric($tid) && !empty($translation['declined'])) {
+	//do something for declined translations
       }
     }
   }
@@ -59,6 +43,55 @@ function l10n_suggestions_translate_form_submit($form, &$form_state) {
   $redirect_args = $form_state['values']['target'];
   unset($redirect_args['q']);
   $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
+}
+
+function _l10n_suggestions_translate_form_submit_single($sid, $lng, $string) {
+
+  $tid = $string['approved'];
+  if ($tid == '')  return;
+
+  if ($tid == 'new') {
+    //add a new suggestion
+    $values = $string[$tid]['value'];
+    l10n_suggestions_add_suggestion($sid, $lng, $values);
+    return;
+  }
+
+  if (is_numeric($tid)) {
+    // If this is not an existing vote,
+    // then add a new vote for this translation.
+    $previous_votes = $string[$tid]['original']->votes;
+    global $user;
+    if (!in_array($user->uid, array_keys($previous_votes))) {
+      l10n_suggestions_add_vote($tid, $user->uid);
+    }
+  }
+}
+
+function _l10n_suggestions_translate_form_submit_multiple($sid, $tid, $lng, $translation) {
+  global $user;
+
+  $approved = $translation['approved'];
+  if ($tid == 'new') {
+    //add a new suggestion
+    $values = isset($translation['value']) ? $translation['value'] : array();
+    l10n_suggestions_add_suggestion($sid, $lng, $values);
+  }
+  elseif ($approved != '') {
+    // Add a new vote for this translation
+    // if such a vote does not exist.
+    $previous_votes = $translation['original']->votes;
+    if (!in_array($user->uid, array_keys($previous_votes))) {
+      l10n_suggestions_add_vote($tid, $user->uid);
+    }
+  }
+  elseif ($approved == '') {
+    // Remove this vote, if it exists.
+    $previous_votes = $translation['original']->votes;
+    if (in_array($user->uid, array_keys($previous_votes))) {
+      _l10n_suggestions_clean_previous_votes($tid, $user->uid, $sid, $lng);
+    }
+  }
 }
 
 /**
@@ -176,12 +209,22 @@ function _l10n_suggestions_clean_previous_votes($tid, $uid, $sid, $lng) {
  *   The string ID for which a new suggestion should be added.
  * @param $lng
  *   The language code of the new suggestion.
- * @param $translation
- *   String representing the new translation suggestion.
+ * @param $values
+ *   Array of strings containing the new translation suggestion
+ *   for the singular version and for plural version(s) (if any).
  * @param $uid
- *   ID of the user that submitted the suggestion.
+ *   ID of the user that submitted the suggestion. If missing,
+ *   the logged in user will be used.
  */
-function l10n_suggestions_add_suggestion($sid, $lng, $translation, $uid) {
+function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
+
+  if ($uid == NULL) {
+    global $user;
+    $uid = $user->uid;
+  }
+
+  $translation = l10n_suggestions_pack_string($values);
+  $translation = str_replace(t('<New translation>'), '', $translation);
 
   // Don't add empty translations.
   if (trim($translation) == '')  return false;

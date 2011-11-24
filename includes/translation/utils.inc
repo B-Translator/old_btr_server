@@ -77,6 +77,13 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   $arr_alternatives = $result->fetchAllAssoc('tid');
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
+  // Put alternatives as nested array under strings.
+  foreach ($arr_alternatives as $tid => $alternative) {
+    $pid = $alternative->pid;
+    $lng = $alternative->lng;
+    $arr_strings[$pid]->alternatives[$lng] = $alternative->translation;
+  }
+
   // Put votes as nested arrays inside translations.
   // Votes are already ordered by vtime (desc).
   foreach ($arr_votes as $vid => $vote) {
@@ -93,13 +100,6 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
     if (!isset($translation->votes))  $translation->votes = array();
     $pid = $translation->pid;
     $arr_strings[$pid]->translations[$tid] = $translation;
-  }
-
-  // Put alternatives nested under strings.
-  foreach ($arr_alternatives as $tid => $alternative) {
-    $pid = $alternative->pid;
-    $lng = $alternative->lng;
-    $arr_strings[$pid]->alternatives[$lng] = $alternative->translation;
   }
 
   // Put strings in the same order as $arr_sid.

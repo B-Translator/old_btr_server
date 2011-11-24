@@ -100,6 +100,7 @@ function theme_l10n_suggestions_in_context($variables) {
  */
 function theme_l10n_suggestions_translate_translation($variables) {
   $element = $variables['element'];
+
   if (!isset($element['#attributes']['class'])) {
     $element['#attributes']['class'] = array();
   }
@@ -158,8 +159,9 @@ function theme_l10n_suggestions_translate_translation($variables) {
  */
 function theme_l10n_suggestions_translate_radio($variables) {
   $element = $variables['element'];
+  $type = $element['#type'];  // radio or checkbox
   _form_set_class($element, array('form-radio'));
-  $output = '<input type="radio" ';
+  $output = '<input type="'.$type.'" ';
   $output .= 'id="' . $element['#id'] . '" ';
   $output .= 'name="' . $element['#name'] . '" ';
   $output .= 'value="' . $element['#return_value'] . '" ';

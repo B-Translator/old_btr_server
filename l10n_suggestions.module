@@ -131,6 +131,9 @@ function l10n_suggestions_init() {
       drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/l10n_suggestions-rtl.css');
     }
   }
+
+  //variable_set('l10n_suggestions_voting_mode', 'multiple');  //debug
+  variable_set('l10n_suggestions_voting_mode', 'single');  //debug
 }
 
 ?>
