@@ -238,7 +238,7 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
   // Use HASH matching to avoid marking case-corrections as duplicate.
   $hash = l10n_suggestions_get_string_hash($translation);
   $query = 'SELECT translation FROM {l10n_suggestions_translations} '
-    . 'WHERE pid = :pid AND lng = :lng AND hash = UNHEX(:hash)';
+    . 'WHERE pid = :pid AND lng = :lng AND hash = :hash';
   $params = array(':pid' => $sid, ':lng' => $lng, ':hash' => $hash);
   $existing = db_query($query, $params)->fetchField();
 
@@ -256,7 +256,7 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
         'time_entered' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
-  db_query('UPDATE {l10n_suggestions_translations} SET hash = UNHEX(translation)');
+  db_query('UPDATE {l10n_suggestions_translations} SET hash = SHA1(TRIM(translation))');
 
   // Add also a vote for the new suggestion.
   $vid = l10n_suggestions_add_vote($tid, $uid);

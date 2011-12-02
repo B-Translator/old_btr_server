@@ -11,8 +11,8 @@ use sq;
  * so, we use a hash value of the trimmed phrase in order to
  * make comparisons and to ensure uniqueness of the phrases
  */
-alter table phrases add column hash binary(20);
-update phrases set hash = unhex(sha1(trim(phrase)));
+alter table phrases add column hash varchar(40);
+update phrases set hash = sha1(trim(phrase));
 --select * from phrases limit 10;
 
 /** check for doublicate phrases */

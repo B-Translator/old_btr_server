@@ -25,7 +25,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
 
   //get string details
   $get_strings =
-    " SELECT pid, phrase, hex(hash) AS hash
+    " SELECT pid, phrase, hash
       FROM {l10n_suggestions_phrases}
       WHERE pid IN (:arr_sid)";
   $result = db_query($get_strings, array(':arr_sid' => $arr_sid));
@@ -33,7 +33,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
 
   //get translations
   $get_translations =
-    " SELECT p.pid, t.tid, t.lng, t.translation, hex(t.hash) AS hash,
+    " SELECT p.pid, t.tid, t.lng, t.translation, t.hash,
              t.time_entered, t.uid_entered, u.name AS author, t.vcount
       FROM {l10n_suggestions_phrases} p
       LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
@@ -142,7 +142,12 @@ function l10n_suggestions_unpack_string($string) {
  *   A packed string with NULL bytes separating each string.
  */
 function l10n_suggestions_pack_string($strings) {
-  return implode("\0", $strings);
+  if (is_array($strings)) {
+    return implode("\0", $strings);
+  }
+  else {
+    return $strings;
+  }
 }
 
 function l10n_suggestions_get_string_hash($l10n_string) {

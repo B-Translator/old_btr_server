@@ -14,9 +14,9 @@ alter table l10n_suggestions_phrases add column old_id int;
 /**
  * The column hash will be used for more efficient and reliable
  * text comparison.
- * hash = unhex(sha1(trim(phrase)))
+ * hash = sha1(trim(phrase))
  */
---alter table l10n_suggestions_phrases add column hash binary(20) after phrase;
+--alter table l10n_suggestions_phrases add column hash varchar(40) after phrase;
 
 /**
  * Importing bulk data is done a bit faster if keys and indexes

@@ -11,7 +11,8 @@ else
 fi
 
 ### make this 'true' for a full dump of the database
-dump='false'
+#dump='false'
+dump='true'
 
 
 ### dump only the schema of the database
@@ -30,7 +31,7 @@ then
   date=$(date +%Y%m%d)
   dump_file=l10n_suggestions_dump_$date.sql
 
-  mysqldump --user=root --password --opt --hex-blob  \
+  mysqldump --user=root --password --opt \
             --database $db_name --tables \
             l10n_suggestions_phrases l10n_suggestions_locations \
             l10n_suggestions_translations l10n_suggestions_votes \

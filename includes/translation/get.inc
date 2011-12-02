@@ -71,7 +71,7 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   // Get the matching string and its translations.
   $query = db_select('l10n_suggestions_phrases', 'p')
     ->fields('p', array('pid'))
-    ->where('p.hash = unhex(:hash)', array(':hash' => $hash));
+    ->where('p.hash = :hash', array(':hash' => $hash));
   $strings = l10n_suggestions_get_strings($query, $lng);
   //if ($strings) dpm($strings[0]);  //debug
 

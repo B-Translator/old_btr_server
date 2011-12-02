@@ -38,9 +38,9 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'hash' => array(
-        'description' => 'hash = UNHEX(SHA1(TRIM(phrase))) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
-        'type' => 'binary',
-        'length' => '20',
+        'description' => 'hash = SHA1(TRIM(phrase)) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
+        'type' => 'varchar',
+        'length' => '40',
         'not null' => FALSE,
       ),
       'uid_entered' => array(
@@ -101,9 +101,9 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'hash' => array(
-        'description' => 'hash = UNHEX(SHA1(TRIM(translation))) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
-        'type' => 'binary',
-        'length' => '20',
+        'description' => 'hash = SHA1(TRIM(translation)) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
+        'type' => 'varchar',
+        'length' => '40',
         'not null' => FALSE,
       ),
       'vcount' => array(

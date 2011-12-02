@@ -40,12 +40,12 @@ inner join sq.phrases psq on (lsq.phraseid = psq.id);
 --select * from l10n_suggestions_translations limit 10;
 
 -- The column hash will be used for more efficient and reliable text comparison.
--- hash = unhex(sha1(trim(phrase)))
---alter table l10n_suggestions_translations add column hash binary(20) after translation;
+-- hash = sha1(trim(phrase))
+--alter table l10n_suggestions_translations add column hash varchar(40) after translation;
 --alter table l10n_suggestions_translations add index hash (hash);
 
 update l10n_suggestions_translations
-set hash = unhex(sha1(trim(translation)))
+set hash = sha1(trim(translation))
 where hash is null;
 
 
@@ -84,11 +84,11 @@ inner join fr.phrases pfr on (lfr.phraseid = pfr.id);
 --select * from l10n_suggestions_translations where lng='fr' limit 10;
 
 -- The column hash will be used for more efficient and reliable text comparison.
--- hash = unhex(sha1(trim(phrase)))
---alter table l10n_suggestions_translations add column hash binary(20) after translation;
+-- hash = sha1(trim(phrase))
+--alter table l10n_suggestions_translations add column hash varchar(40) after translation;
 
 update l10n_suggestions_translations
-set hash = unhex(sha1(trim(translation)))
+set hash = sha1(trim(translation))
 where hash is null;
 
 --alter table l10n_suggestions_translations add index hash (hash);

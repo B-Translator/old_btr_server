@@ -173,9 +173,9 @@ keeping notes, project planning, tasks management, etc.
                 from projects.
      - pid : serial :: Internal numeric identifier for a phrase.
      - phrase : text :: The (English) phrase to be translated.
-     - hash : binary(20) :: Will be used for a more efficient and
+     - hash : varchar(40) :: Will be used for a more efficient and
           reliable text comparison, searching, indexing, etc. hash =
-          UNHEX(SHA1(TRIM(phrase)))
+          SHA1(TRIM(phrase))
      - uid_entered : int :: ID of the user that inserted this string
           on the DB.
      - time_entered : datetime :: The time that this string was
@@ -194,9 +194,9 @@ keeping notes, project planning, tasks management, etc.
      - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
      - translation : varchar(1000) :: The (suggested) translation of
           the phrase.
-     - hash : binary(20) :: Will be used for a more efficient and
+     - hash : varchar(40) :: Will be used for a more efficient and
           reliable text comparison, searching, indexing, etc. hash =
-          UNHEX(SHA1(TRIM(translation)))
+          SHA1(TRIM(translation))
      - vcount : int/tiny :: Count of votes received so far. This can be
           counted on the table Votes, but for convenience is stored
           here as well.
