@@ -12,7 +12,7 @@ require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
  * Menu callback: translation/get/lng/hash
- * Get translation suggestions for a given phrase.
+ * Get translation suggestions for a given string.
  * 'lng' and 'hash' are passed as parameters to the function.
  */
 function l10n_suggestions_get($lng =NULL, $hash =NULL) {
@@ -69,9 +69,9 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   );
 
   // Get the matching string and its translations.
-  $query = db_select('l10n_suggestions_phrases', 'p')
-    ->fields('p', array('pid'))
-    ->where('p.hash = :hash', array(':hash' => $hash));
+  $query = db_select('l10n_suggestions_strings', 's')
+    ->fields('s', array('sid'))
+    ->where('s.hash = :hash', array(':hash' => $hash));
   $strings = l10n_suggestions_get_strings($query, $lng);
   //if ($strings) dpm($strings[0]);  //debug
 

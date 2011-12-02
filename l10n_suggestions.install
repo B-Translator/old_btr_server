@@ -23,22 +23,22 @@ function l10n_suggestions_uninstall() {
  */
 function l10n_suggestions_schema() {
 
-  //Translatable strings and phrases that are extracted from projects.
-  $schema['l10n_suggestions_phrases'] = array(
-    'description' => 'Translatable strings and phrases that are extracted from...',
+  //Translatable strings that are extracted from projects.
+  $schema['l10n_suggestions_strings'] = array(
+    'description' => 'Translatable strings that are extracted from projects.',
     'fields' => array(
-      'pid' => array(
-        'description' => 'Internal numeric identifier for a phrase.',
+      'sid' => array(
+        'description' => 'Internal numeric identifier for a l10n string.',
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'phrase' => array(
-        'description' => 'The (English) phrase to be translated.',
+      'string' => array(
+        'description' => 'The (English) l10n string to be translated.',
         'type' => 'text',
         'not null' => TRUE,
       ),
       'hash' => array(
-        'description' => 'hash = SHA1(TRIM(phrase)) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
+        'description' => 'hash = SHA1(TRIM(string)) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
         'type' => 'varchar',
         'length' => '40',
         'not null' => FALSE,
@@ -54,37 +54,37 @@ function l10n_suggestions_schema() {
         'not null' => FALSE,
       ),
       'pcount' => array(
-        'description' => 'How often this phrase is encountered in all the projects. Can be useful for any heuristics that try to find out which phrases need to be translated first.',
+        'description' => 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings need to be translated first.',
         'type' => 'int',
         'size' => 'tiny',
         'not null' => FALSE,
         'default' => 1,
       ),
     ),
-    'primary key' => array('pid'),
+    'primary key' => array('sid'),
     'unique keys' => array(
       'hash' => array('hash')
     ),
     'indexes' => array(
-      'phrase' => array(array('phrase', 100)),
-      'phrase_text' => array('phrase'),
+      'string' => array(array('string', 100)),
+      'string_text' => array('string'),
       'uid_entered' => array('uid_entered', 'time_entered'),
     ),
   );
 
-  //Translations/suggestions of the phrases (strings).
-  //For each phrase/string there can be translations for different
+  //Translations/suggestions of the l10n strings.
+  //For each l10n string there can be translations for different
   //languages, and more than one translation for each language.
   $schema['l10n_suggestions_translations'] = array(
-    'description' => 'Translations/suggestions of the phrases (strings). For...',
+    'description' => 'Translations/suggestions of the l10n strings. For...',
     'fields' => array(
       'tid' => array(
         'description' => 'Internal numeric identifier for a translation.',
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'pid' => array(
-        'description' => 'Reference to the id of the phrase that is translated.',
+      'sid' => array(
+        'description' => 'Reference to the id of the l10n string that is translated.',
         'type' => 'int',
         'not null' => TRUE,
       ),
@@ -95,7 +95,7 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'translation' => array(
-        'description' => 'The (suggested) translation of the phrase.',
+        'description' => 'The (suggested) translation of the l10n string.',
         'type' => 'varchar',
         'length' => '1000',
         'not null' => TRUE,
@@ -128,7 +128,7 @@ function l10n_suggestions_schema() {
     'primary key' => array('tid'),
     'indexes' => array(
       'hash' => array('hash'),
-      'pid' => array('pid'),
+      'sid' => array('sid'),
       'time' => array('time_entered'),
       'translation_text' => array('translation'),
       'uid' => array('uid_entered'),
@@ -196,17 +196,17 @@ function l10n_suggestions_schema() {
     'primary key' => array('uid'),
   );
 
-  //Locations (lines) where a phrase (string) is found.
+  //Locations (lines) where a l10n string is found.
   $schema['l10n_suggestions_locations'] = array(
-    'description' => 'Locations (lines) where a phrase (string) is found.',
+    'description' => 'Locations (lines) where a l10n string is found.',
     'fields' => array(
       'lid' => array(
         'description' => 'Internal numeric identifier of a line.',
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'pid' => array(
-        'description' => 'Reference to the id of the phrase contained in this line.',
+      'sid' => array(
+        'description' => 'Reference to the id of the l10n string contained in this line.',
         'type' => 'int',
         'not null' => TRUE,
       ),
@@ -234,7 +234,7 @@ function l10n_suggestions_schema() {
     ),
     'primary key' => array('lid'),
     'indexes' => array(
-      'pid' => array('pid'),
+      'sid' => array('sid'),
       'projectname' => array(array('projectname', 5)),
     ),
   );

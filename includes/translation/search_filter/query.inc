@@ -3,21 +3,21 @@
 /**
  * Build the query that selects the strings that match
  * the given filter. This query should return only the id-s
- * of the matching phrases and the matching scores, ordered by
+ * of the matching strings and the matching scores, ordered by
  * the score in decreasing order.
  *
  * It should be something like this:
  *
- *    SELECT p.pid,
+ *    SELECT s.sid,
  *           MAX(MATCH (t.translation) AGAINST (:words)) AS score
- *    FROM {l10n_suggestions_phrases} p
- *    LEFT JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
+ *    FROM {l10n_suggestions_strings} s
+ *    LEFT JOIN {l10n_suggestions_translations} t ON (s.sid = t.sid)
  *    LEFT JOIN . . . . .
  *    . . . . . . . . . .
  *    WHERE (t.lng = :lng)
  *      AND (MATCH (t.translation) AGAINST (:words IN BOOLEAN MODE))
  *    . . . . . . . . . .
- *    GROUP BY p.pid
+ *    GROUP BY s.sid
  *    ORDER BY score DESC
  *    LIMIT :limit;
  *
@@ -31,10 +31,10 @@
  */
 function l10n_suggestions_build_query($filter) {
 
-  $query = db_select('l10n_suggestions_phrases', 'p')
+  $query = db_select('l10n_suggestions_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
-  $query->addField('p', 'pid');
-  $query->groupBy('p.pid');
+  $query->addField('s', 'sid');
+  $query->groupBy('s.sid');
 
   _l10n_suggestions_filter_by_content($query, $filter['mode'], $filter['words']);
   _l10n_suggestions_filter_by_project($query, $filter['project'], $filter['package'], $filter['release']);
@@ -74,9 +74,9 @@ function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words
   list($mode, $content) = explode('-', $search_mode);
   $in_boolean_mode = ($mode=='boolean' ? ' IN BOOLEAN MODE' : '');
   if ($content=='strings') {
-    $query->addExpression('MATCH (p.phrase) AGAINST (:words)', 'score');
+    $query->addExpression('MATCH (s.string) AGAINST (:words)', 'score');
     $query->where(
-      'MATCH (p.phrase) AGAINST (:words' . $in_boolean_mode . ')',
+      'MATCH (s.string) AGAINST (:words' . $in_boolean_mode . ')',
       array(':words' => $search_words)
     );
   }
@@ -186,7 +186,7 @@ function _l10n_suggestions_filter_by_date($query, $date_filter, $from_date, $to_
   }
 
   //get the alias (name) of the date field that has to be checked
-  if      ($date_filter=='strings')  $field = 'p.time_entered';
+  if      ($date_filter=='strings')  $field = 's.time_entered';
   elseif  ($date_filter=='votes')    $field = 'v.vtime';
   else                               $field = 't.time_entered';
 
@@ -219,14 +219,14 @@ function _l10n_suggestions_join_table($query, $table) {
 
   switch ($table) {
     case 'translations':
-      $query->leftJoin("l10n_suggestions_translations", 't', 'p.pid = t.pid');
+      $query->leftJoin("l10n_suggestions_translations", 't', 's.sid = t.sid');
       break;
     case 'votes':
-      _l10n_suggestions_join_table($query, 'translations', 't', 'p.pid = t.pid');
+      _l10n_suggestions_join_table($query, 'translations', 't', 's.sid = t.sid');
       $query->leftJoin("l10n_suggestions_votes", 'v', 'v.tid = t.tid');
       break;
     case 'locations':
-      $query->leftJoin("l10n_suggestions_locations", 'l', 'p.pid = l.pid');
+      $query->leftJoin("l10n_suggestions_locations", 'l', 's.sid = l.sid');
       break;
     default:
       debug("Error: _l10n_suggestions_join_table(): table '$table' is unknown.");

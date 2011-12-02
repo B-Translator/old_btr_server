@@ -19,26 +19,26 @@
  */
 function l10n_suggestions_get_strings($filter_query, $lng) {
   //get the IDs of the strings that are returned by the filter query
-  $assoc_arr_sid = $filter_query->execute()->fetchAllAssoc('pid');
+  $assoc_arr_sid = $filter_query->execute()->fetchAllAssoc('sid');
   if (empty($assoc_arr_sid))  return array();
   $arr_sid = array_keys($assoc_arr_sid);
 
   //get string details
   $get_strings =
-    " SELECT pid, phrase, hash
-      FROM {l10n_suggestions_phrases}
-      WHERE pid IN (:arr_sid)";
+    " SELECT sid, string, hash
+      FROM {l10n_suggestions_strings}
+      WHERE sid IN (:arr_sid)";
   $result = db_query($get_strings, array(':arr_sid' => $arr_sid));
-  $arr_strings = $result->fetchAllAssoc('pid');
+  $arr_strings = $result->fetchAllAssoc('sid');
 
   //get translations
   $get_translations =
-    " SELECT p.pid, t.tid, t.lng, t.translation, t.hash,
+    " SELECT s.sid, t.tid, t.lng, t.translation, t.hash,
              t.time_entered, t.uid_entered, u.name AS author, t.vcount
-      FROM {l10n_suggestions_phrases} p
-      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (p.pid = t.pid)
+      FROM {l10n_suggestions_strings} s
+      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (s.sid = t.sid)
       LEFT OUTER JOIN {users} u ON (u.uid = t.uid_entered)
-      WHERE (t.lng = :lng) AND p.pid IN (:arr_sid)
+      WHERE (t.lng = :lng) AND s.sid IN (:arr_sid)
       ORDER BY t.vcount DESC";
   $result = db_query($get_translations, array(':lng' => $lng, ':arr_sid' => $arr_sid));
   $arr_translations = $result->fetchAllAssoc('tid');
@@ -63,15 +63,15 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   //get alternatives (from other languages)
   //they are the best translations (max vcount) from the alternative languages
   $get_alternatives =
-    " SELECT DISTINCT t.pid, t.tid, t.lng, t.translation, t.vcount
-      FROM (SELECT pid, lng, MAX(vcount) AS max_vcount
+    " SELECT DISTINCT t.sid, t.tid, t.lng, t.translation, t.vcount
+      FROM (SELECT sid, lng, MAX(vcount) AS max_vcount
 	    FROM l10n_suggestions_translations
-	    WHERE lng IN (:arr_lng) AND pid IN (:arr_sid)
-	    GROUP BY pid, lng
+	    WHERE lng IN (:arr_lng) AND sid IN (:arr_sid)
+	    GROUP BY sid, lng
 	    ) AS m
       INNER JOIN l10n_suggestions_translations AS t
-	    ON m.pid = t.pid AND m.lng = t.lng AND m.max_vcount = t.vcount
-      GROUP BY t.pid, t.lng, t.vcount";
+	    ON m.sid = t.sid AND m.lng = t.lng AND m.max_vcount = t.vcount
+      GROUP BY t.sid, t.lng, t.vcount";
   $arr_lng = array('fr', 'sq');
   $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sid' => $arr_sid));
   $arr_alternatives = $result->fetchAllAssoc('tid');
@@ -79,9 +79,9 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
 
   // Put alternatives as nested array under strings.
   foreach ($arr_alternatives as $tid => $alternative) {
-    $pid = $alternative->pid;
+    $sid = $alternative->sid;
     $lng = $alternative->lng;
-    $arr_strings[$pid]->alternatives[$lng] = $alternative->translation;
+    $arr_strings[$sid]->alternatives[$lng] = $alternative->translation;
   }
 
   // Put votes as nested arrays inside translations.
@@ -98,18 +98,18 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   // (even though it may be empty).
   foreach ($arr_translations as $tid => $translation) {
     if (!isset($translation->votes))  $translation->votes = array();
-    $pid = $translation->pid;
-    $arr_strings[$pid]->translations[$tid] = $translation;
+    $sid = $translation->sid;
+    $arr_strings[$sid]->translations[$tid] = $translation;
   }
 
   // Put strings in the same order as $arr_sid.
   // Make sure as well that each string has an array of translations
   // (even though it may be empty).
-  foreach ($arr_sid as $pid) {
-    $string = $arr_strings[$pid];
+  foreach ($arr_sid as $sid) {
+    $string = $arr_strings[$sid];
     if (!isset($string->translations)) $string->translations = array();
     if (!isset($string->alternatives)) $string->alternatives = array();
-    $strings[$pid] = $string;
+    $strings[$sid] = $string;
   }
 
   return $strings;

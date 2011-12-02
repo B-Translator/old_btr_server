@@ -15,11 +15,11 @@ function l10n_suggestions_help($path, $args) {
   switch($path)
     {
       case 'translation/get':
-        $help = t('Get translation suggestions for a given phrase.');
+        $help = t('Get translation suggestions for a given string.');
         break;
 
       case 'translation/vote':
-        $help = t('Vote the best translation for a phrase, or suggest a better translation.');
+        $help = t('Vote the best translation for a string, or suggest a better translation.');
         break;
     }
 
@@ -33,7 +33,7 @@ function l10n_suggestions_help($path, $args) {
 function l10n_suggestions_menu() {
   $items['translation/get'] = array(
     'title'           => 'Get l10n Translation',
-    'description'     => 'Get translation suggestions for a given phrase.',
+    'description'     => 'Get translation suggestions for a given string.',
     'page callback'   => 'l10n_suggestions_get',
     'file'            => 'includes/translation/get.inc',
     'access callback' => TRUE,
@@ -41,7 +41,7 @@ function l10n_suggestions_menu() {
 
   $items['translation/vote'] = array(
     'title'           => 'Vote l10n Translation',
-    'description'     => 'Vote the best translation for a phrase, or suggest a better translation.',
+    'description'     => 'Vote the best translation for a string, or suggest a better translation.',
     'page callback'   => 'l10n_suggestions_vote',
     'file'            => 'includes/translation/vote.inc',
     'access callback' => TRUE,
@@ -49,7 +49,7 @@ function l10n_suggestions_menu() {
 
   $items['translation/search'] = array(
     'title'           => 'Search l10n Translations',
-    'description'     => 'Search phrases and translations using various filters.',
+    'description'     => 'Search strings and translations using various filters.',
     'page callback'   => 'l10n_suggestions_search',
     'file'            => 'includes/translation/search.inc',
     'access callback' => TRUE,

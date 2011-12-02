@@ -26,7 +26,7 @@ function l10n_suggestions_build_filter() {
   list($limit_options, $default_limit) = _l10n_suggestions_get_filter_options('limit');
   $filter['limit'] = in_array($limit, $limit_options) ? $limit : $default_limit;
 
-  //search can be done either by similarity of phrases (natural search),
+  //search can be done either by similarity of l10n strings (natural search),
   //or by matching words according to a certain logic (boolean search);
   //search can be performed either on l10n strings or on the translations
   $mode = isset($request['mode']) ? $request['mode'] : '';
@@ -219,8 +219,8 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
 
   $form['basic_search']['words'] = array(
     '#type' => 'textarea',
-    '#title' => t('The Phrase Or Words To Be Searched'),
-    '#description' => t('Search for l10n strings or translations that contain the given words. The <emphasized>natural</emphasized> search will try to find phrases similar to the given one (see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-natural-language.html">Natural Language Full-Text Searches</a>). The <emphasized>boolean</emphasized> search will try to match words according to logical rules. The words can be preceded by + (plus), - (minus), etc. (for more details see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-boolean.html">Boolean Full-Text Searches</a>).'),
+    '#title' => t('The String Or Words To Be Searched'),
+    '#description' => t('Search for l10n strings or translations that contain the given words. The <emphasized>natural</emphasized> search will try to find strings similar to the given one (see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-natural-language.html">Natural Language Full-Text Searches</a>). The <emphasized>boolean</emphasized> search will try to match words according to logical rules. The words can be preceded by + (plus), - (minus), etc. (for more details see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-boolean.html">Boolean Full-Text Searches</a>).'),
     '#default_value' => $form_state['values']['words'],
     '#rows' => 2,
   );

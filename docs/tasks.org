@@ -3,27 +3,6 @@ This file is used to keep the project organized. It is based on the
 org-mode of Emacs (http://orgmode.org/), which is a good tool for
 keeping notes, project planning, tasks management, etc.
 
-* Initial Plan							    :ARCHIVE:
-
-** DONE Design DB schema
-   Design a propper DB schema for l10n_suggestions. In general, it is
-   going to be reacher than the open-tran.eu schema, since it is going
-   to keep data about votes/evaluations/promotions of different
-   suggestions.
-
-** DONE Get open-tran.eu data
-   Download it from: http://open-tran.eu/dev.html
-
-** TODO Import data
-   Write a script for importing the open-tran.eu data into the
-   l10n_suggestions DB (MySQL). It should:
-   1. [X] dump the data from the SQLite db
-   2. [X] import them into MySQL
-   3. [X] rearrange them to fit the new schema requirements
-   4. [ ] take care of both an initial import and an update (in the
-      case of update it should be carefull not to overwrite any
-      existing data)
-
 * Functional requirements
   Describe the desired functionality of the module. Then define the
   requirements in terms of forms and other UI elements, permissions,
@@ -157,10 +136,10 @@ keeping notes, project planning, tasks management, etc.
 
    The DB tables and their fields:
 
-   + Locations :: Locations (lines) where a phrase (string) is found.
+   + Locations :: Locations (lines) where a l10n string is found.
      - lid : serial :: Internal numeric identifier of a line.
-     - pid : int :: Reference to the id of the phrase contained in
-                    this line.
+     - sid : int :: Reference to the id of the l10n string contained
+                    in this line.
      - projectid : int :: Reference to the id of the project that
           contains this line.
      - packageid : int :: Reference to the id of the package that
@@ -169,31 +148,30 @@ keeping notes, project planning, tasks management, etc.
           containing this line.
      - flags : int :: Copied from open-trans.eu
 
-   + Phrases :: Translatable strings and phrases that are extracted
-                from projects.
-     - pid : serial :: Internal numeric identifier for a phrase.
-     - phrase : text :: The (English) phrase to be translated.
+   + Strings :: Translatable strings that are extracted from projects.
+     - sid : serial :: Internal numeric identifier for a l10n string.
+     - string : text :: The (English) l10n string to be translated.
      - hash : varchar(40) :: Will be used for a more efficient and
           reliable text comparison, searching, indexing, etc. hash =
-          SHA1(TRIM(phrase))
+          SHA1(TRIM(string))
      - uid_entered : int :: ID of the user that inserted this string
           on the DB.
      - time_entered : datetime :: The time that this string was
           entered on the DB.
-     - pcount : int/tiny :: How often this phrase is encountered in
+     - pcount : int/tiny :: How often this string is encountered in
           all the projects. Can be useful for any heuristics that try
-          to find out which phrases need to be translated first.
+          to find out which strings need to be translated first.
 
-   + Translations :: Translations/suggestions of the phrases
-                     (strings). For each phrase/string there can be
-                     translations for different languages, and more
-                     than one translation for each language.
+   + Translations :: Translations/suggestions of the l10n strings.
+                     For each string there can be translations for
+                     different languages, and more than one
+                     translation for each language.
      - tid : serial :: Internal numeric identifier for a translation.
-     - pid : int :: Reference to the id of the phrase that is
+     - sid : int :: Reference to the id of the l10n string that is
                     translated.
      - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
      - translation : varchar(1000) :: The (suggested) translation of
-          the phrase.
+          the string.
      - hash : varchar(40) :: Will be used for a more efficient and
           reliable text comparison, searching, indexing, etc. hash =
           SHA1(TRIM(translation))
@@ -226,12 +204,12 @@ keeping notes, project planning, tasks management, etc.
 
 *** translations/get/<lng>/<hash>
 
-    An interface for suggesting translations to a phrase.  Gets as
+    An interface for suggesting translations to a string.  Gets as
     input
     - the language code to which will be translated
-    - the hash of the phrase to be translated
+    - the hash of the string to be translated
 
-    Returns a list of translation suggestions of the given phrase.
+    Returns a list of translation suggestions of the given string.
     This interface should be accessible by anybody.
     There should be also a corresponding XML-RPC interface, so that it
     can be accessed from external programs.
@@ -249,12 +227,12 @@ keeping notes, project planning, tasks management, etc.
 
 *** translations/vote
 
-    This interface will select a random phrase and will present it and
+    This interface will select a random string and will present it and
     its available translations to the user. The user will vote one of
     them as the best translation, or will provide a new translation
     that he thinks is better.
 
-    The original phrase is usually presented in English, but
+    The original string is usually presented in English, but
     additional languages can be presented as well, if the user is not
     confident with English. (He can select these options on the user
     settings page as well.)
@@ -291,16 +269,15 @@ keeping notes, project planning, tasks management, etc.
 
 ** DB
 
-*** TODO Write scripts for updating data from open-tran.eu
-    Take care to preserve the data that already exist in the DB.
+*** TODO Write scripts for importing and updating data from *.po files
+    + Take care to preserve the data that already exist in the DB.
+    + Check the plurals (how they are handled?).
+    + There are cases of strings where exaclty the same translation is
+      stored several times. Try to fix it.
 
 *** Misc
-    + Check the plurals (how they are handled?).
-    + There are cases of strings where exaclty the same translation
-      is stored several times. Checkout why it happens, and try to
-      fix it.
-    + The function that generates the hash of a string (phrase)
-      probably should be changed and improved.
+    + The function that generates the hash of a l10n string probably
+      should be changed and improved.
 
 ** UI
 
@@ -355,8 +332,6 @@ keeping notes, project planning, tasks management, etc.
     on user preferencies, and also on the priorities of translation.
 
 ** Misc
-   - rename phrases to strings, pid to sid, etc.
-     (to be consistent with the terminology used in l10n_server)
    - Start with simple tests (l10n_suggestions.test)
    - Improve instalation.
    - Make an initial package.
@@ -390,3 +365,28 @@ keeping notes, project planning, tasks management, etc.
    2. Restart the server: service mysql restart
    3. Drop and recreate fulltext indexes.
 
+* Archive							    :ARCHIVE:
+
+** Initial Plan							    :ARCHIVE:
+   :PROPERTIES:
+   :ARCHIVE_TIME: 2011-12-02 Fri 21:52
+   :END:
+
+*** DONE Design DB schema
+    Design a propper DB schema for l10n_suggestions. In general, it is
+    going to be reacher than the open-tran.eu schema, since it is going
+    to keep data about votes/evaluations/promotions of different
+    suggestions.
+
+*** DONE Get open-tran.eu data
+    Download it from: http://open-tran.eu/dev.html
+
+*** TODO Import data
+    Write a script for importing the open-tran.eu data into the
+    l10n_suggestions DB (MySQL). It should:
+    1. [X] dump the data from the SQLite db
+    2. [X] import them into MySQL
+    3. [X] rearrange them to fit the new schema requirements
+    4. [ ] take care of both an initial import and an update (in the
+       case of update it should be carefull not to overwrite any
+       existing data)

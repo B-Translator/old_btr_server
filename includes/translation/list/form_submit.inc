@@ -115,7 +115,7 @@ function l10n_suggestions_add_vote($tid, $uid) {
   if (empty($trans))  return NULL;
 
   // Clean any previous vote.
-  $nr = _l10n_suggestions_clean_previous_votes($tid, $uid, $trans->pid, $trans->lng);
+  $nr = _l10n_suggestions_clean_previous_votes($tid, $uid, $trans->sid, $trans->lng);
 
   // Add the vote.
   $vid = db_insert('l10n_suggestions_votes')
@@ -186,8 +186,8 @@ function _l10n_suggestions_clean_previous_votes($tid, $uid, $sid, $lng) {
     // Get the other sibling translations
     // (translations of the same string for the same language).
     $sql = 'SELECT tid FROM {l10n_suggestions_translations} '
-      . 'WHERE pid = :pid AND lng = :lng';
-    $params = array(':pid' => $sid, ':lng' => $lng);
+      . 'WHERE sid = :sid AND lng = :lng';
+    $params = array(':sid' => $sid, ':lng' => $lng);
     $arr_tid = db_query($sql, $params)->fetchCol();
 
     if (empty($arr_tid))  return 0;
@@ -230,16 +230,16 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
   if (trim($translation) == '')  return false;
 
   // Load the string and adjust translation whitespace based on source.
-  $query = 'SELECT phrase FROM {l10n_suggestions_phrases} WHERE pid = :pid';
-  $source_string = db_query($query, array(':pid' => $sid))->fetchField();
+  $query = 'SELECT string FROM {l10n_suggestions_strings} WHERE sid = :sid';
+  $source_string = db_query($query, array(':sid' => $sid))->fetchField();
   $translation = l10n_suggestions_trim($translation, $source_string);
 
   // Look for an existing translation, if any.
   // Use HASH matching to avoid marking case-corrections as duplicate.
   $hash = l10n_suggestions_get_string_hash($translation);
   $query = 'SELECT translation FROM {l10n_suggestions_translations} '
-    . 'WHERE pid = :pid AND lng = :lng AND hash = :hash';
-  $params = array(':pid' => $sid, ':lng' => $lng, ':hash' => $hash);
+    . 'WHERE sid = :sid AND lng = :lng AND hash = :hash';
+  $params = array(':sid' => $sid, ':lng' => $lng, ':hash' => $hash);
   $existing = db_query($query, $params)->fetchField();
 
   // If this translation already exists, there is nothing to be added.
@@ -248,7 +248,7 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
   // Insert the new suggestion.
   $tid = db_insert('l10n_suggestions_translations')
     ->fields(array(
-        'pid' => $sid,
+        'sid' => $sid,
         'lng' => $lng,
         'translation' => $translation,
         'vcount' => 1,

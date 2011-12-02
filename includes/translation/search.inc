@@ -13,7 +13,7 @@ require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
  * Menu callback: translation/search
- * Search phrases and translations using various filters.
+ * Search strings and translations using various filters.
  */
 function l10n_suggestions_search() {
 

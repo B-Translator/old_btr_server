@@ -46,7 +46,7 @@ bg=orange</panel_attributes>
       <h>30</h>
     </coordinates>
     <panel_attributes>bt=*
-Phrases
+Strings
 fg=red
 bg=yellow</panel_attributes>
     <additional_attributes/>
@@ -212,7 +212,7 @@ from l10n_server).</panel_attributes>
       <w>250</w>
       <h>100</h>
     </coordinates>
-    <panel_attributes>Each phrase can have many
+    <panel_attributes>Each string can have many
 translations (or suggestions).
 Each translation has many votes.
 Each vote is given by a certain
@@ -227,7 +227,7 @@ user.</panel_attributes>
       <w>250</w>
       <h>90</h>
     </coordinates>
-    <panel_attributes>The same phrase can be found
+    <panel_attributes>The same string can be found
 in several locations, and these
 locations can be on the same
 project or on different projects.</panel_attributes>

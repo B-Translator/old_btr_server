@@ -8,8 +8,8 @@ use sq;
 
 /**
  * text comparisons are not efficient and reliable in mysql,
- * so, we use a hash value of the trimmed phrase in order to
- * make comparisons and to ensure uniqueness of the phrases
+ * so, we use a hash value of the trimmed string in order to
+ * make comparisons and to ensure uniqueness of the strings
  */
 alter table phrases add column hash varchar(40);
 update phrases set hash = sha1(trim(phrase));
