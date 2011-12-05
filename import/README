@@ -23,3 +23,8 @@ It makes no validity checks, but this is OK, since the PO files that
 are imported are supposed to be valid. Anyway, if needed, PO files
 can be checked with msgfmt before being parsed (and skipped if not
 valid).
+
+'get-*.sh' scripts are used to get from internet the PO files that
+are going to be imported. They are mainly based on the scripts of
+the open-tran project:  http://code.google.com/p/open-tran/
+http://code.google.com/p/open-tran/source/browse/#svn%2Ftrunk%2Fimport
