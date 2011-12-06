@@ -2,6 +2,7 @@
 
 /**
  * Copyright (C) 2008, Iulian Ilea (http://iulian.net), all rights reserved.
+ * Copyright (C) 2011, Dashamir Hoxha (dashohoxha@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -24,29 +25,30 @@ class POParser
   /**
    * Format of a msgid entry:
    * array(
-   *      'references'   => array(),      // each file on a new line
    *      'translator-comments'   => '',
    *      'extracted-comments'    => '',
-   *      'flags'        => array(
+   *      'references'            => array(),
+   *      'flags'                 => array(
    *          'fuzzy'
    *          ...
    *      ),
-   *      'previous-msgctxt'  => '',
-   *      'previous-msgid'    => '',
-   *      'msgctxt'       => '',
-   *      'msgid'         => '',
+   *      'previous-msgctxt'      => '',
+   *      'previous-msgid'        => '',
+   *      'previous-msgid_plural' => '',
+   *      'msgctxt'               => '',
+   *      'msgid'                 => '',
+   *      'msgid_plural'          => '',
    *
    *      // when no plural forms
-   *      'msgstr'        => '',
+   *      'msgstr'                => '',
    *
    *      // when plural forms
-   *      'msgid_plural'   => '',
-   *      'msgstr'        => array(
-   *          0   => '',                  // singular
-   *          1   => '',                  // 1st plural form
-   *          2   => '',                  // 2nd plural form
+   *      'msgstr'                => array(
+   *          0   => '',   // singular
+   *          1   => '',   // 1st plural form
+   *          2   => '',   // 2nd plural form
    *          ...
-   *          n   => ''                   // nth plural form
+   *          n   => ''    // nth plural form
    *      )
    * )
    *
@@ -58,160 +60,258 @@ class POParser
     return substr($str, 1, -1);
   }
 
+  /**
+   * Return the string between the quotes, after the first space.
+   * For example: msgid "...value_of_msgid..."
+   */
+  protected function _get_value($line)
+  {
+    return $this->_dequote(substr($line, strpos($line, ' ') + 1));    
+  }
+
+  /**
+   * Get the headers of the PO file (from the msgstr of the first (empty) entry)
+   * and return them as an array.
+   */
+  protected function _parse_headers($str_headers)
+  {
+    $headers = array(
+		     'Project-Id-Version'            => '',
+		     'Report-Msgid-Bugs-To'          => '',
+		     'POT-Creation-Date'             => '',
+		     'PO-Revision-Date'              => '',
+		     'Last-Translator'               => '',
+		     'Language-Team'                 => '',
+		     'Content-Type'                  => '',
+		     'Content-Transfer-Encoding'     => '',
+		     'Plural-Forms'                  => '',
+		     );
+
+    $lines = explode('\n', $str_headers);
+    $i = 0;
+    for ($i=0, $n=count($lines); $i < $n; $i++)
+      {
+	$line = $lines[$i];
+
+	$colonIndex = strpos($line, ':');
+	if ($colonIndex === false)  continue;
+
+	$headerName = substr($line, 0, $colonIndex);
+	if (!isset($headers[$headerName]))  continue;
+
+	// skip the white space after the colon
+	$headers[$headerName] = substr($line, $colonIndex + 1);
+      }
+
+    return $headers;
+  }
+
   public function parse($filename)
   {
     // basic file verification
-    if (!is_file($filename)) {
-      throw new Exception('The specified file does not exist.');
-    }
-    if (substr($filename, strrpos($filename, '.')) !== '.po') {
-      throw new Exception('The specified file is not a PO file.');
-    }
+    if (!is_file($filename))
+      {
+	throw new Exception('The specified file does not exist.');
+      }
+    if (substr($filename, strrpos($filename, '.')) !== '.po')
+      {
+	throw new Exception('The specified file is not a PO file.');
+      }
 
+    // read file as an array of lines
     $lines = file($filename, FILE_IGNORE_NEW_LINES);
 
-    // on the first two lines I'm expecting msgid respectively msgstr,
-    // both containing empty strings
-    $entries = array(
-					 //            array(
-					 //                'msgid'     => '',
-					 //                'msgstr'    => array('')
-					 //            )
-        );
-
-    // parsing headers; stop at the first empty line
-    $headers = array(
-					 'Project-Id-Version'            => '',
-					 'Report-Msgid-Bugs-To'          => '',
-					 'POT-Creation-Date'             => '',
-					 'PO-Revision-Date'              => '',
-					 'Last-Translator'               => '',
-					 'Language-Team'                 => '',
-					 'Content-Type'                  => '',
-					 'Content-Transfer-Encoding'     => '',
-					 'Plural-Forms'                  => '',
-					 );
-    $i = 2;
-    while ($line = $lines[$i++]) {
-      $line = $this->_dequote($line);
-      $colonIndex = strpos($line, ':');
-      if ($colonIndex === false) {
-		continue;
-      }
-      $headerName = substr($line, 0, $colonIndex);
-      if (!isset($headers[$headerName])) {
-		continue;
-      }
-      // skip the white space after the colon and remove the \n at the end
-      $headers[$headerName] = substr($line, $colonIndex + 1, -2);
-    }
+    // $block can be: msgctxt, msgid, msgid_plural, msgstr,
+    // previous-msgctxt, previous-msgid, previous-msgid_plural
+    // it is used to keep track of multi-line blocks
+    $block = '';
 
     $entry = array();
-    $state = ''; // parser state (msgid or msgstr)
-    for ($n = count($lines); $i < $n; $i++) {
-      $line = $lines[$i];
-      if ($line === '') {
-		if (sizeof($entry)>0) $entries[] = $entry;
-		$state = '';
-		$entry = array();
+    for ($i=0, $n = count($lines); $i < $n; $i++)
+      {
+	$line = $lines[$i];
+
+	// empty line
+	if (trim($line) == '')
+	  {
+	    if (empty($entry)) continue;
+	    $entries[] = $entry;
+	    $entry = array();
+	    continue;
+	  }
+
+	// translator comments
+	if (strpos($line, '# ') === 0)
+	  {
+	    if (!isset($entry['translator-comments']))
+	      {
+		$entry['translator-comments'] = substr($line, 2);
+	      }
+	    else
+	      {
+		$entry['translator-comments'] .= "\n" . substr($line, 2);
+	      }
+	    continue;
+	  }
+
+	// extracted comments
+	if (strpos($line, '#. ') === 0)
+	  {
+	    if (!isset($entry['extracted-comments']))
+	      {
+		$entry['extracted-comments'] = substr($line, 3);
+	      }
+	    else
+	      {
+		$entry['extracted-comments'] .= "\n" . substr($line, 3);
+	      }
+	    continue;
+	  }
+
+	// references
+	if (strpos($line, '#: ') === 0)
+	  {
+	    if (!isset($entry['references']))
+	      {
+		$entry['references'] = array();
+	      }
+	    $entry['references'][] = substr($line, 3);
+	    continue;
+	  }
+
+	// flags
+	if (strpos($line, '#, ') === 0)
+	  {
+	    if (!isset($entry['flags']))
+	      {
+		$entry['flags'] = array();
+	      }
+	    $entry['flags'][] = substr($line, 3);
+	    continue;
+	  }
+
+	// previous msgid, msgid_plural, msgctxt
+	if (strpos($line, '#| ') === 0)
+	  {
+	    $comment = substr($line, 3);
+
+	    // previous msgctxt
+	    if (strpos($comment, 'msgctxt ') === 0)
+	      {
+		$entry['previous-msgctxt'] = $this->_get_value($comment);
+		$block = 'previous-msgctxt';
 		continue;
+	      }
+
+	    // previous msgid
+	    if (strpos($comment, 'msgid ') === 0)
+	      {
+		$entry['previous-msgid'] = $this->_get_value($comment);
+		$block = 'previous-msgid';
+		continue;
+	      }
+
+	    // previous msgid_plural
+	    if (strpos($comment, 'msgid_plural ') === 0)
+	      {
+		$entry['previous-msgid_plural'] = $this->_get_value($comment);
+		$block = 'previous-msgid_plural';
+		continue;
+	      }
+
+	    // multi-line previous-msgctxt or previous-msgid or previous-msgid_plural
+	    if ($comment[0] == '"')
+	      {
+		$entry[$block] .= $this->_dequote($comment);
+		continue;
+	      }
+
+	    continue;
+	  }
+
+	// msgctxt
+	if (strpos($line, 'msgctxt ') === 0)
+	  {
+	    $entry['msgctxt'] = $this->_get_value($line);
+	    $block = 'msgctxt';
+	    continue;
+	  }
+
+	// msgid
+	if (strpos($line, 'msgid ') === 0)
+	  {
+	    $entry['msgid'] = $this->_get_value($line);
+	    $block = 'msgid';
+	    continue;
+	  }
+
+	// msgid_plural
+	if (strpos($line, 'msgid_plural ') === 0)
+	  {
+	    $entry['msgid_plural'] = $this->_get_value($line);
+	    $block = 'msgid_plural';
+	    continue;
+	  }
+
+	// msgstr (no plural forms)
+	if (strpos($line, 'msgstr ') === 0)
+	  {
+	    $entry['msgstr'] = $this->_get_value($line);
+	    $block = 'msgstr';
+	    continue;
+	  }
+
+	// msgstr (plural forms)
+	if (strpos($line, 'msgstr[') === 0)
+	  {
+	    if (!isset($entry['msgstr']))
+	      {
+		$entry['msgstr'] = array();
+	      }
+	    $entry['msgstr'][] = $this->_get_value($line);
+	    $block = 'msgstr';
+	    continue;
+	  }
+
+	// multi-line msgid, msgid_plural or msgstr
+	if ($line[0] === '"')
+	  {
+	    // multi-line msgid or msgid_plural
+	    if ($block == 'msgctxt' or $block == 'msgid' or $block == 'msgid_plural')
+	      {
+		$entry[$block] .= $this->_dequote($line);
+		continue;
+	      }
+
+	    // multi-line msgstr
+	    if ($block == 'msgstr')
+	      {
+		if (!is_array($entry['msgstr']))
+		  {
+		    $entry['msgstr'] .= $this->_dequote($line);
+		    continue;
+		  }
+		else
+		  {
+		    $last = count($entry['msgstr']) - 1;
+		    $entry['msgstr'][$last] .= $this->_dequote($line);
+		    continue;
+		  }
+	      }
+	  }
       }
-      if ($line[0] == '#') {
-		$comment = substr($line, 3);
-		switch ($line[1]) {
-		  // translator comments
-		case ' ': {
-		  if (!isset($entry['translator-comments'])) {
-			$entry['translator-comments'] = $comment;
-		  }
-		  else {
-			$entry['translator-comments'] .= "\n" . $comment;
-		  }
-		  break;
-		}
-		  // extracted comments
-		case '.': {
-		  if (!isset($entry['extracted-comments'])) {
-			$entry['extracted-comments'] = $comment;
-		  }
-		  else {
-			$entry['extracted-comments'] .= "\n" . $comment;
-		  }
-		  break;
-		}
-		  // reference
-		case ':': {
-		  if (!isset($entry['references'])) {
-			$entry['references'] = array();
-		  }
-		  $entry['references'][] = $comment;
-		  break;
-		}
-		  // flag
-		case ',': {
-		  if (!isset($entry['flags'])) {
-			$entry['flags'] = array();
-		  }
-		  $entry['flags'][] = $comment;
-		  break;
-		}
-		  // previous msgid, msgctxt
-		case '|': {
-		  // msgi[d]
-		  if ($comment[4] == 'd') {
-			$entry['previous-msgid'] = $this->_dequote(substr($comment, 6));
-		  }
-		  // msgc[t]xt
-		  else {
-			$entry['previous-msgctxt'] = $this->_dequote(substr($comment, 8));
-		  }
-		  break;
-		}
-		}
-      } else
-		if (strpos($line, 'msgid') === 0) {
-		  if ($line[5] === ' ') {
-			$entry['msgid'] = $this->_dequote(substr($line, 6));
-			$state = 'msgid';
-		  }
-		  // msgid[_]plural
-		  else {
-			$entry['msgid_plural'] = $this->_dequote(substr($line, 13));
-			$state = 'msgid_plural';
-		  }
-		} else
-		  if (strpos($line, 'msgstr') === 0) {
-			$state = 'msgstr';
-			// no plural forms
-			if ($line[6] === ' ') {
-			  $entry['msgstr'] = $this->_dequote(substr($line, 7));
-			}
-			// plural forms
-			else {
-			  if (!isset($entry['msgstr'])) {
-				$entry['msgstr'] = array();
-			  }
-			  $entry['msgstr'][] = $this->_dequote(substr($line, strpos($line, ' ') + 1));
-			}
-		  } else
-            if ($line[0] === '"') {
-			  $line = $this->_dequote($line);
-			  switch($state) {
-			  case 'msgid' :
-			  case 'msgid_plural' :
-				$entry[$state] .= $line;
-				break;
-			  case 'msgstr' :
-				if (!is_array($entry['msgstr'])) {
-				  $entry['msgstr'] .= $line;
-				} else {
-				  $entry['msgstr'][count($entry['msgstr']) - 1] .= $line;
-				}
-				break;
-			  }
-            }
-    }
-    if (sizeof($entry)>0) $entries[] = $entry;
+
+    // append the last entry
+    if (!empty($entry))  $entries[] = $entry;
+    
+    // parse the headers from the msgstr of the first (empty) entry
+    $headers = array();
+    if ($entries[0]['msgid'] == '')
+      {
+	$headers = $this->_parse_headers($entries[0]['msgstr']);
+      }
+
     return array($headers, $entries);
   }
 }
+?>
