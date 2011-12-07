@@ -1,7 +1,7 @@
 #!/bin/bash
 
-data_root="/media/usbdisk2/PO"
-languages="fr de it sq en_GB es"
+### get $data_root and $languages
+. ./config.sh
 
 function change_dir() {
     dir="$1"

@@ -1,72 +1,22 @@
 #!/usr/bin/php
 <?php
-// Get the parameters (project, lng, file.po).
-if ($argc != 4) {
-  print "Usage: $argv[0] project lng file.po\n";
+// Get the parameters (project, lng, source, file.po).
+if ($argc != 5) {
+  print "Usage: $argv[0] project lng source file.po\n\n";
   exit(1);
 }
+$script = $argv[0];
 $project = $argv[1];
 $lng = $argv[2];
-$filename = $argv[3];
-//print "$project $lng $filename\n";  exit(0);  //debug
+$source = $argv[3];
+$file = $argv[4];
+print "$project $lng $source $file\n";  exit(0);  //debug
 
-// Get the POParser class.
-include_once(dirname(__FILE__).'/POParser.php');
+// Get the path of the file (relaive from source).
+list($data_root, $path) = split("/$source/", $file);
 
-// Get the DB parameters.
-@include_once(dirname(__FILE__).'/settings.php');
-$db = $databases['default']['default'];
-$dbdriver = $db['driver'];
-$dbhost = $db['host'];
-$dbname = $db['database'];  $dbname = 'l10nsq_test';  //debug
-$dbuser = $db['username'];
-$dbpass = $db['password'];
-
-// Create a persistent DB connection.
-$DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
-//print "$DSN\n";  exit(0);  //debug
-$dbh = new PDO($DSN, $dbuser, $dbpass);
-
-// Prepare the query for getting the id of a string (if it is already stored).
-$get_string_id = $dbh->prepare("SELECT sid FROM l10n_suggestions_strings WHERE hash = :hash");
-$get_string_id->bindParam(':hash', $s_hash);
-
-// Prepare the query for inserting a string into the table of strings.
-$insert_string = $dbh->prepare("
-  INSERT INTO l10n_suggestions_strings
-     (string, hash, uid_entered, time_entered)
-  VALUES
-     (:string, :hash, :uid, :time)
-");
-$insert_string->bindParam(':string', $msgid);
-$insert_string->bindParam(':hash', $s_hash);
-$insert_string->bindParam(':uid', $uid);
-$insert_string->bindParam(':time', $time);
-
-// Prepare the query for inserting a location into the table of locations.
-$insert_location = $dbh->prepare("
-  INSERT INTO l10n_suggestions_locations
-     (sid, projectname)
-  VALUES
-     (:sid, :project)
-");
-$insert_location->bindParam(':sid', $sid);
-$insert_location->bindParam(':project', $project);
-
-// Prepare the query for inserting a translation into the table of translations.
-$insert_translation = $dbh->prepare("
-  INSERT INTO l10n_suggestions_translations
-     (sid, lng, translation, hash, vcount, uid_entered, time_entered)
-  VALUES
-     (:sid, :lng, :translation, :hash, :vcount, :uid, :time)
-");
-$insert_translation->bindParam(':sid', $sid);
-$insert_translation->bindParam(':lng', $lng);
-$insert_translation->bindParam(':translation', $msgstr);
-$insert_translation->bindParam(':vcount', $vcount);
-$insert_translation->bindParam(':hash', $t_hash);
-$insert_translation->bindParam(':uid', $uid);
-$insert_translation->bindParam(':time', $time);
+// Prepare the queries that are used for processing strings.
+include_once(dirname(__FILE__).'/prepare_queries.php');
 
 // Set some variable that don't change.
 $uid = '1';  //admin
@@ -74,9 +24,10 @@ $time = date('Y-m-d H:i:s');
 $vcount = '0';
 
 // Parse the given PO file.
+include_once(dirname(__FILE__).'/POParser.php');
 $parser = new POParser;
-list($headers, $entries) = $parser->parse($filename);
-//print_r($headers);  print_r($entries);  exit(0);  //debug
+list($headers, $entries) = $parser->parse($file);
+print_r($headers);  print_r($entries);  exit(0);  //debug
 
 // Process each msgid entry.
 foreach ($entries as $entry) {

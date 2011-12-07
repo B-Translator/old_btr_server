@@ -28,3 +28,8 @@ valid).
 are going to be imported. They are mainly based on the scripts of
 the open-tran project:  http://code.google.com/p/open-tran/
 http://code.google.com/p/open-tran/source/browse/#svn%2Ftrunk%2Fimport
+
+'import-*.sh' scripts are used to process the downloaded PO files
+and to import their data into DB. They find each *.po file and then
+process it by calling 'po_import.php' with proper arguments.
+
