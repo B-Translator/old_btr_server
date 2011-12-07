@@ -32,7 +32,8 @@ class PODB
     // Create a DB connection.
     $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
     //print "$DSN\n";  exit(0);  //debug
-    $this->dbh = new PDO($DSN, $dbuser, $dbpass);
+    $this->dbh = new PDO($DSN, $dbuser, $dbpass, 
+			 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
   }
 
   /** Prepare the queries that will be used and store them in $this->queries[] . */
