@@ -32,7 +32,7 @@ class PODB
     // Create a DB connection.
     $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
     //print "$DSN\n";  exit(0);  //debug
-    $this->dbh = new PDO($DSN, $dbuser, $dbpass, 
+    $this->dbh = new PDO($DSN, $dbuser, $dbpass,
 			 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
   }
 
@@ -47,7 +47,7 @@ class PODB
     // insert_string
     $this->queries['insert_string'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_strings
-	 (string, hash, uid_entered, time_entered)
+	 (string, hash, uid, time)
       VALUES
 	 (:string, :hash, :uid, :time)
     ");
@@ -63,9 +63,9 @@ class PODB
     // insert_translation
     $this->queries['insert_translation'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_translations
-	 (sid, lng, translation, hash, vcount, uid_entered, time_entered)
+	 (sid, lng, translation, hash, count, uid, time)
       VALUES
-	 (:sid, :lng, :translation, :hash, :vcount, :uid, :time)
+	 (:sid, :lng, :translation, :hash, :count, :uid, :time)
     ");
   }
 
@@ -123,7 +123,7 @@ class PODB
 		    ':lng' => $lng,
 		    ':translation' => $translation,
 		    ':hash' => sha1(trim($translation)),
-		    ':vcount' => 0,
+		    ':count' => 0,
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
 		    );

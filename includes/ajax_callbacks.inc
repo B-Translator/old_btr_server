@@ -144,13 +144,13 @@ function l10n_suggestions_translation_details($tid = 0, $ajax = 0) {
       $uid_submitted = $item->uid_action;
     }
   }
-  if (!empty($uid_submitted) && ($uid_submitted != $string->uid_entered)) {
+  if (!empty($uid_submitted) && ($uid_submitted != $string->uid)) {
     // Turns out the user used for attribution is different to the user used for
     // the string storage.
-    // TODO Convert "user_load" to "user_load_multiple" if "$string->uid_entered" is other than a uid.
+    // TODO Convert "user_load" to "user_load_multiple" if "$string->uid" is other than a uid.
     // To return a single user object, wrap "user_load_multiple" with "array_shift" or equivalent.
-    // Example: array_shift(user_load_multiple(array(), $string->uid_entered))
-    $account = user_load($string->uid_entered);
+    // Example: array_shift(user_load_multiple(array(), $string->uid))
+    $account = user_load($string->uid);
     $author = theme('username', array('account' => $account));
     array_unshift($history_list, t('by !author', array('!author' => $author)));
   }

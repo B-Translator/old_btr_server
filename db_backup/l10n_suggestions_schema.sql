@@ -4,12 +4,12 @@ CREATE TABLE `l10n_suggestions_strings` (
   `sid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier for a l10n string.',
   `string` text COLLATE utf8_bin NOT NULL COMMENT 'The (English) l10n string to be translated.',
   `hash` varchar(40) CHARACTER SET ascii DEFAULT NULL,
-  `uid_entered` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
-  `time_entered` datetime DEFAULT NULL COMMENT 'The time that this string was entered on the DB.',
-  `pcount` tinyint(4) DEFAULT '1' COMMENT 'How often this phrase is encountered in all the projects. Can be useful for any heuristics that try to find out which phrases need to be translated first.',
+  `uid` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
+  `time` datetime DEFAULT NULL COMMENT 'The time that this string was entered on the DB.',
+  `count` tinyint(4) DEFAULT '1' COMMENT 'How often this phrase is encountered in all the projects. Can be useful for any heuristics that try to find out which phrases need to be translated first.',
   PRIMARY KEY (`sid`),
   UNIQUE KEY `hash` (`hash`),
-  KEY `uid_entered` (`uid_entered`,`time_entered`),
+  KEY `uid` (`uid`,`time`),
   KEY `string` (`string`(100)),
   FULLTEXT KEY `string_text` (`string`)
 ) ENGINE=MyISAM AUTO_INCREMENT=810815 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
@@ -19,7 +19,7 @@ CREATE TABLE `l10n_suggestions_strings` (
 CREATE TABLE `l10n_suggestions_locations` (
   `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier of a line.',
   `sid` int(11) NOT NULL COMMENT 'Reference to the id of the l10n string contained in this line.',
-  `projectid` int(11) DEFAULT NULL COMMENT 'Reference to the id of the project that contains this line.',
+  `pid` int(11) DEFAULT NULL COMMENT 'Reference to the id of the project that contains this line.',
   `packageid` int(11) DEFAULT NULL COMMENT 'Reference to the id of the package that contains the project.',
   `projectname` varchar(100) DEFAULT NULL COMMENT 'The name of the project containing this line.',
   `flags` int(11) DEFAULT NULL COMMENT 'Copied from open-trans.eu',
@@ -36,12 +36,12 @@ CREATE TABLE `l10n_suggestions_translations` (
   `lng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'Language code (en, fr, sq_AL, etc.)',
   `translation` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The (suggested) translation of the phrase.',
   `hash` varchar(40) CHARACTER SET ascii DEFAULT NULL,
-  `vcount` tinyint(4) DEFAULT '1' COMMENT 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
-  `uid_entered` int(11) DEFAULT NULL COMMENT 'The uid of the user that initially proposed this translation',
-  `time_entered` datetime DEFAULT NULL COMMENT 'Time when the translation was entered into the database.',
+  `count` tinyint(4) DEFAULT '1' COMMENT 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
+  `uid` int(11) DEFAULT NULL COMMENT 'The uid of the user that initially proposed this translation',
+  `time` datetime DEFAULT NULL COMMENT 'Time when the translation was entered into the database.',
   PRIMARY KEY (`tid`),
-  KEY `uid` (`uid_entered`),
-  KEY `time` (`time_entered`),
+  KEY `uid` (`uid`),
+  KEY `time` (`time`),
   KEY `hash` (`hash`),
   KEY `sid` (`sid`),
   FULLTEXT KEY `translation_text` (`translation`)
@@ -53,12 +53,12 @@ CREATE TABLE `l10n_suggestions_votes` (
   `vid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier for a vote.',
   `tid` int(11) NOT NULL COMMENT 'Reference to the id of the translation which is voted.',
   `uid` int(11) NOT NULL COMMENT 'Reference to the id of the user that submitted the vote.',
-  `vtime` datetime DEFAULT NULL COMMENT 'Timestamp of the voting time.',
+  `time` datetime DEFAULT NULL COMMENT 'Timestamp of the voting time.',
   PRIMARY KEY (`vid`),
   UNIQUE KEY `tid_uid` (`tid`,`uid`),
   KEY `tid` (`tid`),
   KEY `uid` (`uid`),
-  KEY `time` (`vtime`)
+  KEY `time` (`time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=426 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

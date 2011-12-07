@@ -43,17 +43,17 @@ function l10n_suggestions_schema() {
         'length' => '40',
         'not null' => FALSE,
       ),
-      'uid_entered' => array(
+      'uid' => array(
         'description' => 'ID of the user that inserted this string on the DB.',
         'type' => 'int',
         'not null' => FALSE,
       ),
-      'time_entered' => array(
+      'time' => array(
         'description' => 'The time that this string was entered on the DB.',
         'type' => 'datetime',
         'not null' => FALSE,
       ),
-      'pcount' => array(
+      'count' => array(
         'description' => 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings need to be translated first.',
         'type' => 'int',
         'size' => 'tiny',
@@ -68,7 +68,7 @@ function l10n_suggestions_schema() {
     'indexes' => array(
       'string' => array(array('string', 100)),
       'string_text' => array('string'),
-      'uid_entered' => array('uid_entered', 'time_entered'),
+      'uid' => array('uid', 'time'),
     ),
   );
 
@@ -106,19 +106,19 @@ function l10n_suggestions_schema() {
         'length' => '40',
         'not null' => FALSE,
       ),
-      'vcount' => array(
+      'count' => array(
         'description' => 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
         'type' => 'int',
         'size' => 'tiny',
         'not null' => FALSE,
         'default' => 1,
       ),
-      'uid_entered' => array(
+      'uid' => array(
         'description' => 'The uid of the user that initially proposed this translation',
         'type' => 'int',
         'not null' => FALSE,
       ),
-      'time_entered' => array(
+      'time' => array(
         'description' => 'Unix timestamp of when the string was entered into the database.',
         'type' => 'int',
         'not null' => TRUE,
@@ -129,9 +129,9 @@ function l10n_suggestions_schema() {
     'indexes' => array(
       'hash' => array('hash'),
       'sid' => array('sid'),
-      'time' => array('time_entered'),
+      'time' => array('time'),
       'translation_text' => array('translation'),
-      'uid' => array('uid_entered'),
+      'uid' => array('uid'),
     ),
   );
 
@@ -154,7 +154,7 @@ function l10n_suggestions_schema() {
         'type' => 'int',
         'not null' => TRUE,
       ),
-      'vtime' => array(
+      'time' => array(
         'description' => 'Timestamp of the voting time.',
         'type' => 'datetime',
         'not null' => FALSE,
@@ -166,7 +166,7 @@ function l10n_suggestions_schema() {
     ),
     'indexes' => array(
       'tid' => array('tid'),
-      'time' => array('vtime'),
+      'time' => array('time'),
       'uid' => array('uid'),
     ),
   );
@@ -210,7 +210,7 @@ function l10n_suggestions_schema() {
         'type' => 'int',
         'not null' => TRUE,
       ),
-      'projectid' => array(
+      'pid' => array(
         'description' => 'Reference to the id of the project that contains this line.',
         'type' => 'int',
         'not null' => TRUE,

@@ -117,7 +117,7 @@ function _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, 
     _l10n_suggestions_join_table($query, 'votes');
     global $user;
     $query->condition(db_or()
-      ->condition('t.uid_entered', $user->uid)
+      ->condition('t.uid', $user->uid)
       ->condition('v.uid', $user->uid)
     );
     //done, ignore $translated_by and $voted_by
@@ -136,7 +136,7 @@ function _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, 
   if ($t_uid==$v_uid and $t_uid!='') {
     _l10n_suggestions_join_table($query, 'votes');
     $query->condition(db_or()
-      ->condition('t.uid_entered', $t_uid)
+      ->condition('t.uid', $t_uid)
       ->condition('v.uid', $t_uid)
     );
     return;
@@ -146,7 +146,7 @@ function _l10n_suggestions_filter_by_author($query, $only_mine, $translated_by, 
   //translated by $t_uid AND voted by $v_uid
   if ($t_uid != '') {
     _l10n_suggestions_join_table($query, 'translations');
-    $query->condition('t.uid_entered', $t_uid);
+    $query->condition('t.uid', $t_uid);
   }
   if ($v_uid != '') {
     _l10n_suggestions_join_table($query, 'votes');
@@ -186,9 +186,9 @@ function _l10n_suggestions_filter_by_date($query, $date_filter, $from_date, $to_
   }
 
   //get the alias (name) of the date field that has to be checked
-  if      ($date_filter=='strings')  $field = 's.time_entered';
-  elseif  ($date_filter=='votes')    $field = 'v.vtime';
-  else                               $field = 't.time_entered';
+  if      ($date_filter=='strings')  $field = 's.time';
+  elseif  ($date_filter=='votes')    $field = 'v.time';
+  else                               $field = 't.time';
 
   //add to query the propper date condition;
   //if none of the dates are given, no condition is added

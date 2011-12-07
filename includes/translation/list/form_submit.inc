@@ -122,15 +122,15 @@ function l10n_suggestions_add_vote($tid, $uid) {
     ->fields(array(
         'tid' => $tid,
         'uid' => $uid,
-        'vtime' => date('Y-m-d H:i:s', REQUEST_TIME),
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
 
   // Update vote count of the translation.
   $sql = 'SELECT COUNT(*) FROM {l10n_suggestions_votes} WHERE tid = :tid';
-  $vcount = db_query($sql, array(':tid' => $tid))->fetchField();
+  $count = db_query($sql, array(':tid' => $tid))->fetchField();
   db_update('l10n_suggestions_translations')
-    ->fields(array('vcount' => $vcount))
+    ->fields(array('count' => $count))
     ->condition('tid', $tid)
     ->execute();
 
@@ -251,9 +251,9 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
         'sid' => $sid,
         'lng' => $lng,
         'translation' => $translation,
-        'vcount' => 1,
-        'uid_entered' => $uid,
-        'time_entered' => date('Y-m-d H:i:s', REQUEST_TIME),
+        'count' => 1,
+        'uid' => $uid,
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
   db_query('UPDATE {l10n_suggestions_translations} SET hash = SHA1(TRIM(translation))');

@@ -117,7 +117,7 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
       'tid' => '0',
       'lng' => $lng,
       'translation' => t('(not translated)'),
-      'uid_entered' => 0,
+      'uid' => 0,
       'votes' => array(),
     );
   }
@@ -154,7 +154,7 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
     'tid' => 'new',
     'lng' => $lng,
     'translation' => $translation,
-    'uid_entered' => $user->uid,
+    'uid' => $user->uid,
     'votes' => array(),
   );
 }
@@ -167,7 +167,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sid, $lng
 
   $translation->translation = l10n_suggestions_unpack_string($translation->translation);
 
-  $is_own = ($user->uid == $translation->uid_entered);
+  $is_own = ($user->uid == $translation->uid);
   $is_approved = in_array($user->uid, array_keys($translation->votes));
   $is_new = ($translation->tid == 'new');
   $no_translation = ($translation->tid == '0');
@@ -230,7 +230,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sid, $lng
       );
     }
     if (isset($translation->author)) {
-      $title = l10n_suggestions_translate_byline($translation->author, $translation->uid_entered, $translation->time_entered, -1, -1, FALSE);
+      $title = l10n_suggestions_translate_byline($translation->author, $translation->uid, $translation->time, -1, -1, FALSE);
 
       $form['author'] = array(
         '#markup' => $title,
@@ -239,14 +239,14 @@ function _l10n_suggestions_translate_translation($translation, $string_sid, $lng
       );
     }
     //TODO: Improve displaying of vote count and the voters.
-    if ($translation->vcount != '0') {
+    if ($translation->count != '0') {
       $voters = array();
       foreach ($translation->votes as $uid=>$vote) {
         $voters[] = theme('username', array('account' => (object) array('name' => $vote->name, 'uid' => $uid)));
       }
       $form['votes'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Number of Votes: @vcount', array('@vcount' => $translation->vcount)),
+        '#title' => t('Number of Votes: @count', array('@count' => $translation->count)),
         //'#prefix' => '<div class="l10n-more-info">',
         //'#suffix' => '</div>',
         '#collapsible' => true,

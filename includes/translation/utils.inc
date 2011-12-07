@@ -34,12 +34,12 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   //get translations
   $get_translations =
     " SELECT s.sid, t.tid, t.lng, t.translation, t.hash,
-             t.time_entered, t.uid_entered, u.name AS author, t.vcount
+             t.time, t.uid, u.name AS author, t.count
       FROM {l10n_suggestions_strings} s
       LEFT OUTER JOIN {l10n_suggestions_translations} t ON (s.sid = t.sid)
-      LEFT OUTER JOIN {users} u ON (u.uid = t.uid_entered)
+      LEFT OUTER JOIN {users} u ON (u.uid = t.uid)
       WHERE (t.lng = :lng) AND s.sid IN (:arr_sid)
-      ORDER BY t.vcount DESC";
+      ORDER BY t.count DESC";
   $result = db_query($get_translations, array(':lng' => $lng, ':arr_sid' => $arr_sid));
   $arr_translations = $result->fetchAllAssoc('tid');
 
@@ -50,28 +50,28 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   }
   else {
     $get_votes =
-      " SELECT t.tid, v.vid, v.uid, u.name, v.vtime
+      " SELECT t.tid, v.vid, v.uid, u.name, v.time
         FROM {l10n_suggestions_translations} t
         LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tid = t.tid)
         LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
         WHERE t.tid IN (:arr_tid)
-        ORDER BY v.vtime DESC";
+        ORDER BY v.time DESC";
     $result = db_query($get_votes, array(':arr_tid' => $arr_tid));
     $arr_votes = $result->fetchAllAssoc('vid');
   }
 
   //get alternatives (from other languages)
-  //they are the best translations (max vcount) from the alternative languages
+  //they are the best translations (max count) from the alternative languages
   $get_alternatives =
-    " SELECT DISTINCT t.sid, t.tid, t.lng, t.translation, t.vcount
-      FROM (SELECT sid, lng, MAX(vcount) AS max_vcount
+    " SELECT DISTINCT t.sid, t.tid, t.lng, t.translation, t.count
+      FROM (SELECT sid, lng, MAX(count) AS max_count
 	    FROM l10n_suggestions_translations
 	    WHERE lng IN (:arr_lng) AND sid IN (:arr_sid)
 	    GROUP BY sid, lng
 	    ) AS m
       INNER JOIN l10n_suggestions_translations AS t
-	    ON m.sid = t.sid AND m.lng = t.lng AND m.max_vcount = t.vcount
-      GROUP BY t.sid, t.lng, t.vcount";
+	    ON m.sid = t.sid AND m.lng = t.lng AND m.max_count = t.count
+      GROUP BY t.sid, t.lng, t.count";
   $arr_lng = array('fr', 'sq');
   $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sid' => $arr_sid));
   $arr_alternatives = $result->fetchAllAssoc('tid');
@@ -85,7 +85,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   }
 
   // Put votes as nested arrays inside translations.
-  // Votes are already ordered by vtime (desc).
+  // Votes are already ordered by time (desc).
   foreach ($arr_votes as $vid => $vote) {
     $tid = $vote->tid;
     $uid = $vote->uid;
@@ -93,7 +93,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   }
 
   // Put translations as nested arrays inside strings.
-  // Translations are already ordered by vcount (desc).
+  // Translations are already ordered by count (desc).
   // Make sure that each translation has an array of votes
   // (even though it may be empty).
   foreach ($arr_translations as $tid => $translation) {
