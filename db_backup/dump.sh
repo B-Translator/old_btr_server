@@ -16,6 +16,7 @@ dump='false'
 ### dump only the schema of the database
 mysqldump --user=root --password --no-data --compact \
           --database $db_name --tables \
+          l10n_suggestions_projects l10n_suggestions_files \
           l10n_suggestions_strings l10n_suggestions_locations \
           l10n_suggestions_translations l10n_suggestions_votes \
           l10n_suggestions_users > l10n_suggestions_schema.sql
@@ -31,6 +32,7 @@ then
 
   mysqldump --user=root --password --opt \
             --database $db_name --tables \
+            l10n_suggestions_projects l10n_suggestions_files \
             l10n_suggestions_strings l10n_suggestions_locations \
             l10n_suggestions_translations l10n_suggestions_votes \
             l10n_suggestions_users > $dump_file

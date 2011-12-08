@@ -1,0 +1,38 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+
+
+* Archive							    :ARCHIVE:
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2011-12-08 Thu 07:59
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_CATEGORY: tasks
+  :END:
+
+** Initial Plan							    :ARCHIVE:
+   :PROPERTIES:
+   :ARCHIVE_TIME: 2011-12-02 Fri 21:52
+   :END:
+
+*** DONE Design DB schema
+    Design a propper DB schema for l10n_suggestions. In general, it is
+    going to be reacher than the open-tran.eu schema, since it is going
+    to keep data about votes/evaluations/promotions of different
+    suggestions.
+
+*** DONE Get open-tran.eu data
+    Download it from: http://open-tran.eu/dev.html
+
+*** TODO Import data
+    Write a script for importing the open-tran.eu data into the
+    l10n_suggestions DB (MySQL). It should:
+    1. [X] dump the data from the SQLite db
+    2. [X] import them into MySQL
+    3. [X] rearrange them to fit the new schema requirements
+    4. [ ] take care of both an initial import and an update (in the
+       case of update it should be carefull not to overwrite any
+       existing data)
+
+

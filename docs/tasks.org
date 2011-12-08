@@ -136,21 +136,52 @@ keeping notes, project planning, tasks management, etc.
 
    The DB tables and their fields:
 
+   + Files :: A PO file that is imported and can be exported from the
+              DB.
+     - fid : serial :: Auto-increment internal identifier.
+     - file : varchar(200) :: The file name (and the path) of the
+          imported file.
+     - pid : int :: Reference to the project for which this PO file is
+          a translation.
+     - lng : varchar(10) :: The code of the translation language.
+     - header : text :: Headers of the imported PO file, as a long
+          line. Needed mainly for exporting.
+     - uid : int :: Id of the user that imported the file.
+     - time : datetime :: The date and time that the record was
+          registered.
+     - active : boolean :: The active or deleted state of the record.
+
+   + Projects :: A project is the software/application which is
+                 translated by the PO files.
+     - pid : serial :: Auto-increment internal identifier.
+     - project : varchar(100) :: Project name (with the release
+          appended if needed).
+     - origin : varchar(100) :: The origin of the project (where does
+          it come from).
+     - uid : int(11) :: Id of the user that registered the project.
+     - time : datetime :: The date and time that the project was
+          registered.
+     - active : boolean :: The active or deleted status of the record.
+
    + Locations :: Locations (lines) where a l10n string is found.
      - lid : serial :: Internal numeric identifier of a line.
      - sid : int :: Reference to the id of the l10n string contained
-                    in this line.
+          in this line.
      - pid : int :: Reference to the id of the project that
           contains this line.
-     - packageid : int :: Reference to the id of the package that
-          contains the project.
-     - projectname : varchar(100) :: The name of the project
-          containing this line.
-     - flags : int :: Copied from open-trans.eu
+     - translator_comments : varchar(500) ::
+     - extracted_comments : varchar(500) ::
+     - referencies : varchar(500) ::
+     - flags : varchar(100) ::
+     - previous_msgctxt : varchar(500) ::
+     - previous_msgid : varchar(500) ::
+     - previous_msgid_plural : varchar(500) ::
+     - active : boolean :: The active or deleted status of the record.
 
    + Strings :: Translatable strings that are extracted from projects.
      - sid : serial :: Internal numeric identifier for a l10n string.
      - string : text :: The (English) l10n string to be translated.
+     - context : varchar(500) :: The msgctxt of the PO entry.
      - hash : varchar(40) :: Will be used for a more efficient and
           reliable text comparison, searching, indexing, etc. hash =
           SHA1(TRIM(string))
@@ -161,14 +192,14 @@ keeping notes, project planning, tasks management, etc.
      - count : int/tiny :: How often this string is encountered in
           all the projects. Can be useful for any heuristics that try
           to find out which strings need to be translated first.
+     - active : boolean :: The active/deleted status of the record.
 
    + Translations :: Translations/suggestions of the l10n strings.
-                     For each string there can be translations for
-                     different languages, and more than one
-                     translation for each language.
+          For each string there can be translations for different
+          languages, and more than one translation for each language.
      - tid : serial :: Internal numeric identifier for a translation.
      - sid : int :: Reference to the id of the l10n string that is
-                    translated.
+          translated.
      - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
      - translation : varchar(1000) :: The (suggested) translation of
           the string.
@@ -179,17 +210,19 @@ keeping notes, project planning, tasks management, etc.
           counted on the table Votes, but for convenience is stored
           here as well.
      - uid : int :: id of the user that initially proposed this
-                        translation
+          translation
      - time : datetime :: Time that the translation was
           entered into the database.
+     - active : boolean :: The active or deleted status of the record.
 
    + Votes :: Votes for each translation/suggestion.
      - vid : serial :: Internal numeric identifier for a vote.
      - tid : int :: Reference to the id of the translation which is
-                    voted.
+          voted.
      - uid : int :: Reference to the id of the user that submitted the
-                    vote.
+          vote.
      - time : datetime :: Timestamp of the voting time.
+     - active : boolean :: The active or deleted status of the record.
 
    + Users :: Users that contribute translations/suggestions/votes.
      - uid : int :: The numeric identifier of the user.
@@ -368,30 +401,3 @@ keeping notes, project planning, tasks management, etc.
 ** Misc
    + For imported projects no releases are stored because we keep the
      latest version.
-
-
-* Archive							    :ARCHIVE:
-
-** Initial Plan							    :ARCHIVE:
-   :PROPERTIES:
-   :ARCHIVE_TIME: 2011-12-02 Fri 21:52
-   :END:
-
-*** DONE Design DB schema
-    Design a propper DB schema for l10n_suggestions. In general, it is
-    going to be reacher than the open-tran.eu schema, since it is going
-    to keep data about votes/evaluations/promotions of different
-    suggestions.
-
-*** DONE Get open-tran.eu data
-    Download it from: http://open-tran.eu/dev.html
-
-*** TODO Import data
-    Write a script for importing the open-tran.eu data into the
-    l10n_suggestions DB (MySQL). It should:
-    1. [X] dump the data from the SQLite db
-    2. [X] import them into MySQL
-    3. [X] rearrange them to fit the new schema requirements
-    4. [ ] take care of both an initial import and an update (in the
-       case of update it should be carefull not to overwrite any
-       existing data)
