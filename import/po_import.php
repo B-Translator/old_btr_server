@@ -3,10 +3,10 @@
    // Check the number of parameters.
 if ($argc != 5) {
   print "
-Usage: $argv[0] project lng source file.po
+Usage: $argv[0] project lng origin file.po
   project -- the name of the project that is being imported.
   lng     -- the language of translation (de, fr, sq, en_GB, etc.).
-  source  -- the source of the PO file (ubuntu, GNOME, KDE, etc.)
+  origin  -- the origin of the PO file (ubuntu, GNOME, KDE, etc.)
   file.po -- the PO file to be imported.
 
 Example:
@@ -16,17 +16,18 @@ Example:
   exit(1);
 }
 
-// Get the parameters (project, lng, source, file.po).
+// Get the parameters (project, lng, origin, file.po).
 $script = $argv[0];
 $project = $argv[1];
 $lng = $argv[2];
-$source = $argv[3];
-$file = $argv[4];
-print "$script $project $lng $source $file\n";  //log
+$origin = $argv[3];
+$filename = $argv[4];
+//log
+print "$script $project $lng $origin $filename\n";
 
-// Get the path of the file (relative from source).
-$parts = split("/$source/", $file);
-$path = isset($parts[1]) ? $parts[1] : '';
+// Get the path of the file relative from origin.
+$parts = split("/$origin/", $filename);
+$file = isset($parts[1]) ? $parts[1] : '';
 
 // Create a DB variable for handling queries.
 include_once(dirname(__FILE__).'/po_db.php');
@@ -35,34 +36,72 @@ $db = new PODB;
 // Parse the given PO file.
 include_once(dirname(__FILE__).'/POParser.php');
 $parser = new POParser;
-list($headers, $entries) = $parser->parse($file);
+list($headers, $entries) = $parser->parse($filename);
 //print_r($headers);  print_r($entries);  exit(0);  //debug
 
-// Process each gettext entry.
-foreach ($entries as $entry) {
-  //print_r($entry);  continue;  //debug
-
-  // Get the string of this entry
-  $string = $entry['msgid'];
-  if (isset($entry['msgid_plural'])) {
-    $string .= "\0" . $entry['msgid_plural'];
-  }
-
-  // Get the $sid of this string.
-  $sid = $db->get_string_id($string);
-  if ($sid === null) {
-    $sid = $db->insert_string($string);
-  }
-  if (!$sid) {
-    print "Some problems with the string '$string'.\n";
-    continue;
-  }
-
-  // Insert a location record.
-  $lid = $db->insert_location($sid, $project);
-
-  // Insert the translation for this string.
-  $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
-  $tid = $db->insert_translation($sid, $lng, $translation);
+// Get the id of the project.
+$pid = $db->get_project_id($project, $origin);
+if ($pid === null) {
+  $pid = $db->insert_project($project, $origin);
 }
+
+// Check whether the file already exists.
+// If not found, insert a new one, else update the existing one.
+$headers = ($entries[0]['msgid'] == '') ? $entries[0]['msgstr'] : '';
+$fid = $db->get_file_id($pid, $lng, $file);
+if ($fid === null) {
+  $fid = $db->insert_file($pid, $lng, $file, $headers);
+}
+else {
+  $db->update_file($pid, $lng, $file, $headers);
+}
+
+// If the file has been already imported, then exit.
+if ($db->file_is_imported($fid)) {
+  print "...Skiping, already imported.\n";
+  exit(0);
+};
+
+// Process each gettext entry.
+foreach ($entries as $entry)
+  {
+    //print_r($entry);  continue;  //debug
+
+    // Get the string and context of this entry.
+    $string = $entry['msgid'];
+    if (isset($entry['msgid_plural'])) {
+      $string .= "\0" . $entry['msgid_plural'];
+    }
+    $context = isset($entry['context']) ? $entry['context'] : 'none';
+
+    // Get the $sid of this string. If not found, insert a new string and get its id.
+    $sid = $db->get_string_id($string, $context);
+    if ($sid === null) {
+      $sid = $db->insert_string($string, $context);
+    }
+    if (!$sid) {
+      print "Some problems with the string '$string'.\n";
+      continue;
+    }
+
+    // Insert a location record, by replacing any existing one.
+    $lid = $db->get_location_id($pid, $sid);
+    if ($lid === null) {
+      $lid = $db->insert_location($pid, $sid, $entry);
+    }
+
+    // Insert the translation for this string.
+    $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
+    if (trim($translation) != '')
+      {
+	// Check first that it does not exist already.
+	$tid = $db->get_translation_id($sid, $translation);
+	if ($tid == null) {
+	  $tid = $db->insert_translation($sid, $lng, $translation);
+	}
+    }
+  }
+
+// Mark the file as imported.
+$db->set_file_imported($fid);
 ?>

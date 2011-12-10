@@ -1,12 +1,12 @@
 use l10nsq_test;
 
-drop table l10n_suggestions_files;
-drop table l10n_suggestions_projects;
-drop table l10n_suggestions_locations;
-drop table l10n_suggestions_strings;
-drop table l10n_suggestions_translations;
-drop table l10n_suggestions_votes;
-drop table l10n_suggestions_users;
+drop table if exists l10n_suggestions_files;
+drop table if exists l10n_suggestions_projects;
+drop table if exists l10n_suggestions_locations;
+drop table if exists l10n_suggestions_strings;
+drop table if exists l10n_suggestions_translations;
+drop table if exists l10n_suggestions_votes;
+drop table if exists l10n_suggestions_users;
 
 create table l10n_suggestions_files like l10nsq.l10n_suggestions_files;
 create table l10n_suggestions_projects like l10nsq.l10n_suggestions_projects;

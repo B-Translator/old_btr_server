@@ -10,8 +10,8 @@ It doesn't have the overhead of a drush command and is much faster.
 It is going to be used for the initial import of the PO files (which
 are going to be too many, hundreds or more, so it is important that
 it works as fast as possible). It can be called like this:
-  ./po-import.php projectname lngcode filename.po
-  ./po-import.php kturtle sq kturtle.po
+  ./po-import.php projectname lngcode origin filename.po
+  ./po-import.php kturtle sq KDE test/kturtle.po
 
 'settings.php' should be a link to the configuration file of the site.
 It can also be a copy (modified or not). The script 'po-import.php'

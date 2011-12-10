@@ -7,7 +7,8 @@ CREATE TABLE `l10n_suggestions_projects` (
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active or deleted status of the record.',
-  PRIMARY KEY (`pid`)
+  PRIMARY KEY (`pid`),
+  KEY `project` (`project`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='A project is the software/application which is translated by';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -21,7 +22,9 @@ CREATE TABLE `l10n_suggestions_files` (
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that imported the file.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the record was registered.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active or deleted state of the record.',
-  PRIMARY KEY (`fid`)
+  PRIMARY KEY (`fid`),
+  KEY `pid` (`pid`),
+  KEY `file` (`file`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
