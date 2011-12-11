@@ -23,7 +23,183 @@ function l10n_suggestions_uninstall() {
  */
 function l10n_suggestions_schema() {
 
-  //Translatable strings that are extracted from projects.
+  // PO files that are imported and can be exported from the DB.
+  $schema['l10n_suggestions_files'] = array(
+    'description' => 'A PO file that is imported and can be exported from the DB.',
+    'fields' => array(
+      'fid' => array(
+        'description' => 'Auto-increment internal identifier.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'file' => array(
+        'description' => 'The file name (and the path) of the imported file.',
+        'type' => 'varchar',
+        'length' => '200',
+        'not null' => FALSE,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the project for which this PO file is a translation.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'lng' => array(
+        'description' => 'The code of the translation language.',
+        'type' => 'varchar',
+        'length' => '10',
+        'not null' => TRUE,
+      ),
+      'headers' => array(
+        'description' => 'Headers of the imported PO file, as a long line. Needed mainly for exporting.',
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'uid' => array(
+        'description' => 'Id of the user that imported the file.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'time' => array(
+        'description' => 'The date and time that the record was registered.',
+        'type' => 'datetime',
+        'not null' => FALSE,
+      ),
+      'active' => array(
+        'description' => 'The active or deleted status of the record.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+    'primary key' => array('fid'),
+    'indexes' => array(
+      'file' => array('file'),
+      'pid' => array('pid'),
+    ),
+  );
+
+  // Projects are the software/applications which are translated by the PO files.
+  $schema['l10n_suggestions_projects'] = array(
+    'description' => 'A project is the software/application which is translated by the PO files.',
+    'fields' => array(
+      'pid' => array(
+        'description' => 'Auto-increment internal identifier.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'project' => array(
+        'description' => 'Project name (with the release appended if needed).',
+        'type' => 'varchar',
+        'length' => '100',
+        'not null' => TRUE,
+      ),
+      'origin' => array(
+        'description' => 'The origin of the project (where does it come from).',
+        'type' => 'varchar',
+        'length' => '100',
+        'not null' => FALSE,
+      ),
+      'uid' => array(
+        'description' => 'Id of the user that registered the project.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'time' => array(
+        'description' => 'The date and time that the project was registered.',
+        'type' => 'datetime',
+        'not null' => FALSE,
+      ),
+      'active' => array(
+        'description' => 'The active or deleted status of the record.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+    'primary key' => array('pid'),
+    'indexes' => array(
+      'project' => array('project'),
+    ),
+  );
+
+  // Locations (lines) where a l10n string is found.
+  $schema['l10n_suggestions_locations'] = array(
+    'description' => 'Locations (lines) where a l10n string is found.',
+    'fields' => array(
+      'lid' => array(
+        'description' => 'Internal numeric identifier of a line.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'sid' => array(
+        'description' => 'Reference to the id of the l10n string contained in this line.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'pid' => array(
+        'description' => 'Reference to the id of the project that contains this line.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'translator_comments' => array(
+        'description' => 'Translator comments in the PO entry (starting with "# ").',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'extracted_comments' => array(
+        'description' => 'Extracted comments in the PO entry (starting with "#. ").',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'referencies' => array(
+        'description' => 'Line numbers where the sting occurs (starting with "#: ").',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'flags' => array(
+        'description' => 'Flags of the PO entry (starting with "#, ").',
+        'type' => 'varchar',
+        'length' => '100',
+        'not null' => FALSE,
+      ),
+      'previous_msgctxt' => array(
+        'description' => 'Previous msgctxt in the PO entry (starting with "#| msgctxt ").',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'previous_msgid' => array(
+        'description' => 'Previous msgid in the PO entry (starting with "#| msgid ").',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'previous_msgid_plural' => array(
+        'description' => 'Previous msgid_plural in the PO entry (starting with "#| msgid_plural ").',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
+      'active' => array(
+        'description' => 'The active/deleted status of the record.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+    ),
+    'primary key' => array('lid'),
+    'indexes' => array(
+      'sid' => array('sid'),
+    ),
+  );
+
+  // Translatable strings that are extracted from projects.
   $schema['l10n_suggestions_strings'] = array(
     'description' => 'Translatable strings that are extracted from projects.',
     'fields' => array(
@@ -33,12 +209,18 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'string' => array(
-        'description' => 'The (English) l10n string to be translated.',
+        'description' => 'The string to be translated: "$msgid"."\0"."$msgid_plural"',
         'type' => 'text',
         'not null' => TRUE,
       ),
+      'context' => array(
+        'description' => 'The string context (msgctxt of the PO entry).',
+        'type' => 'varchar',
+        'length' => '500',
+        'not null' => FALSE,
+      ),
       'hash' => array(
-        'description' => 'hash = SHA1(TRIM(string)) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
+        'description' => 'Unique hash of the string: SHA1(CONCAT(string,context)) ',
         'type' => 'varchar',
         'length' => '40',
         'not null' => FALSE,
@@ -54,10 +236,17 @@ function l10n_suggestions_schema() {
         'not null' => FALSE,
       ),
       'count' => array(
-        'description' => 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings need to be translated first.',
+        'description' => 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings should be translated first.',
         'type' => 'int',
         'size' => 'tiny',
         'not null' => FALSE,
+        'default' => 1,
+      ),
+      'active' => array(
+        'description' => 'The active/deleted status of the record.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
         'default' => 1,
       ),
     ),
@@ -72,9 +261,9 @@ function l10n_suggestions_schema() {
     ),
   );
 
-  //Translations/suggestions of the l10n strings.
-  //For each l10n string there can be translations for different
-  //languages, and more than one translation for each language.
+  // Translations/suggestions of the l10n strings.
+  // For each l10n string there can be translations for different
+  // languages, and more than one translation for each language.
   $schema['l10n_suggestions_translations'] = array(
     'description' => 'Translations/suggestions of the l10n strings. For...',
     'fields' => array(
@@ -95,13 +284,13 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'translation' => array(
-        'description' => 'The (suggested) translation of the l10n string.',
+        'description' => 'The (suggested) translation of the phrase.',
         'type' => 'varchar',
         'length' => '1000',
         'not null' => TRUE,
       ),
       'hash' => array(
-        'description' => 'hash = SHA1(TRIM(translation)) Will be used for a more efficient and reliable text comparison, searching, indexing, etc.',
+        'description' => 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sid))',
         'type' => 'varchar',
         'length' => '40',
         'not null' => FALSE,
@@ -114,15 +303,21 @@ function l10n_suggestions_schema() {
         'default' => 1,
       ),
       'uid' => array(
-        'description' => 'The uid of the user that initially proposed this translation',
+        'description' => 'The uid of the user that initially suggested/submitted this translation.',
         'type' => 'int',
         'not null' => FALSE,
       ),
       'time' => array(
-        'description' => 'Unix timestamp of when the string was entered into the database.',
+        'description' => 'Time when the translation was entered into the database.',
+        'type' => 'datetime',
+        'not null' => FALSE,
+      ),
+      'active' => array(
+        'description' => 'The active/deleted status of the record.',
         'type' => 'int',
+        'size' => 'tiny',
         'not null' => TRUE,
-        'default' => 0,
+        'default' => 1,
       ),
     ),
     'primary key' => array('tid'),
@@ -135,7 +330,7 @@ function l10n_suggestions_schema() {
     ),
   );
 
-  //Votes for each translation/suggestion.
+  // Votes for each translation/suggestion.
   $schema['l10n_suggestions_votes'] = array(
     'description' => 'Votes for each translation/suggestion.',
     'fields' => array(
@@ -159,6 +354,13 @@ function l10n_suggestions_schema() {
         'type' => 'datetime',
         'not null' => FALSE,
       ),
+      'active' => array(
+        'description' => 'The active/deleted status of the record.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
     ),
     'primary key' => array('vid'),
     'unique keys' => array(
@@ -171,7 +373,7 @@ function l10n_suggestions_schema() {
     ),
   );
 
-  //Users that contribute translations/suggestions/votes.
+  // Users that contribute translations/suggestions/votes.
   $schema['l10n_suggestions_users'] = array(
     'description' => 'Users that contribute translations/suggestions/votes.',
     'fields' => array(
@@ -194,49 +396,6 @@ function l10n_suggestions_schema() {
       ),
     ),
     'primary key' => array('uid'),
-  );
-
-  //Locations (lines) where a l10n string is found.
-  $schema['l10n_suggestions_locations'] = array(
-    'description' => 'Locations (lines) where a l10n string is found.',
-    'fields' => array(
-      'lid' => array(
-        'description' => 'Internal numeric identifier of a line.',
-        'type' => 'serial',
-        'not null' => TRUE,
-      ),
-      'sid' => array(
-        'description' => 'Reference to the id of the l10n string contained in this line.',
-        'type' => 'int',
-        'not null' => TRUE,
-      ),
-      'pid' => array(
-        'description' => 'Reference to the id of the project that contains this line.',
-        'type' => 'int',
-        'not null' => TRUE,
-      ),
-      'packageid' => array(
-        'description' => 'Reference to the id of the package that contains the project.',
-        'type' => 'int',
-        'not null' => TRUE,
-      ),
-      'projectname' => array(
-        'description' => 'The name of the project containing this line.',
-        'type' => 'varchar',
-        'length' => '100',
-        'not null' => FALSE,
-      ),
-      'flags' => array(
-        'description' => 'Copied from open-trans.eu',
-        'type' => 'int',
-        'not null' => FALSE,
-      ),
-    ),
-    'primary key' => array('lid'),
-    'indexes' => array(
-      'sid' => array('sid'),
-      'projectname' => array(array('projectname', 5)),
-    ),
   );
 
   return $schema;
