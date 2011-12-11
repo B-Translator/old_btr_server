@@ -35,4 +35,18 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_suggestion
        case of update it should be carefull not to overwrite any
        existing data)
 
+* TODO Write scripts for importing and updating data from *.po files
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2011-12-11 Sun 09:18
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/DB
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: TODO
+  :END:
+  + Take care to preserve the data that already exist in the DB.
+  + Check the plurals (how they are handled?).
+  + There are cases of strings where exaclty the same translation is
+    stored several times. Try to fix it.
+
+
 

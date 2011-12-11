@@ -139,21 +139,21 @@ keeping notes, project planning, tasks management, etc.
 
    Projects and Categories can be used to limit the scope of the
    search (and other operations).
- 
+
    A project contains the translations of a certain application
-   (software). 
+   (software).
 
    A project can have several PO files (one for each different
    language).  Each of these PO files has many PO entries, which are
    stored in the table Locations.
- 
+
    The table Locations stores only the comments, line referencies,
    flags, previous strings, etc. of each PO entry.
- 
+
    The msgid (and msgctxt) of the entry is stored on the table
    Strings. A string can be connected to several locations, since the
    same string can be used on different projects.
- 
+
    Each string can have several translations (or suggestions) in each
    language. Each translation can have many votes. Each vote is given
    by a certain user.
@@ -181,7 +181,7 @@ keeping notes, project planning, tasks management, etc.
      - uid : int :: Id of the user that imported the file.
      - time : datetime :: The date and time that the record was
           registered.
-     - active : boolean :: The active or deleted state of the record.
+     - active : boolean :: The active or deleted status of the record.
 
    + Projects :: A project is the software/application which is
                  translated by the PO files.
@@ -201,29 +201,37 @@ keeping notes, project planning, tasks management, etc.
           in this line.
      - pid : int :: Reference to the id of the project that
           contains this line.
-     - translator_comments : varchar(500) ::
-     - extracted_comments : varchar(500) ::
-     - referencies : varchar(500) ::
-     - flags : varchar(100) ::
-     - previous_msgctxt : varchar(500) ::
-     - previous_msgid : varchar(500) ::
-     - previous_msgid_plural : varchar(500) ::
+     - translator_comments : varchar(500) :: Translator comments in
+          the PO entry (starting with "# ").
+     - extracted_comments : varchar(500) :: Extracted comments in the
+          PO entry (starting with "#. ").
+     - referencies : varchar(500) :: Line numbers where the sting
+          occurs (starting with "#: ").
+     - flags : varchar(100) :: Flags of the PO entry (starting with
+          "#, ").
+     - previous_msgctxt : varchar(500) :: Previous msgctxt in the PO
+          entry (starting with "#| msgctxt ").
+     - previous_msgid : varchar(500) :: Previous msgid in the PO entry
+          (starting with "#| msgid ").
+     - previous_msgid_plural : varchar(500) :: Previous msgid_plural
+          in the PO entry (starting with "#| msgid_plural ").
      - active : boolean :: The active or deleted status of the record.
 
    + Strings :: Translatable strings that are extracted from projects.
      - sid : serial :: Internal numeric identifier for a l10n string.
-     - string : text :: The (English) l10n string to be translated.
-     - context : varchar(500) :: The msgctxt of the PO entry.
-     - hash : varchar(40) :: Will be used for a more efficient and
-          reliable text comparison, searching, indexing, etc. hash =
-          SHA1(TRIM(string))
+     - string : text :: The string to be translated:
+          CONCAT(msgid,CHAR(0),msgid_plural)
+     - context : varchar(500) :: The string context (msgctxt of the PO
+          entry).
+     - hash : char(40) :: Unique hash of the string:
+          SHA1(CONCAT(string,context))
      - uid : int :: ID of the user that inserted this string
           on the DB.
      - time : datetime :: The time that this string was
           entered on the DB.
      - count : int/tiny :: How often this string is encountered in
           all the projects. Can be useful for any heuristics that try
-          to find out which strings need to be translated first.
+          to find out which strings should be translated first.
      - active : boolean :: The active/deleted status of the record.
 
    + Translations :: Translations/suggestions of the l10n strings.
@@ -235,14 +243,13 @@ keeping notes, project planning, tasks management, etc.
      - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
      - translation : varchar(1000) :: The (suggested) translation of
           the string.
-     - hash : varchar(40) :: Will be used for a more efficient and
-          reliable text comparison, searching, indexing, etc. hash =
-          SHA1(TRIM(translation))
+     - hash : char(40) :: Unique hash of the translation:
+          SHA1(CONCAT(translation,lng,sid))
      - count : int/tiny :: Count of votes received so far. This can be
           counted on the table Votes, but for convenience is stored
           here as well.
-     - uid : int :: id of the user that initially proposed this
-          translation
+     - uid : int :: id of the user that initially suggested/submitted
+          this translation
      - time : datetime :: Time that the translation was
           entered into the database.
      - active : boolean :: The active or deleted status of the record.
@@ -336,13 +343,9 @@ keeping notes, project planning, tasks management, etc.
 
 *** TODO Write scripts for importing and updating data from *.po files
     + Take care to preserve the data that already exist in the DB.
-    + Check the plurals (how they are handled?).
-    + There are cases of strings where exaclty the same translation is
-      stored several times. Try to fix it.
-
-*** Misc
-    + The function that generates the hash of a l10n string probably
-      should be changed and improved.
+*** TODO Improve hash functions for strings and translations
+*** TODO Replace id-s by uid-s (universal id-s) based on hashes
+*** TODO Write scripts for exporting PO files from the DB.
 
 ** UI
 

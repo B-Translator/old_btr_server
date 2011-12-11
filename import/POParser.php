@@ -66,7 +66,7 @@ class POParser
    */
   protected function _get_value($line)
   {
-    return $this->_dequote(substr($line, strpos($line, ' ') + 1));    
+    return $this->_dequote(substr($line, strpos($line, ' ') + 1));
   }
 
   /**
@@ -134,9 +134,12 @@ class POParser
 	// empty line
 	if (trim($line) == '')
 	  {
-	    if (empty($entry)) continue;
-	    $entries[] = $entry;
-	    $entry = array();
+	    if ($block == 'msgstr')
+	      {
+		$entries[] = $entry;
+		$entry = array();
+		$block = '';
+	      }
 	    continue;
 	  }
 
@@ -302,8 +305,8 @@ class POParser
       }
 
     // append the last entry
-    if (!empty($entry))  $entries[] = $entry;
-    
+    if ($block == 'msgstr')  $entries[] = $entry;
+
     // parse the headers from the msgstr of the first (empty) entry
     $headers = array();
     if ($entries[0]['msgid'] == '')

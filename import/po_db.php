@@ -21,13 +21,7 @@ class PODB
   protected function connect()
   {
     // Get the DB parameters.
-    @include_once(dirname(__FILE__).'/settings.php');
-    $db = $databases['default']['default'];
-    $dbdriver = $db['driver'];
-    $dbhost = $db['host'];
-    $dbname = $db['database'];  $dbname = 'l10nsq_test';  //debug
-    $dbuser = $db['username'];
-    $dbpass = $db['password'];
+    @include_once(dirname(__FILE__).'/db_params.php');
 
     // Create a DB connection.
     $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
@@ -97,11 +91,11 @@ class PODB
     $this->queries['insert_location'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_locations
 	 (sid, pid,
-          translator_comments, extracted_comments, referencies, flags, 
+          translator_comments, extracted_comments, referencies, flags,
           previous_msgctxt, previous_msgid, previous_msgid_plural)
       VALUES
 	 (:sid, :pid,
-          :translator_comments, :extracted_comments, :referencies, :flags, 
+          :translator_comments, :extracted_comments, :referencies, :flags,
           :previous_msgctxt, :previous_msgid, :previous_msgid_plural)
     ");
 
@@ -147,7 +141,8 @@ class PODB
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
 		    );
-    $pid = $this->queries['insert_project']->execute($params);
+    $this->queries['insert_project']->execute($params);
+    $pid = $this->dbh->lastInsertId();
 
     return $pid;
   }
@@ -181,7 +176,8 @@ class PODB
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
 		    );
-    $fid = $this->queries['insert_file']->execute($params);
+    $this->queries['insert_file']->execute($params);
+    $fid = $this->dbh->lastInsertId();
 
     return $fid;
   }
@@ -221,7 +217,7 @@ class PODB
    */
   public function get_string_id($string, $context)
   {
-    $params = array(':hash' => sha1(trim($string)));
+    $params = array(':hash' => sha1($string . $context));
     $this->queries['get_string_id']->execute($params);
     $row = $this->queries['get_string_id']->fetch();
     $sid = isset($row['sid']) ? $row['sid'] : null;
@@ -237,7 +233,7 @@ class PODB
     $params = array(
 		    ':string' => $string,
 		    ':context' => $context,
-		    ':hash' => sha1(trim($string)),
+		    ':hash' => sha1($string.$context),
 		    ':uid' => 1,   //admin
 		    ':time' => $this->time,
 		    );
@@ -289,11 +285,11 @@ class PODB
   }
 
   /** Get and return the id of a translation. */
-  public function get_translation_id($sid, $translation)
+  public function get_translation_id($sid, $lng, $translation)
   {
     $params = array(
 		    ':sid' => $sid,
-		    ':hash' => sha1(trim($translation)),
+		    ':hash' => sha1($translation . $lng . $sid),
 		    );
     $this->queries['get_translation_id']->execute($params);
     $row = $this->queries['get_translation_id']->fetch();
@@ -309,7 +305,7 @@ class PODB
 		    ':sid' => $sid,
 		    ':lng' => $lng,
 		    ':translation' => $translation,
-		    ':hash' => sha1(trim($translation)),
+		    ':hash' => sha1($translation . $lng . $sid),
 		    ':count' => 0,
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
@@ -318,11 +314,6 @@ class PODB
     $tid = $this->dbh->lastInsertId();
 
     return $tid;
-  }
-
-  public function exec($query)
-  {
-    return $this->dbh->exec($query);
   }
 }
 ?>

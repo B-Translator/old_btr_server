@@ -9,7 +9,7 @@ CREATE TABLE `l10n_suggestions_projects` (
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active or deleted status of the record.',
   PRIMARY KEY (`pid`),
   KEY `project` (`project`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='A project is the software/application which is translated by';
+) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=latin1 COMMENT='A project is the software/application which is translated by';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -25,7 +25,7 @@ CREATE TABLE `l10n_suggestions_files` (
   PRIMARY KEY (`fid`),
   KEY `pid` (`pid`),
   KEY `file` (`file`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='A PO file that is imported and can be exported from the DB.';
+) ENGINE=MyISAM AUTO_INCREMENT=449 DEFAULT CHARSET=latin1 COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -33,7 +33,7 @@ CREATE TABLE `l10n_suggestions_strings` (
   `sid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier for a l10n string.',
   `string` text COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
   `context` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
-  `hash` varchar(40) CHARACTER SET ascii DEFAULT NULL COMMENT 'Unique hash of the string: SHA1(CONCAT(string,context)) ',
+  `hash` char(40) CHARACTER SET ascii DEFAULT NULL COMMENT 'Unique hash of the string: SHA1(CONCAT(string,context)) ',
   `uid` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
   `time` datetime DEFAULT NULL COMMENT 'The time that this string was entered on the DB.',
   `count` tinyint(4) DEFAULT '1' COMMENT 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings should be translated first.',
@@ -43,7 +43,7 @@ CREATE TABLE `l10n_suggestions_strings` (
   KEY `string` (`string`(100)),
   KEY `uid` (`uid`,`time`),
   FULLTEXT KEY `string_text` (`string`)
-) ENGINE=MyISAM AUTO_INCREMENT=810815 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
+) ENGINE=MyISAM AUTO_INCREMENT=80546 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -61,7 +61,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
   PRIMARY KEY (`lid`),
   KEY `sid` (`sid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1149986 DEFAULT CHARSET=utf8 COMMENT='Locations (lines) where a l10n string is found.';
+) ENGINE=InnoDB AUTO_INCREMENT=100298 DEFAULT CHARSET=utf8 COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -70,7 +70,7 @@ CREATE TABLE `l10n_suggestions_translations` (
   `sid` int(11) NOT NULL COMMENT 'Reference to the id of the l10n string that is translated.',
   `lng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'Language code (en, fr, sq_AL, etc.)',
   `translation` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The (suggested) translation of the phrase.',
-  `hash` varchar(40) CHARACTER SET ascii DEFAULT NULL COMMENT 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sid))',
+  `hash` char(40) CHARACTER SET ascii DEFAULT NULL COMMENT 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sid))',
   `count` tinyint(4) DEFAULT '1' COMMENT 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
   `uid` int(11) DEFAULT NULL COMMENT 'The uid of the user that initially suggested/submitted this translation.',
   `time` datetime DEFAULT NULL COMMENT 'Time when the translation was entered into the database.',
@@ -78,10 +78,10 @@ CREATE TABLE `l10n_suggestions_translations` (
   PRIMARY KEY (`tid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`),
-  KEY `hash` (`hash`),
   KEY `sid` (`sid`),
+  KEY `hash` (`hash`),
   FULLTEXT KEY `translation_text` (`translation`)
-) ENGINE=MyISAM AUTO_INCREMENT=616388 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
+) ENGINE=MyISAM AUTO_INCREMENT=123880 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -96,7 +96,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `tid` (`tid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB AUTO_INCREMENT=430 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

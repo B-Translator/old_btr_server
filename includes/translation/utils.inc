@@ -150,11 +150,4 @@ function l10n_suggestions_pack_string($strings) {
   }
 }
 
-function l10n_suggestions_get_string_hash($l10n_string) {
-  $l10n_string = preg_replace('/^ +/', '', $l10n_string);
-  $l10n_string = preg_replace('/ +$/', '', $l10n_string);
-  $l10n_string = sha1($l10n_string);
-  return $l10n_string;
-}
-
 ?>

@@ -221,7 +221,7 @@ function l10n_suggestions_schema() {
       ),
       'hash' => array(
         'description' => 'Unique hash of the string: SHA1(CONCAT(string,context)) ',
-        'type' => 'varchar',
+        'type' => 'char',
         'length' => '40',
         'not null' => FALSE,
       ),
@@ -291,7 +291,7 @@ function l10n_suggestions_schema() {
       ),
       'hash' => array(
         'description' => 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sid))',
-        'type' => 'varchar',
+        'type' => 'char',
         'length' => '40',
         'not null' => FALSE,
       ),
