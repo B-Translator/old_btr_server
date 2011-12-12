@@ -5,9 +5,15 @@ echo "===== GETTING GNOME ====="
 . ./get.inc.sh
 change_dir GNOME
 
-gnome_modules=$(wget -o /dev/null -O- http://svn.gnome.org/viewvc/ | grep 'a href="/viewvc/[^"]' | sed 's/.*\/viewvc\/\([^\/]*\)\/.*/\1/')
-
-for module in $gnome_modules
+l10n_gnome='http://l10n.gnome.org/languages'
+version='gnome-3-4'
+for lng in $languages
 do
-    svn_checkout http://svn.gnome.org/svn/$module/trunk/po $module
+    rm -rf $lng
+    mkdir $lng
+    cd $lng
+    wget $l10n_gnome/$lng/$version/ui.tar.gz
+    tar xfz ui.tar.gz
+    rm ui.tar.gz
+    cd ..
 done

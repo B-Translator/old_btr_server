@@ -6,11 +6,11 @@
 ### import the PO files from GNOME
 for lng in $languages
 do
-    find "$data_root/GNOME" -name $lng\.po > file_list.txt
-    while read file
+    for file in $(ls $data_root/GNOME/$lng/*.$lng.po)
     do
-	project=$(basename $(dirname $file))
+	basename=$(basename $file)
+	project=${basename%.*.$lng.po}
+	#echo $file;  echo $project;  continue;  ## debug
 	./po_import.php $project $lng GNOME $file
-    done < file_list.txt
+    done
 done
-rm file_list.txt
