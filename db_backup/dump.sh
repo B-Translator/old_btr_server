@@ -14,7 +14,7 @@ fi
 dump='false'
 
 ### dump only the schema of the database
-mysqldump --user=root --password --no-data --compact \
+mysqldump --user=root --password --no-data --compact --add-drop-table \
           --database $db_name --tables \
           l10n_suggestions_projects l10n_suggestions_files \
           l10n_suggestions_strings l10n_suggestions_locations \

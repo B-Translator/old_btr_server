@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `l10n_suggestions_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_projects` (
@@ -11,6 +12,7 @@ CREATE TABLE `l10n_suggestions_projects` (
   KEY `project` (`project`)
 ) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=latin1 COMMENT='A project is the software/application which is translated by';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_files` (
@@ -27,6 +29,7 @@ CREATE TABLE `l10n_suggestions_files` (
   KEY `file` (`file`)
 ) ENGINE=MyISAM AUTO_INCREMENT=449 DEFAULT CHARSET=latin1 COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_strings` (
@@ -45,6 +48,7 @@ CREATE TABLE `l10n_suggestions_strings` (
   FULLTEXT KEY `string_text` (`string`)
 ) ENGINE=MyISAM AUTO_INCREMENT=80546 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_locations` (
@@ -63,6 +67,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   KEY `sid` (`sid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100298 DEFAULT CHARSET=utf8 COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_translations` (
@@ -83,6 +88,7 @@ CREATE TABLE `l10n_suggestions_translations` (
   FULLTEXT KEY `translation_text` (`translation`)
 ) ENGINE=MyISAM AUTO_INCREMENT=123880 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_votes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_votes` (
@@ -98,6 +104,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `time` (`time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_users` (

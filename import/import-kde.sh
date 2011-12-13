@@ -3,7 +3,7 @@
 ### get $data_root and $languages
 . ./config.sh
 
-### import the PO files from GNOME
+### import the PO files from KDE
 for lng in $languages
 do
     dir="$data_root/KDE/$lng/messages"
