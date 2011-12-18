@@ -1,5 +1,5 @@
 <?php
-class PODB
+class PODB_Import
 {
   /** Keeps the DB handler/connection. */
   private $dbh;

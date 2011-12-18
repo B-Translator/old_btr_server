@@ -30,8 +30,8 @@ $parts = split("/$origin/", $filename);
 $file = isset($parts[1]) ? $parts[1] : '';
 
 // Create a DB variable for handling queries.
-include_once(dirname(__FILE__).'/po_db.php');
-$db = new PODB;
+include_once(dirname(__FILE__).'/po_db_import.php');
+$db = new PODB_Import;
 
 // Parse the given PO file.
 include_once(dirname(__FILE__).'/POParser.php');
