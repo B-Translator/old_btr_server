@@ -59,16 +59,16 @@ class PODB_Export
   }
 
   /**
-   * Get and return an array of strings, indexed by sid.
+   * Get and return an array of strings, indexed by sguid.
    */
   public function get_strings($pid)
   {
     $get_strings = $this->dbh->prepare("
-      SELECT l.sid, s.string, s.context,
+      SELECT l.sguid, s.string, s.context,
 	     translator_comments, extracted_comments, referencies, flags,
 	     previous_msgctxt, previous_msgid, previous_msgid_plural
       FROM l10n_suggestions_locations l
-      LEFT JOIN l10n_suggestions_strings s ON (s.sid = l.sid)
+      LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
       WHERE l.pid = :pid
     ");
     $params = array(':pid' => $pid);
@@ -76,38 +76,38 @@ class PODB_Export
 
     $arr_strings = array();
     while ($string = $get_strings->fetchObject()) {
-      $sid = $string->sid;
-      $arr_strings[$sid] = $string;
+      $sguid = $string->sguid;
+      $arr_strings[$sguid] = $string;
     }
 
     return $arr_strings;
   }
 
   /**
-   * Get and return an array of translations, indexed by sid.
+   * Get and return an array of translations, indexed by sguid.
    */
   public function get_best_translations($pid, $lng)
   {
     $get_best_translations = $this->dbh->prepare("
-      SELECT t2.sid, t2.translation
-      FROM (SELECT t1.sid, t1.translation, MAX(t1.count) AS max_count
+      SELECT t2.sguid, t2.translation
+      FROM (SELECT t1.sguid, t1.translation, MAX(t1.count) AS max_count
 	      FROM l10n_suggestions_locations AS l1
 	      LEFT JOIN l10n_suggestions_translations AS t1
-		    ON (t1.sid = l1.sid AND t1.lng = :lng)
+		    ON (t1.sguid = l1.sguid AND t1.lng = :lng)
 	      WHERE l1.pid = :pid
-	      GROUP BY t1.sid
+	      GROUP BY t1.sguid
 	   ) AS m
       LEFT JOIN l10n_suggestions_translations AS t2
-	    ON (t2.sid = m.sid AND t2.lng = :lng AND t2.count = m.max_count)
-      GROUP BY t2.sid
+	    ON (t2.sguid = m.sguid AND t2.lng = :lng AND t2.count = m.max_count)
+      GROUP BY t2.sguid
     ");
     $params = array(':pid' => $pid, ':lng' => $lng);
     $get_best_translations->execute($params);
 
     $arr_translations = array();
     while ($translation = $get_best_translations->fetchObject()) {
-      $sid = $translation->sid;
-      $arr_translations[$sid] = $translation;
+      $sguid = $translation->sguid;
+      $arr_translations[$sguid] = $translation;
     }
 
     return $arr_translations;

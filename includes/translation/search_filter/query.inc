@@ -8,16 +8,16 @@
  *
  * It should be something like this:
  *
- *    SELECT s.sid,
+ *    SELECT s.sguid,
  *           MAX(MATCH (t.translation) AGAINST (:words)) AS score
  *    FROM {l10n_suggestions_strings} s
- *    LEFT JOIN {l10n_suggestions_translations} t ON (s.sid = t.sid)
+ *    LEFT JOIN {l10n_suggestions_translations} t ON (s.sguid = t.sguid)
  *    LEFT JOIN . . . . .
  *    . . . . . . . . . .
  *    WHERE (t.lng = :lng)
  *      AND (MATCH (t.translation) AGAINST (:words IN BOOLEAN MODE))
  *    . . . . . . . . . .
- *    GROUP BY s.sid
+ *    GROUP BY s.sguid
  *    ORDER BY score DESC
  *    LIMIT :limit;
  *
@@ -33,8 +33,8 @@ function l10n_suggestions_build_query($filter) {
 
   $query = db_select('l10n_suggestions_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
-  $query->addField('s', 'sid');
-  $query->groupBy('s.sid');
+  $query->addField('s', 'sguid');
+  $query->groupBy('s.sguid');
 
   _l10n_suggestions_filter_by_content($query, $filter['mode'], $filter['words']);
   _l10n_suggestions_filter_by_project($query, $filter['project'], $filter['package'], $filter['release']);
@@ -219,14 +219,14 @@ function _l10n_suggestions_join_table($query, $table) {
 
   switch ($table) {
     case 'translations':
-      $query->leftJoin("l10n_suggestions_translations", 't', 's.sid = t.sid');
+      $query->leftJoin("l10n_suggestions_translations", 't', 's.sguid = t.sguid');
       break;
     case 'votes':
-      _l10n_suggestions_join_table($query, 'translations', 't', 's.sid = t.sid');
+      _l10n_suggestions_join_table($query, 'translations', 't', 's.sguid = t.sguid');
       $query->leftJoin("l10n_suggestions_votes", 'v', 'v.tid = t.tid');
       break;
     case 'locations':
-      $query->leftJoin("l10n_suggestions_locations", 'l', 's.sid = l.sid');
+      $query->leftJoin("l10n_suggestions_locations", 'l', 's.sguid = l.sguid');
       break;
     default:
       debug("Error: _l10n_suggestions_join_table(): table '$table' is unknown.");

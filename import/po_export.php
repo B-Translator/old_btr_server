@@ -40,9 +40,9 @@ $strings = $db->get_strings($pid);
 $translations = $db->get_best_translations($pid, $lng);
 
 // Add translations to the corresponding strings.
-foreach (array_keys($strings) as $sid) {
-  $translation = isset($translations[$sid]) ? $translations[$sid]->translation : '';
-  $strings[$sid]->translation = $translation;
+foreach (array_keys($strings) as $sguid) {
+  $translation = isset($translations[$sguid]) ? $translations[$sguid]->translation : '';
+  $strings[$sguid]->translation = $translation;
 }
 //print_r($strings);  return;  //debug
 

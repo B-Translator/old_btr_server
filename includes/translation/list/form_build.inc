@@ -53,8 +53,8 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
   );
 
   // Fill in string values for the editor.
-  foreach ($strings as $sid => $string) {
-    $form['strings'][$sid] = _l10n_suggestions_translate_form_item($form_state, $string, $lng);
+  foreach ($strings as $sguid => $string) {
+    $form['strings'][$sguid] = _l10n_suggestions_translate_form_item($form_state, $string, $lng);
   }
 
   dpm($form, '$form');  //debug
@@ -113,7 +113,7 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
   // If there is no translation yet, display a visible placeholder.
   if (empty($translations)) {
     $translations['0'] = (object) array(
-      'sid' => $string->sid,
+      'sguid' => $string->sguid,
       'tid' => '0',
       'lng' => $lng,
       'translation' => t('(not translated)'),
@@ -124,13 +124,13 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
 
   foreach ($translations as $tid => $translation) {
     // Add the translation to the list.
-    $form[$tid] = _l10n_suggestions_translate_translation($translation, $string->sid, $lng);
+    $form[$tid] = _l10n_suggestions_translate_translation($translation, $string->sguid, $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('submit suggestions')) {
     $textarea = _l10n_suggestions_translate_translation_textarea($string, $lng);
-    $form[$textarea->tid] = _l10n_suggestions_translate_translation($textarea, $string->sid, $lng);
+    $form[$textarea->tid] = _l10n_suggestions_translate_translation($textarea, $string->sguid, $lng);
   }
 
   return $form;
@@ -150,7 +150,7 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
   $translation = implode('\0', $arr_translations);
 
   return (object) array(
-    'sid' => $string->sid,
+    'sguid' => $string->sguid,
     'tid' => 'new',
     'lng' => $lng,
     'translation' => $translation,
@@ -162,7 +162,7 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
 /**
  * Creates the form fragment for a translated string.
  */
-function _l10n_suggestions_translate_translation($translation, $string_sid, $lng) {
+function _l10n_suggestions_translate_translation($translation, $string_sguid, $lng) {
   global $user;
 
   $translation->translation = l10n_suggestions_unpack_string($translation->translation);
@@ -196,7 +196,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sid, $lng
   );
   if ($voting_mode == 'single') {
     $form['approved']['#checked'] = $is_approved;
-    $form['approved']['#parents'] = array('strings', $string_sid, 'approved');
+    $form['approved']['#parents'] = array('strings', $string_sguid, 'approved');
   }
 
   if ($may_moderate && !$is_new && !$no_translation) {

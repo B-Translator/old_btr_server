@@ -197,7 +197,7 @@ keeping notes, project planning, tasks management, etc.
 
    + Locations :: Locations (lines) where a l10n string is found.
      - lid : serial :: Internal numeric identifier of a line.
-     - sid : int :: Reference to the id of the l10n string contained
+     - sguid : int :: Reference to the id of the l10n string contained
           in this line.
      - pid : int :: Reference to the id of the project that
           contains this line.
@@ -218,13 +218,12 @@ keeping notes, project planning, tasks management, etc.
      - active : boolean :: The active or deleted status of the record.
 
    + Strings :: Translatable strings that are extracted from projects.
-     - sid : serial :: Internal numeric identifier for a l10n string.
      - string : text :: The string to be translated:
           CONCAT(msgid,CHAR(0),msgid_plural)
      - context : varchar(500) :: The string context (msgctxt of the PO
           entry).
-     - hash : char(40) :: Unique hash of the string:
-          SHA1(CONCAT(string,context))
+     - sguid : char(40) :: Globally Unique ID of the string, as hash
+          of the string and context: SHA1(CONCAT(string,context))
      - uid : int :: ID of the user that inserted this string
           on the DB.
      - time : datetime :: The time that this string was
@@ -238,13 +237,13 @@ keeping notes, project planning, tasks management, etc.
           For each string there can be translations for different
           languages, and more than one translation for each language.
      - tid : serial :: Internal numeric identifier for a translation.
-     - sid : int :: Reference to the id of the l10n string that is
+     - sguid : int :: Reference to the id of the l10n string that is
           translated.
      - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
      - translation : varchar(1000) :: The (suggested) translation of
           the string.
      - hash : char(40) :: Unique hash of the translation:
-          SHA1(CONCAT(translation,lng,sid))
+          SHA1(CONCAT(translation,lng,sguid))
      - count : int/tiny :: Count of votes received so far. This can be
           counted on the table Votes, but for convenience is stored
           here as well.

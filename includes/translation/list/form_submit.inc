@@ -14,18 +14,18 @@ function l10n_suggestions_translate_form_submit($form, &$form_state) {
   $voting_mode = variable_get('l10n_suggestions_voting_mode', 'single');
 
   // Iterate outer structure built in l10n_suggestions_translate_form().
-  foreach ($form_values['strings'] as $sid => $string) {
+  foreach ($form_values['strings'] as $sguid => $string) {
 
     if ($voting_mode == 'single') {
       $tid = $string['approved'];
-      _l10n_suggestions_translate_form_submit_single($sid, $lng, $string);
+      _l10n_suggestions_translate_form_submit_single($sguid, $lng, $string);
     }
 
     // Iterate inner structure built in _l10n_suggestions_translate_form_item().
     // Form items have numeric $tid values and other keys here.
     foreach ($string as $tid => $translation) {
       if ($voting_mode == 'multiple') {
-	_l10n_suggestions_translate_form_submit_multiple($sid, $tid, $lng, $translation);
+	_l10n_suggestions_translate_form_submit_multiple($sguid, $tid, $lng, $translation);
       }
       if (is_numeric($tid) && !empty($translation['declined'])) {
 	//do something for declined translations
@@ -45,7 +45,7 @@ function l10n_suggestions_translate_form_submit($form, &$form_state) {
   $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
 }
 
-function _l10n_suggestions_translate_form_submit_single($sid, $lng, $string) {
+function _l10n_suggestions_translate_form_submit_single($sguid, $lng, $string) {
 
   $tid = $string['approved'];
   if ($tid == '')  return;
@@ -53,7 +53,7 @@ function _l10n_suggestions_translate_form_submit_single($sid, $lng, $string) {
   if ($tid == 'new') {
     //add a new suggestion
     $values = $string[$tid]['value'];
-    l10n_suggestions_add_suggestion($sid, $lng, $values);
+    l10n_suggestions_add_suggestion($sguid, $lng, $values);
     return;
   }
 
@@ -68,14 +68,14 @@ function _l10n_suggestions_translate_form_submit_single($sid, $lng, $string) {
   }
 }
 
-function _l10n_suggestions_translate_form_submit_multiple($sid, $tid, $lng, $translation) {
+function _l10n_suggestions_translate_form_submit_multiple($sguid, $tid, $lng, $translation) {
   global $user;
 
   $approved = $translation['approved'];
   if ($tid == 'new') {
     //add a new suggestion
     $values = isset($translation['value']) ? $translation['value'] : array();
-    l10n_suggestions_add_suggestion($sid, $lng, $values);
+    l10n_suggestions_add_suggestion($sguid, $lng, $values);
   }
   elseif ($approved != '') {
     // Add a new vote for this translation
@@ -89,7 +89,7 @@ function _l10n_suggestions_translate_form_submit_multiple($sid, $tid, $lng, $tra
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']->votes;
     if (in_array($user->uid, array_keys($previous_votes))) {
-      _l10n_suggestions_clean_previous_votes($tid, $user->uid, $sid, $lng);
+      _l10n_suggestions_clean_previous_votes($tid, $user->uid, $sguid, $lng);
     }
   }
 }
@@ -115,7 +115,7 @@ function l10n_suggestions_add_vote($tid, $uid) {
   if (empty($trans))  return NULL;
 
   // Clean any previous vote.
-  $nr = _l10n_suggestions_clean_previous_votes($tid, $uid, $trans->sid, $trans->lng);
+  $nr = _l10n_suggestions_clean_previous_votes($tid, $uid, $trans->sguid, $trans->lng);
 
   // Add the vote.
   $vid = db_insert('l10n_suggestions_votes')
@@ -152,7 +152,7 @@ function l10n_suggestions_add_vote($tid, $uid) {
  *   ID of the translation.
  * @param $uid
  *   ID of the user.
- * @param $sid
+ * @param $sguid
  *   ID of the source string.
  * @param $lng
  *   Language code of the translation.
@@ -161,7 +161,7 @@ function l10n_suggestions_add_vote($tid, $uid) {
  *   (Normally should be 0, but can also be 1. If it is >1,
  *   something must be wrong.)
  */
-function _l10n_suggestions_clean_previous_votes($tid, $uid, $sid, $lng) {
+function _l10n_suggestions_clean_previous_votes($tid, $uid, $sguid, $lng) {
 
   //TODO: Instead of deleting previous votes, save them in
   //      an archive table, so that the history of changing
@@ -186,8 +186,8 @@ function _l10n_suggestions_clean_previous_votes($tid, $uid, $sid, $lng) {
     // Get the other sibling translations
     // (translations of the same string for the same language).
     $sql = 'SELECT tid FROM {l10n_suggestions_translations} '
-      . 'WHERE sid = :sid AND lng = :lng';
-    $params = array(':sid' => $sid, ':lng' => $lng);
+      . 'WHERE sguid = :sguid AND lng = :lng';
+    $params = array(':sguid' => $sguid, ':lng' => $lng);
     $arr_tid = db_query($sql, $params)->fetchCol();
 
     if (empty($arr_tid))  return 0;
@@ -205,7 +205,7 @@ function _l10n_suggestions_clean_previous_votes($tid, $uid, $sid, $lng) {
 /**
  * Adds a new translation suggestion to a source string.
  *
- * @param $sid
+ * @param $sguid
  *   The string ID for which a new suggestion should be added.
  * @param $lng
  *   The language code of the new suggestion.
@@ -216,7 +216,7 @@ function _l10n_suggestions_clean_previous_votes($tid, $uid, $sid, $lng) {
  *   ID of the user that submitted the suggestion. If missing,
  *   the logged in user will be used.
  */
-function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
+function l10n_suggestions_add_suggestion($sguid, $lng, $values, $uid =NULL) {
 
   if ($uid == NULL) {
     global $user;
@@ -230,17 +230,15 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
   if (trim($translation) == '')  return false;
 
   // Load the string and adjust translation whitespace based on source.
-  $query = 'SELECT string FROM {l10n_suggestions_strings} WHERE sid = :sid';
-  $source_string = db_query($query, array(':sid' => $sid))->fetchField();
+  $query = 'SELECT string FROM {l10n_suggestions_strings} WHERE sguid = :sguid';
+  $source_string = db_query($query, array(':sguid' => $sguid))->fetchField();
   $translation = l10n_suggestions_trim($translation, $source_string);
 
   // Look for an existing translation, if any.
   // Use HASH matching to avoid marking case-corrections as duplicate.
-  $hash = sha1($translation.$lng.$sid);
-  $query = 'SELECT translation FROM {l10n_suggestions_translations} '
-    . 'WHERE sid = :sid AND lng = :lng AND hash = :hash';
-  $params = array(':sid' => $sid, ':lng' => $lng, ':hash' => $hash);
-  $existing = db_query($query, $params)->fetchField();
+  $hash = sha1($translation . $lng . $sguid);
+  $query = 'SELECT translation FROM {l10n_suggestions_translations} WHERE hash = :hash';
+  $existing = db_query($query, array(':hash' => $hash))->fetchField();
 
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  return false;
@@ -248,10 +246,10 @@ function l10n_suggestions_add_suggestion($sid, $lng, $values, $uid =NULL) {
   // Insert the new suggestion.
   $tid = db_insert('l10n_suggestions_translations')
     ->fields(array(
-        'sid' => $sid,
+        'sguid' => $sguid,
         'lng' => $lng,
         'translation' => $translation,
-	'hash' => sha1($translation . $lng . $sid),
+	'hash' => sha1($translation . $lng . $sguid),
         'count' => 1,
         'uid' => $uid,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),

@@ -84,21 +84,17 @@ foreach ($entries as $entry)
     // Don't add strings like 'translator-credits' etc. as translatable strings.
     if (preg_match('/.*translator.*credit.*/', $string))  continue;
 
-    // Get the $sid of this string. If not found, insert a new string and get its id.
+    // Get the $sguid of this string. If not found, insert a new string and get its id.
     $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
-    $sid = $db->get_string_id($string, $context);
-    if ($sid === null) {
-      $sid = $db->insert_string($string, $context);
-    }
-    if (!$sid) {
-      print "Some problems with the string '$string'.\n";
-      continue;
+    $sguid = $db->get_string_id($string, $context);
+    if ($sguid === null) {
+      $sguid = $db->insert_string($string, $context);
     }
 
     // Insert a location record, by replacing any existing one.
-    $lid = $db->get_location_id($pid, $sid);
+    $lid = $db->get_location_id($pid, $sguid);
     if ($lid === null) {
-      $lid = $db->insert_location($pid, $sid, $entry);
+      $lid = $db->insert_location($pid, $sguid, $entry);
     }
 
     // Insert the translation for this string.
@@ -106,9 +102,9 @@ foreach ($entries as $entry)
     if (trim($translation) != '')
       {
 	// Check first that it does not exist already.
-	$tid = $db->get_translation_id($sid, $lng, $translation);
+	$tid = $db->get_translation_id($sguid, $lng, $translation);
 	if ($tid == null) {
-	  $tid = $db->insert_translation($sid, $lng, $translation);
+	  $tid = $db->insert_translation($sguid, $lng, $translation);
 	}
     }
   }

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Functions specific to the menu path: translation/get/lng/hash .
+ *   Functions specific to the menu path: translation/get/lng/sguid .
  */
 
 /**
@@ -11,11 +11,11 @@ require_once(dirname(__FILE__) . '/list/list.inc');
 require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
- * Menu callback: translation/get/lng/hash
+ * Menu callback: translation/get/lng/sguid
  * Get translation suggestions for a given string.
- * 'lng' and 'hash' are passed as parameters to the function.
+ * 'lng' and 'sguid' are passed as parameters to the function.
  */
-function l10n_suggestions_get($lng =NULL, $hash =NULL) {
+function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
 
   // Add the the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
@@ -27,10 +27,10 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
   $lng_codes = array_keys($languages);
 
   //check the correct usage of parameters
-  if ($lng==NULL or $hash==NULL) {
-    drupal_set_message(t("Missing parameters lng/hash."), 'error');
+  if ($lng==NULL or $sguid==NULL) {
+    drupal_set_message(t("Missing parameters lng/sguid."), 'error');
     $output = array(
-      '#markup' => t("The correct usage of this interface is: <strong>translation/get/lng/hash</strong> , where <strong>lng</strong> is one of: <strong>!lng_codes</strong> .",
+      '#markup' => t("The correct usage of this interface is: <strong>translation/get/lng/sguid</strong> , where <strong>lng</strong> is one of: <strong>!lng_codes</strong> .",
                  array(
                    '!lng_codes' => implode(', ', $lng_codes),
                  ))
@@ -70,18 +70,18 @@ function l10n_suggestions_get($lng =NULL, $hash =NULL) {
 
   // Get the matching string and its translations.
   $query = db_select('l10n_suggestions_strings', 's')
-    ->fields('s', array('sid'))
-    ->where('s.hash = :hash', array(':hash' => $hash));
+    ->fields('s', array('sguid'))
+    ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = l10n_suggestions_get_strings($query, $lng);
   //if ($strings) dpm($strings[0]);  //debug
 
   // If no strings were returned, display an empty message.
   if (!$strings) {
-    drupal_set_message(t("No strings with hash '<strong>!hash</strong>' found.", array('!hash'=>$hash)), 'error');
+    drupal_set_message(t("No strings with GUID '<strong>!sguid</strong>' found.", array('!sguid'=>$sguid)), 'error');
     $output = array(
-      '#markup' => t("No strings with hash '<strong>!hash</strong>' found. <br/> Try instead to search with: !search_path",
+      '#markup' => t("No strings with GUID '<strong>!sguid</strong>' found. <br/> Try instead to search with: !search_path",
                  array(
-                   '!hash' => $hash,
+                   '!sguid' => $sguid,
                    '!search_path' => l('translation/search', 'translation/search'),
                  ))
     );

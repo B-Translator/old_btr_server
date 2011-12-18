@@ -19,28 +19,28 @@
  */
 function l10n_suggestions_get_strings($filter_query, $lng) {
   //get the IDs of the strings that are returned by the filter query
-  $assoc_arr_sid = $filter_query->execute()->fetchAllAssoc('sid');
-  if (empty($assoc_arr_sid))  return array();
-  $arr_sid = array_keys($assoc_arr_sid);
+  $assoc_arr_sguid = $filter_query->execute()->fetchAllAssoc('sguid');
+  if (empty($assoc_arr_sguid))  return array();
+  $arr_sguid = array_keys($assoc_arr_sguid);
 
   //get string details
   $get_strings =
-    " SELECT sid, string, hash
+    " SELECT sguid, string
       FROM {l10n_suggestions_strings}
-      WHERE sid IN (:arr_sid)";
-  $result = db_query($get_strings, array(':arr_sid' => $arr_sid));
-  $arr_strings = $result->fetchAllAssoc('sid');
+      WHERE sguid IN (:arr_sguid)";
+  $result = db_query($get_strings, array(':arr_sguid' => $arr_sguid));
+  $arr_strings = $result->fetchAllAssoc('sguid');
 
   //get translations
   $get_translations =
-    " SELECT s.sid, t.tid, t.lng, t.translation, t.hash,
+    " SELECT s.sguid, t.tid, t.lng, t.translation, t.hash,
              t.time, t.uid, u.name AS author, t.count
       FROM {l10n_suggestions_strings} s
-      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (s.sid = t.sid)
+      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (s.sguid = t.sguid)
       LEFT OUTER JOIN {users} u ON (u.uid = t.uid)
-      WHERE (t.lng = :lng) AND s.sid IN (:arr_sid)
+      WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
       ORDER BY t.count DESC";
-  $result = db_query($get_translations, array(':lng' => $lng, ':arr_sid' => $arr_sid));
+  $result = db_query($get_translations, array(':lng' => $lng, ':arr_sguid' => $arr_sguid));
   $arr_translations = $result->fetchAllAssoc('tid');
 
   //get votes
@@ -63,25 +63,25 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   //get alternatives (from other languages)
   //they are the best translations (max count) from the alternative languages
   $get_alternatives =
-    " SELECT DISTINCT t.sid, t.tid, t.lng, t.translation, t.count
-      FROM (SELECT sid, lng, MAX(count) AS max_count
+    " SELECT DISTINCT t.sguid, t.tid, t.lng, t.translation, t.count
+      FROM (SELECT sguid, lng, MAX(count) AS max_count
 	    FROM l10n_suggestions_translations
-	    WHERE lng IN (:arr_lng) AND sid IN (:arr_sid)
-	    GROUP BY sid, lng
+	    WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
+	    GROUP BY sguid, lng
 	    ) AS m
       INNER JOIN l10n_suggestions_translations AS t
-	    ON m.sid = t.sid AND m.lng = t.lng AND m.max_count = t.count
-      GROUP BY t.sid, t.lng, t.count";
+	    ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
+      GROUP BY t.sguid, t.lng, t.count";
   $arr_lng = array('fr', 'sq');
-  $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sid' => $arr_sid));
+  $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid));
   $arr_alternatives = $result->fetchAllAssoc('tid');
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
   // Put alternatives as nested array under strings.
   foreach ($arr_alternatives as $tid => $alternative) {
-    $sid = $alternative->sid;
+    $sguid = $alternative->sguid;
     $lng = $alternative->lng;
-    $arr_strings[$sid]->alternatives[$lng] = $alternative->translation;
+    $arr_strings[$sguid]->alternatives[$lng] = $alternative->translation;
   }
 
   // Put votes as nested arrays inside translations.
@@ -98,18 +98,18 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   // (even though it may be empty).
   foreach ($arr_translations as $tid => $translation) {
     if (!isset($translation->votes))  $translation->votes = array();
-    $sid = $translation->sid;
-    $arr_strings[$sid]->translations[$tid] = $translation;
+    $sguid = $translation->sguid;
+    $arr_strings[$sguid]->translations[$tid] = $translation;
   }
 
-  // Put strings in the same order as $arr_sid.
+  // Put strings in the same order as $arr_sguid.
   // Make sure as well that each string has an array of translations
   // (even though it may be empty).
-  foreach ($arr_sid as $sid) {
-    $string = $arr_strings[$sid];
+  foreach ($arr_sguid as $sguid) {
+    $string = $arr_strings[$sguid];
     if (!isset($string->translations)) $string->translations = array();
     if (!isset($string->alternatives)) $string->alternatives = array();
-    $strings[$sid] = $string;
+    $strings[$sguid] = $string;
   }
 
   return $strings;

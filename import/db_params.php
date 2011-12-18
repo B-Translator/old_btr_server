@@ -4,7 +4,7 @@ $db = $databases['default']['default'];
 
 $dbdriver = $db['driver'];
 $dbhost = $db['host'];
-$dbname = $db['database'];  $dbname = 'l10nsq_test';  //debug
+$dbname = $db['database'];  //$dbname = 'l10nsq_test';  //debug
 $dbuser = $db['username'];
 $dbpass = $db['password'];
 

@@ -41,7 +41,7 @@ td.source {
   width: 45%;
   direction: ltr;
 }
-  td.source .l10n-sid {
+  td.source .l10n-sguid {
     padding-right: 6px;
     font-size: 10px;
     color: #000;
@@ -149,7 +149,7 @@ td li.translation > .selector {
 
 li.translation .l10n-string,
 td.source .l10n-string,
-td.sid a {
+td.sguid a {
   display: block;
   line-height: 16px;
 }

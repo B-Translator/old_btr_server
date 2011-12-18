@@ -12,7 +12,7 @@ echo $sql | mysql $mysql_params
 ### import all PO files
 #./import-ubuntu.sh
 ./import-gnome.sh
-#./import-kde.sh
+./import-kde.sh
 
 ### drop column 'imported'
 sql="ALTER TABLE l10n_suggestions_files DROP COLUMN imported"
@@ -22,5 +22,5 @@ echo $sql | mysql $mysql_params
 sql="UPDATE l10n_suggestions_strings s
      SET s.count = (SELECT count(*)
                     FROM l10n_suggestions_locations l
-                    WHERE l.sid = s.sid)"
+                    WHERE l.sguid = s.sguid)"
 echo $sql | mysql $mysql_params

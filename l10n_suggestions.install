@@ -133,7 +133,7 @@ function l10n_suggestions_schema() {
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'sid' => array(
+      'sguid' => array(
         'description' => 'Reference to the id of the l10n string contained in this line.',
         'type' => 'int',
         'not null' => TRUE,
@@ -195,7 +195,7 @@ function l10n_suggestions_schema() {
     ),
     'primary key' => array('lid'),
     'indexes' => array(
-      'sid' => array('sid'),
+      'sguid' => array('sguid'),
     ),
   );
 
@@ -203,11 +203,6 @@ function l10n_suggestions_schema() {
   $schema['l10n_suggestions_strings'] = array(
     'description' => 'Translatable strings that are extracted from projects.',
     'fields' => array(
-      'sid' => array(
-        'description' => 'Internal numeric identifier for a l10n string.',
-        'type' => 'serial',
-        'not null' => TRUE,
-      ),
       'string' => array(
         'description' => 'The string to be translated: "$msgid"."\0"."$msgid_plural"',
         'type' => 'text',
@@ -219,8 +214,8 @@ function l10n_suggestions_schema() {
         'length' => '500',
         'not null' => FALSE,
       ),
-      'hash' => array(
-        'description' => 'Unique hash of the string: SHA1(CONCAT(string,context)) ',
+      'sguid' => array(
+        'description' => 'Globally Unique ID of the string, as hash of the string and context: SHA1(CONCAT(string,context)) ',
         'type' => 'char',
         'length' => '40',
         'not null' => FALSE,
@@ -250,10 +245,7 @@ function l10n_suggestions_schema() {
         'default' => 1,
       ),
     ),
-    'primary key' => array('sid'),
-    'unique keys' => array(
-      'hash' => array('hash')
-    ),
+    'primary key' => array('sguid'),
     'indexes' => array(
       'string' => array(array('string', 100)),
       'string_text' => array('string'),
@@ -272,7 +264,7 @@ function l10n_suggestions_schema() {
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'sid' => array(
+      'sguid' => array(
         'description' => 'Reference to the id of the l10n string that is translated.',
         'type' => 'int',
         'not null' => TRUE,
@@ -290,7 +282,7 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'hash' => array(
-        'description' => 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sid))',
+        'description' => 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sguid))',
         'type' => 'char',
         'length' => '40',
         'not null' => FALSE,
@@ -323,7 +315,7 @@ function l10n_suggestions_schema() {
     'primary key' => array('tid'),
     'indexes' => array(
       'hash' => array('hash'),
-      'sid' => array('sid'),
+      'sguid' => array('sguid'),
       'time' => array('time'),
       'translation_text' => array('translation'),
       'uid' => array('uid'),

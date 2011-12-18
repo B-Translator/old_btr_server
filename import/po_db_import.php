@@ -70,31 +70,31 @@ class PODB_Import
 
     // get_string_id
     $this->queries['get_string_id'] = $this->dbh->prepare("
-      SELECT sid FROM l10n_suggestions_strings WHERE hash = :hash
+      SELECT sguid FROM l10n_suggestions_strings WHERE sguid = :sguid
     ");
 
     // insert_string
     $this->queries['insert_string'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_strings
-	 (string, context, hash, uid, time)
+	 (string, context, sguid, uid, time)
       VALUES
-	 (:string, :context, :hash, :uid, :time)
+	 (:string, :context, :sguid, :uid, :time)
     ");
 
     // get_location_id
     $this->queries['get_location_id'] = $this->dbh->prepare("
       SELECT lid FROM l10n_suggestions_locations
-      WHERE pid = :pid AND sid = :sid
+      WHERE pid = :pid AND sguid = :sguid
     ");
 
     // insert_location
     $this->queries['insert_location'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_locations
-	 (sid, pid,
+	 (sguid, pid,
           translator_comments, extracted_comments, referencies, flags,
           previous_msgctxt, previous_msgid, previous_msgid_plural)
       VALUES
-	 (:sid, :pid,
+	 (:sguid, :pid,
           :translator_comments, :extracted_comments, :referencies, :flags,
           :previous_msgctxt, :previous_msgid, :previous_msgid_plural)
     ");
@@ -102,15 +102,15 @@ class PODB_Import
     // get_translation_id
     $this->queries['get_translation_id'] = $this->dbh->prepare("
       SELECT tid FROM l10n_suggestions_translations
-      WHERE sid = :sid AND hash = :hash
+      WHERE hash = :hash
     ");
 
     // insert_translation
     $this->queries['insert_translation'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_translations
-	 (sid, lng, translation, hash, count, uid, time)
+	 (sguid, lng, translation, hash, count, uid, time)
       VALUES
-	 (:sid, :lng, :translation, :hash, :count, :uid, :time)
+	 (:sguid, :lng, :translation, :hash, :count, :uid, :time)
     ");
   }
 
@@ -217,12 +217,12 @@ class PODB_Import
    */
   public function get_string_id($string, $context)
   {
-    $params = array(':hash' => sha1($string . $context));
+    $params = array(':sguid' => sha1($string . $context));
     $this->queries['get_string_id']->execute($params);
     $row = $this->queries['get_string_id']->fetch();
-    $sid = isset($row['sid']) ? $row['sid'] : null;
+    $sguid = isset($row['sguid']) ? $row['sguid'] : null;
 
-    return $sid;
+    return $sguid;
   }
 
   /**
@@ -230,25 +230,25 @@ class PODB_Import
    */
   public function insert_string($string, $context)
   {
+    $sguid = sha1($string . $context);
     $params = array(
 		    ':string' => $string,
 		    ':context' => $context,
-		    ':hash' => sha1($string.$context),
+		    ':sguid' => $sguid,
 		    ':uid' => 1,   //admin
 		    ':time' => $this->time,
 		    );
     $this->queries['insert_string']->execute($params);
-    $sid = $this->dbh->lastInsertId();
 
-    return $sid;
+    return $sguid;
   }
 
   /** Return the id of a location. */
-  public function get_location_id($pid, $sid)
+  public function get_location_id($pid, $sguid)
   {
     $params = array(
 		    ':pid' => $pid,
-		    ':sid' => $sid,
+		    ':sguid' => $sguid,
 		    );
     $this->queries['get_location_id']->execute($params);
     $row = $this->queries['get_location_id']->fetch();
@@ -258,7 +258,7 @@ class PODB_Import
   }
 
   /** Insert a location into DB. */
-  public function insert_location($pid, $sid, $entry)
+  public function insert_location($pid, $sguid, $entry)
   {
     $translator_comments = isset($entry['translator-comments']) ? $entry['translator-comments'] : null;
     $extracted_comments = isset($entry['extracted-comments']) ? $entry['extracted-comments'] : null;
@@ -269,7 +269,7 @@ class PODB_Import
     $previous_msgid_plural = isset($entry['previous-msgid_plural']) ? $entry['previous-msgid_plural'] : null;
     $params = array(
 		    ':pid' => $pid,
-		    ':sid' => $sid,
+		    ':sguid' => $sguid,
 		    ':translator_comments' => $translator_comments,
 		    ':extracted_comments' => $extracted_comments,
 		    ':referencies' => $referencies,
@@ -285,12 +285,9 @@ class PODB_Import
   }
 
   /** Get and return the id of a translation. */
-  public function get_translation_id($sid, $lng, $translation)
+  public function get_translation_id($sguid, $lng, $translation)
   {
-    $params = array(
-		    ':sid' => $sid,
-		    ':hash' => sha1($translation . $lng . $sid),
-		    );
+    $params = array(':hash' => sha1($translation . $lng . $sguid));
     $this->queries['get_translation_id']->execute($params);
     $row = $this->queries['get_translation_id']->fetch();
     $tid = isset($row['tid']) ? $row['tid'] : null;
@@ -299,13 +296,13 @@ class PODB_Import
   }
 
   /** Insert a translation into DB. */
-  public function insert_translation($sid, $lng, $translation)
+  public function insert_translation($sguid, $lng, $translation)
   {
     $params = array(
-		    ':sid' => $sid,
+		    ':sguid' => $sguid,
 		    ':lng' => $lng,
 		    ':translation' => $translation,
-		    ':hash' => sha1($translation . $lng . $sid),
+		    ':hash' => sha1($translation . $lng . $sguid),
 		    ':count' => 0,
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
