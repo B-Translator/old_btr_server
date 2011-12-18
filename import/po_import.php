@@ -3,14 +3,14 @@
    // Check the number of parameters.
 if ($argc != 5) {
   print "
-Usage: $argv[0] project lng origin file.po
+Usage: $argv[0] origin project lng file.po
+  origin  -- the origin of the PO file (ubuntu, GNOME, KDE, etc.)
   project -- the name of the project that is being imported.
   lng     -- the language of translation (de, fr, sq, en_GB, etc.).
-  origin  -- the origin of the PO file (ubuntu, GNOME, KDE, etc.)
   file.po -- the PO file to be imported.
 
 Example:
-  $argv[0] kturtle fr KDE test/kturtle.po
+  $argv[0] KDE kturtle fr test/kturtle.po
 
 ";
   exit(1);
@@ -18,9 +18,9 @@ Example:
 
 // Get the parameters (project, lng, origin, file.po).
 $script = $argv[0];
-$project = $argv[1];
-$lng = $argv[2];
-$origin = $argv[3];
+$origin = $argv[1];
+$project = $argv[2];
+$lng = $argv[3];
 $filename = $argv[4];
 //log
 print "$script $project $lng $origin $filename\n";
@@ -36,7 +36,14 @@ $db = new PODB;
 // Parse the given PO file.
 include_once(dirname(__FILE__).'/POParser.php');
 $parser = new POParser;
-list($headers, $entries) = $parser->parse($filename);
+$entries = $parser->parse($filename);
+/*
+// parse the headers from the msgstr of the first (empty) entry
+$headers = array();
+if ($entries[0]['msgid'] == '') {
+  $headers = $parser->parse_headers($entries[0]['msgstr']);
+}
+*/
 //print_r($headers);  print_r($entries);  exit(0);  //debug
 
 // Get the id of the project.
@@ -72,9 +79,13 @@ foreach ($entries as $entry)
     if (isset($entry['msgid_plural'])) {
       $string .= "\0" . $entry['msgid_plural'];
     }
-    $context = isset($entry['context']) ? $entry['context'] : 'none';
+    // Don't add the header entry as a translatable string.
+    if ($string == '')  continue;
+    // Don't add strings like 'translator-credits' etc. as translatable strings.
+    if (preg_match('/.*translator.*credit.*/', $string))  continue;
 
     // Get the $sid of this string. If not found, insert a new string and get its id.
+    $context = isset($entry['context']) ? $entry['context'] : '';
     $sid = $db->get_string_id($string, $context);
     if ($sid === null) {
       $sid = $db->insert_string($string, $context);

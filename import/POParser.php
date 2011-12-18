@@ -73,7 +73,7 @@ class POParser
    * Get the headers of the PO file (from the msgstr of the first (empty) entry)
    * and return them as an array.
    */
-  protected function _parse_headers($str_headers)
+  public function parse_headers($str_headers)
   {
     $headers = array(
 		     'Project-Id-Version'            => '',
@@ -307,14 +307,7 @@ class POParser
     // append the last entry
     if ($block == 'msgstr')  $entries[] = $entry;
 
-    // parse the headers from the msgstr of the first (empty) entry
-    $headers = array();
-    if ($entries[0]['msgid'] == '')
-      {
-	$headers = $this->_parse_headers($entries[0]['msgstr']);
-      }
-
-    return array($headers, $entries);
+    return $entries;
   }
 }
 ?>

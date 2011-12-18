@@ -8,10 +8,10 @@
 function l10n_suggestions_project_autocomplete($string = '') {
   $matches = array();
   if ($string) {
-    $query = "SELECT DISTINCT SUBSTRING(projectname,3) AS project
-              FROM {l10n_suggestions_locations}
-              WHERE projectname LIKE :str ORDER BY project";
-    $result = db_query_range($query, 0, 10, array(':str' => '_/'.$string.'%'));
+    $query = "SELECT DISTINCT project
+              FROM {l10n_suggestions_projects}
+              WHERE project LIKE :str ORDER BY project";
+    $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
     foreach ($result as $project) {
       $matches[$project->project] = check_plain($project->project);
     }
