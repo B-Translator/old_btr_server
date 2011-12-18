@@ -69,35 +69,33 @@ DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_translations` (
-  `tid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier for a translation.',
   `sguid` char(40) COLLATE utf8_bin NOT NULL COMMENT 'Reference to the id of the l10n string that is translated.',
   `lng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'Language code (en, fr, sq_AL, etc.)',
   `translation` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The (suggested) translation of the phrase.',
-  `hash` char(40) CHARACTER SET ascii DEFAULT NULL COMMENT 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sid))',
+  `tguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Globally Unique ID of the translation, defined as hash: SHA1(CONCAT(translation,lng,sguid))',
   `count` tinyint(4) DEFAULT '1' COMMENT 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
   `uid` int(11) DEFAULT NULL COMMENT 'The uid of the user that initially suggested/submitted this translation.',
   `time` datetime DEFAULT NULL COMMENT 'Time when the translation was entered into the database.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
-  PRIMARY KEY (`tid`),
+  PRIMARY KEY (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`),
-  KEY `hash` (`hash`),
   KEY `sguid` (`sguid`),
   FULLTEXT KEY `translation_text` (`translation`)
-) ENGINE=MyISAM AUTO_INCREMENT=356288 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_votes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_votes` (
   `vid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier for a vote.',
-  `tid` int(11) NOT NULL COMMENT 'Reference to the id of the translation which is voted.',
+  `tguid` char(40) NOT NULL COMMENT 'Reference to the id of the translation which is voted.',
   `uid` int(11) NOT NULL COMMENT 'Reference to the id of the user that submitted the vote.',
   `time` datetime DEFAULT NULL COMMENT 'Timestamp of the voting time.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
   PRIMARY KEY (`vid`),
-  UNIQUE KEY `tid_uid` (`tid`,`uid`),
-  KEY `tid` (`tid`),
+  UNIQUE KEY `tid_uid` (`tguid`,`uid`),
+  KEY `tid` (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';

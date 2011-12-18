@@ -181,7 +181,7 @@ function theme_l10n_suggestions_translate_translation_list($variables) {
   $element = $variables['element'];
   $output = '<ul>';
   foreach (element_children($element) as $child) {
-    if (is_numeric($child) || $child == 'new') {
+    if ((strlen($child) == 40) || ($child == 'new')) {
       $output .= drupal_render($element[$child]);
     }
   }

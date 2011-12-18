@@ -102,9 +102,9 @@ foreach ($entries as $entry)
     if (trim($translation) != '')
       {
 	// Check first that it does not exist already.
-	$tid = $db->get_translation_id($sguid, $lng, $translation);
-	if ($tid == null) {
-	  $tid = $db->insert_translation($sguid, $lng, $translation);
+	$tguid = $db->get_translation_id($sguid, $lng, $translation);
+	if ($tguid == null) {
+	  $tguid = $db->insert_translation($sguid, $lng, $translation);
 	}
     }
   }

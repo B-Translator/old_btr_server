@@ -223,7 +223,7 @@ function _l10n_suggestions_join_table($query, $table) {
       break;
     case 'votes':
       _l10n_suggestions_join_table($query, 'translations', 't', 's.sguid = t.sguid');
-      $query->leftJoin("l10n_suggestions_votes", 'v', 'v.tid = t.tid');
+      $query->leftJoin("l10n_suggestions_votes", 'v', 'v.tguid = t.tguid');
       break;
     case 'locations':
       $query->leftJoin("l10n_suggestions_locations", 'l', 's.sguid = l.sguid');

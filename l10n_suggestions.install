@@ -135,7 +135,8 @@ function l10n_suggestions_schema() {
       ),
       'sguid' => array(
         'description' => 'Reference to the id of the l10n string contained in this line.',
-        'type' => 'int',
+        'type' => 'char',
+        'length' => '40',
         'not null' => TRUE,
       ),
       'pid' => array(
@@ -218,7 +219,7 @@ function l10n_suggestions_schema() {
         'description' => 'Globally Unique ID of the string, as hash of the string and context: SHA1(CONCAT(string,context)) ',
         'type' => 'char',
         'length' => '40',
-        'not null' => FALSE,
+        'not null' => TRUE,
       ),
       'uid' => array(
         'description' => 'ID of the user that inserted this string on the DB.',
@@ -259,14 +260,10 @@ function l10n_suggestions_schema() {
   $schema['l10n_suggestions_translations'] = array(
     'description' => 'Translations/suggestions of the l10n strings. For...',
     'fields' => array(
-      'tid' => array(
-        'description' => 'Internal numeric identifier for a translation.',
-        'type' => 'serial',
-        'not null' => TRUE,
-      ),
       'sguid' => array(
         'description' => 'Reference to the id of the l10n string that is translated.',
-        'type' => 'int',
+        'type' => 'char',
+        'length' => '40',
         'not null' => TRUE,
       ),
       'lng' => array(
@@ -281,11 +278,11 @@ function l10n_suggestions_schema() {
         'length' => '1000',
         'not null' => TRUE,
       ),
-      'hash' => array(
-        'description' => 'Unique hash of the translation: SHA1(CONCAT(translation,lng,sguid))',
+      'tguid' => array(
+        'description' => 'Globally Unique ID of the translation, defined as the hash: SHA1(CONCAT(translation,lng,sguid))',
         'type' => 'char',
         'length' => '40',
-        'not null' => FALSE,
+        'not null' => TRUE,
       ),
       'count' => array(
         'description' => 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
@@ -312,9 +309,8 @@ function l10n_suggestions_schema() {
         'default' => 1,
       ),
     ),
-    'primary key' => array('tid'),
+    'primary key' => array('tguid'),
     'indexes' => array(
-      'hash' => array('hash'),
       'sguid' => array('sguid'),
       'time' => array('time'),
       'translation_text' => array('translation'),
@@ -331,9 +327,10 @@ function l10n_suggestions_schema() {
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'tid' => array(
+      'tguid' => array(
         'description' => 'Reference to the id of the translation which is voted.',
-        'type' => 'int',
+        'type' => 'char',
+        'length' => '40',
         'not null' => TRUE,
       ),
       'uid' => array(
@@ -356,10 +353,10 @@ function l10n_suggestions_schema() {
     ),
     'primary key' => array('vid'),
     'unique keys' => array(
-      'tid_uid' => array('tid', 'uid')
+      'tguid_uid' => array('tguid', 'uid')
     ),
     'indexes' => array(
-      'tid' => array('tid'),
+      'tguid' => array('tguid'),
       'time' => array('time'),
       'uid' => array('uid'),
     ),

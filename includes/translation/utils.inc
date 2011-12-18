@@ -33,7 +33,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
 
   //get translations
   $get_translations =
-    " SELECT s.sguid, t.tid, t.lng, t.translation, t.hash,
+    " SELECT s.sguid, t.tguid, t.lng, t.translation,
              t.time, t.uid, u.name AS author, t.count
       FROM {l10n_suggestions_strings} s
       LEFT OUTER JOIN {l10n_suggestions_translations} t ON (s.sguid = t.sguid)
@@ -41,29 +41,29 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
       WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
       ORDER BY t.count DESC";
   $result = db_query($get_translations, array(':lng' => $lng, ':arr_sguid' => $arr_sguid));
-  $arr_translations = $result->fetchAllAssoc('tid');
+  $arr_translations = $result->fetchAllAssoc('tguid');
 
   //get votes
-  $arr_tid = array_keys($arr_translations);
-  if (empty($arr_tid)) {
+  $arr_tguid = array_keys($arr_translations);
+  if (empty($arr_tguid)) {
     $arr_votes = array();
   }
   else {
     $get_votes =
-      " SELECT t.tid, v.vid, v.uid, u.name, v.time
+      " SELECT t.tguid, v.vid, v.uid, u.name, v.time
         FROM {l10n_suggestions_translations} t
-        LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tid = t.tid)
+        LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tguid = t.tguid)
         LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
-        WHERE t.tid IN (:arr_tid)
+        WHERE t.tguid IN (:arr_tguid)
         ORDER BY v.time DESC";
-    $result = db_query($get_votes, array(':arr_tid' => $arr_tid));
+    $result = db_query($get_votes, array(':arr_tguid' => $arr_tguid));
     $arr_votes = $result->fetchAllAssoc('vid');
   }
 
   //get alternatives (from other languages)
   //they are the best translations (max count) from the alternative languages
   $get_alternatives =
-    " SELECT DISTINCT t.sguid, t.tid, t.lng, t.translation, t.count
+    " SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
       FROM (SELECT sguid, lng, MAX(count) AS max_count
 	    FROM l10n_suggestions_translations
 	    WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
@@ -74,11 +74,11 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
       GROUP BY t.sguid, t.lng, t.count";
   $arr_lng = array('fr', 'sq');
   $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid));
-  $arr_alternatives = $result->fetchAllAssoc('tid');
+  $arr_alternatives = $result->fetchAllAssoc('tguid');
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
   // Put alternatives as nested array under strings.
-  foreach ($arr_alternatives as $tid => $alternative) {
+  foreach ($arr_alternatives as $tguid => $alternative) {
     $sguid = $alternative->sguid;
     $lng = $alternative->lng;
     $arr_strings[$sguid]->alternatives[$lng] = $alternative->translation;
@@ -87,19 +87,19 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   // Put votes as nested arrays inside translations.
   // Votes are already ordered by time (desc).
   foreach ($arr_votes as $vid => $vote) {
-    $tid = $vote->tid;
+    $tguid = $vote->tguid;
     $uid = $vote->uid;
-    $arr_translations[$tid]->votes[$uid] = $vote;
+    $arr_translations[$tguid]->votes[$uid] = $vote;
   }
 
   // Put translations as nested arrays inside strings.
   // Translations are already ordered by count (desc).
   // Make sure that each translation has an array of votes
   // (even though it may be empty).
-  foreach ($arr_translations as $tid => $translation) {
+  foreach ($arr_translations as $tguid => $translation) {
     if (!isset($translation->votes))  $translation->votes = array();
     $sguid = $translation->sguid;
-    $arr_strings[$sguid]->translations[$tid] = $translation;
+    $arr_strings[$sguid]->translations[$tguid] = $translation;
   }
 
   // Put strings in the same order as $arr_sguid.

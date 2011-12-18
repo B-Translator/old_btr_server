@@ -101,16 +101,16 @@ class PODB_Import
 
     // get_translation_id
     $this->queries['get_translation_id'] = $this->dbh->prepare("
-      SELECT tid FROM l10n_suggestions_translations
-      WHERE hash = :hash
+      SELECT tguid FROM l10n_suggestions_translations
+      WHERE tguid = :tguid
     ");
 
     // insert_translation
     $this->queries['insert_translation'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_translations
-	 (sguid, lng, translation, hash, count, uid, time)
+	 (sguid, lng, translation, tguid, count, uid, time)
       VALUES
-	 (:sguid, :lng, :translation, :hash, :count, :uid, :time)
+	 (:sguid, :lng, :translation, :tguid, :count, :uid, :time)
     ");
   }
 
@@ -287,30 +287,30 @@ class PODB_Import
   /** Get and return the id of a translation. */
   public function get_translation_id($sguid, $lng, $translation)
   {
-    $params = array(':hash' => sha1($translation . $lng . $sguid));
+    $params = array(':tguid' => sha1($translation . $lng . $sguid));
     $this->queries['get_translation_id']->execute($params);
     $row = $this->queries['get_translation_id']->fetch();
-    $tid = isset($row['tid']) ? $row['tid'] : null;
+    $tguid = isset($row['tguid']) ? $row['tguid'] : null;
 
-    return $tid;
+    return $tguid;
   }
 
   /** Insert a translation into DB. */
   public function insert_translation($sguid, $lng, $translation)
   {
+    $tguid = sha1($translation . $lng . $sguid);
     $params = array(
 		    ':sguid' => $sguid,
 		    ':lng' => $lng,
 		    ':translation' => $translation,
-		    ':hash' => sha1($translation . $lng . $sguid),
+		    ':tguid' => $tguid,
 		    ':count' => 0,
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
 		    );
     $this->queries['insert_translation']->execute($params);
-    $tid = $this->dbh->lastInsertId();
 
-    return $tid;
+    return $tguid;
   }
 }
 ?>

@@ -114,7 +114,7 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
   if (empty($translations)) {
     $translations['0'] = (object) array(
       'sguid' => $string->sguid,
-      'tid' => '0',
+      'tguid' => '0',
       'lng' => $lng,
       'translation' => t('(not translated)'),
       'uid' => 0,
@@ -122,15 +122,15 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
     );
   }
 
-  foreach ($translations as $tid => $translation) {
+  foreach ($translations as $tguid => $translation) {
     // Add the translation to the list.
-    $form[$tid] = _l10n_suggestions_translate_translation($translation, $string->sguid, $lng);
+    $form[$tguid] = _l10n_suggestions_translate_translation($translation, $string->sguid, $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('submit suggestions')) {
     $textarea = _l10n_suggestions_translate_translation_textarea($string, $lng);
-    $form[$textarea->tid] = _l10n_suggestions_translate_translation($textarea, $string->sguid, $lng);
+    $form[$textarea->tguid] = _l10n_suggestions_translate_translation($textarea, $string->sguid, $lng);
   }
 
   return $form;
@@ -151,7 +151,7 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
 
   return (object) array(
     'sguid' => $string->sguid,
-    'tid' => 'new',
+    'tguid' => 'new',
     'lng' => $lng,
     'translation' => $translation,
     'uid' => $user->uid,
@@ -169,8 +169,8 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
 
   $is_own = ($user->uid == $translation->uid);
   $is_approved = in_array($user->uid, array_keys($translation->votes));
-  $is_new = ($translation->tid == 'new');
-  $no_translation = ($translation->tid == '0');
+  $is_new = ($translation->tguid == 'new');
+  $no_translation = ($translation->tguid == '0');
   $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
 
   $form = array(
@@ -189,8 +189,8 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
     '#theme' => 'l10n_suggestions_translate_radio',
     '#theme_wrappers' => array(),
     '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
-    '#return_value' => $translation->tid,
-    '#default_value' => $is_approved ? $translation->tid : '',
+    '#return_value' => $translation->tguid,
+    '#default_value' => $is_approved ? $translation->tguid : '',
     '#disabled' => !user_access('submit votes') || $no_translation,
     '#attributes' => array('class' => array('selector')),
   );
@@ -234,7 +234,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
 
       $form['author'] = array(
         '#markup' => $title,
-        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translation/details/' . $translation->tid) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
+        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translation/details/' . $translation->tguid) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
         //'#suffix' => '</a><div class="l10n-more-info"></div></div>',
       );
     }

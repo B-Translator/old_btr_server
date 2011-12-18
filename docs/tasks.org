@@ -197,8 +197,8 @@ keeping notes, project planning, tasks management, etc.
 
    + Locations :: Locations (lines) where a l10n string is found.
      - lid : serial :: Internal numeric identifier of a line.
-     - sguid : int :: Reference to the id of the l10n string contained
-          in this line.
+     - sguid : char(40) :: Reference to the id of the l10n string
+          contained in this line.
      - pid : int :: Reference to the id of the project that
           contains this line.
      - translator_comments : varchar(500) :: Translator comments in
@@ -236,14 +236,13 @@ keeping notes, project planning, tasks management, etc.
    + Translations :: Translations/suggestions of the l10n strings.
           For each string there can be translations for different
           languages, and more than one translation for each language.
-     - tid : serial :: Internal numeric identifier for a translation.
      - sguid : int :: Reference to the id of the l10n string that is
           translated.
      - lng : varchar(5) :: Language code (en, fr, sq_AL, etc.)
      - translation : varchar(1000) :: The (suggested) translation of
           the string.
-     - hash : char(40) :: Unique hash of the translation:
-          SHA1(CONCAT(translation,lng,sguid))
+     - tguid : char(40) :: Globally Unique ID of the translation,
+          defined as the hash: SHA1(CONCAT(translation,lng,sguid))
      - count : int/tiny :: Count of votes received so far. This can be
           counted on the table Votes, but for convenience is stored
           here as well.
@@ -255,8 +254,8 @@ keeping notes, project planning, tasks management, etc.
 
    + Votes :: Votes for each translation/suggestion.
      - vid : serial :: Internal numeric identifier for a vote.
-     - tid : int :: Reference to the id of the translation which is
-          voted.
+     - tguid : char(40) :: Reference to the id of the translation
+          which is voted.
      - uid : int :: Reference to the id of the user that submitted the
           vote.
      - time : datetime :: Timestamp of the voting time.
@@ -273,7 +272,7 @@ keeping notes, project planning, tasks management, etc.
 
 ** UI
 
-*** translations/get/<lng>/<hash>
+*** translations/get/<lng>/<sguid>
 
     An interface for suggesting translations to a string.  Gets as
     input
@@ -342,9 +341,9 @@ keeping notes, project planning, tasks management, etc.
 
 *** TODO Write scripts for importing and updating data from *.po files
     + Take care to preserve the data that already exist in the DB.
-*** TODO Improve hash functions for strings and translations
+*** DONE Improve hash functions for strings and translations
 *** TODO Replace id-s by uid-s (universal id-s) based on hashes
-*** TODO Write scripts for exporting PO files from the DB.
+*** DONE Write scripts for exporting PO files from the DB.
 
 ** UI
 
