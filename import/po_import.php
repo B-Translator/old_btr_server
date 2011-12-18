@@ -85,7 +85,7 @@ foreach ($entries as $entry)
     if (preg_match('/.*translator.*credit.*/', $string))  continue;
 
     // Get the $sid of this string. If not found, insert a new string and get its id.
-    $context = isset($entry['context']) ? $entry['context'] : '';
+    $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
     $sid = $db->get_string_id($string, $context);
     if ($sid === null) {
       $sid = $db->insert_string($string, $context);
