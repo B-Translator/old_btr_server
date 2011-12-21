@@ -7,7 +7,6 @@ CREATE TABLE `l10n_suggestions_projects` (
   `origin` varchar(100) DEFAULT NULL COMMENT 'The origin of the project (where does it come from).',
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
-  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active or deleted status of the record.',
   PRIMARY KEY (`pid`),
   KEY `project` (`project`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1928 DEFAULT CHARSET=latin1 COMMENT='A project is the software/application which is translated by';
@@ -17,16 +16,15 @@ DROP TABLE IF EXISTS `l10n_suggestions_files`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_files` (
   `fid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
-  `file` varchar(200) DEFAULT NULL COMMENT 'The file name (and the path) of the imported file.',
+  `hash` char(40) NOT NULL COMMENT 'The SHA1() hash of the whole file content.',
   `pid` int(11) NOT NULL COMMENT 'Reference to the project for which this PO file is a translation.',
   `lng` varchar(10) NOT NULL COMMENT 'The code of the translation language.',
   `headers` text COMMENT 'Headers of the imported PO file, as a long line. Needed mainly for exporting.',
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that imported the file.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the record was registered.',
-  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active or deleted status of the record.',
   PRIMARY KEY (`fid`),
-  KEY `pid` (`pid`),
-  KEY `file` (`file`)
+  UNIQUE KEY `hash` (`hash`),
+  KEY `pid` (`pid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2870 DEFAULT CHARSET=latin1 COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_strings`;
@@ -60,7 +58,6 @@ CREATE TABLE `l10n_suggestions_locations` (
   `previous_msgctxt` varchar(500) DEFAULT NULL COMMENT 'Previous msgctxt in the PO entry (starting with "#| msgctxt ").',
   `previous_msgid` varchar(500) DEFAULT NULL COMMENT 'Previous msgid in the PO entry (starting with "#| msgid ").',
   `previous_msgid_plural` varchar(500) DEFAULT NULL COMMENT 'Previous msgid_plural in the PO entry (starting with "#| msgid_plural ").',
-  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
   PRIMARY KEY (`lid`),
   KEY `sguid` (`sguid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=331807 DEFAULT CHARSET=utf8 COMMENT='Locations (lines) where a l10n string is found.';
@@ -98,7 +95,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `tid` (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

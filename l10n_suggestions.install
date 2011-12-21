@@ -32,11 +32,11 @@ function l10n_suggestions_schema() {
         'type' => 'serial',
         'not null' => TRUE,
       ),
-      'file' => array(
-        'description' => 'The file name (and the path) of the imported file.',
-        'type' => 'varchar',
-        'length' => '200',
-        'not null' => FALSE,
+      'hash' => array(
+        'description' => 'The SHA1() hash of the whole file content.',
+        'type' => 'char',
+        'length' => '40',
+        'not null' => TRUE,
       ),
       'pid' => array(
         'description' => 'Reference to the project for which this PO file is a translation.',
@@ -64,17 +64,10 @@ function l10n_suggestions_schema() {
         'type' => 'datetime',
         'not null' => FALSE,
       ),
-      'active' => array(
-        'description' => 'The active or deleted status of the record.',
-        'type' => 'int',
-        'size' => 'tiny',
-        'not null' => TRUE,
-        'default' => 1,
-      ),
     ),
     'primary key' => array('fid'),
     'indexes' => array(
-      'file' => array('file'),
+      'hash' => array('hash'),
       'pid' => array('pid'),
     ),
   );
@@ -109,13 +102,6 @@ function l10n_suggestions_schema() {
         'description' => 'The date and time that the project was registered.',
         'type' => 'datetime',
         'not null' => FALSE,
-      ),
-      'active' => array(
-        'description' => 'The active or deleted status of the record.',
-        'type' => 'int',
-        'size' => 'tiny',
-        'not null' => TRUE,
-        'default' => 1,
       ),
     ),
     'primary key' => array('pid'),
@@ -185,13 +171,6 @@ function l10n_suggestions_schema() {
         'type' => 'varchar',
         'length' => '500',
         'not null' => FALSE,
-      ),
-      'active' => array(
-        'description' => 'The active/deleted status of the record.',
-        'type' => 'int',
-        'size' => 'tiny',
-        'not null' => TRUE,
-        'default' => 1,
       ),
     ),
     'primary key' => array('lid'),

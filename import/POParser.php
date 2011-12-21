@@ -113,9 +113,10 @@ class POParser
       {
 	throw new Exception('The specified file does not exist.');
       }
-    if (substr($filename, strrpos($filename, '.')) !== '.po')
+    $ext = substr($filename, strrpos($filename, '.'));
+    if ($ext != '.po' and $ext != '.pot')
       {
-	throw new Exception('The specified file is not a PO file.');
+	throw new Exception('The specified file is not a PO/POT file.');
       }
 
     // read file as an array of lines

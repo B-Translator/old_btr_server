@@ -171,8 +171,7 @@ keeping notes, project planning, tasks management, etc.
    + Files :: A PO file that is imported and can be exported from the
               DB.
      - fid : serial :: Auto-increment internal identifier.
-     - file : varchar(200) :: The file name (and the path) of the
-          imported file.
+     - hash : char(40) :: The SHA1() hash of the whole file content.
      - pid : int :: Reference to the project for which this PO file is
           a translation.
      - lng : varchar(10) :: The code of the translation language.
@@ -181,7 +180,6 @@ keeping notes, project planning, tasks management, etc.
      - uid : int :: Id of the user that imported the file.
      - time : datetime :: The date and time that the record was
           registered.
-     - active : boolean :: The active or deleted status of the record.
 
    + Projects :: A project is the software/application which is
                  translated by the PO files.
@@ -193,7 +191,6 @@ keeping notes, project planning, tasks management, etc.
      - uid : int(11) :: Id of the user that registered the project.
      - time : datetime :: The date and time that the project was
           registered.
-     - active : boolean :: The active or deleted status of the record.
 
    + Locations :: Locations (lines) where a l10n string is found.
      - lid : serial :: Internal numeric identifier of a line.
@@ -215,7 +212,6 @@ keeping notes, project planning, tasks management, etc.
           (starting with "#| msgid ").
      - previous_msgid_plural : varchar(500) :: Previous msgid_plural
           in the PO entry (starting with "#| msgid_plural ").
-     - active : boolean :: The active or deleted status of the record.
 
    + Strings :: Translatable strings that are extracted from projects.
      - string : text :: The string to be translated:

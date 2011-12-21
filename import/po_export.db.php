@@ -1,5 +1,5 @@
 <?php
-class PODB_Export
+class DB_PO_Export
 {
   /** Keeps the DB handler/connection. */
   private $dbh;

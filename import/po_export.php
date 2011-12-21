@@ -24,8 +24,8 @@ $lng = $argv[3];
 $filename = isset($argv[4]) ? $argv[4] : NULL;
 
 // Create a DB variable for handling queries.
-include_once(dirname(__FILE__).'/po_db_export.php');
-$db = new PODB_Export;
+include_once(dirname(__FILE__).'/po_export.db.php');
+$db = new DB_PO_Export;
 
 // Get the id of the project.
 $pid = $db->get_project_id($project, $origin);

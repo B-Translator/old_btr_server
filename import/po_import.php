@@ -1,13 +1,29 @@
 #!/usr/bin/php
 <?php
-   // Check the number of parameters.
+   /**
+    * 'po_import.php' imports a new PO (translation) file, if such a file
+    * does not exist. It assumes that the POT file of the project has
+    * already been imported, otherwise it will quit without doing anything.
+    * Along with the file, it also inserts the translations for the
+    * corresponding strings, when such translations do not exist.
+    *
+    * @param origin
+    *     The origin of the project (ubuntu, GNOME, KDE, etc.).
+    * @param project
+    *     The name of the project.
+    * @param lng
+    *     The language of translation (de, fr, sq, en_GB, etc.).
+    * @param file.pot
+    *     The PO file to be imported.
+    */
+
 if ($argc != 5) {
   print "
 Usage: $argv[0] origin project lng file.po
-  origin  -- the origin of the PO file (ubuntu, GNOME, KDE, etc.)
-  project -- the name of the project that is being imported.
-  lng     -- the language of translation (de, fr, sq, en_GB, etc.).
-  file.po -- the PO file to be imported.
+  origin  -- The origin of the project (ubuntu, GNOME, KDE, etc.)
+  project -- The name of the project.
+  lng     -- The language of translation (de, fr, sq, en_GB, etc.).
+  file.po -- The PO file to be imported.
 
 Example:
   $argv[0] KDE kturtle fr test/kturtle.po
@@ -16,99 +32,121 @@ Example:
   exit(1);
 }
 
-// Get the parameters (project, lng, origin, file.po).
+// Get the parameters (origin, project, lng, filename).
 $script = $argv[0];
 $origin = $argv[1];
 $project = $argv[2];
 $lng = $argv[3];
 $filename = $argv[4];
 //log
-print "$script $project $lng $origin $filename\n";
-
-// Get the path of the file relative from origin.
-$parts = split("/$origin/", $filename);
-$file = isset($parts[1]) ? $parts[1] : '';
+print "$script $origin $project $lng $filename\n";
 
 // Create a DB variable for handling queries.
-include_once(dirname(__FILE__).'/po_db_import.php');
-$db = new PODB_Import;
+include_once(dirname(__FILE__).'/po_import.db.php');
+$db = new DB_PO_Import;
+
+// Get the project id.
+$pid = $db->get_project_id($project, $origin);
+if ($pid === null) {
+  print "Error: The project '$origin/$project' does not exist.\n";
+  print "       Import first the POT file of the project.";
+  exit(1);
+}
 
 // Parse the given PO file.
 include_once(dirname(__FILE__).'/POParser.php');
 $parser = new POParser;
 $entries = $parser->parse($filename);
-/*
-// parse the headers from the msgstr of the first (empty) entry
-$headers = array();
-if ($entries[0]['msgid'] == '') {
-  $headers = $parser->parse_headers($entries[0]['msgstr']);
-}
-*/
-//print_r($headers);  print_r($entries);  exit(0);  //debug
 
-// Get the id of the project.
-$pid = $db->get_project_id($project, $origin);
-if ($pid === null) {
-  $pid = $db->insert_project($project, $origin);
-}
-
-// Check whether the file already exists.
-// If not found, insert a new one, else update the existing one.
+// Add a file and get its id.
 $headers = ($entries[0]['msgid'] == '') ? $entries[0]['msgstr'] : '';
-$fid = $db->get_file_id($pid, $lng, $file);
-if ($fid === null) {
-  $fid = $db->insert_file($pid, $lng, $file, $headers);
-}
-else {
-  $db->update_file($pid, $lng, $file, $headers);
-}
-
-// If the file has been already imported, then exit.
-if ($db->file_is_imported($fid)) {
-  print "...Skiping, already imported.\n";
-  exit(0);
-};
+$fid = add_file($filename, $pid, $lng, $headers);
 
 // Process each gettext entry.
 foreach ($entries as $entry)
   {
-    //print_r($entry);  continue;  //debug
+    // Get the string sguid.
+    $sguid = get_string_sguid($entry);
+    if ($sguid == NULL)  continue;
 
-    // Get the string and context of this entry.
-    $string = $entry['msgid'];
-    if (isset($entry['msgid_plural'])) {
-      $string .= "\0" . $entry['msgid_plural'];
-    }
-    // Don't add the header entry as a translatable string.
-    if ($string == '')  continue;
-    // Don't add strings like 'translator-credits' etc. as translatable strings.
-    if (preg_match('/.*translator.*credit.*/', $string))  continue;
-
-    // Get the $sguid of this string. If not found, insert a new string and get its id.
-    $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
-    $sguid = $db->get_string_id($string, $context);
-    if ($sguid === null) {
-      $sguid = $db->insert_string($string, $context);
-    }
-
-    // Insert a location record, by replacing any existing one.
-    $lid = $db->get_location_id($pid, $sguid);
-    if ($lid === null) {
-      $lid = $db->insert_location($pid, $sguid, $entry);
-    }
-
-    // Insert the translation for this string.
+    // Add the translation for this string.
     $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
-    if (trim($translation) != '')
-      {
-	// Check first that it does not exist already.
-	$tguid = $db->get_translation_id($sguid, $lng, $translation);
-	if ($tguid == null) {
-	  $tguid = $db->insert_translation($sguid, $lng, $translation);
-	}
+    if (trim($translation) != '') {
+      //print_r('--  ' . $translation . "\n");  //debug
+      $tguid = $db->insert_translation($sguid, $lng, $translation);
     }
   }
 
-// Mark the file as imported.
-$db->set_file_imported($fid);
+// End.
+exit(0);
+
+// ------------------------ functions ----------------------
+
+/**
+ * Insert a file in the DB, if it does not already exist.
+ */
+function add_file($filename, $pid, $lng, $headers)
+{
+  // Get the sha1 hash of the file.
+  $output = shell_exec("sha1sum $filename");
+  $parts = explode('  ', $output);
+  $hash = $parts[0];
+
+  // Check whether the file already exists.
+  global $db;
+  $sql = "SELECT pid, lng FROM l10n_suggestions_files WHERE hash = :hash";
+  $row = $db->query($sql, array(':hash' => $hash))->fetch();
+
+  // If file already exists.
+  if (isset($row['pid']))
+    {
+      if ($row['pid']==$pid and $row['lng']==$lng) {
+	print "...already imported, skipping...\n";
+	exit(0);
+      }
+      else {
+        // file already imported for some other project or language
+        $sql = "SELECT origin, project FROM l10n_suggestions_projects WHERE pid = :pid";
+        $row1 = $db->query($sql, array(':pid' => $row['pid']))->fetch();
+        $origin1 = $row1['origin'];
+        $project1 = $row1['project'];
+        $lng1 = $row['lng'];
+	print "Error: File has already been imported for '$origin1/$project1/$lng1'.";
+	exit(2);
+      }
+    }
+
+  // File does not exits, insert it.
+  $fid = $db->insert_file($hash, $pid, $lng, $headers);
+
+  return $fid;
+}
+
+/**
+ * Return the sguid of the string, if it already exists on the DB;
+ * otherwise return NULL.
+ */
+function get_string_sguid($entry)
+{
+  // Get the string.
+  $string = $entry['msgid'];
+  if (isset($entry['msgid_plural'])) {
+    $string .= "\0" . $entry['msgid_plural'];
+  }
+
+  // Get the context.
+  $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
+
+  // Get the $sguid of this string.
+  $sguid = sha1($string . $context);
+
+  // Check that it exists.
+  global $db;
+  if ($db->check_string_sguid($sguid)) {
+    return $sguid;
+  }
+  else {
+    return NULL;
+  };
+}
 ?>
