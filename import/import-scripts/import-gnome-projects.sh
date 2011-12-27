@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### get $data_root and $languages
-. ./config.sh
+. ../config.sh
 
 ### use the fr PO files as POT files
 lng=fr
@@ -11,5 +11,5 @@ do
     basename=$(basename $file)
     project=${basename%.*.$lng.po}
     #echo $file;  echo $project;  continue;  ## debug
-    ./pot_import.php GNOME $project $file
+    ../pot_import.php GNOME $project $file
 done

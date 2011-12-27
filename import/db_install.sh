@@ -11,5 +11,4 @@ mysql_params="$($(which php) db_params.php bash)"
 mysql $mysql_params < ../db_backup/l10n_suggestions_schema.sql
 
 ### get the PO files and import them
-#./get-all.sh
-./import-all.sh
+./db_update.sh

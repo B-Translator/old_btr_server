@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### get $data_root and $languages
-. ./config.sh
+. ../config.sh
 
 ### import the PO files from KDE
 for lng in $languages
@@ -11,7 +11,7 @@ do
     while read file
     do
 	project=$(basename ${file%%.po})
-	./po_import.php KDE $project $lng $file
+	../po_import.php KDE $project $lng $file
     done < file_list.txt
 done
 rm file_list.txt

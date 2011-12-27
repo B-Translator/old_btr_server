@@ -1,5 +1,8 @@
 #!/bin/bash
 
+### go to this directory
+cd $(dirname $0)
+
 ### import all PO files
 #./import-ubuntu-projects.sh
 #./import-ubuntu-files.sh

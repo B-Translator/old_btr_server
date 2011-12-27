@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### get $data_root and $languages
-. ./config.sh
+. ../config.sh
 
 ### import the PO files from GNOME
 for lng in $languages
@@ -11,6 +11,6 @@ do
 	basename=$(basename $file)
 	project=${basename%.*.$lng.po}
 	#echo $file;  echo $project;  continue;  ## debug
-	./po_import.php GNOME $project $lng $file
+	../po_import.php GNOME $project $lng $file
     done
 done

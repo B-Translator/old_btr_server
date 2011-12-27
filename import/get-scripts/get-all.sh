@@ -1,5 +1,8 @@
 #!/bin/bash
 
+### go to this directory
+cd $(dirname $0)
+
 ./get-gnome.sh
 ./get-kde.sh
 #./get-misc.sh

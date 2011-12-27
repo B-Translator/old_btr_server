@@ -1,35 +1,9 @@
 <?php
-class DB_POT_Import
+
+include(dirname(__FILE__) . '/db.php');
+
+class DB_POT_Import extends DB
 {
-  /** Keeps the DB handler/connection. */
-  private $dbh;
-
-  /** Keeps an associated array of prepared queries. */
-  private $queries = array();
-
-  /** Timestamp of inserting data. */
-  private $time;
-
-  public function __construct()
-  {
-    $this->connect();
-    $this->prepare_queries();
-    $this->time = date('Y-m-d H:i:s');
-  }
-
-  /** Create a DB connection. */
-  protected function connect()
-  {
-    // Get the DB parameters.
-    @include_once(dirname(__FILE__).'/db_params.php');
-
-    // Create a DB connection.
-    $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
-    //print "$DSN\n";  exit(0);  //debug
-    $this->dbh = new PDO($DSN, $dbuser, $dbpass,
-			 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-  }
-
   /** Prepare the queries that will be used and store them in $this->queries[] . */
   protected function prepare_queries()
   {
@@ -142,15 +116,6 @@ class DB_POT_Import
     $lid = $this->dbh->lastInsertId();
 
     return $lid;
-  }
-
-  /**
-   * Execute the given SQL command and return the number of the
-   * affected rows.
-   */
-  public function exec($sql)
-  {
-    return $this->dbh->exec($sql);
   }
 }
 ?>

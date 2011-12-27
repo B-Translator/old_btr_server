@@ -1,35 +1,83 @@
 
-The scripts in this directory will be used to make the initial
-import of the PO files in the database. All the PO files available
-that we can find will be imported, creating so a big l10n dictionary
-(like that of open-tran.eu). This dictionary will be the initial
-base for voting and making further translation suggestions.
+The scripts in this directory are used to import/export PO files and
+projects into the database. The existing translations of the PO files
+will create the initial bases for voting and adding further
+suggestions. Then, the most voted translation will be exported.
 
-'po-import.php' is used to import a single PO file into the database.
-It doesn't have the overhead of a drush command and is much faster.
-It is going to be used for the initial import of the PO files (which
-are going to be too many, hundreds or more, so it is important that
-it works as fast as possible). It can be called like this:
-  ./po-import.php projectname lngcode origin filename.po
-  ./po-import.php kturtle sq KDE test/kturtle.po
+There are two steps for importing a projects' translations.  The first
+step is to import the POT (template) file of the project, and the
+second step is to import the PO (translation) file for each language
+that is supported.
 
-'settings.php' should be a link to the configuration file of the site.
-It can also be a copy (modified or not). The script 'po-import.php'
-includes it in order to get the parameters of the database connection.
+POT files are imported by 'pot_import.php', which can be called like
+this:
+  ./pot_import.php origin project file.pot
+  ./pot_import.php KDE kturtle test/kturtle.pot
+Instead of using the POT file itself, usually it is OK to use the PO
+file of a language, like this:
+  ./pot_import.php KDE kturtle test/kturtle_fr.po
+This is because this import does not use the translations at all.  It
+just creates a new project (with the given origin and project name),
+creates its locations, and creates the corresponding strings. If such
+a project already exists, it is first removed (along with its related
+locations).
 
-'POParser.php' is the parser used. It is taken from:
-http://code.google.com/p/php-po-parser/issues/detail?id=2
-It makes no validity checks, but this is OK, since the PO files that
-are imported are supposed to be valid. Anyway, if needed, PO files
-can be checked with msgfmt before being parsed (and skipped if not
-valid).
+PO files are imported by 'po_import.php', which can be called like
+this:
+  ./po_import.php origin project lng file.po
+  ./po_import.php KDE kturtle sq test/kturtle.po
+This script adds in DB only the files and translations of the
+corresponding language. It assumes that the project and locations and
+strings are already imported, otherwise it will fail and exit. So,
+before using 'po_import.php' for importing a translation file, make
+sure that 'pot_import.php' has been already called for the
+corresponding project.
 
-'get-*.sh' scripts are used to get from internet the PO files that
-are going to be imported. They are mainly based on the scripts of
-the open-tran project:  http://code.google.com/p/open-tran/
+For exporting files, the script 'po_export.php' is used, which can be
+called like this:
+  ./po_export.php origin project lng [file.po]
+  ./po_export.php KDE kturtle fr test/kturtle_fr.po
+If 'file.po' is missing, the content of the file is output to stdout.
+
+The files '*.db.php' contain DB clases that encapsulate the
+interaction of import/export scripts with the database of the
+application. All of them extend 'db.php', which creates a connection
+to the database. The paramaters of the DB connection are retrieved
+from 'db_params.php', which extracts them from 'settings.php'.
+'settings.php' should be a symbolic link to the configuration file of
+the site (it can also be a copy of it, modified or not).
+
+'POParser.php' is a parser used to extract the data from a PO/POT
+file, in order to import them into the DB . It is taken from:
+http://code.google.com/p/php-po-parser/issues/detail?id=2 It makes no
+validity checks, but this is OK, since the PO files that are imported
+are supposed to be valid. (Anyway, if needed, PO files can be checked
+with msgfmt before being imported).
+
+'POWriter.php' is used during export to generate a PO file from the
+projects, locations, strings and translatins that are stored in the
+DB.
+
+The scripts in the directory 'get-scripts/' are used to get from
+internet the PO files that are going to be imported. They are based on
+the scripts of the open-tran project:
+http://code.google.com/p/open-tran/
 http://code.google.com/p/open-tran/source/browse/#svn%2Ftrunk%2Fimport
 
-'import-*.sh' scripts are used to process the downloaded PO files
-and to import their data into DB. They find each *.po file and then
-process it by calling 'po_import.php' with proper arguments.
+The scripts in the directory 'import-scripts/' are used to process the
+downloaded PO files and to import their data into DB. They find each
+*.po file and then process it by calling 'po_import.php' with proper
+arguments. However they first create (import) the corresponding
+projects, by calling 'pot_import.php' and using French translations as
+POT files.
 
+The get/import scripts use configuration data from 'config.sh'. The
+'data_root' variable can be an absolute or relative directory. If it
+is a relative directory, then a symbolic link to the data directory
+should be created inside 'get-scripts/' and 'import-scripts/', so that
+the scripts can find it.
+
+The script 'db_install.sh' is used to install the database initially
+(for the first time). The script 'db_update.sh' can be called time
+after time (for example once or twice a year) to make sure that we
+have the latest versions of strings and translations for each project.

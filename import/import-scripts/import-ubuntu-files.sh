@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### get $data_root and $languages
-. ./config.sh
+. ../config.sh
 
 ### import the PO files from ubuntu
 for lng in $languages
@@ -10,6 +10,6 @@ do
     for file in $(ls $dir)
     do
 	project=${file%%.po}
-	./po_import.php ubuntu $project $lng $dir/$file
+	../po_import.php ubuntu $project $lng $dir/$file
     done
 done

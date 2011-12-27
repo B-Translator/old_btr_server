@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### get $data_root and $languages
-. ./config.sh
+. ../config.sh
 
 function change_dir() {
     dir="$1"
