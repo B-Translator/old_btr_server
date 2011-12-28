@@ -28,7 +28,7 @@ class DB_PO_Export extends DB
   public function get_file_headers($pid, $lng)
   {
     $get_file_headers = $this->dbh->prepare("
-      SELECT headers FROM l10n_suggestions_files
+      SELECT headers, comments FROM l10n_suggestions_files
       WHERE pid = :pid AND lng = :lng
     ");
     $params = array(':pid' => $pid, ':lng' => $lng);
@@ -36,8 +36,9 @@ class DB_PO_Export extends DB
 
     $row = $get_file_headers->fetch();
     $headers = isset($row['headers']) ? $row['headers'] : null;
+    $comments = isset($row['comments']) ? $row['comments'] : null;
 
-    return $headers;
+    return array($headers, $comments);
   }
 
   /**

@@ -35,7 +35,7 @@ if ($pid === null) {
 }
 
 // Get the headers, strings and translations.
-$headers = $db->get_file_headers($pid, $lng);
+list($headers, $comments) = $db->get_file_headers($pid, $lng);
 $strings = $db->get_strings($pid);
 $translations = $db->get_best_translations($pid, $lng);
 
@@ -50,11 +50,11 @@ foreach (array_keys($strings) as $sguid) {
 include_once(dirname(__FILE__).'/POWriter.php');
 $writer = new POWriter;
 if ($filename === NULL) {
-  $output = $writer->write($headers, $strings);
+  $output = $writer->write($headers, $comments, $strings);
   print(implode("\n", $output) . "\n");
 }
 else {
-  $writer->write($headers, $strings, $filename);
+  $writer->write($headers, $comments, $strings, $filename);
 }
 
 ?>

@@ -175,8 +175,10 @@ keeping notes, project planning, tasks management, etc.
      - pid : int :: Reference to the project for which this PO file is
           a translation.
      - lng : varchar(10) :: The code of the translation language.
-     - header : text :: Headers of the imported PO file, as a long
+     - headers : text :: Headers of the imported PO file, as a long
           line. Needed mainly for exporting.
+     - comments : text :: Translator comments of the file (above the
+          header entry). Needed mainly for exporting.
      - uid : int :: Id of the user that imported the file.
      - time : datetime :: The date and time that the record was
           registered.

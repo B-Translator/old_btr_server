@@ -32,9 +32,9 @@ class POWriter
     $this->w_line($prefix . '"' . $value . '\n"');
   }
 
-  public function write($headers, $entries, $filename =NULL)
+  public function write($headers, $comments, $entries, $filename =NULL)
   {
-    $this->write_headers($headers);
+    $this->write_headers($headers, $comments);
     foreach ($entries as $entry) {
       $this->write_entry($entry);
     }
@@ -47,8 +47,13 @@ class POWriter
     }
   }
 
-  protected function write_headers($headers)
+  protected function write_headers($headers, $comments)
   {
+    $comment_lines = explode("\n", $comments);
+    foreach ($comment_lines as $comment) {
+      $this->w_line('# ' . $comment);
+    }
+
     $this->w_line('msgid ""');
     $this->w_line('msgstr ""');
     $arr_headers = explode('\n', $headers);

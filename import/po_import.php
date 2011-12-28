@@ -58,9 +58,14 @@ include_once(dirname(__FILE__).'/POParser.php');
 $parser = new POParser;
 $entries = $parser->parse($filename);
 
+// Get headers and comments.
+$headers = $comments = null;
+if ($entries[0]['msgid'] == '') {
+  $headers = $entries[0]['msgstr'];
+  $comments = $entries[0]['translator-comments'];
+}
 // Add a file and get its id.
-$headers = ($entries[0]['msgid'] == '') ? $entries[0]['msgstr'] : '';
-$fid = add_file($filename, $pid, $lng, $headers);
+$fid = add_file($filename, $pid, $lng, $headers, $comments);
 
 // Process each gettext entry.
 foreach ($entries as $entry)
@@ -85,7 +90,7 @@ exit(0);
 /**
  * Insert a file in the DB, if it does not already exist.
  */
-function add_file($filename, $pid, $lng, $headers)
+function add_file($filename, $pid, $lng, $headers, $comments)
 {
   // Get the sha1 hash of the file.
   $output = shell_exec("sha1sum $filename");
@@ -117,7 +122,7 @@ function add_file($filename, $pid, $lng, $headers)
     }
 
   // File does not exits, insert it.
-  $fid = $db->insert_file($hash, $pid, $lng, $headers);
+  $fid = $db->insert_file($hash, $pid, $lng, $headers, $comments);
 
   return $fid;
 }

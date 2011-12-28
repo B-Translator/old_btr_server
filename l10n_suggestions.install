@@ -54,6 +54,11 @@ function l10n_suggestions_schema() {
         'type' => 'text',
         'not null' => FALSE,
       ),
+      'comments' => array(
+        'description' => 'Translator comments of the file (above the header entry).',
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
       'uid' => array(
         'description' => 'Id of the user that imported the file.',
         'type' => 'int',
