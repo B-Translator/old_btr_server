@@ -193,7 +193,7 @@ PO files.
 Projects and Categories can be used
 to limit the scope of the search (and
 other operations).
- 
+
 A project contains the translations
 of a certain application/software.
 A project can have several PO files
@@ -201,17 +201,17 @@ A project can have several PO files
 Each of these PO files has many
 PO entries, which are stored in the
 table Locations.
- 
+
 The table Locations stores only the
-comments, line referencies, flags,
+comments, line references, flags,
 previous strings, etc. of each PO entry.
- 
+
 The msgid (and msgctxt) of the entry
 is stored on the table Strings. A string
 can be connected to several locations,
 since the same string can be used on
 different projects.
- 
+
 Each string can have several
 translations (or suggestions) in each
 language. Each translation can have

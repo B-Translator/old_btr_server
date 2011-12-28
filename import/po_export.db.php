@@ -47,7 +47,7 @@ class DB_PO_Export extends DB
   {
     $get_strings = $this->dbh->prepare("
       SELECT l.sguid, s.string, s.context,
-	     translator_comments, extracted_comments, referencies, flags,
+	     translator_comments, extracted_comments, line_references, flags,
 	     previous_msgctxt, previous_msgid, previous_msgid_plural
       FROM l10n_suggestions_locations l
       LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)

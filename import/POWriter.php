@@ -53,6 +53,7 @@ class POWriter
     $this->w_line('msgstr ""');
     $arr_headers = explode('\n', $headers);
     foreach ($arr_headers as $header) {
+      if ($header=='')  continue;
       $this->w_quoted('', $header);
     }
   }
@@ -69,8 +70,8 @@ class POWriter
       $this->write_comments('#. ', $entry->extracted_comments);
     }
 
-    if (isset($entry->referencies)) {
-      $this->write_comments('#: ', $entry->referencies);
+    if (isset($entry->line_references)) {
+      $this->write_comments('#: ', $entry->line_references);
     }
 
     if (isset($entry->flags)) {
@@ -92,7 +93,7 @@ class POWriter
       $this->write_msgx('#| ', 'msgid_plural', $entry->previous_msgid_plural);
     }
 
-    if (isset($entry->context)) {
+    if (isset($entry->context) && $entry->context != '') {
       $this->write_msgx('', 'msgctxt', $entry->context);
     }
 

@@ -44,7 +44,7 @@ foreach (array_keys($strings) as $sguid) {
   $translation = isset($translations[$sguid]) ? $translations[$sguid]->translation : '';
   $strings[$sguid]->translation = $translation;
 }
-//print_r($strings);  return;  //debug
+//print_r($strings);  exit(0);  //debug
 
 // Write entries to a PO file.
 include_once(dirname(__FILE__).'/POWriter.php');

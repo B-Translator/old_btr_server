@@ -33,11 +33,11 @@ class DB_POT_Import extends DB
     $this->queries['insert_location'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_locations
 	 (sguid, pid,
-          translator_comments, extracted_comments, referencies, flags,
+          translator_comments, extracted_comments, line_references, flags,
           previous_msgctxt, previous_msgid, previous_msgid_plural)
       VALUES
 	 (:sguid, :pid,
-          :translator_comments, :extracted_comments, :referencies, :flags,
+          :translator_comments, :extracted_comments, :line_references, :flags,
           :previous_msgctxt, :previous_msgid, :previous_msgid_plural)
     ");
   }
@@ -96,17 +96,17 @@ class DB_POT_Import extends DB
   {
     $translator_comments = isset($entry['translator-comments']) ? $entry['translator-comments'] : null;
     $extracted_comments = isset($entry['extracted-comments']) ? $entry['extracted-comments'] : null;
-    $referencies = isset($entry['referencies']) ? implode(' ', $entry['referencies']) : null;
+    $line_references = isset($entry['references']) ? implode(' ', $entry['references']) : null;
     $flags = isset($entry['flags']) ? implode(' ', $entry['flags']) : null;
     $previous_msgctxt = isset($entry['previous-msgctxt']) ? $entry['previous-msgctxt'] : null;
     $previous_msgid = isset($entry['previous-msgid']) ? $entry['previous-msgid'] : null;
     $previous_msgid_plural = isset($entry['previous-msgid_plural']) ? $entry['previous-msgid_plural'] : null;
     $params = array(
-		    ':pid' => $pid,
 		    ':sguid' => $sguid,
+		    ':pid' => $pid,
 		    ':translator_comments' => $translator_comments,
 		    ':extracted_comments' => $extracted_comments,
-		    ':referencies' => $referencies,
+		    ':line_references' => $line_references,
 		    ':flags' => $flags,
 		    ':previous_msgctxt' => $previous_msgctxt,
 		    ':previous_msgid' => $previous_msgid,

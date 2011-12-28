@@ -9,7 +9,7 @@ CREATE TABLE `l10n_suggestions_projects` (
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
   PRIMARY KEY (`pid`),
   KEY `project` (`project`)
-) ENGINE=InnoDB AUTO_INCREMENT=3611 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
+) ENGINE=InnoDB AUTO_INCREMENT=3627 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -25,7 +25,7 @@ CREATE TABLE `l10n_suggestions_files` (
   PRIMARY KEY (`fid`),
   UNIQUE KEY `hash` (`hash`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5291 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
+) ENGINE=InnoDB AUTO_INCREMENT=5293 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -53,7 +53,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   `pid` int(11) NOT NULL COMMENT 'Reference to the id of the project that contains this line.',
   `translator_comments` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Translator comments in the PO entry (starting with "# ").',
   `extracted_comments` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Extracted comments in the PO entry (starting with "#. ").',
-  `referencies` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Line numbers where the sting occurs (starting with "#: ").',
+  `line_references` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Line numbers where the sting occurs (starting with "#: ").',
   `flags` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'Flags of the PO entry (starting with "#, ").',
   `previous_msgctxt` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgctxt in the PO entry (starting with "#| msgctxt ").',
   `previous_msgid` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid in the PO entry (starting with "#| msgid ").',
@@ -61,7 +61,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   PRIMARY KEY (`lid`),
   KEY `pid` (`pid`),
   KEY `sguid` (`sguid`)
-) ENGINE=InnoDB AUTO_INCREMENT=568504 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
+) ENGINE=InnoDB AUTO_INCREMENT=569555 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

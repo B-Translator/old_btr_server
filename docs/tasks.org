@@ -147,7 +147,7 @@ keeping notes, project planning, tasks management, etc.
    language).  Each of these PO files has many PO entries, which are
    stored in the table Locations.
 
-   The table Locations stores only the comments, line referencies,
+   The table Locations stores only the comments, line references,
    flags, previous strings, etc. of each PO entry.
 
    The msgid (and msgctxt) of the entry is stored on the table
@@ -202,7 +202,7 @@ keeping notes, project planning, tasks management, etc.
           the PO entry (starting with "# ").
      - extracted_comments : varchar(500) :: Extracted comments in the
           PO entry (starting with "#. ").
-     - referencies : varchar(500) :: Line numbers where the sting
+     - line_references : varchar(500) :: Line numbers where the sting
           occurs (starting with "#: ").
      - flags : varchar(100) :: Flags of the PO entry (starting with
           "#, ").
@@ -261,10 +261,6 @@ keeping notes, project planning, tasks management, etc.
      - uid : int :: The numeric identifier of the user.
      - points : int :: Number of points rewarded for his activity.
      - config : varchar(250) :: Serialized configuration variables.
-
-*** Issues
-    - Store multiple plurals in different records or in one record?
-    -
 
 ** UI
 
@@ -335,10 +331,10 @@ keeping notes, project planning, tasks management, etc.
 
 ** DB
 
-*** TODO Write scripts for importing and updating data from *.po files
+*** DONE Write scripts for importing and updating data from *.po files
     + Take care to preserve the data that already exist in the DB.
 *** DONE Improve hash functions for strings and translations
-*** TODO Replace id-s by uid-s (universal id-s) based on hashes
+*** DONE Replace id-s by uid-s (universal id-s) based on hashes
 *** DONE Write scripts for exporting PO files from the DB.
 
 ** UI
@@ -428,5 +424,6 @@ keeping notes, project planning, tasks management, etc.
    3. Drop and recreate fulltext indexes.
 
 ** Misc
-   + For imported projects no releases are stored because we keep the
-     latest version.
+   + Field sguid:char(40) on strings, locations and translations must
+     be of the same character set, otherwise mysql will not use the
+     index (primary key) on queries. The same for the field tguid.

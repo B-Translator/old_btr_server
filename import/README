@@ -38,6 +38,13 @@ called like this:
   ./po_export.php origin project lng [file.po]
   ./po_export.php KDE kturtle fr test/kturtle_fr.po
 If 'file.po' is missing, the content of the file is output to stdout.
+After a file is exported, it should also be processed with 'msgmerge',
+so that any entries that are skipped during import (like
+translator-credits, etc.)  can be restored. For example:
+  ./po_import.php KDE kturtle sq kturtle_sq_orig.po
+  ./po_export.php KDE kturtle sq kturtle_sq_exported.po
+  msgmerge -o kturtle_sq_merged.po kturtle_sq_exported.po kturtle_sq_orig.po
+
 
 The files '*.db.php' contain DB clases that encapsulate the
 interaction of import/export scripts with the database of the

@@ -142,7 +142,7 @@ function l10n_suggestions_schema() {
         'length' => '500',
         'not null' => FALSE,
       ),
-      'referencies' => array(
+      'line_references' => array(
         'description' => 'Line numbers where the sting occurs (starting with "#: ").',
         'type' => 'varchar',
         'length' => '500',

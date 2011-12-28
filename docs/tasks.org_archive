@@ -48,5 +48,13 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_suggestion
   + There are cases of strings where exaclty the same translation is
     stored several times. Try to fix it.
 
-
+* Issues
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2011-12-28 Wed 08:52
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Design/DB Schema
+  :ARCHIVE_CATEGORY: tasks
+  :END:
+  - Store multiple plurals in different records or in one record?
+  -
 
