@@ -1,0 +1,44 @@
+These drush commands are used to import/export PO files and projects
+into the database. The existing translations of the PO files will
+create the initial bases for voting and adding further
+suggestions. Then, the most voted translation will be exported.
+
+There are two steps for importing a projects' translations.  The first
+step is to import the POT (template) file of the project, and the
+second step is to import the PO (translation) file for each language
+that is supported.
+
+POT files are imported by 'pot-import' (or 'impot'), which can be
+called like this:
+  drush [-l site] impot origin project file.pot
+  drush -l l10n-sq.org impot KDE kturtle test/kturtle.pot
+Instead of using the POT file itself, usually it is OK to use the PO
+file of a language, like this:
+  drush -l l10n-sq.org impot KDE kturtle test/kturtle_fr.pot
+This is because this import does not use the translations at all.  It
+just creates a new project (with the given origin and project name),
+creates its locations, and creates the corresponding strings. If such
+a project already exists, it is first removed (along with its related
+locations).
+
+PO files are imported by 'po-import' (or 'impo'), which can be called
+like this:
+  drush [-l site] impo origin project lng file.po
+  drush -l l10n-sq.org impo KDE kturtle fr test/kturtle_fr.po
+This command adds in DB only the files and translations of the
+corresponding language. It assumes that the project and locations and
+strings are already imported, otherwise it will fail and exit. So,
+before using 'impo' for importing a translation file, make sure that
+'impot' has been already called for the corresponding project.
+
+For exporting files, the command 'po-export' (or 'expo') is used,
+which can be called like this:
+  drush [-l site] expo origin project lng [file.po]
+  drush -l l10n-sq.org expo KDE kturtle fr test/kturtle_fr.po
+If 'file.po' is missing, the content of the file is output to stdout.
+After a file is exported, it should also be processed with 'msgmerge',
+so that any entries that are skipped during import (like
+translator-credits, etc.)  can be restored. For example:
+  drush -l l10n-sq.org impo KDE kturtle sq kturtle_sq_orig.po
+  drush -l l10n-sq.org expo KDE kturtle sq kturtle_sq_exported.po
+  msgmerge -o kturtle_sq_merged.po kturtle_sq_exported.po kturtle_sq_orig.po

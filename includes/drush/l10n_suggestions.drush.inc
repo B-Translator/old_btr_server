@@ -14,19 +14,36 @@
 function l10n_suggestions_drush_command() {
   $items = array();
 
-  // The 'po-import' command
-  $items['po-import'] = array(
-    'description' => "Import a .po file into the DB of l10n_suggestions.",
+  // The 'pot-import' command
+  $items['pot-import'] = array(
+    'description' => "Import the POT file of a project into the DB.",
     'arguments' => array(
-      'origin'  => 'the origin of the PO file (ubuntu, GNOME, KDE, etc.)',
-      'project' => 'the name of the project that is being imported',
-      'lng'     => 'the language of translation (de, fr, sq, en_GB, etc.)',
-      'file.po' => 'the PO file to be imported (absolute path or relative to DRUPAL_ROOT)',
+      'origin'   => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
+      'project'  => 'The name of the project that is being imported.',
+      'file.pot' => 'The POT file of the project (absolute path or relative to DRUPAL_ROOT).',
     ),
     'options' => array(
     ),
     'examples' => array(
-      "drush -l l10n-sq.org impo \\\n   KDE kturtle sq ../kturtle.po" => 'Import kturtle.po Albanian into the DB.',
+      "drush -l l10n-sq.org impot \\\n   KDE kturtle kturtle.pot" => 'Import kturtle.pot into the DB.',
+    ),
+    'aliases' => array('impot'),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+  );
+
+  // The 'po-import' command
+  $items['po-import'] = array(
+    'description' => "Import the PO file of a translation into the DB.",
+    'arguments' => array(
+      'origin'  => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
+      'project' => 'The name of the project that is being imported.',
+      'lng'     => 'The language of translation (de, fr, sq, en_GB, etc.)',
+      'file.po' => 'The PO file of the translation (absolute path or relative to DRUPAL_ROOT).',
+    ),
+    'options' => array(
+    ),
+    'examples' => array(
+      "drush -l l10n-sq.org impo \\\n   KDE kturtle fr kturtle.po" => 'Import the French translation of kturtle into the DB.',
     ),
     'aliases' => array('impo'),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
@@ -34,12 +51,12 @@ function l10n_suggestions_drush_command() {
 
   // The 'po-export' command
   $items['po-export'] = array(
-    'description' => "Export a .po file from the DB of l10n_suggestions.",
+    'description' => "Export the PO file of a translation from the DB.",
     'arguments' => array(
-      'origin'  => 'the origin of the PO file (ubuntu, GNOME, KDE, etc.)',
-      'project' => 'the name of the project that is being exported',
-      'lng'     => 'the language of translation (de, fr, sq, en_GB, etc.)',
-      'file.po' => 'File to save the exported data (absolute path or relative to DRUPAL_ROOT). If missing, write to stdout.',
+      'origin'  => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
+      'project' => 'The name of the project that is being exported.',
+      'lng'     => 'The language of translation (de, fr, sq, en_GB, etc.)',
+      'file.po' => 'File to save the exported translation (absolute path or relative to DRUPAL_ROOT). If missing, write to stdout.',
     ),
     'options' => array(
     ),
@@ -75,6 +92,8 @@ function l10n_suggestions_drush_command() {
  */
 function l10n_suggestions_drush_help($section) {
   switch ($section) {
+    case 'drush:pot-import':
+      return dt("This command will import into DB the POT file of a project.");
     case 'drush:po-import':
       return dt("This command will import into DB a PO file of a project.");
     case 'drush:po-export':
@@ -82,7 +101,7 @@ function l10n_suggestions_drush_help($section) {
     case 'meta:l10n_suggestions:title':
       return dt("L10n_Suggestions Commands");
     case 'meta:l10n_suggestions:summary':
-      return dt("Handle the import/export of PO files for the module l10n_suggestions.");
+      return dt("Handle the import/export of PO/POT files for the module l10n_suggestions.");
   }
 }
 
@@ -103,6 +122,15 @@ function l10n_suggestions_drush_help($section) {
   }
   }
 */
+
+/**
+ * Command callback for pot-import.
+ */
+function drush_l10n_suggestions_pot_import($origin, $project, $file) {
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
+  $output = shell_exec("$path/pot_import.php $origin $project $file");
+  print $output;
+}
 
 /**
  * Command callback for po-import.
