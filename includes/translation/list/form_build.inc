@@ -43,7 +43,8 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
     'submit' => array(
       '#type' => 'submit',
       '#value' => t('Save changes'),
-      '#access' => user_access('submit suggestions'),
+      //'#access' => user_access('submit suggestions'),
+      '#access' => user_is_logged_in(),
     ),
 
     'pager_bottom' => array(
@@ -191,7 +192,8 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
     '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tguid,
     '#default_value' => $is_approved ? $translation->tguid : '',
-    '#disabled' => !user_access('submit votes') || $no_translation,
+    //'#disabled' => !user_access('submit votes') || $no_translation,
+    '#disabled' => !user_is_logged_in() || $no_translation,
     '#attributes' => array('class' => array('selector')),
   );
   if ($voting_mode == 'single') {
