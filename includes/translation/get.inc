@@ -52,9 +52,6 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
     return $output;
   }
 
-  // Add CSS styles.
-  drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
-
   // Add RTL style if the current language's direction is RTL
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
     drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');

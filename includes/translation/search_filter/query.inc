@@ -101,8 +101,8 @@ function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words
 function _l10n_suggestions_filter_by_project($query, $project, $package, $release) {
   //filter by project
   if ($project != '') {
-    _l10n_suggestions_join_table($query, 'locations');
-    $query->condition('l.projectname', '_/' . db_like($project) . '%', 'LIKE');
+    _l10n_suggestions_join_table($query, 'projects');
+    $query->condition('p.project', $project);
   }
 }
 
@@ -222,11 +222,15 @@ function _l10n_suggestions_join_table($query, $table) {
       $query->leftJoin("l10n_suggestions_translations", 't', 's.sguid = t.sguid');
       break;
     case 'votes':
-      _l10n_suggestions_join_table($query, 'translations', 't', 's.sguid = t.sguid');
+      _l10n_suggestions_join_table($query, 'translations');
       $query->leftJoin("l10n_suggestions_votes", 'v', 'v.tguid = t.tguid');
       break;
     case 'locations':
       $query->leftJoin("l10n_suggestions_locations", 'l', 's.sguid = l.sguid');
+      break;
+    case 'projects':
+      _l10n_suggestions_join_table($query, 'locations');
+      $query->leftJoin("l10n_suggestions_projects", 'p', 'p.pid = l.pid');
       break;
     default:
       debug("Error: _l10n_suggestions_join_table(): table '$table' is unknown.");
