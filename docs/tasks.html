@@ -4,10 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 lang="en" xml:lang="en">
 <head>
-<title>This file is used to keep the project organized. It is based on the</title>
+<title>Documentation of the module l10n_suggestions</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-01-04 22:49:21 CET"/>
+<meta name="generated" content="2012-01-04 Wed"/>
 <meta name="author" content="Dashamir Hoxha"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -44,6 +44,21 @@ lang="en" xml:lang="en">
                                  font-weight:bold; }
   /*]]>*/-->
 </style>
+<script type="text/javascript" src="org-info.js"></script>
+<script type="text/javascript" >
+<!--/*--><![CDATA[/*><!--*/
+org_html_manager.set("TOC_DEPTH", "3");
+org_html_manager.set("LINK_HOME", "");
+org_html_manager.set("LINK_UP", "");
+org_html_manager.set("LOCAL_TOC", "1");
+org_html_manager.set("VIEW_BUTTONS", "0");
+org_html_manager.set("MOUSE_HINT", "#aadddd");
+org_html_manager.set("FIXED_TOC", "0");
+org_html_manager.set("TOC", "1");
+org_html_manager.set("VIEW", "overview");
+org_html_manager.setup();  // activate after the parameters are set
+/*]]>*///-->
+</script>
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -70,8 +85,12 @@ lang="en" xml:lang="en">
 <body>
 <div id="content">
 
-<h1 class="title">This file is used to keep the project organized. It is based on the</h1>
+<h1 class="title">Documentation of the module l10n_suggestions</h1>
 
+<p>This file is used to keep the project organized. It is based on the
+org-mode of Emacs (<a href="http://orgmode.org/">http://orgmode.org/</a>), which is a good tool for
+keeping notes, project planning, tasks management, etc.
+</p>
 
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
@@ -108,7 +127,7 @@ lang="en" xml:lang="en">
 <li><a href="#sec-2.2.1">2.2.1 translations/get/&lt;lng&gt;/&lt;sguid&gt; </a></li>
 <li><a href="#sec-2.2.2">2.2.2 translations/search?lng=..&amp;limit=..&amp;mode=..&amp;words=.. </a></li>
 <li><a href="#sec-2.2.3">2.2.3 translations/vote </a></li>
-<li><a href="#sec-2.2.4">2.2.4 translations/user<sub>settings</sub> </a></li>
+<li><a href="#sec-2.2.4">2.2.4 translations/user_settings </a></li>
 <li><a href="#sec-2.2.5">2.2.5 translations/admin </a></li>
 </ul></li>
 </ul>
@@ -275,14 +294,14 @@ projects, activity etc. should be supported and provided.
 <div class="outline-text-4" id="text-1.1.7">
 
 <p>It should be possible to integrate with other l10n modules, like
-l10n<sub>server</sub>, etc. When a new project is added on l10n<sub>server</sub>, the
+l10n_server, etc. When a new project is added on l10n_server, the
 strings that need to be translated can get some suggestions
-automatically from l10n<sub>suggestions</sub>. Or they can be submitted to
-l10n<sub>suggestions</sub> so that people can supply translation and
+automatically from l10n_suggestions. Or they can be submitted to
+l10n_suggestions so that people can supply translation and
 suggestions for them, to vote on these suggestions, etc.
 </p>
 <p>
-The manager of the project on l10n<sub>server</sub> may also adjust some
+The manager of the project on l10n_server may also adjust some
 configuration parameters related to the suggestions. For example a
 suggestion can be accepted as a correct translation only if it got
 75% of all the votes about all the suggestions, otherwise it
@@ -385,7 +404,7 @@ maintain the data (backup, restore, update) etc.
 <div class="outline-text-4" id="text-1.2.5">
 
 <p>In case of integration with other modules (for example with
-l10n<sub>server</sub>), l10n<sub>suggestions</sub> should alter their forms and
+l10n_server), l10n_suggestions should alter their forms and
 interfaces to add the neccessary options and settings.
 </p>
 
@@ -407,6 +426,24 @@ interfaces to add the neccessary options and settings.
 <h3 id="sec-2.1"><span class="section-number-3">2.1</span> DB Schema </h3>
 <div class="outline-text-3" id="text-2.1">
 
+
+
+<div id="fig:db_diagram" class="figure">
+<p><img src="./db_diagram.png"  alt="./db_diagram.png" /></p>
+<p>Tables and their relations.</p>
+</div>
+
+
+<div id="fig:object_diagram_1" class="figure">
+<p><img src="./object_diagram_1.png"  alt="./object_diagram_1.png" /></p>
+<p>Structure of the DB.</p>
+</div>
+
+
+<div id="fig:object_diagram_2" class="figure">
+<p><img src="./object_diagram_2.png"  alt="./object_diagram_2.png" /></p>
+<p>Structure of the DB.</p>
+</div>
 
 <p>
 Files, Projects and Locations are related to the import/export of
@@ -444,7 +481,7 @@ A release can be appended to the name of the project as well. So,
 two different releases of the same software project are considered
 as two different projects. Each of them has its on list of
 locations, however they share most of the strings and
-translations. Actually, for the purposes of l10n<sub>suggestions</sub> only
+translations. Actually, for the purposes of l10n_suggestions only
 the latest release is what matters, so any earlier releases will
 eventually be removed (or archived).
 </p>
@@ -526,15 +563,15 @@ contained in this line.
 Reference to the id of the project that
 contains this line.
 </dd>
-<dt>translator<sub>comments</sub> : varchar(500)</dt><dd>
+<dt>translator_comments : varchar(500)</dt><dd>
 Translator comments in
 the PO entry (starting with "# ").
 </dd>
-<dt>extracted<sub>comments</sub> : varchar(500)</dt><dd>
+<dt>extracted_comments : varchar(500)</dt><dd>
 Extracted comments in the
 PO entry (starting with "#. ").
 </dd>
-<dt>line<sub>references</sub> : varchar(500)</dt><dd>
+<dt>line_references : varchar(500)</dt><dd>
 Line numbers where the sting
 occurs (starting with "#: ").
 </dd>
@@ -542,17 +579,17 @@ occurs (starting with "#: ").
 Flags of the PO entry (starting with
 "#, ").
 </dd>
-<dt>previous<sub>msgctxt</sub> : varchar(500)</dt><dd>
+<dt>previous_msgctxt : varchar(500)</dt><dd>
 Previous msgctxt in the PO
 entry (starting with "#| msgctxt ").
 </dd>
-<dt>previous<sub>msgid</sub> : varchar(500)</dt><dd>
+<dt>previous_msgid : varchar(500)</dt><dd>
 Previous msgid in the PO entry
 (starting with "#| msgid ").
 </dd>
-<dt>previous<sub>msgid</sub><sub>plural</sub> : varchar(500)</dt><dd>
-Previous msgid<sub>plural</sub>
-in the PO entry (starting with "#| msgid<sub>plural</sub> ").
+<dt>previous_msgid_plural : varchar(500)</dt><dd>
+Previous msgid_plural
+in the PO entry (starting with "#| msgid_plural ").
 
 </dd>
 </dl>
@@ -562,7 +599,7 @@ Translatable strings that are extracted from projects.
 <dl>
 <dt>string : text</dt><dd>
 The string to be translated:
-CONCAT(msgid,CHAR(0),msgid<sub>plural</sub>)
+CONCAT(msgid,CHAR(0),msgid_plural)
 </dd>
 <dt>context : varchar(500)</dt><dd>
 The string context (msgctxt of the PO
@@ -601,7 +638,7 @@ Reference to the id of the l10n string that is
 translated.
 </dd>
 <dt>lng : varchar(5)</dt><dd>
-Language code (en, fr, sq<sub>AL</sub>, etc.)
+Language code (en, fr, sq_AL, etc.)
 </dd>
 <dt>translation : varchar(1000)</dt><dd>
 The (suggested) translation of
@@ -750,7 +787,7 @@ settings page as well.)
 </div>
 
 <div id="outline-container-2.2.4" class="outline-4">
-<h4 id="sec-2.2.4"><span class="section-number-4">2.2.4</span> translations/user<sub>settings</sub> </h4>
+<h4 id="sec-2.2.4"><span class="section-number-4">2.2.4</span> translations/user_settings </h4>
 <div class="outline-text-4" id="text-2.2.4">
 
 <p>The user can set:
@@ -828,7 +865,7 @@ permission checking, etc.
 <b>[<span style="visibility:hidden;">X</span>]</b> Build the pages for admin dashboard, reports and stats.
 </li>
 <li>
-<b>[<span style="visibility:hidden;">X</span>]</b> Integrate with projects and packages from l10n<sub>server</sub>
+<b>[<span style="visibility:hidden;">X</span>]</b> Integrate with projects and packages from l10n_server
 </li>
 <li>
 <b>[<span style="visibility:hidden;">X</span>]</b> Add an API for external applications.
@@ -1012,7 +1049,7 @@ on user preferencies, and also on the priorities of translation.
 
 <ul>
 <li>
-Start with simple tests (l10n<sub>suggestions</sub>.test)
+Start with simple tests (l10n_suggestions.test)
 </li>
 <li>
 Improve instalation.
@@ -1069,13 +1106,13 @@ Edit /etc/mysql/my.cnf and set:
 
 <p>
 [mysqld]
-ft<sub>min</sub><sub>word</sub><sub>len</sub> = 1
-ft<sub>stopword</sub><sub>file</sub> = ''
+ft_min_word_len = 1
+ft_stopword_file = ''
 </p>
 <p>
 [isamchk]
-ft<sub>min</sub><sub>word</sub><sub>len</sub> = 1
-ft<sub>stopword</sub><sub>file</sub> = ''
+ft_min_word_len = 1
+ft_stopword_file = ''
 </p>
 </li>
 <li>
@@ -1106,9 +1143,9 @@ index (primary key) on queries. The same for the field tguid.
 </div>
 <div id="postamble">
 <p class="author"> Author: Dashamir Hoxha
-<a href="mailto:dasho@dasho.al">&lt;dasho@dasho.al&gt;</a>
+<a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
 </p>
-<p class="date"> Date: 2012-01-04 22:49:21 CET</p>
+<p class="date"> Date: 2012-01-04 Wed</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>
