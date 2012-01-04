@@ -236,7 +236,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
 
       $form['author'] = array(
         '#markup' => $title,
-        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translation/details/' . $translation->tguid) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
+        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translations/details/' . $translation->tguid) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
         //'#suffix' => '</a><div class="l10n-more-info"></div></div>',
       );
     }

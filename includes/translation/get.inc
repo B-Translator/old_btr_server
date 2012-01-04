@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Functions specific to the menu path: translation/get/lng/sguid .
+ *   Functions specific to the menu path: translations/get/lng/sguid .
  */
 
 /**
@@ -11,7 +11,7 @@ require_once(dirname(__FILE__) . '/list/list.inc');
 require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
- * Menu callback: translation/get/lng/sguid
+ * Menu callback: translations/get/lng/sguid
  * Get translation suggestions for a given string.
  * 'lng' and 'sguid' are passed as parameters to the function.
  */
@@ -30,7 +30,7 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
   if ($lng==NULL or $sguid==NULL) {
     drupal_set_message(t("Missing parameters lng/sguid."), 'error');
     $output = array(
-      '#markup' => t("The correct usage of this interface is: <strong>translation/get/lng/sguid</strong> , where <strong>lng</strong> is one of: <strong>!lng_codes</strong> .",
+      '#markup' => t("The correct usage of this interface is: <strong>translations/get/lng/sguid</strong> , where <strong>lng</strong> is one of: <strong>!lng_codes</strong> .",
                  array(
                    '!lng_codes' => implode(', ', $lng_codes),
                  ))
@@ -46,7 +46,7 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
                  array(
                    '!lng' => $lng,
                    '!lng_codes' => implode(', ', $lng_codes),
-                   '!search_path' => l('translation/search', 'translation/search')
+                   '!search_path' => l('translations/search', 'translations/search')
                  )),
     );
     return $output;
@@ -61,7 +61,7 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Get Translations'), 'translation/get'),
+      l(t('Get Translations'), 'translations/get'),
     )
   );
 
@@ -79,7 +79,7 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
       '#markup' => t("No strings with GUID '<strong>!sguid</strong>' found. <br/> Try instead to search with: !search_path",
                  array(
                    '!sguid' => $sguid,
-                   '!search_path' => l('translation/search', 'translation/search'),
+                   '!search_path' => l('translations/search', 'translations/search'),
                  ))
     );
     return $output;

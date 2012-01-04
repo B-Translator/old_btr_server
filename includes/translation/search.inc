@@ -12,7 +12,7 @@ require_once(dirname(__FILE__) . '/list/list.inc');
 require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
- * Menu callback: translation/search
+ * Menu callback: translations/search
  * Search strings and translations using various filters.
  */
 function l10n_suggestions_search() {
@@ -37,7 +37,7 @@ function l10n_suggestions_search() {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Search Translations'), 'translation/search'),
+      l(t('Search Translations'), 'translations/search'),
     )
   );
 

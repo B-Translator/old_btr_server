@@ -2,12 +2,12 @@
 
 /**
  * Functions related to the filter form
- * of the translation/search interface.
+ * of the translations/search interface.
  */
 
 /**
  * Build the filter data from the GET request,
- * which is like: translation/search?lng=fr&words=xyz&limit=10
+ * which is like: translations/search?lng=fr&words=xyz&limit=10
  * Check and sanize the data, and put default values where missing.
  */
 function l10n_suggestions_build_filter() {
@@ -258,7 +258,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Package'),
     '#description' => t('Search only the strings belonging to the matching package.'),
     '#default_value' => $form_state['values']['package'],
-    '#autocomplete_path' => 'translation/package-autocomplete',
+    '#autocomplete_path' => 'translations/package-autocomplete',
   );
   */
 
@@ -267,7 +267,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Project'),
     '#description' => t('Search only the strings belonging to the matching project.'),
     '#default_value' => $form_state['values']['project'],
-    '#autocomplete_path' => 'translation/autocomplete/project',
+    '#autocomplete_path' => 'translations/autocomplete/project',
   );
 
   /*
@@ -276,7 +276,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Release'),
     '#description' => t('Search only the strings belonging to the matching release.'),
     '#default_value' => $form_state['values']['release'],
-    '#autocomplete_path' => 'translation/release-autocomplete',
+    '#autocomplete_path' => 'translations/release-autocomplete',
   );
   */
 
@@ -303,7 +303,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Translated By'),
     '#description' => t('Search only the strings with translations suggested by the selected user.'),
     '#default_value' => $form_state['values']['translated_by'],
-    '#autocomplete_path' => 'translation/autocomplete/user',
+    '#autocomplete_path' => 'translations/autocomplete/user',
     '#states' => array(
       'visible' => array(
         ':input[name="only_mine"]' => array('checked' => false),
@@ -316,7 +316,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#title' => t('Voted By'),
     '#description' => t('Search only the strings with translations voted by the selected user.'),
     '#default_value' => $form_state['values']['voted_by'],
-    '#autocomplete_path' => 'translation/autocomplete/user',
+    '#autocomplete_path' => 'translations/autocomplete/user',
     '#states' => array(
       'visible' => array(
         ':input[name="only_mine"]' => array('checked' => false),

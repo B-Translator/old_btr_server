@@ -14,11 +14,11 @@ require_once(dirname(__FILE__) . '/includes/common.inc');
 function l10n_suggestions_help($path, $args) {
   switch($path)
     {
-      case 'translation/get':
+      case 'translations/get':
         $help = t('Get translation suggestions for a given string.');
         break;
 
-      case 'translation/vote':
+      case 'translations/vote':
         $help = t('Vote the best translation for a string, or suggest a better translation.');
         break;
     }
@@ -31,48 +31,63 @@ function l10n_suggestions_help($path, $args) {
  * Implements hook_menu().
  */
 function l10n_suggestions_menu() {
-  $items['translation/get'] = array(
+
+  $items['translation'] = array(
+    'type' => MENU_NORMAL_ITEM,
+    'title'           => 'Translations',
+    'description'     => 'Vote the best translation for a string, or suggest a better translation.',
+    'page callback'   => 'l10n_suggestions_vote',
+    'file'            => 'includes/translations/vote.inc',
+    'access callback' => TRUE,
+  );
+
+  $items['translations/default'] = array(
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title'           => 'Vote',
+    //'description'     => 'Vote the best translation for a string, or suggest a better translation.',
+    //'page callback'   => 'l10n_suggestions_vote',
+    //'file'            => 'includes/translations/vote.inc',
+    //'access callback' => TRUE,
+    'weight'          => 1,
+  );
+
+  $items['translations/search'] = array(
+    'type' => MENU_LOCAL_TASK,
+    'title'           => 'Search',
+    'description'     => 'Search strings and translations using various filters.',
+    'page callback'   => 'l10n_suggestions_search',
+    'file'            => 'includes/translations/search.inc',
+    'access callback' => TRUE,
+    'weight'          => 2,
+  );
+
+  $items['translations/get'] = array(
+    'type'            => MENU_CALLBACK,
     'title'           => 'Get l10n Translation',
     'description'     => 'Get translation suggestions for a given string.',
     'page callback'   => 'l10n_suggestions_get',
-    'file'            => 'includes/translation/get.inc',
-    'access callback' => TRUE,
-  );
-
-  $items['translation/vote'] = array(
-    'title'           => 'Vote l10n Translation',
-    'description'     => 'Vote the best translation for a string, or suggest a better translation.',
-    'page callback'   => 'l10n_suggestions_vote',
-    'file'            => 'includes/translation/vote.inc',
-    'access callback' => TRUE,
-  );
-
-  $items['translation/search'] = array(
-    'title'           => 'Search l10n Translations',
-    'description'     => 'Search strings and translations using various filters.',
-    'page callback'   => 'l10n_suggestions_search',
-    'file'            => 'includes/translation/search.inc',
+    'file'            => 'includes/translations/get.inc',
     'access callback' => TRUE,
   );
 
   // Autocomplete callback for project textfields.
-  $items['translation/autocomplete/project'] = array(
+  $items['translations/autocomplete/project'] = array(
+    'type'            => MENU_CALLBACK,
     'title'           => 'Project autocomplete',
     'page callback'   => 'l10n_suggestions_project_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
-    'type'            => MENU_CALLBACK,
   );
 
   // Autocomplete callback for user textfields.
-  $items['translation/autocomplete/user'] = array(
+  $items['translations/autocomplete/user'] = array(
+    'type'            => MENU_CALLBACK,
     'title'           => 'User autocomplete',
     'page callback'   => 'l10n_suggestions_user_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
-    'type'            => MENU_CALLBACK,
   );
 
   return $items;

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Functions specific to the menu path: translation/vote .
+ *   Functions specific to the menu path: translations/vote .
  */
 
 /**
@@ -11,7 +11,7 @@ require_once(dirname(__FILE__) . '/list/list.inc');
 require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
- * Menu callback: translation/vote
+ * Menu callback: translations/vote
  * Vote the best translation for a string, or suggest a better translation.
  */
 function l10n_suggestions_vote() {
@@ -37,7 +37,7 @@ function l10n_suggestions_vote() {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Vote Translation'), 'translation/vote'),
+      l(t('Vote Translation'), 'translations/vote'),
     )
   );
 
@@ -65,7 +65,8 @@ function l10n_suggestions_get_random_sguid() {
 
   // Condition for selecting projects
   // from which to get a random string.
-  $where = "(origin='KDE' AND project='kturtle')";
+  $where = "(origin='KDE' AND project='kturtle')"
+         . " OR (origin='ubuntu' AND project='pingus')";
 
   // Get the total number of strings from which we can choose.
   $sql_count = "
@@ -88,7 +89,7 @@ function l10n_suggestions_get_random_sguid() {
     LIMIT $row_number, 1
   ";
   $random_sguid = db_query($sql_get_sguid)->fetchField();
-  
+
   return $random_sguid;
 }
 
