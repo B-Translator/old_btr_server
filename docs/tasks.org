@@ -314,20 +314,21 @@ keeping notes, project planning, tasks management, etc.
     + translations/admin/stats
 
 * Implementation Plan
-  1. Make *voting* work (without permissions, user setting, admin
+  1. [X] Make *voting* work (without permissions, user setting, admin
      config, etc.)
-  2. Release an initial drupal package and prepare a test/demo site.
-  3. Add *admin config*, *user settings*, *permissions*, permission
-     checking, etc.
-  4. Make a basic *integration with facebook* (for voting).
-  5. Put it online.
-  6. Add a basic *email interface* (for voting).
-  7. Add a *mobile interface* (or theme).
-  8. Build the pages for admin dashboard, reports and stats.
-  9. Integrate with projects and packages from l10n_server
-  10. Add an API for external applications.
-  11. Integration with google+, twitter, diaspora, etc.
-  12. Android app that can be used for voting.
+  2. [ ] Release an initial drupal package and prepare a test/demo
+     site.
+  3. [ ] Add *admin config*, *user settings*, *permissions*,
+     permission checking, etc.
+  4. [ ] Make a basic *integration with facebook* (for voting).
+  5. [ ] Put it online.
+  6. [ ] Add a basic *email interface* (for voting).
+  7. [ ] Add a *mobile interface* (or theme).
+  8. [ ] Build the pages for admin dashboard, reports and stats.
+  9. [ ] Integrate with projects and packages from l10n_server
+  10. [ ] Add an API for external applications.
+  11. [ ] Integration with google+, twitter, diaspora, etc.
+  12. [ ] Android app that can be used for voting.
 
 * Tasks
 
@@ -383,10 +384,10 @@ keeping notes, project planning, tasks management, etc.
       an archive table, in order to keep the history of changing votes as well.
 
 
-*** XML-RPC interface
+*** TODO XML-RPC interface
     Or some other web-service (API) interface.
 
-*** Interface *translation/vote*
+*** DONE Interface *translations/vote*
     This is almost the same as the search interface. However, instead of
     using a filter to select strings, they are selected randomly, based
     on user preferencies, and also on the priorities of translation.
