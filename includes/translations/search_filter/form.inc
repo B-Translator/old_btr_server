@@ -19,6 +19,17 @@ function l10n_suggestions_build_filter() {
   $languages = l10n_suggestions_get_languages();
   $lng_codes = array_keys($languages);
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
+  //by default search for strings similar to the one that is being voted
+  if ($lng == '' && isset($_SESSION['random_sguid'])) {
+    $sguid = $_SESSION['random_sguid'];
+    $sql = 'SELECT string FROM l10n_suggestions_strings WHERE sguid = :sguid';
+    $string = db_query($sql, array(':sguid' => $sguid))->fetchField();
+    if ($string) {
+      $lng = 'sq';  // TODO: set the default translation lng for the user.
+      $request['words'] = $string;
+    }
+  }
+  //set filter language
   $filter['lng'] = in_array($lng, $lng_codes) ? $lng : 'fr';
 
   //number of results to be displayed

@@ -61,9 +61,12 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Get Translations'), 'translations/get'),
+      l(t('Translations'), 'translations'),
     )
   );
+
+  // Set the title.
+  drupal_set_title(t('Get Translations'));
 
   // Get the matching string and its translations.
   $query = db_select('l10n_suggestions_strings', 's')

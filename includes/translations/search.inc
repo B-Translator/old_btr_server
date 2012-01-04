@@ -37,9 +37,12 @@ function l10n_suggestions_search() {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Search Translations'), 'translations/search'),
+      l(t('Translations'), 'translations'),
     )
   );
+
+  // Set the title.
+  drupal_set_title(t('Search Translations'));
 
   // Add the filter form.
   $output = array(

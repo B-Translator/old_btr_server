@@ -37,9 +37,12 @@ function l10n_suggestions_vote() {
   drupal_set_breadcrumb(
     array(
       l(t('Home'), NULL),
-      l(t('Vote Translation'), 'translations/vote'),
+      l(t('Translations'), 'translations'),
     )
   );
+
+  // Set the title.
+  drupal_set_title(t('Vote Translations'));
 
   // Get the sguid of a random string.
   $sguid = l10n_suggestions_get_random_sguid();
@@ -89,6 +92,9 @@ function l10n_suggestions_get_random_sguid() {
     LIMIT $row_number, 1
   ";
   $random_sguid = db_query($sql_get_sguid)->fetchField();
+
+  // Save it in the session.
+  $_SESSION['random_sguid'] = $random_sguid;
 
   return $random_sguid;
 }
