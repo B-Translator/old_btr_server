@@ -58,7 +58,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
     $form['strings'][$sguid] = _l10n_suggestions_translate_form_item($form_state, $string, $lng);
   }
 
-  dpm($form, '$form');  //debug
+  //dpm($form, '$form');  //debug
   return $form;
 }
 

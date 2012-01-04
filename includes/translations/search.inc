@@ -33,6 +33,7 @@ function l10n_suggestions_search() {
     drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');
   }
 
+  /*
   // Add missing breadcrumb.
   drupal_set_breadcrumb(
     array(
@@ -40,6 +41,7 @@ function l10n_suggestions_search() {
       l(t('Translations'), 'translations'),
     )
   );
+  */
 
   // Set the title.
   drupal_set_title(t('Search Translations'));
@@ -65,7 +67,7 @@ function l10n_suggestions_search() {
     drupal_set_message(t('No strings found. Try adjusting the filter options.'));
   }
   else {
-    dpm($strings, '$strings');  //debug
+    //dpm($strings, '$strings');  //debug
     $output[] = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
   }
 

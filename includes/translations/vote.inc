@@ -33,6 +33,7 @@ function l10n_suggestions_vote() {
     drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');
   }
 
+  /*
   // Add missing breadcrumb.
   drupal_set_breadcrumb(
     array(
@@ -40,6 +41,7 @@ function l10n_suggestions_vote() {
       l(t('Translations'), 'translations'),
     )
   );
+  */
 
   // Set the title.
   drupal_set_title(t('Vote Translations'));

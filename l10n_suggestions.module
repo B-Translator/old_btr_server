@@ -165,6 +165,9 @@ function l10n_suggestions_init() {
 
   //variable_set('l10n_suggestions_voting_mode', 'multiple');  //debug
   variable_set('l10n_suggestions_voting_mode', 'single');  //debug
+
+  // Disable breadcrumb.
+  drupal_set_breadcrumb(array());
 }
 
 ?>
