@@ -292,6 +292,9 @@ function l10n_suggestions_translate_byline($name, $uid, $time, $medium, $type, $
     '@ago' => $time ? t('@time ago', array('@time' => format_interval(REQUEST_TIME - strtotime($time)))) : t('no time record available'),
   );
 
+  return t('by !author <span title="@ago">on @date</span>', $params);
+
+  /*
   switch ($type) {
     case L10N_SERVER_ACTION_ADD:
       switch ($medium) {
@@ -328,6 +331,8 @@ function l10n_suggestions_translate_byline($name, $uid, $time, $medium, $type, $
       // Default byline that work as a click-target to get more information.
       return t('by !author <span title="@ago">on @date</span>', $params);
   }
+  */
+
 }
 
 

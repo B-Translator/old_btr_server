@@ -70,7 +70,7 @@ function l10n_suggestions_get_random_sguid() {
 
   // Condition for selecting projects
   // from which to get a random string.
-  $where = "(origin='KDE' AND project='kturtle')"
+  $where = "(origin='KDE' AND project='kdelibs')"
          . " OR (origin='ubuntu' AND project='pingus')";
 
   // Get the total number of strings from which we can choose.
