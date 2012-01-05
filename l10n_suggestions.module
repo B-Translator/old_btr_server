@@ -86,6 +86,25 @@ function l10n_suggestions_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a plain-text list of all the imported projects,
+  // filtered by the given origin/project.
+  $items['translations/project/list'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project List',
+    'page callback'   => 'l10n_suggestions_project_list',
+    'file'            => 'includes/projects.inc',
+    'access callback' => TRUE,
+  );
+
+  // Return as plain-text the PO file for a given origin/project/lng.
+  $items['translations/project/export'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project Export',
+    'page callback'   => 'l10n_suggestions_project_export',
+    'file'            => 'includes/projects.inc',
+    'access callback' => TRUE,
+  );
+
   // Autocomplete callback for project textfields.
   $items['translations/autocomplete/project'] = array(
     'type'            => MENU_CALLBACK,

@@ -455,6 +455,22 @@ keeping notes, project planning, tasks management, etc.
    2. Restart the server: service mysql restart
    3. Drop and recreate fulltext indexes.
 
+** How to use simple REST API for exporting projects
+
+*** List:
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list
+    cat list.txt
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/GNOME
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/GNOME/a*
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/kturtle
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/kturtle/json
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/-
+    wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/*turtle*/text
+
+*** Export:
+    wget --no-check-certificate -O test1.po https://l10n-sq.org/translations/project/export/KDE/kturtle/sq
+    vim test1.po
+
 ** Misc
    + Field sguid:char(40) on strings, locations and translations must
      be of the same character set, otherwise mysql will not use the
