@@ -14,17 +14,23 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/vote
  * Vote the best translation for a string, or suggest a better translation.
  */
-function l10n_suggestions_vote() {
+function l10n_suggestions_vote($sguid =NULL, $one_time_login =NULL) {
+
+  if ($one_time_login != NULL) {
+    l10n_suggestions_login_one_time($one_time_login);
+    drupal_goto("translations/$sguid");
+    return;
+  }
 
   // TODO: Get the translation language from the user settings.
   $lng = 'sq';
 
-  // Add the the CSS and JS files.
+  // Add the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
   drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
 
-  //get languages and language codes
+  // Get languages and language codes
   $languages = l10n_suggestions_get_languages();
   $lng_codes = array_keys($languages);
 
@@ -46,21 +52,62 @@ function l10n_suggestions_vote() {
   // Set the title.
   drupal_set_title(t('Vote Translations'));
 
-  // Get the sguid of a random string.
-  $sguid = l10n_suggestions_get_random_sguid();
+  // If no $sguid is given as parameter,
+  // get the sguid of a random string.
+  if ($sguid == NULL) {
+    $sguid = l10n_suggestions_get_random_sguid();
+  }
 
   // Get the matching string and its translations.
   $query = db_select('l10n_suggestions_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = l10n_suggestions_get_strings($query, $lng);
-  //if ($strings) dpm($strings[0]);  //debug
+  //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.
   $output = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
 
   return $output;
+}
 
+function l10n_suggestions_login_one_time($one_time_login =NULL)
+{
+  if ($one_time_login == NULL)  return false;
+
+  // Check if the user is already logged in.
+  global $user;
+  if ($user->uid)  return false;
+
+  // Get $timestamp, $uid, and $hashed_pass
+  $parts = preg_split('/\./', $one_time_login, 3);
+  $timestamp = isset($parts[0]) ? $parts[0] : '';
+  $uid = isset($parts[1]) ? $parts[1] : '';
+  $hashed_pass = isset($parts[2]) ? $parts[2] : '';
+  if ($timestamp == '' or $uid == '' or $hashed_pass == '')  return false;
+
+  // Get the user details.
+  $account = user_load($uid);
+  if (!isset($account) || $account->status == 0)  return false;
+
+  // Check the timestamp.
+  $timeout = 86400;  // 24 hours
+  $current = REQUEST_TIME;
+  if ($current - $timestamp > $timeout) {
+    drupal_set_message(t('Login link has expired.'));
+    return false;
+  }
+
+  // Check the hashed password.
+  if ($hashed_pass != user_pass_rehash($account->pass, $timestamp, $account->login)) {
+    drupal_set_message(t('Could not validate login link.'));
+    return false;
+  }
+
+  // Login the new user.
+  $user = $account;
+  user_login_finalize();
+  return true;
 }
 
 /**
@@ -100,5 +147,4 @@ function l10n_suggestions_get_random_sguid() {
 
   return $random_sguid;
 }
-
 ?>

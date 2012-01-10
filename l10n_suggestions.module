@@ -6,6 +6,7 @@
  */
 
 require_once(dirname(__FILE__) . '/includes/common.inc');
+require_once(dirname(__FILE__) . '/includes/cron.inc');
 
 /**
  * Implements hook_help().
@@ -41,7 +42,7 @@ function l10n_suggestions_menu() {
     'access callback' => TRUE,
   );
 
-  $items['translations/default'] = array(
+  $items['translations/vote'] = array(
     'type'            => MENU_DEFAULT_LOCAL_TASK,
     'title'           => 'Vote',
     'weight'          => 1,
@@ -183,10 +184,11 @@ function l10n_suggestions_init() {
   }
 
   //variable_set('l10n_suggestions_voting_mode', 'multiple');  //debug
-  variable_set('l10n_suggestions_voting_mode', 'single');  //debug
+  //variable_set('l10n_suggestions_voting_mode', 'single');  //debug
 
   // Disable breadcrumb.
   drupal_set_breadcrumb(array());
-}
 
+  //drupal_cron_run();  //test
+}
 ?>
