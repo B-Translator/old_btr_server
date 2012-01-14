@@ -8,14 +8,24 @@
  * Implements hook_install().
  */
 function l10n_suggestions_install() {
-  // nothing yet
+
+  variable_set('mail_system',
+    array_merge(
+      variable_get('mail_system', array('default-system' => 'DefaultMailSystem')),  // Previously set mail_system variable
+      array('l10n_suggestions' => 'HTMLMailSystem')
+    )
+  );
 }
 
 /**
  * Implements hook_uninstall().
  */
 function l10n_suggestions_uninstall() {
-  // nothing yet
+
+  // Unset module keys in variable mail_system
+  $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
+  unset($mail_system['l10n_suggestions']);
+  variable_set('mail_system', $mail_system);
 }
 
 /**

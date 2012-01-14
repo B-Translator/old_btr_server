@@ -162,6 +162,37 @@ function l10n_suggestions_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implement hook_mail().
+ *
+ * This hook defines a list of possible e-mail templates that this module can
+ * send. Each e-mail is given a unique identifier, or 'key'.
+ *
+ * $message comes in with some standard properties already set: 'to' address,
+ * 'from' address, and a set of default 'headers' from drupal_mail(). The goal
+ * of hook_mail() is to set the message's 'subject' and 'body' properties, as
+ * well as make any adjustments to the headers that are necessary.
+ *
+ * The $params argument is an array which can hold any additional data required
+ * to build the mail subject and body; for example, user-entered form data, or
+ * some context information as to where the mail request came from.
+ *
+ * Note that hook_mail() is not actually a hook. It is only called for a single
+ * module, the module named in the first argument of drupal_mail(). So it's
+ * a callback of a type, but not a hook.
+ */
+function l10n_suggestions_mail($key, &$message, $params) {
+  switch ($key) {
+    // Send a string for review.
+    case 'send_string_by_email':
+      $message['subject'] = $params['subject'];
+      $message['body'] = array();
+      $message['body_text'] = $params['text_message'];
+      $message['body_html'] = $params['html_message'];
+      break;
+  }
+}
+
+/**
  * Implements hook_init().
  *
  * Add stylesheets and block search engines from web application pages.

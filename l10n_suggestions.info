@@ -4,3 +4,4 @@ package = l10n suggestions
 core = 7.x
 
 files[] = l10n_suggestions.test
+files[] = includes/html_mail.php

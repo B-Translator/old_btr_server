@@ -38,6 +38,7 @@ function l10n_suggestions_cron_queue_info() {
 
 function send_string_by_email($account) {
 
+  // Get a random sguid.
   require_once(dirname(__FILE__) . '/translations/vote.inc');
   $sguid = l10n_suggestions_get_random_sguid();
 
@@ -59,7 +60,19 @@ Thanks.
 
 <p>Thanks.</p>
 ";
-  //send_html_mail($from_name, $from_email, $to, $subject, $html_message, $text_message);
-  send_html_mail('l10n-sq.org', 'noreply@l10n-sq.org', $account->mail, 'Translations', $html_message, $text_message);
+
+  $module = 'l10n_suggestions';
+  $key = 'send_string_by_email';
+  $from = "l10n-sq.org <noreply@l10n-sq.org>";
+  $to = $account->name . ' <' .$account->mail . '>';
+  $language = $account->lng;
+  $send = TRUE;
+
+  $params['subject'] = t('Translation Review');
+  $params['text_message'] = $text_message;
+  $params['html_message'] = $html_message;
+
+  $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
+  return $result;
 }
 ?>
