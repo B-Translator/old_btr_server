@@ -9,8 +9,8 @@ function l10n_suggestions_cron() {
 
   $accounts = entity_load('user');
   foreach ($accounts as $account) {
-    if ($account->uid < 2) {
-      continue; // skip admin
+    if ($account->uid < 2 or $account->status != 1) {
+      continue; // skip admin and disabled accounts
     }
 
     $account_data = (object) array(

@@ -25,10 +25,7 @@ class HTMLMailSystem implements MailSystemInterface {
 
     $text_message = $message['body_text'];
     $html_message = $message['body_html'];
-    $message['body'] = "MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary=\"$mime_boundary\"
-
-This is a multi-part message in MIME format.
+    $message['body'] = "This is a multi-part message in MIME format.
 
 --$mime_boundary
 Content-Type: text/plain; charset=UTF-8
@@ -41,8 +38,8 @@ Content-Transfer-Encoding: quoted-printable
 
 $html_message
 
---$mime_boundary--
-";
+--$mime_boundary--";
+
     return $message;
   }
 
