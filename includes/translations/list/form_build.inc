@@ -111,18 +111,6 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
   // Translations are stored in an array.
   $translations = $string->translations;
 
-  // If there is no translation yet, display a visible placeholder.
-  if (empty($translations)) {
-    $translations['0'] = (object) array(
-      'sguid' => $string->sguid,
-      'tguid' => '0',
-      'lng' => $lng,
-      'translation' => t('(not translated)'),
-      'uid' => 0,
-      'votes' => array(),
-    );
-  }
-
   foreach ($translations as $tguid => $translation) {
     // Add the translation to the list.
     $form[$tguid] = _l10n_suggestions_translate_translation($translation, $string->sguid, $lng);
@@ -171,7 +159,6 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
   $is_own = ($user->uid == $translation->uid);
   $is_approved = in_array($user->uid, array_keys($translation->votes));
   $is_new = ($translation->tguid == 'new');
-  $no_translation = ($translation->tguid == '0');
   $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
 
   $form = array(
@@ -192,8 +179,8 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
     '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tguid,
     '#default_value' => $is_approved ? $translation->tguid : '',
-    //'#disabled' => !user_access('submit votes') || $no_translation,
-    '#disabled' => !user_is_logged_in() || $no_translation,
+    //'#disabled' => !user_access('submit votes'),
+    '#disabled' => !user_is_logged_in(),
     '#attributes' => array('class' => array('selector')),
   );
   if ($voting_mode == 'single') {
@@ -201,7 +188,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
     $form['approved']['#parents'] = array('strings', $string_sguid, 'approved');
   }
 
-  if ($may_moderate && !$is_new && !$no_translation) {
+  if ($may_moderate && !$is_new) {
     $form['declined'] = array(
       '#type' => 'checkbox',
       '#title' => t('Decline'),
@@ -209,10 +196,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
     );
   }
 
-  if ($no_translation) {
-    //nothing else to add
-  }
-  elseif ($is_new) {
+  if ($is_new) {
     // Fill in with as many textareas as required to enter translation
     // for this string.
     $form['value'] = array_fill(0, count($translation->translation), array(
