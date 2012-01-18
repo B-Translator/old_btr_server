@@ -42,7 +42,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
     // permissions to submit votes and suggestions.
     'submit' => array(
       '#type' => 'submit',
-      '#value' => t('Save changes'),
+      '#value' => t('Save'),
       //'#access' => user_access('submit suggestions'),
       '#access' => user_is_logged_in(),
     ),

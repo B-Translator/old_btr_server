@@ -173,33 +173,36 @@ function _l10n_suggestions_clean_previous_votes($tguid, $uid, $sguid, $lng) {
   // Get the voting mode.
   $voting_mode = variable_get('l10n_suggestions_voting_mode', 'single');
 
+  $arr_tguid = array();
   if ($voting_mode == 'multiple') {
-    // Remove any other votes by the user for this translation.
-    $num_deleted = db_delete('l10n_suggestions_votes')
-      ->condition('uid', $uid)
-      ->condition('tguid', $tguid)
-      ->execute();
-
-    return $num_deleted;
+    $arr_tguid = array($tguid);
   }
   else { // ($voting_mode == 'single')
-    // Get the other sibling translations
-    // (translations of the same string for the same language).
-    $sql = 'SELECT tguid FROM {l10n_suggestions_translations} '
-      . 'WHERE sguid = :sguid AND lng = :lng';
-    $params = array(':sguid' => $sguid, ':lng' => $lng);
+    // Get the other sibling translations (translations of the same
+    // string and the same language) which the user has voted.
+    $sql = '
+      SELECT DISTINCT t.tguid FROM {l10n_suggestions_translations} t
+      LEFT JOIN {l10n_suggestions_votes} v ON (v.tguid = t.tguid)
+      WHERE t.sguid = :sguid AND t.lng = :lng AND v.uid = :uid';
+    $params = array(':sguid' => $sguid, ':lng' => $lng, ':uid' => $uid);
     $arr_tguid = db_query($sql, $params)->fetchCol();
-
-    if (empty($arr_tguid))  return 0;
-
-    // Remove any other votes by the user for this string.
-    $num_deleted = db_delete('l10n_suggestions_votes')
-      ->condition('uid', $uid)
-      ->condition('tguid', $arr_tguid, 'IN')
-      ->execute();
-
-    return $num_deleted;
   }
+
+  if (empty($arr_tguid))  return 0;
+
+  // Remove any votes by the user for each translation in $arr_tguid.
+  $num_deleted = db_delete('l10n_suggestions_votes')
+    ->condition('uid', $uid)
+    ->condition('tguid', $arr_tguid, 'IN')
+    ->execute();
+
+  // Decrement the vote count for each translation in $arr_tguid.
+  $num_updated = db_update('l10n_suggestions_translations')
+    ->expression('count', 'count - 1')
+    ->condition('tguid', $arr_tguid, 'IN')
+    ->execute();
+
+  return $num_deleted;
 }
 
 /**
