@@ -10,6 +10,7 @@ do
     for file in $(ls $dir)
     do
 	project=${file%%.po}
-	../po_import.php ubuntu $project $lng $dir/$file
+	pot_name=$project
+	../po_import.php ubuntu $project $pot_name $lng $dir/$file
     done
 done

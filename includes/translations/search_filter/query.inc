@@ -228,9 +228,13 @@ function _l10n_suggestions_join_table($query, $table) {
     case 'locations':
       $query->leftJoin("l10n_suggestions_locations", 'l', 's.sguid = l.sguid');
       break;
+    case 'templates':
+      $query->leftJoin("l10n_suggestions_templates", 'tpl', 'tpl.potid = l.potid');
+      break;
     case 'projects':
       _l10n_suggestions_join_table($query, 'locations');
-      $query->leftJoin("l10n_suggestions_projects", 'p', 'p.pid = l.pid');
+      _l10n_suggestions_join_table($query, 'templates');
+      $query->leftJoin("l10n_suggestions_projects", 'p', 'p.pguid = tpl.pguid');
       break;
     default:
       debug("Error: _l10n_suggestions_join_table(): table '$table' is unknown.");

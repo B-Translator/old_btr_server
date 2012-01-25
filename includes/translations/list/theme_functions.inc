@@ -53,7 +53,7 @@ function theme_l10n_suggestions_translate_source($variables) {
   $output .= '<label class="l10n-string' . $filter_match . '">' . drupal_render($element['source']['string']) . '</label>';
   $output .= theme('l10n_suggestions_in_context', array('source' => $element['#string']));
 
-  $output .= '<div class="l10n-usage"><a href="' . url('translations/source-details/' . $element['#string']->sguid) . '" class="l10n-more-link" title="' . t('Show list of projects and releases where this text is used.') . '">' . t('Show related projects') . '</a><div class="l10n-more-info"></div></div>';
+  $output .= '<div class="l10n-usage"><a href="' . url('translations/source-details/' . $element['#string']->sguid) . '" class="l10n-more-link" title="' . t('Show list of projects where this string is used.') . '">' . t('Show related projects') . '</a><div class="l10n-more-info"></div></div>';
 
   /** TODO: Improve alternatives in other languages.
   $output .= drupal_render($element['alternatives']);

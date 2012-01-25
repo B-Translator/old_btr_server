@@ -10,7 +10,8 @@ do
     do
 	basename=$(basename $file)
 	project=${basename%.*.$lng.po}
+	pot_name=$project
 	#echo $file;  echo $project;  continue;  ## debug
-	../po_import.php GNOME $project $lng $file
+	../po_import.php GNOME $project $pot_name $lng $file
     done
 done

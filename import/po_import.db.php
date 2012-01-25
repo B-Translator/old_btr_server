@@ -22,37 +22,39 @@ class DB_PO_Import extends DB
   }
 
   /**
-   * Get and return the id of a project.
+   * Get and return the id of a template.
    */
-  public function get_project_id($project, $origin)
+  public function get_template_potid($origin, $project, $tplname)
   {
+    $pguid = sha1($origin . $project);
     $stmt = $this->dbh->prepare("
-      SELECT pid FROM l10n_suggestions_projects
-      WHERE project = :project AND origin = :origin
+      SELECT potid FROM l10n_suggestions_templates
+      WHERE pguid = :pguid AND tplname = :tplname
     ");
     $params = array(
-		    ':project' => $project,
-		    ':origin' => $origin,
+		    ':pguid' => $pguid,
+		    ':tplname' => $tplname,
 		    );
     $stmt->execute($params);
     $row = $stmt->fetch();
-    $pid = isset($row['pid']) ? $row['pid'] : null;
+    $potid = isset($row['potid']) ? $row['potid'] : null;
 
-    return $pid;
+    return $potid;
   }
 
   /** Insert a new file and return its id. */
-  public function insert_file($hash, $pid, $lng, $headers, $comments)
+  public function insert_file($filename, $hash, $potid, $lng, $headers, $comments)
   {
     $stmt = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_files
-	 (hash, pid, lng, headers, comments, uid, time)
+	 (filename, hash, potid, lng, headers, comments, uid, time)
       VALUES
-	 (:hash, :pid, :lng, :headers, :comments, :uid, :time)
+	 (:filename, :hash, :pid, :lng, :headers, :comments, :uid, :time)
     ");
     $params = array(
+		    ':filename' => $filename,
 		    ':hash' => $hash,
-		    ':pid' => $pid,
+		    ':potid' => $potid,
 		    ':lng' => $lng,
 		    ':headers' => $headers,
 		    ':comments' => $comments,

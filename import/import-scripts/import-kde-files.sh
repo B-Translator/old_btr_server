@@ -11,7 +11,8 @@ do
     while read file
     do
 	project=$(basename ${file%%.po})
-	../po_import.php KDE $project $lng $file
+	pot_name=$project
+	../po_import.php KDE $project $pot_name $lng $file
     done < file_list.txt
 done
 rm file_list.txt

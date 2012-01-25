@@ -123,8 +123,9 @@ function l10n_suggestions_get_random_sguid() {
   // Get the total number of strings from which we can choose.
   $sql_count = "
     SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pid FROM l10n_suggestions_projects WHERE $where) p
-    LEFT JOIN l10n_suggestions_locations l ON (l.pid = p.pid)
+    FROM (SELECT pguid FROM l10n_suggestions_projects WHERE $where) p
+    LEFT JOIN l10n_suggestions_templates tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN l10n_suggestions_locations l ON (l.potid = tpl.potid)
     LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
   ";
   $nr_strings = db_query($sql_count)->fetchField();
@@ -135,8 +136,9 @@ function l10n_suggestions_get_random_sguid() {
   // Get the sguid of the random row.
   $sql_get_sguid = "
     SELECT s.sguid
-    FROM (SELECT pid FROM l10n_suggestions_projects WHERE $where) p
-    LEFT JOIN l10n_suggestions_locations l ON (l.pid = p.pid)
+    FROM (SELECT pguid FROM l10n_suggestions_projects WHERE $where) p
+    LEFT JOIN l10n_suggestions_templates tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN l10n_suggestions_locations l ON (l.potid = tpl.potid)
     LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
     LIMIT $row_number, 1
   ";

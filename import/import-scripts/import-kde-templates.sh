@@ -11,7 +11,8 @@ find $dir -name '*.po' > file_list.txt
 while read file
 do
     project=$(basename ${file%%.po})
-    ../pot_import.php KDE $project $file
+    pot_name=$project
+    ../pot_import.php KDE $project $pot_name $file
 done < file_list.txt
 
 rm file_list.txt

@@ -5,46 +5,48 @@ include(dirname(__FILE__) . '/db.php');
 class DB_PO_Export extends DB
 {
   /**
-   * Get and return the id of a project.
+   * Get and return a list of template ids for the given project.
    */
-  public function get_project_id($project, $origin)
+  public function get_potid_list($origin, $project)
   {
-    $get_project_id = $this->dbh->prepare("
-      SELECT pid FROM l10n_suggestions_projects
-      WHERE project = :project AND origin = :origin
+    $get_potid = $this->dbh->prepare("
+      SELECT potid FROM l10n_suggestions_templates WHERE pguid = :pguid
     ");
-    $params = array(':project' => $project, ':origin' => $origin);
-    $get_project_id->execute($params);
+    $params = array(':pguid' => sha1($origin . $project));
+    $get_potid->execute($params);
 
-    $row = $get_project_id->fetch();
-    $pid = isset($row['pid']) ? $row['pid'] : null;
+    $arr_potid = array();
+    while ($potid = $get_potid->fetchColumn()) {
+      $arr_potid[] = $potid;
+    }
 
-    return $pid;
+    return $arr_potid;
   }
 
   /**
-   * Get and return the headers of a file.
+   * Get and return the filename, headers and comments of a file.
    */
-  public function get_file_headers($pid, $lng)
+  public function get_file_data($potid, $lng)
   {
     $get_file_headers = $this->dbh->prepare("
-      SELECT headers, comments FROM l10n_suggestions_files
-      WHERE pid = :pid AND lng = :lng
+      SELECT filename, headers, comments FROM l10n_suggestions_files
+      WHERE potid = :potid AND lng = :lng
     ");
-    $params = array(':pid' => $pid, ':lng' => $lng);
+    $params = array(':potid' => $potid, ':lng' => $lng);
     $get_file_headers->execute($params);
 
     $row = $get_file_headers->fetch();
+    $filename = isset($row['filename']) ? $row['filename'] : null;
     $headers = isset($row['headers']) ? $row['headers'] : null;
     $comments = isset($row['comments']) ? $row['comments'] : null;
 
-    return array($headers, $comments);
+    return array($filename, $headers, $comments);
   }
 
   /**
    * Get and return an array of strings, indexed by sguid.
    */
-  public function get_strings($pid)
+  public function get_strings($potid)
   {
     $get_strings = $this->dbh->prepare("
       SELECT l.sguid, s.string, s.context,
@@ -52,9 +54,9 @@ class DB_PO_Export extends DB
 	     previous_msgctxt, previous_msgid, previous_msgid_plural
       FROM l10n_suggestions_locations l
       LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
-      WHERE l.pid = :pid
+      WHERE l.potid = :potid
     ");
-    $params = array(':pid' => $pid);
+    $params = array(':potid' => $potid);
     $get_strings->execute($params);
 
     $arr_strings = array();
@@ -69,7 +71,7 @@ class DB_PO_Export extends DB
   /**
    * Get and return an array of translations, indexed by sguid.
    */
-  public function get_best_translations($pid, $lng)
+  public function get_best_translations($potid, $lng)
   {
     $get_best_translations = $this->dbh->prepare("
       SELECT t2.sguid, t2.translation
@@ -77,14 +79,14 @@ class DB_PO_Export extends DB
 	      FROM l10n_suggestions_locations AS l1
 	      LEFT JOIN l10n_suggestions_translations AS t1
 		    ON (t1.sguid = l1.sguid AND t1.lng = :lng)
-	      WHERE l1.pid = :pid
+	      WHERE l1.potid = :potid
 	      GROUP BY t1.sguid
 	   ) AS m
       LEFT JOIN l10n_suggestions_translations AS t2
 	    ON (t2.sguid = m.sguid AND t2.lng = :lng AND t2.count = m.max_count)
       GROUP BY t2.sguid
     ");
-    $params = array(':pid' => $pid, ':lng' => $lng);
+    $params = array(':potid' => $potid, ':lng' => $lng);
     $get_best_translations->execute($params);
 
     $arr_translations = array();

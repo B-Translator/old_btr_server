@@ -1,54 +1,58 @@
 #!/usr/bin/php
 <?php
    /**
-    * 'po_import.php' imports a new PO (translation) file, if such a file
-    * does not exist. It assumes that the POT file of the project has
-    * already been imported, otherwise it will quit without doing anything.
+    * 'po_import.php' imports a new PO (translation) file.
+    * It assumes that the POT file of the project has already
+    * been imported, otherwise it will quit without doing anything.
     * Along with the file, it also inserts the translations for the
     * corresponding strings, when such translations do not exist.
     *
     * @param origin
-    *     The origin of the project (ubuntu, GNOME, KDE, etc.).
+    *     The origin of the project (ubuntu, GNOME, KDE, LibreOffice, Mozilla, etc.).
     * @param project
     *     The name of the project.
+    * @param tplname
+    *     The name of the PO template.
     * @param lng
     *     The language of translation (de, fr, sq, en_GB, etc.).
-    * @param file.pot
+    * @param file.po
     *     The PO file to be imported.
     */
 
-if ($argc != 5) {
+if ($argc != 6) {
   print "
-Usage: $argv[0] origin project lng file.po
-  origin  -- The origin of the project (ubuntu, GNOME, KDE, etc.)
+Usage: $argv[0] origin project tplname lng file.po
+  origin  -- The origin of the project (ubuntu, GNOME, KDE, LibreOffice, etc.)
   project -- The name of the project.
+  tplname -- The name of the PO template.
   lng     -- The language of translation (de, fr, sq, en_GB, etc.).
   file.po -- The PO file to be imported.
 
 Example:
-  $argv[0] KDE kturtle fr test/kturtle.po
+  $argv[0] KDE kturtle kturtle fr test/kturtle.po
 
 ";
   exit(1);
 }
 
-// Get the parameters (origin, project, lng, filename).
+// Get the parameters (origin, project, tplname, lng, filename).
 $script = $argv[0];
 $origin = $argv[1];
 $project = $argv[2];
-$lng = $argv[3];
-$filename = $argv[4];
+$tplname = $argv[3];
+$lng = $argv[4];
+$filename = $argv[5];
 //log
-print "$script $origin $project $lng $filename\n";
+print "$script $origin $project $tplname $lng $filename\n";
 
 // Create a DB variable for handling queries.
 include_once(dirname(__FILE__).'/po_import.db.php');
 $db = new DB_PO_Import;
 
-// Get the project id.
-$pid = $db->get_project_id($project, $origin);
-if ($pid === null) {
-  print "Error: The project '$origin/$project' does not exist.\n";
+// Get the template id.
+$potid = $db->get_template_potid($origin, $project, $tplname);
+if ($potid === null) {
+  print "Error: The template '$origin/$project/$tplname' does not exist.\n";
   print "       Import first the POT file of the project.";
   exit(1);
 }
@@ -64,8 +68,12 @@ if ($entries[0]['msgid'] == '') {
   $headers = $entries[0]['msgstr'];
   $comments = $entries[0]['translator-comments'];
 }
+// Get the pathname of the file, relative to origin.
+$pos = strpos($filename, $origin);
+$pos += strlen($origin) + 1;
+$file = substr($filename, $pos);
 // Add a file and get its id.
-$fid = add_file($filename, $pid, $lng, $headers, $comments);
+$fid = add_file($file, $potid, $lng, $headers, $comments);
 
 // Process each gettext entry.
 foreach ($entries as $entry)
@@ -90,7 +98,7 @@ exit(0);
 /**
  * Insert a file in the DB, if it does not already exist.
  */
-function add_file($filename, $pid, $lng, $headers, $comments)
+function add_file($filename, $potid, $lng, $headers, $comments)
 {
   // Get the sha1 hash of the file.
   $output = shell_exec("sha1sum $filename");
@@ -99,30 +107,34 @@ function add_file($filename, $pid, $lng, $headers, $comments)
 
   // Check whether the file already exists.
   global $db;
-  $sql = "SELECT pid, lng FROM l10n_suggestions_files WHERE hash = :hash";
+  $sql = "SELECT potid, lng FROM l10n_suggestions_files WHERE hash = :hash";
   $row = $db->query($sql, array(':hash' => $hash))->fetch();
 
   // If file already exists.
-  if (isset($row['pid']))
+  if (isset($row['potid']))
     {
-      if ($row['pid']==$pid and $row['lng']==$lng) {
+      if ($row['potid']==$potid and $row['lng']==$lng) {
 	print "...already imported, skipping...\n";
 	exit(0);
       }
       else {
-        // file already imported for some other project or language
-        $sql = "SELECT origin, project FROM l10n_suggestions_projects WHERE pid = :pid";
-        $row1 = $db->query($sql, array(':pid' => $row['pid']))->fetch();
+        // file already imported for some other template or language
+        $sql = "SELECT p.origin, p.project, p.tplname, t.lng
+                FROM l10n_suggestions_templates t
+                LEFT JOIN l10n_suggestions_projects p ON (t.pguid = p.pguid)
+                WHERE t.potid = :potid";
+        $row1 = $db->query($sql, array(':potid' => $row['potid']))->fetch();
         $origin1 = $row1['origin'];
         $project1 = $row1['project'];
+        $tplname1 = $row1['tplname'];
         $lng1 = $row['lng'];
-	print "Error: File has already been imported for '$origin1/$project1/$lng1'.";
+	print "Error: File has already been imported for '$origin1/$project1/$tplname1/$lng1'.";
 	exit(2);
       }
     }
 
   // File does not exits, insert it.
-  $fid = $db->insert_file($hash, $pid, $lng, $headers, $comments);
+  $fid = $db->insert_file($filename, $hash, $potid, $lng, $headers, $comments);
 
   return $fid;
 }

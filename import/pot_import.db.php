@@ -7,18 +7,31 @@ class DB_POT_Import extends DB
   /** Prepare the queries that will be used and store them in $this->queries[] . */
   protected function prepare_queries()
   {
-    // get_project_id
-    $this->queries['get_project_id'] = $this->dbh->prepare("
-      SELECT pid FROM l10n_suggestions_projects
-      WHERE project = :project AND origin = :origin
+    // get_project_pguid
+    $this->queries['get_project_pguid'] = $this->dbh->prepare("
+      SELECT pguid FROM l10n_suggestions_projects WHERE pguid = :pguid
     ");
 
     // insert_project
     $this->queries['insert_project'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_projects
-	 (project, origin, uid, time)
+	 (pguid, project, origin, uid, time)
       VALUES
-	 (:project, :origin, :uid, :time)
+	 (:pguid, :project, :origin, :uid, :time)
+    ");
+
+    // get_template_potid
+    $this->queries['get_template_potid'] = $this->dbh->prepare("
+      SELECT potid FROM l10n_suggestions_templates
+      WHERE pguid = :pguid AND tplname = :tplname
+    ");
+
+    // insert_template
+    $this->queries['insert_template'] = $this->dbh->prepare("
+      INSERT INTO l10n_suggestions_templates
+	 (tplname, filename, pguid, uid, time)
+      VALUES
+	 (:tplname, :filename, :pguid, :uid, :time)
     ");
 
     // insert_string
@@ -43,19 +56,16 @@ class DB_POT_Import extends DB
   }
 
   /**
-   * Get and return the id of a project.
+   * Get and return the pguid of a project.
    */
-  public function get_project_id($project, $origin)
+  public function get_project_pguid($project, $origin)
   {
-    $params = array(
-		    ':project' => $project,
-		    ':origin' => $origin,
-		    );
-    $this->queries['get_project_id']->execute($params);
-    $row = $this->queries['get_project_id']->fetch();
-    $pid = isset($row['pid']) ? $row['pid'] : null;
+    $params = array(':pguid' => sha1($origin . $project));
+    $this->queries['get_project_pguid']->execute($params);
+    $row = $this->queries['get_project_pguid']->fetch();
+    $pguid = isset($row['pguid']) ? $row['pguid'] : null;
 
-    return $pid;
+    return $pguid;
   }
 
   /**
@@ -63,16 +73,51 @@ class DB_POT_Import extends DB
    */
   public function insert_project($project, $origin)
   {
+    $pguid = sha1($origin . $project);
     $params = array(
+		    ':pguid' => $pguid,
 		    ':project' => $project,
 		    ':origin' => $origin,
 		    ':uid' => 1,  //admin
 		    ':time' => $this->time,
 		    );
     $this->queries['insert_project']->execute($params);
-    $pid = $this->dbh->lastInsertId();
 
-    return $pid;
+    return $pguid;
+  }
+
+  /**
+   * Get and return the potid of a template.
+   */
+  public function get_template_potid($pguid, $tplname)
+  {
+    $params = array(
+		    ':pguid' => $pguid,
+		    ':tplname' => $tplname,
+		    );
+    $this->queries['get_template_potid']->execute($params);
+    $row = $this->queries['get_template_potid']->fetch();
+    $potid = isset($row['potid']) ? $row['potid'] : null;
+
+    return $potid;
+  }
+
+  /**
+   * Insert a new template and return its id.
+   */
+  public function insert_template($pguid, $tplname, $filename)
+  {
+    $params = array(
+		    ':tplname' => $tplname,
+		    ':filename' => $filename,
+		    ':pguid' => $pguid,
+		    ':uid' => 1,  //admin
+		    ':time' => $this->time,
+		    );
+    $this->queries['insert_template']->execute($params);
+    $potid = $this->dbh->lastInsertId();
+
+    return $potid;
   }
 
   /**
