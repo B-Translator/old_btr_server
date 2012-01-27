@@ -49,7 +49,7 @@ class DB_PO_Import extends DB
       INSERT INTO l10n_suggestions_files
 	 (filename, hash, potid, lng, headers, comments, uid, time)
       VALUES
-	 (:filename, :hash, :pid, :lng, :headers, :comments, :uid, :time)
+	 (:filename, :hash, :potid, :lng, :headers, :comments, :uid, :time)
     ");
     $params = array(
 		    ':filename' => $filename,

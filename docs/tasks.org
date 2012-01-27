@@ -163,17 +163,16 @@ keeping notes, project planning, tasks management, etc.
    #+ATTR_LaTeX: width=12cm
    [[./object_diagram_2.png]]
 
-   Files, Projects and Locations are related to the import/export of
-   the PO files.
+   Files, Templates, Locations and Projects are related to the
+   import/export of the PO files.
 
    Projects and Categories can be used to limit the scope of the
    search (and other operations).
 
    A project contains the translations of a certain application
-   (software).
-
-   A project can have several PO files (one for each different
-   language).  Each of these PO files has many PO entries, which are
+   (software). A project can have several template (POT) files. A
+   template file can have several PO files (one for each different
+   language). Each of these PO files has many PO entries, which are
    stored in the table Locations.
 
    The table Locations stores only the comments, line references,
@@ -187,22 +186,16 @@ keeping notes, project planning, tasks management, etc.
    language. Each translation can have many votes. Each vote is given
    by a certain user.
 
-   A release can be appended to the name of the project as well. So,
-   two different releases of the same software project are considered
-   as two different projects. Each of them has its on list of
-   locations, however they share most of the strings and
-   translations. Actually, for the purposes of l10n_suggestions only
-   the latest release is what matters, so any earlier releases will
-   eventually be removed (or archived).
-
    The DB tables and their fields:
 
    + Files :: A PO file that is imported and can be exported from the
               DB.
      - fid : serial :: Auto-increment internal identifier.
+     - filename : varchar(250) :: The path and filename of the
+          imported PO file.
      - hash : char(40) :: The SHA1() hash of the whole file content.
-     - pid : int :: Reference to the project for which this PO file is
-          a translation.
+     - potid : int :: Reference to the template (POT) for which this
+          PO file is a translation.
      - lng : varchar(10) :: The code of the translation language.
      - headers : text :: Headers of the imported PO file, as a long
           line. Needed mainly for exporting.
@@ -212,9 +205,23 @@ keeping notes, project planning, tasks management, etc.
      - time : datetime :: The date and time that the record was
           registered.
 
+   + Templates :: POT files that are imported.
+     - potid : serial :: Auto-increment internal identifier.
+     - tplname : varchar(50) :: The name of the POT template (to
+          distinguish it from the other templates of the same
+          project).
+     - filename : varchar(250) :: The path and name of the imported
+          POT file.
+     - pguid : char(40) :: Reference to the project to which this PO
+          template belongs.  it come from).
+     - uid : int(11) :: Id of the user that registered the project.
+     - time : datetime :: The date and time that the template was
+          imported.
+
    + Projects :: A project is the software/application which is
                  translated by the PO files.
-     - pid : serial :: Auto-increment internal identifier.
+     - pguid : char(40) :: Project Globally Unique ID, pguid =
+          SHA1(CONCAT(origin,project))
      - project : varchar(100) :: Project name (with the release
           appended if needed).
      - origin : varchar(100) :: The origin of the project (where does
@@ -227,7 +234,7 @@ keeping notes, project planning, tasks management, etc.
      - lid : serial :: Internal numeric identifier of a line.
      - sguid : char(40) :: Reference to the id of the l10n string
           contained in this line.
-     - pid : int :: Reference to the id of the project that
+     - potid : int :: Reference to the id of the template (POT) that
           contains this line.
      - translator_comments : varchar(500) :: Translator comments in
           the PO entry (starting with "# ").
@@ -363,11 +370,8 @@ keeping notes, project planning, tasks management, etc.
 
 ** DB
 
-*** DONE Write scripts for importing and updating data from *.po files
-    + Take care to preserve the data that already exist in the DB.
-*** DONE Improve hash functions for strings and translations
-*** DONE Replace id-s by uid-s (universal id-s) based on hashes
-*** DONE Write scripts for exporting PO files from the DB.
+*** Make ID of projects guid (because they can be used in user prefs)
+*** In the table of strings, add a reference to the previous (deprecated) string.
 
 ** UI
 
@@ -380,8 +384,8 @@ keeping notes, project planning, tasks management, etc.
     + For each suggestion, the admin (or moderators) should be able to apply
       additional actions (for example remove the suggestion).
 
-    + For each l10n string, display details like: submitted by, submitted when,
-      in which projects it occurs (related locations), etc.
+    + For each l10n string, display in which projects it occurs
+      (related locations), etc.
     + For each l10n string, display also the corresponding translations
       (best suggestions) in auxiliary (helper) languages. For example,
       besides the original l10n string (in English), the French and German
@@ -416,16 +420,15 @@ keeping notes, project planning, tasks management, etc.
 *** TODO XML-RPC interface
     Or some other web-service (API) interface.
 
-*** DONE Interface *translations/vote*
-    This is almost the same as the search interface. However, instead of
-    using a filter to select strings, they are selected randomly, based
-    on user preferencies, and also on the priorities of translation.
-
 ** Misc
    - Start with simple tests (l10n_suggestions.test)
    - Improve instalation.
    - Make an initial package.
-
+*** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
+*** Convert to PO and import the translation files of Firefox, Mozilla, Thunderbird, etc.
+*** Import LibreOffice.
+*** Export in format diff/ediff.
+    
 * Notes
 
 ** How to create TAGS for Emacs

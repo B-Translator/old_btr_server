@@ -51,9 +51,7 @@ $db = new DB_POT_Import;
 $pguid = get_project($project, $origin);
 
 // Get the pathname of the file, relative to origin.
-$pos = strpos($filename, $origin);
-$pos += strlen($origin) + 1;
-$file = substr($filename, $pos);
+$file = preg_replace("#^.*/$origin/#", '', $filename);
 // Create a new template for this project.
 $potid = add_template($pguid, $tplname, $file);
 
@@ -70,7 +68,7 @@ foreach ($entries as $entry)
     if ($sguid == NULL) continue;
 
     // Insert a new location record.
-    $lid = $db->insert_location($pid, $sguid, $entry);
+    $lid = $db->insert_location($potid, $sguid, $entry);
   }
 
 // End.
@@ -123,7 +121,7 @@ function delete_template($potid)
 
   // Decrement the count of the strings related to this template.
   $db->exec("UPDATE l10n_suggestions_strings SET count = count - 1
-             WHERE sguid IN (SELECT sguid FROM l10n_suggestions_locations WHERE pid = $pid)");
+             WHERE sguid IN (SELECT sguid FROM l10n_suggestions_locations WHERE potid = $potid)");
 
   // Delete the locations of this project.
   $db->exec("DELETE FROM l10n_suggestions_locations WHERE potid = $potid");

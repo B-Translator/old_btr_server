@@ -58,3 +58,55 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_suggestion
   - Store multiple plurals in different records or in one record?
   -
 
+* DONE Write scripts for importing and updating data from *.po files
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-01-18 Wed 03:27
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/DB
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  + Take care to preserve the data that already exist in the DB.
+* DONE Improve hash functions for strings and translations
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-01-18 Wed 03:27
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/DB
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Replace id-s by uid-s (universal id-s) based on hashes
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-01-18 Wed 03:27
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/DB
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Write scripts for exporting PO files from the DB.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-01-18 Wed 03:27
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/DB
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE Interface *translations/vote*
+
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-01-18 Wed 03:30
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/l10n_suggestions/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/UI
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+:END:      This is almost the same as the search interface. However, instead of
+  using a filter to select strings, they are selected randomly, based
+  on user preferencies, and also on the priorities of translation.
+
+
+
+
+
+

@@ -106,6 +106,27 @@ function l10n_suggestions_menu() {
     'access callback' => TRUE,
   );
 
+  // Return as an archive the PO files for a given origin/project/lng.
+  // Usefull for projects that have many POT files, like LibreOffice, Mozilla, etc.
+  $items['translations/project/export_tgz'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project Export',
+    'page callback'   => 'l10n_suggestions_project_export_tgz',
+    'file'            => 'includes/projects.inc',
+    'access callback' => TRUE,
+  );
+
+  // Return as plain-text the diff of the PO file for a given origin/project/lng,
+  // which contains the new suggestions since the last version that was imported.
+  // It gets the parameters origin/project/lng[/ediff].
+  $items['translations/project/diff'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project Export',
+    'page callback'   => 'l10n_suggestions_project_diff',
+    'file'            => 'includes/projects.inc',
+    'access callback' => TRUE,
+  );
+
   // Autocomplete callback for project textfields.
   $items['translations/autocomplete/project'] = array(
     'type'            => MENU_CALLBACK,

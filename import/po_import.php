@@ -66,14 +66,14 @@ $entries = $parser->parse($filename);
 $headers = $comments = null;
 if ($entries[0]['msgid'] == '') {
   $headers = $entries[0]['msgstr'];
-  $comments = $entries[0]['translator-comments'];
+  $comments = isset($entries[0]['translator-comments']) ? $entries[0]['translator-comments'] : '';
 }
 // Get the pathname of the file, relative to origin.
 $pos = strpos($filename, $origin);
 $pos += strlen($origin) + 1;
-$file = substr($filename, $pos);
+$filepath = substr($filename, $pos);
 // Add a file and get its id.
-$fid = add_file($file, $potid, $lng, $headers, $comments);
+$fid = add_file($filename, $filepath, $potid, $lng, $headers, $comments);
 
 // Process each gettext entry.
 foreach ($entries as $entry)
@@ -98,7 +98,7 @@ exit(0);
 /**
  * Insert a file in the DB, if it does not already exist.
  */
-function add_file($filename, $potid, $lng, $headers, $comments)
+function add_file($filename, $filepath, $potid, $lng, $headers, $comments)
 {
   // Get the sha1 hash of the file.
   $output = shell_exec("sha1sum $filename");
@@ -133,8 +133,8 @@ function add_file($filename, $potid, $lng, $headers, $comments)
       }
     }
 
-  // File does not exits, insert it.
-  $fid = $db->insert_file($filename, $hash, $potid, $lng, $headers, $comments);
+  // Insert the file.
+  $fid = $db->insert_file($filepath, $hash, $potid, $lng, $headers, $comments);
 
   return $fid;
 }

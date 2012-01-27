@@ -9,7 +9,7 @@ CREATE TABLE `l10n_suggestions_templates` (
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
   PRIMARY KEY (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6728 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
+) ENGINE=InnoDB AUTO_INCREMENT=6739 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -39,8 +39,8 @@ CREATE TABLE `l10n_suggestions_files` (
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the record was registered.',
   PRIMARY KEY (`fid`),
   UNIQUE KEY `hash` (`hash`),
-  KEY `pid` (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10390 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
+  KEY `potid` (`potid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10397 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -76,7 +76,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   PRIMARY KEY (`lid`),
   KEY `pid` (`potid`),
   KEY `sguid` (`sguid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1155598 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
+) ENGINE=InnoDB AUTO_INCREMENT=1155950 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -111,7 +111,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `tid` (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

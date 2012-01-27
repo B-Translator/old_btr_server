@@ -5,42 +5,41 @@ include(dirname(__FILE__) . '/db.php');
 class DB_PO_Export extends DB
 {
   /**
-   * Get and return a list of template ids for the given project.
+   * Get and return the id of a template.
    */
-  public function get_potid_list($origin, $project)
+  public function get_template_potid($origin, $project, $tplname)
   {
-    $get_potid = $this->dbh->prepare("
-      SELECT potid FROM l10n_suggestions_templates WHERE pguid = :pguid
+    $get_template_potid = $this->dbh->prepare("
+      SELECT potid FROM l10n_suggestions_templates
+      WHERE pguid = :pguid AND tplname = :tplname
     ");
-    $params = array(':pguid' => sha1($origin . $project));
-    $get_potid->execute($params);
+    $pguid = sha1($origin . $project);
+    $params = array(':pguid' => $pguid, ':tplname' => $tplname);
+    $get_template_potid->execute($params);
 
-    $arr_potid = array();
-    while ($potid = $get_potid->fetchColumn()) {
-      $arr_potid[] = $potid;
-    }
+    $row = $get_template_potid->fetch();
+    $potid = isset($row['potid']) ? $row['potid'] : null;
 
-    return $arr_potid;
+    return $potid;
   }
 
   /**
-   * Get and return the filename, headers and comments of a file.
+   * Get and return the headers of a file.
    */
-  public function get_file_data($potid, $lng)
+  public function get_file_headers($potid, $lng)
   {
     $get_file_headers = $this->dbh->prepare("
-      SELECT filename, headers, comments FROM l10n_suggestions_files
+      SELECT headers, comments FROM l10n_suggestions_files
       WHERE potid = :potid AND lng = :lng
     ");
     $params = array(':potid' => $potid, ':lng' => $lng);
     $get_file_headers->execute($params);
 
     $row = $get_file_headers->fetch();
-    $filename = isset($row['filename']) ? $row['filename'] : null;
     $headers = isset($row['headers']) ? $row['headers'] : null;
     $comments = isset($row['comments']) ? $row['comments'] : null;
 
-    return array($filename, $headers, $comments);
+    return array($headers, $comments);
   }
 
   /**

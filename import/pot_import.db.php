@@ -45,11 +45,11 @@ class DB_POT_Import extends DB
     // insert_location
     $this->queries['insert_location'] = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_locations
-	 (sguid, pid,
+	 (sguid, potid,
           translator_comments, extracted_comments, line_references, flags,
           previous_msgctxt, previous_msgid, previous_msgid_plural)
       VALUES
-	 (:sguid, :pid,
+	 (:sguid, :potid,
           :translator_comments, :extracted_comments, :line_references, :flags,
           :previous_msgctxt, :previous_msgid, :previous_msgid_plural)
     ");
@@ -137,7 +137,7 @@ class DB_POT_Import extends DB
   }
 
   /** Insert a location into DB. */
-  public function insert_location($pid, $sguid, $entry)
+  public function insert_location($potid, $sguid, $entry)
   {
     $translator_comments = isset($entry['translator-comments']) ? $entry['translator-comments'] : null;
     $extracted_comments = isset($entry['extracted-comments']) ? $entry['extracted-comments'] : null;
@@ -148,7 +148,7 @@ class DB_POT_Import extends DB
     $previous_msgid_plural = isset($entry['previous-msgid_plural']) ? $entry['previous-msgid_plural'] : null;
     $params = array(
 		    ':sguid' => $sguid,
-		    ':pid' => $pid,
+		    ':potid' => $potid,
 		    ':translator_comments' => $translator_comments,
 		    ':extracted_comments' => $extracted_comments,
 		    ':line_references' => $line_references,

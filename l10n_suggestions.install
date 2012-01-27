@@ -42,13 +42,19 @@ function l10n_suggestions_schema() {
         'type' => 'serial',
         'not null' => TRUE,
       ),
+      'filename' => array(
+        'description' => 'The path and filename of the imported PO file.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => FALSE,
+      ),
       'hash' => array(
         'description' => 'The SHA1() hash of the whole file content.',
         'type' => 'char',
         'length' => '40',
         'not null' => TRUE,
       ),
-      'pid' => array(
+      'potid' => array(
         'description' => 'Reference to the project for which this PO file is a translation.',
         'type' => 'int',
         'not null' => TRUE,
@@ -81,20 +87,65 @@ function l10n_suggestions_schema() {
       ),
     ),
     'primary key' => array('fid'),
-    'indexes' => array(
-      'hash' => array('hash'),
-      'pid' => array('pid'),
+    'unique keys' => array(
+      'hash' => array('hash')
     ),
+    'indexes' => array(
+      'potid' => array('potid'),
+    ),
+  );
+
+  // Templates are the POT files that are imported.
+  $schema['l10n_suggestions_templates'] = array(
+    'description' => ' Templates are the POT files that are imported.',
+    'fields' => array(
+      'potid' => array(
+        'description' => 'Auto-increment internal identifier.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ),
+      'tplname' => array(
+        'description' => 'The name of the POT template (to distinguish it from the other templates of the same project).',
+        'type' => 'varchar',
+        'length' => '50',
+        'not null' => TRUE,
+      ),
+      'filename' => array(
+        'description' => 'The path and name of the imported POT file.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => FALSE,
+      ),
+      'pguid' => array(
+        'description' => 'Reference to the project to which this PO template belongs.',
+        'type' => 'char',
+        'length' => '40',
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'Id of the user that registered the project.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'time' => array(
+        'description' => 'The date and time that the project was registered.',
+        'type' => 'datetime',
+        'not null' => FALSE,
+      ),
+    ),
+    'primary key' => array('potid'),
   );
 
   // Projects are the software/applications which are translated by the PO files.
   $schema['l10n_suggestions_projects'] = array(
-    'description' => 'A project is the software/application which is translated by the PO files.',
+    'description' => 'A project is the software/application which is translated by',
     'fields' => array(
-      'pid' => array(
-        'description' => 'Auto-increment internal identifier.',
-        'type' => 'serial',
+      'pguid' => array(
+        'description' => 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
+        'type' => 'char',
+        'length' => '40',
         'not null' => TRUE,
+        'default' => '',
       ),
       'project' => array(
         'description' => 'Project name (with the release appended if needed).',
@@ -119,7 +170,7 @@ function l10n_suggestions_schema() {
         'not null' => FALSE,
       ),
     ),
-    'primary key' => array('pid'),
+    'primary key' => array('pguid'),
     'indexes' => array(
       'project' => array('project'),
     ),
@@ -140,8 +191,8 @@ function l10n_suggestions_schema() {
         'length' => '40',
         'not null' => TRUE,
       ),
-      'pid' => array(
-        'description' => 'Reference to the id of the project that contains this line.',
+      'potid' => array(
+        'description' => 'Reference to the id of the template (POT) that contains this line.',
         'type' => 'int',
         'not null' => TRUE,
       ),
@@ -190,13 +241,14 @@ function l10n_suggestions_schema() {
     ),
     'primary key' => array('lid'),
     'indexes' => array(
+      'potid' => array('potid'),
       'sguid' => array('sguid'),
     ),
   );
 
   // Translatable strings that are extracted from projects.
   $schema['l10n_suggestions_strings'] = array(
-    'description' => 'Translatable strings that are extracted from projects.',
+    'description' => 'Translatable strings that are extracted from...',
     'fields' => array(
       'string' => array(
         'description' => 'The string to be translated: "$msgid"."\0"."$msgid_plural"',
@@ -210,10 +262,11 @@ function l10n_suggestions_schema() {
         'not null' => FALSE,
       ),
       'sguid' => array(
-        'description' => 'Globally Unique ID of the string, as hash of the string and context: SHA1(CONCAT(string,context)) ',
+        'description' => 'Globally Unique ID of the string, generated as a hash of the string and context: SHA1(CONCAT(string,context)) ',
         'type' => 'char',
         'length' => '40',
         'not null' => TRUE,
+        'default' => '',
       ),
       'uid' => array(
         'description' => 'ID of the user that inserted this string on the DB.',
@@ -273,7 +326,7 @@ function l10n_suggestions_schema() {
         'not null' => TRUE,
       ),
       'tguid' => array(
-        'description' => 'Globally Unique ID of the translation, defined as the hash: SHA1(CONCAT(translation,lng,sguid))',
+        'description' => 'Globally Unique ID of the translation, defined as hash: SHA1(CONCAT(translation,lng,sguid))',
         'type' => 'char',
         'length' => '40',
         'not null' => TRUE,
@@ -347,10 +400,10 @@ function l10n_suggestions_schema() {
     ),
     'primary key' => array('vid'),
     'unique keys' => array(
-      'tguid_uid' => array('tguid', 'uid')
+      'tid_uid' => array('tguid', 'uid')
     ),
     'indexes' => array(
-      'tguid' => array('tguid'),
+      'tid' => array('tguid'),
       'time' => array('time'),
       'uid' => array('uid'),
     ),

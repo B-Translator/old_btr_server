@@ -74,8 +74,54 @@ function l10n_suggestions_project_export($origin =NULL, $project =NULL, $lng =NU
   set_time_limit(0);
 
   $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
+  $tplname = $project;
+  $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
+  print $output;
+
+  exit();
+}
+
+/**
+ * Return an archive of PO files for a given origin/project/lng
+ * (usefull for projects that have many POT files.)
+ */
+function l10n_suggestions_project_export_tgz($origin =NULL, $project =NULL, $lng =NULL) {
+  $origin = check_plain($origin);
+  $project = check_plain($project);
+  $lng = check_plain($lng);
+
+  set_time_limit(0);
+  /*
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
   $output = shell_exec("$path/po_export.php $origin $project $lng");
   print $output;
+  */
+  exit();
+}
+
+/**
+ * Return as plain-text the PO file for a given origin/project/lng.
+ */
+
+/**
+ * Return a plain-text diff/ediff of the PO files for a given origin/project/lng,
+ * which contains the new suggestions since the last version that was imported.
+ * It gets the parameters: origin/project/lng[/ediff] (where project can also be '*').
+ */
+function l10n_suggestions_project_diff($origin =NULL, $project =NULL, $lng =NULL, $format =NULL) {
+  $origin = check_plain($origin);
+  $project = check_plain($project);
+  $lng = check_plain($lng);
+  $format = check_plain($format);
+
+  set_time_limit(0);
+
+  /*
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
+  $tplname = $project;
+  $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
+  print $output;
+  */
 
   exit();
 }
