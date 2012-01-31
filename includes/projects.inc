@@ -76,32 +76,44 @@ function l10n_suggestions_project_export($origin =NULL, $project =NULL, $lng =NU
   $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
   $tplname = $project;
   $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
+
+  // Send the content.
   print $output;
 
-  exit();
+  // Stop execution.
+  exit(0);
 }
 
 /**
  * Return an archive of PO files for a given origin/project/lng
  * (usefull for projects that have many POT files.)
+ * If project=='all', then all the projects of the given origin
+ * will be exported (it usually takes a very long time).
  */
-function l10n_suggestions_project_export_tgz($origin =NULL, $project =NULL, $lng =NULL) {
+function l10n_suggestions_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
   $origin = check_plain($origin);
   $project = check_plain($project);
   $lng = check_plain($lng);
 
   set_time_limit(0);
-  /*
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
-  $output = shell_exec("$path/po_export.php $origin $project $lng");
-  print $output;
-  */
-  exit();
-}
 
-/**
- * Return as plain-text the PO file for a given origin/project/lng.
- */
+  // Export files in a tgz archive.
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/import/export-scripts';
+  $tgz_file = exec("$path/export_tgz.sh $origin $project $lng");
+
+  // Send the headers.
+  header('Content-Type: application/octet-stream');
+  header('Content-Disposition: attachment; filename="'. basename($tgz_file) .'"');
+  header('Content-Transfer-Encoding: binary');
+  header("Content-Length: ".filesize($tgz_file));
+
+  // Open the file in a binary mode and dump it to the browser.
+  $fp = fopen($tgz_file, 'rb');
+  fpassthru($fp);
+
+  // Stop execution.
+  exit(0);
+}
 
 /**
  * Return a plain-text diff/ediff of the PO files for a given origin/project/lng,

@@ -474,6 +474,24 @@ keeping notes, project planning, tasks management, etc.
     wget --no-check-certificate -O test1.po https://l10n-sq.org/translations/project/export/KDE/kturtle/sq
     vim test1.po
 
+*** LibreOffice:
+    + List:
+      wget --no-check-certificate -O list.txt \
+             https://l10n-sq.org/translations/project/list/LibreOffice
+      cat list.txt
+
+    + Export:
+      wget --no-check-certificate -O LibreOffice-sw-fr.tgz \
+             https://l10n-sq.org/translations/project/export_tgz/LibreOffice/sw/fr
+      tar tvfz LibreOffice-sw-fr.tgz
+      tar xfz LibreOffice-sw-fr.tgz
+
+    + Export all the projects:
+      wget --no-check-certificate -O LibreOffice-all-fr.tgz \
+             https://l10n-sq.org/translations/project/export_tgz/LibreOffice/all/fr
+      tar tvfz LibreOffice-all-fr.tgz
+      tar xfz LibreOffice-all-fr.tgz
+
 ** Misc
    + Field sguid:char(40) on strings, locations and translations must
      be of the same character set, otherwise mysql will not use the
