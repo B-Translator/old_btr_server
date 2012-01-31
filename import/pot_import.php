@@ -120,8 +120,12 @@ function delete_template($potid)
   global $db;
 
   // Decrement the count of the strings related to this template.
-  $db->exec("UPDATE l10n_suggestions_strings SET count = count - 1
-             WHERE sguid IN (SELECT sguid FROM l10n_suggestions_locations WHERE potid = $potid)");
+  $db->exec("
+         UPDATE l10n_suggestions_strings AS s
+         INNER JOIN (SELECT sguid FROM l10n_suggestions_locations WHERE potid = $potid) AS l
+             ON (l.sguid = s.sguid)
+         SET s.count = s.count - 1"
+	    );
 
   // Delete the locations of this project.
   $db->exec("DELETE FROM l10n_suggestions_locations WHERE potid = $potid");
