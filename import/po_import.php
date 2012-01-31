@@ -68,10 +68,9 @@ if ($entries[0]['msgid'] == '') {
   $headers = $entries[0]['msgstr'];
   $comments = isset($entries[0]['translator-comments']) ? $entries[0]['translator-comments'] : '';
 }
+
 // Get the pathname of the file, relative to origin.
-$pos = strpos($filename, $origin);
-$pos += strlen($origin) + 1;
-$filepath = substr($filename, $pos);
+$filepath = preg_replace("#^.*/$origin/#", '', $filename);
 // Add a file and get its id.
 $fid = add_file($filename, $filepath, $potid, $lng, $headers, $comments);
 
