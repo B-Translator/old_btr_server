@@ -53,3 +53,21 @@ function git_clone() {
 	echo "done."
     fi
 }
+
+function hg_clone() {
+    hg_url="$1"
+    dir="$2"
+
+    if test -d $dir
+    then
+	cd $dir
+	echo -n "-- hg pull $dir... "
+	hg pull -u > /dev/null || true
+	echo "done."
+	cd ..
+    else
+	echo -n "-- hg clone $dir... "
+	hg clone $hg_url $dir > /dev/null || true
+	echo "done."
+    fi
+}

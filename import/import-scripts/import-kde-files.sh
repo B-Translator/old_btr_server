@@ -3,6 +3,25 @@
 ### get $data_root and $languages
 . ../config.sh
 
+### import the PO files
+for lng in $languages
+do
+    projects=$(ls $data_root/KDE/$lng/messages)
+    for project in $projects
+    do
+	po_files=$(find $data_root/KDE/$lng/messages/$project -name '*\.po')
+	for file in $po_files
+	do
+	    pot_name=${file#*/$project/}
+	    pot_name=${pot_name%.po}
+            #echo $project, $pot_name, $lng, $file;  continue;  ## debug
+	    ../po_import.php KDE $project $pot_name $lng $file
+	done
+    done
+done
+
+exit 0
+
 ### import the PO files from KDE
 for lng in $languages
 do
