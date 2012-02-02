@@ -370,7 +370,7 @@ keeping notes, project planning, tasks management, etc.
 
 ** DB
 
-*** Make ID of projects guid (because they can be used in user prefs)
+*** DONE Make ID of projects guid (because they can be used in user prefs)
 *** In the table of strings, add a reference to the previous (deprecated) string.
 
 ** UI
@@ -425,10 +425,17 @@ keeping notes, project planning, tasks management, etc.
    - Improve instalation.
    - Make an initial package.
 *** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
-*** Convert to PO and import the translation files of Firefox, Mozilla, Thunderbird, etc.
-*** Import LibreOffice.
-*** Export in format diff/ediff.
-    
+*** DONE Convert to PO and import the translation files of Firefox, Mozilla, Thunderbird, etc.
+*** DONE Import LibreOffice.
+*** Add origin on the search filter.
+*** Add export_tgz as a drush command.
+*** Export in format diff/ediff.    
+*** Show related projects.
+*** Use short url on the emails sent by cron.
+*** Send full html pages by email.
+*** Use GoogleTranslate API to make an initial suggestion for strings with no translation.
+
+
 * Notes
 
 ** How to create TAGS for Emacs
@@ -491,6 +498,24 @@ keeping notes, project planning, tasks management, etc.
              https://l10n-sq.org/translations/project/export_tgz/LibreOffice/all/fr
       tar tvfz LibreOffice-all-fr.tgz
       tar xfz LibreOffice-all-fr.tgz
+
+*** Mozilla:
+    + List:
+      wget --no-check-certificate -O list.txt \
+             https://l10n-sq.org/translations/project/list/Mozilla
+      cat list.txt
+
+    + Export:
+      wget --no-check-certificate -O Mozilla-browser-fr.tgz \
+             https://l10n-sq.org/translations/project/export_tgz/Mozilla/browser/fr
+      tar tvfz Mozilla-browser-fr.tgz
+      tar xfz Mozilla-browser-fr.tgz
+
+    + Export all the projects:
+      wget --no-check-certificate -O Mozilla-all-fr.tgz \
+             https://l10n-sq.org/translations/project/export_tgz/Mozilla/all/fr
+      tar tvfz Mozilla-all-fr.tgz
+      tar xfz Mozilla-all-fr.tgz
 
 ** Misc
    + Field sguid:char(40) on strings, locations and translations must
