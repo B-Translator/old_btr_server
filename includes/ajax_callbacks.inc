@@ -38,68 +38,37 @@ function l10n_suggestions_user_autocomplete($string = '') {
 
 
 /**
- * Generate list of projects and releases of where a string appears.
- *
- * We could provide much more information (down to line numbers of files), but
- * usability should also be kept in mind. It is possible to investigate hidden
- * information sources though, like tooltips on the release titles presented.
- *
+ * Return string context, a list of related projects (where the string appears), etc.
  * This callback is invoked from JavaScript and is used as an AJAX provider.
  *
- * @param $sid
- *   Source string id.
- * @param $ajax
- *   Whether the request came through AJAX, in which case no page
- *   theming should be applied. Non-AJAX support is a fallback if JS is
- *   turned off.
+ * @param $sguid
+ *   Id of the string.
  */
-function l10n_suggestions_string_details($sid = 0, $ajax = 0) {
+function l10n_suggestions_string_details($sguid) {
 
   $output = '';
-  if ($ajax) {
-    // Prevent devel module information if doing AJAX.
-    $GLOBALS['devel_shutdown'] = FALSE;
-  }
-  else {
-    // Get data about this source string.
-    $string = db_query(
-      'SELECT value, context FROM {l10n_server_string} WHERE sid = :sid',
-      array(':sid' => $sid)
-    )->fetchObject();
-    $unpacked = l10n_suggestions_unpack_string($string->value);
-    $output .= '<h3>' . t('Source string') . '</h3>' . theme('item_list', array('items' => $unpacked));
-    $output .= '<h3>' . (empty($string->context) ? t('Used at the following places') : t('Used at the following places in context %context', array('%context' => $string->context))) . '</h3>';
+
+  // Get the context of this string.
+  $context = db_query("SELECT context FROM l10n_suggestions_strings WHERE sguid = :sguid",
+             array(':sguid' => $sguid))
+    ->fetchField();
+  if (!empty($context)) {
+    $output .= '<h3>' . t('Used with context: %context', array('%context' => $context)) . '</h3>';
   }
 
-  // List of project releases, where this string is used.
-  $result = db_query('SELECT l.pid, p.title project_title, l.rid, r.title release_title, COUNT(l.lineno) as occurrence_count FROM {l10n_server_line} l INNER JOIN {l10n_server_project} p ON l.pid = p.pid INNER JOIN {l10n_server_release} r ON l.rid = r.rid WHERE l.sid = :sid AND p.status = 1 GROUP BY l.rid ORDER BY l.pid, l.rid', array(':sid' => $sid));
+  // List projects where this string is used.
+  $output .= '<h3>' .  t('Used on these projects:') . '</h3>';
+  $sql = "SELECT CONCAT(p.origin, ' / ', p.project) AS proj
+          FROM l10n_suggestions_strings s
+          RIGHT JOIN l10n_suggestions_locations l ON (l.sguid = s.sguid)
+          RIGHT JOIN l10n_suggestions_templates t ON (t.potid = l.potid)
+          RIGHT JOIN l10n_suggestions_projects p ON (p.pguid = t.pguid)
+          WHERE s.sguid = :sguid";
+  $project_list = db_query($sql, array(':sguid' => $sguid))->fetchCol();
+  $output .= theme('item_list', array('items' => $project_list));
 
-  $version_list = array();
-  $project_list = array();
-  $previous_project = '';
-  foreach ($result as $instance) {
-    $release_info = $instance->release_title . ' <span title="' . format_plural($instance->occurrence_count, 'Appears once in this release.', 'Appears @count times in this release.') . '">(' . $instance->occurrence_count . ')</span>';
-    if ($instance->project_title != $previous_project) {
-      if (!empty($version_list)) {
-        $project_list[] = join(', ', $version_list);
-      }
-      $version_list = array('<em>' . $instance->project_title . ':</em> ' . $release_info);
-    }
-    else {
-      $version_list[] = $release_info;
-    }
-    $previous_project = $instance->project_title;
-  }
-  $project_list[] = join(', ', $version_list);
-  $usage_list = theme('item_list', array('items' => $project_list));
-  if ($ajax) {
-    print $usage_list;
-    exit;
-  }
-  else {
-    $output .= $usage_list;
-    return $output;
-  }
+  print $output;
+  exit(0);
 }
 
 /**

@@ -127,6 +127,15 @@ function l10n_suggestions_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a string context, related projects (where a string is found), etc.
+  $items['translations/string_details'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'String details',
+    'page callback'   => 'l10n_suggestions_string_details',
+    'file'            => 'includes/ajax_callbacks.inc',
+    'access callback' => TRUE,
+  );
+
   // Autocomplete callback for project textfields.
   $items['translations/autocomplete/project'] = array(
     'type'            => MENU_CALLBACK,
