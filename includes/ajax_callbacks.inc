@@ -21,6 +21,24 @@ function l10n_suggestions_project_autocomplete($string = '') {
 }
 
 /**
+ * Retrieve a JSON list of autocomplete suggestions for origins of projects.
+ */
+function l10n_suggestions_origin_autocomplete($string = '') {
+  $matches = array();
+  if ($string) {
+    $query = "SELECT DISTINCT origin
+              FROM {l10n_suggestions_projects}
+              WHERE origin LIKE :str ORDER BY origin";
+    $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
+    foreach ($result as $project) {
+      $matches[$project->origin] = check_plain($project->origin);
+    }
+  }
+  print drupal_json_encode($matches);
+  exit();
+}
+
+/**
  * Retrieve a JSON list of autocomplete suggestions for users.
  */
 function l10n_suggestions_user_autocomplete($string = '') {

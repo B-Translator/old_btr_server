@@ -35,7 +35,7 @@
     $('.l10n-usage .l10n-more-link').click(function() {
       if ($(this).siblings('.l10n-more-info').css('display') == 'none') {
         // Was shown before but is currently hidden.
-        $(this).html(Drupal.t('Hide related projects')).siblings('.l10n-more-info').toggle();
+        $(this).html(Drupal.t('Hide string details.')).siblings('.l10n-more-info').toggle();
       }
       else if ($(this).siblings('.l10n-more-info').html()) {
         // Is shown and needs to be hidden.
@@ -44,7 +44,7 @@
       else {
         // Was not yet loaded, we want to load the information fresh from the server.
         // Append /1 to the href, telling the server we want AHAH targeted output.
-        $(this).html(Drupal.t('Loading...')).siblings('.l10n-more-info').load(this.href + '/1', function(){$(this).siblings('.l10n-more-link').html(Drupal.t('Hide related projects'));});
+        $(this).html(Drupal.t('Loading...')).siblings('.l10n-more-info').load(this.href + '/1', function(){$(this).siblings('.l10n-more-link').html(Drupal.t('Hide string details.'));});
       }
       // Prevent the actual link click from happening.
       return false;

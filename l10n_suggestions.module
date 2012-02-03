@@ -146,6 +146,16 @@ function l10n_suggestions_menu() {
     'access callback' => TRUE,
   );
 
+  // Autocomplete callback for origin textfields.
+  $items['translations/autocomplete/origin'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Origin autocomplete',
+    'page callback'   => 'l10n_suggestions_origin_autocomplete',
+    'file'            => 'includes/ajax_callbacks.inc',
+    //'access arguments' => array('access localization community'),
+    'access callback' => TRUE,
+  );
+
   // Autocomplete callback for user textfields.
   $items['translations/autocomplete/user'] = array(
     'type'            => MENU_CALLBACK,

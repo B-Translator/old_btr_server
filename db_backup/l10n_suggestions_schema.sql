@@ -4,24 +4,26 @@ DROP TABLE IF EXISTS `l10n_suggestions_templates`;
 CREATE TABLE `l10n_suggestions_templates` (
   `potid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
   `tplname` varchar(50) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'The name of the POT template (to distinguish it from the other templates of the same project).',
-  `filename` varchar(250) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'The path and name of the imported POT file.',
+  `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and name of the imported POT file.',
   `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the project to which this PO template belongs.',
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
-  PRIMARY KEY (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6739 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
+  PRIMARY KEY (`potid`),
+  KEY `pguid` (`pguid`)
+) ENGINE=InnoDB AUTO_INCREMENT=9762 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_projects` (
-  `pguid` char(40) CHARACTER SET ascii NOT NULL DEFAULT '' COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
+  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
   `project` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Project name (with the release appended if needed).',
   `origin` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'The origin of the project (where does it come from).',
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
   PRIMARY KEY (`pguid`),
-  KEY `project` (`project`)
+  KEY `project` (`project`),
+  KEY `origin` (`origin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_files`;
@@ -29,7 +31,7 @@ DROP TABLE IF EXISTS `l10n_suggestions_files`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `l10n_suggestions_files` (
   `fid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
-  `filename` varchar(250) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'The path and filename of the imported PO file.',
+  `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and filename of the imported PO file.',
   `hash` char(40) CHARACTER SET ascii NOT NULL COMMENT 'The SHA1() hash of the whole file content.',
   `potid` int(11) NOT NULL COMMENT 'Reference to the project for which this PO file is a translation.',
   `lng` varchar(10) COLLATE utf8_bin NOT NULL COMMENT 'The code of the translation language.',
@@ -40,7 +42,7 @@ CREATE TABLE `l10n_suggestions_files` (
   PRIMARY KEY (`fid`),
   UNIQUE KEY `hash` (`hash`),
   KEY `potid` (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10397 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
+) ENGINE=InnoDB AUTO_INCREMENT=12164 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -74,9 +76,9 @@ CREATE TABLE `l10n_suggestions_locations` (
   `previous_msgid` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid in the PO entry (starting with "#| msgid ").',
   `previous_msgid_plural` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid_plural in the PO entry (starting with "#| msgid_plural ").',
   PRIMARY KEY (`lid`),
-  KEY `pid` (`potid`),
-  KEY `sguid` (`sguid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1155950 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
+  KEY `sguid` (`sguid`),
+  KEY `potid` (`potid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1540608 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

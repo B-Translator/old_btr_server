@@ -37,7 +37,7 @@ function l10n_suggestions_build_query($filter) {
   $query->groupBy('s.sguid');
 
   _l10n_suggestions_filter_by_content($query, $filter['mode'], $filter['words']);
-  _l10n_suggestions_filter_by_project($query, $filter['project'], $filter['package'], $filter['release']);
+  _l10n_suggestions_filter_by_project($query, $filter['project'], $filter['origin']);
   _l10n_suggestions_filter_by_author($query, $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
   _l10n_suggestions_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
 
@@ -94,15 +94,21 @@ function _l10n_suggestions_filter_by_content($query, $search_mode, $search_words
 }
 
 /**
- * Apply to the query conditions related to authors.
+ * Apply to the query conditions related to projects and origin.
  * The first parameter, $query, is an object, so it is passed
  * by reference.
  */
-function _l10n_suggestions_filter_by_project($query, $project, $package, $release) {
-  //filter by project
+function _l10n_suggestions_filter_by_project($query, $project, $origin) {
+
+  if ($project == '' and $origin == '')  return;
+
+  _l10n_suggestions_join_table($query, 'projects');
+
   if ($project != '') {
-    _l10n_suggestions_join_table($query, 'projects');
     $query->condition('p.project', $project);
+  }
+  if ($origin != '') {
+    $query->condition('p.origin', $origin);
   }
 }
 

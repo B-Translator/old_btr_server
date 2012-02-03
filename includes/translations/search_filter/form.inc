@@ -45,10 +45,9 @@ function l10n_suggestions_build_filter() {
   $filter['mode'] = in_array($mode, $search_mode_options) ? $mode : $default_search_mode;
   $filter['words'] = isset($request['words']) ? $request['words'] : '';
 
-  //searching can be limited only to certain packages, projects or releases
-  $filter['package'] = isset($request['package']) ? trim($request['package']) : '';
+  //searching can be limited only to certain projects and/or origins
   $filter['project'] = isset($request['project']) ? trim($request['project']) : '';
-  $filter['release'] = isset($request['release']) ? trim($request['release']) : '';
+  $filter['origin'] = isset($request['origin']) ? trim($request['origin']) : '';
 
   //limit search only to the strings touched (translated or voted) by the current user
   $filter['only_mine'] = isset($request['only_mine']) && (int)$request['only_mine'] ? 1 : 0;
@@ -120,12 +119,8 @@ function l10n_suggestions_get_query_values($form_values) {
   //package, project, release
   if (trim($form_values['project']) != '' )
     $query['project'] = $form_values['project'];
-  /*
-  if (trim($form_values['package']) != '' )
-    $query['package'] = $form_values['pakage'];
-  if (trim($form_values['release']) != '' )
-    $query['release'] = $form_values['release'];
-  */
+  if (trim($form_values['origin']) != '' )
+    $query['origin'] = $form_values['origin'];
 
   //only_mine
   if ($form_values['only_mine'] == 1) {
@@ -263,16 +258,6 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#collapsed' => FALSE,
   );
 
-  /*
-  $form['advanced_search']['projects']['package'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Package'),
-    '#description' => t('Search only the strings belonging to the matching package.'),
-    '#default_value' => $form_state['values']['package'],
-    '#autocomplete_path' => 'translations/package-autocomplete',
-  );
-  */
-
   $form['advanced_search']['projects']['project'] = array(
     '#type' => 'textfield',
     '#title' => t('Project'),
@@ -281,15 +266,13 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#autocomplete_path' => 'translations/autocomplete/project',
   );
 
-  /*
-  $form['advanced_search']['projects']['release'] = array(
+  $form['advanced_search']['projects']['origin'] = array(
     '#type' => 'textfield',
-    '#title' => t('Release'),
-    '#description' => t('Search only the strings belonging to the matching release.'),
-    '#default_value' => $form_state['values']['release'],
-    '#autocomplete_path' => 'translations/release-autocomplete',
+    '#title' => t('Origin'),
+    '#description' => t('Limit search only to the projects from a certain origin.'),
+    '#default_value' => $form_state['values']['origin'],
+    '#autocomplete_path' => 'translations/autocomplete/origin',
   );
-  */
 
   //TODO: Some of the advanced filtering options should be available
   //      only if the user has propper access rights.
