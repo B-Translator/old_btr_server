@@ -136,7 +136,7 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
   $languages = l10n_suggestions_get_languages();
   $nplurals = $languages[$lng]['plurals'];
   $arr_translations = array_fill(0, count($string->string) > 1 ? $nplurals : 1, '');
-  $translation = implode('\0', $arr_translations);
+  $translation = implode("\0", $arr_translations);
 
   return (object) array(
     'sguid' => $string->sguid,
