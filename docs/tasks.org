@@ -91,6 +91,30 @@ keeping notes, project planning, tasks management, etc.
     should be considered as fuzzy translation and needs to be reviewed
     by the package manager.
 
+*** Integration with the existing workflow of the project translations
+    Project translators will continue to work with their prefered
+    tools (like Pootle, Lokalize, etc.). They will also continue to
+    use their prefered workflows (the way that they coordinate their
+    translation work with each-other and with the project
+    releases).
+
+    This system should help them to get feedback and possibly any new
+    suggestions or translations from a big crowd of the
+    contributers. The system should provide means and tools for easy
+    integration with the workflow of the project translations.
+
+    For example, it should allow the translation maintainers to import
+    their existing translation files (PO files), and to export
+    translation files that contain the most voted translations, as
+    well as new suggestions (for translated strings) or new
+    translations (for untranslated strings). It should also allow them
+    to get the latest changes (suggestions, translations, etc.) since
+    the last time that they checked, or since a predefined moment in
+    the past.
+
+    The latest changes should be exported in a format that is easy to
+    review, modify and apply (diff or ediff).
+
 
 ** Required forms
 
@@ -348,6 +372,87 @@ keeping notes, project planning, tasks management, etc.
     + translations/admin/dashboard
     + translations/admin/reports
     + translations/admin/stats
+
+** API
+
+*** Import/Export projects and PO files
+    There are two steps for importing a projects' translations.  The
+    first step is to import the POT (template) file of the project,
+    and the second step is to import the PO (translation) file for
+    each language that is supported.
+
+**** Shell
+
+     + pot_import.php origin project tplname file.pot
+
+       Import a POT (template) file of a project 
+
+     + po_import.php origin project tplname lng file.po
+
+       Import a PO (translation) file of a project-language.
+
+     + po_export.php origin project tplname lng [file.po]
+
+       Export a PO (translation) file of a project-language.
+
+     + export_tgz.sh origin project lng [output_dir]
+
+       Export all the PO (translation) files of a project-language.
+
+     + project_list.sh [origin [project]]
+
+       Output a list of imported projects.
+       
+**** Drush
+     + pot-import
+     + po-import
+     + po-export
+     + po-export-tgz
+     + project-list
+
+**** REST
+     + translations/project/list ([/origin[/project[/format]]])
+     + translations/project/export (/origin/project/language)
+     + translations/project/export_tgz (/origin/project/language)
+     
+*** Making snapshots and getting diffs
+    A snapshot of a project-language is an export of the corresponding
+    translation files (in the current state), which are stored in the
+    DB with the aim of using them later to get diffs.  They are like a
+    simple kind of version control system, but usually we are
+    interested only on a few latest snapshots, and we can delete the
+    previous ones (and should delete them, because they take much
+    space).
+
+**** Shell
+
+     + snapshot-get.sh origin project lng
+
+       Create and store in DB a snapshot of a project-language.
+
+     + snapshot-list.sh origin project lng
+
+       List existings snapshots of a project-language and their details.
+
+     + snapshot-del.sh snapshot_id
+
+       Delete an existing snapshot, identified by its id. 
+
+     + snapshot-checkout.sh snapshot_id
+
+       Export a snapshot from the DB into the filesystem.
+
+     + snapshot-diff.sh [id1 [id2]]
+
+       Get the diff (or ediff) between two snapshots, or between a
+       snapshot and the current state, or between the last snapshot
+       and the current state.
+
+**** Remote shell
+     Remote shell API allows the Shell API to be executed remotely,
+     using key-pair authentication, and checking access rights (for
+     example a translator can make and delete snapshots only for the
+     projects that he manages).
 
 * Implementation Plan
   1. [X] Make *voting* work (without permissions, user setting, admin
