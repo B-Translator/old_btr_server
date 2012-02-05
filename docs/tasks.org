@@ -623,6 +623,10 @@ keeping notes, project planning, tasks management, etc.
       tar xfz Mozilla-all-fr.tgz
 
 ** Misc
+
    + Field sguid:char(40) on strings, locations and translations must
      be of the same character set, otherwise mysql will not use the
      index (primary key) on queries. The same for the field tguid.
+     
+   + Crontab entry:
+     0 4 * * *  wget -O - -q -t 1 --no-check-certificate https://test.l10n-sq.org/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
