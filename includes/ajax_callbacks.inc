@@ -81,7 +81,8 @@ function l10n_suggestions_string_details($sguid) {
           RIGHT JOIN l10n_suggestions_locations l ON (l.sguid = s.sguid)
           RIGHT JOIN l10n_suggestions_templates t ON (t.potid = l.potid)
           RIGHT JOIN l10n_suggestions_projects p ON (p.pguid = t.pguid)
-          WHERE s.sguid = :sguid";
+          WHERE s.sguid = :sguid
+          ORDER BY p.origin, p.project";
   $project_list = db_query($sql, array(':sguid' => $sguid))->fetchCol();
   $output .= theme('item_list', array('items' => $project_list));
 
