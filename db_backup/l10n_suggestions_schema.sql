@@ -12,6 +12,20 @@ CREATE TABLE `l10n_suggestions_templates` (
   KEY `pguid` (`pguid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9762 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_diffs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `l10n_suggestions_diffs` (
+  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
+  `lng` varchar(5) COLLATE utf8_bin NOT NULL COMMENT 'The language of translation.',
+  `nr` smallint(5) unsigned NOT NULL COMMENT 'Incremental number of the diffs of a project-language.',
+  `diff` text COLLATE utf8_bin NOT NULL COMMENT 'The content of the diff.',
+  `comment` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT 'Comment/description of the diff.',
+  `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that inserted the diff.',
+  `time` datetime NOT NULL COMMENT 'The date and time that the diff was saved.',
+  PRIMARY KEY (`pguid`,`lng`,`nr`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Diffs between the current state and the last snapshot.';
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -113,7 +127,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `tid` (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

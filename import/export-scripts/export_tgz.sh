@@ -38,25 +38,7 @@ pid=$$
 export_dir=$output_dir/$pid
 for proj in $project_list
 do
-    ### get from the DB the names of the templates and the filenames
-    sql="SELECT t.tplname, f.filename FROM l10n_suggestions_files f
-         LEFT JOIN l10n_suggestions_templates t ON (f.potid = t.potid) 
-         LEFT JOIN l10n_suggestions_projects p ON (t.pguid = p.pguid)
-         WHERE p.origin = '$origin' AND p.project = '$proj' AND f.lng = '$lng'"
-    #echo $sql | mysql $mysql_params --skip-column-names | sed -e 's/\t/,/g' ;  exit;  # debug
-    result_rows=$(echo $sql | mysql $mysql_params --skip-column-names | sed -e 's/\t/,/g')
-
-    ### export all the PO files of the project
-    for row in $result_rows
-    do
-	tplname=$(echo $row | cut -d, -f1)
-	filename=$(echo $row | cut -d, -f2)
-	#echo $origin, $proj, $tplname, $filename;  continue;  # debug
-	po_file=$export_dir/$origin/$filename
-	mkdir -p $(dirname $po_file)
-	echo ../po_export.php $origin $proj $tplname $lng $po_file
-	../po_export.php $origin $proj $tplname $lng $po_file
-    done
+    ./export.sh $origin $proj $lng $export_dir
 done
 
 ### create the tgz archive on the output dir
