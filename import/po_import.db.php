@@ -43,16 +43,17 @@ class DB_PO_Import extends DB
   }
 
   /** Insert a new file and return its id. */
-  public function insert_file($filename, $hash, $potid, $lng, $headers, $comments)
+  public function insert_file($filename, $relative_filename, $hash, $potid, $lng, $headers, $comments)
   {
     $stmt = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_files
-	 (filename, hash, potid, lng, headers, comments, uid, time)
+	 (filename, content, hash, potid, lng, headers, comments, uid, time)
       VALUES
-	 (:filename, :hash, :potid, :lng, :headers, :comments, :uid, :time)
+	 (:filename, :content, :hash, :potid, :lng, :headers, :comments, :uid, :time)
     ");
     $params = array(
-		    ':filename' => $filename,
+		    ':filename' => $relative_filename,
+		    ':content' => file_get_contents($filename),
 		    ':hash' => $hash,
 		    ':potid' => $potid,
 		    ':lng' => $lng,

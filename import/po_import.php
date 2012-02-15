@@ -70,9 +70,9 @@ if ($entries[0]['msgid'] == '') {
 }
 
 // Get the pathname of the file, relative to origin.
-$filepath = preg_replace("#^.*/$origin/#", '', $filename);
+$relative_filename = preg_replace("#^.*/$origin/#", '', $filename);
 // Add a file and get its id.
-$fid = add_file($filename, $filepath, $potid, $lng, $headers, $comments);
+$fid = add_file($filename, $relative_filename, $potid, $lng, $headers, $comments);
 
 // Process each gettext entry.
 foreach ($entries as $entry)
@@ -97,7 +97,7 @@ exit(0);
 /**
  * Insert a file in the DB, if it does not already exist.
  */
-function add_file($filename, $filepath, $potid, $lng, $headers, $comments)
+function add_file($filename, $relative_filename, $potid, $lng, $headers, $comments)
 {
   // Get the sha1 hash of the file.
   $output = shell_exec("sha1sum $filename");
@@ -133,7 +133,7 @@ function add_file($filename, $filepath, $potid, $lng, $headers, $comments)
     }
 
   // Insert the file.
-  $fid = $db->insert_file($filepath, $hash, $potid, $lng, $headers, $comments);
+  $fid = $db->insert_file($filename, $relative_filename, $hash, $potid, $lng, $headers, $comments);
 
   return $fid;
 }

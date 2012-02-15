@@ -68,9 +68,10 @@ class DB_PO_Export extends DB
   }
 
   /**
-   * Get and return an array of translations, indexed by sguid.
+   * Get and return an associative array of the most voted translations,
+   * indexed by sguid. Translations which have no votes at all are skipped.
    */
-  public function get_best_translations($potid, $lng)
+  public function get_most_voted_translations($potid, $lng)
   {
     $get_best_translations = $this->dbh->prepare("
       SELECT t2.sguid, t2.translation
@@ -78,7 +79,7 @@ class DB_PO_Export extends DB
 	      FROM l10n_suggestions_locations AS l1
 	      LEFT JOIN l10n_suggestions_translations AS t1
 		    ON (t1.sguid = l1.sguid AND t1.lng = :lng)
-	      WHERE l1.potid = :potid
+	      WHERE l1.potid = :potid AND t1.count > 0
 	      GROUP BY t1.sguid
 	   ) AS m
       LEFT JOIN l10n_suggestions_translations AS t2
@@ -89,12 +90,35 @@ class DB_PO_Export extends DB
     $get_best_translations->execute($params);
 
     $arr_translations = array();
-    while ($translation = $get_best_translations->fetchObject()) {
-      $sguid = $translation->sguid;
-      $arr_translations[$sguid] = $translation;
+    while ($row = $get_best_translations->fetch()) {
+      $sguid = $row['sguid'];
+      $arr_translations[$sguid] = $row['translation'];
     }
 
     return $arr_translations;
+  }
+
+  /**
+   * Export from DB the content of the original file that was imported,
+   * save it into a temp file, and return its filename.
+   */
+  public function get_original_file($potid, $lng)
+  {
+    $get_file_content = $this->dbh->prepare("
+      SELECT content FROM l10n_suggestions_files
+      WHERE potid = :potid AND lng = :lng
+    ");
+    $params = array(':potid' => $potid, ':lng' => $lng);
+    $get_file_content->execute($params);
+
+    $row = $get_file_content->fetch();
+    $file_content = isset($row['content']) ? $row['content'] : '';
+
+    $tmpfname = tempnam('/tmp', 'l10n_suggestions_export_');
+    $tmpfname .= '.po';
+    file_put_contents($tmpfname, $file_content);
+    
+    return $tmpfname;
   }
 }
 ?>

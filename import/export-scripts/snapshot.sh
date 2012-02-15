@@ -56,4 +56,4 @@ fi
 
 ### replace the previous snapshot with the latest one
 rm -rf snapshot/$project_path
-mv -a $export_dir/$project_path snapshot/
+mv $export_dir/$project_path snapshot/

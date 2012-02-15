@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-function print_usage()
+function print_usage($argv)
 {
   print "
 Usage: $argv[0] add  origin project lng file.ediff [comment [user_id]]
@@ -26,7 +26,7 @@ Examples:
 }
 
 // Check the number of parameters.
-if ($argc < 4)  print_usage();
+if ($argc < 4)  print_usage($argv);
 
 // Get the common parameters (operation, origin, project, lng)
 $script = $argv[0];
@@ -38,7 +38,7 @@ $lng = $argv[4];
 // Get the additional parameters for each operation.
 if ($operation == 'add') {
   $file = isset($argv[5]) ? $argv[5] : null;
-  if ($file == null)  print_usage();
+  if ($file == null)  print_usage($argv);
   $comment = isset($argv[6]) ? $argv[6] : null;
   $user_id = isset($argv[7]) ? $argv[7] : null;
 }
@@ -46,11 +46,11 @@ else if ($operation == 'list') {
 }
 else if ($operation == 'get') {
   $number = isset($argv[5]) ? $argv[5] : null;
-  if ($number == null)  print_usage();
+  if ($number == null)  print_usage($argv);
   $file = isset($argv[6]) ? $argv[6] : null;
 }
 else {
-  print_usage();
+  print_usage($argv);
 }
 
 // Create a DB variable for handling queries.

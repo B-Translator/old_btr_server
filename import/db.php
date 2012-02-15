@@ -27,7 +27,14 @@ class DB
     $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
     //print "$DSN\n";  exit(0);  //debug
     $this->dbh = new PDO($DSN, $dbuser, $dbpass,
-			 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+			 array(
+			       PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+			       // Set buffer limit to 15M.
+			       // (Check also MySQL max_allowed_packet setting.
+			       //  http://dev.mysql.com/doc/refman/5.0/en/program-variables.html )
+			       PDO::MYSQL_ATTR_MAX_BUFFER_SIZE => 15*1024*1024,
+			       )
+			 );
   }
 
   /**

@@ -10,7 +10,7 @@ CREATE TABLE `l10n_suggestions_templates` (
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
   PRIMARY KEY (`potid`),
   KEY `pguid` (`pguid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9762 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
+) ENGINE=InnoDB AUTO_INCREMENT=9763 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_diffs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -46,6 +46,7 @@ DROP TABLE IF EXISTS `l10n_suggestions_files`;
 CREATE TABLE `l10n_suggestions_files` (
   `fid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
   `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and filename of the imported PO file.',
+  `content` mediumtext COLLATE utf8_bin COMMENT 'The original content of the imported file.',
   `hash` char(40) CHARACTER SET ascii NOT NULL COMMENT 'The SHA1() hash of the whole file content.',
   `potid` int(11) NOT NULL COMMENT 'Reference to the project for which this PO file is a translation.',
   `lng` varchar(10) COLLATE utf8_bin NOT NULL COMMENT 'The code of the translation language.',
@@ -56,7 +57,7 @@ CREATE TABLE `l10n_suggestions_files` (
   PRIMARY KEY (`fid`),
   UNIQUE KEY `hash` (`hash`),
   KEY `potid` (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12164 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
+) ENGINE=InnoDB AUTO_INCREMENT=12165 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -92,7 +93,7 @@ CREATE TABLE `l10n_suggestions_locations` (
   PRIMARY KEY (`lid`),
   KEY `sguid` (`sguid`),
   KEY `potid` (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1540608 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
+) ENGINE=InnoDB AUTO_INCREMENT=1540958 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -127,7 +128,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `tid` (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
