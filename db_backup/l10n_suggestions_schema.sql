@@ -1,3 +1,15 @@
+DROP TABLE IF EXISTS `l10n_suggestions_snapshots`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `l10n_suggestions_snapshots` (
+  `pguid` char(40) COLLATE utf8_bin NOT NULL COMMENT 'Reference to the project.',
+  `lng` varchar(10) COLLATE utf8_bin NOT NULL COMMENT 'The language of translation.',
+  `snapshot` mediumblob NOT NULL COMMENT 'The content of the tgz archive.',
+  `uid` int(11) NOT NULL COMMENT 'Id of the user that updated the snapshot for the last time.',
+  `time` datetime NOT NULL COMMENT 'The time of last update.',
+  PRIMARY KEY (`pguid`,`lng`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Snapshots are tgz archives of project-lng translation files.';
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_templates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
