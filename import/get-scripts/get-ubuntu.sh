@@ -37,10 +37,13 @@ langs=$(echo $languages | sed -e 's/ /\\|/g')
 tar tvfz $translations | grep -e "/\($langs\)/" | gawk '{print $6}' > extract-files.txt
 
 ### extract these files from the language pack archives
-### after the extraction, there will be directories like:
-### rosseta-oneiric/$lng/LC_MESSAGES
 tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$translations
 tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$translations_update 2>/dev/null
+
+### after the extraction, there will be directories like:
+### rosseta-oneiric/$lng/LC_MESSAGES
+mv rosseta-oneiric/* .
+rmdir rosseta-oneiric/
 
 ### cleanup
 rm extract-files.txt

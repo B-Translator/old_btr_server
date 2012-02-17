@@ -41,6 +41,7 @@ if ($operation == 'add') {
   if ($file == null)  print_usage($argv);
   $comment = isset($argv[6]) ? $argv[6] : null;
   $user_id = isset($argv[7]) ? $argv[7] : null;
+  print "$script $operation $origin $project $lng $file $comment $user_id\n";
 }
 else if ($operation == 'list') {
 }

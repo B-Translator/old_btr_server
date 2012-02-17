@@ -34,6 +34,7 @@ $origin = $argv[2];
 $project = $argv[3];
 $lng = $argv[4];
 $file = $argv[5];
+print "$script $operation $origin $project $lng $file\n";
 
 // Create a DB variable for handling queries.
 include_once(dirname(__FILE__).'/snapshot.db.php');

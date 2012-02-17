@@ -127,6 +127,7 @@ class POParser
     // it is used to keep track of multi-line blocks
     $block = '';
 
+    $entries = array();
     $entry = array();
     for ($i=0, $n = count($lines); $i < $n; $i++)
       {

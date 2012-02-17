@@ -6,7 +6,7 @@
 ### import the POT files from ubuntu
 lng=fr
 
-dir="$data_root/ubuntu/rosetta-oneiric/$lng/LC_MESSAGES"
+dir="$data_root/ubuntu/$lng/LC_MESSAGES"
 for file in $(ls $dir)
 do
     project=${file%%.po}

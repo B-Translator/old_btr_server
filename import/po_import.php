@@ -118,7 +118,7 @@ function add_file($filename, $relative_filename, $potid, $lng, $headers, $commen
       }
       else {
         // file already imported for some other template or language
-        $sql = "SELECT p.origin, p.project, p.tplname, t.lng
+        $sql = "SELECT p.origin, p.project, t.tplname
                 FROM l10n_suggestions_templates t
                 LEFT JOIN l10n_suggestions_projects p ON (t.pguid = p.pguid)
                 WHERE t.potid = :potid";
@@ -127,7 +127,7 @@ function add_file($filename, $relative_filename, $potid, $lng, $headers, $commen
         $project1 = $row1['project'];
         $tplname1 = $row1['tplname'];
         $lng1 = $row['lng'];
-	print "Error: File has already been imported for '$origin1/$project1/$tplname1/$lng1'.";
+	print "Error: File has already been imported for '$origin1 $project1 $tplname1 $lng1'.\n";
 	exit(2);
       }
     }

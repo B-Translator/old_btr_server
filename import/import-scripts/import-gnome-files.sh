@@ -3,6 +3,9 @@
 ### get $data_root and $languages
 . ../config.sh
 
+### include function make-snapshot
+. make-snapshot.sh
+
 ### import the PO files from GNOME
 for lng in $languages
 do
@@ -13,5 +16,8 @@ do
 	pot_name=$project
 	#echo $file;  echo $project;  continue;  ## debug
 	../po_import.php GNOME $project $pot_name $lng $file
+
+	## make initial snapshots
+	make-snapshot GNOME $project $lng $file
     done
 done

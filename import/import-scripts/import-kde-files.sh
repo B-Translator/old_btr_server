@@ -3,6 +3,9 @@
 ### get $data_root and $languages
 . ../config.sh
 
+### include function make-snapshot
+. make-snapshot.sh
+
 ### import the PO files
 for lng in $languages
 do
@@ -17,21 +20,8 @@ do
             #echo $project, $pot_name, $lng, $file;  continue;  ## debug
 	    ../po_import.php KDE $project $pot_name $lng $file
 	done
+	
+	## make initial snapshots
+	make-snapshot KDE $project $lng $po_files
     done
 done
-
-exit 0
-
-### import the PO files from KDE
-for lng in $languages
-do
-    dir="$data_root/KDE/$lng/messages"
-    find $dir -name '*.po' > file_list.txt
-    while read file
-    do
-	project=$(basename ${file%%.po})
-	pot_name=$project
-	../po_import.php KDE $project $pot_name $lng $file
-    done < file_list.txt
-done
-rm file_list.txt

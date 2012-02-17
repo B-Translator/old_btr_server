@@ -5,13 +5,14 @@
 ### get the parameters
 if [ $# -lt 3 ]
 then
-    echo "Usage: $0 origin project lng"
+    echo "Usage: $0 origin project lng [original]"
     echo ""
     exit 1
 fi
 origin=$1
 project=$2
 lng=$3
+algorithm=$4
 #echo $origin $project $lng;  exit;  # debug
 
 ### go to the script directory
@@ -20,7 +21,8 @@ cd $(dirname $0)
 ### export the project
 pid=$$
 export_dir=tmp_$pid
-./export.sh $origin $project $lng $export_dir
+mkdir -p $export_dir
+./export.sh $origin $project $lng $export_dir $algorithm
 
 ### get the project path
 case $origin in
@@ -41,19 +43,31 @@ case $origin in
 	;;
 esac
 
-if [ -d snapshot/$project_path -o -f snapshot/$project_path ]
-then
-    ### make the difference with the previous snapshot
-    pology=pology/bin/poediff
-    fname_ediff="$origin-$project-$lng.ediff"
-    snapshot_path=snapshot/$project_path
-    export_path=$export_dir/$project_path
-    $pology -o $fname_ediff $snapshot_path $export_path
+### get the last snapshot from DB
+snapshot_dir=tmp1_$pid
+mkdir -p $snapshot_dir
+snapshot_file=$origin-$project-$lng.tgz
+../snapshot.php get $origin $project $lng $snapshot_file
+tar -C $snapshot_dir -xz --file=$snapshot_file
 
-    ### store the difference in the DB
-    ../po_diff.php $origin $project $lng $fname_ediff
-fi
+### make the difference with the previous snapshot
+pology=pology/bin/poediff
+fname_ediff="$origin-$project-$lng.ediff"
+snapshot_path=$snapshot_dir/$project_path
+export_path=$export_dir/$project_path
+echo $pology -n -o $fname_ediff $snapshot_path $export_path
+$pology -n -o $fname_ediff $snapshot_path $export_path
 
-### replace the previous snapshot with the latest one
-rm -rf snapshot/$project_path
-mv $export_dir/$project_path snapshot/
+### store the difference in the DB
+../po_diff.php add $origin $project $lng $fname_ediff
+
+### replace the previous snapshot with the latest export
+rm $snapshot_file
+tar -C $export_dir -cz --file=$snapshot_file .
+../snapshot.php update $origin $project $lng $snapshot_file
+
+### clean up
+rm $fname_ediff
+rm $snapshot_file
+rm -rf $snapshot_dir
+rm -rf $export_dir
