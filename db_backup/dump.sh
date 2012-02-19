@@ -10,8 +10,10 @@ else
   exit 1
 fi
 
-### make this 'true' for a full dump of the database
-dump='false'
+### make this 'full' for a full dump of the database
+### or 'user' for dumping only user suggestions and votes
+#dump='false'
+dump='user'
 
 ### dump only the schema of the database
 mysqldump --user=root --password --no-data --compact --add-drop-table \
@@ -27,7 +29,7 @@ mysqldump --user=root --password --no-data --compact --add-drop-table \
 sed -e '/^SET /d' -i l10n_suggestions_schema.sql
 
 ### make a full dump of the database
-if [ "$dump" = 'true' ]
+if [ "$dump" = 'full' ]
 then
   date=$(date +%Y%m%d)
   dump_file=l10n_suggestions_dump_$date.sql
@@ -40,6 +42,23 @@ then
             l10n_suggestions_strings l10n_suggestions_locations \
             l10n_suggestions_translations l10n_suggestions_votes \
             l10n_suggestions_users > $dump_file
+
+  gzip $dump_file
+fi
+
+### dump only user suggestions and votes
+if [ "$dump" = 'user' ]
+then
+  date=$(date +%Y%m%d)
+  dump_file=l10n_suggestions_user_$date.sql
+
+  mysqldump --user=root --password --opt --database $db_name \
+            --tables l10n_suggestions_translations \
+            --where="uid>1" > $dump_file
+  mysqldump --user=root --password --opt --database $db_name \
+            --tables l10n_suggestions_users >> $dump_file
+  mysqldump --user=root --password --opt --database $db_name \
+            --tables l10n_suggestions_votes >> $dump_file
 
   gzip $dump_file
 fi
