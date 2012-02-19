@@ -5,14 +5,13 @@
 ### get the parameters
 if [ $# -lt 3 ]
 then
-    echo "Usage: $0 origin project lng [original]"
+    echo "Usage: $0 origin project lng"
     echo ""
     exit 1
 fi
 origin=$1
 project=$2
 lng=$3
-algorithm=$4
 #echo $origin $project $lng;  exit;  # debug
 
 ### go to the script directory
@@ -22,26 +21,7 @@ cd $(dirname $0)
 pid=$$
 export_dir=tmp_$pid
 mkdir -p $export_dir
-./export.sh $origin $project $lng $export_dir $algorithm
-
-### get the project path
-case $origin in
-    'KDE' )
-	project_path=KDE/$lng/messages/$project
-	;;
-    'GNOME' )
-	project_path=GNOME/$lng/$project.master.$lng.po
-	;;
-    'ubuntu' )
-	project_path=ubuntu/$lng/LC_MESSAGES/$project.po
-	;;
-    'LibreOffice' )
-	project_path=LibreOffice/$lng/$project
-	;;
-    'Mozilla' )
-	project_path=Mozilla/po/$lng/$project
-	;;
-esac
+./export.sh $origin $project $lng $export_dir
 
 ### get the last snapshot from DB
 snapshot_dir=tmp1_$pid
@@ -50,16 +30,19 @@ snapshot_file=$origin-$project-$lng.tgz
 ../snapshot.php get $origin $project $lng $snapshot_file
 tar -C $snapshot_dir -xz --file=$snapshot_file
 
-### make the difference with the previous snapshot
-pology=pology/bin/poediff
-fname_ediff="$origin-$project-$lng.ediff"
-snapshot_path=$snapshot_dir/$project_path
-export_path=$export_dir/$project_path
-echo $pology -n -o $fname_ediff $snapshot_path $export_path
-$pology -n -o $fname_ediff $snapshot_path $export_path
+### make the unified diff (diff -u) with the previous snapshot
+file_diff="$origin-$project-$lng.diff"
+echo "diff -rubB $snapshot_dir $export_dir > $file_diff"
+diff -rubB $snapshot_dir $export_dir > $file_diff
 
-### store the difference in the DB
-../po_diff.php add $origin $project $lng $fname_ediff
+### make the embedded diff (poediff) with the previous snapshot
+pology=pology/bin/poediff
+file_ediff="$origin-$project-$lng.ediff"
+echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
+$pology -n $snapshot_dir $export_dir > $file_ediff
+
+### store the diffs in the DB
+../po_diff.php add $origin $project $lng $file_diff $file_ediff
 
 ### replace the previous snapshot with the latest export
 rm $snapshot_file
@@ -67,7 +50,8 @@ tar -C $export_dir -cz --file=$snapshot_file .
 ../snapshot.php update $origin $project $lng $snapshot_file
 
 ### clean up
-rm $fname_ediff
+rm $file_diff
+rm $file_ediff
 rm $snapshot_file
 rm -rf $snapshot_dir
 rm -rf $export_dir

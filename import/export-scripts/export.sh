@@ -6,7 +6,7 @@
 ### get the parameters
 if [ $# -lt 4 ]
 then
-    echo "Usage: $0 origin project lng output_dir [original]"
+    echo "Usage: $0 origin project lng output_dir"
     echo ""
     exit 1
 fi
@@ -14,7 +14,6 @@ origin=$1
 project=$2
 lng=$3
 output_dir=$4
-algorithm=$5
 echo $0 $origin $project $lng $output_dir
 
 ### go to the script directory
@@ -40,6 +39,6 @@ do
     #echo $origin, $project, $tplname, $filename;  continue;  # debug
     po_file=$output_dir/$origin/$filename
     mkdir -p $(dirname $po_file)
-    echo ../po_export.php $origin $project $tplname $lng $po_file $algorithm
-    ../po_export.php $origin $project $tplname $lng $po_file $algorithm
+    echo ../po_export.php $origin $project $tplname $lng $po_file
+    ../po_export.php $origin $project $tplname $lng $po_file
 done

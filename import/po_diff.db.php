@@ -23,7 +23,7 @@ class DB_PO_Diff extends DB
     return $max_nr;
   }
 
-  public function insert_diff($origin, $project, $lng, $file, $comment =null, $uid =null)
+  public function insert_diff($origin, $project, $lng, $file_diff, $file_ediff, $comment =null, $uid =null)
   {
     // get the revision number
     $nr = $this->get_max_nr($origin, $project, $lng);
@@ -31,15 +31,16 @@ class DB_PO_Diff extends DB
 
     $insert_diff = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_diffs
-	 (pguid, lng, nr, diff, comment, uid, time)
+	 (pguid, lng, nr, diff, ediff, comment, uid, time)
       VALUES
-	 (:pguid, :lng, :nr, :diff, :comment, :uid, :time)
+	 (:pguid, :lng, :nr, :diff, :ediff, :comment, :uid, :time)
     ");
     $params = array(
 		    ':pguid' => sha1($origin . $project),
 		    ':lng' => $lng,
 		    ':nr' => $nr,
-		    ':diff' => file_get_contents($file),
+		    ':diff' => file_get_contents($file_diff),
+		    ':ediff' => file_get_contents($file_ediff),
 		    ':comment' => $comment,
 		    ':uid' => $uid,
 		    ':time' => $this->time,
@@ -70,10 +71,11 @@ class DB_PO_Diff extends DB
   /**
    * Get and return the content of the specified diff.
    */
-  public function get_diff($origin, $project, $lng, $nr)
+  public function get_diff($origin, $project, $lng, $nr, $format)
   {
+    $diff_field = ($format=='ediff' ? 'ediff' : 'diff');
     $get_diff = $this->dbh->prepare("
-      SELECT diff FROM l10n_suggestions_diffs
+      SELECT $diff_field FROM l10n_suggestions_diffs
       WHERE pguid = :pguid AND lng = :lng AND nr = :nr
       ORDER BY time ASC
     ");
@@ -82,7 +84,7 @@ class DB_PO_Diff extends DB
     $get_diff->execute($params);
 
     $row = $get_diff->fetch();
-    $diff = isset($row['diff']) ? $row['diff'] : null;
+    $diff = isset($row[$diff_field]) ? $row[$diff_field] : null;
 
     return $diff;
   }

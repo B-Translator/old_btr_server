@@ -5,6 +5,7 @@
 ### the original files, and it will produce and store
 ### the first diff.
 
+
 function make-snapshot()
 {
     ### get the parameters
@@ -25,5 +26,6 @@ function make-snapshot()
     rm $snapshot_tgz  ## clean up
 
     ## make a second snapshot (which will generate and save a diff)
-    ../export-scripts/snapshot.sh $origin $project $lng original
+    export PO_EXPORT_MODE=original   ## set the export mode for po_export.php
+    ../export-scripts/snapshot.sh $origin $project $lng
 }

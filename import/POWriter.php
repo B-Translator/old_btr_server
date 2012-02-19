@@ -49,9 +49,11 @@ class POWriter
 
   protected function write_headers($headers, $comments)
   {
-    $comment_lines = explode("\n", $comments);
-    foreach ($comment_lines as $comment) {
-      $this->w_line('# ' . $comment);
+    if (!empty($comments)) {
+      $comment_lines = explode("\n", $comments);
+      foreach ($comment_lines as $comment) {
+	$this->w_line('# ' . $comment);
+      }
     }
 
     $this->w_line('msgid ""');
@@ -145,7 +147,7 @@ class POWriter
 	for ($i=0; $i < $last; $i++) {
 	  $this->w_quoted($prefix, $lines[$i]);
 	}
-	$this->w_quoted($prefix, $lines[$last]);
+	$this->w_line($prefix . $type . ' "' . $lines[$last] . '"');
       }
   }
 }
