@@ -532,13 +532,15 @@ keeping notes, project planning, tasks management, etc.
 *** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
 *** DONE Convert to PO and import the translation files of Firefox, Mozilla, Thunderbird, etc.
 *** DONE Import LibreOffice.
-*** Add origin on the search filter.
+*** DONE Add origin on the search filter.
+*** DONE Show related projects.
 *** Add export_tgz as a drush command.
 *** Export in format diff/ediff.    
-*** Show related projects.
-*** Use short url on the emails sent by cron.
+*** DONE Use short url on the emails sent by cron.
 *** Send full html pages by email.
 *** Use GoogleTranslate API to make an initial suggestion for strings with no translation.
+    It has become commercial. Cannot be done.
+*** Improve the look of number of votes.
 
 
 * Notes

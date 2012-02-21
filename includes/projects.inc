@@ -116,24 +116,37 @@ function l10n_suggestions_project_export_tgz($origin ='LibreOffice', $project ='
 }
 
 /**
- * Return a plain-text diff/ediff of the PO files for a given origin/project/lng,
- * which contains the new suggestions since the last version that was imported.
- * It gets the parameters: origin/project/lng[/ediff] (where project can also be '*').
+ * Return the diff/ediff of the PO files for a given origin/project/lng/nr.
+ * It gets the parameters: origin/project/lng[/nr[/ediff]].
+ * If the parameter 'nr' is '-', it returns the latest most-voted suggestions
+ * since the last snapshot.
+ * If the parameter 'nr' is missing, it returns a list of the saved diffs instead.
  */
-function l10n_suggestions_project_diff($origin =NULL, $project =NULL, $lng =NULL, $format =NULL) {
+function l10n_suggestions_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
   $origin = check_plain($origin);
   $project = check_plain($project);
   $lng = check_plain($lng);
+  $nr = check_plain($nr);
   $format = check_plain($format);
+
+  $fmt = ($format == 'ediff' ? 'ediff' : 'diff');
 
   set_time_limit(0);
 
-  /*
   $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
-  $tplname = $project;
-  $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
+  if (empty($nr)) {
+    $output = shell_exec("$path/po_diff.php list $origin $project $lng");
+  }
+  else if ($nr == '-') {
+    shell_exec("$path/export-scripts/diff.sh $origin $project $lng");
+    $fname = "$path/export-scripts/$origin-$project-$lng";
+    $output = file_get_contents($fname.".$fmt");
+    shell_exec("rm $fname.tgz $fname.diff $fname.ediff");
+  }
+  else {
+    $output = shell_exec("$path/po_diff.php get $origin $project $lng $nr $fmt");
+  }
   print $output;
-  */
 
   exit();
 }

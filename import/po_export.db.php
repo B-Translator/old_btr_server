@@ -115,6 +115,7 @@ class DB_PO_Export extends DB
     $file_content = isset($row['content']) ? $row['content'] : '';
 
     $tmpfname = tempnam('/tmp', 'l10n_suggestions_export_');
+    shell_exec("rm $tmpfname");
     $tmpfname .= '.po';
     file_put_contents($tmpfname, $file_content);
     

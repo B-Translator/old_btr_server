@@ -1,6 +1,6 @@
 #!/bin/bash
-### Export the current state of translation files of a project-language
-### Make also the diff with the last snapshot and store it in DB.
+### Make the diff with the last snapshot and store it in DB.
+### Save in DB the current snapshot.
 
 ### get the parameters
 if [ $# -lt 3 ]
@@ -17,41 +17,23 @@ lng=$3
 ### go to the script directory
 cd $(dirname $0)
 
-### export the project
-pid=$$
-export_dir=tmp_$pid
-mkdir -p $export_dir
-./export.sh $origin $project $lng $export_dir
+### make the diff with the last snapshot
+./diff.sh $origin $project $lng
 
-### get the last snapshot from DB
-snapshot_dir=tmp1_$pid
-mkdir -p $snapshot_dir
-snapshot_file=$origin-$project-$lng.tgz
-../snapshot.php get $origin $project $lng $snapshot_file
-tar -C $snapshot_dir -xz --file=$snapshot_file
-
-### make the unified diff (diff -u) with the previous snapshot
+### files that are created by diff.sh
+snapshot_file="$origin-$project-$lng.tgz"
 file_diff="$origin-$project-$lng.diff"
-echo "diff -rubB $snapshot_dir $export_dir > $file_diff"
-diff -rubB $snapshot_dir $export_dir > $file_diff
-
-### make the embedded diff (poediff) with the previous snapshot
-pology=pology/bin/poediff
 file_ediff="$origin-$project-$lng.ediff"
-echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
-$pology -n $snapshot_dir $export_dir > $file_ediff
 
-### store the diffs in the DB
-../po_diff.php add $origin $project $lng $file_diff $file_ediff
-
-### replace the previous snapshot with the latest export
-rm $snapshot_file
-tar -C $export_dir -cz --file=$snapshot_file .
-../snapshot.php update $origin $project $lng $snapshot_file
+### if $file_diff or $file_ediff is not empty
+### store them in the DB and save the snapshot as well
+if [ -s $file_diff -o -s $file_ediff ]
+then
+    ../po_diff.php add $origin $project $lng $file_diff $file_ediff
+    ../snapshot.php update $origin $project $lng $snapshot_file
+fi
 
 ### clean up
+rm $snapshot_file
 rm $file_diff
 rm $file_ediff
-rm $snapshot_file
-rm -rf $snapshot_dir
-rm -rf $export_dir
