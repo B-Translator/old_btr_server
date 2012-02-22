@@ -12,8 +12,9 @@ fi
 
 ### make this 'full' for a full dump of the database
 ### or 'user' for dumping only user suggestions and votes
-#dump='false'
-dump='user'
+dump='false'
+#dump='full'
+#dump='user'
 
 ### dump only the schema of the database
 mysqldump --user=root --password --no-data --compact --add-drop-table \

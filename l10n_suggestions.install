@@ -434,6 +434,94 @@ function l10n_suggestions_schema() {
     'primary key' => array('uid'),
   );
 
+  // Snapshots are tgz archives of project-lng translation files.
+  $schema['l10n_suggestions_snapshots'] = array(
+    'description' => 'Snapshots are tgz archives of project-lng translation files.',
+    'fields' => array(
+      'pguid' => array(
+        'description' => 'Reference to the project.',
+        'type' => 'char',
+        'length' => '40',
+        'not null' => TRUE,
+      ),
+      'lng' => array(
+        'description' => 'The language of translation.',
+        'type' => 'varchar',
+        'length' => '10',
+        'not null' => TRUE,
+      ),
+      'snapshot' => array(
+        'description' => 'The content of the tgz archive.',
+        'type' => 'mediumblob',
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'Id of the user that updated the snapshot for the last time.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ),
+      'time' => array(
+        'description' => 'The time of last update.',
+        'type' => 'datetime',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('pguid', 'lng'),
+  );
+
+  // Diffs between the current state and the last snapshot.
+  $schema['l10n_suggestions_diffs'] = array(
+    'description' => 'Diffs between the current state and the last snapshot.',
+    'fields' => array(
+      'pguid' => array(
+        'description' => 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
+        'type' => 'char',
+        'length' => '40',
+        'not null' => TRUE,
+      ),
+      'lng' => array(
+        'description' => 'The language of translation.',
+        'type' => 'varchar',
+        'length' => '5',
+        'not null' => TRUE,
+      ),
+      'nr' => array(
+        'description' => 'Incremental number of the diffs of a project-language.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'size' => 'small',
+        'not null' => TRUE,
+      ),
+      'diff' => array(
+        'description' => 'The content of the unified diff (diff -u).',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'ediff' => array(
+        'description' => 'The embedded diff (generated with the command poediff of pology).',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+      'comment' => array(
+        'description' => 'Comment/description of the diff.',
+        'type' => 'varchar',
+        'length' => '200',
+        'not null' => FALSE,
+      ),
+      'uid' => array(
+        'description' => 'Id of the user that inserted the diff.',
+        'type' => 'int',
+        'not null' => FALSE,
+      ),
+      'time' => array(
+        'description' => 'The date and time that the diff was saved.',
+        'type' => 'datetime',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('pguid', 'lng', 'nr'),
+  );
+
   return $schema;
 }
 ?>

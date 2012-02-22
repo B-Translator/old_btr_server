@@ -324,6 +324,28 @@ keeping notes, project planning, tasks management, etc.
      - points : int :: Number of points rewarded for his activity.
      - config : varchar(250) :: Serialized configuration variables.
 
+   + Snapshots :: Snapshots are tgz archives of project-lng
+                  translation files.
+     - pguid : char(40) :: Reference to the project.
+     - lng : varchar(10) :: The language of translation.
+     - snapshot : mediumblob :: The content of the tgz archive.
+     - uid : int :: Id of the user that updated the snapshot for the
+                    last time.
+     - time : datetime :: The time of last update.
+
+   + Diffs :: Diffs between the current state and the last snapshot.
+     - pguid : char(40) :: Reference to the project.
+     - lng : varchar(10) :: The language of translation.
+     - nr : smallint :: Incremental number of the diffs of a
+                        project-language.
+     - diff : text :: The content of the unified diff (diff -u).
+     - ediff : text :: The embedded diff (generated with the command
+                       poediff of pology).
+     - comment : varchar(200) :: Comment/description of the diff.
+     - uid : int :: Id of the user that inserted the diff.
+     - time : datetime :: The date and time that the diff was saved.
+
+
 ** UI
 
 *** translations/get/<lng>/<sguid>
@@ -385,7 +407,7 @@ keeping notes, project planning, tasks management, etc.
 
      + pot_import.php origin project tplname file.pot
 
-       Import a POT (template) file of a project 
+       Import a POT (template) file of a project
 
      + po_import.php origin project tplname lng file.po
 
@@ -402,7 +424,7 @@ keeping notes, project planning, tasks management, etc.
      + project_list.sh [origin [project]]
 
        Output a list of imported projects.
-       
+
 **** Drush
      + pot-import
      + po-import
@@ -414,45 +436,26 @@ keeping notes, project planning, tasks management, etc.
      + translations/project/list ([/origin[/project[/format]]])
      + translations/project/export (/origin/project/language)
      + translations/project/export_tgz (/origin/project/language)
-     
+
 *** Making snapshots and getting diffs
-    A snapshot of a project-language is an export of the corresponding
-    translation files (in the current state), which are stored in the
-    DB with the aim of using them later to get diffs.  They are like a
-    simple kind of version control system, but usually we are
-    interested only on a few latest snapshots, and we can delete the
-    previous ones (and should delete them, because they take much
-    space).
+    A snapshot is an export of the PO files of a project-language.  A
+    project has a snapshot for each language.  A diff is the
+    difference between a snapshot and the last one.  The diffs are
+    sequentially numbered and they keep the history of changes.
 
 **** Shell
+     + snapshot.sh origin project lng
+       Export the translations of a project-language.
+       Make the diff with the last snapshot and store the diff in DB.
+       Store the snapshot in the DB (replacing the old one).
+**** REST
+     + translations/project/diff (/origin/project/lng[/nr[/ediff]])
+       Return the diff/ediff of the PO files for a given origin/project/lng/nr.
+       If the parameter 'nr' is '-', it returns the latest most-voted
+       suggestions since the last snapshot.
+       If the parameter 'nr' is missing, it returns a list of the
+       saved diffs instead.
 
-     + snapshot-get.sh origin project lng
-
-       Create and store in DB a snapshot of a project-language.
-
-     + snapshot-list.sh origin project lng
-
-       List existings snapshots of a project-language and their details.
-
-     + snapshot-del.sh snapshot_id
-
-       Delete an existing snapshot, identified by its id. 
-
-     + snapshot-checkout.sh snapshot_id
-
-       Export a snapshot from the DB into the filesystem.
-
-     + snapshot-diff.sh [id1 [id2]]
-
-       Get the diff (or ediff) between two snapshots, or between a
-       snapshot and the current state, or between the last snapshot
-       and the current state.
-
-**** Remote shell
-     Remote shell API allows the Shell API to be executed remotely,
-     using key-pair authentication, and checking access rights (for
-     example a translator can make and delete snapshots only for the
-     projects that he manages).
 
 * Implementation Plan
   1. [X] Make *voting* work (without permissions, user setting, admin
@@ -535,7 +538,7 @@ keeping notes, project planning, tasks management, etc.
 *** DONE Add origin on the search filter.
 *** DONE Show related projects.
 *** Add export_tgz as a drush command.
-*** Export in format diff/ediff.    
+*** DONE Export in format diff/ediff.
 *** DONE Use short url on the emails sent by cron.
 *** Send full html pages by email.
 *** Use GoogleTranslate API to make an initial suggestion for strings with no translation.
@@ -624,11 +627,41 @@ keeping notes, project planning, tasks management, etc.
       tar tvfz Mozilla-all-fr.tgz
       tar xfz Mozilla-all-fr.tgz
 
+
+** How to use simple REST API to get diffs
+
+*** Get a list of diffs:
+    wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq ; cat list.txt
+    wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq ; cat list.txt
+    wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq ; cat list.txt
+    wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/ubuntu/pingus/sq ; cat list.txt
+
+*** Get a specific diff:
+    wget -q --no-check-certificate -O Mozilla-browser-sq.2.diff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/2
+    wget -q --no-check-certificate -O Mozilla-browser-sq.2.ediff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/2/ediff
+    wget -q --no-check-certificate -O LibreOffice-sw-sq.2.diff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/2
+    wget -q --no-check-certificate -O LibreOffice-sw-sq.2.ediff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/2/ediff
+    wget -q --no-check-certificate -O KDE-kdelibs-sq.2.diff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/2
+    wget -q --no-check-certificate -O KDE-kdelibs-sq.2.ediff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/2/ediff
+
+
+*** Get the current diff:
+    This is the diff between the current state and the last snapshot.
+    It is not stored yet in the DB (it will be stored if we get
+    another snapshot).
+
+    wget -q --no-check-certificate -O Mozilla-browser-sq.current.diff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/-
+    wget -q --no-check-certificate -O Mozilla-browser-sq.current.ediff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/-/ediff
+    wget -q --no-check-certificate -O LibreOffice-sw-sq.current.diff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/-
+    wget -q --no-check-certificate -O LibreOffice-sw-sq.current.ediff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/-/ediff
+    wget -q --no-check-certificate -O KDE-kdelibs-sq.current.diff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/-
+    wget -q --no-check-certificate -O KDE-kdelibs-sq.current.ediff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/-/ediff
+
 ** Misc
 
    + Field sguid:char(40) on strings, locations and translations must
      be of the same character set, otherwise mysql will not use the
      index (primary key) on queries. The same for the field tguid.
-     
+
    + Crontab entry:
      0 4 * * *  wget -O - -q -t 1 --no-check-certificate https://test.l10n-sq.org/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
