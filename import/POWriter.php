@@ -147,7 +147,9 @@ class POWriter
 	for ($i=0; $i < $last; $i++) {
 	  $this->w_quoted($prefix, $lines[$i]);
 	}
-	$this->w_line($prefix . $type . ' "' . $lines[$last] . '"');
+	if (!empty($lines[$last])) {
+	  $this->w_line($prefix . '"' . $lines[$last] . '"');
+	}
       }
   }
 }
