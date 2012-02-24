@@ -6,15 +6,31 @@
 ### go to the script directory
 cd $(dirname $0)
 
+### get $data_root
+. ../config.sh
+
+### Files that are imported are assumed to be
+### under the directory '$data_root/$origin/'.
+### The path under $origin does not matter (can
+### be any path that suits the project structure).
+origin=misc
+project=pingus
+po_dir="$data_root/$origin/$project"
+rm -rf $po_dir/
+mkdir -p $po_dir/
+cp ~/pingus-fr.po $po_dir/ 
+cp ~/pingus-sq.po $po_dir/ 
+
 ### import the template
-../pot_import.php ubuntu pingus pingus ~/pingus-fr.po
+potemplate=pingus
+../pot_import.php $origin $project $potemplate $po_dir/pingus-fr.po
 
 ### import the PO files
-../po_import.php ubuntu pingus pingus fr ~/pingus-fr.po
-../po_import.php ubuntu pingus pingus sq ~/pingus-sq.po
+../po_import.php $origin $project $potemplate fr $po_dir/pingus-fr.po
+../po_import.php $origin $project $potemplate sq $po_dir/pingus-sq.po
 
 ## make initial snapshots
 . make-snapshot.sh
-make-snapshot ubuntu pingus fr ~/pingus-fr.po
-make-snapshot ubuntu pingus sq ~/pingus-sq.po
+make-snapshot $origin $project fr $po_dir/pingus-fr.po
+make-snapshot $origin $project sq $po_dir/pingus-sq.po
 
