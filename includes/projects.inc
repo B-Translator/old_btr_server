@@ -73,7 +73,7 @@ function l10n_suggestions_project_export($origin =NULL, $project =NULL, $lng =NU
 
   set_time_limit(0);
 
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/export';
   $tplname = $project;
   $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
 
@@ -133,18 +133,18 @@ function l10n_suggestions_project_diff($origin, $project, $lng, $nr =NULL, $form
 
   set_time_limit(0);
 
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/export';
   if (empty($nr)) {
-    $output = shell_exec("$path/po_diff.php list $origin $project $lng");
+    $output = shell_exec("$path/db_diff.php list $origin $project $lng");
   }
   else if ($nr == '-') {
-    shell_exec("$path/export/diff.sh $origin $project $lng");
+    shell_exec("$path/export/make_diff.sh $origin $project $lng");
     $fname = "$path/export/$origin-$project-$lng";
     $output = file_get_contents($fname.".$fmt");
     shell_exec("rm $fname.tgz $fname.diff $fname.ediff");
   }
   else {
-    $output = shell_exec("$path/po_diff.php get $origin $project $lng $nr $fmt");
+    $output = shell_exec("$path/db_diff.php get $origin $project $lng $nr $fmt");
   }
   print $output;
 

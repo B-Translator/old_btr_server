@@ -20,12 +20,12 @@ echo $0 $origin $project $lng $output_dir
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql_params="$($(which php) ../db_params.php bash)"
+mysql_params="$($(which php) ../db/get-connection.php bash)"
 #echo $mysql_params;  exit;  # debug
 
 ### get from the DB the names of the templates and the filenames
 sql="SELECT t.tplname, f.filename FROM l10n_suggestions_files f
-     LEFT JOIN l10n_suggestions_templates t ON (f.potid = t.potid) 
+     LEFT JOIN l10n_suggestions_templates t ON (f.potid = t.potid)
      LEFT JOIN l10n_suggestions_projects p ON (t.pguid = p.pguid)
      WHERE p.origin = '$origin' AND p.project = '$project' AND f.lng = '$lng'"
 #echo $sql | mysql $mysql_params --skip-column-names | sed -e 's/\t/,/g' ;  exit;  # debug
@@ -39,6 +39,6 @@ do
     #echo $origin, $project, $tplname, $filename;  continue;  # debug
     po_file=$output_dir/$origin/$filename
     mkdir -p $(dirname $po_file)
-    echo ../po_export.php $origin $project $tplname $lng $po_file
-    ../po_export.php $origin $project $tplname $lng $po_file
+    echo ./po_export.php $origin $project $tplname $lng $po_file
+    ./po_export.php $origin $project $tplname $lng $po_file
 done

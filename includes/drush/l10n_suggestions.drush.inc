@@ -127,7 +127,7 @@ function l10n_suggestions_drush_help($section) {
  * Command callback for pot-import.
  */
 function drush_l10n_suggestions_pot_import($origin, $project, $file) {
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/import';
   $output = shell_exec("$path/pot_import.php $origin $project $file");
   print $output;
 }
@@ -136,7 +136,7 @@ function drush_l10n_suggestions_pot_import($origin, $project, $file) {
  * Command callback for po-import.
  */
 function drush_l10n_suggestions_po_import($origin, $project, $lng, $file) {
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/import';
   $output = shell_exec("$path/po_import.php $origin $project $lng $file");
   print $output;
 }
@@ -145,7 +145,7 @@ function drush_l10n_suggestions_po_import($origin, $project, $lng, $file) {
  * Command callback for po-export.
  */
 function drush_l10n_suggestions_po_export($origin, $project, $lng, $file =NULL) {
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/export';
   $output = shell_exec("$path/po_export.php $origin $project $lng $file");
   print $output;
 }

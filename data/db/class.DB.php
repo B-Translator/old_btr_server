@@ -20,8 +20,8 @@ class DB
   /** Create a DB connection. */
   protected function connect()
   {
-    // Get the DB parameters.
-    @include_once(dirname(__FILE__).'/db_params.php');
+    // Get the DB connection parameters.
+    @include_once(dirname(__FILE__).'/get-connection.php');
 
     // Create a DB connection.
     $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";

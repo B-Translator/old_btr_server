@@ -1,6 +1,6 @@
 <?php
 
-include(dirname(__FILE__) . '/db.php');
+include(dirname(dirname(__FILE__)) . '/db/class.DB.php');
 
 class DB_PO_Export extends DB
 {
@@ -118,7 +118,7 @@ class DB_PO_Export extends DB
     shell_exec("rm $tmpfname");
     $tmpfname .= '.po';
     file_put_contents($tmpfname, $file_content);
-    
+
     return $tmpfname;
   }
 }

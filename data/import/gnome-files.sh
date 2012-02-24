@@ -15,7 +15,7 @@ do
 	project=${basename%.*.$lng.po}
 	pot_name=$project
 	#echo $file;  echo $project;  continue;  ## debug
-	../po_import.php GNOME $project $pot_name $lng $file
+	./po_import.php GNOME $project $pot_name $lng $file
 
 	## make initial snapshots
 	make-snapshot GNOME $project $lng $file

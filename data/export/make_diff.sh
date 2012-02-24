@@ -27,7 +27,7 @@ mkdir -p $export_dir
 snapshot_dir=tmp1_$pid
 mkdir -p $snapshot_dir
 snapshot_file=$origin-$project-$lng.tgz
-../snapshot.php get $origin $project $lng $snapshot_file
+./db_snapshot.php get $origin $project $lng $snapshot_file
 tar -C $snapshot_dir -xz --file=$snapshot_file
 
 ### make the unified diff (diff -u) with the previous snapshot

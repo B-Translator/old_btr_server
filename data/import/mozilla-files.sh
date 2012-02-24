@@ -18,7 +18,7 @@ do
 	    pot_name=${file#*/$project/}
 	    pot_name=${pot_name%.po}
             #echo $lng, $project, $pot_name, $file;  continue;  ## debug
-	    ../po_import.php Mozilla $project $pot_name $lng $file
+	    ./po_import.php Mozilla $project $pot_name $lng $file
 	done
 
 	## make initial snapshots

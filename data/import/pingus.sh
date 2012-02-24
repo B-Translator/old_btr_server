@@ -23,11 +23,11 @@ cp ~/pingus-sq.po $po_dir/
 
 ### import the template
 potemplate=pingus
-../pot_import.php $origin $project $potemplate $po_dir/pingus-fr.po
+./pot_import.php $origin $project $potemplate $po_dir/pingus-fr.po
 
 ### import the PO files
-../po_import.php $origin $project $potemplate fr $po_dir/pingus-fr.po
-../po_import.php $origin $project $potemplate sq $po_dir/pingus-sq.po
+./po_import.php $origin $project $potemplate fr $po_dir/pingus-fr.po
+./po_import.php $origin $project $potemplate sq $po_dir/pingus-sq.po
 
 ## make initial snapshots
 . make-snapshot.sh

@@ -58,7 +58,7 @@ if ($potid === null) {
 }
 
 // Parse the given PO file.
-include_once(dirname(__FILE__).'/POParser.php');
+include_once(dirname(dirname(__FILE__)).'/gettext/POParser.php');
 $parser = new POParser;
 $entries = $parser->parse($filename);
 

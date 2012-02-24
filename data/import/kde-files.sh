@@ -18,7 +18,7 @@ do
 	    pot_name=${file#*/$project/}
 	    pot_name=${pot_name%.po}
             #echo $project, $pot_name, $lng, $file;  continue;  ## debug
-	    ../po_import.php KDE $project $pot_name $lng $file
+	    ./po_import.php KDE $project $pot_name $lng $file
 	done
 	
 	## make initial snapshots

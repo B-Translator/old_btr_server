@@ -11,5 +11,5 @@ for file in $(ls $dir)
 do
     project=${file%%.po}
     pot_name=$project
-    ../pot_import.php ubuntu $project $pot_name $dir/$file
+    ./pot_import.php ubuntu $project $pot_name $dir/$file
 done

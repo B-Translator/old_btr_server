@@ -37,7 +37,7 @@ $file = $argv[5];
 print "$script $operation $origin $project $lng $file\n";
 
 // Create a DB variable for handling queries.
-include_once(dirname(__FILE__).'/snapshot.db.php');
+include_once(dirname(__FILE__).'/db_snapshot.db.php');
 $db = new DB_Snapshot;
 
 // Perform the requested operation.

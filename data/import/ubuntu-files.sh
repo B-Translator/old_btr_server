@@ -14,7 +14,7 @@ do
     do
 	project=${file%%.po}
 	pot_name=$project
-	../po_import.php ubuntu $project $pot_name $lng $dir/$file
+	./po_import.php ubuntu $project $pot_name $lng $dir/$file
 
 	## make initial snapshots
 	make-snapshot ubuntu $project $lng $dir/$file

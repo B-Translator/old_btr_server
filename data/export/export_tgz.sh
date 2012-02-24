@@ -21,7 +21,7 @@ output_dir=${4:-/tmp}
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql_params="$($(which php) ../db_params.php bash)"
+mysql_params="$($(which php) ../db/get-connection.php bash)"
 #echo $mysql_params;  exit;  # debug
 
 ### get the list of the projects to be exported

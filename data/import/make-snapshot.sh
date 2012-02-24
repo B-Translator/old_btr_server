@@ -22,10 +22,10 @@ function make-snapshot()
     tar -C $data_root/ -cz --file=$snapshot_tgz $po_files_relative
 
     ### store the tgz file into the DB
-    ../snapshot.php init $origin $project $lng $snapshot_tgz
+    ../export/db_snapshot.php init $origin $project $lng $snapshot_tgz
     rm $snapshot_tgz  ## clean up
 
     ## make a second snapshot (which will generate and save a diff)
     export PO_EXPORT_MODE=original   ## set the export mode for po_export.php
-    ../export/snapshot.sh $origin $project $lng
+    ../export/make_snapshot.sh $origin $project $lng
 }

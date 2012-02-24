@@ -83,7 +83,7 @@ foreach (array_keys($strings) as $sguid) {
 //print_r($strings);  exit(0);  //debug
 
 // Write entries to a PO file.
-include_once(dirname(__FILE__).'/POWriter.php');
+include_once(dirname(dirname(__FILE__)).'/gettext/POWriter.php');
 $writer = new POWriter;
 if ($filename === NULL) {
   $output = $writer->write($headers, $comments, $strings);
@@ -105,7 +105,7 @@ exit(0);
 function get_translations_from_file($file)
 {
   // Parse the given PO file.
-  include_once(dirname(__FILE__).'/POParser.php');
+  include_once(dirname(dirname(__FILE__)).'/gettext/POParser.php');
   $parser = new POParser;
   $entries = $parser->parse($file);
 

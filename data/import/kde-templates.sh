@@ -15,7 +15,7 @@ do
 	pot_name=${file#*/$project/}
 	pot_name=${pot_name%.po}
         #echo $project, $pot_name, $file;  continue;  ## debug
-	../pot_import.php KDE $project $pot_name $file
+	./pot_import.php KDE $project $pot_name $file
     done
 done
 
@@ -27,7 +27,7 @@ while read file
 do
     project=$(basename ${file%%.po})
     pot_name=$project
-    ../pot_import.php KDE $project $pot_name $file
+    ./pot_import.php KDE $project $pot_name $file
 done < file_list.txt
 
 rm file_list.txt

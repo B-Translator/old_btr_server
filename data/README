@@ -53,11 +53,12 @@ translator-credits, etc.)  can be restored. For example:
 
 The files '*.db.php' contain DB clases that encapsulate the
 interaction of import/export scripts with the database of the
-application. All of them extend 'db.php', which creates a connection
-to the database. The paramaters of the DB connection are retrieved
-from 'db_params.php', which extracts them from 'settings.php'.
-'settings.php' should be a symbolic link to the configuration file of
-the site (it can also be a copy of it, modified or not).
+application. All of them extend 'db/class.DB.php', which creates a
+connection to the database. The paramaters of the DB connection are
+retrieved from 'db/get-connection.php', which extracts them from
+'db/settings.php'.  'db/settings.php' should be a symbolic link to the
+configuration file of the site (it can also be a copy of it, modified
+or not).
 
 'POParser.php' is a parser used to extract the data from a PO/POT
 file, in order to import them into the DB . It is taken from:
@@ -89,7 +90,7 @@ is a relative directory, then a symbolic link to the data directory
 should be created inside 'get/' and 'import/', so that
 the scripts can find it.
 
-The script 'db_install.sh' is used to install the database initially
-(for the first time). The script 'db_update.sh' can be called time
-after time (for example once or twice a year) to make sure that we
-have the latest versions of strings and translations for each project.
+The script 'install.sh' is used to install the database initially (for
+the first time). The script 'update.sh' can be called time after time
+(for example once or twice a year) to make sure that we have the
+latest versions of strings and translations for each project.

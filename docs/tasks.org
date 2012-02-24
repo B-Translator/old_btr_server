@@ -444,7 +444,7 @@ keeping notes, project planning, tasks management, etc.
     sequentially numbered and they keep the history of changes.
 
 **** Shell
-     + snapshot.sh origin project lng
+     + make_snapshot.sh origin project lng
        Export the translations of a project-language.
        Make the diff with the last snapshot and store the diff in DB.
        Store the snapshot in the DB (replacing the old one).

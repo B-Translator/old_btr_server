@@ -4,11 +4,11 @@
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql_params="$($(which php) db_params.php bash)"
+mysql_params="$($(which php) db/get-connection.php bash)"
 #echo $mysql_params;  exit 0;  ## debug
 
 ### create the DB tables
 mysql $mysql_params < db/l10n_suggestions_schema.sql
 
 ### get the PO files and import them
-./db_update.sh
+./update.sh

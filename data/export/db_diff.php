@@ -61,7 +61,7 @@ else {
 }
 
 // Create a DB variable for handling queries.
-include_once(dirname(__FILE__).'/po_diff.db.php');
+include_once(dirname(__FILE__).'/db_diff.db.php');
 $db = new DB_PO_Diff;
 
 // Perform the requested operation.

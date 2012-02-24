@@ -18,8 +18,8 @@ do
     project=$(echo $line | cut -d'/' -f2)
     for lng in $languages
     do
-	echo ./snapshot.sh $origin $project $lng
-	./snapshot.sh $origin $project $lng
+	echo ./make_snapshot.sh $origin $project $lng
+	./make_snapshot.sh $origin $project $lng
     done
 done < project_list.txt
 

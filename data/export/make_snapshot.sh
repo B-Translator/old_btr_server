@@ -18,9 +18,9 @@ lng=$3
 cd $(dirname $0)
 
 ### make the diff with the last snapshot
-./diff.sh $origin $project $lng
+./make_diff.sh $origin $project $lng
 
-### files that are created by diff.sh
+### files that are created by make_diff.sh
 snapshot_file="$origin-$project-$lng.tgz"
 file_diff="$origin-$project-$lng.diff"
 file_ediff="$origin-$project-$lng.ediff"
@@ -29,8 +29,8 @@ file_ediff="$origin-$project-$lng.ediff"
 ### store them in the DB and save the snapshot as well
 if [ -s $file_diff -o -s $file_ediff ]
 then
-    ../po_diff.php add $origin $project $lng $file_diff $file_ediff
-    ../snapshot.php update $origin $project $lng $snapshot_file
+    ./db_diff.php add $origin $project $lng $file_diff $file_ediff
+    ./db_snapshot.php update $origin $project $lng $snapshot_file
 fi
 
 ### clean up

@@ -1,6 +1,6 @@
 <?php
 
-include(dirname(__FILE__) . '/db.php');
+include(dirname(dirname(__FILE__)) . '/db/class.DB.php');
 
 class DB_POT_Import extends DB
 {

@@ -15,7 +15,7 @@ project=$1
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql_params="$($(which php) ../db_params.php bash)"
+mysql_params="$($(which php) ../db/get-connection.php bash)"
 
 ### build the mysql command
 mysql="mysql -N $mysql_params"
