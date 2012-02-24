@@ -2,10 +2,10 @@
 
 echo "===== GETTING MANDRIVA ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir mandriva
 
-### get a list of .po files for our languages 
+### get a list of .po files for our languages
 svn_url=http://svn.mandriva.com/svn/soft
 svn ls -R $svn_url > svn_mandriva.txt
 langs=$(echo $languages | sed -e 's/ /\\|/g')
@@ -20,4 +20,4 @@ do
 done < svn_mandriva_po.txt svn_mandriva_po.txt
 
 ### cleanup
-rm svn_mandriva.txt 
+rm svn_mandriva.txt

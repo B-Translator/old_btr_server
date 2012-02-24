@@ -2,7 +2,7 @@
 
 echo "===== GETTING KDE ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir KDE
 
 #kde_modules=$(svn ls svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4)

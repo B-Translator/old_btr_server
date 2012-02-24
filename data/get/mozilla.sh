@@ -2,7 +2,7 @@
 
 echo "===== GETTING Mozilla ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir Mozilla
 
 ### clone from the mercurial repository

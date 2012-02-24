@@ -2,7 +2,7 @@
 
 echo "===== GETTING MISC ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir misc
 
 svn_checkout svn://svn.d-i.alioth.debian.org/svn/d-i/trunk/packages/po debian-installer

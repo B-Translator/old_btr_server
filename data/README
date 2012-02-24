@@ -70,13 +70,13 @@ with msgfmt before being imported).
 projects, locations, strings and translatins that are stored in the
 DB.
 
-The scripts in the directory 'get-scripts/' are used to get from
+The scripts in the directory 'get/' are used to get from
 internet the PO files that are going to be imported. They are based on
 the scripts of the open-tran project:
 http://code.google.com/p/open-tran/
 http://code.google.com/p/open-tran/source/browse/#svn%2Ftrunk%2Fimport
 
-The scripts in the directory 'import-scripts/' are used to process the
+The scripts in the directory 'import/' are used to process the
 downloaded PO files and to import their data into DB. They find each
 *.po file and then process it by calling 'po_import.php' with proper
 arguments. However they first create (import) the corresponding
@@ -86,7 +86,7 @@ POT files.
 The get/import scripts use configuration data from 'config.sh'. The
 'data_root' variable can be an absolute or relative directory. If it
 is a relative directory, then a symbolic link to the data directory
-should be created inside 'get-scripts/' and 'import-scripts/', so that
+should be created inside 'get/' and 'import/', so that
 the scripts can find it.
 
 The script 'db_install.sh' is used to install the database initially

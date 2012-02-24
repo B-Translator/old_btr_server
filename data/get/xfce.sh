@@ -2,7 +2,7 @@
 
 echo "===== GETTING XFCE ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir xfce
 
 xfce_modules=$(wget -o /dev/null -O- http://git.xfce.org | grep 'sublevel-repo[^~]*$' | sed "s/^.*href='\([^']*\)'.*$/\1/")

@@ -4,5 +4,5 @@
 cd $(dirname $0)
 
 ### get the PO files and import them
-get-scripts/get-all.sh
-import-scripts/import-all.sh
+get/all.sh
+import/all.sh

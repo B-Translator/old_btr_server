@@ -2,7 +2,7 @@
 
 echo "===== GETTING FEDORA ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir fedora
 
 # This is a dummy run that should make wget avoid a refresh

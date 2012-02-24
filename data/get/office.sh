@@ -2,7 +2,7 @@
 
 echo "===== GETTING LibreOffice ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir LibreOffice
 
 ### download all translations

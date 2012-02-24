@@ -17,7 +17,7 @@ function make-snapshot()
     ### remove '$data_root/' from the path of the files
     po_files_relative=$(echo $po_files | sed -e "s,^$data_root/,,g" -e "s, $data_root/, ,g")
 
-    ### make a tgz archive of the PO files 
+    ### make a tgz archive of the PO files
     snapshot_tgz=$origin-$project-$lng.tgz
     tar -C $data_root/ -cz --file=$snapshot_tgz $po_files_relative
 
@@ -27,5 +27,5 @@ function make-snapshot()
 
     ## make a second snapshot (which will generate and save a diff)
     export PO_EXPORT_MODE=original   ## set the export mode for po_export.php
-    ../export-scripts/snapshot.sh $origin $project $lng
+    ../export/snapshot.sh $origin $project $lng
 }

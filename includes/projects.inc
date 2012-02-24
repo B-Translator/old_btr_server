@@ -73,7 +73,7 @@ function l10n_suggestions_project_export($origin =NULL, $project =NULL, $lng =NU
 
   set_time_limit(0);
 
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
   $tplname = $project;
   $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
 
@@ -98,7 +98,7 @@ function l10n_suggestions_project_export_tgz($origin ='LibreOffice', $project ='
   set_time_limit(0);
 
   // Export files in a tgz archive.
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/import/export-scripts';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/export';
   $tgz_file = exec("$path/export_tgz.sh $origin $project $lng");
 
   // Send the headers.
@@ -133,13 +133,13 @@ function l10n_suggestions_project_diff($origin, $project, $lng, $nr =NULL, $form
 
   set_time_limit(0);
 
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/import';
+  $path = drupal_get_path('module', 'l10n_suggestions') . '/data';
   if (empty($nr)) {
     $output = shell_exec("$path/po_diff.php list $origin $project $lng");
   }
   else if ($nr == '-') {
-    shell_exec("$path/export-scripts/diff.sh $origin $project $lng");
-    $fname = "$path/export-scripts/$origin-$project-$lng";
+    shell_exec("$path/export/diff.sh $origin $project $lng");
+    $fname = "$path/export/$origin-$project-$lng";
     $output = file_get_contents($fname.".$fmt");
     shell_exec("rm $fname.tgz $fname.diff $fname.ediff");
   }

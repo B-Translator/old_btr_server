@@ -18,7 +18,7 @@
 
 echo "===== GETTING UBUNTU ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir ubuntu
 
 ### Get the base pack and the latest update:

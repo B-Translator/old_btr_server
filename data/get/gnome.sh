@@ -2,7 +2,7 @@
 
 echo "===== GETTING GNOME ====="
 
-. ./get.inc.sh
+. ./inc.sh
 change_dir GNOME
 
 l10n_gnome='http://l10n.gnome.org/languages'
