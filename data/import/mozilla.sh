@@ -6,11 +6,25 @@
 ### include function make-snapshot
 . make-snapshot.sh
 
-### import the PO files, using the en-GB files as templates
+### get the list of projects to be imported
 pot_dir=$data_root/Mozilla/po/en-GB
+if [ $# -gt 0 ]
+then
+    projects="$@"
+else
+    projects=$(ls $pot_dir)
+fi
+#echo $projects;  exit;  ## debug
+
+### import the PO files, using the en-GB files as templates
 for project in $(ls $pot_dir)
 do
     echo -e "\n==========> Mozilla $project"  # ;  continue;  ## debug
+    if [ ! -d $pot_dir/$project ]
+    then
+	echo "Error: project '$project' not found."
+	continue;
+    fi
 
     ### import the POT files
     pot_files=$(find $pot_dir/$project -name '*\.pot')

@@ -6,16 +6,27 @@
 ### include function make-snapshot
 . make-snapshot.sh
 
-### import the PO files from GNOME
-### using the fr PO file as template (POT)
-for pot_file in $(ls $data_root/GNOME/fr/*.fr.po)
+### get the list of projects to be imported
+pot_dir=$data_root/GNOME/fr
+if [ $# -gt 0 ]
+then
+    for project in $@
+    do
+	pot_files="$pot_files $(ls $pot_dir/$project.*.fr.po)"
+    done
+else
+    pot_files=$(ls $pot_dir/*.fr.po)
+fi
+#echo $pot_files;  exit;  ## debug
+
+### import the POt/PO files
+for pot_file in $pot_files
 do
     ### get the project name
     basename=$(basename $pot_file)
     project=${basename%.*.fr.po}
     pot_name=$project
-    echo -e "\n==========> GNOME $project $pot_name"
-    #continue;  ## debug
+    echo -e "\n==========> GNOME $project"  #; continue;  ## debug
 
     ### import the POT file
     ./pot_import.php GNOME $project $pot_name $pot_file
@@ -27,8 +38,7 @@ do
 	po_file=${basename%.fr.po}.$lng.po
 	po_file=$data_root/GNOME/$lng/$po_file
 	if [ ! -f $po_file ]; then continue; fi
-	echo -e "\n----------> $po_file";
-	#continue;  ## debug
+	echo -e "\n----------> $po_file"  #; continue;  ## debug
 
 	### import the PO file
 	./po_import.php GNOME $project $pot_name $lng $po_file
@@ -36,5 +46,6 @@ do
 	## make an initial snapshot
 	make-snapshot GNOME $project $lng $po_file
     done
+
     #exit 0  ## debug
 done
