@@ -28,6 +28,12 @@ do
     pot_name=$project
     echo -e "\n==========> GNOME $project"  #; continue;  ## debug
 
+    ### make last snapshots before re-import
+    for lng in $languages
+    do
+	make-last-snapshot GNOME $project $lng
+    done
+
     ### import the POT file
     ./pot_import.php GNOME $project $pot_name $pot_file
 
@@ -43,7 +49,7 @@ do
 	### import the PO file
 	./po_import.php GNOME $project $pot_name $lng $po_file
 	
-	## make an initial snapshot
+	## make an initial snapshot after (re)import
 	make-snapshot GNOME $project $lng $po_file
     done
 

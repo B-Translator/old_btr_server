@@ -26,6 +26,12 @@ do
 	continue;
     fi
 
+    ### make last snapshots before re-import
+    for lng in $languages
+    do
+	make-last-snapshot KDE $project $lng
+    done
+
     ### import the POT files
     pot_files=$(find $pot_dir/$project -name '*\.po')
     for pot_file in $pot_files
@@ -53,7 +59,7 @@ do
 	    ./po_import.php KDE $project $pot_name $lng $po_file
 	done
 
-	## make initial snapshot
+	## make initial snapshot after (re)import
 	make-snapshot KDE $project $lng $po_files
     done
 

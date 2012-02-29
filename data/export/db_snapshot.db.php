@@ -4,7 +4,6 @@ include(dirname(dirname(__FILE__)) . '/db/class.DB.php');
 
 class DB_Snapshot extends DB
 {
-  /*
   private function delete_snapshot($origin, $project, $lng)
   {
     $delete_snapshot = $this->dbh->prepare("
@@ -17,12 +16,11 @@ class DB_Snapshot extends DB
 		    );
     $delete_snapshot->execute($params);
   }
-  */
 
   public function insert_snapshot($origin, $project, $lng, $file)
   {
     // Delete it first (in case that it exists).
-    //$this->delete_snapshot($origin, $project, $lng);
+    $this->delete_snapshot($origin, $project, $lng);
 
     $insert_snapshot = $this->dbh->prepare("
       INSERT INTO l10n_suggestions_snapshots

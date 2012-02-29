@@ -28,7 +28,11 @@ snapshot_dir=tmp1_$pid
 mkdir -p $snapshot_dir
 snapshot_file=$origin-$project-$lng.tgz
 ./db_snapshot.php get $origin $project $lng $snapshot_file
-tar -C $snapshot_dir -xz --file=$snapshot_file
+if [ -f $snapshot_file ]
+then
+    tar -C $snapshot_dir -xz --file=$snapshot_file
+    rm $snapshot_file
+fi
 
 ### make the unified diff (diff -u) with the previous snapshot
 file_diff="$origin-$project-$lng.diff"
@@ -42,7 +46,6 @@ echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
 $pology -n $snapshot_dir $export_dir > $file_ediff
 
 ### create a tarball with the latest export
-rm $snapshot_file
 tar -C $export_dir -cz --file=$snapshot_file .
 
 ### clean up

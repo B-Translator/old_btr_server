@@ -9,6 +9,9 @@ cd $(dirname $0)
 ### get $data_root
 . ../config.sh
 
+### include snapshot functions
+. make-snapshot.sh
+
 ### Files that are imported are assumed to be
 ### under the directory '$data_root/$origin/'.
 ### The path under $origin does not matter (can
@@ -21,6 +24,10 @@ mkdir -p $po_dir/
 cp ~/pingus-fr.po $po_dir/ 
 cp ~/pingus-sq.po $po_dir/ 
 
+### make last snapshots before re-import
+make-last-snapshot $origin $project fr
+make-last-snapshot $origin $project sq
+
 ### import the template
 potemplate=pingus
 ./pot_import.php $origin $project $potemplate $po_dir/pingus-fr.po
@@ -29,8 +36,7 @@ potemplate=pingus
 ./po_import.php $origin $project $potemplate fr $po_dir/pingus-fr.po
 ./po_import.php $origin $project $potemplate sq $po_dir/pingus-sq.po
 
-## make initial snapshots
-. make-snapshot.sh
+## make initial snapshots after (re)import
 make-snapshot $origin $project fr $po_dir/pingus-fr.po
 make-snapshot $origin $project sq $po_dir/pingus-sq.po
 

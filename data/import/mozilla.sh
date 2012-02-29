@@ -26,6 +26,12 @@ do
 	continue;
     fi
 
+    ### make last snapshots before re-import
+    for lng in $languages
+    do
+	make-last-snapshot Mozilla $project $lng
+    done
+
     ### import the POT files
     pot_files=$(find $pot_dir/$project -name '*\.pot')
     for pot_file in $pot_files
@@ -53,7 +59,7 @@ do
 	    ./po_import.php Mozilla $project $pot_name $lng $po_file
 	done
 
-	## make initial snapshots
+	## make initial snapshots after (re)import
 	make-snapshot Mozilla $project $lng $po_files
     done
 

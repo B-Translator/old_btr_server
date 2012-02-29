@@ -5,14 +5,15 @@
 ### get the parameters
 if [ $# -lt 3 ]
 then
-    echo "Usage: $0 origin project lng"
+    echo "Usage: $0 origin project lng [diff_comment]"
     echo ""
     exit 1
 fi
 origin=$1
 project=$2
 lng=$3
-#echo $origin $project $lng;  exit;  # debug
+diff_comment=$4
+#echo "$origin $project $lng '$diff_comment'";  exit;  # debug
 
 ### go to the script directory
 cd $(dirname $0)
@@ -29,7 +30,7 @@ file_ediff="$origin-$project-$lng.ediff"
 ### store them in the DB and save the snapshot as well
 if [ -s $file_diff -o -s $file_ediff ]
 then
-    ./db_diff.php add $origin $project $lng $file_diff $file_ediff
+    ./db_diff.php add $origin $project $lng $file_diff $file_ediff "$diff_comment"
     ./db_snapshot.php update $origin $project $lng $snapshot_file
 fi
 

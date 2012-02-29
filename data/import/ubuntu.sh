@@ -32,6 +32,12 @@ do
 	continue;
     fi
 
+    ### make last snapshots before re-import
+    for lng in $languages
+    do
+	make-last-snapshot ubuntu $project $lng
+    done
+
     ### import the POT file
     pot_name=$project
     ./pot_import.php ubuntu $project $pot_name $pot_file
@@ -47,7 +53,7 @@ do
 	### import the PO file
 	./po_import.php ubuntu $project $pot_name $lng $po_file
 
-	## make initial snapshot
+	## make initial snapshot after (re)import
 	make-snapshot ubuntu $project $lng $po_file
     done
 
