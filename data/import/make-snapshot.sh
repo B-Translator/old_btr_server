@@ -10,6 +10,9 @@
 ### format. It also contains the entries that are skipped
 ### during the import.
 
+### suppress some of the log/debug messages
+### which by default are displayed
+export QUIET=true
 
 function make-last-snapshot()
 {

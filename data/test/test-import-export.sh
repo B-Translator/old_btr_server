@@ -9,10 +9,6 @@ cd $(dirname $0)
 ### import pingus data
 ../import/pingus.sh
 
-### make another snapshot
-../export/make_snapshot.sh misc pingus sq
-../export/make_snapshot.sh misc pingus fr
-
 ### get the pingus diffs
 ../export/wget-diffs.sh misc pingus sq
 ../export/wget-diffs.sh misc pingus sq 1

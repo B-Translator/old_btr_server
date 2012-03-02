@@ -12,7 +12,7 @@ fi
 origin=$1
 project=$2
 lng=$3
-#echo $origin $project $lng;  exit;  # debug
+#echo $0 $origin $project $lng;  exit;  # debug
 
 ### go to the script directory
 cd $(dirname $0)
@@ -36,13 +36,13 @@ fi
 
 ### make the unified diff (diff -u) with the previous snapshot
 file_diff="$origin-$project-$lng.diff"
-echo "diff -rubB $snapshot_dir $export_dir > $file_diff"
+test "$QUIET" = '' && echo "diff -rubB $snapshot_dir $export_dir > $file_diff"
 diff -rubB $snapshot_dir $export_dir > $file_diff
 
 ### make the embedded diff (poediff) with the previous snapshot
 pology=pology/bin/poediff
 file_ediff="$origin-$project-$lng.ediff"
-echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
+test "$QUIET" = '' && echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
 $pology -n $snapshot_dir $export_dir > $file_ediff
 
 ### create a tarball with the latest export
@@ -53,6 +53,9 @@ rm -rf $snapshot_dir
 rm -rf $export_dir
 
 ### output the name of the generated files
-echo "--> $snapshot_file"
-echo "--> $file_diff"
-echo "--> $file_ediff"
+if [ "$QUIET" = '' ]
+then 
+    echo "--> $snapshot_file"
+    echo "--> $file_diff"
+    echo "--> $file_ediff"
+fi

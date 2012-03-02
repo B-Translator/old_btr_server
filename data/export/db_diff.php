@@ -45,7 +45,7 @@ if ($operation == 'add') {
   if ($file_ediff == null)  print_usage($argv);
   $comment = isset($argv[7]) ? $argv[7] : null;
   $user_id = isset($argv[8]) ? $argv[8] : null;
-  print "$script $operation $origin $project $lng $file_diff $file_ediff $comment $user_id\n";
+  print "$script $operation $origin $project $lng $file_diff $file_ediff '$comment' $user_id\n";
 }
 else if ($operation == 'list') {
 }
