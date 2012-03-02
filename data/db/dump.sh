@@ -12,9 +12,9 @@ fi
 
 ### make this 'full' for a full dump of the database
 ### or 'user' for dumping only user suggestions and votes
-dump='false'
+#dump='false'
 #dump='full'
-#dump='user'
+dump='user'
 
 ### dump only the schema of the database
 mysqldump --user=root --password --no-data --compact --add-drop-table \
@@ -53,13 +53,13 @@ then
   date=$(date +%Y%m%d)
   dump_file=l10n_suggestions_user_$date.sql
 
-  mysqldump --user=root --password --opt --database $db_name \
-            --tables l10n_suggestions_translations \
+  mysqldump --user=root --password --no-create-info \
+            --database $db_name --tables l10n_suggestions_translations \
             --where="uid>1" > $dump_file
-  mysqldump --user=root --password --opt --database $db_name \
-            --tables l10n_suggestions_users >> $dump_file
-  mysqldump --user=root --password --opt --database $db_name \
-            --tables l10n_suggestions_votes >> $dump_file
+  mysqldump --user=root --password --opt \
+            --database $db_name --tables l10n_suggestions_users >> $dump_file
+  mysqldump --user=root --password --opt \
+            --database $db_name --tables l10n_suggestions_votes >> $dump_file
 
   gzip $dump_file
 fi
