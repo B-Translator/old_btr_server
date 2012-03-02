@@ -1,29 +1,3 @@
-DROP TABLE IF EXISTS `l10n_suggestions_snapshots`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_snapshots` (
-  `pguid` char(40) COLLATE utf8_bin NOT NULL COMMENT 'Reference to the project.',
-  `lng` varchar(10) COLLATE utf8_bin NOT NULL COMMENT 'The language of translation.',
-  `snapshot` mediumblob NOT NULL COMMENT 'The content of the tgz archive.',
-  `uid` int(11) NOT NULL COMMENT 'Id of the user that updated the snapshot for the last time.',
-  `time` datetime NOT NULL COMMENT 'The time of last update.',
-  PRIMARY KEY (`pguid`,`lng`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Snapshots are tgz archives of project-lng translation files.';
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_templates`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_templates` (
-  `potid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
-  `tplname` varchar(50) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'The name of the POT template (to distinguish it from the other templates of the same project).',
-  `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and name of the imported POT file.',
-  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the project to which this PO template belongs.',
-  `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
-  `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
-  PRIMARY KEY (`potid`),
-  KEY `pguid` (`pguid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9763 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_diffs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -39,19 +13,17 @@ CREATE TABLE `l10n_suggestions_diffs` (
   PRIMARY KEY (`pguid`,`lng`,`nr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Diffs between the current state and the last snapshot.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_projects`;
+DROP TABLE IF EXISTS `l10n_suggestions_snapshots`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_projects` (
-  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
-  `project` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Project name (with the release appended if needed).',
-  `origin` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'The origin of the project (where does it come from).',
-  `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
-  `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
-  PRIMARY KEY (`pguid`),
-  KEY `project` (`project`),
-  KEY `origin` (`origin`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
+CREATE TABLE `l10n_suggestions_snapshots` (
+  `pguid` char(40) COLLATE utf8_bin NOT NULL COMMENT 'Reference to the project.',
+  `lng` varchar(10) COLLATE utf8_bin NOT NULL COMMENT 'The language of translation.',
+  `snapshot` mediumblob NOT NULL COMMENT 'The content of the tgz archive.',
+  `uid` int(11) NOT NULL COMMENT 'Id of the user that updated the snapshot for the last time.',
+  `time` datetime NOT NULL COMMENT 'The time of last update.',
+  PRIMARY KEY (`pguid`,`lng`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Snapshots are tgz archives of project-lng translation files.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -70,24 +42,35 @@ CREATE TABLE `l10n_suggestions_files` (
   PRIMARY KEY (`fid`),
   UNIQUE KEY `hash` (`hash`),
   KEY `potid` (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12165 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
+) ENGINE=InnoDB AUTO_INCREMENT=17933 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_strings`;
+DROP TABLE IF EXISTS `l10n_suggestions_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_strings` (
-  `string` text COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
-  `context` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
-  `sguid` char(40) CHARACTER SET ascii NOT NULL DEFAULT '' COMMENT 'Globally Unique ID of the string, generated as a hash of the string and context: SHA1(CONCAT(string,context)) ',
-  `uid` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
-  `time` datetime DEFAULT NULL COMMENT 'The time that this string was entered on the DB.',
-  `count` tinyint(4) DEFAULT '1' COMMENT 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings should be translated first.',
-  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
-  PRIMARY KEY (`sguid`),
-  KEY `string` (`string`(100)),
-  KEY `uid` (`uid`,`time`),
-  FULLTEXT KEY `string_text` (`string`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
+CREATE TABLE `l10n_suggestions_projects` (
+  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
+  `project` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Project name (with the release appended if needed).',
+  `origin` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'The origin of the project (where does it come from).',
+  `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
+  `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
+  PRIMARY KEY (`pguid`),
+  KEY `project` (`project`),
+  KEY `origin` (`origin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_templates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `l10n_suggestions_templates` (
+  `potid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
+  `tplname` varchar(50) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'The name of the POT template (to distinguish it from the other templates of the same project).',
+  `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and name of the imported POT file.',
+  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the project to which this PO template belongs.',
+  `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
+  `time` datetime DEFAULT NULL COMMENT 'The date and time that the project was registered.',
+  PRIMARY KEY (`potid`),
+  KEY `pguid` (`pguid`)
+) ENGINE=InnoDB AUTO_INCREMENT=14133 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -106,7 +89,24 @@ CREATE TABLE `l10n_suggestions_locations` (
   PRIMARY KEY (`lid`),
   KEY `sguid` (`sguid`),
   KEY `potid` (`potid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1540958 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
+) ENGINE=InnoDB AUTO_INCREMENT=2254204 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_suggestions_strings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `l10n_suggestions_strings` (
+  `string` text COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
+  `context` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
+  `sguid` char(40) CHARACTER SET ascii NOT NULL DEFAULT '' COMMENT 'Globally Unique ID of the string, generated as a hash of the string and context: SHA1(CONCAT(string,context)) ',
+  `uid` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
+  `time` datetime DEFAULT NULL COMMENT 'The time that this string was entered on the DB.',
+  `count` tinyint(4) DEFAULT '1' COMMENT 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings should be translated first.',
+  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
+  PRIMARY KEY (`sguid`),
+  KEY `string` (`string`(100)),
+  KEY `uid` (`uid`,`time`),
+  FULLTEXT KEY `string_text` (`string`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -141,7 +141,7 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `tid` (`tguid`),
   KEY `uid` (`uid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_suggestions_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
