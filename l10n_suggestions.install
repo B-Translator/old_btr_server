@@ -83,6 +83,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'The date and time that the record was registered.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => FALSE,
       ),
     ),
@@ -130,6 +131,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'The date and time that the project was registered.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => FALSE,
       ),
     ),
@@ -167,6 +169,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'The date and time that the project was registered.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => FALSE,
       ),
     ),
@@ -276,6 +279,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'The time that this string was entered on the DB.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => FALSE,
       ),
       'count' => array(
@@ -296,7 +300,6 @@ function l10n_suggestions_schema() {
     'primary key' => array('sguid'),
     'indexes' => array(
       'string' => array(array('string', 100)),
-      'string_text' => array('string'),
       'uid' => array('uid', 'time'),
     ),
   );
@@ -346,6 +349,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'Time when the translation was entered into the database.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => FALSE,
       ),
       'active' => array(
@@ -388,6 +392,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'Timestamp of the voting time.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => FALSE,
       ),
       'active' => array(
@@ -452,7 +457,9 @@ function l10n_suggestions_schema() {
       ),
       'snapshot' => array(
         'description' => 'The content of the tgz archive.',
-        'type' => 'mediumblob',
+        'type' => 'blob',
+        'size' => 'medium',
+        'mysql_type' => 'mediumblob',
         'not null' => TRUE,
       ),
       'uid' => array(
@@ -463,6 +470,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'The time of last update.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => TRUE,
       ),
     ),
@@ -516,6 +524,7 @@ function l10n_suggestions_schema() {
       'time' => array(
         'description' => 'The date and time that the diff was saved.',
         'type' => 'datetime',
+        'mysql_type' => 'DATETIME',
         'not null' => TRUE,
       ),
     ),
