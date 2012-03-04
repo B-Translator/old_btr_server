@@ -118,7 +118,7 @@ function l10n_suggestions_get_random_sguid() {
   // Condition for selecting projects
   // from which to get a random string.
   $where = "(origin='KDE' AND project='kdelibs')"
-         . " OR (origin='ubuntu' AND project='pingus')"
+         . " OR (origin='misc' AND project='pingus')"
          . " OR (origin='LibreOffice' AND project='sw')"
          . " OR (origin='Mozilla' AND project='browser')";
 
