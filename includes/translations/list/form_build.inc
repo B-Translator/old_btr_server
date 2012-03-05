@@ -1,6 +1,6 @@
 <?php
 /**
- * The function l10n_suggestions_translate_form() builds a render array
+ * The function l10n_feedback_translate_form() builds a render array
  * for the strings and their corresponding translations/suggestions.
  * The edit and submit functionality will be available only when suitable.
  */
@@ -18,7 +18,7 @@
  * @return
  *   A render array of the page.
  */
-function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
+function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
   $pager = theme('pager', array('tags' => NULL, 'element' => 0));
   $form = array(
     'target' => array(
@@ -35,7 +35,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
     ),
     'strings' => array(
       '#tree' => TRUE,
-      '#theme' => 'l10n_suggestions_translate_table',
+      '#theme' => 'l10n_feedback_translate_table',
     ),
 
     // The submit buttons will appear only when the user has
@@ -55,7 +55,7 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
 
   // Fill in string values for the editor.
   foreach ($strings as $sguid => $string) {
-    $form['strings'][$sguid] = _l10n_suggestions_translate_form_item($form_state, $string, $lng);
+    $form['strings'][$sguid] = _l10n_feedback_translate_form_item($form_state, $string, $lng);
   }
 
   //dpm($form, '$form');  //debug
@@ -65,16 +65,16 @@ function l10n_suggestions_translate_form($form, &$form_state, $strings, $lng) {
 /**
  * Creates the form fragment for a source string and its translations.
  */
-function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
+function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
 
   $string_unpacked = $string->string;
-  $string->string = l10n_suggestions_unpack_string($string->string);
+  $string->string = l10n_feedback_unpack_string($string->string);
 
   $form = array(
     '#string' => $string,
     '#langcode' => $lng,
     'source' => array(
-      'string' => array('#markup' => _l10n_suggestions_translate_render_textarray($string->string)),
+      'string' => array('#markup' => _l10n_feedback_translate_render_textarray($string->string)),
     ),
   );
 
@@ -91,8 +91,8 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
    * TODO: Improve alternatives in other languages.
   $arr_items = array();
   foreach ($string->alternatives as $langcode => $string) {
-    $string = l10n_suggestions_unpack_string($string);
-    $rendered_string = _l10n_suggestions_translate_render_textarray($string);
+    $string = l10n_feedback_unpack_string($string);
+    $rendered_string = _l10n_feedback_translate_render_textarray($string);
     $arr_items = array(
       '#markup' => "<strong>$langcode:</strong><label class='l10n-string'>$rendered_string</label>",
     );
@@ -113,13 +113,13 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
 
   foreach ($translations as $tguid => $translation) {
     // Add the translation to the list.
-    $form[$tguid] = _l10n_suggestions_translate_translation($translation, $string->sguid, $lng);
+    $form[$tguid] = _l10n_feedback_translate_translation($translation, $string->sguid, $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('submit suggestions')) {
-    $textarea = _l10n_suggestions_translate_translation_textarea($string, $lng);
-    $form[$textarea->tguid] = _l10n_suggestions_translate_translation($textarea, $string->sguid, $lng);
+    $textarea = _l10n_feedback_translate_translation_textarea($string, $lng);
+    $form[$textarea->tguid] = _l10n_feedback_translate_translation($textarea, $string->sguid, $lng);
   }
 
   return $form;
@@ -128,12 +128,12 @@ function _l10n_suggestions_translate_form_item(&$form_state, $string, $lng) {
 /**
  * Build mock object for new textarea.
  */
-function _l10n_suggestions_translate_translation_textarea($string, $lng) {
+function _l10n_feedback_translate_translation_textarea($string, $lng) {
   global $user;
 
   // Fill in with as many items as required. If the source was plural, we
   // need to fill in with a number adequate for this language.
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   $nplurals = $languages[$lng]['plurals'];
   $arr_translations = array_fill(0, count($string->string) > 1 ? $nplurals : 1, '');
   $translation = implode("\0", $arr_translations);
@@ -151,10 +151,10 @@ function _l10n_suggestions_translate_translation_textarea($string, $lng) {
 /**
  * Creates the form fragment for a translated string.
  */
-function _l10n_suggestions_translate_translation($translation, $string_sguid, $lng) {
+function _l10n_feedback_translate_translation($translation, $string_sguid, $lng) {
   global $user;
 
-  $translation->translation = l10n_suggestions_unpack_string($translation->translation);
+  $translation->translation = l10n_feedback_unpack_string($translation->translation);
 
   $is_own = ($user->uid == $translation->uid);
   $is_approved = in_array($user->uid, array_keys($translation->votes));
@@ -162,7 +162,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
   $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
 
   $form = array(
-    '#theme' => 'l10n_suggestions_translate_translation',
+    '#theme' => 'l10n_feedback_translate_translation',
     'original' => array(
       '#type' => 'value',
       '#value' => $translation,
@@ -170,13 +170,13 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
   );
 
   // The 'approved' radio/checkbox is used to pick the approved (voted/liked) translation(s).
-  $voting_mode = variable_get('l10n_suggestions_voting_mode', 'single');
+  $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');
   $type = ($voting_mode == 'single') ? 'radio' : 'checkbox';
   $form['approved'] = array(
     '#type' => $type,
-    '#theme' => 'l10n_suggestions_translate_radio',
+    '#theme' => 'l10n_feedback_translate_radio',
     '#theme_wrappers' => array(),
-    '#title' => _l10n_suggestions_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
+    '#title' => _l10n_feedback_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tguid,
     '#default_value' => $is_approved ? $translation->tguid : '',
     //'#disabled' => !user_access('submit votes'),
@@ -216,7 +216,7 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
       );
     }
     if (isset($translation->author)) {
-      $title = l10n_suggestions_translate_byline($translation->author, $translation->uid, $translation->time, -1, -1, FALSE);
+      $title = l10n_feedback_translate_byline($translation->author, $translation->uid, $translation->time, -1, -1, FALSE);
 
       $form['author'] = array(
         '#markup' => $title,
@@ -252,11 +252,11 @@ function _l10n_suggestions_translate_translation($translation, $string_sguid, $l
  * Generate markup for an unpacked string.
  *
  * @param $textarray
- *   An array of strings as generated by l10n_suggestions_unpack_string().
+ *   An array of strings as generated by l10n_feedback_unpack_string().
  * @param $empty
  *   Specific data to include as the data to use when empty.
  */
-function _l10n_suggestions_translate_render_textarray($textarray, $empty = '') {
+function _l10n_feedback_translate_render_textarray($textarray, $empty = '') {
   // data-empty is a proprietary attribute used in editor.css to be displayed when
   // starting to submit a new suggestion.
   $empty = !empty($empty) ? ' data-empty="' . check_plain($empty) . '"' : '';
@@ -267,7 +267,7 @@ function _l10n_suggestions_translate_render_textarray($textarray, $empty = '') {
 /**
  * Generates the byline containing meta information about a string.
  */
-function l10n_suggestions_translate_byline($name, $uid, $time, $medium, $type, $link_user = TRUE) {
+function l10n_feedback_translate_byline($name, $uid, $time, $medium, $type, $link_user = TRUE) {
   $params = array(
     '!author' => $uid ? ($link_user ? theme('username', array('account' => (object) array('name' => $name, 'uid' => $uid))) : check_plain($name)) : t('uknown user'),
     // Also skip handling time if uid was not specified (for decline entries

@@ -5,11 +5,11 @@
 /**
  * Retrieve a JSON list of autocomplete suggestions for projects.
  */
-function l10n_suggestions_project_autocomplete($string = '') {
+function l10n_feedback_project_autocomplete($string = '') {
   $matches = array();
   if ($string) {
     $query = "SELECT DISTINCT project
-              FROM {l10n_suggestions_projects}
+              FROM {l10n_feedback_projects}
               WHERE project LIKE :str ORDER BY project";
     $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
     foreach ($result as $project) {
@@ -23,11 +23,11 @@ function l10n_suggestions_project_autocomplete($string = '') {
 /**
  * Retrieve a JSON list of autocomplete suggestions for origins of projects.
  */
-function l10n_suggestions_origin_autocomplete($string = '') {
+function l10n_feedback_origin_autocomplete($string = '') {
   $matches = array();
   if ($string) {
     $query = "SELECT DISTINCT origin
-              FROM {l10n_suggestions_projects}
+              FROM {l10n_feedback_projects}
               WHERE origin LIKE :str ORDER BY origin";
     $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
     foreach ($result as $project) {
@@ -41,7 +41,7 @@ function l10n_suggestions_origin_autocomplete($string = '') {
 /**
  * Retrieve a JSON list of autocomplete suggestions for users.
  */
-function l10n_suggestions_user_autocomplete($string = '') {
+function l10n_feedback_user_autocomplete($string = '') {
   $matches = array();
   if ($string) {
     $query = "SELECT name FROM {users} WHERE name LIKE :str ORDER BY name";
@@ -62,12 +62,12 @@ function l10n_suggestions_user_autocomplete($string = '') {
  * @param $sguid
  *   Id of the string.
  */
-function l10n_suggestions_string_details($sguid) {
+function l10n_feedback_string_details($sguid) {
 
   $output = '';
 
   // Get the context of this string.
-  $context = db_query("SELECT context FROM l10n_suggestions_strings WHERE sguid = :sguid",
+  $context = db_query("SELECT context FROM l10n_feedback_strings WHERE sguid = :sguid",
              array(':sguid' => $sguid))
     ->fetchField();
   if (!empty($context)) {
@@ -77,10 +77,10 @@ function l10n_suggestions_string_details($sguid) {
   // List projects where this string is used.
   $output .= '<h3>' .  t('Used on these projects:') . '</h3>';
   $sql = "SELECT CONCAT(p.origin, ' / ', p.project) AS proj
-          FROM l10n_suggestions_strings s
-          RIGHT JOIN l10n_suggestions_locations l ON (l.sguid = s.sguid)
-          RIGHT JOIN l10n_suggestions_templates t ON (t.potid = l.potid)
-          RIGHT JOIN l10n_suggestions_projects p ON (p.pguid = t.pguid)
+          FROM l10n_feedback_strings s
+          RIGHT JOIN l10n_feedback_locations l ON (l.sguid = s.sguid)
+          RIGHT JOIN l10n_feedback_templates t ON (t.potid = l.potid)
+          RIGHT JOIN l10n_feedback_projects p ON (p.pguid = t.pguid)
           WHERE s.sguid = :sguid
           ORDER BY p.origin, p.project";
   $project_list = db_query($sql, array(':sguid' => $sguid))->fetchCol();
@@ -100,7 +100,7 @@ function l10n_suggestions_string_details($sguid) {
  *   theming should be applied. Non-AJAX support is a fallback if JS is
  *   turned off.
  */
-function l10n_suggestions_translation_details($tid = 0, $ajax = 0) {
+function l10n_feedback_translation_details($tid = 0, $ajax = 0) {
 
   // Get data about this translation.
   $string = db_query(
@@ -114,7 +114,7 @@ function l10n_suggestions_translation_details($tid = 0, $ajax = 0) {
     $GLOBALS['devel_shutdown'] = FALSE;
   }
   else {
-    $unpacked = l10n_suggestions_unpack_string($string->translation);
+    $unpacked = l10n_feedback_unpack_string($string->translation);
     $output .= '<h3>' . t('Translation') . '</h3>' . theme('item_list', array('items' => $unpacked)) . '<h3>' . t('History') . '</h3>';
   }
 
@@ -124,7 +124,7 @@ function l10n_suggestions_translation_details($tid = 0, $ajax = 0) {
   $uid_submitted = 0;
   $history_list = array();
   foreach ($result as $item) {
-    $history_list[] = l10n_suggestions_translate_byline($item->name, $item->uid_action, $item->time_action, $item->medium_action, $item->type_action);
+    $history_list[] = l10n_feedback_translate_byline($item->name, $item->uid_action, $item->time_action, $item->medium_action, $item->type_action);
     if ($item->type_action == L10N_SERVER_ACTION_ADD) {
       // Remember the first uid who submitted this. This will get overwritten, and since we are going backwards in time,
       // the last value kept will be the first uid who submitted this string. We need this in case it is different to

@@ -17,7 +17,7 @@
  *   is an associative array, with translations and votes as nested
  *   associative arrays.
  */
-function l10n_suggestions_get_strings($filter_query, $lng) {
+function l10n_feedback_get_strings($filter_query, $lng) {
   //get the IDs of the strings that are returned by the filter query
   $assoc_arr_sguid = $filter_query->execute()->fetchAllAssoc('sguid');
   if (empty($assoc_arr_sguid))  return array();
@@ -26,7 +26,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   //get string details
   $get_strings =
     " SELECT sguid, string
-      FROM {l10n_suggestions_strings}
+      FROM {l10n_feedback_strings}
       WHERE sguid IN (:arr_sguid)";
   $result = db_query($get_strings, array(':arr_sguid' => $arr_sguid));
   $arr_strings = $result->fetchAllAssoc('sguid');
@@ -35,8 +35,8 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   $get_translations =
     " SELECT s.sguid, t.tguid, t.lng, t.translation,
              t.time, t.uid, u.name AS author, t.count
-      FROM {l10n_suggestions_strings} s
-      LEFT OUTER JOIN {l10n_suggestions_translations} t ON (s.sguid = t.sguid)
+      FROM {l10n_feedback_strings} s
+      LEFT OUTER JOIN {l10n_feedback_translations} t ON (s.sguid = t.sguid)
       LEFT OUTER JOIN {users} u ON (u.uid = t.uid)
       WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
       ORDER BY t.count DESC";
@@ -51,8 +51,8 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   else {
     $get_votes =
       " SELECT t.tguid, v.vid, v.uid, u.name, v.time
-        FROM {l10n_suggestions_translations} t
-        LEFT OUTER JOIN {l10n_suggestions_votes} v ON (v.tguid = t.tguid)
+        FROM {l10n_feedback_translations} t
+        LEFT OUTER JOIN {l10n_feedback_votes} v ON (v.tguid = t.tguid)
         LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
         WHERE t.tguid IN (:arr_tguid)
         ORDER BY v.time DESC";
@@ -65,11 +65,11 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
   $get_alternatives =
     " SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
       FROM (SELECT sguid, lng, MAX(count) AS max_count
-	    FROM l10n_suggestions_translations
+	    FROM l10n_feedback_translations
 	    WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
 	    GROUP BY sguid, lng
 	    ) AS m
-      INNER JOIN l10n_suggestions_translations AS t
+      INNER JOIN l10n_feedback_translations AS t
 	    ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
       GROUP BY t.sguid, t.lng, t.count";
   $arr_lng = array('fr', 'sq');
@@ -129,7 +129,7 @@ function l10n_suggestions_get_strings($filter_query, $lng) {
  *   a plural string, or one element in case of a regular string. This
  *  is called a $textarray elsewhere.
  */
-function l10n_suggestions_unpack_string($string) {
+function l10n_feedback_unpack_string($string) {
   return explode("\0", $string);
 }
 
@@ -141,7 +141,7 @@ function l10n_suggestions_unpack_string($string) {
  * @return
  *   A packed string with NULL bytes separating each string.
  */
-function l10n_suggestions_pack_string($strings) {
+function l10n_feedback_pack_string($strings) {
   if (is_array($strings)) {
     return implode("\0", $strings);
   }

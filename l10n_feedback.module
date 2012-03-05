@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Module file for l10n_suggestions.
+ * Module file for l10n_feedback.
  */
 
 require_once(dirname(__FILE__) . '/includes/common.inc');
@@ -12,7 +12,7 @@ require_once(dirname(__FILE__) . '/includes/cron.inc');
  * Implements hook_help().
  */
                                /*
-function l10n_suggestions_help($path, $args) {
+function l10n_feedback_help($path, $args) {
   switch($path)
     {
       case 'translations/get':
@@ -31,13 +31,13 @@ function l10n_suggestions_help($path, $args) {
 /**
  * Implements hook_menu().
  */
-function l10n_suggestions_menu() {
+function l10n_feedback_menu() {
 
   $items['translations'] = array(
     'type'            => MENU_NORMAL_ITEM,
     'title'           => 'Translations',
     'description'     => 'Vote the best translation for a string, or suggest a better translation.',
-    'page callback'   => 'l10n_suggestions_vote',
+    'page callback'   => 'l10n_feedback_vote',
     'file'            => 'includes/translations/vote.inc',
     'access callback' => TRUE,
   );
@@ -52,7 +52,7 @@ function l10n_suggestions_menu() {
     'type'            => MENU_LOCAL_TASK,
     'title'           => 'Search',
     'description'     => 'Search strings and translations using various filters.',
-    'page callback'   => 'l10n_suggestions_search',
+    'page callback'   => 'l10n_feedback_search',
     'file'            => 'includes/translations/search.inc',
     'access callback' => TRUE,
     'weight'          => 2,
@@ -62,7 +62,7 @@ function l10n_suggestions_menu() {
     'type'            => MENU_LOCAL_TASK,
     'title'           => 'Export',
     'description'     => 'Export the most voted translations of a project into a PO file.',
-    'page callback'   => 'l10n_suggestions_export',
+    'page callback'   => 'l10n_feedback_export',
     'file'            => 'includes/translations/export.inc',
     'access callback' => TRUE,
     'weight'          => 3,
@@ -72,7 +72,7 @@ function l10n_suggestions_menu() {
     'type'            => MENU_LOCAL_TASK,
     'title'           => 'Import',
     'description'     => 'Import strings and translations from POT/PO files of projects.',
-    'page callback'   => 'l10n_suggestions_import',
+    'page callback'   => 'l10n_feedback_import',
     'file'            => 'includes/translations/import.inc',
     'access callback' => TRUE,
     'weight'          => 4,
@@ -82,7 +82,7 @@ function l10n_suggestions_menu() {
     'type'            => MENU_CALLBACK,
     'title'           => 'Get l10n Translation',
     'description'     => 'Get translation suggestions for a given string.',
-    'page callback'   => 'l10n_suggestions_get',
+    'page callback'   => 'l10n_feedback_get',
     'file'            => 'includes/translations/get.inc',
     'access callback' => TRUE,
   );
@@ -92,7 +92,7 @@ function l10n_suggestions_menu() {
   $items['translations/project/list'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project List',
-    'page callback'   => 'l10n_suggestions_project_list',
+    'page callback'   => 'l10n_feedback_project_list',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -101,7 +101,7 @@ function l10n_suggestions_menu() {
   $items['translations/project/export'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'l10n_suggestions_project_export',
+    'page callback'   => 'l10n_feedback_project_export',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -111,7 +111,7 @@ function l10n_suggestions_menu() {
   $items['translations/project/export_tgz'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'l10n_suggestions_project_export_tgz',
+    'page callback'   => 'l10n_feedback_project_export_tgz',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -122,7 +122,7 @@ function l10n_suggestions_menu() {
   $items['translations/project/diff'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'l10n_suggestions_project_diff',
+    'page callback'   => 'l10n_feedback_project_diff',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -131,7 +131,7 @@ function l10n_suggestions_menu() {
   $items['translations/string_details'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'String details',
-    'page callback'   => 'l10n_suggestions_string_details',
+    'page callback'   => 'l10n_feedback_string_details',
     'file'            => 'includes/ajax_callbacks.inc',
     'access callback' => TRUE,
   );
@@ -140,7 +140,7 @@ function l10n_suggestions_menu() {
   $items['translations/autocomplete/project'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project autocomplete',
-    'page callback'   => 'l10n_suggestions_project_autocomplete',
+    'page callback'   => 'l10n_feedback_project_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
@@ -150,7 +150,7 @@ function l10n_suggestions_menu() {
   $items['translations/autocomplete/origin'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Origin autocomplete',
-    'page callback'   => 'l10n_suggestions_origin_autocomplete',
+    'page callback'   => 'l10n_feedback_origin_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
@@ -160,7 +160,7 @@ function l10n_suggestions_menu() {
   $items['translations/autocomplete/user'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'User autocomplete',
-    'page callback'   => 'l10n_suggestions_user_autocomplete',
+    'page callback'   => 'l10n_feedback_user_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
@@ -172,30 +172,30 @@ function l10n_suggestions_menu() {
 /**
  * Implements hook_theme().
  */
-function l10n_suggestions_theme($existing, $type, $theme, $path) {
+function l10n_feedback_theme($existing, $type, $theme, $path) {
   return array(
-    'l10n_suggestions_filter_form_element' => array(
+    'l10n_feedback_filter_form_element' => array(
       'render element' => 'element',
     ),
-    'l10n_suggestions_translate_translation' => array(
+    'l10n_feedback_translate_translation' => array(
       'render element' => 'element',
     ),
-    'l10n_suggestions_translate_actions' => array(
+    'l10n_feedback_translate_actions' => array(
       'render element' => 'element',
     ),
-    'l10n_suggestions_in_context' => array(
+    'l10n_feedback_in_context' => array(
       'variables' => array('source' => NULL),
     ),
-    'l10n_suggestions_translate_radio' => array(
+    'l10n_feedback_translate_radio' => array(
       'render element' => 'element',
     ),
-    'l10n_suggestions_translate_source' => array(
+    'l10n_feedback_translate_source' => array(
       'render element' => 'element',
     ),
-    'l10n_suggestions_translate_translation_list' => array(
+    'l10n_feedback_translate_translation_list' => array(
       'render element' => 'element',
     ),
-    'l10n_suggestions_translate_table' => array(
+    'l10n_feedback_translate_table' => array(
       'render element' => 'element',
     ),
   );
@@ -220,7 +220,7 @@ function l10n_suggestions_theme($existing, $type, $theme, $path) {
  * module, the module named in the first argument of drupal_mail(). So it's
  * a callback of a type, but not a hook.
  */
-function l10n_suggestions_mail($key, &$message, $params) {
+function l10n_feedback_mail($key, &$message, $params) {
   switch ($key) {
     // Send a string for review.
     case 'send_string_by_email':
@@ -236,25 +236,25 @@ function l10n_suggestions_mail($key, &$message, $params) {
  *
  * Add stylesheets and block search engines from web application pages.
  */
-function l10n_suggestions_init() {
+function l10n_feedback_init() {
   if (arg(0) == 'translation') {
-    drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/l10n_suggestions.css');
+    drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback.css');
     // For the translation overview pages. This is used to present admin page like panels.
     drupal_add_css(drupal_get_path('module', 'system') . '/admin.css');
   }
 
   // Check if language is RTL
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   $lng = arg(2);
   if (array_key_exists($lng, $languages)) {
     // Add RTL style if the current language's direction is RTL
     if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-      drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/l10n_suggestions-rtl.css');
+      drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback-rtl.css');
     }
   }
 
-  //variable_set('l10n_suggestions_voting_mode', 'multiple');  //debug
-  //variable_set('l10n_suggestions_voting_mode', 'single');  //debug
+  //variable_set('l10n_feedback_voting_mode', 'multiple');  //debug
+  //variable_set('l10n_feedback_voting_mode', 'single');  //debug
 
   // Disable breadcrumb.
   drupal_set_breadcrumb(array());
@@ -265,7 +265,7 @@ function l10n_suggestions_init() {
   variable_set('mail_system',
     array_merge(
       variable_get('mail_system', array('default-system' => 'DefaultMailSystem')),  // Previously set mail_system variable
-      array('l10n_suggestions' => 'HTMLMailSystem')
+      array('l10n_feedback' => 'HTMLMailSystem')
     )
   );
   */

@@ -1,5 +1,5 @@
 #!/bin/bash
-### restore the tables of the module l10n_suggestions
+### restore the tables of the module l10n_feedback
 
 ### check the parameters
 if [ $# -ne 2 ]

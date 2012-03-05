@@ -10,19 +10,19 @@
  * which is like: translations/search?lng=fr&words=xyz&limit=10
  * Check and sanize the data, and put default values where missing.
  */
-function l10n_suggestions_build_filter() {
+function l10n_feedback_build_filter() {
 
   //get a copy of the request parameters
   $request = $_GET;
 
   //get language
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   $lng_codes = array_keys($languages);
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
   //by default search for strings similar to the one that is being voted
   if ($lng == '' && isset($_SESSION['random_sguid'])) {
     $sguid = $_SESSION['random_sguid'];
-    $sql = 'SELECT string FROM l10n_suggestions_strings WHERE sguid = :sguid';
+    $sql = 'SELECT string FROM l10n_feedback_strings WHERE sguid = :sguid';
     $string = db_query($sql, array(':sguid' => $sguid))->fetchField();
     if ($string) {
       $lng = 'sq';  // TODO: set the default translation lng for the user.
@@ -34,14 +34,14 @@ function l10n_suggestions_build_filter() {
 
   //number of results to be displayed
   $limit = isset($request['limit']) ? (int)trim($request['limit']) : 0;
-  list($limit_options, $default_limit) = _l10n_suggestions_get_filter_options('limit');
+  list($limit_options, $default_limit) = _l10n_feedback_get_filter_options('limit');
   $filter['limit'] = in_array($limit, $limit_options) ? $limit : $default_limit;
 
   //search can be done either by similarity of l10n strings (natural search),
   //or by matching words according to a certain logic (boolean search);
   //search can be performed either on l10n strings or on the translations
   $mode = isset($request['mode']) ? $request['mode'] : '';
-  list($search_mode_options, $default_search_mode) = _l10n_suggestions_get_filter_options('mode');
+  list($search_mode_options, $default_search_mode) = _l10n_feedback_get_filter_options('mode');
   $filter['mode'] = in_array($mode, $search_mode_options) ? $mode : $default_search_mode;
   $filter['words'] = isset($request['words']) ? $request['words'] : '';
 
@@ -58,7 +58,7 @@ function l10n_suggestions_build_filter() {
 
   //limit by date of string, translation or voting (used by admins)
   $date_filter = isset($request['date_filter']) ? trim($request['date_filter']) : '';
-  list($date_filter_options, $default_date_filter) = _l10n_suggestions_get_filter_options('date_filter');
+  list($date_filter_options, $default_date_filter) = _l10n_feedback_get_filter_options('date_filter');
   $filter['date_filter'] = in_array($date_filter, $date_filter_options) ? $date_filter : $default_date_filter;
 
   //from_date
@@ -81,7 +81,7 @@ function l10n_suggestions_build_filter() {
 /**
  * Submission handler for filtering form.
  */
-function l10n_suggestions_filter_form_submit($form, &$form_state) {
+function l10n_feedback_filter_form_submit($form, &$form_state) {
 
   //dpm($form_state['values']);  //debug
 
@@ -94,7 +94,7 @@ function l10n_suggestions_filter_form_submit($form, &$form_state) {
     // Redirect (with a GET request) keeping the relevant filters intact in the URL.
     $form_state['redirect'] = array(
       $_GET['q'],
-      array('query' => l10n_suggestions_get_query_values($form_state['values']))
+      array('query' => l10n_feedback_get_query_values($form_state['values']))
     );
     return;
   }
@@ -105,12 +105,12 @@ function l10n_suggestions_filter_form_submit($form, &$form_state) {
  * All non-string values are converted to string representations.
  * If a form value is equal to the default value, it is removed (unset) from the array.
  */
-function l10n_suggestions_get_query_values($form_values) {
+function l10n_feedback_get_query_values($form_values) {
 
   $query = array();
 
   //lng
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   $lng_codes = array_keys($languages);
   $lng = trim($form_values['lng']);
   if (in_array($lng, $lng_codes))
@@ -135,7 +135,7 @@ function l10n_suggestions_get_query_values($form_values) {
   }
 
   //date_filter
-  list($date_filter_options, $default_date_filter) = _l10n_suggestions_get_filter_options('date_filter');
+  list($date_filter_options, $default_date_filter) = _l10n_feedback_get_filter_options('date_filter');
   if ( in_array($form_values['date_filter'], $date_filter_options)
     && $form_values['date_filter'] != $default_date_filter )
     {
@@ -155,7 +155,7 @@ function l10n_suggestions_get_query_values($form_values) {
     $query['to_date'] = $str_date;
 
   //limit
-  list($limit_options, $default_limit) = _l10n_suggestions_get_filter_options('limit');
+  list($limit_options, $default_limit) = _l10n_feedback_get_filter_options('limit');
   if ( in_array($form_values['limit'], $limit_options)
     && $form_values['limit'] != $default_limit )
     {
@@ -163,7 +163,7 @@ function l10n_suggestions_get_query_values($form_values) {
     }
 
   //search mode and words
-  list($search_mode_options, $default_search_mode) = _l10n_suggestions_get_filter_options('mode');
+  list($search_mode_options, $default_search_mode) = _l10n_feedback_get_filter_options('mode');
   if ( in_array($form_values['mode'], $search_mode_options)
     && $form_values['mode'] != $default_search_mode )
     {
@@ -181,7 +181,7 @@ function l10n_suggestions_get_query_values($form_values) {
  * @param $filters
  *   Array of filter options.
  */
-function l10n_suggestions_filter_form($form, &$form_state, $filter) {
+function l10n_feedback_filter_form($form, &$form_state, $filter) {
 
   //if the form has no values yet (either it is the first time that
   //the form is opened, or we have a get request), we set the values
@@ -195,7 +195,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#suffix' => '</div>',
   );
 
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   $form['lng'] = array(
     '#type' => 'select',
@@ -215,7 +215,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#collapsed' => FALSE,
   );
 
-  list($search_mode_options, $default) = _l10n_suggestions_get_filter_options('mode', 'assoc');
+  list($search_mode_options, $default) = _l10n_feedback_get_filter_options('mode', 'assoc');
   $form['basic_search']['mode'] = array(
     '#type' => 'select',
     '#title' => t('Search Mode'),
@@ -231,7 +231,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#rows' => 2,
   );
 
-  list($limit_options, $default) = _l10n_suggestions_get_filter_options('limit', 'assoc');
+  list($limit_options, $default) = _l10n_feedback_get_filter_options('limit', 'assoc');
   $form['limit'] = array(
     '#type' => 'select',
     '#title' => t('Limit'),
@@ -326,7 +326,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
     '#collapsed' => TRUE,
   );
 
-  list($date_filter_options, $default) = _l10n_suggestions_get_filter_options('date_filter', 'assoc');
+  list($date_filter_options, $default) = _l10n_feedback_get_filter_options('date_filter', 'assoc');
   $form['advanced_search']['date']['date_filter'] = array(
     '#type' => 'select',
     '#title' => t('What to Filter'),
@@ -382,7 +382,7 @@ function l10n_suggestions_filter_form($form, &$form_state, $filter) {
  * and the default value. If being associative ($assoc) is not required
  * then only the keys are retrned.
  */
-function _l10n_suggestions_get_filter_options($field, $assoc =FALSE) {
+function _l10n_feedback_get_filter_options($field, $assoc =FALSE) {
 
   switch ($field) {
 

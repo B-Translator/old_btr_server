@@ -10,7 +10,7 @@ class DB_PO_Export extends DB
   public function get_template_potid($origin, $project, $tplname)
   {
     $get_template_potid = $this->dbh->prepare("
-      SELECT potid FROM l10n_suggestions_templates
+      SELECT potid FROM l10n_feedback_templates
       WHERE pguid = :pguid AND tplname = :tplname
     ");
     $pguid = sha1($origin . $project);
@@ -29,7 +29,7 @@ class DB_PO_Export extends DB
   public function get_file_headers($potid, $lng)
   {
     $get_file_headers = $this->dbh->prepare("
-      SELECT headers, comments FROM l10n_suggestions_files
+      SELECT headers, comments FROM l10n_feedback_files
       WHERE potid = :potid AND lng = :lng
     ");
     $params = array(':potid' => $potid, ':lng' => $lng);
@@ -51,8 +51,8 @@ class DB_PO_Export extends DB
       SELECT l.sguid, s.string, s.context,
 	     translator_comments, extracted_comments, line_references, flags,
 	     previous_msgctxt, previous_msgid, previous_msgid_plural
-      FROM l10n_suggestions_locations l
-      LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
+      FROM l10n_feedback_locations l
+      LEFT JOIN l10n_feedback_strings s ON (s.sguid = l.sguid)
       WHERE l.potid = :potid
     ");
     $params = array(':potid' => $potid);
@@ -76,13 +76,13 @@ class DB_PO_Export extends DB
     $get_best_translations = $this->dbh->prepare("
       SELECT t2.sguid, t2.translation
       FROM (SELECT t1.sguid, t1.translation, MAX(t1.count) AS max_count
-	      FROM l10n_suggestions_locations AS l1
-	      LEFT JOIN l10n_suggestions_translations AS t1
+	      FROM l10n_feedback_locations AS l1
+	      LEFT JOIN l10n_feedback_translations AS t1
 		    ON (t1.sguid = l1.sguid AND t1.lng = :lng)
 	      WHERE l1.potid = :potid AND t1.count > 0
 	      GROUP BY t1.sguid
 	   ) AS m
-      LEFT JOIN l10n_suggestions_translations AS t2
+      LEFT JOIN l10n_feedback_translations AS t2
 	    ON (t2.sguid = m.sguid AND t2.lng = :lng AND t2.count = m.max_count)
       GROUP BY t2.sguid
     ");
@@ -105,7 +105,7 @@ class DB_PO_Export extends DB
   public function get_original_file($potid, $lng)
   {
     $get_file_content = $this->dbh->prepare("
-      SELECT content FROM l10n_suggestions_files
+      SELECT content FROM l10n_feedback_files
       WHERE potid = :potid AND lng = :lng
     ");
     $params = array(':potid' => $potid, ':lng' => $lng);
@@ -114,7 +114,7 @@ class DB_PO_Export extends DB
     $row = $get_file_content->fetch();
     $file_content = isset($row['content']) ? $row['content'] : '';
 
-    $tmpfname = tempnam('/tmp', 'l10n_suggestions_export_');
+    $tmpfname = tempnam('/tmp', 'l10n_feedback_export_');
     shell_exec("rm $tmpfname");
     $tmpfname .= '.po';
     file_put_contents($tmpfname, $file_content);

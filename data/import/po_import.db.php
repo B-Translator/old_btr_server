@@ -9,12 +9,12 @@ class DB_PO_Import extends DB
   {
     // check_string_sguid
     $this->queries['check_string_sguid'] = $this->dbh->prepare("
-      SELECT sguid FROM l10n_suggestions_strings WHERE sguid = :sguid
+      SELECT sguid FROM l10n_feedback_strings WHERE sguid = :sguid
     ");
 
     // insert_translation
     $this->queries['insert_translation'] = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_translations
+      INSERT INTO l10n_feedback_translations
 	 (sguid, lng, translation, tguid, count, uid, time)
       VALUES
 	 (:sguid, :lng, :translation, :tguid, :count, :uid, :time)
@@ -28,7 +28,7 @@ class DB_PO_Import extends DB
   {
     $pguid = sha1($origin . $project);
     $stmt = $this->dbh->prepare("
-      SELECT potid FROM l10n_suggestions_templates
+      SELECT potid FROM l10n_feedback_templates
       WHERE pguid = :pguid AND tplname = :tplname
     ");
     $params = array(
@@ -46,7 +46,7 @@ class DB_PO_Import extends DB
   public function insert_file($filename, $relative_filename, $hash, $potid, $lng, $headers, $comments)
   {
     $stmt = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_files
+      INSERT INTO l10n_feedback_files
 	 (filename, content, hash, potid, lng, headers, comments, uid, time)
       VALUES
 	 (:filename, :content, :hash, :potid, :lng, :headers, :comments, :uid, :time)

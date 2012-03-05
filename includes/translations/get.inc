@@ -15,15 +15,15 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Get translation suggestions for a given string.
  * 'lng' and 'sguid' are passed as parameters to the function.
  */
-function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
+function l10n_feedback_get($lng =NULL, $sguid =NULL) {
 
   // Add the the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
 
   //get languages and language codes
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   $lng_codes = array_keys($languages);
 
   //check the correct usage of parameters
@@ -54,7 +54,7 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
 
   // Add RTL style if the current language's direction is RTL
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor-rtl.css');
   }
 
   /*
@@ -71,10 +71,10 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
   drupal_set_title(t('Get Translations'));
 
   // Get the matching string and its translations.
-  $query = db_select('l10n_suggestions_strings', 's')
+  $query = db_select('l10n_feedback_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
-  $strings = l10n_suggestions_get_strings($query, $lng);
+  $strings = l10n_feedback_get_strings($query, $lng);
   //if ($strings) dpm($strings[0]);  //debug
 
   // If no strings were returned, display an empty message.
@@ -91,7 +91,7 @@ function l10n_suggestions_get($lng =NULL, $sguid =NULL) {
   }
 
   // Output the string and its translations.
-  $output = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
+  $output = drupal_get_form('l10n_feedback_translate_form', $strings, $lng);
 
   return $output;
 }

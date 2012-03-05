@@ -14,10 +14,10 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/vote
  * Vote the best translation for a string, or suggest a better translation.
  */
-function l10n_suggestions_vote($sguid =NULL, $one_time_login =NULL) {
+function l10n_feedback_vote($sguid =NULL, $one_time_login =NULL) {
 
   if ($one_time_login != NULL) {
-    l10n_suggestions_login_one_time($one_time_login);
+    l10n_feedback_login_one_time($one_time_login);
     drupal_goto("translations/$sguid");
     return;
   }
@@ -26,17 +26,17 @@ function l10n_suggestions_vote($sguid =NULL, $one_time_login =NULL) {
   $lng = 'sq';
 
   // Add the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
 
   // Get languages and language codes
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   $lng_codes = array_keys($languages);
 
   // Add RTL style if the current language's direction is RTL
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor-rtl.css');
   }
 
   /*
@@ -55,23 +55,23 @@ function l10n_suggestions_vote($sguid =NULL, $one_time_login =NULL) {
   // If no $sguid is given as parameter,
   // get the sguid of a random string.
   if ($sguid == NULL) {
-    $sguid = l10n_suggestions_get_random_sguid();
+    $sguid = l10n_feedback_get_random_sguid();
   }
 
   // Get the matching string and its translations.
-  $query = db_select('l10n_suggestions_strings', 's')
+  $query = db_select('l10n_feedback_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
-  $strings = l10n_suggestions_get_strings($query, $lng);
+  $strings = l10n_feedback_get_strings($query, $lng);
   //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.
-  $output = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
+  $output = drupal_get_form('l10n_feedback_translate_form', $strings, $lng);
 
   return $output;
 }
 
-function l10n_suggestions_login_one_time($one_time_login =NULL)
+function l10n_feedback_login_one_time($one_time_login =NULL)
 {
   if ($one_time_login == NULL)  return false;
 
@@ -113,7 +113,7 @@ function l10n_suggestions_login_one_time($one_time_login =NULL)
 /**
  * Return a random sguid from the strings that should be voted.
  */
-function l10n_suggestions_get_random_sguid() {
+function l10n_feedback_get_random_sguid() {
 
   // Condition for selecting projects
   // from which to get a random string.
@@ -125,10 +125,10 @@ function l10n_suggestions_get_random_sguid() {
   // Get the total number of strings from which we can choose.
   $sql_count = "
     SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pguid FROM l10n_suggestions_projects WHERE $where) p
-    LEFT JOIN l10n_suggestions_templates tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN l10n_suggestions_locations l ON (l.potid = tpl.potid)
-    LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
+    FROM (SELECT pguid FROM l10n_feedback_projects WHERE $where) p
+    LEFT JOIN l10n_feedback_templates tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN l10n_feedback_locations l ON (l.potid = tpl.potid)
+    LEFT JOIN l10n_feedback_strings s ON (s.sguid = l.sguid)
   ";
   $nr_strings = db_query($sql_count)->fetchField();
 
@@ -138,10 +138,10 @@ function l10n_suggestions_get_random_sguid() {
   // Get the sguid of the random row.
   $sql_get_sguid = "
     SELECT s.sguid
-    FROM (SELECT pguid FROM l10n_suggestions_projects WHERE $where) p
-    LEFT JOIN l10n_suggestions_templates tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN l10n_suggestions_locations l ON (l.potid = tpl.potid)
-    LEFT JOIN l10n_suggestions_strings s ON (s.sguid = l.sguid)
+    FROM (SELECT pguid FROM l10n_feedback_projects WHERE $where) p
+    LEFT JOIN l10n_feedback_templates tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN l10n_feedback_locations l ON (l.potid = tpl.potid)
+    LEFT JOIN l10n_feedback_strings s ON (s.sguid = l.sguid)
     LIMIT $row_number, 1
   ";
   $random_sguid = db_query($sql_get_sguid)->fetchField();

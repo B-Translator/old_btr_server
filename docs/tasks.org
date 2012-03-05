@@ -1,4 +1,4 @@
-#+TITLE:     Documentation of the module l10n_suggestions
+#+TITLE:     Documentation of the module l10n_feedback
 #+AUTHOR:    Dashamir Hoxha
 #+EMAIL:     dashohoxha@gmail.com
 #+DATE:      2012-01-04 Wed
@@ -80,8 +80,8 @@ keeping notes, project planning, tasks management, etc.
     It should be possible to integrate with other l10n modules, like
     l10n_server, etc. When a new project is added on l10n_server, the
     strings that need to be translated can get some suggestions
-    automatically from l10n_suggestions. Or they can be submitted to
-    l10n_suggestions so that people can supply translation and
+    automatically from l10n_feedback. Or they can be submitted to
+    l10n_feedback so that people can supply translation and
     suggestions for them, to vote on these suggestions, etc.
 
     The manager of the project on l10n_server may also adjust some
@@ -164,7 +164,7 @@ keeping notes, project planning, tasks management, etc.
 
 *** Other modules interfaces
     In case of integration with other modules (for example with
-    l10n_server), l10n_suggestions should alter their forms and
+    l10n_server), l10n_feedback should alter their forms and
     interfaces to add the neccessary options and settings.
 
 
@@ -529,7 +529,7 @@ keeping notes, project planning, tasks management, etc.
     Or some other web-service (API) interface.
 
 ** Misc
-   - Start with simple tests (l10n_suggestions.test)
+   - Start with simple tests (l10n_feedback.test)
    - Improve instalation.
    - Make an initial package.
 *** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.

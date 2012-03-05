@@ -24,9 +24,9 @@ mysql_params="$($(which php) ../db/get-connection.php bash)"
 #echo $mysql_params;  exit;  # debug
 
 ### get from the DB the names of the templates and the filenames
-sql="SELECT t.tplname, f.filename FROM l10n_suggestions_files f
-     LEFT JOIN l10n_suggestions_templates t ON (f.potid = t.potid)
-     LEFT JOIN l10n_suggestions_projects p ON (t.pguid = p.pguid)
+sql="SELECT t.tplname, f.filename FROM l10n_feedback_files f
+     LEFT JOIN l10n_feedback_templates t ON (f.potid = t.potid)
+     LEFT JOIN l10n_feedback_projects p ON (t.pguid = p.pguid)
      WHERE p.origin = '$origin' AND p.project = '$project' AND f.lng = '$lng'"
 #echo $sql | mysql $mysql_params --skip-column-names | sed -e 's/\t/,/g' ;  exit;  # debug
 result_rows=$(echo $sql | mysql $mysql_params --skip-column-names | sed -e 's/\t/,/g')

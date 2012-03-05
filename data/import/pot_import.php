@@ -121,20 +121,20 @@ function delete_template($potid)
 
   // Decrement the count of the strings related to this template.
   $db->exec("
-         UPDATE l10n_suggestions_strings AS s
-         INNER JOIN (SELECT sguid FROM l10n_suggestions_locations WHERE potid = $potid) AS l
+         UPDATE l10n_feedback_strings AS s
+         INNER JOIN (SELECT sguid FROM l10n_feedback_locations WHERE potid = $potid) AS l
              ON (l.sguid = s.sguid)
          SET s.count = s.count - 1"
 	    );
 
   // Delete the locations of this project.
-  $db->exec("DELETE FROM l10n_suggestions_locations WHERE potid = $potid");
+  $db->exec("DELETE FROM l10n_feedback_locations WHERE potid = $potid");
 
   // Delete the files related to this project.
-  $db->exec("DELETE FROM l10n_suggestions_files WHERE potid = $potid");
+  $db->exec("DELETE FROM l10n_feedback_files WHERE potid = $potid");
 
   // Delete the template itself.
-  $db->exec("DELETE FROM l10n_suggestions_templates WHERE potid = $potid");
+  $db->exec("DELETE FROM l10n_feedback_templates WHERE potid = $potid");
 }
 
 
@@ -170,7 +170,7 @@ function add_string($entry)
   // Increment the count of the string.
   // If no record was affected, it means that such a string
   // does not exist, so insert a new string.
-  $sql = "UPDATE l10n_suggestions_strings SET count = count + 1 WHERE sguid = '$sguid'";
+  $sql = "UPDATE l10n_feedback_strings SET count = count + 1 WHERE sguid = '$sguid'";
   global $db;
   if (!$db->exec($sql)) {
     $db->insert_string($string, $context);

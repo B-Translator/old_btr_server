@@ -10,7 +10,7 @@ class DB_PO_Diff extends DB
   private function get_max_nr($origin, $project, $lng)
   {
     $get_max_nr = $this->dbh->prepare("
-      SELECT MAX(nr) AS max_nr FROM l10n_suggestions_diffs
+      SELECT MAX(nr) AS max_nr FROM l10n_feedback_diffs
       WHERE pguid = :pguid AND lng = :lng
     ");
     $pguid = sha1($origin . $project);
@@ -30,7 +30,7 @@ class DB_PO_Diff extends DB
     $nr++;
 
     $insert_diff = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_diffs
+      INSERT INTO l10n_feedback_diffs
 	 (pguid, lng, nr, diff, ediff, comment, uid, time)
       VALUES
 	 (:pguid, :lng, :nr, :diff, :ediff, :comment, :uid, :time)
@@ -55,7 +55,7 @@ class DB_PO_Diff extends DB
   public function get_diff_list($origin, $project, $lng)
   {
     $get_diff_list = $this->dbh->prepare("
-      SELECT nr, time, comment FROM l10n_suggestions_diffs
+      SELECT nr, time, comment FROM l10n_feedback_diffs
       WHERE pguid = :pguid AND lng = :lng
       ORDER BY time ASC
     ");
@@ -75,7 +75,7 @@ class DB_PO_Diff extends DB
   {
     $diff_field = ($format=='ediff' ? 'ediff' : 'diff');
     $get_diff = $this->dbh->prepare("
-      SELECT $diff_field FROM l10n_suggestions_diffs
+      SELECT $diff_field FROM l10n_feedback_diffs
       WHERE pguid = :pguid AND lng = :lng AND nr = :nr
       ORDER BY time ASC
     ");

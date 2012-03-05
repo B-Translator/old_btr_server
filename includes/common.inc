@@ -6,7 +6,7 @@
 /**
  * Returns an array of languages and their details.
  */
-function l10n_suggestions_get_languages() {
+function l10n_feedback_get_languages() {
 
   $arr_langs = array(
     'fr' => array(

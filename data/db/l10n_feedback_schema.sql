@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS `l10n_suggestions_diffs`;
+DROP TABLE IF EXISTS `l10n_feedback_diffs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_diffs` (
+CREATE TABLE `l10n_feedback_diffs` (
   `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
   `lng` varchar(5) COLLATE utf8_bin NOT NULL COMMENT 'The language of translation.',
   `nr` smallint(5) unsigned NOT NULL COMMENT 'Incremental number of the diffs of a project-language.',
@@ -13,10 +13,10 @@ CREATE TABLE `l10n_suggestions_diffs` (
   PRIMARY KEY (`pguid`,`lng`,`nr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Diffs between the current state and the last snapshot.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_snapshots`;
+DROP TABLE IF EXISTS `l10n_feedback_snapshots`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_snapshots` (
+CREATE TABLE `l10n_feedback_snapshots` (
   `pguid` char(40) COLLATE utf8_bin NOT NULL COMMENT 'Reference to the project.',
   `lng` varchar(10) COLLATE utf8_bin NOT NULL COMMENT 'The language of translation.',
   `snapshot` mediumblob NOT NULL COMMENT 'The content of the tgz archive.',
@@ -25,10 +25,10 @@ CREATE TABLE `l10n_suggestions_snapshots` (
   PRIMARY KEY (`pguid`,`lng`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Snapshots are tgz archives of project-lng translation files.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_files`;
+DROP TABLE IF EXISTS `l10n_feedback_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_files` (
+CREATE TABLE `l10n_feedback_files` (
   `fid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
   `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and filename of the imported PO file.',
   `content` mediumtext COLLATE utf8_bin COMMENT 'The original content of the imported file.',
@@ -44,10 +44,10 @@ CREATE TABLE `l10n_suggestions_files` (
   KEY `potid` (`potid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17933 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_projects`;
+DROP TABLE IF EXISTS `l10n_feedback_projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_projects` (
+CREATE TABLE `l10n_feedback_projects` (
   `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project Globally Unique ID, pguid = SHA1(CONCAT(origin,project))',
   `project` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT 'Project name (with the release appended if needed).',
   `origin` varchar(100) CHARACTER SET utf8 DEFAULT NULL COMMENT 'The origin of the project (where does it come from).',
@@ -58,10 +58,10 @@ CREATE TABLE `l10n_suggestions_projects` (
   KEY `origin` (`origin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A project is the software/application which is translated by';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_templates`;
+DROP TABLE IF EXISTS `l10n_feedback_templates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_templates` (
+CREATE TABLE `l10n_feedback_templates` (
   `potid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
   `tplname` varchar(50) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'The name of the POT template (to distinguish it from the other templates of the same project).',
   `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and name of the imported POT file.',
@@ -72,10 +72,10 @@ CREATE TABLE `l10n_suggestions_templates` (
   KEY `pguid` (`pguid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14133 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT=' Templates are the POT files that are imported.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_locations`;
+DROP TABLE IF EXISTS `l10n_feedback_locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_locations` (
+CREATE TABLE `l10n_feedback_locations` (
   `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier of a line.',
   `sguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the id of the l10n string contained in this line.',
   `potid` int(11) NOT NULL COMMENT 'Reference to the id of the template (POT) that contains this line.',
@@ -91,10 +91,10 @@ CREATE TABLE `l10n_suggestions_locations` (
   KEY `potid` (`potid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2254204 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Locations (lines) where a l10n string is found.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_strings`;
+DROP TABLE IF EXISTS `l10n_feedback_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_strings` (
+CREATE TABLE `l10n_feedback_strings` (
   `string` text COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
   `context` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
   `sguid` char(40) CHARACTER SET ascii NOT NULL DEFAULT '' COMMENT 'Globally Unique ID of the string, generated as a hash of the string and context: SHA1(CONCAT(string,context)) ',
@@ -108,10 +108,10 @@ CREATE TABLE `l10n_suggestions_strings` (
   FULLTEXT KEY `string_text` (`string`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translatable strings that are extracted from...';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_translations`;
+DROP TABLE IF EXISTS `l10n_feedback_translations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_translations` (
+CREATE TABLE `l10n_feedback_translations` (
   `sguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the id of the l10n string that is translated.',
   `lng` varchar(5) COLLATE utf8_bin NOT NULL COMMENT 'Language code (en, fr, sq_AL, etc.)',
   `translation` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The (suggested) translation of the phrase.',
@@ -127,10 +127,10 @@ CREATE TABLE `l10n_suggestions_translations` (
   FULLTEXT KEY `translation_text` (`translation`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_votes`;
+DROP TABLE IF EXISTS `l10n_feedback_votes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_votes` (
+CREATE TABLE `l10n_feedback_votes` (
   `vid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier for a vote.',
   `tguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the id of the translation which is voted.',
   `uid` int(11) NOT NULL COMMENT 'Reference to the id of the user that submitted the vote.',
@@ -143,10 +143,10 @@ CREATE TABLE `l10n_suggestions_votes` (
   KEY `time` (`time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `l10n_suggestions_users`;
+DROP TABLE IF EXISTS `l10n_feedback_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `l10n_suggestions_users` (
+CREATE TABLE `l10n_feedback_users` (
   `uid` int(11) NOT NULL COMMENT 'The numeric identifier of the user.',
   `points` int(11) DEFAULT '0' COMMENT 'Number of points rewarded for his activity.',
   `config` varchar(250) DEFAULT NULL COMMENT 'Serialized configuration variables.',

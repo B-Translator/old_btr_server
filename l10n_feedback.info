@@ -3,5 +3,5 @@ description =  The functionality of http://open-tran.eu/, extended with feedback
 package = l10n suggestions
 core = 7.x
 
-files[] = l10n_suggestions.test
+files[] = l10n_feedback.test
 files[] = includes/html_mail.php

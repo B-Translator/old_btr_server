@@ -2,7 +2,7 @@
 /*
  * Implements hook_cron().
  */
-function l10n_suggestions_cron() {
+function l10n_feedback_cron() {
 
   $queue = DrupalQueue::get('send_string_emails');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
@@ -28,7 +28,7 @@ function l10n_suggestions_cron() {
 /*
  * Implements hook_cron_queue_info().
  */
-function l10n_suggestions_cron_queue_info() {
+function l10n_feedback_cron_queue_info() {
   $queues['send_string_emails'] = array(
     'worker callback' => 'send_string_by_email',
     'time' => 120,
@@ -40,7 +40,7 @@ function send_string_by_email($account) {
 
   // Get a random sguid.
   require_once(dirname(__FILE__) . '/translations/vote.inc');
-  $sguid = l10n_suggestions_get_random_sguid();
+  $sguid = l10n_feedback_get_random_sguid();
 
   $lng = $account->lng;
   $uid = $account->uid;
@@ -71,7 +71,7 @@ Thanks.
 <p>Thanks.</p>
 ";
 
-  $module = 'l10n_suggestions';
+  $module = 'l10n_feedback';
   $key = 'send_string_by_email';
   $from = "l10n-sq.org <noreply@l10n-sq.org>";
   $to = $account->name . ' <' .$account->mail . '>';

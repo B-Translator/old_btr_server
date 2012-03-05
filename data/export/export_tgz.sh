@@ -29,7 +29,7 @@ if [ "$project" != 'all' ]
 then
     project_list=$project
 else
-    sql="SELECT project FROM l10n_suggestions_projects WHERE origin = '$origin'"
+    sql="SELECT project FROM l10n_feedback_projects WHERE origin = '$origin'"
     project_list=$(echo $sql | mysql $mysql_params --skip-column-names)
 fi
 

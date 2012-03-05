@@ -9,12 +9,12 @@ class DB_POT_Import extends DB
   {
     // get_project_pguid
     $this->queries['get_project_pguid'] = $this->dbh->prepare("
-      SELECT pguid FROM l10n_suggestions_projects WHERE pguid = :pguid
+      SELECT pguid FROM l10n_feedback_projects WHERE pguid = :pguid
     ");
 
     // insert_project
     $this->queries['insert_project'] = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_projects
+      INSERT INTO l10n_feedback_projects
 	 (pguid, project, origin, uid, time)
       VALUES
 	 (:pguid, :project, :origin, :uid, :time)
@@ -22,13 +22,13 @@ class DB_POT_Import extends DB
 
     // get_template_potid
     $this->queries['get_template_potid'] = $this->dbh->prepare("
-      SELECT potid FROM l10n_suggestions_templates
+      SELECT potid FROM l10n_feedback_templates
       WHERE pguid = :pguid AND tplname = :tplname
     ");
 
     // insert_template
     $this->queries['insert_template'] = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_templates
+      INSERT INTO l10n_feedback_templates
 	 (tplname, filename, pguid, uid, time)
       VALUES
 	 (:tplname, :filename, :pguid, :uid, :time)
@@ -36,7 +36,7 @@ class DB_POT_Import extends DB
 
     // insert_string
     $this->queries['insert_string'] = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_strings
+      INSERT INTO l10n_feedback_strings
 	 (string, context, sguid, uid, time, count)
       VALUES
 	 (:string, :context, :sguid, :uid, :time, :count)
@@ -44,7 +44,7 @@ class DB_POT_Import extends DB
 
     // insert_location
     $this->queries['insert_location'] = $this->dbh->prepare("
-      INSERT INTO l10n_suggestions_locations
+      INSERT INTO l10n_feedback_locations
 	 (sguid, potid,
           translator_comments, extracted_comments, line_references, flags,
           previous_msgctxt, previous_msgid, previous_msgid_plural)

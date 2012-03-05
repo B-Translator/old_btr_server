@@ -11,7 +11,7 @@
  * @return
  *   An associative array describing commands.
  */
-function l10n_suggestions_drush_command() {
+function l10n_feedback_drush_command() {
   $items = array();
 
   // The 'pot-import' command
@@ -69,13 +69,13 @@ function l10n_suggestions_drush_command() {
 
   // These will appear in the list of topics when `drush topic` is executed.
   // To view this topic, run `drush --include=/full/path/to/examples topic`
-  $items['l10n_suggestions-exposition'] = array(
-    'description' => dt('Importing and exporting PO files from the l10n_suggestions module.'),
+  $items['l10n_feedback-exposition'] = array(
+    'description' => dt('Importing and exporting PO files from the l10n_feedback module.'),
     'hidden' => TRUE,
     'topic' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'callback' => 'drush_print_file',
-    'callback arguments' => array(dirname(__FILE__) . '/l10n_suggestions-topic.txt'),
+    'callback arguments' => array(dirname(__FILE__) . '/l10n_feedback-topic.txt'),
   );
 
   return $items;
@@ -90,7 +90,7 @@ function l10n_suggestions_drush_command() {
  * @return
  *   A string with the help text for your command.
  */
-function l10n_suggestions_drush_help($section) {
+function l10n_feedback_drush_help($section) {
   switch ($section) {
     case 'drush:pot-import':
       return dt("This command will import into DB the POT file of a project.");
@@ -98,10 +98,10 @@ function l10n_suggestions_drush_help($section) {
       return dt("This command will import into DB a PO file of a project.");
     case 'drush:po-export':
       return dt("This command will export a PO file from the DB.");
-    case 'meta:l10n_suggestions:title':
-      return dt("L10n_Suggestions Commands");
-    case 'meta:l10n_suggestions:summary':
-      return dt("Handle the import/export of PO/POT files for the module l10n_suggestions.");
+    case 'meta:l10n_feedback:title':
+      return dt("L10n_Feedback Commands");
+    case 'meta:l10n_feedback:summary':
+      return dt("Handle the import/export of PO/POT files for the module l10n_feedback.");
   }
 }
 
@@ -126,8 +126,8 @@ function l10n_suggestions_drush_help($section) {
 /**
  * Command callback for pot-import.
  */
-function drush_l10n_suggestions_pot_import($origin, $project, $file) {
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/import';
+function drush_l10n_feedback_pot_import($origin, $project, $file) {
+  $path = drupal_get_path('module', 'l10n_feedback') . '/data/import';
   $output = shell_exec("$path/pot_import.php $origin $project $file");
   print $output;
 }
@@ -135,8 +135,8 @@ function drush_l10n_suggestions_pot_import($origin, $project, $file) {
 /**
  * Command callback for po-import.
  */
-function drush_l10n_suggestions_po_import($origin, $project, $lng, $file) {
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/import';
+function drush_l10n_feedback_po_import($origin, $project, $lng, $file) {
+  $path = drupal_get_path('module', 'l10n_feedback') . '/data/import';
   $output = shell_exec("$path/po_import.php $origin $project $lng $file");
   print $output;
 }
@@ -144,8 +144,8 @@ function drush_l10n_suggestions_po_import($origin, $project, $lng, $file) {
 /**
  * Command callback for po-export.
  */
-function drush_l10n_suggestions_po_export($origin, $project, $lng, $file =NULL) {
-  $path = drupal_get_path('module', 'l10n_suggestions') . '/data/export';
+function drush_l10n_feedback_po_export($origin, $project, $lng, $file =NULL) {
+  $path = drupal_get_path('module', 'l10n_feedback') . '/data/export';
   $output = shell_exec("$path/po_export.php $origin $project $lng $file");
   print $output;
 }

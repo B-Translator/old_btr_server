@@ -1,18 +1,18 @@
 <?php
 /**
  * @file l10n_suggestion.install
- * Contains install and update functions for l10n_suggestions.
+ * Contains install and update functions for l10n_feedback.
  */
 
 /**
  * Implements hook_install().
  */
-function l10n_suggestions_install() {
+function l10n_feedback_install() {
 
   variable_set('mail_system',
     array_merge(
       variable_get('mail_system', array('default-system' => 'DefaultMailSystem')),  // Previously set mail_system variable
-      array('l10n_suggestions' => 'HTMLMailSystem')
+      array('l10n_feedback' => 'HTMLMailSystem')
     )
   );
 }
@@ -20,21 +20,21 @@ function l10n_suggestions_install() {
 /**
  * Implements hook_uninstall().
  */
-function l10n_suggestions_uninstall() {
+function l10n_feedback_uninstall() {
 
   // Unset module keys in variable mail_system
   $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
-  unset($mail_system['l10n_suggestions']);
+  unset($mail_system['l10n_feedback']);
   variable_set('mail_system', $mail_system);
 }
 
 /**
  * Implements hook_schema().
  */
-function l10n_suggestions_schema() {
+function l10n_feedback_schema() {
 
   // PO files that are imported and can be exported from the DB.
-  $schema['l10n_suggestions_files'] = array(
+  $schema['l10n_feedback_files'] = array(
     'description' => 'A PO file that is imported and can be exported from the DB.',
     'fields' => array(
       'fid' => array(
@@ -97,7 +97,7 @@ function l10n_suggestions_schema() {
   );
 
   // Templates are the POT files that are imported.
-  $schema['l10n_suggestions_templates'] = array(
+  $schema['l10n_feedback_templates'] = array(
     'description' => ' Templates are the POT files that are imported.',
     'fields' => array(
       'potid' => array(
@@ -139,7 +139,7 @@ function l10n_suggestions_schema() {
   );
 
   // Projects are the software/applications which are translated by the PO files.
-  $schema['l10n_suggestions_projects'] = array(
+  $schema['l10n_feedback_projects'] = array(
     'description' => 'A project is the software/application which is translated by',
     'fields' => array(
       'pguid' => array(
@@ -180,7 +180,7 @@ function l10n_suggestions_schema() {
   );
 
   // Locations (lines) where a l10n string is found.
-  $schema['l10n_suggestions_locations'] = array(
+  $schema['l10n_feedback_locations'] = array(
     'description' => 'Locations (lines) where a l10n string is found.',
     'fields' => array(
       'lid' => array(
@@ -250,7 +250,7 @@ function l10n_suggestions_schema() {
   );
 
   // Translatable strings that are extracted from projects.
-  $schema['l10n_suggestions_strings'] = array(
+  $schema['l10n_feedback_strings'] = array(
     'description' => 'Translatable strings that are extracted from...',
     'fields' => array(
       'string' => array(
@@ -307,7 +307,7 @@ function l10n_suggestions_schema() {
   // Translations/suggestions of the l10n strings.
   // For each l10n string there can be translations for different
   // languages, and more than one translation for each language.
-  $schema['l10n_suggestions_translations'] = array(
+  $schema['l10n_feedback_translations'] = array(
     'description' => 'Translations/suggestions of the l10n strings. For...',
     'fields' => array(
       'sguid' => array(
@@ -370,7 +370,7 @@ function l10n_suggestions_schema() {
   );
 
   // Votes for each translation/suggestion.
-  $schema['l10n_suggestions_votes'] = array(
+  $schema['l10n_feedback_votes'] = array(
     'description' => 'Votes for each translation/suggestion.',
     'fields' => array(
       'vid' => array(
@@ -415,7 +415,7 @@ function l10n_suggestions_schema() {
   );
 
   // Users that contribute translations/suggestions/votes.
-  $schema['l10n_suggestions_users'] = array(
+  $schema['l10n_feedback_users'] = array(
     'description' => 'Users that contribute translations/suggestions/votes.',
     'fields' => array(
       'uid' => array(
@@ -440,7 +440,7 @@ function l10n_suggestions_schema() {
   );
 
   // Snapshots are tgz archives of project-lng translation files.
-  $schema['l10n_suggestions_snapshots'] = array(
+  $schema['l10n_feedback_snapshots'] = array(
     'description' => 'Snapshots are tgz archives of project-lng translation files.',
     'fields' => array(
       'pguid' => array(
@@ -478,7 +478,7 @@ function l10n_suggestions_schema() {
   );
 
   // Diffs between the current state and the last snapshot.
-  $schema['l10n_suggestions_diffs'] = array(
+  $schema['l10n_feedback_diffs'] = array(
     'description' => 'Diffs between the current state and the last snapshot.',
     'fields' => array(
       'pguid' => array(

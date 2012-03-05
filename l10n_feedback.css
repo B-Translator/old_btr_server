@@ -99,10 +99,10 @@ em.l10n-suggestions-marker {
   direction:ltr;
 }
 
-#block-l10n_suggestions-contributors table {
+#block-l10n_feedback-contributors table {
   width: 100%;
 }
-#block-l10n_suggestions-contributors tr.even, #block-l10n_suggestions-contributors tr.odd {
+#block-l10n_feedback-contributors tr.even, #block-l10n_feedback-contributors tr.odd {
   background-color: transparent;
 }
 

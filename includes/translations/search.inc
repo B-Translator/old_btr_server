@@ -15,22 +15,22 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/search
  * Search strings and translations using various filters.
  */
-function l10n_suggestions_search() {
+function l10n_feedback_search() {
 
   // Add the the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'l10n_suggestions') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
 
   // Build the filter from the GET request parameters.
-  $filter = l10n_suggestions_build_filter();
+  $filter = l10n_feedback_build_filter();
   //dpm($filter, '$filter');  //debug
 
   // Add RTL style if the current language's direction is RTL
   $lng = $filter['lng'];
-  $languages = l10n_suggestions_get_languages();
+  $languages = l10n_feedback_get_languages();
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'l10n_suggestions') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor-rtl.css');
   }
 
   /*
@@ -48,11 +48,11 @@ function l10n_suggestions_search() {
 
   // Add the filter form.
   $output = array(
-    drupal_get_form('l10n_suggestions_filter_form', $filter)
+    drupal_get_form('l10n_feedback_filter_form', $filter)
   );
 
   // Get a query for selecting strings that match the filter.
-  $query = l10n_suggestions_build_query($filter);
+  $query = l10n_feedback_build_query($filter);
   if (!$query) {
     drupal_set_message(t('Filter is empty. Put something on the filter options.'));
     return $output;
@@ -60,7 +60,7 @@ function l10n_suggestions_search() {
   //dpq($query);  //debug
 
   // Get the strings selected by the filter and the corresponding translations.
-  $strings = l10n_suggestions_get_strings($query, $lng);
+  $strings = l10n_feedback_get_strings($query, $lng);
 
   // Output the strings.
   if (empty($strings)) {
@@ -68,7 +68,7 @@ function l10n_suggestions_search() {
   }
   else {
     //dpm($strings, '$strings');  //debug
-    $output[] = drupal_get_form('l10n_suggestions_translate_form', $strings, $lng);
+    $output[] = drupal_get_form('l10n_feedback_translate_form', $strings, $lng);
   }
 
   //dpm($output[1], 'translate_form');  //debug

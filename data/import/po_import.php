@@ -106,7 +106,7 @@ function add_file($filename, $relative_filename, $potid, $lng, $headers, $commen
 
   // Check whether the file already exists.
   global $db;
-  $sql = "SELECT potid, lng FROM l10n_suggestions_files WHERE hash = :hash";
+  $sql = "SELECT potid, lng FROM l10n_feedback_files WHERE hash = :hash";
   $row = $db->query($sql, array(':hash' => $hash))->fetch();
 
   // If file already exists.
@@ -119,8 +119,8 @@ function add_file($filename, $relative_filename, $potid, $lng, $headers, $commen
       else {
         // file already imported for some other template or language
         $sql = "SELECT p.origin, p.project, t.tplname
-                FROM l10n_suggestions_templates t
-                LEFT JOIN l10n_suggestions_projects p ON (t.pguid = p.pguid)
+                FROM l10n_feedback_templates t
+                LEFT JOIN l10n_feedback_projects p ON (t.pguid = p.pguid)
                 WHERE t.potid = :potid";
         $row1 = $db->query($sql, array(':potid' => $row['potid']))->fetch();
         $origin1 = $row1['origin'];

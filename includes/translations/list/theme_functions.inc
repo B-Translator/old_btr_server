@@ -7,7 +7,7 @@
 /**
  * Main theme function for translation table.
  */
-function theme_l10n_suggestions_translate_table($variables) {
+function theme_l10n_feedback_translate_table($variables) {
 
   $element = $variables['element'];
   $header = array(
@@ -30,11 +30,11 @@ function theme_l10n_suggestions_translate_table($variables) {
       ),
       array(
         'class' => array('source'),
-        'data' => theme('l10n_suggestions_translate_source', array('element' => $element[$key])),
+        'data' => theme('l10n_feedback_translate_source', array('element' => $element[$key])),
       ),
       array(
         'class' => array('translation'),
-        'data' => theme('l10n_suggestions_translate_translation_list', array('element' => $element[$key])),
+        'data' => theme('l10n_feedback_translate_translation_list', array('element' => $element[$key])),
       ),
     );
   }
@@ -45,13 +45,13 @@ function theme_l10n_suggestions_translate_table($variables) {
 /**
  * Theme function for a source cell in the translation table.
  */
-function theme_l10n_suggestions_translate_source($variables) {
+function theme_l10n_feedback_translate_source($variables) {
   $element = $variables['element'];
-  $output = theme('l10n_suggestions_translate_actions', array('element' => $element['source']));
+  $output = theme('l10n_feedback_translate_actions', array('element' => $element['source']));
   //$filter_match = ($element['filters_match']['#value'] ? ' filter-match' : ' filter-no-match');
   $filter_match = ' filter-no-match';
   $output .= '<label class="l10n-string' . $filter_match . '">' . drupal_render($element['source']['string']) . '</label>';
-  $output .= theme('l10n_suggestions_in_context', array('source' => $element['#string']));
+  $output .= theme('l10n_feedback_in_context', array('source' => $element['#string']));
 
   $output .= '<div class="l10n-usage"><a href="' . url('translations/string_details/' . $element['#string']->sguid) . '" class="l10n-more-link" title="' . t('Show the string context and a list of projects where this string is used.') . '">' . t('Show string details.') . '</a><div class="l10n-more-info"></div></div>';
 
@@ -65,7 +65,7 @@ function theme_l10n_suggestions_translate_source($variables) {
 /**
  * Theme appropriate actions for the given string element.
  */
-function theme_l10n_suggestions_translate_actions($variables) {
+function theme_l10n_feedback_translate_actions($variables) {
   $element = $variables['element'];
   $actions = '';
   foreach (array('declined', 'edit') as $type) {
@@ -87,7 +87,7 @@ function theme_l10n_suggestions_translate_actions($variables) {
  * @param $string
  *   Source string object.
  */
-function theme_l10n_suggestions_in_context($variables) {
+function theme_l10n_feedback_in_context($variables) {
   $string = $variables['source'];
   if (!empty($string->context)) {
     return '<div class="string-context">' . t('in context: @context', array('@context' => $string->context)) . '</div>';
@@ -98,7 +98,7 @@ function theme_l10n_suggestions_in_context($variables) {
 /**
  * Theme a suggestion/translation.
  */
-function theme_l10n_suggestions_translate_translation($variables) {
+function theme_l10n_feedback_translate_translation($variables) {
   $element = $variables['element'];
 
   if (!isset($element['#attributes']['class'])) {
@@ -136,7 +136,7 @@ function theme_l10n_suggestions_translate_translation($variables) {
   }
 
   $output = '<li' . drupal_attributes($element['#attributes']) . '>';
-  $output .= theme('l10n_suggestions_translate_actions', array('element' => $element));
+  $output .= theme('l10n_feedback_translate_actions', array('element' => $element));
   // Add the radio box to pick the approved translation.
   $output .= drupal_render($element['approved']);
 
@@ -157,7 +157,7 @@ function theme_l10n_suggestions_translate_translation($variables) {
 /**
  * Theme a radio button to pick the approved translation.
  */
-function theme_l10n_suggestions_translate_radio($variables) {
+function theme_l10n_feedback_translate_radio($variables) {
   $element = $variables['element'];
   $type = $element['#type'];  // radio or checkbox
   _form_set_class($element, array('form-radio'));
@@ -177,7 +177,7 @@ function theme_l10n_suggestions_translate_radio($variables) {
 /**
  * Theme a list of suggestions for a string.
  */
-function theme_l10n_suggestions_translate_translation_list($variables) {
+function theme_l10n_feedback_translate_translation_list($variables) {
   $element = $variables['element'];
   $output = '<ul>';
   foreach (element_children($element) as $child) {
