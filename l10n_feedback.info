@@ -1,6 +1,6 @@
-name = l10n suggestions
-description =  The functionality of http://open-tran.eu/, extended with feedback and suggestions from people.
-package = l10n suggestions
+name = l10n feedback
+description =  Getting feedback and suggestions from people about l10n translations.
+package = l10n
 core = 7.x
 
 files[] = l10n_feedback.test

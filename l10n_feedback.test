@@ -8,7 +8,7 @@
 /**
  * l10n_feedback test cases
  */
-class L10nSuggestionsTestCase extends DrupalWebTestCase {
+class L10nFeedbackTestCase extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
@@ -23,12 +23,12 @@ class L10nSuggestionsTestCase extends DrupalWebTestCase {
   }
 
   // Test Case1
-  public function testL10nSuggestionsCase1() {
+  public function testL10nFeedbackCase1() {
     // nothing yet
   }
 
   // Test Case2
-  public function testL10nSuggestionsCase2() {
+  public function testL10nFeedbackCase2() {
     // nothing yet
   }
 }
@@ -36,12 +36,12 @@ class L10nSuggestionsTestCase extends DrupalWebTestCase {
 /**
  * l10n_feedback unit testing
  */
-class L10nSuggestionsUnitTestCase extends DrupalUnitTestCase {
+class L10nFeedbackUnitTestCase extends DrupalUnitTestCase {
 
   public static function getInfo() {
     return array(
       'name' => 'l10n_feedback unit tests',
-      'description' => 'Unit testing for module ll10n_feedback.',
+      'description' => 'Unit testing for module l10n_feedback.',
       'group' => 'l10n',
     );
   }
@@ -51,7 +51,7 @@ class L10nSuggestionsUnitTestCase extends DrupalUnitTestCase {
     parent::setUp();
   }
 
-  public function testL10nSuggestionsUnitTestCase1() {
+  public function testL10nFeedbackUnitTestCase1() {
     // nothing yet
   }
 }
