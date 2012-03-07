@@ -1,1 +1,1 @@
-../../../../../l10n-sq.org/settings.php
+../../../../../../l10n-sq.org/settings.php
