@@ -67,6 +67,10 @@ function l10n_feedback_project_list($origin =NULL, $project =NULL, $format =NULL
  * Return as plain-text the PO file for a given origin/project/lng.
  */
 function l10n_feedback_project_export($origin =NULL, $project =NULL, $lng =NULL) {
+
+  print "For performance reasons, export is currently disabled.";
+  exit(0);
+
   $origin = check_plain($origin);
   $project = check_plain($project);
   $lng = check_plain($lng);
@@ -91,6 +95,10 @@ function l10n_feedback_project_export($origin =NULL, $project =NULL, $lng =NULL)
  * will be exported (it usually takes a very long time).
  */
 function l10n_feedback_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
+
+  print "For performance reasons, export_tgz is currently disabled.";
+  exit(0);
+
   $origin = check_plain($origin);
   $project = check_plain($project);
   $lng = check_plain($lng);
