@@ -1,0 +1,11 @@
+
+After installing the module, the tables of the DB should be filled
+with data. This is done by running the script 'data/install.sh'.  But
+don't forget to check first 'data/config.sh' and to make sure that the
+settings are correct.
+
+Importing all the data can take a lot of time (many hours, maybe
+days), so it is a good idea to run the install script like this:
+  nohup data/install.sh &
+Then you can check the progress at any time by: tail -f nohup.out
+
