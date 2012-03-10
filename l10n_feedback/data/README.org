@@ -4,6 +4,11 @@ projects into the database. The existing translations of the PO files
 will create the initial bases for voting and adding further
 suggestions. Then, the most voted translation will be exported.
 
+
+
+
+* Importing
+
 There are two steps for importing a projects' translations.  The first
 step is to import the POT (template) file of the project, and the
 second step is to import the PO (translation) file for each language
@@ -37,6 +42,9 @@ strings are already imported, otherwise it will fail and exit. So,
 before using 'po_import.php' for importing a translation file, make
 sure that 'pot_import.php' has been already called for the
 corresponding template file (POT).
+
+
+* Exporting
 
 For exporting files, the script 'po_export.php' is used, which can be
 called like this:
