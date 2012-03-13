@@ -1,9 +1,15 @@
 #!/usr/bin/php
 <?php
    /**
-    * 'po_import.php' imports a new PO (translation) file.
-    * It assumes that the POT file of the project has already
-    * been imported, otherwise it will quit without doing anything.
+    * 'po_import.php' imports a new PO (translation) file.  It assumes
+    * that the POT file of the project has already been imported,
+    * otherwise it will quit without doing anything.  If the file has
+    * been already imported, then it is skiped.
+    * 
+    * For each file, all the information that is needed for exporting
+    * it is stored, like the file name and path, the headers of the
+    * file, the content of the file, etc.
+    * 
     * Along with the file, it also inserts the translations for the
     * corresponding strings, when such translations do not exist.
     *
@@ -29,7 +35,7 @@ Usage: $argv[0] origin project tplname lng file.po
   file.po -- The PO file to be imported.
 
 Example:
-  $argv[0] KDE kturtle kturtle fr test/kturtle.po
+  $argv[0] KDE kdeedu kturtle fr test/kturtle.po
 
 ";
   exit(1);

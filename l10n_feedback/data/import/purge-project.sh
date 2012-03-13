@@ -36,10 +36,10 @@ do
          SET s.count = s.count - 1"
     echo $sql | $mysql
 
-    ### delete the locations of this project
+    ### delete the locations of this template
     echo "DELETE FROM l10n_feedback_locations WHERE potid = $potid" | $mysql
 
-    ### delete the files related to this project
+    ### delete the files related to this template
     echo "DELETE FROM l10n_feedback_files WHERE potid = $potid" | $mysql
 
     ### delete the template itself

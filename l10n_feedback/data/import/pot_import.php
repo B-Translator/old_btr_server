@@ -1,12 +1,23 @@
 #!/usr/bin/php
 <?php
    /**
-    * 'pot_import.php' creates a new template and a new project (if needed).
-    * Along with the template, it also creates/updates locations and strings.
-    * The POT file that is given as input can be either a *.pot file, or
-    * the *.po file of a language (for example fr, de, etc.). In case that
-    * it is a *.po file, its translations (msgstr) are not used and the file
-    * has to be imported again with 'po_import.php'.
+    * 'pot_import.php' creates a new template and a new project (if
+    * needed).  If the given origin+project already exists, then the
+    * existing project is used.  However, if the given template
+    * already exists (for this project), then it is deleted first
+    * (along with the locations and files related to it), and then
+    * recreated.
+    *
+    * Along with the template, locations that are contained in this
+    * template are created as well. The string corresponding to each
+    * location is created only if it does not already exist. Otherwise
+    * the existing string is referenced instead (and the reference
+    * count of the string is incremented).
+    * 
+    * The POT file that is given as input can be either a *.pot file,
+    * or the *.po file of a language (for example fr, de, etc.). In
+    * case that it is a *.po file, its translations (msgstr) are not
+    * used and the file has to be imported again with 'po_import.php'.
     *
     * @param origin
     *     The origin of the project (ubuntu, GNOME, KDE, LibreOffice, Mozilla, etc.).
@@ -27,8 +38,8 @@ Usage: $argv[0] origin project tplname file.pot
   file.pot -- The POT file of the project.
 
 Examples:
-  $argv[0] KDE kturtle kturtle test/kturtle.pot
-  $argv[0] KDE kturtle kturtle test/kturtle_fr.po
+  $argv[0] KDE kdeedu kturtle test/kturtle.pot
+  $argv[0] KDE kdeedu kturtle test/kturtle_fr.po
 
 ";
   exit(1);
@@ -127,10 +138,10 @@ function delete_template($potid)
          SET s.count = s.count - 1"
 	    );
 
-  // Delete the locations of this project.
+  // Delete the locations of this template.
   $db->exec("DELETE FROM l10n_feedback_locations WHERE potid = $potid");
 
-  // Delete the files related to this project.
+  // Delete the files related to this template.
   $db->exec("DELETE FROM l10n_feedback_files WHERE potid = $potid");
 
   // Delete the template itself.

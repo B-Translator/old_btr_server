@@ -20,8 +20,8 @@ If the export mode is not given as an argument, then the env variable
 PO_EXPORT_MODE will be tried.
 
 Examples:
-  $argv[0] KDE kturtle kturtle fr > test/kturtle_fr.po
-  $argv[0] KDE kturtle kturtle fr test/kturtle_fr.po original
+  $argv[0] KDE kdeedu kturtle fr > test/kturtle_fr.po
+  $argv[0] KDE kdeedu kturtle fr test/kturtle_fr.po original
 
 ";
   exit(1);

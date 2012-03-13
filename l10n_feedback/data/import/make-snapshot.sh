@@ -1,15 +1,4 @@
 
-### Generate snapshots for a project that is imported.
-### The first (initial) snapshot contains the original
-### files that are imported, and it will not generate
-### a diff. The second snapshot contains the export of
-### the original files, and it will produce and store
-### the first diff. This initial diff actually contains
-### the differences that come as a result of formating
-### changes between the original format and the exported
-### format. It also contains the entries that are skipped
-### during the import.
-
 ### suppress some of the log/debug messages
 ### which by default are displayed
 export QUIET=true
@@ -27,6 +16,14 @@ function make-last-snapshot()
     ../export/make_snapshot.sh $origin $project $lng "$diff_comment"
 }
 
+### Generate snapshots for a project after it is imported.  The first
+### (initial) snapshot contains the original files that are imported,
+### and it will not generate a diff. The second snapshot contains the
+### export of the original files, and it will produce and store the
+### first diff. This initial diff actually contains the differences
+### that come as a result of formating changes between the original
+### format and the exported format. It also contains the entries that
+### are skipped during the import.
 function make-snapshot()
 {
     ### get the parameters

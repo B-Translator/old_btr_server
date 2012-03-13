@@ -2,6 +2,8 @@
 ### Export the translation files of a given origin/project/lng
 ### If project==all, then all the projects of the given origin
 ### will be exported.
+### It the environments variable QUIET is defined, then it will
+### be less verbose (will not output much progress/debug info).
 
 ### get the parameters
 if [ $# -lt 4 ]
