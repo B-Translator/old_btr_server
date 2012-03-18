@@ -5,8 +5,12 @@
 ### get the parameters
 if [ $# -lt 3 ]
 then
-    echo "Usage: $0 origin project lng"
-    echo ""
+    echo "
+Usage: $0 origin project lng
+
+Export the current state of translation files of a project-language
+and make a diff with the last snapshot.
+"
     exit 1
 fi
 origin=$1

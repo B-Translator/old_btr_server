@@ -5,8 +5,12 @@
 ### get the parameters
 if [ $# -lt 3 ]
 then
-    echo "Usage: $0 origin project lng [diff_comment]"
-    echo ""
+    echo "
+Usage: $0 origin project lng [diff_comment]
+
+Make the diff with the last snapshot and store it in DB.
+Save in DB the current snapshot.
+"
     exit 1
 fi
 origin=$1
