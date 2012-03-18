@@ -17,25 +17,22 @@
 * Implementation Plan
   1. [X] Make *voting* work (without permissions, user setting, admin
      config, etc.)
-  2. [ ] Release an initial drupal package and prepare a test/demo
-     site.
+  2. [X] Install a test/demo site.
   3. [ ] Add *admin config*, *user settings*, *permissions*,
      permission checking, etc.
-  4. [ ] Make a basic *integration with facebook* (for voting).
+  4. [ ] Improve the *integration with facebook* (for voting).
   5. [ ] Put it online.
-  6. [ ] Add a basic *email interface* (for voting).
+  6. [ ] Improve the *email interface* (for voting).
   7. [ ] Add a *mobile interface* (or theme).
   8. [ ] Build the pages for admin dashboard, reports and stats.
-  9. [ ] Integrate with projects and packages from l10n_server
-  10. [ ] Add an API for external applications.
-  11. [ ] Integration with google+, twitter, diaspora, etc.
-  12. [ ] Android app that can be used for voting.
+  9. [ ] Add an API for external applications.
+  10. [ ] Integration with google+, twitter, diaspora, etc.
+  11. [ ] Android app that can be used for voting.
 
 * Tasks
 
 ** DB
 
-*** DONE Make ID of projects guid (because they can be used in user prefs)
 *** In the table of strings, add a reference to the previous (deprecated) string.
 
 ** UI
@@ -90,17 +87,12 @@
    - Improve instalation.
    - Make an initial package.
 *** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
-*** DONE Convert to PO and import the translation files of Firefox, Mozilla, Thunderbird, etc.
-*** DONE Import LibreOffice.
-*** DONE Add origin on the search filter.
-*** DONE Show related projects.
 *** Add export_tgz as a drush command.
-*** DONE Export in format diff/ediff.
-*** DONE Use short url on the emails sent by cron.
 *** Send full html pages by email.
 *** Use GoogleTranslate API to make an initial suggestion for strings with no translation.
     It has become commercial. Cannot be done.
 *** Improve the look of number of votes.
+*** Add the possibility to leave comments/discussions under each string-lng
 
 
 * Notes

@@ -105,6 +105,70 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   using a filter to select strings, they are selected randomly, based
   on user preferencies, and also on the priorities of translation.
 
+* DONE Make ID of projects guid (because they can be used in user prefs)
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:37
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/DB
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Convert to PO and import the translation files of Firefox, Mozilla, Thunderbird, etc.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:37
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Import LibreOffice.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:37
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Add origin on the search filter.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:37
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Show related projects.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:38
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Export in format diff/ediff.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:38
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Use short url on the emails sent by cron.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-03-18 Sun 09:38
+  :ARCHIVE_FILE: /var/www-ssl/drupal/sites/all/modules/B-Translator/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+
+
+
+
+
+
+
 
 
 
