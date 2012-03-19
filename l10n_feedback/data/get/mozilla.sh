@@ -16,6 +16,7 @@ done
 cd ..
 
 ### convert to PO format
+rm -rf po/
 mkdir -p po/
 moz2po --pot --template=moz/en-GB --input=moz/en-GB --output=po/en-GB
 for lng in $languages

@@ -41,9 +41,9 @@ tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$transl
 tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$translations_update 2>/dev/null
 
 ### after the extraction, there will be directories like:
-### rosseta-oneiric/$lng/LC_MESSAGES
-mv rosseta-oneiric/* .
-rmdir rosseta-oneiric/
+### roseta-oneiric/$lng/LC_MESSAGES
+mv roseta-oneiric/* .
+rmdir roseta-oneiric/
 
 ### cleanup
 rm extract-files.txt

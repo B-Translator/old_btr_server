@@ -9,4 +9,4 @@ cd $(dirname $0)
 ./ubuntu.sh
 ./office.sh
 ./kde.sh
-./pingus.sh
+#./pingus.sh
