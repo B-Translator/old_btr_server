@@ -4,6 +4,8 @@
 cd $(dirname $0)
 
 ### get the PO files and import them
-get/all.sh
-import/all.sh
+#get/all.sh
+#import/all.sh
 
+### import pingus data
+import/pingus.sh

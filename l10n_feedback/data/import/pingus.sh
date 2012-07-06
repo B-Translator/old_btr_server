@@ -21,8 +21,8 @@ project=pingus
 po_dir="$data_root/$origin/$project"
 rm -rf $po_dir/
 mkdir -p $po_dir/
-cp ~/pingus-fr.po $po_dir/ 
-cp ~/pingus-sq.po $po_dir/ 
+cp ../test/PO_files/pingus-fr.po $po_dir/ 
+cp ../test/PO_files/pingus-sq.po $po_dir/ 
 
 ### make last snapshots before re-import
 make-last-snapshot $origin $project fr

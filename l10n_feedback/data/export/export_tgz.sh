@@ -21,8 +21,8 @@ output_dir=${4:-/tmp}
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql_params="$($(which php) ../db/get-connection.php bash)"
-#echo $mysql_params;  exit;  # debug
+mysql="$(drush sql-connect)"
+#echo $mysql;  exit;  # debug
 
 ### get the list of the projects to be exported
 if [ "$project" != 'all' ]
@@ -30,7 +30,7 @@ then
     project_list=$project
 else
     sql="SELECT project FROM l10n_feedback_projects WHERE origin = '$origin'"
-    project_list=$(echo $sql | mysql $mysql_params --skip-column-names)
+    project_list=$(echo $sql | $mysql --skip-column-names)
 fi
 
 ### export the PO files of all the projects in project_list

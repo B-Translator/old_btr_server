@@ -14,11 +14,8 @@ project=$1
 ### go to the script directory
 cd $(dirname $0)
 
-### get the DB connection parameters
-mysql_params="$($(which php) ../db/get-connection.php bash)"
-
 ### build the mysql command
-mysql="mysql -N $mysql_params"
+mysql="$(drush sql-connect) -N "
 
 ### get a list of templates related to the project
 sql="SELECT potid FROM l10n_feedback_templates t
