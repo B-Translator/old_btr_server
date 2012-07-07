@@ -31,10 +31,6 @@
 
 * Tasks
 
-** DB
-
-*** In the table of strings, add a reference to the previous (deprecated) string.
-
 ** UI
 
 *** List of *string-->translations*
@@ -46,8 +42,6 @@
     + For each suggestion, the admin (or moderators) should be able to apply
       additional actions (for example remove the suggestion).
 
-    + For each l10n string, display in which projects it occurs
-      (related locations), etc.
     + For each l10n string, display also the corresponding translations
       (best suggestions) in auxiliary (helper) languages. For example,
       besides the original l10n string (in English), the French and German
@@ -78,21 +72,44 @@
     + When the votes are changed, the old (removed) votes should be stored on
       an archive table, in order to keep the history of changing votes as well.
 
+*** DONE For each l10n string, display in which projects it occurs (related locations), etc.
 
-*** TODO XML-RPC interface
+** Workflow
+
+*** When a new suggestion is added, notify previous voters to review their votes.
+
+*** The author of a suggestion can withdraw it or change it.
+    In both cases the votes are lost (deleted or archived) and the
+    voters are notified about the change.
+
+
+** API
+
+*** XML-RPC interface
     Or some other web-service (API) interface.
 
+** Integration with Facebook
+*** Add FB comments for each string-lng
+*** For each translation review add a button for posting it on FB as a poll.
+*** When a FB user votes or leaves a comment, update his status.
+
+
 ** Misc
-   - Start with simple tests (l10n_feedback.test)
-   - Improve instalation.
-   - Make an initial package.
-*** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
-*** Add export_tgz as a drush command.
+
+*** Start with simple tests (l10n_feedback.test)
+*** Build a Drupal Installation Profile for l10n.
 *** Send full html pages by email.
+*** Improve the look of number of votes.
+
+*** Add the possibility to leave comments/discussions under each string-lng
+    These can be drupal comments, or facebook comments, etc.
+
+*** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
+
+*** Is it possible to integrate with translation review with StackOverflow API?
+
 *** Use GoogleTranslate API to make an initial suggestion for strings with no translation.
     It has become commercial. Cannot be done.
-*** Improve the look of number of votes.
-*** Add the possibility to leave comments/discussions under each string-lng
 
 
 * Notes

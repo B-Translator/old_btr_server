@@ -8,9 +8,9 @@ new='l10n_feedback_'
 ### list of all the tables
 tables="diffs snapshots files projects templates locations strings translations votes users"
 
-### get the DB connection parameters
-connection="$($(which php) get-connection.php bash)"
-#echo $connection;  exit 0;  ## debug
+### get the mysql command
+mysql="$(drush sql-connect)"
+#echo $mysql;  exit 0;  ## debug
 
 ### rename each table
 for table in $tables
@@ -26,7 +26,7 @@ do
       alter table $new_table disable keys;
       insert into $new_table select * from $old_table;
       alter table $new_table enable keys;"
-    echo "$mysql_commands" | mysql $connection
+    echo "$mysql_commands" | $mysql
 done
 
 #      drop table $old_table;

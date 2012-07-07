@@ -13,8 +13,8 @@ dump_mode=$1
 cd $(dirname $0)
 
 ### get the DB connection parameters
-connection="$($(which php) get-connection.php bash)"
-connection=$(echo $connection | sed -e 's/--database=/--database /')
+mysql_command="$(drush sql-connect)"
+connection=$(echo $mysql_command | sed -e 's/^mysql //' | sed -e 's/--database=/--database /')
 #echo $connection;  exit 0;  ## debug
 
 ### list of all the tables

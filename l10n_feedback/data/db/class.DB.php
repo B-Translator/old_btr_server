@@ -21,7 +21,7 @@ class DB
   protected function connect()
   {
     // Get the DB connection parameters.
-    @include_once(dirname(__FILE__).'/get-connection.php');
+    @include_once(dirname(__FILE__).'/settings.php');
 
     // Create a DB connection.
     $DSN = "$dbdriver:host=$dbhost;dbname=$dbname";
