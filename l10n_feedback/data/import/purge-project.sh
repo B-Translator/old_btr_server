@@ -15,7 +15,7 @@ project=$1
 cd $(dirname $0)
 
 ### build the mysql command
-mysql="$(drush sql-connect) -N "
+mysql="$(cat ../db/sql-connect.txt) --skip-column-names"
 
 ### get a list of templates related to the project
 sql="SELECT potid FROM l10n_feedback_templates t

@@ -22,7 +22,7 @@ test "$QUIET" = '' && echo $0 $origin $project $lng $output_dir
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql="$(drush sql-connect)"
+mysql="$(cat ../db/sql-connect.txt)"
 #echo $mysql;  exit;  # debug
 
 ### get from the DB the names of the templates and the filenames

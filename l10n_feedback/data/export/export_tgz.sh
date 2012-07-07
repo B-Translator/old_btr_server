@@ -21,7 +21,7 @@ output_dir=${4:-/tmp}
 cd $(dirname $0)
 
 ### get the DB connection parameters
-mysql="$(drush sql-connect)"
+mysql="$(cat ../db/sql-connect.txt)"
 #echo $mysql;  exit;  # debug
 
 ### get the list of the projects to be exported

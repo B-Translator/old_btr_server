@@ -3,12 +3,16 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### create the DB tables
-mysql=$(drush sql-connect)
-$mysql < db/l10n_feedback_schema.sql
+### store database settings on db/settings.php and db/sql-connect.txt
+drush php-script db/get-db-settings.php > db/settings.php
+drush sql-connect > db/sql-connect.txt
+#drush -l l10n.org.al php-script db/get-db-settings.php > db/settings.php
+#drush -l l10n.org.al sql-connect > db/sql-connect.txt
 
-### store database settings on db/settings.php
-db/get-db-settings.php > db/settings.php
+### create the DB tables
+mysql=$(cat db/sql-connect.txt)
+#echo $mysql;  exit;  ## debug
+$mysql < db/l10n_feedback_schema.sql
 
 ### import some PO files, just for testing/development
 ./update_test.sh

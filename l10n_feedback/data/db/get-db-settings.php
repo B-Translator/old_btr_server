@@ -1,4 +1,3 @@
-#!/usr/bin/env drush
 <?php
 $db = $GLOBALS['databases']['default']['default'];
 

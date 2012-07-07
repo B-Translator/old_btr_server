@@ -9,7 +9,7 @@ new='l10n_feedback_'
 tables="diffs snapshots files projects templates locations strings translations votes users"
 
 ### get the mysql command
-mysql="$(drush sql-connect)"
+mysql="$(cat sql-connect.txt)"
 #echo $mysql;  exit 0;  ## debug
 
 ### rename each table
