@@ -9,11 +9,11 @@
 ## See also: https://wiki.ubuntu.com/UpstreamToKDE
 ##
 ## Where to get them:
-## https://translations.launchpad.net/ubuntu/natty/+language-packs
+## https://translations.launchpad.net/ubuntu/precise/+language-packs
 ##
 ## Get the base pack and the latest update:
-## wget http://launchpadlibrarian.net/70194188/ubuntu-natty-translations.tar.gz
-## wget http://launchpadlibrarian.net/71172166/ubuntu-natty-translations-update.tar.gz
+## wget https://translations.launchpad.net/ubuntu/precise/+latest-full-language-pack
+## wget http://launchpadlibrarian.net/109392762/ubuntu-precise-translations-update.tar.gz
 ######################################################################################
 
 echo "===== GETTING UBUNTU ====="
@@ -22,13 +22,14 @@ echo "===== GETTING UBUNTU ====="
 change_dir ubuntu
 
 ### Get the base pack and the latest update:
-#wget http://launchpadlibrarian.net/70194188/ubuntu-oneiric-translations.tar.gz
-#wget http://launchpadlibrarian.net/71172166/ubuntu-oneiric-translations-update.tar.gz
+wget https://translations.launchpad.net/ubuntu/precise/+latest-full-language-pack
+mv +latest-full-language-pack ubuntu-precise-translations.tar.gz
+wget http://launchpadlibrarian.net/109392762/ubuntu-precise-translations-update.tar.gz
 
 
 ### downloaded language packs
-translations="./ubuntu-oneiric-translations.tar.gz"
-translations_update="./ubuntu-oneiric-translations-update.tar.gz"
+translations="./ubuntu-precise-translations.tar.gz"
+translations_update="./ubuntu-precise-translations-update.tar.gz"
 
 ### the code of the language to be extracted, like: fr\|de\|en_GB\|sq
 langs=$(echo $languages | sed -e 's/ /\\|/g')
@@ -41,9 +42,10 @@ tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$transl
 tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$translations_update 2>/dev/null
 
 ### after the extraction, there will be directories like:
-### roseta-oneiric/$lng/LC_MESSAGES
-mv roseta-oneiric/* .
-rmdir roseta-oneiric/
+### rosetta-precise/$lng/LC_MESSAGES
+rm -rf $languages
+mv rosetta-precise/* .
+rmdir rosetta-precise/
 
 ### cleanup
 rm extract-files.txt

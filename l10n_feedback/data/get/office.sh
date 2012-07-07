@@ -6,7 +6,7 @@ echo "===== GETTING LibreOffice ====="
 change_dir LibreOffice
 
 ### download all translations
-translations_url="http://download.documentfoundation.org/libreoffice/src/3.5.1/libreoffice-translations-3.5.1.2.tar.xz"
+translations_url="http://download.documentfoundation.org/libreoffice/src/3.6.0/libreoffice-translations-3.6.0.0.beta3.tar.xz"
 wget $translations_url
 
 ### the code of the language to be extracted, like: fr\|de\|en_GB\|sq
