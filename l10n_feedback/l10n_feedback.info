@@ -1,6 +1,6 @@
 name = l10n feedback
 description =  Getting feedback and suggestions from people about l10n translations.
-package = l10n
+package = B-Translator
 core = 7.x
 
 files[] = l10n_feedback.test

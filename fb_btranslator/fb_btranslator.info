@@ -1,6 +1,6 @@
 name = FB l10n_feedback customizations
 description = (fb_btranslator.module) This module will make your site behave more like <a href=http://www.drupalforfacebook.org target=_blank>drupalforfacebook.org</a>.
-package = l10n
+package = B-Translator
 core = 7.x
 dependencies[] = fb
 dependencies[] = fb_form

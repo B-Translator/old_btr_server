@@ -73,7 +73,7 @@ Thanks.
 
   $module = 'l10n_feedback';
   $key = 'send_string_by_email';
-  $from = "l10n-sq.org <noreply@l10n-sq.org>";
+  $from = "l10n-sq <l10n@cit.edu.al>";
   $to = $account->name . ' <' .$account->mail . '>';
   $language = $account->lng;
   $send = TRUE;
