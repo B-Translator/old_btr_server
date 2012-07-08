@@ -117,10 +117,13 @@ function l10n_feedback_get_random_sguid() {
 
   // Condition for selecting projects
   // from which to get a random string.
+  /*
   $where = "(origin='KDE' AND project='kdelibs')"
          . " OR (origin='misc' AND project='pingus')"
          . " OR (origin='LibreOffice' AND project='sw')"
          . " OR (origin='Mozilla' AND project='browser')";
+  */
+  $where = "(origin='test')";
 
   // Get the total number of strings from which we can choose.
   $sql_count = "

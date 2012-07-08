@@ -1,0 +1,1610 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Julien Richard-Foy <julien.rf@no-log.org>, 2009, 2010.
+# Anne-Marie Mahfouf <annemarie.mahfouf@free.fr>, 2009, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: rocs\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2012-03-18 04:41+0100\n"
+"PO-Revision-Date: 2012-01-06 01:39+0100\n"
+"Last-Translator: \n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Lokalize 1.2\n"
+
+#: Actions/AddDataAction.cpp:32 Actions/AddDataHandAction.cpp:33
+msgid "Add Node"
+msgstr "Ajouter un sommet"
+
+#: Actions/AddDataAction.cpp:33
+msgid "Creates a new node at the click position."
+msgstr "Crée un nouveau sommet à l'endroit où vous cliquez."
+
+#: Actions/AddDataAction.cpp:49 Actions/AddDataHandAction.cpp:50
+msgid "untitled"
+msgstr "sans-titre"
+
+#: Actions/AddConnectionHandAction.cpp:35
+msgid "Add Edge"
+msgstr "Ajouter une arête"
+
+#: Actions/AddConnectionHandAction.cpp:36
+msgid "Creates a new edge between 2 nodes"
+msgstr "Crée une arête entre deux sommets."
+
+#: Actions/AddDataHandAction.cpp:34
+msgid "Creates a new node at the click position on the drawing area."
+msgstr ""
+"Crée un nouveau sommet à l'endroit où vous cliquerez dans la zone de dessin."
+
+#: Actions/DeleteHandAction.cpp:35 Interface/MainWindow.cpp:367
+#: Interface/VisualEditor/GraphScene.cpp:397
+#: Interface/VisualEditor/GraphScene.cpp:398
+#: Interface/VisualEditor/GraphScene.cpp:399
+msgid "Delete"
+msgstr "Supprimer"
+
+#: Actions/DeleteHandAction.cpp:36
+msgid "Delete items by clicking on them."
+msgstr "Supprime des objets en cliquant dessus."
+
+#: Actions/SelectMoveHandAction.cpp:37
+msgid "Move"
+msgstr "Déplacer"
+
+#: Actions/SelectMoveHandAction.cpp:38
+msgid "Select and move items."
+msgstr "Sélectionner et déplacer les éléments."
+
+#: Actions/ZoomAction.cpp:39 Interface/VisualEditor/GraphScene.cpp:334
+msgid "Zoom"
+msgstr "Zoomer"
+
+#: Actions/ZoomAction.cpp:40
+msgid "Zoom the canvas by the wheel, or by dragging."
+msgstr "Zoomer la fenêtre avec la molette, ou en glissant."
+
+#: Core/DynamicPropertiesList.cpp:172
+msgid "Unique"
+msgstr "Unique"
+
+#: Core/DynamicPropertiesList.cpp:173
+msgid "Multiple"
+msgstr "Multiple"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:217
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: Core/DynamicPropertiesList.cpp:174 rc.cpp:149
+msgid "Global"
+msgstr "Global"
+
+#: Core/DynamicPropertiesList.cpp:176
+msgctxt "type of dynamic property"
+msgid "None"
+msgstr "Aucun"
+
+#: Core/QtScriptBackend.cpp:103
+msgid "Rocs Console script"
+msgstr ""
+
+#: Core/QtScriptBackend.cpp:248
+#, kde-format
+msgid "<b style=\"color: red\"> Error in include file %1</b>"
+msgstr ""
+
+#: Core/DocumentManager.cpp:145 UndoRedo/URAddNode.cpp:38
+msgid "Untitled"
+msgstr "sans-titre"
+
+#: Core/DocumentManager.cpp:157 Core/DocumentManager.cpp:159
+msgid "Untitled0"
+msgstr "sans-titre0"
+
+#: GraphicsItem/DataItem.cpp:158 GraphicsItem/DataItem.cpp:163
+#, kde-format
+msgid "%1"
+msgstr "%1"
+
+#: GraphicsItem/DataItem.cpp:201 GraphicsItem/DataItem.cpp:206
+#, kde-format
+msgid "v=%1"
+msgstr "v=%1"
+
+#: Interface/MainWindow.cpp:202
+msgid "*.js|Script files"
+msgstr "*.js|Fichiers de script"
+
+#: Interface/MainWindow.cpp:203
+msgid "Rocs Script Files"
+msgstr "Fichiers de script Rocs"
+
+#: Interface/MainWindow.cpp:220
+msgid "Added your description here."
+msgstr "Votre description ajoutée ici."
+
+#: Interface/MainWindow.cpp:243
+msgid "Program Messages"
+msgstr "Messages du programme"
+
+#: Interface/MainWindow.cpp:244
+msgid "Debug Messages"
+msgstr "Messages de débogage"
+
+#: Interface/MainWindow.cpp:248
+msgid "Select output:"
+msgstr "Sélectionner l'entrée :"
+
+#: Interface/MainWindow.cpp:259
+#, fuzzy
+#| msgid "Run"
+msgctxt "Script Execution"
+msgid "Run"
+msgstr "Exécuter"
+
+#: Interface/MainWindow.cpp:260
+msgctxt "Script Execution"
+msgid "One Step"
+msgstr ""
+
+#: Interface/MainWindow.cpp:261
+msgid "Debug run"
+msgstr ""
+
+#: Interface/MainWindow.cpp:262
+msgid "Interrupt at first line"
+msgstr ""
+
+#: Interface/MainWindow.cpp:263
+#, fuzzy
+#| msgid "Stop"
+msgctxt "Script Execution"
+msgid "Stop"
+msgstr "Stop"
+
+#: Interface/MainWindow.cpp:334
+msgctxt "Alignment"
+msgid "Base"
+msgstr "Base"
+
+#: Interface/MainWindow.cpp:335 Interface/MainWindow.cpp:338
+msgctxt "Alignment"
+msgid "Center"
+msgstr "Centre"
+
+#: Interface/MainWindow.cpp:336
+msgctxt "Alignment"
+msgid "Top"
+msgstr "Haut"
+
+#: Interface/MainWindow.cpp:337
+msgctxt "Alignment"
+msgid "Left"
+msgstr "Gauche"
+
+#: Interface/MainWindow.cpp:339
+msgctxt "Alignment"
+msgid "Right"
+msgstr "Droite"
+
+#: Interface/MainWindow.cpp:340
+msgctxt "Alignment"
+msgid "Circle"
+msgstr "Cercle"
+
+#: Interface/MainWindow.cpp:341
+msgctxt "Alignment"
+msgid "Minimize Crossing Edges"
+msgstr "Minimiser les croix"
+
+#: Interface/MainWindow.cpp:344
+msgid "New Graph"
+msgstr "Nouveau graphe"
+
+#: Interface/MainWindow.cpp:345
+msgid "Open Graph"
+msgstr "Ouvrir un graphe"
+
+#: Interface/MainWindow.cpp:346
+msgid "Save Graph"
+msgstr "Enregistrer le graphe"
+
+#: Interface/MainWindow.cpp:347
+msgid "Save Graph as"
+msgstr "Enregistrer le graphe sous"
+
+#: Interface/MainWindow.cpp:348
+msgid "Download Examples"
+msgstr "Télécharger des exemples"
+
+#: Interface/MainWindow.cpp:349
+msgid "Upload script"
+msgstr "Envoyer un script"
+
+#: Interface/MainWindow.cpp:350
+msgid "Save All"
+msgstr "Tout enregistrer"
+
+#: Interface/MainWindow.cpp:352
+msgid "Possible Includes"
+msgstr "Inclusions possibles"
+
+#: Interface/MainWindow.cpp:354
+msgid "New Script"
+msgstr "Nouveau script"
+
+#: Interface/MainWindow.cpp:355
+msgid "Open Script"
+msgstr "Ouvrir un script"
+
+#: Interface/MainWindow.cpp:356
+msgid "Save Script"
+msgstr "Enregistrer le script"
+
+#: Interface/MainWindow.cpp:357
+msgid "Save Script as"
+msgstr "Enregistrer le script sous"
+
+#: Interface/MainWindow.cpp:362
+msgid "Import Graph"
+msgstr "Importer un graphe"
+
+#: Interface/MainWindow.cpp:363
+msgid "Export Graph"
+msgstr "Exporter un graphe"
+
+#: Interface/MainWindow.cpp:399
+msgid "Include Manager"
+msgstr "Gestionnaire d'inclusions"
+
+#: Interface/MainWindow.cpp:400
+msgid "Default Settings"
+msgstr "Paramètres par défaut"
+
+#: Interface/MainWindow.cpp:537
+msgid ""
+"*.graph|Graph files\n"
+"*|All files"
+msgstr ""
+"*.graph|Fichiers Graph\n"
+"*.*|Tous les fichiers"
+
+#: Interface/MainWindow.cpp:537 Interface/ImporterExporterManager.cpp:92
+msgid "Graph Files"
+msgstr "Fichier Graph"
+
+#: Interface/MainWindow.cpp:547
+msgid "This does not seem to be a graph file."
+msgstr "Ce fichier ne semble pas être un fichier graph."
+
+#: Interface/MainWindow.cpp:547
+msgid "Invalid file"
+msgstr "Fichier non valable"
+
+#: Interface/MainWindow.cpp:586
+msgid ""
+"Changes on your graph document are unsaved. Do you want to save your changes?"
+msgstr ""
+"Des changements sur votre document de graphe n'ont pas été enregistrés. "
+"Voulez-vous les enregistrer ?"
+
+#: Interface/MainWindow.cpp:594
+msgid ""
+"Changes on your script files are unsaved. Do you want to save all unsaved "
+"scripts?"
+msgstr ""
+"Des changements sur vos fichiers de script n'ont pas été enregistrés. Voulez-"
+"vous les enregistrer ?"
+
+#: Interface/MainWindow.cpp:602
+msgid ""
+"Changes on your script files and on your graph document are unsaved. Do you "
+"want to save your graph document and all unsaved scripts?"
+msgstr ""
+"Des changements sur vos fichiers de script et votre document de graphe n'ont "
+"pas été enregistrés. Voulez-vous tous les enregistrer ?"
+
+#: Interface/CodeEditor.cpp:36
+msgid ""
+"A KDE Text Editor could not be found, \n"
+" please, check your installation"
+msgstr ""
+"Impossible de trouver un éditeur de textes KDE, \n"
+"veuillez vérifier votre installation."
+
+#: Interface/GraphLayers.cpp:46
+msgid "Add"
+msgstr "Ajouter"
+
+#: Interface/GraphLayers.cpp:106 Models/model_GraphLayers.cpp:82
+#, kde-format
+msgid "Untitled%1"
+msgstr "sans-titre%1"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:28
+#. i18n: ectx: property (text), widget (QLabel, dataStructuresComboLabel)
+#: Interface/VisualEditor/GraphScene.cpp:311 rc.cpp:174
+msgid "Data Structure"
+msgstr "Structure de données"
+
+#: Interface/VisualEditor/GraphScene.cpp:312
+msgid "Selected"
+msgstr "Sélectionner"
+
+#: Interface/VisualEditor/GraphScene.cpp:336
+msgid "In"
+msgstr "Entrée"
+
+#: Interface/VisualEditor/GraphScene.cpp:337
+msgid "Out"
+msgstr "Sortie"
+
+#: Interface/VisualEditor/GraphScene.cpp:338
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: Interface/VisualEditor/GraphScene.cpp:347
+#: Interface/VisualEditor/GraphScene.cpp:374
+msgid "Align"
+msgstr "Aligner"
+
+#: Interface/VisualEditor/GraphScene.cpp:348
+#: Interface/VisualEditor/GraphScene.cpp:375
+msgid "Bottom"
+msgstr "Bas"
+
+#: Interface/VisualEditor/GraphScene.cpp:349
+#: Interface/VisualEditor/GraphScene.cpp:376
+msgid "Center"
+msgstr "Centre"
+
+#: Interface/VisualEditor/GraphScene.cpp:350
+#: Interface/VisualEditor/GraphScene.cpp:377
+msgid "Top"
+msgstr "Haut"
+
+#: Interface/VisualEditor/GraphScene.cpp:351
+#: Interface/VisualEditor/GraphScene.cpp:378
+msgid "Left"
+msgstr "Gauche"
+
+#: Interface/VisualEditor/GraphScene.cpp:352
+#: Interface/VisualEditor/GraphScene.cpp:379
+msgid "Right"
+msgstr "Droite"
+
+#: Interface/VisualEditor/GraphScene.cpp:353
+#: Interface/VisualEditor/GraphScene.cpp:380
+msgid "Circle"
+msgstr "Cercle"
+
+#: Interface/VisualEditor/GraphScene.cpp:354
+#: Interface/VisualEditor/GraphScene.cpp:381
+msgid "Minimize Crossing Edges"
+msgstr "Minimiser les croix"
+
+#: Interface/VisualEditor/GraphScene.cpp:383
+#: Interface/VisualEditor/GraphScene.cpp:388
+msgid "Values"
+msgstr "Valeurs"
+
+#: Interface/VisualEditor/GraphScene.cpp:384
+#: Interface/VisualEditor/GraphScene.cpp:389
+msgid "Enumerate"
+msgstr "Énumérer"
+
+#: Interface/VisualEditor/GraphScene.cpp:385
+#: Interface/VisualEditor/GraphScene.cpp:390
+msgid "Random Integers"
+msgstr "Entiers aléatoires"
+
+#: Interface/VisualEditor/GraphScene.cpp:386
+#: Interface/VisualEditor/GraphScene.cpp:391
+msgid "Random Reals"
+msgstr "Réels aléatoires"
+
+#: Interface/VisualEditor/GraphScene.cpp:401
+msgid "Properties"
+msgstr "Propriétés"
+
+#: Interface/ImporterExporterManager.cpp:46
+#: Interface/ImporterExporterManager.cpp:89
+msgid "*|All files"
+msgstr "*|Tous les fichiers"
+
+#: Interface/ImporterExporterManager.cpp:50
+msgid "Export"
+msgstr "Exporter"
+
+#: Interface/ImporterExporterManager.cpp:51
+msgid "Export graphs to file"
+msgstr "Exporter les graphes vers des fichiers"
+
+#: Interface/DataStructurePropertiesWidget.cpp:160
+msgid "Set default color for data elements"
+msgstr ""
+
+#: Interface/DataStructurePropertiesWidget.cpp:173
+#, fuzzy
+#| msgid "Show values in:"
+msgid "Show values of data elements"
+msgstr "Afficher les valeurs des :"
+
+#: Interface/DataStructurePropertiesWidget.cpp:216
+#, fuzzy
+#| msgid "Pointers"
+msgid "Pointer"
+msgstr "Pointeurs"
+
+#: Interface/DataStructurePropertiesWidget.cpp:219
+msgid "Set default color for pointers"
+msgstr ""
+
+#: Interface/DataStructurePropertiesWidget.cpp:225
+#, fuzzy
+#| msgid "Show names in:"
+msgid "Show names of pointers"
+msgstr "Afficher les nom des :"
+
+#: Interface/DataStructurePropertiesWidget.cpp:232
+#, fuzzy
+#| msgid "Show values in:"
+msgid "Show values of pointers"
+msgstr "Afficher les valeurs des :"
+
+#: Interface/DataStructurePropertiesWidget.cpp:239
+#, fuzzy
+#| msgid "Show values in:"
+msgid "Set visibility of pointers"
+msgstr "Afficher les valeurs des :"
+
+#: Models/model_GraphProperties.cpp:79
+msgid "Property"
+msgstr "Propriété"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:164
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:159
+#. i18n: ectx: property (text), widget (KPushButton, _showValue)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:200
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: Models/model_GraphProperties.cpp:80 rc.cpp:65 rc.cpp:137 rc.cpp:146
+msgid "Value"
+msgstr "Valeur"
+
+#: Models/model_GraphProperties.cpp:81
+msgid "Type"
+msgstr "Type"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, AssignValuesWidget)
+#: Plugins/AssignValues/assignvaluestoolsplugin.cpp:42
+#: Plugins/AssignValues/assignvalueswidget.cpp:61 rc.cpp:171
+msgid "Assign Values"
+msgstr "Assigner des valeurs"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:36
+msgid "Graph Structure"
+msgstr "Structure du graphe"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:94
+msgid "x"
+msgstr "x"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:95
+msgid "y"
+msgstr "y"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:96
+msgid "Size"
+msgstr "Taille"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:61
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:113 rc.cpp:241
+msgid "Graph Type:"
+msgstr "Type de graphe :"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:115
+msgid "Undirected Graph"
+msgstr "Graphe non dirigé"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:116
+msgid "Directed Graph"
+msgstr "Graphe dirigé"
+
+#: Plugins/DataStructure/Graph/GraphPlugin.cpp:117
+msgid "Multigraph"
+msgstr "Graphe multiple"
+
+#: Plugins/DataStructure/Graph/GraphStructure.cpp:248
+msgid "This action will probably remove some edges. Do you want to continue?"
+msgstr ""
+"Cette action enlèvera probablement certains côtés. Voulez-vous continuer ?"
+
+#: Plugins/DataStructure/LinkedList/ListPlugin.cpp:41
+msgid "Linked List Structure"
+msgstr "Structure de liste chaînée"
+
+#: Plugins/DataStructure/LinkedList/ListPlugin.cpp:81
+msgid "Front value"
+msgstr "Valeur frontale"
+
+#: Plugins/DataStructure/LinkedList/ListPlugin.cpp:100
+#, kde-format
+msgid "Data '%1' had more than one(1) out pointers;"
+msgstr "La donnée « %1 » a plus d'un pointeur de sortie ;"
+
+#: Plugins/DataStructure/LinkedList/ListPlugin.cpp:108
+#, kde-format
+msgid "Cannot convert document '%1'"
+msgstr "Impossible de convertir le document « %1 »"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, GenerateGraphWidget)
+#: Plugins/GenerateGraph/generategraphtoolsplugin.cpp:41
+#: Plugins/GenerateGraph/generategraphwidget.cpp:67 rc.cpp:223
+msgid "Generate Graph"
+msgstr "Générer le graphe"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:27
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBox)
+#: Plugins/GenerateGraph/generategraphwidget.cpp:149 rc.cpp:226
+msgid "Mesh Graph"
+msgstr "Graphe en squelette"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:32
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBox)
+#: Plugins/GenerateGraph/generategraphwidget.cpp:188 rc.cpp:229
+msgid "Star Graph"
+msgstr "Graphe en étoile"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:37
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBox)
+#: Plugins/GenerateGraph/generategraphwidget.cpp:224 rc.cpp:232
+msgid "Circle Graph"
+msgstr "Graphe en cercle"
+
+#: Plugins/GenerateGraph/generategraphwidget.cpp:280
+#: Plugins/GenerateGraph/generategraphwidget.cpp:323
+msgid "RandomGraph"
+msgstr "Graphe aléatoire"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, TransformEdgesWidget)
+#: Plugins/TransformEdges/transformedgeswidget.cpp:59
+#: Plugins/TransformEdges/transformedgestoolsplugin.cpp:42 rc.cpp:280
+msgid "Transform Edges"
+msgstr "Transformer les côtés"
+
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:41
+#: Plugins/FilePlugins/dotParser/DotParser.cpp:30
+msgid "Open and Save Graphviz files"
+msgstr "Ouvrir et enregistrer des fichiers Graphviz"
+
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:59
+#: Plugins/FilePlugins/dotParser/DotParser.cpp:50
+msgid "*.dot|Graphviz Files"
+msgstr "*.dot|Fichiers Graphviz"
+
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:67
+#: Plugins/FilePlugins/GMLParser/GMLParser.cpp:63
+#: Plugins/FilePlugins/TXTParser/PlainTxtFilePlugin.cpp:57
+#: Plugins/FilePlugins/dotParser/DotParser.cpp:60
+#, kde-format
+msgid "Cannot open the file: %1. Error %2"
+msgstr "Impossible d'ouvrir le fichier : %1. Erreur %2"
+
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:95
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:163
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:284
+msgid "Could not parse Graphviz file due to syntax errors."
+msgstr ""
+"Impossible d'analyser le fichier Graphviz à cause d'erreurs de syntaxe."
+
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:156
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:277
+msgid "Graphviz parser returned unsuccessfully for file."
+msgstr "L'analyseur Graphviz a échoué pour ce fichier."
+
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:199
+#: Plugins/FilePlugins/DotFilePlugin/DotFilePlugin.cpp:321
+msgid "dotImport"
+msgstr "dotImport"
+
+#: Plugins/FilePlugins/GMLParser/GMLParser.cpp:33
+msgid "Open and Save GML files"
+msgstr "Ouvrir et enregistrer des fichiers GML"
+
+#: Plugins/FilePlugins/GMLParser/GMLParser.cpp:53
+msgid "*.gml|Graph Markup Language Files"
+msgstr "*.gml|Fichiers « Graph Markup Language »"
+
+#: Plugins/FilePlugins/GMLParser/GMLParser.cpp:69
+#: Plugins/FilePlugins/dotParser/DotParser.cpp:66
+#, kde-format
+msgid "cannot parse the file %1."
+msgstr "impossible d'analyser le fichier « %1 »."
+
+#: Plugins/FilePlugins/GMLParser/GMLParser.cpp:115
+#: Plugins/FilePlugins/TXTParser/PlainTxtFilePlugin.cpp:110
+#: Plugins/FilePlugins/dotParser/DotParser.cpp:114
+#, kde-format
+msgid "Cannot open file %1 to write document. Error: %2"
+msgstr ""
+"Impossible d'ouvrir le fichier « %1 » pour y écrire le document. Erreur : %2"
+
+#: Plugins/FilePlugins/TXTParser/PlainTxtFilePlugin.cpp:30
+msgid "Open and Save Plain TXT files"
+msgstr "Ouvrir et enregistrer des fichiers texte simple"
+
+#: Plugins/FilePlugins/TXTParser/PlainTxtFilePlugin.cpp:47
+msgid "*.txt|Plain TXT Files"
+msgstr "*.txt|Fichiers texte simple"
+
+#: Plugins/FilePlugins/TXTParser/PlainTxtFilePlugin.cpp:108
+#: Plugins/FilePlugins/dotParser/DotParser.cpp:112
+msgid "No active graph in this document."
+msgstr "Aucun graphe actif dans ce document."
+
+#: Plugins/FilePlugins/kmlParser/KMLParser.cpp:35
+msgid "Open and Save Keyhole Markup Language files"
+msgstr "Ouvrir et enregistrer des fichiers « Keyhole Markup Language »"
+
+#: Plugins/FilePlugins/kmlParser/KMLParser.cpp:54
+#, kde-format
+msgid "Cannot open file %1: %2"
+msgstr "Impossible d'ouvrir le fichier « %1 » : %2"
+
+#: Plugins/FilePlugins/kmlParser/KMLParser.cpp:144
+msgid "*.kml|Keyhole Markup Language Files"
+msgstr "*.kml|Fichiers « Keyhole Markup Language »"
+
+#: Scripts/IncludeManager.cpp:118
+#, kde-format
+msgid "Cannot open file %2."
+msgstr "Impossible d'ouvrir le fichier « %2 »."
+
+#: Scripts/IncludeManager.cpp:148
+#, kde-format
+msgid "Invalid include directive: %1. Cannot find file in directive."
+msgstr ""
+"Direction d'inclusion non valable : %1. Impossible de trouver le fichier "
+"dans la directive."
+
+#: Main.cpp:38
+msgid "Rocs"
+msgstr "Rocs"
+
+#: Main.cpp:40
+msgid "Graph Theory Tool"
+msgstr "Outil pour la théorie des graphes"
+
+#: Main.cpp:42
+msgid "(c) 2009-2011 Rocs Developers"
+msgstr "(c) 2009-2011 Les développeurs de Rocs"
+
+#: Main.cpp:43
+msgid "Rocs - Data Structure Analysis"
+msgstr "Rocs - Analyse de structures de données"
+
+#: Main.cpp:46
+msgid "Tomaz Canabrava"
+msgstr "Tomaz Canabrava"
+
+#: Main.cpp:46 Main.cpp:47 Main.cpp:48
+msgid "Developer"
+msgstr "Développeur"
+
+#: Main.cpp:47
+msgid "Wagner Reck"
+msgstr "Wagner Reck"
+
+#: Main.cpp:48
+msgid "Andreas Cord-Landwehr"
+msgstr "Andreas Cord-Landwehr"
+
+#: Main.cpp:55
+msgid "No Data Structure plugins found on your system. Exiting."
+msgstr ""
+"Aucun module de structure de données trouvé sur votre système. Fermeture de "
+"l'application."
+
+#: Main.cpp:56
+msgid ""
+"Rocs needs at least one data structure plugin to continue.\n"
+"Try running kbuildsycoca4 from a console and after execute Rocs again."
+msgstr ""
+"Rocs nécessite au moins un module de structure de données pour continuer.\n"
+"Essayez d'exécuter « kbuildsycoca4 » depuis une console puis relancez Rocs à "
+"nouveau."
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Julien Richard-Foy"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "julien.rf@no-log.org"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:5
+msgid "Default Information Display"
+msgstr "Informations d'affichage par défaut"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:44
+#. i18n: ectx: property (text), widget (QLabel, labelNodePosition)
+#: rc.cpp:8
+msgid "Node Information"
+msgstr "Informations du nœud"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:51
+#. i18n: ectx: property (text), widget (QLabel, labelEdgePosition)
+#: rc.cpp:11
+msgid "Edge Information"
+msgstr "Informations du côté"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:65
+#. i18n: ectx: property (text), item, widget (QComboBox, comboDefaultEdge)
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:93
+#. i18n: ectx: property (text), item, widget (QComboBox, comboDefaultNode)
+#: rc.cpp:14 rc.cpp:23
+msgid "centered"
+msgstr "centré"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:70
+#. i18n: ectx: property (text), item, widget (QComboBox, comboDefaultEdge)
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:98
+#. i18n: ectx: property (text), item, widget (QComboBox, comboDefaultNode)
+#: rc.cpp:17 rc.cpp:26
+msgid "below"
+msgstr "en-dessous"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:75
+#. i18n: ectx: property (text), item, widget (QComboBox, comboDefaultEdge)
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:103
+#. i18n: ectx: property (text), item, widget (QComboBox, comboDefaultNode)
+#: rc.cpp:20 rc.cpp:29
+msgid "above"
+msgstr "au-dessus"
+
+#. i18n: file: Interface/ConfigureDefaultProperties.ui:121
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:32
+msgid "Execution Options"
+msgstr "Options d'exécution"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, NodePropertiesWidget)
+#: rc.cpp:35
+msgid "Node Properties"
+msgstr "Propriétés du sommet :"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:32
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:20
+#. i18n: ectx: property (text), widget (QLabel, label)
+#. i18n: file: Interface/DataStructurePropertiesWidget.ui:72
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:38 rc.cpp:83 rc.cpp:155
+msgid "Name:"
+msgstr "Nom :"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:62
+#. i18n: ectx: property (toolTip), widget (QLabel, label_6)
+#. i18n: file: Interface/NodePropertiesWidget.ui:75
+#. i18n: ectx: property (toolTip), widget (KColorCombo, _color)
+#: rc.cpp:41 rc.cpp:47
+msgid "Node color"
+msgstr "Couleur du sommet"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:65
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:44
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:44 rc.cpp:89
+msgid "Color:"
+msgstr "Couleur :"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:88
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:61
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:50 rc.cpp:95
+msgid "Value:"
+msgstr "Valeur :"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:111
+#. i18n: ectx: property (text), widget (QCheckBox, _disableColor)
+#: rc.cpp:53
+msgid "Disable Color"
+msgstr "Désactiver la couleur"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:118
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:56
+msgid "Image"
+msgstr "Image"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:148
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:184
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:59 rc.cpp:140
+msgid "Add Property"
+msgstr "Ajouter une propriété"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:154
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:146
+#. i18n: ectx: property (text), widget (KPushButton, _showName)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:190
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: rc.cpp:62 rc.cpp:131 rc.cpp:143
+msgid "Name"
+msgstr "Nom"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:174
+#. i18n: ectx: property (text), widget (QCheckBox, _isPropertyGlobal)
+#: rc.cpp:68
+msgid "Apply to all nodes"
+msgstr "Appliquer à tous les nœuds"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:194
+#. i18n: ectx: property (text), widget (KPushButton, _addProperty)
+#. i18n: file: Interface/EdgePropertiesWidget.ui:237
+#. i18n: ectx: property (text), widget (KPushButton, _addProperty)
+#: rc.cpp:71 rc.cpp:152
+msgid "add"
+msgstr "ajouter"
+
+#. i18n: file: Interface/NodePropertiesWidget.ui:232
+#. i18n: ectx: property (text), widget (QPushButton, _btnClose)
+#: rc.cpp:74
+msgid "Close"
+msgstr "Fermer"
+
+#. i18n: file: Interface/OpenedFilesWidget.ui:22
+#. i18n: ectx: property (text), widget (KPushButton, _btnNewFile)
+#: rc.cpp:77
+msgid "New File"
+msgstr "Nouveau fichier"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, EdgePropertiesWidget)
+#: rc.cpp:80
+msgid "Edge Properties"
+msgstr "Propriétés de l'arête :"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:30
+#. i18n: ectx: property (toolTip), widget (KLineEdit, _name)
+#: rc.cpp:86
+msgid "Edge name"
+msgstr "Nom de l'arête"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:54
+#. i18n: ectx: property (toolTip), widget (KColorCombo, _color)
+#: rc.cpp:92
+msgid "Edge color"
+msgstr "Couleur de l'arête"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:71
+#. i18n: ectx: property (toolTip), widget (KLineEdit, _value)
+#: rc.cpp:98
+msgid "Edge value"
+msgstr "Valeur de l'arête"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:78
+#. i18n: ectx: property (toolTip), widget (QLabel, label_4)
+#: rc.cpp:101
+msgid "Edge width"
+msgstr "Largeur de l'arête"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:81
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:104
+msgid "Width:"
+msgstr "Largeur :"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:94
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:107
+msgid "Style:"
+msgstr "Style :"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:104
+#. i18n: ectx: property (toolTip), widget (KComboBox, _style)
+#: rc.cpp:110
+msgid "Edge style"
+msgstr "Style de l'arête"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:108
+#. i18n: ectx: property (text), item, widget (KComboBox, _style)
+#: rc.cpp:113
+msgid "solid"
+msgstr "trait plein"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:113
+#. i18n: ectx: property (text), item, widget (KComboBox, _style)
+#: rc.cpp:116
+msgid "dash"
+msgstr "tirets"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:118
+#. i18n: ectx: property (text), item, widget (KComboBox, _style)
+#: rc.cpp:119
+msgid "dot"
+msgstr "points"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:123
+#. i18n: ectx: property (text), item, widget (KComboBox, _style)
+#: rc.cpp:122
+msgid "dash dot"
+msgstr "tirets et points"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:133
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: rc.cpp:125
+msgid "Show"
+msgstr "Afficher"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:143
+#. i18n: ectx: property (toolTip), widget (KPushButton, _showName)
+#: rc.cpp:128
+msgid "Show/hide edge name"
+msgstr "Afficher/Cacher les noms d'arêtes"
+
+#. i18n: file: Interface/EdgePropertiesWidget.ui:156
+#. i18n: ectx: property (toolTip), widget (KPushButton, _showValue)
+#: rc.cpp:134
+msgid "Show/add edge value"
+msgstr "Afficher/Cacher les valeurs des arêtes"
+
+#. i18n: file: Interface/DataStructurePropertiesWidget.ui:109
+#. i18n: ectx: property (title), widget (QGroupBox, _dataTypePropertiesHeader)
+#: rc.cpp:158
+msgid "Display Options"
+msgstr ""
+
+#. i18n: file: Interface/DataStructurePropertiesWidget.ui:194
+#. i18n: ectx: property (toolTip), widget (KPushButton, _dataStructureDelete)
+#: rc.cpp:161
+msgid "Delete the active graph"
+msgstr "Supprimer le graphe courant"
+
+#. i18n: file: Interface/DataStructurePropertiesWidget.ui:197
+#. i18n: ectx: property (whatsThis), widget (KPushButton, _dataStructureDelete)
+#: rc.cpp:164
+msgid "Delete the current active graph: delete all nodes and edges"
+msgstr "Supprime le graphe courant : supprime tous les sommets et arêtes"
+
+#. i18n: Do not translate, X is for delete
+#. i18n: file: Interface/DataStructurePropertiesWidget.ui:200
+#. i18n: ectx: property (text), widget (KPushButton, _dataStructureDelete)
+#: rc.cpp:168
+msgctxt "@action:button"
+msgid "x"
+msgstr "x"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:39
+#. i18n: ectx: property (toolTip), widget (KComboBox, dataStructuresCombo)
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:30
+#. i18n: ectx: property (toolTip), widget (KComboBox, dataStructuresCombo)
+#: rc.cpp:177 rc.cpp:283
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">List of all data "
+"structures that are of type <span style=\" font-style:italic;\">Graph</span>."
+"</p></body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Liste de toutes les "
+"structures de données du type <span style=\" font-style:italic;\">Graphe</"
+"span>.</p></body></html>"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:57
+#. i18n: ectx: property (text), widget (QCheckBox, checkBoxAssignNodes)
+#: rc.cpp:184
+msgid "Nodes"
+msgstr "Nœuds"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:67
+#. i18n: ectx: property (text), widget (QCheckBox, checkBoxAssignEdges)
+#: rc.cpp:187
+msgid "Edges"
+msgstr "Arrêtes"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:101
+#. i18n: ectx: property (text), widget (QLabel, IDlabelStartValue)
+#: rc.cpp:190
+msgid "Start ID"
+msgstr "Identifiant de démarrage"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:135
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:209
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:193 rc.cpp:202
+msgid "Lower Limit"
+msgstr "Limite basse"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:155
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:216
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: rc.cpp:196 rc.cpp:205
+msgid "Upper Limit"
+msgstr "Limite haute"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:162
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:223
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: rc.cpp:199 rc.cpp:208
+msgid "Generator Seed"
+msgstr "Graine du générateur"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:278
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBoxMethod)
+#: rc.cpp:211
+msgid "Enumerate Items"
+msgstr "Énumérer les éléments"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:283
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBoxMethod)
+#: rc.cpp:214
+msgid "Assign Random Integers"
+msgstr "Assigner des entiers aléatoires"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:288
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBoxMethod)
+#: rc.cpp:217
+msgid "Assign Random Reals"
+msgstr "Assigner des réels aléatoires"
+
+#. i18n: file: Plugins/AssignValues/assignvalueswidget.ui:303
+#. i18n: ectx: property (text), widget (QCheckBox, checkBoxOverwriteValues)
+#: rc.cpp:220
+msgid "Overwrite existing values"
+msgstr "Écraser les valeurs existantes"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:42
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBox)
+#: rc.cpp:235
+msgid "Random Graph"
+msgstr "Graphe aléatoire"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:47
+#. i18n: ectx: property (text), item, widget (KComboBox, comboBox)
+#: rc.cpp:238
+msgid "Erdös-Renyi Graph"
+msgstr "Graphe Erdös-Renyi"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:103
+#. i18n: ectx: property (text), widget (QLabel, label_columns)
+#: rc.cpp:244
+msgid "Number of Columns:"
+msgstr "Nombre de colonnes :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:113
+#. i18n: ectx: property (text), widget (QLabel, label_rows)
+#: rc.cpp:247
+msgid "Number of Rows:"
+msgstr "Nombre de lignes :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:157
+#. i18n: ectx: property (text), widget (QLabel, label_numberSatellite)
+#: rc.cpp:250
+msgid "Satellite Nodes:"
+msgstr "Nœuds satellites :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:191
+#. i18n: ectx: property (text), widget (QLabel, label_numberCircle)
+#: rc.cpp:253
+msgid "Number of Nodes:"
+msgstr "Nombre de nœuds :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:225
+#. i18n: ectx: property (text), widget (QLabel, label_randomNodes)
+#: rc.cpp:256
+msgid "Nodes:"
+msgstr "Sommets :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:245
+#. i18n: ectx: property (text), widget (QLabel, label_randomEdges)
+#: rc.cpp:259
+msgid "Edges:"
+msgstr "Côtés :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:259
+#. i18n: ectx: property (text), widget (QLabel, label_randomSelfEdges)
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:311
+#. i18n: ectx: property (text), widget (QLabel, label_GNPSelfEdges)
+#: rc.cpp:262 rc.cpp:271
+msgid "Allow self-edges:"
+msgstr "Autoriser les côtés propres :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:266
+#. i18n: ectx: property (text), widget (QLabel, label_randomGeneratorSeed)
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:335
+#. i18n: ectx: property (text), widget (QLabel, label_GNPGeneratorSeed)
+#: rc.cpp:265 rc.cpp:277
+msgid "Generator Seed:"
+msgstr "Graine du générateur :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:304
+#. i18n: ectx: property (text), widget (QLabel, label_GNPNodes)
+#: rc.cpp:268
+msgid "Nodes (n):"
+msgstr "Nœuds (n) :"
+
+#. i18n: file: Plugins/GenerateGraph/generategraphwidget.ui:328
+#. i18n: ectx: property (text), widget (QLabel, label_GNPEdgeProbability)
+#: rc.cpp:274
+msgid "Edge Probability (p):"
+msgstr "Probabilité de côté (p) :"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:43
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:290
+msgid "Data Structure:"
+msgstr "Structure de données :"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:72
+#. i18n: ectx: property (toolTip), widget (QRadioButton, radioButtonMakeComplete)
+#: rc.cpp:293
+msgid ""
+"This option connects all nodes of the given graph. The new edges do not have "
+"any preset weights."
+msgstr ""
+"Cette option connecte tous les nœuds d'un graphe donné. Les nouveaux côtés "
+"n'ont pas de poids préétabli."
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:75
+#. i18n: ectx: property (text), widget (QRadioButton, radioButtonMakeComplete)
+#: rc.cpp:296
+msgid "Complete Graph"
+msgstr "Compléter le graphe"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:85
+#. i18n: ectx: property (toolTip), widget (QRadioButton, radioButtonEraseEdges)
+#: rc.cpp:299
+msgid "This option removes all edges from the given graph."
+msgstr "Cette option supprime tous les côtés d'un graphe donné."
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:88
+#. i18n: ectx: property (text), widget (QRadioButton, radioButtonEraseEdges)
+#: rc.cpp:302
+msgid "Remove all Edges"
+msgstr "Supprimer tous les côtés"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:95
+#. i18n: ectx: property (toolTip), widget (QRadioButton, radioButtonReverseEdges)
+#: rc.cpp:305
+msgid ""
+"This option reverses all edges of a directed graph. Note that this does not "
+"apply to undirected graphs."
+msgstr ""
+"Cette option renverse tous les côtés d'un graphe dirigé. Remarquez que ceci "
+"ne s'applique pas aux graphes non dirigés."
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:98
+#. i18n: ectx: property (text), widget (QRadioButton, radioButtonReverseEdges)
+#: rc.cpp:308
+msgid "Reverse all Edges"
+msgstr "Inverser tous les côtés"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:109
+#. i18n: ectx: property (toolTip), widget (QRadioButton, radioButtonMakeSpanningtree)
+#: rc.cpp:311
+msgid ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">This option executes <span "
+"style=\" font-style:italic;\">Prim's Minimal Spanning Tree Algorithm</span> "
+"at the graph. All edges without given weights are assumed to have weights "
+"equals 1. Directed and undirected graphs are processed accordingly.</p></"
+"body></html>"
+msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'DejaVu Sans'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Cette option exécute "
+"l'algorithme <span style=\" font-style:italic;\">Prim's Minimal Spanning "
+"Tree</span> sur le graphe. Tous les côtés sans poids donné sont considérés "
+"avec un poids de 1. Les graphes dirigés et non dirigés sont traités d'une "
+"manière précise.</p></body></html>"
+
+#. i18n: file: Plugins/TransformEdges/transformedgeswidget.ui:112
+#. i18n: ectx: property (text), widget (QRadioButton, radioButtonMakeSpanningtree)
+#: rc.cpp:318
+msgid "Spanning Tree Transformation"
+msgstr "Transformation d'arbre espacé"
+
+#. i18n: file: rocs.kcfg:9
+#. i18n: ectx: label, entry (showButtonText), group (ItemPalette)
+#. i18n: file: rocs.kcfg:10
+#. i18n: ectx: whatsthis, entry (showButtonText), group (ItemPalette)
+#: rc.cpp:321 rc.cpp:324
+msgid "Show text beside icon"
+msgstr "Afficher le texte à côté de l'icône"
+
+#. i18n: file: rocs.kcfg:41
+#. i18n: ectx: label, entry (includePath), group (IncludeManager)
+#: rc.cpp:327
+msgid "Path where include manager seek for includes."
+msgstr "Emplacement où le gestionnaire recherche pour des inclusions."
+
+#. i18n: file: rocs.kcfg:46
+#. i18n: ectx: label, entry (dataNodeDisplay), group (DefaultElementDisplay)
+#: rc.cpp:330
+msgid "Position where name and value of a node shall be shown."
+msgstr "Position où le nom et la valeur d'un nœud doivent être affichés."
+
+#. i18n: file: rocs.kcfg:49
+#. i18n: ectx: label, entry (dataEdgeDisplay), group (DefaultElementDisplay)
+#: rc.cpp:333
+msgid "Position where name and value of an edge shall be shown."
+msgstr "Position où le nom et la valeur d'un côté doivent être affichés."
+
+#. i18n: file: rocsui.rc:12
+#. i18n: ectx: Menu (new)
+#: rc.cpp:336
+msgid "New"
+msgstr "Nouveau"
+
+#. i18n: file: rocsui.rc:21
+#. i18n: ectx: Menu (graph)
+#: rc.cpp:339
+msgid "Graph"
+msgstr "Graphe"
+
+#. i18n: file: rocsui.rc:28
+#. i18n: ectx: Menu (script)
+#: rc.cpp:342
+msgid "Script"
+msgstr "Script"
+
+#. i18n: file: rocsui.rc:38
+#. i18n: ectx: Menu (edit)
+#: rc.cpp:345
+msgid "Edit"
+msgstr "Modifier"
+
+#. i18n: file: rocsui.rc:40
+#. i18n: ectx: Menu (conversions)
+#: rc.cpp:348
+msgid "Conversions"
+msgstr "Conversions"
+
+#. i18n: file: rocsui.rc:44
+#. i18n: ectx: Menu
+#: rc.cpp:351
+msgid "Layout"
+msgstr "Disposition"
+
+#. i18n: file: rocsui.rc:57
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:354
+msgid "Tools"
+msgstr "Outils"
+
+#. i18n: file: rocsui.rc:63
+#. i18n: ectx: ToolBar (main)
+#: rc.cpp:357
+msgid "Main Toolbar"
+msgstr "Barre principale"
+
+#. i18n: file: rocsui.rc:71
+#. i18n: ectx: ToolBar (layout)
+#: rc.cpp:360
+msgid "Layout Toolbar"
+msgstr "Barre de disposition"
+
+#~ msgid "Data Color:"
+#~ msgstr "Couleur de la donnée :"
+
+#~ msgid "Color for new nodes"
+#~ msgstr "Couleur des nouveaux sommets"
+
+#~ msgid "Pointer Color:"
+#~ msgstr "Couleur du pointeur :"
+
+#~ msgid "Color for new edges"
+#~ msgstr "Couleur des nouveaux côtés"
+
+#~ msgid "Data"
+#~ msgstr "Données"
+
+#~ msgid "Apply the current color to all nodes"
+#~ msgstr "Appliquer la couleur courante à tous les sommets"
+
+#~ msgid "Apply the current color to all nodes on the drawing area"
+#~ msgstr ""
+#~ "Appliquer la couleur courante à tous les sommets de la zone d'affichage"
+
+#~ msgid "All"
+#~ msgstr "Tous"
+
+#~ msgid "Apply the current color to all edges"
+#~ msgstr "Appliquer la couleur courante à toutes les arêtes"
+
+#~ msgid "Apply the current color to all edges on the drawing area"
+#~ msgstr ""
+#~ "Appliquer la couleur courante à toutes les arêtes de la zone d'affichage"
+
+#~ msgid "Align on the base"
+#~ msgstr "Aligner en bas"
+
+#~ msgid "Align on the center"
+#~ msgstr "Aligner au centre"
+
+#~ msgid "Align on the top"
+#~ msgstr "Aligner en haut"
+
+#~ msgid "Align on the left"
+#~ msgstr "Aligner à gauche"
+
+#~ msgid "Align on the right"
+#~ msgstr "Aligner à droite"
+
+#, fuzzy
+#~| msgid "Align on the left"
+#~ msgid "Align on a circle"
+#~ msgstr "Aligner à gauche"
+
+#~ msgid "..."
+#~ msgstr "…"
+
+#~ msgid "(c) 2009"
+#~ msgstr "© 2009"
+
+#~ msgid "Do you want to save your unsaved document?"
+#~ msgstr "Voulez-vous enregistrer votre document ?"
+
+#~ msgid "Select Items by clicking on them."
+#~ msgstr "Sélectionne des objets en cliquant dessus."
+
+#~ msgid "Moves a node around the drawing area."
+#~ msgstr "Déplace un sommet dans la zone de dessin"
+
+#~ msgid "Make Complete"
+#~ msgstr "Rendre complet"
+
+#, fuzzy
+#~| msgid "Edge value"
+#~ msgid "assign values"
+#~ msgstr "Valeur de l'arête"
+
+#~ msgid "Dialog"
+#~ msgstr "Dialogue"
+
+#~ msgid "Radius:"
+#~ msgstr "Rayon :"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "Connection Type"
+#~ msgstr "Type de connexion"
+
+#~ msgid "Complete"
+#~ msgstr "Complet"
+
+#~ msgctxt "Do not translate, X is for delete"
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid "Graph is oriented"
+#~ msgstr "Le graphe est orienté"
+
+#~ msgid "Name: %1"
+#~ msgstr "Nom : %1"
+
+#~ msgid "Value: %1"
+#~ msgstr "Valeur : %1"
+
+#~ msgid "Save Graph As..."
+#~ msgstr "Enregistrer le graphe sous..."
+
+#~ msgid "Save Script As..."
+#~ msgstr "Enregistrer le script sous..."
+
+#, fuzzy
+#~| msgid " Graph "
+#~ msgid "Ring Graph"
+#~ msgstr "Graphe"
+
+#, fuzzy
+#~| msgid "Untitled"
+#~ msgid "UntitledDoc"
+#~ msgstr "sans-titre"
+
+#~ msgid "Thanks to Ugo Sangiori"
+#~ msgstr "Merci à Ugo Sangiori"
+
+#~ msgid "graph name here"
+#~ msgstr "Nom du graphe ici"
+
+#~ msgid "Edge Color:"
+#~ msgstr "Couleur de l'arête :"
+
+#~ msgid "X-coordinate "
+#~ msgstr "Abscisse"
+
+#~ msgid "Y-coordinate "
+#~ msgstr "Ordonnée"
+
+#~ msgid "Node size"
+#~ msgstr "Taille du sommet"
+
+#~ msgid "Begin"
+#~ msgstr "Début"
+
+#~ msgid "End"
+#~ msgstr "Fin"
+
+#~ msgid "Graph is Automate"
+#~ msgstr "Le graphe est un automate"
+
+#~ msgid " Is begin"
+#~ msgstr "Est le début"
+
+#~ msgid " Is End"
+#~ msgstr "Est la fin"
+
+#~ msgid "Oriented graph"
+#~ msgstr "Graphe orienté"
+
+#~ msgid "Enabling this button will make the graph oriented."
+#~ msgstr "Activer ce bouton pour produire un graphe orienté."
+
+#~ msgid "Automaton Graph"
+#~ msgstr "Automate"
+
+#~ msgid "Enabling this button will make the graph an automaton graph."
+#~ msgstr "Activer ce bouton pour produire un automate"
+
+#~ msgid "Enabling this button will show the names of all nodes."
+#~ msgstr "Activer ce bouton pour afficher les noms de tous les sommets."
+
+#~ msgid "Show all edges' names"
+#~ msgstr "Afficher les noms de toutes les arêtes"
+
+#~ msgid "Enabling this button will show the names of all edges."
+#~ msgstr "Activer ce bouton pour afficher les noms de toutes les arêtes."
+
+#~ msgid "Show all nodes' values"
+#~ msgstr "Afficher les valeurs de tous les sommets"
+
+#~ msgid "Enabling this button will show the values of all nodes."
+#~ msgstr "Activer ce bouton pour afficher les valeurs de tous les sommets"
+
+#~ msgid "Show all edges' values"
+#~ msgstr "Afficher les valeurs de toutes les arêtes"
+
+#~ msgid "Enabling this button will show the values of edges."
+#~ msgstr "Activer ce bouton pour afficher les valeurs de toutes les arêtes."
+
+#, fuzzy
+#~| msgid "x"
+#~ msgctxt "X-coordinate "
+#~ msgid "x:"
+#~ msgstr "x"
+
+#, fuzzy
+#~| msgctxt "NAME OF TRANSLATORS"
+#~| msgid "Your names"
+#~ msgid "Node name"
+#~ msgstr "Julien Richard-Foy"
+
+#~ msgid "name"
+#~ msgstr "nom"
+
+#~ msgid "Draw the graphics using the fastest (but ugliest) method. "
+#~ msgstr ""
+#~ "Dessiner les graphismes en utilisant la méthode la plus rapide (mais "
+#~ "aussi la plus laide)."
+
+#~ msgid "long explanation needed. "
+#~ msgstr "explication longue nécessaire…"
+
+#~ msgid " The Right Size of the Cell "
+#~ msgstr "La taille de la droite de la cellule"
+
+#~ msgid " long  explanation needed "
+#~ msgstr "explication longue nécessaire…"
+
+#~ msgid " the Top Size of the cell "
+#~ msgstr "La taille du haut de la cellule"
+
+#~ msgid " long explanation needed "
+#~ msgstr "explication longue nécessaire…"
+
+#~ msgid "show"
+#~ msgstr "afficher"
+
+#~ msgid "Enabling this button will show all names in edges"
+#~ msgstr "Activer ce bouton pour afficher les noms des arrêtes"
+
+#~ msgid "enabling this button will show all values in nodes"
+#~ msgstr "Activer ce bouton pour afficher les valeurs des sommets"
+
+#~| msgid "Delete"
+#~ msgid "delete"
+#~ msgstr "supprimer"
+
+#~ msgid ""
+#~ "Creates a simple Graph, without multiple edges and without an edge to a "
+#~ "note from the same node."
+#~ msgstr "Crée un graphe simple, sans arrête multiple et sans boucle."
+
+#~ msgid "KSqueezedTextLabel"
+#~ msgstr "KSqueezedTextLabel"
+
+#~ msgid "ScrollArea"
+#~ msgstr "Zone de défilement"
+
+#~ msgid "X"
+#~ msgstr "X"
+
+#~ msgid "Node:"
+#~ msgstr "Sommet :"
+
+#~ msgid "Y"
+#~ msgstr "Y"
+
+#~ msgid "Name of the property"
+#~ msgstr "Nom de la propriété"
+
+#~ msgid "Value of the property"
+#~ msgstr "Valeur de la propriété"
+
+#~ msgid "ok"
+#~ msgstr "Ok"
+
+#~ msgid "Smart Tool"
+#~ msgstr "Outil intelligent"
+
+#~ msgid "Tries to do what it thinks that's good for the soul."
+#~ msgstr "Tente de réaliser ce qui lui semble bon pour l'âme."
+
+#~ msgid "Does Nothing."
+#~ msgstr "Ne fait rien."
+
+#~| msgid "Add Property"
+#~ msgid "Add new property:"
+#~ msgstr "Ajouter une propriété :"

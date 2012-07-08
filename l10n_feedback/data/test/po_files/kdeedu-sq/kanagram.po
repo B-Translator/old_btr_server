@@ -1,0 +1,513 @@
+# Albanian translation for kdeedu
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the kdeedu package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeedu\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2012-01-29 02:52+0100\n"
+"PO-Revision-Date: 2009-09-03 14:18+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-21 22:37+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: kanagram.cpp:51
+msgid "reveal word"
+msgstr "shfaq fjalën"
+
+#: kanagram.cpp:52
+msgid "hint"
+msgstr "këshillë"
+
+#: kanagram.cpp:53
+msgid "Next Anagram"
+msgstr "Anagrami Tjetër"
+
+#: kanagram.cpp:221
+msgid "Show Hint"
+msgstr "Shfaq Këshillën"
+
+#: kanagram.cpp:227
+msgid "Reveal Anagram"
+msgstr "Shfaq Anagramin"
+
+#: kanagram.cpp:233
+msgid "Previous Vocabulary"
+msgstr ""
+
+#: kanagram.cpp:238
+#, fuzzy
+#| msgid "Vocabularies"
+msgid "Next Vocabulary"
+msgstr "Fjalorët"
+
+#: kanagram.cpp:403
+msgid "About Kanagram"
+msgstr "Rreth Kanagram"
+
+#: kanagram.cpp:418
+msgid "About KDE"
+msgstr "Rreth KDE"
+
+#: kanagram.cpp:433
+msgid "Kanagram Handbook"
+msgstr "Broshura Kanagram"
+
+#: kanagram.cpp:449
+msgid "Configure Kanagram"
+msgstr "Konfiguro Kanagram"
+
+#: kanagram.cpp:453
+msgid "Quit Kanagram"
+msgstr "Dil nga Kanagram"
+
+#. i18n: file: mainsettingswidget.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, MainSettingsWidget)
+#: kanagram.cpp:863 rc.cpp:5
+msgctxt "@title:group main settings page name"
+msgid "General"
+msgstr "Të Përgjithshme"
+
+#. i18n: file: vocabsettingswidget.ui:20
+#. i18n: ectx: property (windowTitle), widget (QWidget, VocabSettingsWidget)
+#: kanagram.cpp:867 rc.cpp:110
+msgid "Vocabularies"
+msgstr "Fjalorët"
+
+#: kanagram.cpp:871
+msgid "Shortcuts"
+msgstr "Shkurtore"
+
+#: kanagram.cpp:954
+#, kde-format
+msgid ""
+"File %1 cannot be found.\n"
+" Please ensure that Kanagram is properly installed."
+msgstr ""
+
+#: kanagram.cpp:955
+msgid "Error"
+msgstr "Gabim"
+
+#: main.cpp:31
+msgid "Kanagram"
+msgstr "Kanagram"
+
+#: main.cpp:31
+msgid "An anagram game"
+msgstr "Një lojë anagramash"
+
+#: main.cpp:33
+msgid ""
+"© 2005 Joshua Keel\n"
+"© 2005 Danny Allen\n"
+"© 2007 Jeremy Whiting"
+msgstr ""
+"© 2005 Joshua Keel\n"
+"© 2005 Danny Allen\n"
+"© 2007 Jeremy Whiting"
+
+#: main.cpp:34
+msgid "Joshua Keel"
+msgstr "Joshua Keel"
+
+#: main.cpp:34
+msgid "Coding"
+msgstr "Kodimi"
+
+#: main.cpp:35
+msgid "Danny Allen"
+msgstr "Danny Allen"
+
+#: main.cpp:35
+msgid "Design, Graphics and many Vocabularies"
+msgstr "Vizatimi, Grafikët dhe shumë Fjalorë"
+
+#: main.cpp:36
+msgid "Jeremy Whiting"
+msgstr "Jeremy Whiting"
+
+#: main.cpp:36
+msgid "Maintainer"
+msgstr "Mirëmbajtësi"
+
+#: main.cpp:37
+msgid "Laszlo Papp"
+msgstr ""
+
+#: main.cpp:37
+msgid "Modularization and porting to Mobile"
+msgstr ""
+
+#: main.cpp:38
+msgid "Artemiy Pavlov"
+msgstr "Artemiy Pavlov"
+
+#: main.cpp:38
+msgid "Sound effects"
+msgstr "Efektet Zanore"
+
+#: main.cpp:39
+msgid "Pino Toscano"
+msgstr "Pino Toscano"
+
+#: main.cpp:39
+msgid "Italian Data Files"
+msgstr "Skedarët italianë me të dhëna"
+
+#: main.cpp:40
+msgid "Kris Thomsen"
+msgstr "Kris Thomsen"
+
+#: main.cpp:40
+msgid "Danish Data Files"
+msgstr "Skedarët Danezë Me Të Dhëna"
+
+#: main.cpp:41
+msgid "Patrick Spendrin"
+msgstr "Patrick Spendrin"
+
+#: main.cpp:41
+msgid "German Data Files"
+msgstr "Skedarët Gjermanë Me Të Dhëna"
+
+#: main.cpp:42
+msgid "Eric Krüse"
+msgstr "Eric Krüse"
+
+#: main.cpp:42
+msgid "British English Data Files"
+msgstr "Skedarët Britaniko-Anglezë Me Të Dhëna"
+
+#: main.cpp:43
+msgid "Hanna Scott"
+msgstr "Hanna Scott"
+
+#: main.cpp:43
+msgid "Swedish Data Files"
+msgstr "Skedarët Suedezë Me Të Dhëna"
+
+#: main.cpp:44
+msgid "Jure Repinc"
+msgstr "Jure Repinc"
+
+#: main.cpp:44
+msgid "Slovenian Data Files"
+msgstr "Skedarët Sllovenë Me Të Dhëna"
+
+#: main.cpp:45
+msgid "Yuri Chornoivan"
+msgstr "Yuri Chornoivan"
+
+#: main.cpp:45
+msgid "Ukranian Data Files"
+msgstr "Skedarët Ukrainas Me Të Dhëna"
+
+#: mainsettings.cpp:75
+msgctxt "@item:inlistbox no language for that locale"
+msgid "None"
+msgstr "Asnjë"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE Shqip, Launchpad Contributions: Vilson Gjeci"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"
+
+#. i18n: file: mainsettingswidget.ui:16
+#. i18n: ectx: property (whatsThis), widget (QWidget, MainSettingsWidget)
+#: rc.cpp:8
+msgid ""
+"This setting allows you to set the length of time Kanagram's hint bubble is "
+"shown."
+msgstr ""
+
+#. i18n: file: mainsettingswidget.ui:22
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
+#: rc.cpp:11
+msgid "Hints"
+msgstr "Këshilla"
+
+#. i18n: file: mainsettingswidget.ui:28
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:14
+msgid "Auto-hide hints after:"
+msgstr ""
+
+#. i18n: file: mainsettingswidget.ui:36
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_hintHideTime)
+#: rc.cpp:17
+msgid "Do Not Auto-Hide Hints"
+msgstr "Mos i Vetë Fshih Këshillat"
+
+#. i18n: file: mainsettingswidget.ui:41
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_hintHideTime)
+#: rc.cpp:20
+msgid "3 Seconds"
+msgstr "3 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:46
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_hintHideTime)
+#: rc.cpp:23
+msgid "5 Seconds"
+msgstr "5 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:51
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_hintHideTime)
+#: rc.cpp:26
+msgid "7 Seconds"
+msgstr "7 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:56
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_hintHideTime)
+#: rc.cpp:29
+msgid "9 Seconds"
+msgstr "9 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:64
+#. i18n: ectx: property (text), widget (QLabel, textLabelResolveTime)
+#: rc.cpp:32
+msgid "Time for resolving the anagram:"
+msgstr ""
+
+#. i18n: file: mainsettingswidget.ui:72
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_resolveTime)
+#: rc.cpp:35
+msgid "No time limit"
+msgstr ""
+
+#. i18n: file: mainsettingswidget.ui:77
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_resolveTime)
+#: rc.cpp:38
+#, fuzzy
+#| msgid "3 Seconds"
+msgid "30 Seconds"
+msgstr "3 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:82
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_resolveTime)
+#: rc.cpp:41
+#, fuzzy
+#| msgid "3 Seconds"
+msgid "60 Seconds"
+msgstr "3 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:87
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_resolveTime)
+#: rc.cpp:44
+#, fuzzy
+#| msgid "3 Seconds"
+msgid "120 Seconds"
+msgstr "3 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:92
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_resolveTime)
+#: rc.cpp:47
+#, fuzzy
+#| msgid "3 Seconds"
+msgid "300 Seconds"
+msgstr "3 Sekonda"
+
+#. i18n: file: mainsettingswidget.ui:103
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
+#: rc.cpp:50
+msgid "Vocabulary Options"
+msgstr "Opsionet e Fjalorit"
+
+#. i18n: file: mainsettingswidget.ui:111
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:53
+msgid "Play using:"
+msgstr "Luaj duke përdorur"
+
+#. i18n: file: mainsettingswidget.ui:129
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_useSounds)
+#: rc.cpp:56
+msgid "Turns sounds on/off."
+msgstr "Ndizi/Fiki Zërat"
+
+#. i18n: file: mainsettingswidget.ui:132
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_useSounds)
+#: rc.cpp:59
+msgid "Use sou&nds"
+msgstr "Përdor zë&rat"
+
+#. i18n: file: vocabeditwidget.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, VocabEditWidget)
+#: rc.cpp:62
+msgid "Vocabulary Editor"
+msgstr "Modifikuesi i Fjalorit"
+
+#. i18n: file: vocabeditwidget.ui:74
+#. i18n: ectx: property (text), widget (QPushButton, btnSave)
+#: rc.cpp:65
+msgid "&Save"
+msgstr "&Ruaj"
+
+#. i18n: file: vocabeditwidget.ui:81
+#. i18n: ectx: property (text), widget (QPushButton, btnClose)
+#: rc.cpp:68
+msgid "&Close"
+msgstr "&Mbylle"
+
+#. i18n: file: vocabeditwidget.ui:127
+#. i18n: ectx: property (whatsThis), widget (QLabel, textLabel2)
+#: rc.cpp:71
+msgid ""
+"The description of the vocabulary. If you are creating a new vocabulary, add "
+"a description so that users of your vocabulary will know what kinds of words "
+"it contains."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:130
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:74
+msgid "&Description:"
+msgstr "&Përshkrimi:"
+
+#. i18n: file: vocabeditwidget.ui:143
+#. i18n: ectx: property (whatsThis), widget (QLabel, textLabel1)
+#: rc.cpp:77
+msgid "The name of the vocabulary you are editing."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:146
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:80
+msgid "Vocabulary &name:"
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:195
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnRemoveWord)
+#: rc.cpp:83
+msgid "Removes the selected word."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:198
+#. i18n: ectx: property (text), widget (QPushButton, btnRemoveWord)
+#: rc.cpp:86
+msgid "&Remove Word"
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:205
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnNewWord)
+#: rc.cpp:89
+msgid "Creates a new word."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:208
+#. i18n: ectx: property (text), widget (QPushButton, btnNewWord)
+#: rc.cpp:92
+msgid "&New Word"
+msgstr "&Fjalë e Re"
+
+#. i18n: file: vocabeditwidget.ui:217
+#. i18n: ectx: property (whatsThis), widget (QListWidget, lboxWords)
+#: rc.cpp:95
+msgid "The list of words in the vocabulary."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:246
+#. i18n: ectx: property (whatsThis), widget (QLabel, textLabel3)
+#: rc.cpp:98
+msgid "The selected word. This box allows you to edit the selected word."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:249
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#: rc.cpp:101
+msgid "&Word:"
+msgstr "&Fjalë:"
+
+#. i18n: file: vocabeditwidget.ui:265
+#. i18n: ectx: property (whatsThis), widget (QLabel, textLabel4)
+#: rc.cpp:104
+msgid "The selected hint. Add a hint to aid in guessing the word."
+msgstr ""
+
+#. i18n: file: vocabeditwidget.ui:268
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#: rc.cpp:107
+msgid "&Hint:"
+msgstr "&Këshillë:"
+
+#. i18n: file: vocabsettingswidget.ui:48
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnCreateNew)
+#: rc.cpp:113
+msgid "Creates a new vocabulary."
+msgstr "Krijon një fjalor të ri."
+
+#. i18n: file: vocabsettingswidget.ui:51
+#. i18n: ectx: property (text), widget (QPushButton, btnCreateNew)
+#: rc.cpp:116
+msgid "Create &New"
+msgstr "Krijo të &Ri"
+
+#. i18n: file: vocabsettingswidget.ui:58
+#. i18n: ectx: property (toolTip), widget (QPushButton, btnDownloadNew)
+#: rc.cpp:119
+msgid "Download new vocabulary from  \"Get hot new Stuff\""
+msgstr ""
+
+#. i18n: file: vocabsettingswidget.ui:61
+#. i18n: ectx: property (text), widget (QPushButton, btnDownloadNew)
+#: rc.cpp:122
+msgid "Download new vocabulary"
+msgstr ""
+
+#. i18n: file: vocabsettingswidget.ui:73
+#. i18n: ectx: property (whatsThis), widget (QPushButton, btnEdit)
+#: rc.cpp:125
+msgid "Edits the selected vocabulary."
+msgstr "Modifikon Fjalorin e Përzgjedhur"
+
+#. i18n: file: vocabsettingswidget.ui:76
+#. i18n: ectx: property (text), widget (QPushButton, btnEdit)
+#: rc.cpp:128
+msgid "&Edit"
+msgstr "&Modifiko"
+
+#. i18n: file: vocabsettingswidget.ui:83
+#. i18n: ectx: property (whatsThis), widget (QTreeWidget, lviewVocab)
+#: rc.cpp:131
+msgid "The list of installed vocabularies."
+msgstr "Lista e Fjalorëve të Instaluar."
+
+#. i18n: file: vocabsettingswidget.ui:90
+#. i18n: ectx: property (text), widget (QTreeWidget, lviewVocab)
+#: rc.cpp:134
+msgid "Title"
+msgstr "Titulli"
+
+#. i18n: file: vocabsettingswidget.ui:95
+#. i18n: ectx: property (text), widget (QTreeWidget, lviewVocab)
+#: rc.cpp:137
+msgid "Description"
+msgstr "Përshkrimi"
+
+#: vocabedit.cpp:110
+msgid "Would you like to save your changes?"
+msgstr "Dëshiron të ruash ndryshimet e kryera?"
+
+#: vocabedit.cpp:110
+msgid "Save Changes Dialog"
+msgstr "Regjistro Dialogun e Ndryshimeve"
+
+#: vocabedit.cpp:125
+msgid "New Item"
+msgstr ""
+
+#~ msgid "No hint"
+#~ msgstr "Asnjë këshillë"

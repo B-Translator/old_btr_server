@@ -1,0 +1,319 @@
+# Albanian translation for kdeedu
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the kdeedu package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeedu\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-08-02 05:49+0200\n"
+"PO-Revision-Date: 2010-03-03 13:27+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-21 22:28+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: concentrationCalculator.cpp:91
+msgid "Concentration Calculator"
+msgstr ""
+
+#: concentrationCalculator.cpp:106
+msgid "Calculation Mode:"
+msgstr "Mënyra e Llogaritjes:"
+
+#: concentrationCalculator.cpp:112
+msgid "Amount Solute"
+msgstr ""
+
+#: concentrationCalculator.cpp:113
+msgid "Molar Mass of Solute"
+msgstr ""
+
+#: concentrationCalculator.cpp:114
+msgid "Equivalent Mass"
+msgstr ""
+
+#: concentrationCalculator.cpp:115
+msgid "Amount Solvent"
+msgstr ""
+
+#: concentrationCalculator.cpp:116
+msgid "Molar Mass of Solvent"
+msgstr ""
+
+#: concentrationCalculator.cpp:117
+msgid "Concentration"
+msgstr ""
+
+#: concentrationCalculator.cpp:126
+msgid "Amount of solute:"
+msgstr ""
+
+#: concentrationCalculator.cpp:136 concentrationCalculator.cpp:236
+msgid "Mass"
+msgstr "Masa"
+
+#: concentrationCalculator.cpp:137 concentrationCalculator.cpp:235
+msgid "volume"
+msgstr "volumi"
+
+#: concentrationCalculator.cpp:138 concentrationCalculator.cpp:237
+msgid "moles"
+msgstr "mol"
+
+#: concentrationCalculator.cpp:144 concentrationCalculator.cpp:1023
+#: concentrationCalculator.cpp:1090
+msgid "grams"
+msgstr "gramë"
+
+#: concentrationCalculator.cpp:145 concentrationCalculator.cpp:1024
+#: concentrationCalculator.cpp:1091
+msgid "tons"
+msgstr "ton"
+
+#: concentrationCalculator.cpp:146 concentrationCalculator.cpp:1025
+#: concentrationCalculator.cpp:1092
+msgid "carats"
+msgstr "karatë"
+
+#: concentrationCalculator.cpp:147 concentrationCalculator.cpp:1026
+#: concentrationCalculator.cpp:1093
+msgid "pounds"
+msgstr "paund"
+
+#: concentrationCalculator.cpp:148 concentrationCalculator.cpp:1027
+#: concentrationCalculator.cpp:1094
+msgid "ounces"
+msgstr "ounces"
+
+#: concentrationCalculator.cpp:149 concentrationCalculator.cpp:1028
+#: concentrationCalculator.cpp:1095
+msgid "troy ounces"
+msgstr "troy ounces"
+
+#: concentrationCalculator.cpp:160
+msgid "Molar mass of solute:"
+msgstr ""
+
+#: concentrationCalculator.cpp:169 concentrationCalculator.cpp:188
+#: concentrationCalculator.cpp:273
+msgid "u (mass)"
+msgstr "u (mass)"
+
+#: concentrationCalculator.cpp:178
+msgid "Equivalent mass of solute:"
+msgstr ""
+
+#: concentrationCalculator.cpp:198
+msgid "Density of solute:"
+msgstr ""
+
+#: concentrationCalculator.cpp:208 concentrationCalculator.cpp:293
+msgid "grams per liter"
+msgstr ""
+
+#: concentrationCalculator.cpp:209 concentrationCalculator.cpp:294
+msgid "grams per milliliter"
+msgstr ""
+
+#: concentrationCalculator.cpp:210 concentrationCalculator.cpp:295
+msgid "kilograms per cubic meter"
+msgstr ""
+
+#: concentrationCalculator.cpp:211 concentrationCalculator.cpp:296
+msgid "kilograms per liter"
+msgstr ""
+
+#: concentrationCalculator.cpp:212 concentrationCalculator.cpp:297
+msgid "ounces per cubic inch"
+msgstr ""
+
+#: concentrationCalculator.cpp:213 concentrationCalculator.cpp:298
+msgid "ounces per cubic foot"
+msgstr ""
+
+#: concentrationCalculator.cpp:214 concentrationCalculator.cpp:299
+msgid "pounds per cubic inch"
+msgstr ""
+
+#: concentrationCalculator.cpp:215 concentrationCalculator.cpp:300
+msgid "pounds per cubic foot"
+msgstr ""
+
+#: concentrationCalculator.cpp:216 concentrationCalculator.cpp:301
+msgid "pounds per cubic yard"
+msgstr ""
+
+#: concentrationCalculator.cpp:225
+msgid "Amount of solvent:"
+msgstr ""
+
+#: concentrationCalculator.cpp:244 concentrationCalculator.cpp:1035
+#: concentrationCalculator.cpp:1075
+msgid "liter"
+msgstr "litër"
+
+#: concentrationCalculator.cpp:245 concentrationCalculator.cpp:1036
+#: concentrationCalculator.cpp:1076
+msgid "cubic meters"
+msgstr "metër kub"
+
+#: concentrationCalculator.cpp:246 concentrationCalculator.cpp:1037
+#: concentrationCalculator.cpp:1077
+msgid "cubic feet"
+msgstr "feet kub"
+
+#: concentrationCalculator.cpp:247 concentrationCalculator.cpp:1038
+#: concentrationCalculator.cpp:1078
+msgid "cubic inch"
+msgstr "inç kub"
+
+#: concentrationCalculator.cpp:248 concentrationCalculator.cpp:1039
+#: concentrationCalculator.cpp:1079
+msgid "cubic mile"
+msgstr "milje kub"
+
+#: concentrationCalculator.cpp:249 concentrationCalculator.cpp:1040
+#: concentrationCalculator.cpp:1080
+msgid "fluid ounce"
+msgstr "fluid ons"
+
+#: concentrationCalculator.cpp:250 concentrationCalculator.cpp:1041
+#: concentrationCalculator.cpp:1081
+msgid "cups"
+msgstr "cups"
+
+#: concentrationCalculator.cpp:251 concentrationCalculator.cpp:1042
+#: concentrationCalculator.cpp:1082
+msgid "gallons"
+msgstr "gallonë"
+
+#: concentrationCalculator.cpp:252 concentrationCalculator.cpp:1043
+#: concentrationCalculator.cpp:1083
+msgid "pints"
+msgstr "pintë"
+
+#: concentrationCalculator.cpp:264
+msgid "Molar mass of solvent:"
+msgstr ""
+
+#: concentrationCalculator.cpp:283
+msgid "Density of solvent:"
+msgstr ""
+
+#: concentrationCalculator.cpp:312
+msgid "Concentration:"
+msgstr ""
+
+#: concentrationCalculator.cpp:322
+msgid "molar"
+msgstr "molar"
+
+#: concentrationCalculator.cpp:323
+msgid "Normal"
+msgstr "Normal"
+
+#: concentrationCalculator.cpp:324
+msgid "molal"
+msgstr "molal"
+
+#: concentrationCalculator.cpp:325
+msgid "% ( mass )"
+msgstr "% ( mass )"
+
+#: concentrationCalculator.cpp:326
+msgid "% ( volume )"
+msgstr "% ( volumi )"
+
+#: concentrationCalculator.cpp:327
+msgid "% ( moles )"
+msgstr "% ( mole )"
+
+#: concentrationCalculator.cpp:336
+msgid "Reset"
+msgstr "Rivendos"
+
+#: concentrationCalculator.cpp:1231
+msgid "Percentage should be less than 100.0, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1234
+msgid "Density cannot be zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1237
+msgid "Mass cannot be zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1240
+msgid "Volume cannot be zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1243
+msgid "Number of moles cannot be zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1246
+msgid "Molar mass of solvent is zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1249
+msgid "Number of equivalents is zero - cannot calculate equivalent mass."
+msgstr ""
+
+#: concentrationCalculator.cpp:1252
+msgid "Concentration is zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1255
+msgid ""
+"Insufficient data to calculate the required value, please specify normality."
+msgstr ""
+
+#: concentrationCalculator.cpp:1258
+msgid ""
+"Insufficient data, please specify molarity / mole fraction / molality to "
+"calculate."
+msgstr ""
+
+#: concentrationCalculator.cpp:1261
+msgid ""
+"Amount is specified in moles, cannot calculate molar/equivalent masses.  "
+"Please specify mass/volume."
+msgstr ""
+
+#: concentrationCalculator.cpp:1264
+msgid ""
+"You can only calculate the molar mass of a solvent if the mole fraction is "
+"specified."
+msgstr ""
+
+#: concentrationCalculator.cpp:1267
+msgid "Molar mass cannot be zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1270
+msgid "Equivalent mass cannot be zero, please enter a valid value."
+msgstr ""
+
+#: concentrationCalculator.cpp:1281
+msgid "General"
+msgstr "Të Përgjithshme"
+
+#. i18n: file: concentrationCalculatorConfig.ui:17
+#. i18n: ectx: property (text), widget (QCheckBox, soluteMass)
+#: rc.cpp:3
+msgid "Amount of solute is always specified in terms of mass"
+msgstr ""
+
+#. i18n: file: concentrationCalculatorConfig.ui:24
+#. i18n: ectx: property (text), widget (QCheckBox, solventVolume)
+#: rc.cpp:6
+msgid "Amount of solvent is always specified in terms of volume"
+msgstr ""

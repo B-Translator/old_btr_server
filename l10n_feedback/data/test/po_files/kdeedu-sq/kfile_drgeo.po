@@ -1,0 +1,53 @@
+# Albanian translation for kdeedu
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the kdeedu package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeedu\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-08-02 05:54+0200\n"
+"PO-Revision-Date: 2009-02-07 01:50+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-04-21 22:53+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: kfile/kfile_drgeo.cpp:37
+msgid "Summary"
+msgstr "Përmbledhje"
+
+#: kfile/kfile_drgeo.cpp:39
+msgid "Figures"
+msgstr "Figurat"
+
+#: kfile/kfile_drgeo.cpp:40
+msgid "Texts"
+msgstr "Tekstet"
+
+#: kfile/kfile_drgeo.cpp:41
+msgid "Macros"
+msgstr "Makrot"
+
+#: kfile/kfile_drgeo.cpp:44
+msgctxt "Translators: what this drgeo file contains"
+msgid "Contents"
+msgstr "Përmbajtja"
+
+#: kfile/kfile_drgeo.cpp:71
+msgid "Figure"
+msgstr "Figura"
+
+#: kfile/kfile_drgeo.cpp:78
+msgid "Text"
+msgstr "Teksti"
+
+#: kfile/kfile_drgeo.cpp:85
+msgid "Macro"
+msgstr "Makro"

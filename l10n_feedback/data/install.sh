@@ -15,7 +15,7 @@ mysql=$(cat db/sql-connect.txt)
 $mysql < db/l10n_feedback_schema.sql
 
 ### import some PO files, just for testing/development
-./update_test.sh
+test/update.sh
 
 ### In order to import the real data, first of all check/modify
 ### 'config.sh', and then run 'update.sh'.

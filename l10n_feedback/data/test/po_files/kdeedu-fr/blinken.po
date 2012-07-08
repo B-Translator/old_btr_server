@@ -1,0 +1,237 @@
+# translation of blinken.po to Français
+# translation of blinken.po to
+# translation of ksimon.po to
+# traduction de ksimon.po vers le Français
+#
+# Ane-Marie Mahfouf, 2005.
+# Anne-Marie Mahfouf, 2005.
+# Simon Depiets <2df@tuxfamily.org>, 2005.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2005, 2008.
+# Matthieu Robin <kde@macolu.org>, 2006.
+# Anne-Marie Mahfouf <annma@kde.org>, 2008.
+# Mickael Sibelle <kimael@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: blinken\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-10-28 03:50+0200\n"
+"PO-Revision-Date: 2008-07-02 09:36+0200\n"
+"Last-Translator: Nicolas Ternisien <nicolas.ternisien@gmail.com>\n"
+"Language-Team: Français <kde-francophone@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: blinken.cpp:74
+msgctxt ""
+"If the Steve font that is used by Blinken by default to show status messages "
+"does not support any of the characters of your language, please translate "
+"that message to 1 and KDE standard font will be used to show the texts, if "
+"not translate it to 0"
+msgid "0"
+msgstr "0"
+
+#: blinken.cpp:214
+msgid "Sounds"
+msgstr "Sons"
+
+#: blinken.cpp:215
+msgid "Font"
+msgstr "Police"
+
+#: blinken.cpp:257
+msgctxt "@action:button Start a new game"
+msgid "Start"
+msgstr "Démarrer"
+
+#: blinken.cpp:269
+msgid "Restart"
+msgstr "Redémarrer"
+
+#: blinken.cpp:447
+msgid "Enter Your Name"
+msgstr "Saisissez votre nom"
+
+#: blinken.cpp:447
+msgctxt "@label:textbox refers to the user's name"
+msgid "Name:"
+msgstr "Nom :"
+
+#: blinken.cpp:750
+msgid "Restart the game"
+msgstr "Redémarrer le jeu"
+
+#: blinken.cpp:752
+msgid "Quit Blinken"
+msgstr "Quitter Blinken"
+
+#: blinken.cpp:753
+msgid "View Highscore Table"
+msgstr "Afficher la table des meilleurs scores"
+
+#: blinken.cpp:758
+msgid "Show Settings"
+msgstr "Afficher les paramètres"
+
+#: blinken.cpp:759
+msgid "Hide Settings"
+msgstr "Masquer les paramètres"
+
+#: blinken.cpp:762
+msgid "2nd Level"
+msgstr "2nd niveau"
+
+#: blinken.cpp:763
+msgid "1st Level"
+msgstr "1er niveau"
+
+#: blinken.cpp:764
+msgid "Random Level"
+msgstr "Niveau aléatoire"
+
+#: blinken.cpp:765
+msgid "Press the key for this button"
+msgstr "Appuyer sur la touche pour ce bouton"
+
+#: blinken.cpp:766
+msgid "Click any button to change its key"
+msgstr "Appuyer sur n'importe quel bouton pour changer la touche"
+
+#: blinken.cpp:772
+msgid "Press Start to begin"
+msgstr "Cliquez sur Démarrer pour commencer"
+
+#: blinken.cpp:776
+msgid "Set the Difficulty Level..."
+msgstr "Fixer le niveau de difficulté..."
+
+#: blinken.cpp:786
+msgid "Next sequence in 3..."
+msgstr "Prochaine séquence dans 3..."
+
+#: blinken.cpp:799
+msgid "Next sequence in 3, 2..."
+msgstr "Prochaine séquence dans 3, 2..."
+
+#: blinken.cpp:803
+msgid "Next sequence in 2..."
+msgstr "Prochaine séquence dans 2..."
+
+#: blinken.cpp:817
+msgid "Next sequence in 3, 2, 1..."
+msgstr "Prochaine séquence dans 3, 2, 1..."
+
+#: blinken.cpp:821
+msgid "Next sequence in 2, 1..."
+msgstr "Prochaine séquence dans 2, 1..."
+
+#: blinken.cpp:833
+msgid "Remember this sequence..."
+msgstr "Rappelez-vous de cette séquence..."
+
+#: blinken.cpp:844
+msgid "Repeat the sequence"
+msgstr "Répétez cette séquence"
+
+#: blinken.cpp:861
+msgid "2"
+msgstr "2"
+
+#: blinken.cpp:862
+msgid "1"
+msgstr "1"
+
+#: blinken.cpp:863
+msgid "?"
+msgstr "?"
+
+#: blinken.cpp:867
+msgctxt "@label:chooser which level is currently being played"
+msgid "Level"
+msgstr "Niveau"
+
+#: highscoredialog.cpp:139
+msgctxt "@title:window the highest scores for each level are shown"
+msgid "Highscores"
+msgstr "Meilleurs scores"
+
+#: highscoredialog.cpp:147
+msgctxt "@title:group High scores Level 1 tab title"
+msgid "Level 1"
+msgstr "Niveau 1"
+
+#: highscoredialog.cpp:148
+msgctxt "@title:group High scores Level 2 tab title"
+msgid "Level 2"
+msgstr "Niveau 2"
+
+#: highscoredialog.cpp:149
+msgctxt "@title:group High scores Level ? tab tible"
+msgid "Level ?"
+msgstr "Niveau ?"
+
+#: main.cpp:23
+msgid "Blinken"
+msgstr "Blinken"
+
+#: main.cpp:23
+msgid "A memory enhancement game"
+msgstr "Un jeu d'entraînement à la mémoire"
+
+#: main.cpp:23
+msgid ""
+"© 2005-2007 Albert Astals Cid\n"
+"© 2005-2007 Danny Allen"
+msgstr ""
+"© 2005-2007 Albert Astals Cid\n"
+"© 2005-2007 Danny Allen"
+
+#: main.cpp:24
+msgid "Albert Astals Cid"
+msgstr "Albert Astals Cid"
+
+#: main.cpp:24
+msgid "Coding"
+msgstr "Codage"
+
+#: main.cpp:25
+msgid "Danny Allen"
+msgstr "Danny Allen"
+
+#: main.cpp:25
+msgid "Design, Graphics and Sounds"
+msgstr "Conception, graphiques et sons"
+
+#: main.cpp:26
+msgid "Steve Jordi"
+msgstr "Steve Jordi"
+
+#: main.cpp:26
+msgid "GPL'ed his 'Steve' font so that we could use it"
+msgstr ""
+"Mise sous licence GPL de sa police « Steve » afin de pouvoir l'utiliser"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Simon Depiets,Anne-Marie Mahfouf,Nicolas Ternisien"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"2df@tuxfamily.org,annemarie.mahfouf@free.fr,nicolas.ternisien@gmail.com"
+
+#. i18n: file: blinken.kcfg:9
+#. i18n: ectx: label, entry (playSounds), group (general)
+#: rc.cpp:5
+msgid "Play sounds"
+msgstr "Jouer les sons"
+
+#. i18n: file: blinken.kcfg:13
+#. i18n: ectx: label, entry (customFont), group (general)
+#: rc.cpp:8
+msgid "Use custom font for status text"
+msgstr "Utiliser une police personnalisée pour le texte de l'état"

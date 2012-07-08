@@ -1,0 +1,2947 @@
+# translation of ktouch.po to Francais
+# translation of ktouch.po to
+# traduction de ktouch.po en Français
+# Copyright (C) 2002,2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+#
+# Ane-Marie Mahfouf, 2005.
+# Gérard Delafond <gerard@delafond.org>, 2002, 2004.
+# Robert Jacolin <rjacolin@ifrance.com>, 2003.
+# Matthieu Robin <kde@macolu.org>, 2004, 2005, 2006.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2004, 2005.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2005.
+# Matthieu Robin <matthieu@macolu.org>, 2005.
+# Christophe Benz <christophebenz@yahoo.fr>, 2006.
+# Anne-Marie Mahfouf <annma@kde.org>, 2007.
+# Mickael Sibelle <kimael@gmail.com>, 2008.
+# Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008.
+# Guillaume Pujol <guill.p@gmail.com>, 2008.
+# Xavier Claude <claude.xavier@gmail.com>, 2010, 2011.
+# Sebastien Renard <Sebastien.Renard@digitalfox.org>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: ktouch\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-12-22 04:38+0100\n"
+"PO-Revision-Date: 2011-06-30 18:50+0200\n"
+"Last-Translator: Xavier Claude <claude.xavier@gmail.com>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+"Ludovic Grossard, Guillaume Libersat, Gérard Delafond, Nicolas Ternisien, "
+"Anne-Marie Mahfouf, Xavier Claude"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+"ludovic.grossard@libertysurf.fr, glibersat@linux62.com, gerard@delafond.org, "
+"nicolas.ternisien@gmail.com, annma@kde.org, claude.xavier@gmail.com"
+
+#. i18n: file: src/ktouchui.rc:4
+#. i18n: ectx: Menu (Training)
+#: rc.cpp:5
+msgid "T&raining"
+msgstr "Ent&raînement"
+
+#. i18n: file: src/ktouchui.rc:14
+#. i18n: ectx: Menu (Statistics)
+#: rc.cpp:8
+#, fuzzy
+#| msgid "General Statistics"
+msgid "S&tatistics"
+msgstr "Statistiques générales"
+
+#. i18n: file: src/ktouchui.rc:21
+#. i18n: ectx: Menu (settings)
+#: rc.cpp:11
+msgid "&Settings"
+msgstr "&Configuration"
+
+#. i18n: file: src/ktouchui.rc:28
+#. i18n: ectx: ToolBar (mainToolBar)
+#: rc.cpp:14
+msgid "Main Toolbar"
+msgstr "Barre principale"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, KTouchColorEditorDialog)
+#: rc.cpp:17
+msgid "Color Scheme Editor"
+msgstr "Éditeur de modèles de couleurs"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:25
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:20
+msgid "User Defined Color Schemes"
+msgstr "Modèles de couleurs définis par l'utilisateur"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:64
+#. i18n: ectx: property (text), widget (KPushButton, removeBtn)
+#: rc.cpp:23
+msgid "Remove"
+msgstr "Supprimer"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:79
+#. i18n: ectx: property (text), widget (KPushButton, addBtn)
+#: rc.cpp:26
+msgid "Add"
+msgstr "Ajouter"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:97
+#. i18n: ectx: property (title), widget (QGroupBox, editGroupBox)
+#: rc.cpp:29
+msgid "Edit Color Scheme"
+msgstr "Modifier le modèle de couleurs"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:117
+#. i18n: ectx: property (text), widget (QLabel, nameL)
+#: rc.cpp:32
+msgid "Name of color scheme:"
+msgstr "Nom du modèle de couleurs :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:127
+#. i18n: ectx: property (text), widget (KPushButton, updateBtn)
+#: rc.cpp:35
+msgid "&Store Data"
+msgstr "Enregi&strer les données"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:144
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
+#: rc.cpp:38
+msgid "Slide Line Colors"
+msgstr "Couleurs de la ligne de défilement"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:184
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_2)
+#: rc.cpp:41
+msgid "Teacher background:"
+msgstr "Arrière-plan du professeur :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:198
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#: rc.cpp:44
+msgid "Teacher text:"
+msgstr "Texte du professeur :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:215
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_4)
+#: rc.cpp:47
+msgid "Student background:"
+msgstr "Arrière-plan de l'élève :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:222
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_5)
+#: rc.cpp:50
+msgid "Student text on error:"
+msgstr "Texte de l'élève en cas d'erreur :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:243
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_3)
+#: rc.cpp:53
+msgid "Student text:"
+msgstr "Texte de l'élève :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:250
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_6)
+#: rc.cpp:56
+msgid "Student background on error:"
+msgstr "Arrière-plan de l'élève en cas d'erreur :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:297
+#. i18n: ectx: property (title), widget (QGroupBox, keyboardColorsGroup)
+#: rc.cpp:59
+msgid "Keyboard Colors"
+msgstr "Couleurs du clavier"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:309
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_11)
+#: rc.cpp:62
+msgid "Background colors for normal keys:"
+msgstr "Couleur d'arrière plan pour les touches normales :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:536
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_10)
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:588
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_10_2)
+#: rc.cpp:65 rc.cpp:80
+msgid "Highlighted background:"
+msgstr "Fond surligné :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:543
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:68
+msgid "Normal key colors:"
+msgstr "Couleurs d'une touche normale :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:550
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_9)
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:623
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_9_2)
+#: rc.cpp:71 rc.cpp:86
+msgid "Highlighted text color:"
+msgstr "Couleur du texte surligné :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:557
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_8)
+#: rc.cpp:74
+msgid "Text color:"
+msgstr "Couleur du texte :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:571
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_7)
+#: rc.cpp:77
+msgid "Key frame:"
+msgstr "Marque :"
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:602
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:83
+msgid "Modifier/other keys:"
+msgstr "Touche modificatrice / autre :"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:637
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_7_2)
+#: rc.cpp:89
+msgid "Text color"
+msgstr "Couleur du texte"
+
+#. i18n: file: src/ui/ktouchcoloreditordialog.ui:644
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_8_2)
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:153
+#. i18n: ectx: property (text), widget (QLabel, l6)
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:163
+#. i18n: ectx: property (text), widget (QLabel, l5)
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:282
+#. i18n: ectx: property (text), widget (QLabel, errorBackgroundLabel)
+#: rc.cpp:92 rc.cpp:329 rc.cpp:332 rc.cpp:347
+msgid "Background:"
+msgstr "Fond :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, KTouchKeyboardEditorDialog)
+#: rc.cpp:95
+msgid "Keyboard Layout Editor"
+msgstr "Éditeur de la disposition du clavier"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:29
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
+#: rc.cpp:98
+msgid "Keyboard Identification Data"
+msgstr "Données d'identification du clavier"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:37
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:101
+msgid "Keyboard title:"
+msgstr "Titre de la dictée :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:47
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:104
+msgid "Language id:"
+msgstr "Code de la langue :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:69
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:107
+msgid "Comments:"
+msgstr "Commentaires :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:95
+#. i18n: ectx: property (title), widget (QGroupBox, keyPropertiesBox)
+#: rc.cpp:110
+msgid "Key Properties"
+msgstr "Propriétés de la touche"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:103
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: rc.cpp:113
+msgid "Key type:"
+msgstr "Type de touche :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:113
+#. i18n: ectx: property (text), widget (QLabel, keyTextLabel)
+#: rc.cpp:116
+msgid "Key text:"
+msgstr "Texte de la touche :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:133
+#. i18n: ectx: property (text), widget (QLabel, keyCharLabel)
+#: rc.cpp:119
+msgid "Key characters"
+msgstr "Caractères sur la touche"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:140
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:122
+msgid "Top left:"
+msgstr "En haut à gauche :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:166
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:125
+msgid "Top right:"
+msgstr "En haut à droite :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:198
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: rc.cpp:128
+msgid "Bottom left:"
+msgstr "En bas à gauche :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:224
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: rc.cpp:131
+msgid "Bottom right:"
+msgstr "En bas à droite :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:270
+#. i18n: ectx: property (text), widget (KPushButton, selectFingerKeyButton)
+#: rc.cpp:134
+msgid "Select finger key"
+msgstr "Sélectionner le doigté pour la touche"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:280
+#. i18n: ectx: property (text), widget (KPushButton, deleteKeyButton)
+#: rc.cpp:137
+msgid "Delete Key"
+msgstr "Supprimer cette touche"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:298
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:140
+msgid "Keyboard Edit Options"
+msgstr "Configuration du clavier"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:306
+#. i18n: ectx: property (text), widget (QPushButton, openButton)
+#: rc.cpp:143
+msgid "Open Keyboard..."
+msgstr "Ouvrir une disposition de clavier..."
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:313
+#. i18n: ectx: property (text), widget (QPushButton, setFontButton)
+#: rc.cpp:146
+msgid "Set Keyboard Font..."
+msgstr "Définir la police du clavier..."
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:320
+#. i18n: ectx: property (text), widget (QPushButton, saveButton)
+#: rc.cpp:149
+msgid "Save Keyboard"
+msgstr "Enregistrer la disposition du clavier"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:327
+#. i18n: ectx: property (text), widget (QPushButton, saveAsButton)
+#: rc.cpp:152
+msgid "Save Keyboard As..."
+msgstr "Enregistrer la disposition du clavier sous..."
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:334
+#. i18n: ectx: property (text), widget (QPushButton, closeButton)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1269
+#. i18n: ectx: property (text), widget (KPushButton, closeButton)
+#: rc.cpp:155 rc.cpp:727
+msgid "Close"
+msgstr "Fermer"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:346
+#. i18n: ectx: property (title), widget (QGroupBox, keyGeometryBox)
+#: rc.cpp:158
+msgid "Key Geometry"
+msgstr "Géométrie de la touche"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:352
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:161
+msgid "Left:"
+msgstr "À gauche :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:378
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: rc.cpp:164
+msgid "Width:"
+msgstr "Largeur :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:404
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: rc.cpp:167
+msgid "Top:"
+msgstr "En haut :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:430
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: rc.cpp:170
+msgid "Height:"
+msgstr "Hauteur :"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:465
+#. i18n: ectx: property (title), widget (QGroupBox, keyConnectorEditBox)
+#: rc.cpp:173
+msgid "Key connectors"
+msgstr "Connexions pour la touche"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:473
+#. i18n: ectx: property (text), widget (QLabel, label_10)
+#: rc.cpp:176 src/ktouchkeyboardeditordialog.cpp:478
+msgid "Character"
+msgstr "Caractère : "
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:490
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: rc.cpp:179
+msgid "or unicode"
+msgstr "ou unicode"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:556
+#. i18n: ectx: property (text), widget (KPushButton, clearConnectorButton)
+#: rc.cpp:182
+msgid "Clear connectors"
+msgstr "Effacer les connexions"
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:563
+#. i18n: ectx: property (text), widget (KPushButton, addConnectorButton)
+#: rc.cpp:185
+msgid "Add/update connector"
+msgstr "Ajouter / mettre à jour une connexion"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:576
+#. i18n: ectx: property (text), widget (KPushButton, selectModifierKeyButton)
+#: rc.cpp:188
+msgid "< modifier key>"
+msgstr "<touche modificatrice>"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:624
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox5)
+#: rc.cpp:191
+msgid "Keyboard Layout (click to activate keys for editing or drag keys)"
+msgstr ""
+"Disposition du clavier (cliquer sur une touche pour la changer ou la glisser-"
+"déposer)"
+
+#. i18n: file: src/ui/ktouchkeyboardeditordialog.ui:646
+#. i18n: ectx: property (text), widget (KPushButton, addKeyButton)
+#: rc.cpp:194
+msgid "Add key"
+msgstr "Ajouter une touche"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, KTouchLectureEditorDialog)
+#: rc.cpp:197
+msgid "KTouch Lecture Editor"
+msgstr "Éditeur de dictées KTouch "
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:26
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
+#: rc.cpp:200
+msgid "Lecture Properties"
+msgstr "Propriétés de la dictée "
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:46
+#. i18n: ectx: property (text), widget (QLabel, titleLabel)
+#: rc.cpp:203
+msgid "Title:"
+msgstr "Titre :"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:67
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:206
+msgid "Comment:"
+msgstr "Commentaire :"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:93
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
+#: rc.cpp:209
+msgid "Level Editor"
+msgstr "Éditeur de niveaux"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:143
+#. i18n: ectx: property (text), widget (QLabel, levelLabel)
+#: rc.cpp:212
+msgid "Level Data of Level 10"
+msgstr "Données de niveau du niveau 10"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:172
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:215
+msgid "New characters in this level:"
+msgstr "Nouveaux caractères de ce niveau :"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:198
+#. i18n: ectx: property (text), widget (QLabel, commentLabel)
+#: rc.cpp:218
+msgid "Level comment (optional):"
+msgstr "Description du niveau (optionnel) :"
+
+#. i18n: file: src/ui/ktouchlectureeditordialog.ui:224
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#: rc.cpp:221
+msgid "Level data:"
+msgstr "Données de niveau :"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, KTouchLevelSummaryDialog)
+#: rc.cpp:224
+msgid "Training level summary"
+msgstr "Résumé du niveau d'entraînement"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:19
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:227
+msgid "Summary"
+msgstr "Résumé"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:54
+#. i18n: ectx: attribute (title), widget (QWidget, tab)
+#: rc.cpp:230
+msgid "High scores for this level"
+msgstr "Meilleurs scores de ce niveau"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:61
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:117
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:233 rc.cpp:263
+msgid "1."
+msgstr "1."
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:66
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:122
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:236 rc.cpp:266
+msgid "2."
+msgstr "2."
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:71
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:127
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:239 rc.cpp:269
+msgid "3."
+msgstr "3."
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:76
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:132
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:242 rc.cpp:272
+msgid "4."
+msgstr "4."
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:81
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:137
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:245 rc.cpp:275
+msgid "5."
+msgstr "5."
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:86
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:142
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:248 rc.cpp:278
+msgid "Date"
+msgstr "Date"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:91
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:147
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:251 rc.cpp:281
+msgid "Score"
+msgstr "Score"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:96
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:152
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#: rc.cpp:254 rc.cpp:284
+msgid "Characters per second"
+msgstr "Caractères par seconde"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:101
+#. i18n: ectx: property (text), widget (QTableWidget, userHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:157
+#. i18n: ectx: property (text), widget (QTableWidget, allUserHighscoreTableWidget)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:246
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox6)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:686
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox6_3)
+#: rc.cpp:257 rc.cpp:287 rc.cpp:547 rc.cpp:631
+msgid "Accuracy"
+msgstr "Précision"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:110
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: rc.cpp:260
+msgid "All users high scores for this level"
+msgstr "Tous les noms des meilleurs scores de ce niveau"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:169
+#. i18n: ectx: property (text), widget (QPushButton, retryButton)
+#: rc.cpp:290
+msgid "&Retry level"
+msgstr "&Réessayer le niveau"
+
+#. i18n: file: src/ui/ktouchlevelsummarydialog.ui:189
+#. i18n: ectx: property (text), widget (QPushButton, continueButton)
+#: rc.cpp:293
+msgid "&Continue to next level"
+msgstr "&Continuer au niveau suivant"
+
+#. i18n: file: src/ui/ktouchopenrequestdialog.ui:77
+#. i18n: ectx: property (text), widget (KPushButton, browseBtn)
+#: rc.cpp:296
+msgid "Browse..."
+msgstr "Naviguer..."
+
+#. i18n: file: src/ui/ktouchopenrequestdialog.ui:150
+#. i18n: ectx: property (text), widget (KPushButton, okBtn)
+#: rc.cpp:299
+msgid "&Ok"
+msgstr "&Ok"
+
+#. i18n: file: src/ui/ktouchopenrequestdialog.ui:163
+#. i18n: ectx: property (text), widget (KPushButton, cancelBtn)
+#: rc.cpp:302
+msgid "&Cancel"
+msgstr "&Annuler"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, KTouchPrefColorsPage)
+#: rc.cpp:305 src/ktouch.cpp:430
+msgid "Color Settings"
+msgstr "Configuration des couleurs"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_CommonTypingLineColors)
+#: rc.cpp:308
+msgid "Use custom color for typing line"
+msgstr "Utiliser une couleur personnalisée dans la ligne de frappe"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:49
+#. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_TeacherTextColor)
+#: rc.cpp:311
+msgid "The color for the teacher's line"
+msgstr "La couleur de la ligne d'enseignement"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:75
+#. i18n: ectx: property (text), widget (QLabel, l1)
+#: rc.cpp:314
+msgid "Teacher's line"
+msgstr "Ligne de professeur"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:82
+#. i18n: ectx: property (text), widget (QLabel, l3)
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:92
+#. i18n: ectx: property (text), widget (QLabel, l4)
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:336
+#. i18n: ectx: property (text), widget (QLabel, errorTextLabel)
+#: rc.cpp:317 rc.cpp:320 rc.cpp:362
+msgid "Text:"
+msgstr "Texte :"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:140
+#. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_StudentTextColor)
+#: rc.cpp:323
+msgid "Change the text color for the student line"
+msgstr "Modifier la couleur du texte de la ligne d'étude"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:143
+#. i18n: ectx: property (whatsThis), widget (KColorButton, kcfg_StudentTextColor)
+#: rc.cpp:326
+msgid "Here you can change the color of the text you type in the student line."
+msgstr ""
+"Vous pouvez modifier ici la couleur du texte que vous saisissez dans la "
+"ligne d'étude."
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:208
+#. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_TeacherBackgroundColor)
+#: rc.cpp:335
+msgid "The background for the teacher's line"
+msgstr "L'arrière plan de la ligne d'enseignement"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:211
+#. i18n: ectx: property (whatsThis), widget (KColorButton, kcfg_TeacherBackgroundColor)
+#: rc.cpp:338
+msgid ""
+"Here you can change the background color for the teacher's line (the line of "
+"letters you have to type.)"
+msgstr ""
+"Vous pouvez ici changer la couleur d'arrière plan pour la ligne "
+"d'enseignement (la ligne de lettres que vous devez saisir)."
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:221
+#. i18n: ectx: property (text), widget (QLabel, l2)
+#: rc.cpp:341
+msgid "Typing line"
+msgstr "Ligner de frappe"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:233
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ColorOnError)
+#: rc.cpp:344
+msgid "Use different color on missed typing"
+msgstr "Utiliser une couleur différente lors d'une erreur de frappe"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:301
+#. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_ErrorBackgroundColor)
+#: rc.cpp:350
+msgid "Choose the background color for error in typing line"
+msgstr ""
+"Choisissez la couleur d'arrière plan lors d'erreurs dans la ligne de saisie"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:304
+#. i18n: ectx: property (whatsThis), widget (KColorButton, kcfg_ErrorBackgroundColor)
+#: rc.cpp:353
+msgid ""
+"When you have checked 'Use different color on error in the typing line', you "
+"can then choose a color for the background of errors. You make an error when "
+"you type a wrong letter in the student line. This is a way to make your "
+"errors more visible."
+msgstr ""
+"Lorsque vous avez sélectionné « Utiliser une couleur différente lors d'une "
+"erreur dans la ligne de frappe », vous pouvez alors choisir la couleur de "
+"l'arrière plan des erreurs. Vous pouvez faire une erreur lorsque vous "
+"saisissez une mauvaise lettre dans la ligne d'étude. Cela permet de rendre "
+"les erreurs plus lisibles."
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:323
+#. i18n: ectx: property (toolTip), widget (KColorButton, kcfg_ErrorTextColor)
+#: rc.cpp:356
+msgid "Choose the text color for error in typing line"
+msgstr "Choisissez la couleur du texte lors d'erreurs dans la ligne de saisie"
+
+#. i18n: file: src/ui/ktouchprefcolorspage.ui:326
+#. i18n: ectx: property (whatsThis), widget (KColorButton, kcfg_ErrorTextColor)
+#: rc.cpp:359
+msgid ""
+"When you have checked 'Use different color on error in the typing line', you "
+"can then choose a color for the text of errors. You make an error when you "
+"type a wrong letter in the student line. This is a way to make your errors "
+"more visible."
+msgstr ""
+"Lorsque vous avez sélectionné « Utiliser une couleur différente lors d'une "
+"erreur dans la ligne de frappe », vous pouvez alors choisir la couleur du "
+"texte des erreurs. Vous pouvez faire une erreur lorsque vous saisissez une "
+"mauvaise lettre dans la ligne d'étude. Cela permet de rendre les erreurs "
+"plus lisibles."
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, KTouchPrefGeneralPage)
+#: rc.cpp:365 src/ktouch.cpp:421
+msgid "General Options"
+msgstr "Options générales"
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:19
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox3)
+#: rc.cpp:368
+msgid "Text Line Settings"
+msgstr "Réglages de ligne de texte"
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:76
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#: rc.cpp:371
+msgid "Fast"
+msgstr "Rapide"
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:83
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:374
+msgid "Slow"
+msgstr "Lent "
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:128
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:377
+msgid "Sliding speed:"
+msgstr "Vitesse de défilement :"
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:137
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_OverrideLectureFont)
+#: rc.cpp:380
+msgid "Override lecture font"
+msgstr "Écraser la police de la dictée"
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:177
+#. i18n: ectx: property (text), widget (QLabel, fontTextLabel)
+#: rc.cpp:383
+msgid "Font for displayed/typed text:"
+msgstr "Police pour le texte affiché / tapé :"
+
+#. i18n: file: src/ui/ktouchprefgeneralpage.ui:190
+#. i18n: ectx: property (whatsThis), widget (KFontRequester, kcfg_Font)
+#: rc.cpp:386
+msgid ""
+"This button will display a font dialog where you can change the font for the "
+"student and the teacher lines. When you leave the font dialog, the new font "
+"is previewed in the line below and only applied when you click the Apply "
+"button below."
+msgstr ""
+"Ce bouton affichera une fenêtre de police où vous pourrez modifier la police "
+"pour les lignes d'étude et d'enseignement. Lorsque vous quittez la fenêtre "
+"de police, l'aperçu de la nouvelle est disponible dans la ligne ci-dessous "
+"et est uniquement appliquée lorsque vous cliquez sur le bouton « Appliquer »."
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:13
+#. i18n: ectx: property (windowTitle), widget (QWidget, KTouchPrefKeyboardPage)
+#: rc.cpp:389 src/ktouch.cpp:427
+msgid "Keyboard Settings"
+msgstr "Configuration du clavier"
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:19
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_ShowKeyboard)
+#: rc.cpp:392
+msgid "Show keyboard"
+msgstr "Afficher le clavier"
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:28
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_ShowAnimation)
+#: rc.cpp:395
+msgid "Show on the keyboards the keys you have to type"
+msgstr "Afficher sur le clavier les touches que vous devez saisir"
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:31
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_ShowAnimation)
+#: rc.cpp:398
+msgid ""
+"This highlights on the keyboard the key you have to type next. It is easier "
+"to type when this is checked."
+msgstr ""
+"Ceci permet de surligner sur le clavier la prochaine touche que vous devez "
+"saisir. Il est plus simple de saisir des lettres lorsque cette case est "
+"cochée."
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:34
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowAnimation)
+#: rc.cpp:401
+msgid "Highlight &keys on keyboard"
+msgstr "Surligner les &touches sur le clavier"
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:41
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowLearnedKeysOnly)
+#: rc.cpp:404
+msgid "Hide/dim not yet learned keys "
+msgstr "Cacher / atténuer les touches non apprises"
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:48
+#. i18n: ectx: property (toolTip), widget (QGroupBox, kcfg_OverrideKeyboardFont)
+#: rc.cpp:407
+msgid ""
+"If checked you can specify your own keyboard font instead of the predefined "
+"one of the keyboard layout."
+msgstr ""
+"Si cette case est cochée, vous pouvez indiquer votre propre police pour la "
+"disposition du clavier à la place de celle prédéfinie."
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:51
+#. i18n: ectx: property (whatsThis), widget (QGroupBox, kcfg_OverrideKeyboardFont)
+#: rc.cpp:410
+msgid ""
+"Every keyboard layout may specify its own font. If the predefined font of a "
+"certain keyboard layout does not work or you would like to have your own, "
+"check this button. You may then choose your own font that will be used to "
+"draw the characters on the keys."
+msgstr ""
+"Chaque disposition de clavier doit normalement indiquer sa propre police. Si "
+"la police prédéfinie de certaines dispositions de claviers ne fonctionne pas "
+"ou si vous souhaitez avoir la vôtre, cochez cette case. Vous pourrez alors "
+"choisir la police désirée qui sera utilisé pour dessiner les caractères sur "
+"les touches."
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:54
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_OverrideKeyboardFont)
+#: rc.cpp:413
+msgid "Override keyboard fonts"
+msgstr "Écraser les polices du clavier"
+
+#. i18n: file: src/ui/ktouchprefkeyboardpage.ui:81
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:416
+msgid "Font for keys on keyboard:"
+msgstr "Police pour les touches sur le clavier :"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:16
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox1)
+#: rc.cpp:419
+msgid "Sound"
+msgstr "Son"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:37
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_BeepOnError)
+#. i18n: file: src/ktouch.kcfg:47
+#. i18n: ectx: label, entry (BeepOnError), group (General)
+#: rc.cpp:422 rc.cpp:814
+msgid "Emit a beep on each typing error"
+msgstr "Émettre un bip pour chaque erreur de saisie"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:40
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_BeepOnError)
+#: rc.cpp:425
+msgid ""
+"If checked (default) this will emit a beep each time you make a typing error."
+msgstr ""
+"Si cette case est cochée (défaut), un bip sera émis à chaque fois que vous "
+"ferez une erreur de saisie."
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:43
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_BeepOnError)
+#: rc.cpp:428
+msgid "&Beep on error"
+msgstr "B&ip en cas d'erreur"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:50
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_SoundOnKeypress)
+#: rc.cpp:431
+msgid "Make a typewriter sound for each key pressed"
+msgstr "Émettre le son de la machine à écrire pour chaque touche pressée"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:53
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SoundOnKeypress)
+#: rc.cpp:434
+msgid "If checked this will play a typewriter sound for every key pressed."
+msgstr ""
+"Si ce bouton est coché, on entendra le son de la machine à écrire pour "
+"chaque touche"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:56
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_SoundOnKeypress)
+#: rc.cpp:437
+msgid "&Typewriter sound when typing"
+msgstr "&Son de la machine à écrire quand on tape"
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:63
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_SoundOnLevel)
+#: rc.cpp:440
+msgid "Play a sound when the level automatically changes."
+msgstr "Jouer un son en cas de changement automatique de niveau."
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:66
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SoundOnLevel)
+#: rc.cpp:443
+msgid ""
+"If this is checked (default) a sound will be played each time you "
+"automatically change of level."
+msgstr ""
+"Si cette case est cochée (défaut), un son sera joué à chaque changement "
+"automatique de niveau."
+
+#. i18n: file: src/ui/ktouchprefsoundpage.ui:69
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_SoundOnLevel)
+#: rc.cpp:446
+msgid "&Sound on automatic level change"
+msgstr "&Son en cas de changement automatique de niveau"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:14
+#. i18n: ectx: property (windowTitle), widget (QWidget, KTouchPrefTrainingPage)
+#: rc.cpp:449 src/ktouch.cpp:424
+msgid "Training Options"
+msgstr "Options d'entraînement"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:20
+#. i18n: ectx: property (title), widget (QGroupBox, kcfg_AutoLevelChange)
+#: rc.cpp:452
+msgid "A&utomatic level adjustment"
+msgstr "A&justement automatique du niveau"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:43
+#. i18n: ectx: property (text), widget (QLabel, l9)
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:178
+#. i18n: ectx: property (text), widget (QLabel, l4)
+#: rc.cpp:455 rc.cpp:487
+msgid "chars/minute"
+msgstr "caractères par minute"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:57
+#. i18n: ectx: property (text), widget (QLabel, l10)
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:147
+#. i18n: ectx: property (text), widget (QLabel, l5)
+#: rc.cpp:459 rc.cpp:475
+#, no-c-format
+msgid "%"
+msgstr "%"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:71
+#. i18n: ectx: property (text), widget (QLabel, l7)
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:114
+#. i18n: ectx: property (text), widget (QLabel, l2)
+#: rc.cpp:462 rc.cpp:468
+msgid "Typing speed:"
+msgstr "Vitesse de frappe :"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:81
+#. i18n: ectx: property (text), widget (QLabel, l8)
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:154
+#. i18n: ectx: property (text), widget (QLabel, l3)
+#: rc.cpp:465 rc.cpp:478
+msgid "Correctness:"
+msgstr "Exactitude :"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:137
+#. i18n: ectx: property (text), widget (QLabel, l11)
+#: rc.cpp:471
+msgid "Workload:"
+msgstr "Charge de travail :"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:164
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CompleteWholeTrainingLevel)
+#: rc.cpp:481
+msgid "Complete whole training level before proceeding"
+msgstr "Finir le niveau d'entraînement avant de poursuivre"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:171
+#. i18n: ectx: property (text), widget (QLabel, l12)
+#: rc.cpp:484
+msgid "lines"
+msgstr "lignes"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:219
+#. i18n: ectx: property (text), widget (QLabel, l1)
+#: rc.cpp:490
+msgid "Limits to increase a level"
+msgstr "Limites pour augmenter d'un niveau"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:226
+#. i18n: ectx: property (text), widget (QLabel, l6)
+#: rc.cpp:493
+msgid "Limits to decrease a level"
+msgstr "Limites pour diminuer d'un niveau"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:283
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_DisableManualLevelChange)
+#: rc.cpp:496
+msgid "Disable manual level change buttons"
+msgstr "Désactiver les boutons de changement de niveau"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:314
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_PressEnterOnLineEnd)
+#: rc.cpp:499
+msgid "&Typewriter mode (user must confirm line with Enter)"
+msgstr ""
+"&Mode machine à écrire (l'utilisateur doit confirmer la ligne avec Entrée)"
+
+#. i18n: file: src/ui/ktouchpreftrainingpage.ui:321
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_RememberLevel)
+#: rc.cpp:502
+msgid "&Remember level for next program start"
+msgstr "Se &souvenir du niveau au prochain démarrage du programme"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:20
+#. i18n: ectx: property (windowTitle), widget (QDialog, KTouchStatisticsDialog)
+#: rc.cpp:505
+msgid "Training Statistics"
+msgstr "Statistiques d'entraînement"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:45
+#. i18n: ectx: attribute (title), widget (QWidget, currentTab)
+#: rc.cpp:508
+msgid "Current Training Session"
+msgstr "Session d'entraînement actuelle"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:68
+#. i18n: ectx: property (text), widget (QLabel, currentTitleLabel)
+#: rc.cpp:511
+msgid "Current Training Session Statistics"
+msgstr "Statistiques de la session d'entraînement actuelle"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:86
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_4_2)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:538
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_4)
+#: rc.cpp:514 rc.cpp:604
+msgid "Lecture:"
+msgstr "Dictée :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:106
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_3_2)
+#: rc.cpp:517
+msgid "Levels in this session:"
+msgstr "Niveaux dans cette session :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:136
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox4)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:588
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox4_2)
+#: rc.cpp:520 rc.cpp:616
+msgid "General Statistics"
+msgstr "Statistiques générales"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:151
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:603
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_3)
+#: rc.cpp:523 rc.cpp:619
+msgid "Time (seconds) elapsed:"
+msgstr "Temps écoulé (secondes) :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:164
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, elapsedTimeLCD)
+#: rc.cpp:526
+msgid ""
+"This shows the number of seconds you have typed in this training session."
+msgstr ""
+"Ceci affiche le nombre de secondes passées pendant lesquelles vous avez "
+"saisi au clavier durant cette session d'entraînement."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:174
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:623
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_3)
+#: rc.cpp:529 rc.cpp:622
+msgid "Characters typed:"
+msgstr "Caractères saisis :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:187
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, totalCharsLCD)
+#: rc.cpp:532
+msgid ""
+"The number of characters (correct and wrong) that you have typed so far."
+msgstr "Le nombre de caractères (corrects et erronés) saisis jusqu'ici."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:197
+#. i18n: ectx: property (text), widget (QLabel, textLabel5)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:643
+#. i18n: ectx: property (text), widget (QLabel, textLabel5_2)
+#: rc.cpp:535 rc.cpp:625
+msgid "Mistyped characters:"
+msgstr "Caractères erronés :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:210
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, wrongCharsLCD)
+#: rc.cpp:538
+msgid "Shows how many wrong characters you did type."
+msgstr "Affiche le nombre de caractères erronés saisis."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:220
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:663
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2)
+#: rc.cpp:541 rc.cpp:628
+msgid "Words typed:"
+msgstr "Mots tapés :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:233
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, wordsLCD)
+#: rc.cpp:544
+msgid "The number of words typed so far."
+msgstr "Le nombre de mots saisis depuis le début."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:258
+#. i18n: ectx: property (whatsThis), widget (QProgressBar, correctnessBar)
+#: rc.cpp:550
+msgid ""
+"The ratio of correctly typed characters versus total number of characters "
+"typed."
+msgstr "Le taux de lettres correctes sur le nombre total de caractères saisis."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:271
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox5)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:708
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox5_2)
+#: rc.cpp:553 rc.cpp:634
+msgid "Typing Rate"
+msgstr "Vitesse de frappe"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:286
+#. i18n: ectx: property (text), widget (QLabel, textLabel6)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:723
+#. i18n: ectx: property (text), widget (QLabel, textLabel6_3)
+#: rc.cpp:556 rc.cpp:637
+msgid "Characters per minute:"
+msgstr "Caractères par minute :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:299
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, charSpeedLCD)
+#: rc.cpp:559
+msgid "The number of correct characters you typed per minute."
+msgstr "Le nombre de lettres correctes saisies par minute."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:309
+#. i18n: ectx: property (text), widget (QLabel, textLabel6_2)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:743
+#. i18n: ectx: property (text), widget (QLabel, textLabel6_2_2)
+#: rc.cpp:562 rc.cpp:640
+msgid "Words per minute:"
+msgstr "Mots par minute :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:322
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, wordSpeedLCD)
+#: rc.cpp:565
+msgid "The number of words you typed per minute."
+msgstr "Le nombre de mots saisis par minute."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:337
+#. i18n: ectx: property (whatsThis), widget (QGroupBox, groupBox7)
+#: rc.cpp:568
+msgid ""
+"Here the characters are listed that you have missed during the typing test. "
+"The percentage shows the ratio of how often a key was missed versus how "
+"often the key was pressed in total. Large numbers indicate that the key was "
+"missed a lot."
+msgstr ""
+"Voici la liste des caractères que vous avez manqués au cours du test. Le "
+"pourcentage affiche le taux de touches manquées sur le nombre total de "
+"touches pressées. Un nombre important signifie donc que la touche a été "
+"beaucoup manquée."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:340
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox7)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:771
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox7_2)
+#: rc.cpp:571 rc.cpp:646
+msgid "Character Statistics (characters you need to focus on)"
+msgstr ""
+"Statistiques des caractères (caractères sur lesquels vous devez vous "
+"concentrer)"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:352
+#. i18n: ectx: property (text), widget (QLabel, charLabel1)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:874
+#. i18n: ectx: property (text), widget (QLabel, charLabel1Level)
+#: rc.cpp:574 rc.cpp:670
+msgid "a:"
+msgstr "a :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:382
+#. i18n: ectx: property (text), widget (QLabel, charLabel5)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:867
+#. i18n: ectx: property (text), widget (QLabel, charLabel5Level)
+#: rc.cpp:577 rc.cpp:667
+msgid "e:"
+msgstr "e :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:396
+#. i18n: ectx: property (text), widget (QLabel, charLabel2)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:860
+#. i18n: ectx: property (text), widget (QLabel, charLabel2Level)
+#: rc.cpp:580 rc.cpp:664
+msgid "b:"
+msgstr "b :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:410
+#. i18n: ectx: property (text), widget (QLabel, charLabel6)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:846
+#. i18n: ectx: property (text), widget (QLabel, charLabel6Level)
+#: rc.cpp:583 rc.cpp:661
+msgid "f:"
+msgstr "f :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:424
+#. i18n: ectx: property (text), widget (QLabel, charLabel3)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:818
+#. i18n: ectx: property (text), widget (QLabel, charLabel3Level)
+#: rc.cpp:586 rc.cpp:655
+msgid "c:"
+msgstr "c :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:438
+#. i18n: ectx: property (text), widget (QLabel, charLabel7)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:825
+#. i18n: ectx: property (text), widget (QLabel, charLabel7Level)
+#: rc.cpp:589 rc.cpp:658
+msgid "g:"
+msgstr "g :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:452
+#. i18n: ectx: property (text), widget (QLabel, charLabel4)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:783
+#. i18n: ectx: property (text), widget (QLabel, charLabel4Level)
+#: rc.cpp:592 rc.cpp:649
+msgid "d:"
+msgstr "d :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:466
+#. i18n: ectx: property (text), widget (QLabel, charLabel8)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:790
+#. i18n: ectx: property (text), widget (QLabel, charLabel8Level)
+#: rc.cpp:595 rc.cpp:652
+msgid "h:"
+msgstr "h :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:497
+#. i18n: ectx: attribute (title), widget (QWidget, currentLevelTab)
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:520
+#. i18n: ectx: property (text), widget (QLabel, currentTitleLabel_3)
+#: rc.cpp:598 rc.cpp:601
+msgid "Current Level Statistics"
+msgstr "Statistiques du niveau actuel"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:551
+#. i18n: ectx: property (text), widget (QLabel, lectureLabel2)
+#: rc.cpp:607
+msgid "lectureLabel2"
+msgstr "lectureLabel2"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:558
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
+#: rc.cpp:610
+msgid "Level:"
+msgstr "Niveau :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:571
+#. i18n: ectx: property (text), widget (QLabel, levelLabel2)
+#: rc.cpp:613
+msgid "levelLabel2"
+msgstr "levelLabel2"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:768
+#. i18n: ectx: property (whatsThis), widget (QGroupBox, groupBox7_2)
+#: rc.cpp:643
+msgid ""
+"Here the characters are listed that you have missed during the typing test. "
+"The percentage shows the ratio of how often a key was missed versus how "
+"often the key was pressed correctly. Large numbers indicate that the key was "
+"missed a lot."
+msgstr ""
+"Voici la liste des caractères que vous avez manqués au cours du test. Le "
+"pourcentage affiche le taux de touches manquées sur le nombre de touches "
+"correctes. Un nombre important signifie donc que la touche a été beaucoup "
+"manquée."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:928
+#. i18n: ectx: attribute (title), widget (QWidget, progressTab)
+#: rc.cpp:673
+msgid "Monitor Progress"
+msgstr "Moniteur de progression"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:945
+#. i18n: ectx: property (text), widget (QLabel, currentTitleLabel_2)
+#: rc.cpp:676
+msgid "Your Typing Progress"
+msgstr "Votre progression dans la saisie"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:960
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:679
+msgid "Show progress in lecture:"
+msgstr "Afficher l'avancement de la dictée :"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:973
+#. i18n: ectx: property (whatsThis), widget (KComboBox, lectureCombo)
+#: rc.cpp:682
+msgid "Here you can select the lecture you want to obtain statistics for."
+msgstr ""
+"Si vous cochez cette option, lorsque vous laisserez le pointeur de la souris "
+"quelques instants sur un fichier, une bulle d'aide apparaîtra avec des "
+"informations sur ce fichier"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1004
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox6_2)
+#: rc.cpp:685
+msgid "Progress Chart Options"
+msgstr "Options du diagramme de progression"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1022
+#. i18n: ectx: property (title), widget (QGroupBox, chartDataGroup)
+#: rc.cpp:688
+msgid "Chart Data"
+msgstr "Données du diagramme"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1056
+#. i18n: ectx: property (text), widget (QRadioButton, sessionsRadio)
+#: rc.cpp:691
+msgid "Session stats"
+msgstr "Statistiques de la session"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1069
+#. i18n: ectx: property (text), widget (QRadioButton, levelsRadio)
+#: rc.cpp:694
+msgid "Level stats"
+msgstr "Statistiques du niveau"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1085
+#. i18n: ectx: property (title), widget (QGroupBox, chartTypeGroup)
+#: rc.cpp:697
+msgid "Chart Type"
+msgstr "Type de diagramme"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1119
+#. i18n: ectx: property (text), widget (QRadioButton, correctRadio)
+#. i18n: file: src/ui/ktouchstatuswidget.ui:206
+#. i18n: ectx: property (title), widget (QGroupBox, GroupBox12)
+#: rc.cpp:700 rc.cpp:754 src/ktouchstatisticsdialog.cpp:392
+msgid "Correctness"
+msgstr "Exactitude"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1132
+#. i18n: ectx: property (text), widget (QRadioButton, skillRadio)
+#: rc.cpp:703 src/ktouchstatisticsdialog.cpp:420
+msgid "Skill"
+msgstr "Habileté"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1145
+#. i18n: ectx: property (text), widget (QRadioButton, WPMRadio)
+#: rc.cpp:706 src/ktouchstatisticsdialog.cpp:350
+msgid "Words per minute"
+msgstr "Mots par minute"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1158
+#. i18n: ectx: property (text), widget (QRadioButton, CPMRadio)
+#: rc.cpp:709 src/ktouchstatisticsdialog.cpp:371
+msgid "Characters per minute"
+msgstr "Caractères par minute"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1174
+#. i18n: ectx: property (title), widget (QGroupBox, timeAxisScalingGroup)
+#: rc.cpp:712
+msgid "Time Axis Scaling"
+msgstr "Échelle temporelle des axes"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1208
+#. i18n: ectx: property (text), widget (QRadioButton, timeRadio)
+#: rc.cpp:715
+msgid "Time scaled"
+msgstr "Échelle au temps"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1221
+#. i18n: ectx: property (text), widget (QRadioButton, eventRadio)
+#: rc.cpp:718
+msgid "Constant spacing"
+msgstr "Espacement constant"
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1246
+#. i18n: ectx: property (toolTip), widget (KPushButton, clearButton)
+#: rc.cpp:721
+msgid ""
+"Pressing this button will erase the whole training statistics for the "
+"current user."
+msgstr ""
+"En appuyant sur ce bouton, vous écraserez l'ensemble des statistiques "
+"d'entraînement de l'utilisateur courant."
+
+#. i18n: file: src/ui/ktouchstatisticsdialog.ui:1249
+#. i18n: ectx: property (text), widget (KPushButton, clearButton)
+#: rc.cpp:724
+msgid "Clear History"
+msgstr "Effacer l'historique"
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:29
+#. i18n: ectx: property (title), widget (QGroupBox, GroupBox1)
+#: rc.cpp:730
+msgid "Level"
+msgstr "Niveau"
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:41
+#. i18n: ectx: property (toolTip), widget (QLCDNumber, levelLCD)
+#: rc.cpp:733
+msgid "Current level"
+msgstr "Niveau actuel"
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:44
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, levelLCD)
+#: rc.cpp:736
+msgid "This shows which level you are at."
+msgstr "Ceci affiche à quel niveau vous vous trouvez."
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:71
+#. i18n: ectx: property (text), widget (QToolButton, levelUpBtn)
+#. i18n: file: src/ui/ktouchstatuswidget.ui:90
+#. i18n: ectx: property (text), widget (QToolButton, levelDownBtn)
+#: rc.cpp:739 rc.cpp:742
+msgid "..."
+msgstr "…"
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:114
+#. i18n: ectx: property (title), widget (QGroupBox, GroupBox11)
+#: rc.cpp:745
+msgid "Speed"
+msgstr "Vitesse"
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchstatuswidget.ui:178
+#. i18n: ectx: property (toolTip), widget (QLCDNumber, speedLCD)
+#: rc.cpp:748
+msgid "Characters/Minute"
+msgstr "Caractères / minute"
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:181
+#. i18n: ectx: property (whatsThis), widget (QLCDNumber, speedLCD)
+#: rc.cpp:751
+msgid ""
+"This shows how fast you are typing. It measures the typing speed in "
+"characters per minute."
+msgstr ""
+"Ceci affiche votre vitesse de frappe. Elle se mesure en caractères par "
+"minute."
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:267
+#. i18n: ectx: property (toolTip), widget (QProgressBar, correctnessBar)
+#: rc.cpp:757
+msgid "How much are you typing correctly?"
+msgstr "Quantifie l'exactitude de votre frappe"
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:270
+#. i18n: ectx: property (whatsThis), widget (QProgressBar, correctnessBar)
+#: rc.cpp:760
+msgid "This shows how correctly you are typing."
+msgstr "Ceci affiche l'exactitude de votre frappe"
+
+# unreviewed-context
+#. i18n: file: src/ui/ktouchstatuswidget.ui:289
+#. i18n: ectx: property (title), widget (QGroupBox, GroupBox4)
+#: rc.cpp:763
+msgid "New Characters in This Level"
+msgstr "Nouveaux caractères de ce niveau "
+
+#. i18n: file: src/ui/ktouchstatuswidget.ui:312
+#. i18n: ectx: property (text), widget (QLabel, newCharsLabel)
+#: rc.cpp:766
+msgid "new characters"
+msgstr "nouveaux caractères"
+
+#. i18n: file: src/ui/ktouchusersetupdialog.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, KTouchUserSetupDialog)
+#: rc.cpp:769
+msgid "Setup Users"
+msgstr "Configurer les utilisateurs"
+
+#. i18n: file: src/ui/ktouchusersetupdialog.ui:39
+#. i18n: ectx: property (text), widget (KPushButton, addBtn)
+#: rc.cpp:772
+msgid "&Add"
+msgstr "&Ajouter"
+
+#. i18n: file: src/ui/ktouchusersetupdialog.ui:42
+#. i18n: ectx: property (shortcut), widget (KPushButton, addBtn)
+#: rc.cpp:775
+msgid "Ins, Alt+A"
+msgstr "Ins, Alt+A"
+
+#. i18n: file: src/ui/ktouchusersetupdialog.ui:49
+#. i18n: ectx: property (text), widget (KPushButton, removeBtn)
+#: rc.cpp:778
+msgid "&Remove"
+msgstr "&Supprimer"
+
+#. i18n: file: src/ui/ktouchusersetupdialog.ui:52
+#. i18n: ectx: property (shortcut), widget (KPushButton, removeBtn)
+#: rc.cpp:781
+msgid "Del, Alt+R"
+msgstr "Del, Alt+R"
+
+#. i18n: file: src/ui/ktouchusersetupdialog.ui:75
+#. i18n: ectx: property (text), widget (KPushButton, closeBtn)
+#: rc.cpp:784
+msgid "&Close"
+msgstr "&Fermer"
+
+#. i18n: file: src/ktouch.kcfg:9
+#. i18n: ectx: label, entry (CurrentColorScheme), group (Colors)
+#: rc.cpp:787
+msgid "The number of the current color scheme."
+msgstr "Le numéro du modèle de couleurs actuel."
+
+#. i18n: file: src/ktouch.kcfg:13
+#. i18n: ectx: label, entry (CommonTypingLineColors), group (Colors)
+#: rc.cpp:790
+msgid "Use the same typing line colors independent of color scheme."
+msgstr ""
+"Utiliser les mêmes couleurs pour la ligne de frappe indépendemment du modèle "
+"de couleur."
+
+#. i18n: file: src/ktouch.kcfg:17
+#. i18n: ectx: label, entry (TeacherBackgroundColor), group (Colors)
+#: rc.cpp:793
+msgid "The background color for the teacher's line."
+msgstr "La couleur d'arrière plan de la ligne d'enseignement."
+
+#. i18n: file: src/ktouch.kcfg:21
+#. i18n: ectx: label, entry (TeacherTextColor), group (Colors)
+#: rc.cpp:796
+msgid "The text color for the teacher's line"
+msgstr "La couleur du texte de la ligne d'enseignement"
+
+#. i18n: file: src/ktouch.kcfg:25
+#. i18n: ectx: label, entry (StudentBackgroundColor), group (Colors)
+#: rc.cpp:799
+msgid "The background color for the student's line."
+msgstr "L'arrière plan de la ligne d'étude."
+
+#. i18n: file: src/ktouch.kcfg:29
+#. i18n: ectx: label, entry (StudentTextColor), group (Colors)
+#: rc.cpp:802
+msgid "The text color for the student's line"
+msgstr "La couleur du texte de la ligne d'étude"
+
+#. i18n: file: src/ktouch.kcfg:33
+#. i18n: ectx: label, entry (ColorOnError), group (Colors)
+#: rc.cpp:805
+msgid "Whether to use a different background for wrong text or not."
+msgstr ""
+"Si vous voulez utiliser un arrière plan différent pour un texte faux ou pas."
+
+#. i18n: file: src/ktouch.kcfg:37
+#. i18n: ectx: label, entry (ErrorBackgroundColor), group (Colors)
+#: rc.cpp:808
+msgid "The background color for wrong text (students line)."
+msgstr "La couleur d'arrière plan de la ligne d'étude erronée"
+
+#. i18n: file: src/ktouch.kcfg:41
+#. i18n: ectx: label, entry (ErrorTextColor), group (Colors)
+#: rc.cpp:811
+msgid "The text color for wrong text (students line)."
+msgstr "La couleur du texte de la ligne erronée (ligne d'étude)."
+
+#. i18n: file: src/ktouch.kcfg:51
+#. i18n: ectx: label, entry (SoundOnKeypress), group (General)
+#: rc.cpp:817
+msgid "Play sounds for typing."
+msgstr "Jouer des sons pendant la frappe."
+
+#. i18n: file: src/ktouch.kcfg:55
+#. i18n: ectx: label, entry (SoundOnLevel), group (General)
+#: rc.cpp:820
+msgid "Play a sound on automatic level change"
+msgstr "Jouer un son en cas de changement automatique de niveau"
+
+#. i18n: file: src/ktouch.kcfg:59
+#. i18n: ectx: label, entry (SlidingSpeed), group (General)
+#: rc.cpp:823
+msgid "The sliding speed"
+msgstr "La vitesse de défilement"
+
+#. i18n: file: src/ktouch.kcfg:63
+#. i18n: ectx: label, entry (MaxSlidingWidgetHeight), group (General)
+#: rc.cpp:826
+msgid "The maximum height of the sliding widget"
+msgstr "La hauteur maximum du composant graphique défilant"
+
+#. i18n: file: src/ktouch.kcfg:67
+#. i18n: ectx: label, entry (OverrideLectureFont), group (General)
+#: rc.cpp:829
+msgid "Override the default/predefined lecture fonts."
+msgstr "Écraser la police par défaut/prédéfinie de la dictée."
+
+#. i18n: file: src/ktouch.kcfg:71
+#. i18n: ectx: label, entry (Font), group (General)
+#: rc.cpp:832
+msgid "The font for the student and teacher lines"
+msgstr "La police des lignes d'enseignement et d'étude"
+
+#. i18n: file: src/ktouch.kcfg:75
+#. i18n: ectx: label, entry (CurrentLectureFile), group (General)
+#: rc.cpp:835
+msgid "The currently loaded lecture file"
+msgstr "Le fichier de dictée actuellement chargé"
+
+#. i18n: file: src/ktouch.kcfg:79
+#. i18n: ectx: label, entry (Right2LeftTyping), group (General)
+#: rc.cpp:838
+msgid "Whether we use right-to-left typing."
+msgstr "Si on utilise la frappe de droite à gauche."
+
+#. i18n: file: src/ktouch.kcfg:85
+#. i18n: ectx: label, entry (ShowAnimation), group (Keyboard)
+#: rc.cpp:841
+msgid "Whether to use colors on the keys or not."
+msgstr "Si on utilise les couleurs sur les touches ou non."
+
+#. i18n: file: src/ktouch.kcfg:89
+#. i18n: ectx: label, entry (ShowLearnedKeysOnly), group (Keyboard)
+#: rc.cpp:844
+msgid "Whether to show only the learned/known keys or always all keys."
+msgstr ""
+"Si montre seulement les touches apprises/connues ou toutes les touches."
+
+#. i18n: file: src/ktouch.kcfg:93
+#. i18n: ectx: label, entry (ShowKeyboard), group (Keyboard)
+#: rc.cpp:847
+msgid "Whether to show the keyboard display."
+msgstr "Si on montre la disposition du clavier."
+
+#. i18n: file: src/ktouch.kcfg:97
+#. i18n: ectx: label, entry (OverrideKeyboardFont), group (Keyboard)
+#: rc.cpp:850
+msgid "Whether to override the default/predefined keyboard fonts."
+msgstr "Si on écrase la police par défaut/prédéfinie du clavier."
+
+#. i18n: file: src/ktouch.kcfg:101
+#. i18n: ectx: label, entry (KeyboardFont), group (Keyboard)
+#: rc.cpp:853
+msgid "The font for the keys on the keyboard"
+msgstr "La police pour les touches sur le clavier"
+
+#. i18n: file: src/ktouch.kcfg:105
+#. i18n: ectx: label, entry (CurrentKeyboardFile), group (Keyboard)
+#: rc.cpp:856
+msgid "The currently loaded keyboard file"
+msgstr "Le fichier de clavier actuellement chargé"
+
+#. i18n: file: src/ktouch.kcfg:111
+#. i18n: ectx: label, entry (PressEnterOnLineEnd), group (Training)
+#: rc.cpp:859
+msgid "Requires user to press enter after the line is complete."
+msgstr "Requiert que l'utilisateur appuie sur entrée après la fin de la ligne."
+
+#. i18n: file: src/ktouch.kcfg:115
+#. i18n: ectx: label, entry (AutoLevelChange), group (Training)
+#: rc.cpp:862
+msgid "Allow automatic level adjustments"
+msgstr "Autoriser l'ajustement automatique du niveau"
+
+#. i18n: file: src/ktouch.kcfg:119
+#. i18n: ectx: label, entry (DisableManualLevelChange), group (Training)
+#: rc.cpp:865
+msgid "Disable manual level adjustments when auto-level change is enabled"
+msgstr ""
+"Désactiver le changement automatique de niveau quand l'ajustement "
+"automatique de niveau est activé"
+
+#. i18n: file: src/ktouch.kcfg:123
+#. i18n: ectx: label, entry (RememberLevel), group (Training)
+#: rc.cpp:868
+msgid "Remember the current level for the next KTouch start"
+msgstr "Se souvenir du niveau actuel au prochain démarrage de KTouch"
+
+#. i18n: file: src/ktouch.kcfg:127
+#. i18n: ectx: label, entry (CurrentTrainingLevel), group (Training)
+#: rc.cpp:871
+msgid "The current training level"
+msgstr "Le niveau d'exercice actuel"
+
+#. i18n: file: src/ktouch.kcfg:131
+#. i18n: ectx: label, entry (UpSpeedLimit), group (Training)
+#: rc.cpp:874
+msgid "Number of chars per minute to increase a level"
+msgstr "Nombre de caractères par minute pour augmenter d'un niveau"
+
+#. i18n: file: src/ktouch.kcfg:135
+#. i18n: ectx: label, entry (UpCorrectLimit), group (Training)
+#: rc.cpp:877
+msgid "Percentage of correctness to increase a level"
+msgstr "Pourcentage d'exactitude pour augmenter d'un niveau"
+
+#. i18n: file: src/ktouch.kcfg:139
+#. i18n: ectx: label, entry (DownSpeedLimit), group (Training)
+#: rc.cpp:880
+msgid "Number of chars per minute to decrease a level"
+msgstr "Nombre de caractères par minute pour diminuer d'un niveau"
+
+#. i18n: file: src/ktouch.kcfg:143
+#. i18n: ectx: label, entry (DownCorrectLimit), group (Training)
+#: rc.cpp:883
+msgid "Percentage of correctness to decrease a level"
+msgstr "Pourcentage d'exactitude pour diminuer d'un niveau"
+
+#. i18n: file: src/ktouch.kcfg:147
+#. i18n: ectx: label, entry (NumberOfLinesWorkload), group (Training)
+#: rc.cpp:886
+msgid "How many lines that must be typed before level can change"
+msgstr ""
+"Combien de lignes doivent être tapées avec que le niveau puisse changer"
+
+#. i18n: file: src/ktouch.kcfg:151
+#. i18n: ectx: label, entry (CompleteWholeTrainingLevel), group (Training)
+#: rc.cpp:889
+msgid "Run minimum one complete level before going up"
+msgstr "Réaliser au minimum un niveau complet avant de continuer"
+
+#. i18n: file: src/ktouch.kcfg:157
+#. i18n: ectx: label, entry (MultipleUsers), group (Users)
+#: rc.cpp:892
+msgid "Allow multiple KTouch users for single user account"
+msgstr ""
+"Autoriser plusieurs utilisateurs KTouch pour un seul compte d'utilisateur"
+
+#. i18n: file: src/ktouch.kcfg:161
+#. i18n: ectx: label, entry (CurrentUserName), group (Users)
+#: rc.cpp:895
+msgid "The user name of the current user."
+msgstr "Le nom d'utilisateur de l'utilisateur actuel."
+
+#. i18n: file: training/Arabic/ar.ktouch.xml:3
+#: rc.cpp:899
+msgctxt "Lesson Name"
+msgid "Arabic"
+msgstr "Arabe"
+
+#. i18n: file: training/Bulgarian/bg.ktouch.xml:3
+#: rc.cpp:901
+msgctxt "Lesson Name"
+msgid "Bulgarian (auto-generated)"
+msgstr "Bulgare (auto-généré)"
+
+#. i18n: file: training/Bulgarian/bg.long.ktouch.xml:3
+#: rc.cpp:903
+msgctxt "Lesson Name"
+msgid "Bulgarian (auto-generated-long)"
+msgstr "Bulgare (auto-généré long)"
+
+#. i18n: file: training/Catalan/ca.ktouch.xml:3
+#: rc.cpp:905
+msgctxt "Lesson Name"
+msgid "Catalan (auto-generated)"
+msgstr "Catalan (auto-généré)"
+
+#. i18n: file: training/Czech/cs.ktouch.xml:3
+#: rc.cpp:907
+msgctxt "Lesson Name"
+msgid "Czech (auto-generated)"
+msgstr "Tchèque (auto-généré)"
+
+#. i18n: file: training/Danish/da.auto.ktouch.xml:3
+#: rc.cpp:909
+msgctxt "Lesson Name"
+msgid "Danish (auto-generated)"
+msgstr "Danois (auto-généré)"
+
+#. i18n: file: training/Danish/da.ktouch.xml:3
+#: rc.cpp:911
+msgctxt "Lesson Name"
+msgid "Danish (complete course)"
+msgstr "Danois (cours complet)"
+
+#. i18n: file: training/Dutch/nl.junior.ktouch.xml:3
+#: rc.cpp:913
+msgctxt "Lesson Name"
+msgid "Nederlands Junior (Nederlands for Kids)"
+msgstr "Hollandais Junior (Hollandais pour enfants)"
+
+#. i18n: file: training/Dutch/nl.ktouch.xml:3
+#: rc.cpp:915
+msgctxt "Lesson Name"
+msgid "Nederlands (auto-generated)"
+msgstr "Hollandais (auto-généré)"
+
+#. i18n: file: training/English/en.colemak.ktouch.xml:3
+#: rc.cpp:917
+msgctxt "Lesson Name"
+msgid "Colemak (auto-generated)"
+msgstr "Colemak (auto-généré)"
+
+#. i18n: file: training/English/en.dvorak1.ktouch.xml:3
+#: rc.cpp:919
+msgctxt "Lesson Name"
+msgid "Dvorak (auto-generated)"
+msgstr "Dvorak (auto-généré)"
+
+#. i18n: file: training/English/en.dvorak2.ktouch.xml:3
+#: rc.cpp:921
+msgctxt "Lesson Name"
+msgid "Dvorak - ABCD"
+msgstr "Dvorak - ABCD"
+
+#. i18n: file: training/English/en.ktouch.xml:3
+#: rc.cpp:923
+msgctxt "Lesson Name"
+msgid "English (auto-generated)"
+msgstr "Anglais (auto-généré)"
+
+#. i18n: file: training/English/english_alphagrip.ktouch.xml:3
+#: rc.cpp:925
+msgctxt "Lesson Name"
+msgid "English (for AlphaGrip)"
+msgstr ""
+
+#. i18n: file: training/Finnish/fi.junior.ktouch.xml:3
+#: rc.cpp:927
+msgctxt "Lesson Name"
+msgid "Finnish For Kids"
+msgstr "Finlandais pour enfants"
+
+#. i18n: file: training/Finnish/fi.ktouch.xml:3
+#: rc.cpp:929
+msgctxt "Lesson Name"
+msgid "Finnish (auto-generated)"
+msgstr "Finlandais (auto-généré)"
+
+#. i18n: file: training/French/fr.auto1.ktouch.xml:3
+#: rc.cpp:931
+msgctxt "Lesson Name"
+msgid "French (auto-generated) 2"
+msgstr "Français (auto-généré) 2"
+
+#. i18n: file: training/French/fr.auto2.ktouch.xml:3
+#: rc.cpp:933
+msgctxt "Lesson Name"
+msgid "French (auto-generated) 1"
+msgstr "Français (auto-généré) 1"
+
+#. i18n: file: training/French/fr.dvorak1.ktouch.xml:3
+#: rc.cpp:935
+msgctxt "Lesson Name"
+msgid "Dvorak French (Part 1)"
+msgstr "Dvorak Français (Partie 1)"
+
+#. i18n: file: training/French/fr.dvorak2.ktouch.xml:3
+#: rc.cpp:937
+msgctxt "Lesson Name"
+msgid "Dvorak French (Part 2)"
+msgstr "Dvorak Français (Partie 2)"
+
+#. i18n: file: training/German/de.1.ktouch.xml:3
+#: rc.cpp:939
+msgctxt "Lesson Name"
+msgid "German (in 9 levels)"
+msgstr "Allemand (en 9 niveaux)"
+
+#. i18n: file: training/German/de.2.ktouch.xml:3
+#: rc.cpp:941
+msgctxt "Lesson Name"
+msgid "German (from Tipptrainer)"
+msgstr "Allemand (de Tipptrainer)"
+
+#. i18n: file: training/German/de.3.ktouch.xml:3
+#: rc.cpp:943
+msgctxt "Lesson Name"
+msgid "German (auto-generated)"
+msgstr "Allemand (auto-généré)"
+
+#. i18n: file: training/German/de.dvorak.ktouch.xml:3
+#: rc.cpp:945
+msgctxt "Lesson Name"
+msgid "German (Dvorak keyboard layout)"
+msgstr "Allemand (disposition Dvorak du clavier)"
+
+#. i18n: file: training/German/de.neo2.ktouch.xml:3
+#: rc.cpp:947
+msgctxt "Lesson Name"
+msgid "German (Neo 2 keyboard layout)"
+msgstr "Allemand (disposition du clavier Neo 2)"
+
+#. i18n: file: training/German/de.number.ktouch.xml:3
+#: rc.cpp:949
+msgctxt "Lesson Name"
+msgid "German (Number Pad)"
+msgstr "Allemand (clavier numérique)"
+
+#. i18n: file: training/Hellenic/el.ktouch.xml:3
+#: rc.cpp:951
+msgctxt "Lesson Name"
+msgid "Hellenic"
+msgstr "Grec"
+
+#. i18n: file: training/Hungarian/hu.expert.ktouch.xml:3
+#: rc.cpp:953
+msgctxt "Lesson Name"
+msgid "Hungarian Expert++"
+msgstr "Expert Hongrois++"
+
+#. i18n: file: training/Hungarian/hu.ktouch.xml:3
+#: rc.cpp:955
+msgctxt "Lesson Name"
+msgid "Hungarian (auto-generated)"
+msgstr "Hongrois (auto-généré)"
+
+#. i18n: file: training/Italian/it.ktouch.xml:3
+#: rc.cpp:957
+msgctxt "Lesson Name"
+msgid "Italian (auto-generated)"
+msgstr "Italien (auto-généré)"
+
+#. i18n: file: training/Latin/la.ktouch.xml:3
+#: rc.cpp:959
+msgctxt "Lesson Name"
+msgid "Latin"
+msgstr "Latin"
+
+#. i18n: file: training/Lithuanian/lt.ktouch.xml:3
+#: rc.cpp:961
+msgctxt "Lesson Name"
+msgid "Lithuanian (sdt)"
+msgstr "Lituanien (sdt)"
+
+#. i18n: file: training/Norwegian/no.ktouch.xml:3
+#: rc.cpp:963
+msgctxt "Lesson Name"
+msgid "Norwegian"
+msgstr "Norvégien"
+
+#. i18n: file: training/Polish/pl.ktouch.xml:3
+#: rc.cpp:965
+msgctxt "Lesson Name"
+msgid "Polish (from TTCoach)"
+msgstr "Polonais (de TTCoach)"
+
+#. i18n: file: training/Russian/ru.1.ktouch.xml:3
+#: rc.cpp:967
+msgctxt "Lesson Name"
+msgid "Russian (auto-generated)"
+msgstr "Russe (auto-généré)"
+
+#. i18n: file: training/Russian/ru.2.ktouch.xml:3
+#: rc.cpp:969
+#, fuzzy
+#| msgctxt "Keyboard Layout Name"
+#| msgid "Russian"
+msgctxt "Lesson Name"
+msgid "Russian 2"
+msgstr "Russe"
+
+#. i18n: file: training/Russian/ru.long.ktouch.xml:3
+#: rc.cpp:971
+msgctxt "Lesson Name"
+msgid "Russian (long auto-generated)"
+msgstr "Russe (auto-généré long)"
+
+#. i18n: file: training/Slovak/sl.ktouch.xml:3
+#: rc.cpp:973
+msgctxt "Lesson Name"
+msgid "Slovak (auto-generated)"
+msgstr "Slovaque (auto-généré)"
+
+#. i18n: file: training/Slovenian/slovenian.ktouch.xml:3
+#: rc.cpp:975
+msgctxt "Lesson Name"
+msgid "Slovenian"
+msgstr "Slovène"
+
+#. i18n: file: training/Spanish/es.1.ktouch.xml:3
+#: rc.cpp:977
+msgctxt "Lesson Name"
+msgid "Spanish (auto-generated)"
+msgstr "Espagnol (auto-généré)"
+
+#. i18n: file: training/Spanish/es.2.ktouch.xml:3
+#: rc.cpp:979
+msgctxt "Lesson Name"
+msgid "Spanish (auto-generated) 1"
+msgstr "Espagnol (auto-généré) 1"
+
+#. i18n: file: training/Spanish/es.3.ktouch.xml:3
+#: rc.cpp:981
+msgctxt "Lesson Name"
+msgid "Spanish (auto-generated) 2"
+msgstr "Espagnol (auto-généré) 2"
+
+#. i18n: file: training/Spanish/es.dvorak.ktouch.xml:3
+#: rc.cpp:983
+msgctxt "Lesson Name"
+msgid "Dvorak Spanish"
+msgstr "Dvorak Espagnol"
+
+#. i18n: file: training/Turkish/tr.ktouch.xml:3
+#: rc.cpp:985
+msgctxt "Lesson Name"
+msgid "Turkish (auto-generated)"
+msgstr "Turc (auto-généré)"
+
+#. i18n: file: training/Ukrainian/uk.ktouch.xml:3
+#: rc.cpp:987
+msgctxt "Lesson Name"
+msgid "Ukrainian"
+msgstr "Ukrainien"
+
+#. i18n: file: training/Brazilian/pt.br-nativo.ktouch.xml:3
+#: rc.cpp:989
+msgctxt "Lesson Name"
+msgid "BR-Nativo"
+msgstr ""
+
+#. i18n: file: keyboards/arabic/ar.keyboard.xml:3
+#: rc.cpp:991
+msgctxt "Keyboard Layout Name"
+msgid "Arabic"
+msgstr "Arabe"
+
+#. i18n: file: keyboards/brazilian/pt.br.keyboard.xml:3
+#: rc.cpp:993
+msgctxt "Keyboard Layout Name"
+msgid "Brazilian"
+msgstr "Brésilien"
+
+#. i18n: file: keyboards/bulgarian/bg.keyboard.xml:3
+#: rc.cpp:995
+msgctxt "Keyboard Layout Name"
+msgid "Bulgarian"
+msgstr "Bulgare"
+
+#. i18n: file: keyboards/czech/cs.qwerty.keyboard.xml:3
+#: rc.cpp:997
+msgctxt "Keyboard Layout Name"
+msgid "Czech qwerty"
+msgstr "Qwerty tchèque"
+
+#. i18n: file: keyboards/czech/cs.qwertz.keyboard.xml:3
+#: rc.cpp:999
+msgctxt "Keyboard Layout Name"
+msgid "Czech qwertz"
+msgstr "Qwertz tchèque"
+
+#. i18n: file: keyboards/danish/dk.keyboard.xml:3
+#: rc.cpp:1001
+msgctxt "Keyboard Layout Name"
+msgid "Danish"
+msgstr "Danois"
+
+#. i18n: file: keyboards/english/en.colemak.keyboard.xml:3
+#: rc.cpp:1003
+msgctxt "Keyboard Layout Name"
+msgid "English Colemak"
+msgstr "Colemak Anglais"
+
+#. i18n: file: keyboards/english/en.dvorak.keyboard.xml:3
+#: rc.cpp:1005
+msgctxt "Keyboard Layout Name"
+msgid "English Dvorak"
+msgstr "Dvorak Anglais"
+
+#. i18n: file: keyboards/english/en.keyboard.xml:3
+#: rc.cpp:1007
+msgctxt "Keyboard Layout Name"
+msgid "English"
+msgstr "Anglais"
+
+#. i18n: file: keyboards/english/en_gb.dvorak.keyboard.xml:3
+#: rc.cpp:1009
+msgctxt "Keyboard Layout Name"
+msgid "English Dvorak (United Kingdom)"
+msgstr "Dvorak Anglais (Royaume-Uni)"
+
+#. i18n: file: keyboards/english/en_gb.qwerty.keyboard.xml:3
+#: rc.cpp:1011
+msgctxt "Keyboard Layout Name"
+msgid "English (United Kingdom)"
+msgstr "Anglais (Royaume-Uni)"
+
+#. i18n: file: keyboards/english/en_alphagrip.keyboard.xml:3
+#: rc.cpp:1013
+msgctxt "Keyboard Layout Name"
+msgid "AlphaGrip"
+msgstr ""
+
+#. i18n: file: keyboards/estonian/ee.keyboard.xml:3
+#: rc.cpp:1015
+msgctxt "Keyboard Layout Name"
+msgid "Estonian"
+msgstr "Estonien"
+
+#. i18n: file: keyboards/finnish/fi.keyboard.xml:3
+#: rc.cpp:1017
+msgctxt "Keyboard Layout Name"
+msgid "Finnish Keyboard"
+msgstr "Clavier finnois"
+
+#. i18n: file: keyboards/french/fr.dvorak.keyboard.xml:3
+#: rc.cpp:1019
+msgctxt "Keyboard Layout Name"
+msgid "French Dvorak"
+msgstr "Français Dvorak"
+
+#. i18n: file: keyboards/french/fr.keyboard.xml:3
+#: rc.cpp:1021
+msgctxt "Keyboard Layout Name"
+msgid "French"
+msgstr "Français"
+
+#. i18n: file: keyboards/german/de.dvorak.type2.keyboard.xml:3
+#: rc.cpp:1023
+msgctxt "Keyboard Layout Name"
+msgid "German Dvorak Type II"
+msgstr "Dvorak allemand type II"
+
+#. i18n: file: keyboards/german/de.keyboard.xml:3
+#: rc.cpp:1025
+msgctxt "Keyboard Layout Name"
+msgid "German"
+msgstr "Allemand"
+
+#. i18n: file: keyboards/german/de.neo2.all.keyboard.xml:3
+#: rc.cpp:1027
+msgctxt "Keyboard Layout Name"
+msgid "German Neo 2"
+msgstr "Allemand Neo 2"
+
+#. i18n: file: keyboards/greek/el.keyboard.xml:3
+#: rc.cpp:1029
+msgctxt "Keyboard Layout Name"
+msgid "Greek (English)"
+msgstr "Grec (anglais)"
+
+#. i18n: file: keyboards/hebrew/he.keyboard.xml:3
+#: rc.cpp:1031
+msgctxt "Keyboard Layout Name"
+msgid "Hebrew"
+msgstr "Hébreux"
+
+#. i18n: file: keyboards/hungarian/hu.keyboard.xml:3
+#: rc.cpp:1033
+msgctxt "Keyboard Layout Name"
+msgid "Hungarian"
+msgstr "Hongrois"
+
+#. i18n: file: keyboards/italian/it.keyboard.xml:3
+#: rc.cpp:1035
+msgctxt "Keyboard Layout Name"
+msgid "Italian"
+msgstr "Italien"
+
+#. i18n: file: keyboards/kannada/kn.keyboard.xml:3
+#: rc.cpp:1037
+msgctxt "Keyboard Layout Name"
+msgid "Kannada"
+msgstr "Kannada"
+
+#. i18n: file: keyboards/latin/lat.keyboard.xml:3
+#: rc.cpp:1039
+msgctxt "Keyboard Layout Name"
+msgid "Latinoamerican"
+msgstr "Latino-américain"
+
+#. i18n: file: keyboards/lithuanian/lt.keyboard.xml:3
+#: rc.cpp:1041
+msgctxt "Keyboard Layout Name"
+msgid "Lithuanian standard"
+msgstr "Lituanien standard"
+
+#. i18n: file: keyboards/norwegian/no.keyboard.xml:3
+#: rc.cpp:1043
+msgctxt "Keyboard Layout Name"
+msgid "Norwegian"
+msgstr "Norvégien"
+
+#. i18n: file: keyboards/quebec/qc.keyboard.xml:3
+#: rc.cpp:1045
+msgctxt "Keyboard Layout Name"
+msgid "Québec"
+msgstr "Québec"
+
+#. i18n: file: keyboards/russian/ru.keyboard.xml:3
+#. i18n: file: keyboards/russian/ru.winkeys.keyboard.xml:3
+#: rc.cpp:1047 rc.cpp:1049
+msgctxt "Keyboard Layout Name"
+msgid "Russian"
+msgstr "Russe"
+
+#. i18n: file: keyboards/slovak/sk.qwerty.keyboard.xml:3
+#: rc.cpp:1051
+msgctxt "Keyboard Layout Name"
+msgid "Slovak qwerty"
+msgstr "Qwerty slovaque"
+
+#. i18n: file: keyboards/slovak/sk.qwertz.keyboard.xml:3
+#: rc.cpp:1053
+msgctxt "Keyboard Layout Name"
+msgid "Slovak qwertz"
+msgstr "Qwertz slovaque"
+
+#. i18n: file: keyboards/slovenian/sl.keyboard.xml:3
+#: rc.cpp:1055
+msgctxt "Keyboard Layout Name"
+msgid "Slovenian"
+msgstr "Slovène"
+
+#. i18n: file: keyboards/spanish/es.dvorak.keyboard.xml:3
+#: rc.cpp:1057
+msgctxt "Keyboard Layout Name"
+msgid "Spanish Dvorak"
+msgstr "Dvorak Espagnol"
+
+#. i18n: file: keyboards/spanish/es.keyboard.xml:3
+#: rc.cpp:1059
+msgctxt "Keyboard Layout Name"
+msgid "Spanish"
+msgstr "Espagnol"
+
+#. i18n: file: keyboards/swedish/sv.keyboard.xml:3
+#: rc.cpp:1061
+msgctxt "Keyboard Layout Name"
+msgid "Swedish Keyboard"
+msgstr "Suédois"
+
+#. i18n: file: keyboards/swiss/ch.de.keyboard.xml:3
+#: rc.cpp:1063
+msgctxt "Keyboard Layout Name"
+msgid "German (Swiss)"
+msgstr "Allemand (suisse)"
+
+#. i18n: file: keyboards/swiss/ch.fr.keyboard.xml:3
+#: rc.cpp:1065
+msgctxt "Keyboard Layout Name"
+msgid "French Swiss"
+msgstr "Français suisse"
+
+#. i18n: file: keyboards/tamil/ta_eng.keyboard.xml:3
+#: rc.cpp:1067
+msgctxt "Keyboard Layout Name"
+msgid "Tamil Eng"
+msgstr ""
+
+#. i18n: file: keyboards/tamil/tamil.keyboard.xml:3
+#: rc.cpp:1069
+msgctxt "Keyboard Layout Name"
+msgid "Tamil"
+msgstr ""
+
+#. i18n: file: keyboards/ukrainian/uk.winkeys.keyboard.xml:3
+#: rc.cpp:1071
+msgctxt "Keyboard Layout Name"
+msgid "Ukrainian (winkeys)"
+msgstr "Ukrainien (touches Windows)"
+
+#: src/ktouchcoloreditordialog.cpp:101 src/ktouchcoloreditordialog.cpp:153
+msgid "New color scheme"
+msgstr "Nouveau modèle de couleurs"
+
+#: src/ktouchcoloreditordialog.cpp:163
+msgid "Save modified color schemes?"
+msgstr "Enregistrer le modèle de couleurs modifié ?"
+
+#: src/ktouchcolorscheme.cpp:65 src/ktouchcolorscheme.cpp:113
+msgid "untitled color scheme"
+msgstr "modèle de couleurs sans nom"
+
+#: src/ktouchcolorscheme.cpp:247
+msgid "Black && White"
+msgstr "Noir && blanc"
+
+#: src/ktouchcolorscheme.cpp:267
+msgid "Classic"
+msgstr "Classique"
+
+#: src/ktouchcolorscheme.cpp:293
+msgid "Deep Blue"
+msgstr "Teintes de bleu"
+
+#: src/ktouchcolorscheme.cpp:318
+msgid "Stripy"
+msgstr "Bleu et gris"
+
+#: src/ktouch.cpp:159 src/ktouchstatisticsdata.cpp:435
+#: src/ktouchstatisticsdata.cpp:557 src/ktouchstatisticsdata.cpp:558
+#: src/ktouchstatisticsdata.cpp:589 src/ktouchusersetupdialog.cpp:48
+#: src/ktouchusersetupdialog.cpp:94
+msgid "Default User"
+msgstr "Utilisateur par défaut"
+
+#: src/ktouch.cpp:216
+msgid ""
+"*.txt *ktouch.xml|Text files\n"
+"*|All files"
+msgstr ""
+"*.txt *ktouch.xml|Fichiers texte\n"
+"*|Tous les fichiers"
+
+#: src/ktouch.cpp:216
+msgid "Select Practice Text"
+msgstr "Sélectionner le texte de pratique"
+
+#: src/ktouch.cpp:246
+#, kde-format
+msgid "Imported text from file '%1'"
+msgstr "Texte importé du fichier « %1 »"
+
+#: src/ktouch.cpp:247
+msgid "generated from text file"
+msgstr "généré depuis le fichier texte"
+
+#: src/ktouch.cpp:247
+msgid "all available"
+msgstr "tous disponibles"
+
+#: src/ktouch.cpp:270
+msgid "*.ktouch.xml|Lecture files"
+msgstr "*.ktouch.xml|Fichiers de cours"
+
+#: src/ktouch.cpp:270 src/ktouchopenrequestdialog.cpp:124
+msgid "Select Training Lecture File"
+msgstr "Sélectionner le fichier de dictée d'entraînement"
+
+#: src/ktouch.cpp:371
+msgid "Would you like to keep the current level for the new training session?"
+msgstr ""
+"Voulez-vous conserver le niveau actuel pour la nouvelle session "
+"d'entraînement ?"
+
+#: src/ktouch.cpp:372
+msgid "Start new training session"
+msgstr "Démarrer une nouvelle session d'entraînement"
+
+#: src/ktouch.cpp:372
+msgid "Keep current level"
+msgstr "Conserver le niveau actuel"
+
+#: src/ktouch.cpp:372
+msgid "Start from first level"
+msgstr "Démarrer depuis le premier niveau"
+
+#: src/ktouch.cpp:434
+msgid "Sound Settings"
+msgstr "Configuration des sons"
+
+#: src/ktouch.cpp:469
+#, kde-format
+msgid "Level:  Correct/Total chars: %1/%2  Words: %3"
+msgstr "Niveau : lettres correctes/total : %1/%2 Mots : %3"
+
+#: src/ktouch.cpp:470
+#, kde-format
+msgid "Session: Correct/Total chars: %1/%2  Words: %3"
+msgstr "Session : lettres correctes/total : %1/%2 Mots : %3"
+
+#: src/ktouch.cpp:481
+msgid ""
+"Note that in different countries touch typing is taught slightly different "
+"which usually affects only the top row of keys. For instance, in the United "
+"States only the leftmost key and the key with the 1 are pressed by the "
+"little finger of the left hand. In Germany the little finger also presses "
+"the 2 key, and thus the fingers shift one key to the right on the top row.\n"
+"Normally this only makes a difference for split or ergonomic keyboards."
+msgstr ""
+"Veuillez noter que d'un pays à l'autre la frappe au clavier est enseignée de "
+"façon légèrement différente ce qui n'affecte généralement que la première "
+"rangée de touches. Par exemple, aux USA, seulement la touche la plus à "
+"gauche et celle avec le 1 sont frappées avec le petit doigt de la main "
+"gauche. En Allemagne, le petit doigt appuie aussi sur la touche 2, ainsi les "
+"doigts sont décalés d'une touche sur la droite pour la rangée du haut.\n"
+"Normalement, cela ne fait une différence que sur des claviers détachés ou "
+"ergonomiques."
+
+#: src/ktouch.cpp:509
+#, kde-format
+msgid "Could not find/open the lecture file '%1'."
+msgstr "Impossible de trouver / ouvrir le fichier de dictée « %1 »."
+
+#: src/ktouch.cpp:535 src/ktouch.cpp:924
+#, kde-format
+msgid "Changing user to '%1'. Restarting training session at current level."
+msgstr ""
+"Changement d'utilisateur pour « %1 ». Démarrage de la session d'entraînement "
+"au niveau actuel."
+
+#: src/ktouch.cpp:677
+msgid "&Open Plain Text File..."
+msgstr "&Ouvrir un fichier texte...."
+
+#: src/ktouch.cpp:682
+msgid "&Open Lecture..."
+msgstr "&Ouvrir une dictée..."
+
+#: src/ktouch.cpp:687
+msgid "&Edit Lecture..."
+msgstr "&Modifier la dictée..."
+
+#: src/ktouch.cpp:692
+msgid "&Edit Color Scheme..."
+msgstr "&Modifier le modèle de couleurs..."
+
+#: src/ktouch.cpp:697
+msgid "&Edit Keyboard Layout..."
+msgstr "&Modifier la disposition du clavier..."
+
+#: src/ktouch.cpp:705
+msgid "&Start New Session"
+msgstr "&Démarrer une nouvelle session"
+
+#: src/ktouch.cpp:710
+msgid "&Pause Session"
+msgstr "&Stopper la session"
+
+#: src/ktouch.cpp:715
+msgid "&Lecture Statistics"
+msgstr "Statistiques de la &dictée"
+
+#: src/ktouch.cpp:721
+msgid "Default &Lectures"
+msgstr "&Dictées par défaut"
+
+#: src/ktouch.cpp:731
+msgid "&Keyboard Layouts"
+msgstr "Disposition du c&lavier"
+
+#: src/ktouch.cpp:742
+msgid "Keyboards &Color Schemes"
+msgstr "Modèles de &couleurs du clavier"
+
+#: src/ktouch.cpp:757
+msgid "&Setup Users..."
+msgstr "&Configurer les utilisateurs..."
+
+#: src/ktouch.cpp:762
+msgid "&Current User"
+msgstr "&Utilisateur actuel"
+
+#: src/ktouch.cpp:825 src/ktouchkeyboard.cpp:270 src/ktouchkeyboard.cpp:322
+#: src/ktouchkeyboardeditordialog.cpp:523
+#: src/ktouchkeyboardeditordialog.cpp:575
+msgid "untitled keyboard layout"
+msgstr "disposition du clavier inconnue"
+
+#: src/ktouch.cpp:863 src/ktouchlecture.cpp:209 src/ktouchlecture.cpp:241
+msgid "untitled lecture"
+msgstr "dictée sans titre"
+
+#: src/ktouchkeyboard.cpp:64
+#, kde-format
+msgid "Could not open/download keyboard file '%1'"
+msgstr ""
+"Impossible d'ouvrir / de télécharger le fichier de disposition de clavier "
+"« %1 »."
+
+#: src/ktouchkeyboard.cpp:134
+#, kde-format
+msgid ""
+"%1 with display character '%2' and unicode '%3' has been already defined and "
+"is skipped.\n"
+msgstr ""
+"« %1 » avec le caractère d'affichage « %2 » et le code unicode « %3 » a déjà "
+"été défini et sera omis.\n"
+
+#: src/ktouchkeyboard.cpp:163
+msgid "Finger key"
+msgstr "Touche pour le doigté"
+
+#: src/ktouchkeyboard.cpp:177
+msgid "Control key"
+msgstr "Touche de contrôle"
+
+# unreviewed-context
+#: src/ktouchkeyboard.cpp:197
+msgid "Normal key"
+msgstr "Touche normale "
+
+#: src/ktouchkeyboard.cpp:205
+#, kde-format
+msgid ""
+"Unknown finger key with unicode '%1'. Normal key with display character '%2' "
+"and unicode '%3' skipped.\n"
+msgstr ""
+"Touche de doigté inconnue avec l'unicode « %1 ». La touche normale qui "
+"affiche le caractère « %2 » et le code unicode « %3 » sera omise.\n"
+
+#: src/ktouchkeyboard.cpp:219
+msgid "Hidden key"
+msgstr "Touche cachée"
+
+#: src/ktouchkeyboard.cpp:228
+#, kde-format
+msgid ""
+"Unknown target key with unicode '%1'. Hidden key with display character '%2' "
+"and unicode '%3' skipped.\n"
+msgstr ""
+"Touche cible inconnue avec le code unicode « %1 ». La touche cachée qui "
+"affiche le caractère « %2 » et le code unicode « %3 » sera omise.\n"
+
+#: src/ktouchkeyboard.cpp:233
+#, kde-format
+msgid ""
+"Unknown finger key with unicode '%1'. Hidden key with display character '%2' "
+"and unicode '%3' skipped.\n"
+msgstr ""
+"Touche de doigté inconnue avec le code unicode « %1 ». La touche cachée qui "
+"affiche le caractère « %2 » et le code unicode « %3 » sera omise.\n"
+
+#: src/ktouchkeyboard.cpp:238
+#, kde-format
+msgid ""
+"Unknown modifier/control key with unicode '%1'. Hidden key with display "
+"character '%2' and unicode '%3' skipped.\n"
+msgstr ""
+"Modificateur ou touche de contrôle inconnu avec le code unicode « %1 ». La "
+"touche cachée qui affiche le caractère « %2 » et le code unicode « %3 » sera "
+"omise.\n"
+
+#: src/ktouchkeyboard.cpp:374
+msgctxt "Num-lock"
+msgid "Num"
+msgstr "Num"
+
+#: src/ktouchkeyboardeditordialog.cpp:130
+msgid ""
+"*.keyboard.xml|KTouch Keyboard Files (*.keyboard.xml)\n"
+"*|All Files"
+msgstr ""
+"*.keyboard.xml|Fichiers de claviers KTouch (*.keyboard.xml)\n"
+"*|Tous les fichiers"
+
+#: src/ktouchkeyboardeditordialog.cpp:130
+msgid "Save Keyboard Layout"
+msgstr "Enregistrer la disposition du clavier"
+
+#: src/ktouchkeyboardeditordialog.cpp:211
+msgid "Really delete this key?"
+msgstr "Voulez-vous vraiment supprimer cette touche ?"
+
+#: src/ktouchkeyboardeditordialog.cpp:256
+#: src/ktouchkeyboardeditordialog.cpp:264
+msgid "KTouch keyboard editor"
+msgstr "Éditeur de disposition de clavier KTouch"
+
+#: src/ktouchkeyboardeditordialog.cpp:256
+msgid ""
+"This is not a valid unicode number. Please correct the number or enter a "
+"character."
+msgstr ""
+"Ceci n'est pas un nombre unicode valable. Merci de corriger ce nombre ou de "
+"saisir un caractère."
+
+#: src/ktouchkeyboardeditordialog.cpp:264
+msgid "Please enter either a character or a unicode number."
+msgstr "Veuillez saisir soit un caractère soit un nombre unicode."
+
+#: src/ktouchkeyboardeditordialog.cpp:278
+msgid "Delete all key connections for this key?"
+msgstr "Supprimer toutes les connexions pour cette touche ?"
+
+#: src/ktouchkeyboardeditordialog.cpp:376
+msgid "KTouch keyboard editor error"
+msgstr "Error dans l'éditeur de clavier KTouch "
+
+#: src/ktouchkeyboardeditordialog.cpp:376
+msgid "The selected key is not a finger key."
+msgstr "La touche choisie n'est pas une touche de doigté."
+
+#: src/ktouchkeyboardeditordialog.cpp:478
+msgid "Modifier key"
+msgstr "Touche modificatrice"
+
+#: src/ktouchkeyboardeditordialog.cpp:483
+msgid "<modifier key>"
+msgstr "<Touche modificatrice>"
+
+#: src/ktouchkeyboardeditordialog.cpp:587
+msgid "Open Keyboard File"
+msgstr "Ouvrir un fichier de clavier"
+
+#: src/ktouchkeyboardeditordialog.cpp:588
+msgid "Which keyboard file would you like to edit?"
+msgstr "Quel fichier de clavier voulez-vous éditer ?"
+
+#: src/ktouchkeyboardeditordialog.cpp:589
+msgid "Edit current keyboard:"
+msgstr "Éditer le clavier courant :"
+
+#: src/ktouchkeyboardeditordialog.cpp:590
+msgid "Open a default keyboard:"
+msgstr "Ouvrir un fichier de clavier par défaut :"
+
+#: src/ktouchkeyboardeditordialog.cpp:591
+msgid "Open a keyboard file:"
+msgstr "Ouvrir un fichier de clavier :"
+
+#: src/ktouchkeyboardeditordialog.cpp:592
+msgid "Create new keyboard"
+msgstr "Créer un nouveau clavier"
+
+#: src/ktouchkeyboardeditordialog.cpp:593
+msgid "<no keyboard files available>"
+msgstr "<aucun fichier de clavier disponible>"
+
+#: src/ktouchkeyboardeditordialog.cpp:603
+msgid "Could not open the keyboard file, creating a new one instead."
+msgstr ""
+"Impossible d'ouvrir le fichier de clavier, création d'un nouveau fichier."
+
+#: src/ktouchkeyboardeditordialog.cpp:618
+#, kde-format
+msgid ""
+"There were warnings while reading the keyboard file '%1':\n"
+"%2"
+msgstr ""
+"Il y a eu des avertissements lors de la lecture du fichier « %1 » :\n"
+"%2"
+
+#: src/ktouchkeyboardeditordialog.cpp:632
+#: src/ktouchlectureeditordialog.cpp:407
+msgid " (modified)"
+msgstr " (modifié)"
+
+#: src/ktouchkeyboardeditordialog.cpp:632
+#, kde-format
+msgid "KTouch Keyboard Editor - %1 %2"
+msgstr "Éditeur de disposition de clavier KTouch - %1 %2"
+
+#: src/ktouchkeyboardeditordialog.cpp:633
+#: src/ktouchkeyboardeditordialog.cpp:636
+#, kde-format
+msgid "KTouch Keyboard Editor - %1"
+msgstr "Éditeur de disposition de clavier KTouch - %1"
+
+#: src/ktouchkeyboardeditordialog.cpp:636
+msgid "<unnamed keyboard file>"
+msgstr "<fichier de dictée sans nom>"
+
+#: src/ktouchkeyboardeditordialog.cpp:643
+msgid "The keyboard has been changed. Do you want to save the changes?"
+msgstr ""
+"Votre dictée courante a été modifiée. Voulez-vous enregistrer les "
+"changements ?"
+
+#: src/ktouchkeyboardwidget.cpp:70
+#, kde-format
+msgid "Could not read the keyboard layout file '%1'. %2"
+msgstr "Impossible de lire le fichier de disposition du clavier « %1 ». %2"
+
+#: src/ktouchkeyboardwidget.cpp:82
+#, kde-format
+msgid "Could not download/open keyboard layout file from '%1'."
+msgstr ""
+"Impossible de télécharger / ouvrir un fichier de disposition de clavier de "
+"« %1 »."
+
+#: src/ktouchkeyboardwidget.cpp:112
+msgid ""
+"Error reading the keyboard layout; the default number keypad will be created "
+"instead. You can choose another keyboard layout in the preferences dialog."
+msgstr ""
+"Erreur de lecture de la disposition du clavier. Le numéro par défaut de "
+"clavier sera créé à la place. Vous pouvez choisir une autre disposition de "
+"clavier dans la fenêtre des préférences."
+
+#: src/ktouchlecture.cpp:104
+msgid "A default lecture..."
+msgstr "Une dictée par défaut..."
+
+#: src/ktouchlectureeditordialog.cpp:128
+msgid "Save Training Lecture"
+msgstr "Enregistrer la dictée d'entraînement"
+
+#: src/ktouchlectureeditordialog.cpp:264 src/ktouchlectureeditordialog.cpp:265
+#: src/ktouchlectureeditordialog.cpp:407 src/ktouchlectureeditordialog.cpp:408
+msgid "KTouch Lecture Editor - "
+msgstr "Éditeur de dictées KTouch - "
+
+#: src/ktouchlectureeditordialog.cpp:264
+msgid "<new unnamed lecture file>"
+msgstr "<nouveau fichier de dictée sans nom>"
+
+#: src/ktouchlectureeditordialog.cpp:313
+#, kde-format
+msgid "Data of Level %1"
+msgstr "Données de niveau %1"
+
+#: src/ktouchlectureeditordialog.cpp:354
+msgid "abcdefghijklmnopqrstuvwxyz"
+msgstr "abcdefghijklmnopqrstuvwxyz"
+
+#: src/ktouchlectureeditordialog.cpp:357
+msgid "Enter your lines here..."
+msgstr "Saisissez vos lignes ici..."
+
+#: src/ktouchlectureeditordialog.cpp:368
+msgid "Open Lecture File"
+msgstr "Ouvrir un fichier de dictée"
+
+#: src/ktouchlectureeditordialog.cpp:369
+msgid "Which Lecture File Would You Like to Edit?"
+msgstr "Quel fichier de dictée voulez-vous modifier ?"
+
+#: src/ktouchlectureeditordialog.cpp:370
+msgid "Edit current lecture:"
+msgstr "Modifier la dictée courante :"
+
+#: src/ktouchlectureeditordialog.cpp:371
+msgid "Open a default lecture:"
+msgstr "Ouvrir une dictée par défaut :"
+
+#: src/ktouchlectureeditordialog.cpp:372
+msgid "Open a lecture file:"
+msgstr "Ouvrir un fichier de dictée :"
+
+#: src/ktouchlectureeditordialog.cpp:373
+msgid "Create new lecture"
+msgstr "Créer une nouvelle dictée"
+
+#: src/ktouchlectureeditordialog.cpp:374
+msgid "<no lecture files available>"
+msgstr "<aucun fichier de dictée disponible>"
+
+#: src/ktouchlectureeditordialog.cpp:384
+msgid "Could not open the lecture file, creating a new one instead."
+msgstr ""
+"Impossible d'ouvrir le fichier de dictée, création d'un nouveau fichier."
+
+#: src/ktouchlectureeditordialog.cpp:417
+msgid "The lecture has been changed. Do you want to save the changes?"
+msgstr ""
+"Votre dictée courante a été modifiée. Voulez-vous enregistrer les "
+"changements ?"
+
+#: src/ktouchleveldata.cpp:33
+msgid "Quite a lot"
+msgstr "Beaucoup"
+
+#: src/ktouchleveldata.cpp:35
+msgid ""
+"This is a small default text. If you want\n"
+"to start practicing touch typing, open\n"
+"a lecture/training file from the main menu.\n"
+"If you press Enter after the next line you have\n"
+"successfully completed the default lecture. Hurray!!!"
+msgstr ""
+"Ceci est un court texte d'exemple.\n"
+"Pour commencer à pratiquer la dactylographie,\n"
+"ouvrez un fichier d'entraînement depuis le menu\n"
+"principal. Si vous appuyez sur « Entrée » après la ligne\n"
+"suivante, vous aurez réussi le texte d'entraînement\n"
+"par défaut. Bravo !"
+
+#: src/ktouchleveldata.cpp:74 src/ktouchleveldata.cpp:117
+msgctxt "basically all characters on the keyboard"
+msgid "abcdefghijklmnopqrstuvwxyz"
+msgstr "abcdefghijklmnopqrstuvwxyz"
+
+#: src/ktouchopenrequestdialog.cpp:65
+msgid "<no default files available>"
+msgstr "<aucun fichier par défaut disponible>"
+
+#: src/ktouchopenrequestdialog.cpp:92
+msgid "Please select or enter a file name."
+msgstr "Veuillez sélectionner ou saisir un nom de fichier."
+
+#: src/ktouchopenrequestdialog.cpp:97
+msgid "The URL seems to be malformed; please correct it."
+msgstr "L'URL semble être mal formée ; veuillez la corriger."
+
+#: src/ktouchstatisticsdialog.cpp:80
+msgid "***current***  "
+msgstr "***actuel***"
+
+#: src/ktouchstatisticsdialog.cpp:87
+msgid "No statistics data available yet."
+msgstr "Pas encore de données de statistiques disponibles."
+
+#: src/ktouchstatisticsdialog.cpp:126
+msgid ""
+"Erase all statistics data for the current user?\n"
+"The training session will restart at the current level."
+msgstr ""
+"Effacer toutes les statistiques disponibles pour l'utilisateur en cours ?\n"
+"La session d'entraînement va redémarrer au niveau actuel."
+
+#: src/ktouchstatisticsdialog.cpp:439
+msgid "Time since first practice session in days"
+msgstr "Temps écoulé depuis la première session de pratique en jours"
+
+#: src/ktouchstatisticsdialog.cpp:443
+msgid "Sessions"
+msgstr "Sessions"
+
+#: src/ktouchtrainer.cpp:314
+msgid "Starting training session: Waiting for first keypress..."
+msgstr ""
+"Début d'une session d'entraînement : en attente du premier appui sur une "
+"touche..."
+
+#: src/ktouchtrainer.cpp:333
+msgid "Training session paused. Training continues on next keypress..."
+msgstr ""
+"La session d'entraînement est en pause. Elle continue dès le prochain appui "
+"sur une touche..."
+
+#: src/ktouchtrainer.cpp:346
+msgid "Training session! The time is running..."
+msgstr "Session d'entraînement. Le temps court..."
+
+#: src/ktouchtrainer.cpp:439
+msgid ""
+"You have finished this training exercise.\n"
+"This training session will start from the beginning."
+msgstr ""
+"Vous avez terminé cet exercice d'entraînement.\n"
+"La session d'entraînement va reprendre au début."
+
+#: src/ktouchtrainer.cpp:440
+msgid "You rock!"
+msgstr "Vous êtes génial !"
+
+#: src/ktouchusersetupdialog.cpp:59
+msgid "New User"
+msgstr "Nouvel utilisateur"
+
+#: src/ktouchusersetupdialog.cpp:60
+msgid "Please enter a unique user name:"
+msgstr "Veuillez saisir un nom d'utilisateur unique :"
+
+#: src/ktouchusersetupdialog.cpp:71
+msgid "This is not a valid (unique) user name!"
+msgstr "Ceci n'est pas un nom (unique) d'utilisateur valable !"
+
+#: src/ktouchusersetupdialog.cpp:107
+msgid "Save user list?"
+msgstr "Enregistrer la liste des utilisateurs ?"
+
+#: src/main.cpp:21
+msgid "A program that helps you to learn and practice touch typing"
+msgstr ""
+"Un programme qui vous aide à apprendre et à pratiquer la frappe au clavier"
+
+#: src/main.cpp:28
+msgid "KTouch"
+msgstr "KTouch"
+
+#: src/main.cpp:32
+msgid "Copyright (C) 2000-2007 by Håvard Frøiland and Andreas Nicolai"
+msgstr "Copyright (C) 2000-2007 par Håvard Frøiland et Andreas Nicolai"
+
+#: src/main.cpp:36
+msgid "Andreas Nicolai"
+msgstr "Andreas Nicolai"
+
+#: src/main.cpp:36
+msgid "Current maintainer and programmer"
+msgstr "Mainteneur et programmeur actuel"
+
+#: src/main.cpp:37
+msgid "Håvard Frøiland"
+msgstr "Håvard Frøiland"
+
+#: src/main.cpp:37
+msgid "Original author, project admin"
+msgstr "Auteur, administrateur du projet"
+
+#: src/main.cpp:38
+msgid "David Vignoni"
+msgstr "David Vignoni"
+
+#: src/main.cpp:38
+msgid "Creator of the SVG icon"
+msgstr "Créateur de l'icône SVG."
+
+#: src/main.cpp:39
+msgid "Anne-Marie Mahfouf"
+msgstr "Anne-Marie Mahfouf"
+
+#: src/main.cpp:39
+msgid "Lots of patches, fixes, updates"
+msgstr "Beaucoup d'améliorations, de correctifs, de mises à jours"
+
+#: src/main.cpp:40
+msgid "All the creators of training and keyboard files"
+msgstr "Tous les créateurs de dictées et de dispositions de clavier"
+
+#: src/main.cpp:44
+msgid "Training file to open"
+msgstr "Fichier d'entraînement à ouvrir"
+
+#~ msgid "F&ile"
+#~ msgstr "F&ichier"
+
+#~ msgctxt "Lesson Name"
+#~ msgid "German (NEO-Schnellschreiblayout)"
+#~ msgstr "Allemand (NEO-Schnellschreiblayout)"
+
+#~ msgid "Open Something in Editor"
+#~ msgstr "Ouvrir quelque chose dans l'éditeur"
+
+#~ msgid "Title Question..."
+#~ msgstr "Question sur le titre..."
+
+#~ msgid "Current something"
+#~ msgstr "Quelque chose actuelle"
+
+#~ msgid "TextLabel"
+#~ msgstr "Étiquette"
+
+#~ msgid "Preset something:"
+#~ msgstr "Quelque chose prédéfinie :"
+
+#~ msgid "Open file:"
+#~ msgstr "Ouvrir le fichier :"
+
+#~ msgid "New something"
+#~ msgstr "Nouveau quelque chose"

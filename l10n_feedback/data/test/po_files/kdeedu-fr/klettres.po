@@ -1,0 +1,591 @@
+# translation of klettres.po to Francais
+# translation of klettres.po to
+# traduction de klettres.po en Français
+# Traduction de klettres en Français
+# Copyright (C) 2002,2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+#
+# Ane-Marie Mahfouf, 2005.
+# Gérard Delafond <gerard@delafond.org>, 2002, 2004.
+# Robert Jacolin <rjacolin@ifrance.com>, 2003.
+# Matthieu Robin <kde@macolu.org>, 2003, 2004.
+# Matthieu Robin <kde@macolu.org>, 2004, 2006.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2004, 2005.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2005.
+# Mickael Sibelle <mickael.sibelle@laposte.net>, 2006, 2007.
+# Mickael Sibelle <kimael@gmail.com>, 2007, 2008, 2009.
+# Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: klettres\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-08-02 05:57+0200\n"
+"PO-Revision-Date: 2009-12-13 12:12+0100\n"
+"Last-Translator: Mickael Sibelle <kimael@gmail.com>\n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: klettres.cpp:107
+msgid ""
+"The file sounds.xml was not found in\n"
+"$KDEDIR/share/apps/klettres/\n"
+"\n"
+"Please install this file and start KLettres again.\n"
+"\n"
+msgstr ""
+"Impossible de trouver le fichier « sounds.xml » dans\n"
+"« $KDEDIR/share/apps/klettres/ »\n"
+"\n"
+"Veuillez installer ce fichier et redémarrer KLettres.\n"
+"\n"
+
+#: klettres.cpp:110
+msgid "KLettres - Error"
+msgstr "KLettres - Erreur"
+
+#: klettres.cpp:132
+msgid "New Sound"
+msgstr "Nouveau son"
+
+#: klettres.cpp:136
+msgid "Play a new sound"
+msgstr "Écouter un nouveau son"
+
+#: klettres.cpp:137
+msgid ""
+"You can play a new sound by clicking this button or using the File menu, New "
+"Sound."
+msgstr ""
+"Vous pouvez écouter un nouveau son en cliquant sur ce bouton ou en utilisant "
+"le menu Fichier, Nouveau son"
+
+#: klettres.cpp:140
+msgid "Get Alphabet in New Language..."
+msgstr "Obtenir une nouvelle langue..."
+
+#: klettres.cpp:145
+msgid "Replay Sound"
+msgstr "Rejouer le son"
+
+#: klettres.cpp:148
+msgid "Play the same sound again"
+msgstr "Jouer à nouveau le même son"
+
+#: klettres.cpp:150
+msgid ""
+"You can replay the same sound again by clicking this button or using the "
+"File menu, Replay Sound."
+msgstr ""
+"Vous pouvez entendre à nouveau le même son en cliquant sur ce bouton ou en "
+"utilisant le menu Fichier/Rejouer le son."
+
+#: klettres.cpp:156
+msgctxt "@label:listbox which difficulty level to use"
+msgid "L&evel"
+msgstr "Niv&eau"
+
+#: klettres.cpp:157
+msgid "Select the level"
+msgstr "Sélectionner le niveau"
+
+#: klettres.cpp:158
+msgid ""
+"You can select the level: level 1 displays a letter and you hear it; level 2 "
+"does not display the letter, you only hear it; level 3 displays a syllable "
+"and you hear it; level 4 does not display the syllable, you only hear it."
+msgstr ""
+"Vous pouvez sélectionner le niveau : le niveau 1 affiche une lettre et vous "
+"l'entendez ; le niveau 2 n'affiche pas la lettre, vous l'entendez "
+"uniquement ; le niveau 3 affiche une syllabe, et vous l'entendez ; enfin, au "
+"niveau 4, la syllabe n'est pas affichée, mais vous l'entendez."
+
+#: klettres.cpp:161
+msgctxt "@label:listbox"
+msgid "&Language"
+msgstr "&Langue"
+
+#: klettres.cpp:164 klettres.cpp:165 klettres.cpp:166 klettres.cpp:167
+#, kde-format
+msgctxt "@item:inlistbox choose level"
+msgid "Level %1"
+msgid_plural "Level %1"
+msgstr[0] "Niveau %1"
+msgstr[1] "Niveau %1"
+
+#: klettres.cpp:172
+msgid "Themes"
+msgstr "Thèmes"
+
+#: klettres.cpp:175
+msgid "Select the theme"
+msgstr "Sélectionner le thème"
+
+#: klettres.cpp:176
+msgid ""
+"Here you can change the theme for KLettres. A theme consists in the "
+"background picture and the font color for the letter displayed."
+msgstr ""
+"Vous pouvez ici modifier le thème de KLettres. Un thème est composé d'une "
+"image en arrière-plan et d'une couleur de police pour la lettre affichée."
+
+#: klettres.cpp:179
+msgid "Mode Kid"
+msgstr "Mode enfant"
+
+#: klettres.cpp:183
+msgid ""
+"If you are in the Grown-up mode, clicking on this button will set up the Kid "
+"mode. The Kid mode has no menubar and the font is bigger in the statusbar."
+msgstr ""
+"Si vous êtes dans le mode adulte, un clic sur ce bouton vous placera dans le "
+"mode enfant. Le mode enfant ne possède pas de barre de menu et la police est "
+"plus grande dans la barre d'état."
+
+#: klettres.cpp:186
+msgid "Mode Grown-up"
+msgstr "Mode adulte"
+
+#: klettres.cpp:190
+msgid "The Grownup mode is the normal mode where you can see the menubar."
+msgstr ""
+"Le mode adulte est le mode normal dans lequel vous pouvez voir la barre de "
+"menu."
+
+#: klettres.cpp:226
+msgid "Font Settings"
+msgstr "Configuration des polices"
+
+#: klettres.cpp:230
+msgid "Timer"
+msgstr "Gestionnaire de la vitesse"
+
+#: klettres.cpp:248 klettres.cpp:310
+#, kde-format
+msgctxt "@info:status the current level chosen"
+msgid "(Level %1)"
+msgstr "(Niveau %1)"
+
+#: klettres.cpp:353
+msgid "Grown-up mode is currently active"
+msgstr "Le mode adulte est actuellement actif"
+
+#: klettres.cpp:354
+msgid "Switch to Kid mode"
+msgstr "Passer en mode enfant"
+
+#: klettres.cpp:372
+msgid "Kid mode is currently active"
+msgstr "Le mode enfant est actuellement actif"
+
+#: klettres.cpp:373
+msgid "Switch to Grown-up mode"
+msgstr "Passer en mode adulte"
+
+#: klettres.cpp:394
+#, c-format, kde-format
+msgid ""
+"File $KDEDIR/share/apps/klettres/%1.txt not found;\n"
+"please check your installation."
+msgstr ""
+"Impossible de trouver e fichier « $KDEDIR/share/apps/klettres/%1.txt ». "
+"Veuillez vérifier votre installation."
+
+#: klettres.cpp:397
+msgid "Error"
+msgstr "Erreur"
+
+#: klettresview.cpp:46
+msgid "Type the letter or syllable that you just heard"
+msgstr "Saisissez la lettre ou la syllabe que vous venez d'entendre"
+
+#: kltheme.cpp:49
+msgctxt "@item:inlistbox"
+msgid "Kid"
+msgstr "Enfant"
+
+#: kltheme.cpp:99
+msgctxt "@item:inlistbox desert theme for the interface"
+msgid "Desert"
+msgstr "Désert"
+
+#: kltheme.cpp:149
+msgctxt "@item:inlistbox"
+msgid "Savannah"
+msgstr "Savane"
+
+#: langutils.cpp:101
+msgid "Romanized Hindi"
+msgstr "Indien romanisé"
+
+#: langutils.cpp:103
+msgid "Luganda"
+msgstr "Luganda"
+
+#: langutils.cpp:105
+msgid "English Phonics"
+msgstr "Sons anglais"
+
+#: langutils.cpp:110
+msgctxt "@item:inlistbox no language for that locale"
+msgid "None"
+msgstr "Aucun"
+
+#: main.cpp:33
+msgid ""
+"KLettres helps a very young child or an adult learning \n"
+"a new language by associating sounds and \n"
+"letters in this language.\n"
+"\n"
+"25 languages are available."
+msgstr ""
+"KLettres aide un très jeune enfant ou un adulte apprenant\n"
+"une nouvelle langue, en associant les sons et les lettre dans cette langue.\n"
+"\n"
+"25 langues sont disponibles."
+
+#: main.cpp:42
+msgid "KLettres"
+msgstr "KLettres"
+
+#: main.cpp:43
+msgid "(C) 2001-2011 Anne-Marie Mahfouf"
+msgstr "(C) 2001-2011 Anne-Marie Mahfouf"
+
+#: main.cpp:44
+msgid "Anne-Marie Mahfouf"
+msgstr "Anne-Marie Mahfouf"
+
+#: main.cpp:45
+msgid "Marc Cheng"
+msgstr "Marc Cheng"
+
+#: main.cpp:46
+msgid "Kids and grown-up oxygen icons"
+msgstr "Icônes oxygène pour enfants et plus grands"
+
+#: main.cpp:47
+msgid "Danny Allen"
+msgstr "Danny Allen"
+
+#: main.cpp:48
+msgid "SVG background pictures"
+msgstr "Images de fond SVG"
+
+#: main.cpp:49
+msgid "Robert Gogolok"
+msgstr "Robert Gogolok"
+
+#: main.cpp:50
+msgid "Support and coding guidance"
+msgstr "Gestion et guide de développement"
+
+#: main.cpp:51
+msgid "Peter Hedlund"
+msgstr "Peter Hedlund"
+
+#: main.cpp:52
+msgid "Code for generating special characters' icons"
+msgstr "Code pour la génération des icônes des caractères spéciaux"
+
+#: main.cpp:53
+msgid "Waldo Bastian"
+msgstr "Waldo Bastian"
+
+#: main.cpp:54
+msgid "Port to KConfig XT, coding help"
+msgstr "Portage vers KConfig XT, aide de développement"
+
+#: main.cpp:55
+msgid "Pino Toscano"
+msgstr "Pino Toscano"
+
+#: main.cpp:56
+msgid "Code cleaning, Theme class"
+msgstr "Nettoyage du code et thèmes"
+
+#: main.cpp:57
+msgid "Michael Goettsche"
+msgstr "Michael Goettsche"
+
+#: main.cpp:58
+msgid "Timer setting widgets"
+msgstr "Composants de configuration de la vitesse"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Guillaume Libersat, Nicolas Ternisien, Mickaël Sibelle"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "glibersat@linux62.com, nicolas.ternisien@gmail.com, kimael@gmail.com"
+
+#. i18n: file: klettresui.rc:4
+#. i18n: ectx: Menu (file)
+#: rc.cpp:5
+msgid "&File"
+msgstr "&Fichier"
+
+#. i18n: file: klettresui.rc:15
+#. i18n: ectx: Menu (look_mode)
+#: rc.cpp:8
+msgid "L&ook"
+msgstr "&Apparence"
+
+#. i18n: file: klettresui.rc:23
+#. i18n: ectx: Menu (settings)
+#: rc.cpp:11
+msgid "&Settings"
+msgstr "Configuration"
+
+#. i18n: file: klettresui.rc:33
+#. i18n: ectx: ToolBar (mainToolbar)
+#: rc.cpp:14
+msgid "Main"
+msgstr "Principale"
+
+#. i18n: file: klettresui.rc:47
+#. i18n: ectx: ToolBar (specialCharToolbar)
+#: rc.cpp:17
+msgid "Special Characters"
+msgstr "Caractères spéciaux"
+
+#. i18n: file: timerui.ui:51
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:20
+msgid "Set the time between 2 letters."
+msgstr "Définir le temps entre deux lettres."
+
+#. i18n: file: timerui.ui:91
+#. i18n: ectx: property (toolTip), widget (QSlider, kcfg_KidTimer)
+#. i18n: file: timerui.ui:184
+#. i18n: ectx: property (toolTip), widget (QSlider, kcfg_GrownTimer)
+#: rc.cpp:23 rc.cpp:32
+msgid "Set the timer (in tenths of seconds)"
+msgstr "Définir le temps (en dizaines de secondes)."
+
+#. i18n: file: timerui.ui:94
+#. i18n: ectx: property (whatsThis), widget (QSlider, kcfg_KidTimer)
+#: rc.cpp:26
+msgid ""
+"You can set the time between two letters in Kid mode. Default is 4 tenths of "
+"seconds but younger children might need longer time."
+msgstr ""
+"Vous pouvez définir le temps entre deux lettres du mode pour enfant. La "
+"valeur par défaut est 4 dizaines de secondes, mais de jeunes enfants "
+"pourraient avoir besoin de plus de temps."
+
+#. i18n: file: timerui.ui:122
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:29
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /></head><body style=\" "
+"white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-"
+"weight:400; font-style:normal; text-decoration:none;\"><p style=\" margin-"
+"top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+"indent:0; text-indent:0px;\">Kid Mode</p></body></html>"
+msgstr ""
+"<html> <head> <meta name=\"qrichtext\" content=\"1\" /> </head> <body style="
+"\" white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-"
+"weight:400; font-style:normal; text-decoration:none;\"> <p style=\"margin-"
+"top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+"indent:0; text-indent:0px;\">Mode enfant</p> </body> </html>"
+
+#. i18n: file: timerui.ui:187
+#. i18n: ectx: property (whatsThis), widget (QSlider, kcfg_GrownTimer)
+#: rc.cpp:35
+msgid ""
+"You can set the time between two letters in Grown-up mode. Default is 2 "
+"tenths of seconds."
+msgstr ""
+"Vous pouvez définir le temps entre deux lettres du mode adulte. La valeur "
+"par défaut est une vingtaine de secondes."
+
+#. i18n: file: timerui.ui:215
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: rc.cpp:38
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /></head><body style=\" "
+"white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-"
+"weight:400; font-style:normal; text-decoration:none;\"><p style=\" margin-"
+"top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+"indent:0; text-indent:0px;\">Grown-up Mode</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /></head><body style=\" "
+"white-space: pre-wrap; font-family:Sans Serif; font-size:9pt; font-"
+"weight:400; font-style:normal; text-decoration:none;\"><p style=\" margin-"
+"top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+"indent:0; text-indent:0px;\">Mode adulte</p></body></html>"
+
+#. i18n: file: klettres.kcfg:10
+#. i18n: ectx: label, entry (Language), group (General)
+#: rc.cpp:41
+msgid "Language"
+msgstr "Langue"
+
+#. i18n: file: klettres.kcfg:14
+#. i18n: ectx: label, entry (Theme), group (General)
+#: rc.cpp:44
+msgid "Theme"
+msgstr "Thème"
+
+#. i18n: file: klettres.kcfg:23
+#. i18n: ectx: label, entry (MenuBarBool), group (General)
+#: rc.cpp:47
+msgid "Whether the menubar is shown or hidden"
+msgstr "Afficher ou cacher la barre de menus"
+
+#. i18n: file: klettres.kcfg:27
+#. i18n: ectx: label, entry (Mode), group (General)
+#: rc.cpp:50
+msgid "Mode"
+msgstr "Mode"
+
+#. i18n: file: klettres.kcfg:35
+#. i18n: ectx: label, entry (Level), group (General)
+#: rc.cpp:53
+msgid "Difficulty level."
+msgstr "Niveau de difficulté."
+
+#. i18n: file: klettres.kcfg:41
+#. i18n: ectx: label, entry (KidTimer), group (General)
+#: rc.cpp:56
+msgid "Kid Timer"
+msgstr "Vitesse du mode enfant"
+
+#. i18n: file: klettres.kcfg:45
+#. i18n: ectx: label, entry (GrownTimer), group (General)
+#: rc.cpp:59
+msgid "Grown-up Timer"
+msgstr "Vitesse du mode adulte"
+
+#. i18n: file: klettres.kcfg:51
+#. i18n: ectx: label, entry (Font), group (mFont)
+#: rc.cpp:62
+msgid "Font"
+msgstr "Police"
+
+#: soundfactory.cpp:98
+msgid "Error while loading the sound names."
+msgstr "Une erreur est survenue pendant la lecture des noms des sons."
+
+#: timer.cpp:34 timer.cpp:35 timer.cpp:43 timer.cpp:44
+msgid "tenths of second"
+msgstr "dixièmes de seconde"
+
+#~ msgid "Ludovic Grossard"
+#~ msgstr "Ludovic Grossard"
+
+#~ msgid "French sounds"
+#~ msgstr "Sons français"
+
+#~ msgid "Geert Stams"
+#~ msgstr "Geert Stams"
+
+#~ msgid "Dutch sounds"
+#~ msgstr "Sons néerlandais"
+
+#~ msgid "Erik Kjaer Pedersen"
+#~ msgstr "Erik Kjaer Pedersen"
+
+#~ msgid "Danish sounds"
+#~ msgstr "Sons danois"
+
+#~ msgid "Eva Mikulčíková"
+#~ msgstr "Eva Mikulčíková"
+
+#~ msgid "Czech sounds"
+#~ msgstr "Sons tchèques"
+
+#~ msgid "Silvia Motyčková & Jozef Říha"
+#~ msgstr "Silvia Motyčková & Jozef Říha"
+
+#~ msgid "Slovak sounds"
+#~ msgstr "Sons slovaques"
+
+#~ msgid "Robert Wadley"
+#~ msgstr "Robert Wadley"
+
+#~ msgid "English sounds"
+#~ msgstr "Sons américains"
+
+#~ msgid "Pietro Pasotti"
+#~ msgstr "Pietro Pasotti"
+
+#~ msgid "Italian sounds"
+#~ msgstr "Sons italiens"
+
+#~ msgid "Ana Belén Caballero and Juan Pedro Paredes"
+#~ msgstr "Ana Belén Caballero et Juan Pedro Paredes"
+
+#~ msgid "Spanish sounds"
+#~ msgstr "Sons espagnols"
+
+#~ msgid "Vikas Kharat"
+#~ msgstr "Vikas Kharat"
+
+#~ msgid "Romanized Hindi sounds"
+#~ msgstr "Sons indiens romanisés"
+
+#~ msgid "John Magoye and Cormac Lynch"
+#~ msgstr "John Magoye et Cormac Lynch"
+
+#~ msgid "Luganda sounds"
+#~ msgstr "Sons lugandais"
+
+#~ msgid "Helmut Kriege"
+#~ msgstr "Helmut Kriege"
+
+#~ msgid "German sounds"
+#~ msgstr "Sons allemands"
+
+#~ msgid "Assaf Gorgon and Diego Iastrubni"
+#~ msgstr "Assaf Gorgon et Diego Iastrubni"
+
+#~ msgid "Hebrew sounds"
+#~ msgstr "Sons hébreux"
+
+#~ msgid "Lisa Kriege"
+#~ msgstr "Lisa Kriege"
+
+#~ msgid "British English sounds"
+#~ msgstr "Sons anglais"
+
+#~ msgid "Vikram Vincent"
+#~ msgstr "Vikram Vincent"
+
+#~ msgid "Kannada sounds"
+#~ msgstr "Sons pour le kannada"
+
+#~ msgid "Show &Menubar"
+#~ msgstr "Afficher la barre de &menu"
+
+#~ msgid "Hide &Menubar"
+#~ msgstr "Cacher la barre de &menu"
+
+#~ msgid ""
+#~ "You can show or hide the menubar as you wish by clicking this button."
+#~ msgstr ""
+#~ "Vous pouvez afficher ou cacher la barre de menu en cliquant sur ce bouton."
+
+#~ msgid "Show Menubar"
+#~ msgstr "Afficher la barre de menu"
+
+#~ msgid "Hide Menubar"
+#~ msgstr "Cacher la barre de menu"
+
+#~ msgctxt "@item:inlistbox choose level 2"
+#~ msgid "Level 2"
+#~ msgstr "Niveau 2"
+
+#~ msgctxt "@item:inlistbox choose level 3"
+#~ msgid "Level 3"
+#~ msgstr "Niveau 3"
+
+#~ msgctxt "@item:inlistbox choose level 4"
+#~ msgid "Level 4"
+#~ msgstr "Niveau 4"

@@ -1,0 +1,5664 @@
+# Albanian translation for kdeedu
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the kdeedu package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeedu\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2012-02-23 04:44+0100\n"
+"PO-Revision-Date: 2009-03-11 02:09+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2011-04-21 22:51+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+
+#. i18n: file: tips:2
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:3
+msgid ""
+"<p>You can control a kig construction by means of a \"pykig\" \n"
+"python script, that can be executed with the command \n"
+"<code>pykig.py</code>.  Here is a nice example \n"
+"(<code>hexagons.kpy</code>) you can try:\n"
+"<code><pre>\n"
+"kigdocument.hideobjects()\n"
+"def hexagons (c, v, n):\n"
+"  hexagon = PolygonBCV (c, v, 6)\n"
+"  if n &lt;= 0:\n"
+"    hexagon.show()\n"
+"    for i in range(6): \n"
+"      PolygonSide (hexagon, i, True)\n"
+"    return\n"
+"  cnew = MidPoints (c, v)\n"
+"  hexagons (cnew, v, n-1)\n"
+"  for k in [2,4]:\n"
+"    v1 = PolygonVertex (hexagon, k)\n"
+"    cnew = MidPoints (c, v1)\n"
+"    hexagons (cnew, v1, n-1)\n"
+"hexagons (Point(0,0), Point(1,0), 5)\n"
+"</pre></code>\n"
+msgstr ""
+
+#. i18n: file: tips:28
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:28
+msgid ""
+"<p>You can repeat the latest construction simply by pressing the key\n"
+"'Z'; this comes in very handy if you need to construct a sequence\n"
+"of objects with the same construction, especially if there is\n"
+"no shortcut for that construction.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:37
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:36
+msgid ""
+"<p>One of the most powerful tools in Kig are the menus that you can\n"
+"enter by right-clicking on an object, or on some empty space in the\n"
+"document.  You can use them to give objects names, change their colors\n"
+"and line styles, and lots of other interesting things.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:46
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:44
+msgid ""
+"<p>You can construct new points without using the menu or the toolbar, "
+"simply\n"
+"clicking somewhere on the Kig document with the <em>middle mouse\n"
+"button</em>.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:54
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:51
+msgid ""
+"<p>Kig can open several file formats: its files (<code>.kig</code> files),\n"
+"<em>KGeo</em> files, <em>KSeg</em> files, and, partially, <em>Dr. Geo</em>\n"
+"and <em>Cabri&#8482;</em> files.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:62
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:58
+msgid ""
+"<p>Kig has more than 20 objects and 10 transformations with more than 80 \n"
+"constructions you can use in your documents: open the <em>Objects</em> \n"
+"menu to see them all.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:70
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:65
+msgid ""
+"<p>You can use the selected objects to start the construction of an object\n"
+"which requires the selected objects as arguments. For example, if you have "
+"two\n"
+"points selected, you can choose <em>Start->Circle by Three Points</em> from "
+"the\n"
+"popup menu to start constructing a circle by three points.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:79
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:73
+msgid ""
+"<p>Kig can extends its object set using external macros. You can find some\n"
+"interesting macros on the Kig website:\n"
+"<a href=\"http://edu.kde.org/kig\">http://edu.kde.org/kig</a>.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:87
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:80
+msgid ""
+"<p>If you have more than one object under the mouse, and you want to select "
+"any\n"
+"of them, you can click with the <em>left mouse button</em>, while holding "
+"the\n"
+"<em>Shift</em> key, to get a list of the objects under the mouse cursor "
+"which\n"
+"you can then select from.</p>\n"
+msgstr ""
+
+#. i18n: file: tips:96
+#. i18n: ectx: @info:tipoftheday
+#: tips.cpp:88
+msgid ""
+"<p>When you construct a locus, you can click on it with the <em>right</em> "
+"mouse\n"
+"button and select <em>cartesian equation</em> to see its cartesian "
+"equation, \n"
+"whenever it is an algebraic curve of low degree.</p>\n"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE Shqip, Launchpad Contributions: Vilson Gjeci"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"
+
+#. i18n: file: kig/kigpartui.rc:5
+#. i18n: ectx: Menu (file)
+#. i18n: file: kig/kigui.rc:4
+#. i18n: ectx: Menu (file)
+#: rc.cpp:5 rc.cpp:101
+msgid "&File"
+msgstr "&Skedar"
+
+#. i18n: file: kig/kigpartui.rc:16
+#. i18n: ectx: Menu (edit)
+#: rc.cpp:8
+msgid "&Edit"
+msgstr "&Modifiko"
+
+#. i18n: file: kig/kigpartui.rc:27
+#. i18n: ectx: Menu (view)
+#: rc.cpp:11
+msgid "&View"
+msgstr "&Shfaq"
+
+#. i18n: file: kig/kigpartui.rc:35
+#. i18n: ectx: Menu (objects)
+#: rc.cpp:14
+msgid "&Objects"
+msgstr "&Objektet"
+
+#. i18n: file: kig/kigpartui.rc:37
+#. i18n: ectx: Menu (new_point)
+#: rc.cpp:17
+msgid "&Points"
+msgstr "&Pikat"
+
+#. i18n: file: kig/kigpartui.rc:49
+#. i18n: ectx: Menu (new_line)
+#: rc.cpp:20
+msgid "&Lines"
+msgstr "&Vijat"
+
+#. i18n: file: kig/kigpartui.rc:59
+#. i18n: ectx: Menu (new_circle)
+#: rc.cpp:23
+msgid "&Circles && Arcs"
+msgstr "&Rrathët && Harqet"
+
+#. i18n: file: kig/kigpartui.rc:70
+#. i18n: ectx: Menu (new_poligon)
+#: rc.cpp:26
+msgid "Poly&gons"
+msgstr "Poli&gonet"
+
+#. i18n: file: kig/kigpartui.rc:82
+#. i18n: ectx: Menu (new_vector)
+#: rc.cpp:29
+msgid "&Vectors && Segments"
+msgstr "&Vektorët && Segmentet"
+
+#. i18n: file: kig/kigpartui.rc:91
+#. i18n: ectx: Menu (new_conic)
+#: rc.cpp:32
+msgid "Co&nics && Cubics"
+msgstr "Ko&nike && Kubike"
+
+#. i18n: file: kig/kigpartui.rc:98
+#. i18n: ectx: Menu (new_moreconics)
+#: rc.cpp:35
+msgid "More Conics"
+msgstr "Më tepër Konike"
+
+#. i18n: file: kig/kigpartui.rc:113
+#. i18n: ectx: Menu (new_cubic)
+#: rc.cpp:38
+msgid "Cu&bics"
+msgstr "Ku&bike"
+
+#. i18n: file: kig/kigpartui.rc:121
+#. i18n: ectx: Menu (new_bezier)
+#: rc.cpp:41
+msgid "&Bézier curves"
+msgstr ""
+
+#. i18n: file: kig/kigpartui.rc:131
+#. i18n: ectx: Menu (new_angle)
+#: rc.cpp:44
+msgid "&Angles"
+msgstr "&këndet"
+
+#. i18n: file: kig/kigpartui.rc:136
+#. i18n: ectx: Menu (new_transformation)
+#: rc.cpp:47
+msgid "&Transformations"
+msgstr "&Transformimet"
+
+#. i18n: file: kig/kigpartui.rc:154
+#. i18n: ectx: Menu (new_differentialgeometry)
+#: rc.cpp:50
+msgid "&Differential geometry"
+msgstr "&Gjeometri e Diferencuar"
+
+#. i18n: file: kig/kigpartui.rc:161
+#. i18n: ectx: Menu (new_test)
+#: rc.cpp:53
+msgid "T&ests"
+msgstr "T&estet"
+
+#. i18n: file: kig/kigpartui.rc:172
+#. i18n: ectx: Menu (new_other)
+#: rc.cpp:56
+msgid "&Other"
+msgstr "&Të Tjera"
+
+#. i18n: file: kig/kigpartui.rc:186
+#. i18n: ectx: Menu (types)
+#: rc.cpp:59
+msgid "&Types"
+msgstr "&Tipat"
+
+#. i18n: file: kig/kigpartui.rc:191
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:62
+msgid "&Tools"
+msgstr "&Mjetet"
+
+#. i18n: file: kig/kigpartui.rc:204
+#. i18n: ectx: ToolBar (mainToolBar)
+#. i18n: file: kig/kigui.rc:23
+#. i18n: ectx: ToolBar (mainToolBar)
+#: rc.cpp:65 rc.cpp:107
+msgid "Main Toolbar"
+msgstr "Shiriti Kryesor"
+
+#. i18n: file: kig/kigpartui.rc:218
+#. i18n: ectx: ToolBar (points_toolbar)
+#: rc.cpp:68
+msgid "Points"
+msgstr "Pikat"
+
+#. i18n: file: kig/kigpartui.rc:229
+#. i18n: ectx: ToolBar (line_toolbar)
+#: rc.cpp:71
+msgid "Lines"
+msgstr "Vijat"
+
+#. i18n: file: kig/kigpartui.rc:239
+#. i18n: ectx: ToolBar (vectseg_toolbar)
+#: rc.cpp:74
+msgid "Vectors && Segments"
+msgstr "Vektorët && Segmentet"
+
+#. i18n: file: kig/kigpartui.rc:247
+#. i18n: ectx: ToolBar (circle_toolbar)
+#: rc.cpp:77
+msgid "Circles && Arcs"
+msgstr "Rrethet && Harqet"
+
+#. i18n: file: kig/kigpartui.rc:255
+#. i18n: ectx: ToolBar (conic_toolbar)
+#: rc.cpp:80
+msgid "Conics"
+msgstr "Konikët"
+
+#. i18n: file: kig/kigpartui.rc:264
+#. i18n: ectx: ToolBar (bezier_toolbar)
+#: rc.cpp:83
+msgid "Bézier Curves"
+msgstr ""
+
+#. i18n: file: kig/kigpartui.rc:274
+#. i18n: ectx: ToolBar (angles_toolbar)
+#: rc.cpp:86
+msgid "Angles"
+msgstr "Këndet"
+
+#. i18n: file: kig/kigpartui.rc:279
+#. i18n: ectx: ToolBar (transformation_toolbar)
+#: rc.cpp:89
+msgid "Transformations"
+msgstr "Transformimet"
+
+#. i18n: file: kig/kigpartui.rc:293
+#. i18n: ectx: ToolBar (tests_toolbar)
+#: rc.cpp:92
+msgid "Tests"
+msgstr "Testet"
+
+#. i18n: file: kig/kigpartui.rc:305
+#. i18n: ectx: ToolBar (rest_toolbar)
+#: rc.cpp:95
+msgid "Other Objects"
+msgstr ""
+
+#. i18n: file: kig/kigpartui.rc:313
+#. i18n: ectx: ToolBar (view_toolbar)
+#: rc.cpp:98
+msgid "View"
+msgstr ""
+
+#. i18n: file: kig/kigui.rc:13
+#. i18n: ectx: Menu (settings)
+#: rc.cpp:104
+msgid "&Settings"
+msgstr ""
+
+#. i18n: file: filters/asyexporteroptionswidget.ui:22
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#. i18n: file: filters/imageexporteroptionswidget.ui:120
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#. i18n: file: filters/latexexporteroptionswidget.ui:82
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#. i18n: file: filters/svgexporteroptionswidget.ui:22
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:110 rc.cpp:134 rc.cpp:164 rc.cpp:176 misc/kigfiledialog.cc:34
+msgid "Options"
+msgstr ""
+
+#. i18n: file: filters/asyexporteroptionswidget.ui:42
+#. i18n: ectx: property (text), widget (QCheckBox, showFrameCheckBox)
+#. i18n: file: filters/latexexporteroptionswidget.ui:95
+#. i18n: ectx: property (text), widget (QCheckBox, showFrameCheckBox)
+#: rc.cpp:113 rc.cpp:170
+msgid "Show Extra Frame"
+msgstr ""
+
+#. i18n: file: filters/asyexporteroptionswidget.ui:49
+#. i18n: ectx: property (text), widget (QCheckBox, showAxesCheckBox)
+#. i18n: file: filters/imageexporteroptionswidget.ui:140
+#. i18n: ectx: property (text), widget (QCheckBox, showAxesCheckBox)
+#. i18n: file: filters/latexexporteroptionswidget.ui:102
+#. i18n: ectx: property (text), widget (QCheckBox, showAxesCheckBox)
+#. i18n: file: filters/svgexporteroptionswidget.ui:42
+#. i18n: ectx: property (text), widget (QCheckBox, showAxesCheckBox)
+#: rc.cpp:116 rc.cpp:137 rc.cpp:173 rc.cpp:179
+msgid "Show Axes"
+msgstr ""
+
+#. i18n: file: filters/asyexporteroptionswidget.ui:56
+#. i18n: ectx: property (text), widget (QCheckBox, showGridCheckBox)
+#. i18n: file: filters/imageexporteroptionswidget.ui:147
+#. i18n: ectx: property (text), widget (QCheckBox, showGridCheckBox)
+#. i18n: file: filters/latexexporteroptionswidget.ui:88
+#. i18n: ectx: property (text), widget (QCheckBox, showGridCheckBox)
+#. i18n: file: filters/svgexporteroptionswidget.ui:49
+#. i18n: ectx: property (text), widget (QCheckBox, showGridCheckBox)
+#: rc.cpp:119 rc.cpp:140 rc.cpp:167 rc.cpp:182
+msgid "Show Grid"
+msgstr ""
+
+#. i18n: file: filters/imageexporteroptionswidget.ui:22
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:122
+msgid "Resolution"
+msgstr ""
+
+#. i18n: file: filters/imageexporteroptionswidget.ui:37
+#. i18n: ectx: property (text), widget (QCheckBox, keepAspectRatio)
+#: rc.cpp:125
+msgid "&Keep Aspect Ratio"
+msgstr ""
+
+#. i18n: file: filters/imageexporteroptionswidget.ui:54
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:128
+msgid "Height:"
+msgstr ""
+
+#. i18n: file: filters/imageexporteroptionswidget.ui:110
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:131
+msgid "Width:"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:23
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:143
+msgid "Output format"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:29
+#. i18n: ectx: property (text), widget (QRadioButton, psTricksRadioButton)
+#: rc.cpp:146
+msgid "PSTricks"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:36
+#. i18n: ectx: property (text), widget (QRadioButton, tikzRadioButton)
+#: rc.cpp:149
+msgid "Tikz/PGF"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:46
+#. i18n: ectx: property (text), widget (QRadioButton, asyRadioButton)
+#: rc.cpp:152
+msgid "Asymptote"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:56
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:155
+msgid "Document options"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:62
+#. i18n: ectx: property (text), widget (QRadioButton, pictureRadioButton)
+#: rc.cpp:158
+msgid "Picture only"
+msgstr ""
+
+#. i18n: file: filters/latexexporteroptionswidget.ui:72
+#. i18n: ectx: property (text), widget (QRadioButton, documentRadioButton)
+#: rc.cpp:161
+msgid "Standalone document"
+msgstr ""
+
+#. i18n: file: misc/kigcoordinateprecisiondialog.ui:9
+#. i18n: ectx: property (text), widget (QCheckBox, m_defaultCheckBox)
+#: rc.cpp:185
+msgid "&Use default coordinate precision"
+msgstr ""
+
+#. i18n: file: misc/kigcoordinateprecisiondialog.ui:16
+#. i18n: ectx: property (text), widget (QLabel, m_precisionLabel)
+#: rc.cpp:188
+msgid "&Specify coordinate precision:"
+msgstr ""
+
+#. i18n: file: modes/edittypewidget.ui:36
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:191
+msgid ""
+"Here you can modify the name, the description and the icon of this macro "
+"type."
+msgstr ""
+
+#. i18n: file: modes/edittypewidget.ui:73
+#. i18n: ectx: property (text), widget (QLabel, label_2_3)
+#: rc.cpp:194
+msgid "Name:"
+msgstr ""
+
+#. i18n: file: modes/edittypewidget.ui:93
+#. i18n: ectx: property (text), widget (QLabel, label_2_2_2)
+#: rc.cpp:197
+msgid "Description:"
+msgstr ""
+
+#. i18n: file: modes/historywidget.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:200
+msgid "Description of the current step:"
+msgstr ""
+
+#. i18n: file: modes/historywidget.ui:53
+#. i18n: ectx: property (toolTip), widget (QPushButton, buttonFirst)
+#: rc.cpp:203
+msgid "First step"
+msgstr ""
+
+#. i18n: file: modes/historywidget.ui:66
+#. i18n: ectx: property (toolTip), widget (QPushButton, buttonBack)
+#: rc.cpp:206
+msgid "One step back"
+msgstr ""
+
+#. i18n: file: modes/historywidget.ui:82
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#: rc.cpp:209
+msgid "/"
+msgstr ""
+
+#. i18n: file: modes/historywidget.ui:96
+#. i18n: ectx: property (toolTip), widget (QPushButton, buttonNext)
+#: rc.cpp:212
+msgid "One step forward"
+msgstr ""
+
+#. i18n: file: modes/historywidget.ui:109
+#. i18n: ectx: property (toolTip), widget (QPushButton, buttonLast)
+#: rc.cpp:215
+msgid "Last step"
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:37
+#. i18n: ectx: property (toolTip), widget (QTreeView, typeList)
+#: rc.cpp:218
+msgid "Select types here..."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:40
+#. i18n: ectx: property (whatsThis), widget (QTreeView, typeList)
+#: rc.cpp:221
+msgid ""
+"This is a list of the current macro types... You can select, edit, delete, "
+"export and import them..."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:99
+#. i18n: ectx: property (whatsThis), widget (KPushButton, buttonEdit)
+#: rc.cpp:224
+msgid "Edit the selected type."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:102
+#. i18n: ectx: property (text), widget (KPushButton, buttonEdit)
+#: rc.cpp:227 modes/typesdialog.cpp:368
+msgid "&Edit..."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:109
+#. i18n: ectx: property (whatsThis), widget (KPushButton, buttonRemove)
+#: rc.cpp:230
+msgid "Delete all the selected types in the list."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:112
+#. i18n: ectx: property (text), widget (KPushButton, buttonRemove)
+#: rc.cpp:233 modes/popup.cc:390 modes/typesdialog.cpp:369
+msgid "&Delete"
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:151
+#. i18n: ectx: property (whatsThis), widget (KPushButton, buttonExport)
+#: rc.cpp:236
+msgid "Export all the selected types to a file."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:154
+#. i18n: ectx: property (text), widget (KPushButton, buttonExport)
+#: rc.cpp:239 modes/typesdialog.cpp:371
+msgid "E&xport..."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:161
+#. i18n: ectx: property (whatsThis), widget (KPushButton, buttonImport)
+#: rc.cpp:242
+msgid "Import macros that are contained in one or more files."
+msgstr ""
+
+#. i18n: file: modes/typeswidget.ui:164
+#. i18n: ectx: property (text), widget (KPushButton, buttonImport)
+#: rc.cpp:245
+msgid "&Import..."
+msgstr ""
+
+#: rc.cpp:246
+msgid "Circle by Center && Line"
+msgstr ""
+
+#: rc.cpp:247
+msgid "A circle constructed by its center and tangent to a given line"
+msgstr ""
+
+#: rc.cpp:248
+msgid "Construct a circle tangent to this line"
+msgstr ""
+
+#: rc.cpp:249 rc.cpp:254 objects/circle_type.cc:34
+msgid "Construct a circle with this center"
+msgstr ""
+
+#: rc.cpp:250
+msgid "Select the line that the new circle should be tangent to..."
+msgstr ""
+
+#: rc.cpp:251 rc.cpp:256 objects/circle_type.cc:39 objects/circle_type.cc:194
+msgid "Select the center of the new circle..."
+msgstr ""
+
+#: rc.cpp:252
+msgid "Circle by Point && Segment (as the Diameter)"
+msgstr ""
+
+#: rc.cpp:253
+msgid ""
+"A circle defined by its center and the length of a segment as the diameter"
+msgstr ""
+
+#: rc.cpp:255
+msgid ""
+"Construct a circle with the diameter given by the length of this segment"
+msgstr ""
+
+#: rc.cpp:257
+msgid "Select the segment whose length gives the diameter of the new circle..."
+msgstr ""
+
+#: rc.cpp:258
+msgid "Equilateral Triangle"
+msgstr ""
+
+#: rc.cpp:259
+msgid "Equilateral triangle with given two vertices"
+msgstr ""
+
+#: rc.cpp:260
+msgid "Evolute"
+msgstr ""
+
+#: rc.cpp:261
+msgid "Evolute of a curve"
+msgstr ""
+
+#: rc.cpp:262
+msgid "Evolute of this curve"
+msgstr ""
+
+#: rc.cpp:263 rc.cpp:268 objects/centerofcurvature_type.cc:35
+#: objects/tangent_type.cc:36
+msgid "Select the curve..."
+msgstr ""
+
+#: rc.cpp:264
+msgid "Osculating Circle"
+msgstr ""
+
+#: rc.cpp:265
+msgid "Osculating circle of a curve at a point"
+msgstr ""
+
+#: rc.cpp:266
+msgid "Osculating circle of this curve"
+msgstr ""
+
+#: rc.cpp:267
+msgid "Osculating circle at this point"
+msgstr ""
+
+#: rc.cpp:269
+msgid "Select the point..."
+msgstr ""
+
+#: rc.cpp:270
+msgid "Segment Axis"
+msgstr ""
+
+#: rc.cpp:271
+msgid "The perpendicular line through a given segment's mid point."
+msgstr ""
+
+#: rc.cpp:272
+msgid "Construct the axis of this segment"
+msgstr ""
+
+#: rc.cpp:273
+msgid "Select the segment of which you want to draw the axis..."
+msgstr ""
+
+#: rc.cpp:274
+msgid "Square"
+msgstr ""
+
+#: rc.cpp:275
+msgid "Square with two given adjacent vertices"
+msgstr ""
+
+#: rc.cpp:276
+msgid "Vector Difference"
+msgstr ""
+
+#: rc.cpp:277
+msgid "Construct the vector difference of two vectors."
+msgstr ""
+
+#: rc.cpp:278
+msgid "Construct the vector difference of this vector and another one."
+msgstr ""
+
+#: rc.cpp:279
+msgid "Construct the vector difference of the other vector and this one."
+msgstr ""
+
+#: rc.cpp:280
+msgid "Construct the vector difference starting at this point."
+msgstr ""
+
+#: rc.cpp:281
+msgid ""
+"Select the first of the two vectors of which you want to construct the "
+"difference..."
+msgstr ""
+
+#: rc.cpp:282
+msgid ""
+"Select the other of the two vectors of which you want to construct the "
+"difference..."
+msgstr ""
+
+#: rc.cpp:283
+msgid "Select the point to construct the difference vector in..."
+msgstr ""
+
+#: filters/filter.h:55 filters/cabri-utils.cc:33 misc/object_hierarchy.cc:486
+#: objects/object_imp_factory.cc:294
+#, kde-format
+msgid "An error was encountered at line %1 in file %2."
+msgstr ""
+
+#: kig/aboutdata.h:29
+msgid "KDE Interactive Geometry"
+msgstr ""
+
+#: kig/aboutdata.h:33
+msgid "(C) 2002-2005, The Kig developers"
+msgstr ""
+
+#: kig/aboutdata.h:35
+msgid "Dominique Devriese"
+msgstr ""
+
+#: kig/aboutdata.h:36
+msgid "Original author, long time maintainer, design and lots of code."
+msgstr ""
+
+#: kig/aboutdata.h:39
+msgid "Maurizio Paolini"
+msgstr ""
+
+#: kig/aboutdata.h:40
+msgid ""
+"Did a lot of important work all around Kig, including, but not limited to "
+"conics, cubics, transformations and property tests support."
+msgstr ""
+
+#: kig/aboutdata.h:45
+msgid "Pino Toscano"
+msgstr ""
+
+#: kig/aboutdata.h:46
+msgid ""
+"Actual maintainer, Dr. Geo import filter, point and line styles, Italian "
+"translation, miscellaneous stuff here and there."
+msgstr ""
+
+#: kig/aboutdata.h:51
+msgid "Franco Pasquarelli"
+msgstr ""
+
+#: kig/aboutdata.h:52
+msgid ""
+"Helped a lot with the implementation of the Locus object, there's quite some "
+"math involved in doing it right, and Franco wrote the most difficult parts."
+msgstr ""
+
+#: kig/aboutdata.h:57
+msgid "Francesca Gatti"
+msgstr ""
+
+#: kig/aboutdata.h:58
+msgid "Responsible for the computation of the algebraic equation of a locus."
+msgstr ""
+
+#: kig/aboutdata.h:62
+msgid "Petr Gajdos"
+msgstr ""
+
+#: kig/aboutdata.h:63
+msgid "Contributed the Bézier curves and related icons."
+msgstr ""
+
+#: kig/aboutdata.h:66
+msgid "Raoul Bourquin"
+msgstr ""
+
+#: kig/aboutdata.h:67
+msgid "Contributed the 'asymptote' export filter."
+msgstr ""
+
+#: kig/aboutdata.h:70
+msgid "Eric Depagne"
+msgstr ""
+
+#: kig/aboutdata.h:71
+msgid ""
+"The French translator, who also sent me some useful feedback, like feature "
+"requests and bug reports."
+msgstr ""
+
+#: kig/aboutdata.h:75
+msgid "Marc Bartsch"
+msgstr ""
+
+#: kig/aboutdata.h:76
+msgid ""
+"Author of KGeo, where I got inspiration, some source, and most of the "
+"artwork from."
+msgstr ""
+
+#: kig/aboutdata.h:80
+msgid "Christophe Devriese"
+msgstr ""
+
+#: kig/aboutdata.h:81
+msgid ""
+"Domi's brother, who he got to write the algorithm for calculating the center "
+"of the circle with three points given."
+msgstr ""
+
+#: kig/aboutdata.h:86
+msgid "Christophe Prud'homme"
+msgstr ""
+
+#: kig/aboutdata.h:87
+msgid "Sent me a patch for some bugs."
+msgstr ""
+
+#: kig/aboutdata.h:90
+msgid "Robert Gogolok"
+msgstr ""
+
+#: kig/aboutdata.h:91
+msgid ""
+"Gave me some good feedback on Kig, some feature requests, cleanups and style "
+"fixes, and someone to chat with on irc :)"
+msgstr ""
+
+#: kig/aboutdata.h:96
+msgid "David Vignoni"
+msgstr ""
+
+#: kig/aboutdata.h:97
+msgid "Responsible for the nice application SVG Icon."
+msgstr ""
+
+#: kig/aboutdata.h:100
+msgid "Danny Allen"
+msgstr ""
+
+#: kig/aboutdata.h:101
+msgid "Responsible for the new object action icons."
+msgstr ""
+
+#: filters/asyexporter.cc:40
+msgid "Export to &Asymptote..."
+msgstr ""
+
+#: filters/asyexporter.cc:45
+msgid "&Asymptote..."
+msgstr ""
+
+#: filters/asyexporter.cc:56
+msgid "*.asy|Asymptote Documents (*.asy)"
+msgstr ""
+
+#: filters/asyexporter.cc:57
+msgid "Export as Asymptote script"
+msgstr ""
+
+#: filters/asyexporter.cc:58
+msgid "Asymptote Options"
+msgstr ""
+
+#: filters/asyexporter.cc:78 filters/exporter.cc:119
+#: filters/latexexporter.cc:1030 filters/svgexporter.cc:81
+#: filters/xfigexporter.cc:592
+#, kde-format
+msgid ""
+"The file \"%1\" could not be opened. Please check if the file permissions "
+"are set correctly."
+msgstr ""
+
+#: filters/cabri-filter.cc:157
+msgid "This is an XFig file, not a Cabri figure."
+msgstr ""
+
+#: filters/cabri-filter.cc:202
+#, kde-format
+msgid ""
+"This Cabri version (%1) is not supported yet.\n"
+"Please contact the Kig authors to help supporting this Cabri version."
+msgstr ""
+
+#: filters/cabri-filter.cc:659
+#, kde-format
+msgid ""
+"This Cabri file contains a \"%1\" object, which Kig does not currently "
+"support."
+msgstr ""
+
+#: filters/drgeo-filter.cc:109
+#, kde-format
+msgid "The Dr. Geo file \"%1\" is a macro file so it contains no figures."
+msgstr ""
+
+#: filters/drgeo-filter.cc:112
+#, kde-format
+msgid "There are no figures in Dr. Geo file \"%1\"."
+msgstr ""
+
+#: filters/drgeo-filter.cc:128
+msgid "Dr. Geo Filter"
+msgstr ""
+
+#: filters/drgeo-filter.cc:129
+msgid ""
+"The current Dr. Geo file contains more than one figure.\n"
+"Please select which to import:"
+msgstr ""
+
+#: filters/drgeo-filter.cc:339 filters/drgeo-filter.cc:397
+#: filters/drgeo-filter.cc:429 filters/drgeo-filter.cc:442
+#: filters/drgeo-filter.cc:465 filters/drgeo-filter.cc:481
+#: filters/drgeo-filter.cc:504 filters/drgeo-filter.cc:631
+#: filters/drgeo-filter.cc:649 filters/drgeo-filter.cc:690
+#: filters/drgeo-filter.cc:702 filters/drgeo-filter.cc:722
+#, kde-format
+msgid ""
+"This Dr. Geo file contains a \"%1 %2\" object, which Kig does not currently "
+"support."
+msgstr ""
+
+#: filters/drgeo-filter.cc:376
+msgid ""
+"This Dr. Geo file contains an intersection type, which Kig does not "
+"currently support."
+msgstr ""
+
+#: filters/exporter.cc:72
+msgid "&Export to image"
+msgstr ""
+
+#: filters/exporter.cc:77
+msgid "&Image..."
+msgstr ""
+
+#: filters/exporter.cc:89
+msgid "Export as Image"
+msgstr ""
+
+#: filters/exporter.cc:90
+msgid "Image Options"
+msgstr ""
+
+#: filters/exporter.cc:111
+msgid "Sorry, this file format is not supported."
+msgstr ""
+
+#: filters/exporter.cc:135
+#, kde-format
+msgid "Sorry, something went wrong while saving to image \"%1\""
+msgstr ""
+
+#: filters/exporter.cc:158
+msgid "&Export To"
+msgstr ""
+
+#: filters/filter.cc:73
+#, kde-format
+msgid ""
+"The file \"%1\" could not be opened.  This probably means that it does not "
+"exist, or that it cannot be opened due to its permissions"
+msgstr ""
+
+#: filters/filter.cc:82
+#, kde-format
+msgid ""
+"An error was encountered while parsing the file \"%1\".  It cannot be opened."
+msgstr ""
+
+#: filters/filter.cc:84
+msgid "Parse Error"
+msgstr ""
+
+#: filters/filter.cc:95
+#, kde-format
+msgid "Kig cannot open the file \"%1\"."
+msgstr ""
+
+#: filters/filter.cc:96 misc/lists.cc:325
+msgid "Not Supported"
+msgstr ""
+
+#: filters/kseg-filter.cc:182
+msgid ""
+"This KSeg document uses a scaling transformation, which Kig currently cannot "
+"import."
+msgstr ""
+
+#: filters/kseg-filter.cc:561
+msgid ""
+"This KSeg file contains a filled circle, which Kig does not currently "
+"support."
+msgstr ""
+
+#: filters/kseg-filter.cc:567
+msgid ""
+"This KSeg file contains an arc sector, which Kig does not currently support."
+msgstr ""
+
+#: filters/kseg-filter.cc:573
+msgid ""
+"This KSeg file contains an arc segment, which Kig does not currently support."
+msgstr ""
+
+#: filters/latexexporter.cc:74
+msgid "Export to &Latex..."
+msgstr ""
+
+#: filters/latexexporter.cc:79
+msgid "&Latex..."
+msgstr ""
+
+#: filters/latexexporter.cc:992
+msgid "*.tex|Latex Documents (*.tex)"
+msgstr ""
+
+#: filters/latexexporter.cc:993
+msgid "Export as Latex"
+msgstr ""
+
+#: filters/latexexporter.cc:994
+msgid "Latex Options"
+msgstr ""
+
+#: filters/native-filter.cc:194
+#, kde-format
+msgid ""
+"This file was created by Kig version \"%1\", which this version cannot open."
+msgstr ""
+
+#: filters/native-filter.cc:200
+#, kde-format
+msgid ""
+"This file was created by Kig version \"%1\".\n"
+"Support for older Kig formats (pre-0.4) has been removed from Kig.\n"
+"You can try to open this file with an older Kig version (0.4 to 0.6),\n"
+"and then save it again, which will save it in the new format."
+msgstr ""
+
+#: filters/native-filter.cc:231 filters/native-filter.cc:425
+msgid ""
+"This Kig file has a coordinate system that this Kig version does not "
+"support.\n"
+"A standard coordinate system will be used instead."
+msgstr ""
+
+#: filters/native-filter.cc:336 filters/native-filter.cc:529
+#: objects/object_imp_factory.cc:505
+#, kde-format
+msgid ""
+"This Kig file uses an object of type \"%1\", which this Kig version does not "
+"support.Perhaps you have compiled Kig without support for this object type,"
+"or perhaps you are using an older Kig version."
+msgstr ""
+
+#: filters/native-filter.cc:389
+#, kde-format
+msgid ""
+"This Kig file uses an object of type \"%1\", which is obsolete, you should "
+"save the construction with a different name and check that it works as "
+"expected."
+msgstr ""
+
+#: filters/svgexporter.cc:45
+msgid "&Export to SVG..."
+msgstr ""
+
+#: filters/svgexporter.cc:50
+msgid "&SVG..."
+msgstr ""
+
+#: filters/svgexporter.cc:61
+msgid "*.svg|Scalable Vector Graphics (*.svg)"
+msgstr ""
+
+#: filters/svgexporter.cc:62
+msgid "Export as SVG"
+msgstr ""
+
+#: filters/svgexporter.cc:63
+msgid "SVG Options"
+msgstr ""
+
+#: filters/svgexporter.cc:110
+#, kde-format
+msgid "Sorry, something went wrong while saving to SVG file \"%1\""
+msgstr ""
+
+#: filters/xfigexporter.cc:60
+msgid "Export to &XFig file"
+msgstr ""
+
+#: filters/xfigexporter.cc:66
+msgid "&XFig File..."
+msgstr ""
+
+#: filters/xfigexporter.cc:580
+msgid "*.fig|XFig Documents (*.fig)"
+msgstr ""
+
+#: filters/xfigexporter.cc:581
+msgid "Export as XFig File"
+msgstr ""
+
+#: misc/builtin_stuff.cc:60
+msgid "Point by Numeric Labels"
+msgstr ""
+
+#: misc/builtin_stuff.cc:61
+msgid "A point whose coordinates are given by two numeric labels"
+msgstr ""
+
+#: misc/builtin_stuff.cc:68
+msgid "Segment"
+msgstr ""
+
+#: misc/builtin_stuff.cc:69
+msgid "A segment constructed from its start and end point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:76
+msgid "Line by Two Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:77
+msgid "A line constructed through two points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:83
+msgid "Half-Line"
+msgstr ""
+
+#: misc/builtin_stuff.cc:84
+msgid "A half-line by its start point, and another point somewhere on it."
+msgstr ""
+
+#: misc/builtin_stuff.cc:91
+msgid "Perpendicular"
+msgstr ""
+
+#: misc/builtin_stuff.cc:92
+msgid ""
+"A line constructed through a point, perpendicular to another line or segment."
+msgstr ""
+
+#: misc/builtin_stuff.cc:99
+msgid "Parallel"
+msgstr ""
+
+#: misc/builtin_stuff.cc:100
+msgid ""
+"A line constructed through a point, and parallel to another line or segment"
+msgstr ""
+
+#: misc/builtin_stuff.cc:107
+msgid "Circle by Center && Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:108
+msgid "A circle constructed by its center and a point that pertains to it"
+msgstr ""
+
+#: misc/builtin_stuff.cc:114
+msgid "Circle by Three Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:115
+msgid "A circle constructed through three points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:121
+msgid "Circle by Point && Radius"
+msgstr ""
+
+#: misc/builtin_stuff.cc:122
+msgid "A circle defined by its center and the length of the radius"
+msgstr ""
+
+#: misc/builtin_stuff.cc:137
+msgid "Construct Bisector of This Angle"
+msgstr ""
+
+#: misc/builtin_stuff.cc:138
+msgid "Select the angle you want to construct the bisector of..."
+msgstr ""
+
+#: misc/builtin_stuff.cc:139 objects/other_imp.cc:107
+msgid "Angle Bisector"
+msgstr ""
+
+#: misc/builtin_stuff.cc:140
+msgid "The bisector of an angle"
+msgstr ""
+
+#: misc/builtin_stuff.cc:147
+msgid "Conic by Five Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:148
+msgid "A conic constructed through five points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:155
+msgid "Hyperbola by Asymptotes && Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:156
+msgid "A hyperbola with given asymptotes through a point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:163
+msgid "Ellipse by Focuses && Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:164
+msgid "An ellipse constructed by its focuses and a point that pertains to it"
+msgstr ""
+
+#: misc/builtin_stuff.cc:171
+msgid "Hyperbola by Focuses && Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:172
+msgid "A hyperbola constructed by its focuses and a point that pertains to it"
+msgstr ""
+
+#: misc/builtin_stuff.cc:179
+msgid "Conic by Directrix, Focus && Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:180
+msgid "A conic with given directrix and focus, through a point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:187
+msgid "Vertical Parabola by Three Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:188
+msgid "A vertical parabola constructed through three points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:195
+msgid "Cubic Curve by Nine Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:196
+msgid "A cubic curve constructed through nine points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:203
+msgid "Polar Point of a Line"
+msgstr ""
+
+#: misc/builtin_stuff.cc:204
+msgid "The polar point of a line with respect to a conic."
+msgstr ""
+
+#: misc/builtin_stuff.cc:211
+msgid "Polar Line of a Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:212
+msgid "The polar line of a point with respect to a conic."
+msgstr ""
+
+#: misc/builtin_stuff.cc:219
+msgid "Cubic Curve with Node by Six Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:220
+msgid "A cubic curve with a nodal point at the origin through six points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:227
+msgid "Cubic Curve with Cusp by Four Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:228
+msgid "A cubic curve with a horizontal cusp at the origin through four points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:235
+msgid "Cubic Function by Four Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:236
+msgid "A cubic function through four points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:243
+msgid "Directrix of a Conic"
+msgstr ""
+
+#: misc/builtin_stuff.cc:244
+msgid "The directrix line of a conic."
+msgstr ""
+
+#: misc/builtin_stuff.cc:251
+msgid "Angle by Three Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:252
+msgid "An angle defined by three points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:259
+msgid "Equilateral Hyperbola by Four Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:260
+msgid "An equilateral hyperbola constructed through four points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:277
+msgid "Construct the midpoint of this segment"
+msgstr ""
+
+#: misc/builtin_stuff.cc:283 objects/line_imp.cc:124
+msgid "Mid Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:284
+msgid "The midpoint of a segment or two other points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:293
+msgid "Vector"
+msgstr ""
+
+#: misc/builtin_stuff.cc:294
+msgid "Construct a vector from two given points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:301
+msgid "Vector Sum"
+msgstr ""
+
+#: misc/builtin_stuff.cc:302
+msgid "Construct the vector sum of two vectors."
+msgstr ""
+
+#: misc/builtin_stuff.cc:309
+msgid "Line by Vector"
+msgstr ""
+
+#: misc/builtin_stuff.cc:310
+msgid "Construct the line by a given vector though a given point."
+msgstr ""
+
+#: misc/builtin_stuff.cc:317
+msgid "Half-Line by Vector"
+msgstr ""
+
+#: misc/builtin_stuff.cc:318
+msgid "Construct the half-line by a given vector starting at given point."
+msgstr ""
+
+#: misc/builtin_stuff.cc:325
+msgid "Arc by Three Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:326
+msgid "Construct an arc through three points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:333
+msgid "Conic Arc by Center and Three Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:334
+msgid "Construct a conic arc with given center through three points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:341
+msgid "Conic Arc by Five Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:342
+msgid "Construct a conic arc through five points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:349
+msgid "Arc by Center, Angle && Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:350
+msgid ""
+"Construct an arc by its center and a given angle, starting at a given point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:358
+msgid "Parabola by Directrix && Focus"
+msgstr ""
+
+#: misc/builtin_stuff.cc:359
+msgid "A parabola defined by its directrix and focus"
+msgstr ""
+
+#: misc/builtin_stuff.cc:379
+msgid "Translate"
+msgstr ""
+
+#: misc/builtin_stuff.cc:380
+msgid "The translation of an object by a vector"
+msgstr ""
+
+#: misc/builtin_stuff.cc:387
+msgid "Reflect in Point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:388
+msgid "An object reflected in a point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:395
+msgid "Reflect in Line"
+msgstr ""
+
+#: misc/builtin_stuff.cc:396
+msgid "An object reflected in a line"
+msgstr ""
+
+#: misc/builtin_stuff.cc:403
+msgid "Rotate"
+msgstr ""
+
+#: misc/builtin_stuff.cc:404
+msgid "An object rotated by an angle around a point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:411
+msgid "Scale"
+msgstr ""
+
+#: misc/builtin_stuff.cc:412
+msgid ""
+"Scale an object over a point, by the ratio given by the length of a segment"
+msgstr ""
+
+#: misc/builtin_stuff.cc:419
+msgid "Scale over Line"
+msgstr ""
+
+#: misc/builtin_stuff.cc:420
+msgid ""
+"An object scaled over a line, by the ratio given by the length of a segment"
+msgstr ""
+
+#: misc/builtin_stuff.cc:427
+msgid "Scale (ratio given by two segments)"
+msgstr ""
+
+#: misc/builtin_stuff.cc:428
+msgid ""
+"Scale an object over a point, by the ratio given by the length of two "
+"segments"
+msgstr ""
+
+#: misc/builtin_stuff.cc:435
+msgid "Scale over Line (ratio given by two segments)"
+msgstr ""
+
+#: misc/builtin_stuff.cc:436
+msgid ""
+"An object scaled over a line, by the ratio given by the length of two "
+"segments"
+msgstr ""
+
+#: misc/builtin_stuff.cc:443
+msgid "Apply Similitude"
+msgstr ""
+
+#: misc/builtin_stuff.cc:444
+msgid ""
+"Apply a similitude to an object (the sequence of a scaling and rotation "
+"around a center)"
+msgstr ""
+
+#: misc/builtin_stuff.cc:451
+msgid "Harmonic Homology"
+msgstr ""
+
+#: misc/builtin_stuff.cc:452
+msgid ""
+"The harmonic homology with a given center and a given axis (this is a "
+"projective transformation)"
+msgstr ""
+
+#: misc/builtin_stuff.cc:467
+msgid "Draw Projective Shadow"
+msgstr ""
+
+#: misc/builtin_stuff.cc:468
+msgid ""
+"The shadow of an object with a given light source and projection plane "
+"(indicated by a line)"
+msgstr ""
+
+#: misc/builtin_stuff.cc:483
+msgid "Asymptotes of a Hyperbola"
+msgstr ""
+
+#: misc/builtin_stuff.cc:484
+msgid "The two asymptotes of a hyperbola."
+msgstr ""
+
+#: misc/builtin_stuff.cc:497
+msgid "Triangle by Its Vertices"
+msgstr ""
+
+#: misc/builtin_stuff.cc:498
+msgid "Construct a triangle given its three vertices."
+msgstr ""
+
+#: misc/builtin_stuff.cc:524
+msgid "Convex Hull"
+msgstr ""
+
+#: misc/builtin_stuff.cc:525
+msgid "A polygon that corresponds to the convex hull of another polygon"
+msgstr ""
+
+#: misc/builtin_stuff.cc:536
+msgid "Bézier Quadratic by its Control Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:537
+msgid "Construct a Bézier quadratic given its three control points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:544
+msgid "Bézier Cubic by its Control Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:545
+msgid "Construct a Bézier cubic given its four control points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:556
+msgid "Rational Bézier Quadratic by its Control Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:557
+msgid "Construct a Rational Bézier quadratic given its three control points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:564
+msgid "Rational Bézier Cubic by its Control Points"
+msgstr ""
+
+#: misc/builtin_stuff.cc:565
+msgid "Construct a Rational Bézier cubic given its four control points."
+msgstr ""
+
+#: misc/builtin_stuff.cc:584
+msgid "Parallel Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:585
+msgid "Test whether two given lines are parallel"
+msgstr ""
+
+#: misc/builtin_stuff.cc:592
+msgid "Orthogonal Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:593
+msgid "Test whether two given lines are orthogonal"
+msgstr ""
+
+#: misc/builtin_stuff.cc:600
+msgid "Collinear Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:601
+msgid "Test whether three given points are collinear"
+msgstr ""
+
+#: misc/builtin_stuff.cc:608
+msgid "Contains Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:609
+msgid "Test whether a given curve contains a given point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:616
+msgid "In Polygon Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:617
+msgid "Test whether a given polygon contains a given point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:624
+msgid "Convex Polygon Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:625
+msgid "Test whether a given polygon is convex"
+msgstr ""
+
+#: misc/builtin_stuff.cc:632
+msgid "Existence Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:633
+msgid "Test whether a given object is constructible"
+msgstr ""
+
+#: misc/builtin_stuff.cc:640
+msgid "Distance Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:641
+msgid ""
+"Test whether a given point have the same distance from a given point and "
+"from another given point"
+msgstr ""
+
+#: misc/builtin_stuff.cc:649
+msgid "Vector Equality Test"
+msgstr ""
+
+#: misc/builtin_stuff.cc:650
+msgid "Test whether two vectors are equal"
+msgstr ""
+
+#: misc/builtin_stuff.cc:691 modes/popup.cc:1028
+msgid "Python Script"
+msgstr ""
+
+#: misc/builtin_stuff.cc:692
+msgid "Construct a new Python script."
+msgstr ""
+
+#: misc/goniometry.cc:122
+msgctxt "Translators: Degrees"
+msgid "Deg"
+msgstr ""
+
+#: misc/goniometry.cc:123
+msgctxt "Translators: Radians"
+msgid "Rad"
+msgstr ""
+
+#: misc/goniometry.cc:124
+msgctxt "Translators: Gradians"
+msgid "Grad"
+msgstr ""
+
+#: misc/guiaction.cc:121
+msgid ""
+"A normal point, i.e. one that is either independent or attached to a line, "
+"circle, segment."
+msgstr ""
+
+#: misc/guiaction.cc:133
+msgid "Point"
+msgstr ""
+
+#: misc/guiaction.cc:174
+msgid "Construct a text label."
+msgstr ""
+
+#: misc/guiaction.cc:184
+msgid "Text Label"
+msgstr ""
+
+#: misc/guiaction.cc:205
+msgid "Construct a Point by its Coordinates"
+msgstr ""
+
+#: misc/guiaction.cc:215
+msgid "Point by Coordinates"
+msgstr ""
+
+#: misc/guiaction.cc:228
+msgid "Fixed Point"
+msgstr ""
+
+#: misc/guiaction.cc:229
+msgid "Enter the coordinates for the new point."
+msgstr ""
+
+#: misc/guiaction.cc:250
+msgid "Construct a Numeric Value"
+msgstr ""
+
+#: misc/guiaction.cc:260
+msgid "Numeric Value"
+msgstr ""
+
+#: misc/kigfiledialog.cc:54 kig/kig_part.cpp:675 modes/typesdialog.cpp:456
+#, kde-format
+msgid "The file \"%1\" already exists. Do you wish to overwrite it?"
+msgstr ""
+
+#: misc/kigfiledialog.cc:55 kig/kig_part.cpp:676 modes/typesdialog.cpp:458
+msgid "Overwrite File?"
+msgstr ""
+
+#: misc/kiginputdialog.cc:130
+msgid "Set Angle Size"
+msgstr ""
+
+#: misc/kiginputdialog.cc:144
+msgid "Insert the new size of this angle:"
+msgstr ""
+
+#: misc/kiginputdialog.cc:155
+msgid "Use this edit field to modify the size of this angle."
+msgstr ""
+
+#: misc/kiginputdialog.cc:162
+msgid ""
+"Choose from this list the goniometric unit you want to use to modify the "
+"size of this angle.<br />\n"
+"If you switch to another unit, the value in the edit field on the left will "
+"be converted to the new selected unit."
+msgstr ""
+
+#: misc/lists.cc:303 misc/lists.cc:309
+#, kde-format
+msgid "Could not open macro file '%1'"
+msgstr ""
+
+#: misc/lists.cc:320
+#, kde-format
+msgid "Kig cannot open the macro file \"%1\"."
+msgstr ""
+
+#: misc/lists.cc:321
+msgid ""
+"This file was created by a very old Kig version (pre-0.4). Support for this "
+"format has been removed from recent Kig versions. You can try to import this "
+"macro using a previous Kig version (0.4 to 0.6) and then export it again in "
+"the new format."
+msgstr ""
+
+#: misc/lists.cc:377
+#, kde-format
+msgid "Unnamed Macro #%1"
+msgstr ""
+
+#: misc/object_hierarchy.cc:551
+#, kde-format
+msgid ""
+"This Kig file uses an object of type \"%1\", which this Kig version does not "
+"support. Perhaps you have compiled Kig without support for this object type, "
+"or perhaps you are using an older Kig version."
+msgstr ""
+
+#: misc/special_constructors.cc:325
+msgid "Radical Lines for Conics"
+msgstr ""
+
+#: misc/special_constructors.cc:326
+msgid ""
+"The lines constructed through the intersections of two conics.  This is also "
+"defined for non-intersecting conics."
+msgstr ""
+
+#: misc/special_constructors.cc:384 misc/special_constructors.cc:480
+msgid "Moving Point"
+msgstr ""
+
+#: misc/special_constructors.cc:385
+msgid ""
+"Select the moving point, which will be moved around while drawing the "
+"locus..."
+msgstr ""
+
+#: misc/special_constructors.cc:386
+msgid "Following Point"
+msgstr ""
+
+#: misc/special_constructors.cc:387
+msgid ""
+"Select the following point, whose locations the locus will be drawn "
+"through..."
+msgstr ""
+
+#: misc/special_constructors.cc:391
+msgid "Locus"
+msgstr ""
+
+#: misc/special_constructors.cc:391
+msgid "A locus"
+msgstr ""
+
+#: misc/special_constructors.cc:481
+msgid "Dependent Point"
+msgstr ""
+
+#: misc/special_constructors.cc:599
+msgid "Polygon by Its Vertices"
+msgstr ""
+
+#: misc/special_constructors.cc:600
+msgid "Construct a polygon by giving its vertices"
+msgstr ""
+
+#: misc/special_constructors.cc:636
+msgid ""
+"... with this vertex (click on the first vertex to terminate construction)"
+msgstr ""
+
+#: misc/special_constructors.cc:637
+msgid "Construct a polygon with this vertex"
+msgstr ""
+
+#: misc/special_constructors.cc:644
+msgid "Select a point to be a vertex of the new polygon..."
+msgstr ""
+
+#: misc/special_constructors.cc:678
+msgid "Open Polygon (Polygonal Line)"
+msgstr ""
+
+#: misc/special_constructors.cc:679
+msgid "Construct an open polygon"
+msgstr ""
+
+#: misc/special_constructors.cc:715
+msgid ""
+"... with this vertex (click again on the last vertex to terminate "
+"construction)"
+msgstr ""
+
+#: misc/special_constructors.cc:716
+msgid "Construct a polygonal line with this vertex"
+msgstr ""
+
+#: misc/special_constructors.cc:723
+msgid "Select a point to be a vertex of the new polygonal line..."
+msgstr ""
+
+#: misc/special_constructors.cc:756 misc/special_constructors.cc:823
+msgid "Polygon"
+msgstr ""
+
+#: misc/special_constructors.cc:757
+msgid "Construct the vertices of this polygon..."
+msgstr ""
+
+#: misc/special_constructors.cc:761
+msgid "Vertices of a Polygon"
+msgstr ""
+
+#: misc/special_constructors.cc:762
+msgid "The vertices of a polygon."
+msgstr ""
+
+#: misc/special_constructors.cc:824
+msgid "Construct the sides of this polygon..."
+msgstr ""
+
+#: misc/special_constructors.cc:828
+msgid "Sides of a Polygon"
+msgstr ""
+
+#: misc/special_constructors.cc:829
+msgid "The sides of a polygon."
+msgstr ""
+
+#: misc/special_constructors.cc:900
+msgid "Regular Polygon with Given Center"
+msgstr ""
+
+#: misc/special_constructors.cc:905
+msgid "Construct a regular polygon with a given center and vertex"
+msgstr ""
+
+#: misc/special_constructors.cc:1064
+msgid "Construct a regular polygon with this center"
+msgstr ""
+
+#: misc/special_constructors.cc:1068
+msgid "Construct a regular polygon with this vertex"
+msgstr ""
+
+#: misc/special_constructors.cc:1080
+#, kde-format
+msgid "Adjust the number of sides (%1/%2)"
+msgstr ""
+
+#: misc/special_constructors.cc:1084
+#, kde-format
+msgid "Adjust the number of sides (%1)"
+msgstr ""
+
+#: misc/special_constructors.cc:1100
+msgid "Select the center of the new polygon..."
+msgstr ""
+
+#: misc/special_constructors.cc:1104
+msgid "Select a vertex for the new polygon..."
+msgstr ""
+
+#: misc/special_constructors.cc:1108
+msgid "Move the cursor to get the desired number of sides..."
+msgstr ""
+
+#: misc/special_constructors.cc:1190
+msgid "Bézier Curve by its Control Points"
+msgstr ""
+
+#: misc/special_constructors.cc:1191
+msgid "Construct a Bézier curve by giving its control points"
+msgstr ""
+
+#: misc/special_constructors.cc:1227
+msgid ""
+"... with this control point (click again on the last control point to "
+"terminate construction)"
+msgstr ""
+
+#: misc/special_constructors.cc:1228
+msgid "Construct a Bézier curve with this control point"
+msgstr ""
+
+#: misc/special_constructors.cc:1235
+msgid "Select a point to be a control point of the new Bézier curve..."
+msgstr ""
+
+#: misc/special_constructors.cc:1272
+msgid "Rational Bézier Curve by its Control Points"
+msgstr ""
+
+#: misc/special_constructors.cc:1277
+msgid ""
+"Construct a Bézier curve by giving its control points and positive weights"
+msgstr ""
+
+#: misc/special_constructors.cc:1342
+msgid "... assign this weight to last selected control point"
+msgstr ""
+
+#: misc/special_constructors.cc:1345
+msgid ""
+"... with this control point (click again on the last control point or weight "
+"to terminate construction)"
+msgstr ""
+
+#: misc/special_constructors.cc:1346
+msgid "Construct a rational Bézier curve with this control point"
+msgstr ""
+
+#: misc/special_constructors.cc:1354
+msgid ""
+"Select a point to be a control point of the new rational Bézier curve..."
+msgstr ""
+
+#: misc/special_constructors.cc:1356
+msgid "Select a numeric label to be a weight of last selected point..."
+msgstr ""
+
+#: misc/special_constructors.cc:1549
+msgid "Construct the Radical Lines of This Circle"
+msgstr ""
+
+#: misc/special_constructors.cc:1551
+msgid "Construct the Radical Lines of This Conic"
+msgstr ""
+
+#: misc/special_constructors.cc:1566
+msgid "Generic Affinity"
+msgstr ""
+
+#: misc/special_constructors.cc:1567
+msgid ""
+"The unique affinity that maps three points (or a triangle) onto three other "
+"points (or a triangle)"
+msgstr ""
+
+#: misc/special_constructors.cc:1590
+msgid "Generic Projective Transformation"
+msgstr ""
+
+#: misc/special_constructors.cc:1591
+msgid ""
+"The unique projective transformation that maps four points (or a "
+"quadrilateral) onto four other points (or a quadrilateral)"
+msgstr ""
+
+#: misc/special_constructors.cc:1618
+msgid "Inversion of Point, Line or Circle"
+msgstr ""
+
+#: misc/special_constructors.cc:1619
+msgid "The inversion of a point, line or circle with respect to a circle"
+msgstr ""
+
+#: misc/special_constructors.cc:1683
+msgid "Measure Transport"
+msgstr ""
+
+#: misc/special_constructors.cc:1688
+msgid "Transport the measure of a segment or arc over a line or circle."
+msgstr ""
+
+#: misc/special_constructors.cc:1801 objects/special_calcers.cc:24
+msgid "Segment to transport"
+msgstr ""
+
+#: misc/special_constructors.cc:1803
+msgid "Arc to transport"
+msgstr ""
+
+#: misc/special_constructors.cc:1805
+msgid "Value to transport"
+msgstr ""
+
+#: misc/special_constructors.cc:1807
+msgid "Transport a measure on this line"
+msgstr ""
+
+#: misc/special_constructors.cc:1809 objects/special_calcers.cc:22
+msgid "Transport a measure on this circle"
+msgstr ""
+
+#: misc/special_constructors.cc:1813
+msgid "Start transport from this point of the circle"
+msgstr ""
+
+#: misc/special_constructors.cc:1815
+msgid "Start transport from this point of the line"
+msgstr ""
+
+#: misc/special_constructors.cc:1817
+msgid "Start transport from this point of the curve"
+msgstr ""
+
+#: misc/special_constructors.cc:1830
+msgid "Select a segment, arc or numeric label to be transported..."
+msgstr ""
+
+#: misc/special_constructors.cc:1834
+msgid "Select a destination line or circle..."
+msgstr ""
+
+#: misc/special_constructors.cc:1838
+msgid "Choose a starting point on the line/circle..."
+msgstr ""
+
+#: misc/special_constructors.cc:1879 objects/intersection_types.cc:36
+msgid "Intersect with this conic"
+msgstr ""
+
+#: misc/special_constructors.cc:1881 misc/special_constructors.cc:1890
+#: objects/intersection_types.cc:32
+msgid "Intersect with this line"
+msgstr ""
+
+#: misc/special_constructors.cc:1888 objects/intersection_types.cc:155
+#: objects/intersection_types.cc:223
+msgid "Intersect with this cubic"
+msgstr ""
+
+#: misc/special_constructors.cc:1897 misc/special_constructors.cc:1899
+#: objects/intersection_types.cc:471 objects/intersection_types.cc:473
+msgid "Intersect with this circle"
+msgstr ""
+
+#: misc/special_constructors.cc:1905
+msgid "Intersect"
+msgstr ""
+
+#: misc/special_constructors.cc:1906
+msgid "The intersection of two objects"
+msgstr ""
+
+#: misc/special_constructors.cc:2007
+msgid "Intersect this Circle"
+msgstr ""
+
+#: misc/special_constructors.cc:2009
+msgid "Intersect this Conic"
+msgstr ""
+
+#: misc/special_constructors.cc:2011
+msgid "Intersect this Segment"
+msgstr ""
+
+#: misc/special_constructors.cc:2013
+msgid "Intersect this Half-line"
+msgstr ""
+
+#: misc/special_constructors.cc:2015
+msgid "Intersect this Line"
+msgstr ""
+
+#: misc/special_constructors.cc:2017
+msgid "Intersect this Cubic Curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2019
+msgid "Intersect this Arc"
+msgstr ""
+
+#: misc/special_constructors.cc:2021
+msgid "Intersect this Polygon"
+msgstr ""
+
+#: misc/special_constructors.cc:2023
+msgid "Intersect this Polygonal"
+msgstr ""
+
+#: misc/special_constructors.cc:2028
+msgid "with this Circle"
+msgstr ""
+
+#: misc/special_constructors.cc:2030
+msgid "with this Conic"
+msgstr ""
+
+#: misc/special_constructors.cc:2032
+msgid "with this Segment"
+msgstr ""
+
+#: misc/special_constructors.cc:2034
+msgid "with this Half-line"
+msgstr ""
+
+#: misc/special_constructors.cc:2036
+msgid "with this Line"
+msgstr ""
+
+#: misc/special_constructors.cc:2038
+msgid "with this Cubic Curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2040
+msgid "with this Arc"
+msgstr ""
+
+#: misc/special_constructors.cc:2042
+msgid "with this Polygon"
+msgstr ""
+
+#: misc/special_constructors.cc:2044
+msgid "with this Polygonal"
+msgstr ""
+
+#: misc/special_constructors.cc:2054
+msgid "Construct Midpoint of This Point and Another One"
+msgstr ""
+
+#: misc/special_constructors.cc:2055
+msgid ""
+"Select the first of the points of which you want to construct the midpoint..."
+msgstr ""
+
+#: misc/special_constructors.cc:2056
+msgid "Construct the midpoint of this point and another one"
+msgstr ""
+
+#: misc/special_constructors.cc:2057
+msgid "Select the other of the points of which to construct the midpoint..."
+msgstr ""
+
+#: misc/special_constructors.cc:2167
+msgid "Select the first object to intersect..."
+msgstr ""
+
+#: misc/special_constructors.cc:2169
+msgid "Select the second object to intersect..."
+msgstr ""
+
+#: misc/special_constructors.cc:2174
+msgid "Tangent"
+msgstr ""
+
+#: misc/special_constructors.cc:2175
+msgid "The line tangent to a curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2217
+msgid "Tangent to This Circle"
+msgstr ""
+
+#: misc/special_constructors.cc:2219
+msgid "Tangent to This Conic"
+msgstr ""
+
+#: misc/special_constructors.cc:2221
+msgid "Tangent to This Arc"
+msgstr ""
+
+#: misc/special_constructors.cc:2223
+msgid "Tangent to This Cubic Curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2225
+msgid "Tangent to This Curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2227
+msgid "Tangent at This Point"
+msgstr ""
+
+#: misc/special_constructors.cc:2248
+msgid "Center Of Curvature"
+msgstr ""
+
+#: misc/special_constructors.cc:2249
+msgid "The center of the osculating circle to a curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2284
+msgid "Center of Curvature of This Conic"
+msgstr ""
+
+#: misc/special_constructors.cc:2286
+msgid "Center of Curvature of This Cubic Curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2288
+msgid "Center of Curvature of This Curve"
+msgstr ""
+
+#: misc/special_constructors.cc:2290
+msgid "Center of Curvature at This Point"
+msgstr ""
+
+#: misc/unit.cc:121
+msgctxt "Translators: Pixel"
+msgid "pixel"
+msgstr ""
+
+#: misc/unit.cc:122
+msgctxt "Translators: Centimeter"
+msgid "cm"
+msgstr ""
+
+#: misc/unit.cc:123
+msgctxt "Translators: Inch"
+msgid "in"
+msgstr ""
+
+#: modes/construct_mode.cc:265 modes/normal.cc:280
+msgid "Which object?"
+msgstr ""
+
+#: modes/construct_mode.cc:301
+msgid ""
+"Click the location where you want to place the new point, or the curve that "
+"you want to attach it to..."
+msgstr ""
+
+#: modes/construct_mode.cc:478
+msgid "Now select the location for the result label."
+msgstr ""
+
+#: modes/edittype.cc:38
+msgid "Edit Type"
+msgstr ""
+
+#: modes/edittype.cc:49
+msgid "Here you can edit the name of the current macro type."
+msgstr ""
+
+#: modes/edittype.cc:52
+msgid ""
+"Here you can edit the description of the current macro type. This field is "
+"optional, so you can also leave this empty: if you do so, then your macro "
+"type will have no description."
+msgstr ""
+
+#: modes/edittype.cc:57
+msgid "Use this button to change the icon of the current macro type."
+msgstr ""
+
+#: modes/edittype.cc:81
+msgid "The name of the macro can not be empty."
+msgstr ""
+
+#: modes/historydialog.cc:41
+msgid "History Browser"
+msgstr ""
+
+#: modes/historydialog.cc:125
+msgid "Start of the construction"
+msgstr ""
+
+#: modes/label.cc:168 modes/macrowizard.cc:130 modes/typesdialog.cpp:314
+msgid "Name"
+msgstr ""
+
+#: modes/label.cc:196 modes/popup.cc:538 modes/popup.cc:570
+msgid "<unnamed object>"
+msgstr ""
+
+#: modes/label.cc:329
+#, c-format
+msgid ""
+"There are '%n' parts in the text that you have not selected a value for. "
+"Please remove them or select enough arguments."
+msgstr ""
+
+#: modes/label.cc:406
+#, kde-format
+msgid "argument %1"
+msgstr ""
+
+#: modes/label.cc:435
+#, kde-format
+msgid "Selecting argument %1"
+msgstr ""
+
+#: modes/label.cc:546
+msgid "Change Label"
+msgstr ""
+
+#: modes/label.cc:645 objects/text_type.cc:325
+msgid "Set Value"
+msgstr ""
+
+#: modes/label.cc:645
+msgid "Enter value:"
+msgstr ""
+
+#: modes/label.cc:676
+msgid "Select the position for the new numeric value..."
+msgstr ""
+
+#: modes/macro.cc:92
+msgid ""
+"One of the result objects you selected cannot be calculated from the given "
+"objects. Kig cannot calculate this macro because of this. Please press Back, "
+"and construct the objects in the correct order..."
+msgstr ""
+
+#: modes/macro.cc:102
+msgid ""
+"One of the given objects is not used in the calculation of the resultant "
+"objects.  This probably means you are expecting Kig to do something "
+"impossible.  Please check the macro and try again."
+msgstr ""
+
+#: modes/macrowizard.cc:50
+msgid "Given Objects"
+msgstr ""
+
+#: modes/macrowizard.cc:57
+msgid "Select the \"given\" objects for your new macro and press \"Next\"."
+msgstr ""
+
+#: modes/macrowizard.cc:90
+msgid "Final Object"
+msgstr ""
+
+#: modes/macrowizard.cc:97
+msgid "Select the final object(s) for your new macro."
+msgstr ""
+
+#: modes/macrowizard.cc:131
+msgid "Enter a name and description for your new type."
+msgstr ""
+
+#: modes/macrowizard.cc:139
+msgid "&Name:"
+msgstr ""
+
+#: modes/macrowizard.cc:146
+msgid "&Description:"
+msgstr ""
+
+#: modes/macrowizard.cc:152
+msgid "&Icon:"
+msgstr ""
+
+#: modes/macrowizard.cc:174
+msgid "Define New Macro"
+msgstr ""
+
+#: modes/moving.cc:158
+#, kde-format
+msgid "Move %1 Object"
+msgid_plural "Move %1 Objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modes/moving.cc:241
+msgid "Redefine Point"
+msgstr ""
+
+#: modes/popup.cc:200
+msgid "Kig Document"
+msgstr ""
+
+#: modes/popup.cc:209 modes/popup.cc:1153
+#, kde-format
+msgid "%1 Object"
+msgid_plural "%1 Objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modes/popup.cc:251
+msgid "&Transform"
+msgstr ""
+
+#: modes/popup.cc:252
+msgid "T&est"
+msgstr ""
+
+#: modes/popup.cc:253
+msgid "Const&ruct"
+msgstr ""
+
+#: modes/popup.cc:254
+msgid "&Start"
+msgstr ""
+
+#: modes/popup.cc:255
+msgid "Add Te&xt Label"
+msgstr ""
+
+#: modes/popup.cc:256
+msgid "Set Co&lor"
+msgstr ""
+
+#: modes/popup.cc:257
+msgid "Set &Pen Width"
+msgstr ""
+
+#: modes/popup.cc:258
+msgid "Set St&yle"
+msgstr ""
+
+#: modes/popup.cc:260
+msgid "Set Coordinate S&ystem"
+msgstr ""
+
+#: modes/popup.cc:352
+msgid "Black"
+msgstr ""
+
+#: modes/popup.cc:353
+msgid "Gray"
+msgstr ""
+
+#: modes/popup.cc:354
+msgid "Red"
+msgstr ""
+
+#: modes/popup.cc:355
+msgid "Green"
+msgstr ""
+
+#: modes/popup.cc:356
+msgid "Cyan"
+msgstr ""
+
+#: modes/popup.cc:357
+msgid "Yellow"
+msgstr ""
+
+#: modes/popup.cc:358
+msgid "Dark Red"
+msgstr ""
+
+#: modes/popup.cc:382
+msgid "&Hide"
+msgstr ""
+
+#: modes/popup.cc:386
+msgid "&Show"
+msgstr ""
+
+#: modes/popup.cc:389
+msgid "&Move"
+msgstr ""
+
+#: modes/popup.cc:400
+msgid "&Custom Color"
+msgstr ""
+
+#: modes/popup.cc:489
+msgid "Set &Name..."
+msgstr ""
+
+#: modes/popup.cc:493
+msgid "&Name"
+msgstr ""
+
+#: modes/popup.cc:529 modes/popup.cc:546
+msgid "Set Object Name"
+msgstr ""
+
+#: modes/popup.cc:529
+msgid "Set Name of this Object:"
+msgstr ""
+
+#: modes/popup.cc:644
+msgid "Change Object Color"
+msgstr ""
+
+#: modes/popup.cc:660
+msgid "Change Object Width"
+msgstr ""
+
+#: modes/popup.cc:688
+msgid "Change Point Style"
+msgstr ""
+
+#: modes/popup.cc:701
+msgid "Change Object Style"
+msgstr ""
+
+#: modes/popup.cc:788 modes/popup.cc:797 modes/popup.cc:806
+msgctxt "More menu items"
+msgid "More..."
+msgstr ""
+
+#: modes/popup.cc:940 kig/kig_part.cpp:256
+msgid "U&nhide All"
+msgstr ""
+
+#: modes/textlabelwizard.cc:50
+msgid "Enter Label Text"
+msgstr ""
+
+#: modes/textlabelwizard.cc:59
+#, kde-format
+msgid ""
+"Enter the text for your label here and press \"Next\".\n"
+"If you want to show variable parts, then put %1, %2, ... at the appropriate "
+"places (e.g. \"This segment is %1 units long.\")."
+msgstr ""
+
+#: modes/textlabelwizard.cc:69
+msgid "Show text in a frame"
+msgstr ""
+
+#: modes/textlabelwizard.cc:93 scripting/newscriptwizard.cc:67
+msgid "Select Arguments"
+msgstr ""
+
+#: modes/textlabelwizard.cc:102
+msgid ""
+"Now select the argument(s) you need.  For every argument, click on it, "
+"select an object and a property in the Kig window, and click finish when you "
+"are done..."
+msgstr ""
+
+#: modes/textlabelwizard.cc:123
+msgid "Construct Label"
+msgstr ""
+
+#: objects/angle_type.cc:40
+msgid "Construct an angle through this point"
+msgstr ""
+
+#: objects/angle_type.cc:45
+msgid ""
+"Select a point that the first half-line of the angle should go through..."
+msgstr ""
+
+#: objects/angle_type.cc:46
+msgid "Construct an angle at this point"
+msgstr ""
+
+#: objects/angle_type.cc:47
+msgid "Select the point to construct the angle in..."
+msgstr ""
+
+#: objects/angle_type.cc:49
+msgid ""
+"Select a point that the second half-line of the angle should go through..."
+msgstr ""
+
+#: objects/angle_type.cc:104
+msgid "Set Si&ze"
+msgstr ""
+
+#: objects/angle_type.cc:148
+msgid "Resize Angle"
+msgstr ""
+
+#: objects/arc_type.cc:47
+msgid "Construct an arc starting at this point"
+msgstr ""
+
+#: objects/arc_type.cc:52 objects/arc_type.cc:168
+msgid "Select the start point of the new arc..."
+msgstr ""
+
+#: objects/arc_type.cc:53
+msgid "Construct an arc through this point"
+msgstr ""
+
+#: objects/arc_type.cc:54
+msgid "Select a point for the new arc to go through..."
+msgstr ""
+
+#: objects/arc_type.cc:55
+msgid "Construct an arc ending at this point"
+msgstr ""
+
+#: objects/arc_type.cc:56
+msgid "Select the end point of the new arc..."
+msgstr ""
+
+#: objects/arc_type.cc:165
+msgid "Construct an arc with this center"
+msgstr ""
+
+#: objects/arc_type.cc:166
+msgid "Select the center of the new arc..."
+msgstr ""
+
+#: objects/arc_type.cc:169
+msgid "Construct an arc with this angle"
+msgstr ""
+
+#: objects/arc_type.cc:170
+msgid "Select the angle of the new arc..."
+msgstr ""
+
+#: objects/arc_type.cc:225
+msgid "Construct a conic arc starting at this point"
+msgstr ""
+
+#: objects/arc_type.cc:226
+msgid "Select the start point of the new conic arc..."
+msgstr ""
+
+#: objects/arc_type.cc:227
+msgid "Construct a conic arc through this point"
+msgstr ""
+
+#: objects/arc_type.cc:228
+msgid "Select a point for the new conic arc to go through..."
+msgstr ""
+
+#: objects/arc_type.cc:229
+msgid "Construct a conic arc ending at this point"
+msgstr ""
+
+#: objects/arc_type.cc:230
+msgid "Select the end point of the new conic arc..."
+msgstr ""
+
+#: objects/arc_type.cc:234
+msgid "Construct an conic arc with this center"
+msgstr ""
+
+#: objects/arc_type.cc:235
+msgid "Select the center of the new conic arc..."
+msgstr ""
+
+#: objects/bezier_imp.cc:136 objects/bezier_imp.cc:434
+msgid "Number of control points"
+msgstr ""
+
+#: objects/bezier_imp.cc:137 objects/bezier_imp.cc:435
+msgid "Control polygon"
+msgstr ""
+
+#: objects/bezier_imp.cc:138 objects/bezier_imp.cc:436
+#: objects/circle_imp.cc:151 objects/conic_imp.cc:88 objects/cubic_imp.cc:293
+#: objects/locus_imp.cc:107
+msgid "Cartesian Equation"
+msgstr ""
+
+#: objects/bezier_imp.cc:222 objects/polygon_imp.cc:336
+msgid "Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:223
+msgid "Select this Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:224
+#, kde-format
+msgid "Select Bézier Curve %1"
+msgstr ""
+
+#: objects/bezier_imp.cc:225
+msgid "Remove a Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:226
+msgid "Add a Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:227
+msgid "Move a Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:228
+msgid "Attach to this Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:229
+msgid "Show a Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:230
+msgid "Hide a Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:240
+msgid "Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:241
+msgid "Select this Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:242
+#, kde-format
+msgid "Select Bézier Quadratic %1"
+msgstr ""
+
+#: objects/bezier_imp.cc:243
+msgid "Remove a Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:244
+msgid "Add a Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:245
+msgid "Move a Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:246
+msgid "Attach to this Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:247
+msgid "Show a Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:248
+msgid "Hide a Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:258
+msgid "Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:259
+msgid "Select this Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:260
+#, kde-format
+msgid "Select Bézier Cubic %1"
+msgstr ""
+
+#: objects/bezier_imp.cc:261
+msgid "Remove a Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:262
+msgid "Add a Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:263
+msgid "Move a Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:264
+msgid "Attach to this Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:265
+msgid "Show a Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:266
+msgid "Hide a Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:520
+msgid "Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:521
+msgid "Select this Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:522
+#, kde-format
+msgid "Select Rational Bézier Curve %1"
+msgstr ""
+
+#: objects/bezier_imp.cc:523
+msgid "Remove a Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:524
+msgid "Add a Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:525
+msgid "Move a Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:526
+msgid "Attach to this Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:527
+msgid "Show a Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:528
+msgid "Hide a Rational Bézier Curve"
+msgstr ""
+
+#: objects/bezier_imp.cc:538
+msgid "Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:539
+msgid "Select this Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:540
+#, kde-format
+msgid "Select Rational Bézier Quadratic %1"
+msgstr ""
+
+#: objects/bezier_imp.cc:541
+msgid "Remove a Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:542
+msgid "Add a Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:543
+msgid "Move a Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:544
+msgid "Attach to this Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:545
+msgid "Show a Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:546
+msgid "Hide a Rational Bézier Quadratic"
+msgstr ""
+
+#: objects/bezier_imp.cc:556
+msgid "Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:557
+msgid "Select this Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:558
+#, kde-format
+msgid "Select Rational Bézier Cubic %1"
+msgstr ""
+
+#: objects/bezier_imp.cc:559
+msgid "Remove a Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:560
+msgid "Add a Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:561
+msgid "Move a Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:562
+msgid "Attach to this Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:563
+msgid "Show a Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_imp.cc:564
+msgid "Hide a Rational Bézier Cubic"
+msgstr ""
+
+#: objects/bezier_type.cc:40
+msgid "Construct a quadratic Bézier curve with this control point"
+msgstr ""
+
+#: objects/bezier_type.cc:41
+msgid ""
+"Select a point to be a control point of the new quadratic Bézier curve..."
+msgstr ""
+
+#: objects/bezier_type.cc:140
+msgid "Construct a cubic Bézier curve with this control point"
+msgstr ""
+
+#: objects/bezier_type.cc:141
+msgid "Select a point to be a control point of the new cubic Bézier curve..."
+msgstr ""
+
+#: objects/bezier_type.cc:358
+msgid "Construct a quadratic rational Bézier curve with this control point"
+msgstr ""
+
+#: objects/bezier_type.cc:359 objects/bezier_type.cc:470
+msgid ""
+"Select three points and three numeric values as weights to construct "
+"rational Bézier curve..."
+msgstr ""
+
+#: objects/bezier_type.cc:360 objects/bezier_type.cc:471
+msgid "Select this value as weight"
+msgstr ""
+
+#: objects/bezier_type.cc:469
+msgid "Construct a cubic rational Bézier curve with this control point"
+msgstr ""
+
+#: objects/bogus_imp.cc:338
+msgid "Test Result"
+msgstr ""
+
+#: objects/centerofcurvature_type.cc:36
+msgid "Select a point on the curve..."
+msgstr ""
+
+#: objects/circle_imp.cc:146 objects/polygon_imp.cc:308
+#: objects/polygon_imp.cc:322
+msgid "Surface"
+msgstr ""
+
+#: objects/circle_imp.cc:147
+msgid "Circumference"
+msgstr ""
+
+#: objects/circle_imp.cc:148 objects/other_imp.cc:378
+msgid "Radius"
+msgstr ""
+
+#: objects/circle_imp.cc:149 objects/conic_imp.cc:85 objects/other_imp.cc:377
+msgid "Center"
+msgstr ""
+
+#: objects/circle_imp.cc:150
+msgid "Expanded Cartesian Equation"
+msgstr ""
+
+#: objects/circle_imp.cc:152 objects/conic_imp.cc:89
+msgid "Polar Equation"
+msgstr ""
+
+#: objects/circle_imp.cc:238
+#, kde-format
+msgid "rho = %1   [centered at %2]"
+msgstr ""
+
+#: objects/circle_imp.cc:346
+msgid "circle"
+msgstr ""
+
+#: objects/circle_imp.cc:347
+msgid "Select this circle"
+msgstr ""
+
+#: objects/circle_imp.cc:348
+#, kde-format
+msgid "Select circle %1"
+msgstr ""
+
+#: objects/circle_imp.cc:349
+msgid "Remove a Circle"
+msgstr ""
+
+#: objects/circle_imp.cc:350
+msgid "Add a Circle"
+msgstr ""
+
+#: objects/circle_imp.cc:351
+msgid "Move a Circle"
+msgstr ""
+
+#: objects/circle_imp.cc:352
+msgid "Attach to this circle"
+msgstr ""
+
+#: objects/circle_imp.cc:353
+msgid "Show a Circle"
+msgstr ""
+
+#: objects/circle_imp.cc:354
+msgid "Hide a Circle"
+msgstr ""
+
+#: objects/circle_type.cc:32
+msgid "Construct a circle through this point"
+msgstr ""
+
+#: objects/circle_type.cc:41 objects/circle_type.cc:75
+#: objects/circle_type.cc:77 objects/circle_type.cc:79
+msgid "Select a point for the new circle to go through..."
+msgstr ""
+
+#: objects/circle_type.cc:195
+msgid "With this radius"
+msgstr ""
+
+#: objects/circle_type.cc:196
+msgid "Select the length of the radius..."
+msgstr ""
+
+#: objects/conic_imp.cc:84
+msgid "Conic Type"
+msgstr ""
+
+#: objects/conic_imp.cc:86
+msgid "First Focus"
+msgstr ""
+
+#: objects/conic_imp.cc:87
+msgid "Second Focus"
+msgstr ""
+
+#: objects/conic_imp.cc:210
+msgid "Ellipse"
+msgstr ""
+
+#: objects/conic_imp.cc:212
+msgid "Hyperbola"
+msgstr ""
+
+#: objects/conic_imp.cc:214
+msgid "Parabola"
+msgstr ""
+
+#: objects/conic_imp.cc:264
+msgid "rho"
+msgstr ""
+
+#: objects/conic_imp.cc:271
+msgid "cos theta"
+msgstr ""
+
+#: objects/conic_imp.cc:272
+msgid "sin theta"
+msgstr ""
+
+#: objects/conic_imp.cc:274
+#, kde-format
+msgid "[centered at %1]"
+msgstr ""
+
+#: objects/conic_imp.cc:384
+msgid "conic"
+msgstr ""
+
+#: objects/conic_imp.cc:385
+msgid "Select this conic"
+msgstr ""
+
+#: objects/conic_imp.cc:386
+#, kde-format
+msgid "Select conic %1"
+msgstr ""
+
+#: objects/conic_imp.cc:387
+msgid "Remove a Conic"
+msgstr ""
+
+#: objects/conic_imp.cc:388
+msgid "Add a Conic"
+msgstr ""
+
+#: objects/conic_imp.cc:389
+msgid "Move a Conic"
+msgstr ""
+
+#: objects/conic_imp.cc:390
+msgid "Attach to this conic"
+msgstr ""
+
+#: objects/conic_imp.cc:391
+msgid "Show a Conic"
+msgstr ""
+
+#: objects/conic_imp.cc:392
+msgid "Hide a Conic"
+msgstr ""
+
+#: objects/conic_imp.cc:534
+msgid "Supporting Conic"
+msgstr ""
+
+#: objects/conic_imp.cc:535 objects/line_imp.cc:126 objects/other_imp.cc:385
+msgid "First End Point"
+msgstr ""
+
+#: objects/conic_imp.cc:536 objects/line_imp.cc:127 objects/other_imp.cc:386
+msgid "Second End Point"
+msgstr ""
+
+#: objects/conic_imp.cc:610
+msgid "conic arc"
+msgstr ""
+
+#: objects/conic_imp.cc:611
+msgid "Select this conic arc"
+msgstr ""
+
+#: objects/conic_imp.cc:612
+#, kde-format
+msgid "Select conic arc %1"
+msgstr ""
+
+#: objects/conic_imp.cc:613
+msgid "Remove a Conic Arc"
+msgstr ""
+
+#: objects/conic_imp.cc:614
+msgid "Add a Conic Arc"
+msgstr ""
+
+#: objects/conic_imp.cc:615
+msgid "Move a Conic Arc"
+msgstr ""
+
+#: objects/conic_imp.cc:616
+msgid "Attach to this conic arc"
+msgstr ""
+
+#: objects/conic_imp.cc:617
+msgid "Show a Conic Arc"
+msgstr ""
+
+#: objects/conic_imp.cc:618
+msgid "Hide a Conic Arc"
+msgstr ""
+
+#: objects/conic_types.cc:33 objects/conic_types.cc:87
+#: objects/conic_types.cc:221
+msgid "Construct a conic through this point"
+msgstr ""
+
+#: objects/conic_types.cc:38 objects/conic_types.cc:40
+#: objects/conic_types.cc:42 objects/conic_types.cc:44
+#: objects/conic_types.cc:46 objects/conic_types.cc:88
+#: objects/conic_types.cc:222
+msgid "Select a point for the new conic to go through..."
+msgstr ""
+
+#: objects/conic_types.cc:83 objects/conic_types.cc:85
+msgid "Construct a conic with this asymptote"
+msgstr ""
+
+#: objects/conic_types.cc:84
+msgid "Select the first asymptote of the new conic..."
+msgstr ""
+
+#: objects/conic_types.cc:86
+msgid "Select the second asymptote of the new conic..."
+msgstr ""
+
+#: objects/conic_types.cc:140
+msgid "Construct an ellipse with this focus"
+msgstr ""
+
+#: objects/conic_types.cc:145
+msgid "Select the first focus of the new ellipse..."
+msgstr ""
+
+#: objects/conic_types.cc:147
+msgid "Select the second focus of the new ellipse..."
+msgstr ""
+
+#: objects/conic_types.cc:148
+msgid "Construct an ellipse through this point"
+msgstr ""
+
+#: objects/conic_types.cc:149
+msgid "Select a point for the new ellipse to go through..."
+msgstr ""
+
+#: objects/conic_types.cc:175
+msgid "Construct a hyperbola with this focus"
+msgstr ""
+
+#: objects/conic_types.cc:180
+msgid "Select the first focus of the new hyperbola..."
+msgstr ""
+
+#: objects/conic_types.cc:182
+msgid "Select the second focus of the new hyperbola..."
+msgstr ""
+
+#: objects/conic_types.cc:183 objects/conic_types.cc:417
+msgid "Construct a hyperbola through this point"
+msgstr ""
+
+#: objects/conic_types.cc:184 objects/conic_types.cc:422
+#: objects/conic_types.cc:424 objects/conic_types.cc:426
+#: objects/conic_types.cc:428
+msgid "Select a point for the new hyperbola to go through..."
+msgstr ""
+
+#: objects/conic_types.cc:217
+msgid "Construct a conic with this line as directrix"
+msgstr ""
+
+#: objects/conic_types.cc:218
+msgid "Select the directrix of the new conic..."
+msgstr ""
+
+#: objects/conic_types.cc:219
+msgid "Construct a conic with this point as focus"
+msgstr ""
+
+#: objects/conic_types.cc:220
+msgid "Select the focus of the new conic..."
+msgstr ""
+
+#: objects/conic_types.cc:260
+msgid "Construct a parabola through this point"
+msgstr ""
+
+#: objects/conic_types.cc:265 objects/conic_types.cc:267
+#: objects/conic_types.cc:269
+msgid "Select a point for the new parabola to go through..."
+msgstr ""
+
+#: objects/conic_types.cc:307
+msgid "Construct a polar point wrt. this conic"
+msgstr ""
+
+#: objects/conic_types.cc:308 objects/conic_types.cc:344
+msgid "Select the conic wrt. which you want to construct a polar point..."
+msgstr ""
+
+#: objects/conic_types.cc:309
+msgid "Construct the polar point of this line"
+msgstr ""
+
+#: objects/conic_types.cc:310 objects/conic_types.cc:346
+msgid "Select the line of which you want to construct the polar point..."
+msgstr ""
+
+#: objects/conic_types.cc:343
+msgid "Construct a polar line wrt. this conic"
+msgstr ""
+
+#: objects/conic_types.cc:345
+msgid "Construct the polar line of this point"
+msgstr ""
+
+#: objects/conic_types.cc:380
+msgid "Construct the directrix of this conic"
+msgstr ""
+
+#: objects/conic_types.cc:381
+msgid "Select the conic of which you want to construct the directrix..."
+msgstr ""
+
+#: objects/conic_types.cc:465
+msgid "Construct a parabola with this directrix"
+msgstr ""
+
+#: objects/conic_types.cc:466
+msgid "Select the directrix of the new parabola..."
+msgstr ""
+
+#: objects/conic_types.cc:467
+msgid "Construct a parabola with this focus"
+msgstr ""
+
+#: objects/conic_types.cc:468
+msgid "Select the focus of the new parabola..."
+msgstr ""
+
+#: objects/conic_types.cc:505
+msgid "Construct the asymptotes of this conic"
+msgstr ""
+
+#: objects/conic_types.cc:506
+msgid "Select the conic of which you want to construct the asymptotes..."
+msgstr ""
+
+#: objects/conic_types.cc:543
+msgid "Construct the radical lines of this conic"
+msgstr ""
+
+#: objects/conic_types.cc:548
+msgid ""
+"Select the first of the two conics of which you want to construct the "
+"radical line..."
+msgstr ""
+
+#: objects/conic_types.cc:550
+msgid ""
+"Select the other of the two conic of which you want to construct the radical "
+"line..."
+msgstr ""
+
+#: objects/conic_types.cc:669
+msgid "Switch Radical Lines"
+msgstr ""
+
+#: objects/conic_types.cc:685
+msgid "Switch Conic Radical Lines"
+msgstr ""
+
+#: objects/cubic_imp.cc:356
+msgid "cubic curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:357
+msgid "Select this cubic curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:358
+#, kde-format
+msgid "Select cubic curve %1"
+msgstr ""
+
+#: objects/cubic_imp.cc:359
+msgid "Remove a Cubic Curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:360
+msgid "Add a Cubic Curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:361
+msgid "Move a Cubic Curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:362
+msgid "Attach to this cubic curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:363
+msgid "Show a Cubic Curve"
+msgstr ""
+
+#: objects/cubic_imp.cc:364
+msgid "Hide a Cubic Curve"
+msgstr ""
+
+#: objects/cubic_type.cc:26
+msgid "Construct a cubic curve through this point"
+msgstr ""
+
+#: objects/cubic_type.cc:27
+msgid "Select a point for the new cubic to go through..."
+msgstr ""
+
+#: objects/curve_imp.cc:31
+msgid "curve"
+msgstr ""
+
+#: objects/curve_imp.cc:32
+msgid "Select this curve"
+msgstr ""
+
+#: objects/curve_imp.cc:33
+#, kde-format
+msgid "Select curve %1"
+msgstr ""
+
+#: objects/curve_imp.cc:34
+msgid "Remove a Curve"
+msgstr ""
+
+#: objects/curve_imp.cc:35
+msgid "Add a Curve"
+msgstr ""
+
+#: objects/curve_imp.cc:36
+msgid "Move a Curve"
+msgstr ""
+
+#: objects/curve_imp.cc:37
+msgid "Attach to this curve"
+msgstr ""
+
+#: objects/curve_imp.cc:38
+msgid "Show a Curve"
+msgstr ""
+
+#: objects/curve_imp.cc:39
+msgid "Hide a Curve"
+msgstr ""
+
+#: objects/curve_imp.cc:405
+msgid "Possibly trascendental curve"
+msgstr ""
+
+#: objects/intersection_types.cc:157 objects/intersection_types.cc:158
+#: objects/intersection_types.cc:225
+msgid "Already computed intersection point"
+msgstr ""
+
+#: objects/intersection_types.cc:396
+msgid "Intersect with this cubic curve"
+msgstr ""
+
+#: objects/intersection_types.cc:523
+msgid "Intersect with this arc"
+msgstr ""
+
+#: objects/inversion_type.cc:34
+msgid "Invert with respect to this circle"
+msgstr ""
+
+#: objects/inversion_type.cc:35
+msgid "Select the circle we want to invert against..."
+msgstr ""
+
+#: objects/inversion_type.cc:40
+msgid "Compute the inversion of this object"
+msgstr ""
+
+#: objects/inversion_type.cc:41
+msgid "Select the object to invert..."
+msgstr ""
+
+#: objects/inversion_type.cc:292
+msgid "Compute the inversion of this point"
+msgstr ""
+
+#: objects/inversion_type.cc:293
+msgid "Select the point to invert..."
+msgstr ""
+
+#: objects/inversion_type.cc:353
+msgid "Compute the inversion of this line"
+msgstr ""
+
+#: objects/inversion_type.cc:354
+msgid "Select the line to invert..."
+msgstr ""
+
+#: objects/inversion_type.cc:406
+msgid "Compute the inversion of this segment"
+msgstr ""
+
+#: objects/inversion_type.cc:407
+msgid "Select the segment to invert..."
+msgstr ""
+
+#: objects/inversion_type.cc:497
+msgid "Compute the inversion of this circle"
+msgstr ""
+
+#: objects/inversion_type.cc:498
+msgid "Select the circle to invert..."
+msgstr ""
+
+#: objects/inversion_type.cc:562
+msgid "Compute the inversion of this arc"
+msgstr ""
+
+#: objects/inversion_type.cc:563
+msgid "Select the arc to invert..."
+msgstr ""
+
+#: objects/line_imp.cc:97
+msgid "Slope"
+msgstr ""
+
+#: objects/line_imp.cc:98
+msgid "Equation"
+msgstr ""
+
+#: objects/line_imp.cc:123 objects/other_imp.cc:215 objects/polygon_imp.cc:335
+msgid "Length"
+msgstr ""
+
+#: objects/line_imp.cc:125 objects/line_imp.cc:195
+msgid "Support Line"
+msgstr ""
+
+#: objects/line_imp.cc:196
+msgid "End Point"
+msgstr ""
+
+#: objects/line_imp.cc:523 objects/line_imp.cc:532
+msgid "line"
+msgstr ""
+
+#: objects/line_imp.cc:524
+msgid "Select a Line"
+msgstr ""
+
+#: objects/line_imp.cc:533
+msgid "Select this line"
+msgstr ""
+
+#: objects/line_imp.cc:534
+#, kde-format
+msgid "Select line %1"
+msgstr ""
+
+#: objects/line_imp.cc:535
+msgid "Remove a Line"
+msgstr ""
+
+#: objects/line_imp.cc:536
+msgid "Add a Line"
+msgstr ""
+
+#: objects/line_imp.cc:537
+msgid "Move a Line"
+msgstr ""
+
+#: objects/line_imp.cc:538
+msgid "Attach to this line"
+msgstr ""
+
+#: objects/line_imp.cc:539
+msgid "Show a Line"
+msgstr ""
+
+#: objects/line_imp.cc:540
+msgid "Hide a Line"
+msgstr ""
+
+#: objects/line_imp.cc:549
+msgid "segment"
+msgstr ""
+
+#: objects/line_imp.cc:550
+msgid "Select this segment"
+msgstr ""
+
+#: objects/line_imp.cc:551
+#, kde-format
+msgid "Select segment %1"
+msgstr ""
+
+#: objects/line_imp.cc:552
+msgid "Remove a Segment"
+msgstr ""
+
+#: objects/line_imp.cc:553
+msgid "Add a Segment"
+msgstr ""
+
+#: objects/line_imp.cc:554
+msgid "Move a Segment"
+msgstr ""
+
+#: objects/line_imp.cc:555
+msgid "Attach to this segment"
+msgstr ""
+
+#: objects/line_imp.cc:556
+msgid "Show a Segment"
+msgstr ""
+
+#: objects/line_imp.cc:557
+msgid "Hide a Segment"
+msgstr ""
+
+#: objects/line_imp.cc:566
+msgid "half-line"
+msgstr ""
+
+#: objects/line_imp.cc:567
+msgid "Select this half-line"
+msgstr ""
+
+#: objects/line_imp.cc:568
+#, kde-format
+msgid "Select half-line %1"
+msgstr ""
+
+#: objects/line_imp.cc:569
+msgid "Remove a Half-Line"
+msgstr ""
+
+#: objects/line_imp.cc:570
+msgid "Add a Half-Line"
+msgstr ""
+
+#: objects/line_imp.cc:571
+msgid "Move a Half-Line"
+msgstr ""
+
+#: objects/line_imp.cc:572
+msgid "Attach to this half-line"
+msgstr ""
+
+#: objects/line_imp.cc:573
+msgid "Show a Half-Line"
+msgstr ""
+
+#: objects/line_imp.cc:574
+msgid "Hide a Half-Line"
+msgstr ""
+
+#: objects/line_type.cc:38
+msgid "Construct a segment starting at this point"
+msgstr ""
+
+#: objects/line_type.cc:39
+msgid "Select the start point of the new segment..."
+msgstr ""
+
+#: objects/line_type.cc:40
+msgid "Construct a segment ending at this point"
+msgstr ""
+
+#: objects/line_type.cc:41
+msgid "Select the end point of the new segment..."
+msgstr ""
+
+#: objects/line_type.cc:66
+msgid "Construct a line through this point"
+msgstr ""
+
+#: objects/line_type.cc:71
+msgid "Select a point for the line to go through..."
+msgstr ""
+
+#: objects/line_type.cc:73
+msgid "Select another point for the line to go through..."
+msgstr ""
+
+#: objects/line_type.cc:98
+msgid "Construct a half-line starting at this point"
+msgstr ""
+
+#: objects/line_type.cc:103 objects/line_type.cc:301
+msgid "Select the start point of the new half-line..."
+msgstr ""
+
+#: objects/line_type.cc:104
+msgid "Construct a half-line through this point"
+msgstr ""
+
+#: objects/line_type.cc:105
+msgid "Select a point for the half-line to go through..."
+msgstr ""
+
+#: objects/line_type.cc:146
+msgid "Construct a line parallel to this line"
+msgstr ""
+
+#: objects/line_type.cc:147
+msgid "Select a line parallel to the new line..."
+msgstr ""
+
+#: objects/line_type.cc:148
+msgid "Construct the parallel line through this point"
+msgstr ""
+
+#: objects/line_type.cc:149 objects/line_type.cc:182 objects/line_type.cc:261
+msgid "Select a point for the new line to go through..."
+msgstr ""
+
+#: objects/line_type.cc:179
+msgid "Construct a line perpendicular to this line"
+msgstr ""
+
+#: objects/line_type.cc:180
+msgid "Select a line perpendicular to the new line..."
+msgstr ""
+
+#: objects/line_type.cc:181
+msgid "Construct a perpendicular line through this point"
+msgstr ""
+
+#: objects/line_type.cc:224
+msgid "Set &Length..."
+msgstr ""
+
+#: objects/line_type.cc:243
+msgid "Set Segment Length"
+msgstr ""
+
+#: objects/line_type.cc:243
+msgid "Choose the new length: "
+msgstr ""
+
+#: objects/line_type.cc:251
+msgid "Resize Segment"
+msgstr ""
+
+#: objects/line_type.cc:258
+msgid "Construct a line by this vector"
+msgstr ""
+
+#: objects/line_type.cc:259
+msgid "Select a vector in the direction of the new line..."
+msgstr ""
+
+#: objects/line_type.cc:298
+msgid "Construct a half-line by this vector"
+msgstr ""
+
+#: objects/line_type.cc:299
+msgid "Select a vector in the direction of the new half-line..."
+msgstr ""
+
+#: objects/locus_imp.cc:204
+msgid "locus"
+msgstr ""
+
+#: objects/locus_imp.cc:205
+msgid "Select this locus"
+msgstr ""
+
+#: objects/locus_imp.cc:206
+#, kde-format
+msgid "Select locus %1"
+msgstr ""
+
+#: objects/locus_imp.cc:207
+msgid "Remove a Locus"
+msgstr ""
+
+#: objects/locus_imp.cc:208
+msgid "Add a Locus"
+msgstr ""
+
+#: objects/locus_imp.cc:209
+msgid "Move a Locus"
+msgstr ""
+
+#: objects/locus_imp.cc:210
+msgid "Attach to this locus"
+msgstr ""
+
+#: objects/locus_imp.cc:211
+msgid "Show a Locus"
+msgstr ""
+
+#: objects/locus_imp.cc:212
+msgid "Hide a Locus"
+msgstr ""
+
+#: objects/object_imp.cc:54
+msgid "Object Type"
+msgstr ""
+
+#: objects/object_imp.cc:288
+msgid "Object"
+msgstr ""
+
+#: objects/object_imp.cc:289
+msgid "Select this object"
+msgstr ""
+
+#: objects/object_imp.cc:290
+#, kde-format
+msgid "Select object %1"
+msgstr ""
+
+#: objects/object_imp.cc:291
+msgid "Remove an object"
+msgstr ""
+
+#: objects/object_imp.cc:292
+msgid "Add an object"
+msgstr ""
+
+#: objects/object_imp.cc:293
+msgid "Move an object"
+msgstr ""
+
+#: objects/object_imp.cc:294
+msgid "Attach to this object"
+msgstr ""
+
+#: objects/object_imp.cc:295
+msgid "Show an object"
+msgstr ""
+
+#: objects/object_imp.cc:296
+msgid "Hide an object"
+msgstr ""
+
+#: objects/other_imp.cc:105 objects/other_imp.cc:381
+msgid "Angle in Radians"
+msgstr ""
+
+#: objects/other_imp.cc:106 objects/other_imp.cc:380
+msgid "Angle in Degrees"
+msgstr ""
+
+#: objects/other_imp.cc:216
+msgid "Midpoint"
+msgstr ""
+
+#: objects/other_imp.cc:217
+msgid "X length"
+msgstr ""
+
+#: objects/other_imp.cc:218
+msgid "Y length"
+msgstr ""
+
+#: objects/other_imp.cc:219
+msgid "Opposite Vector"
+msgstr ""
+
+#: objects/other_imp.cc:379
+msgid "Angle"
+msgstr ""
+
+#: objects/other_imp.cc:382
+msgid "Sector Surface"
+msgstr ""
+
+#: objects/other_imp.cc:383
+msgid "Arc Length"
+msgstr ""
+
+#: objects/other_imp.cc:384
+msgid "Support Circle"
+msgstr ""
+
+#: objects/other_imp.cc:573
+msgid "angle"
+msgstr ""
+
+#: objects/other_imp.cc:574
+msgid "Select this angle"
+msgstr ""
+
+#: objects/other_imp.cc:575
+#, kde-format
+msgid "Select angle %1"
+msgstr ""
+
+#: objects/other_imp.cc:576
+msgid "Remove an Angle"
+msgstr ""
+
+#: objects/other_imp.cc:577
+msgid "Add an Angle"
+msgstr ""
+
+#: objects/other_imp.cc:578
+msgid "Move an Angle"
+msgstr ""
+
+#: objects/other_imp.cc:579
+msgid "Attach to this angle"
+msgstr ""
+
+#: objects/other_imp.cc:580
+msgid "Show an Angle"
+msgstr ""
+
+#: objects/other_imp.cc:581
+msgid "Hide an Angle"
+msgstr ""
+
+#: objects/other_imp.cc:589
+msgid "vector"
+msgstr ""
+
+#: objects/other_imp.cc:590
+msgid "Select this vector"
+msgstr ""
+
+#: objects/other_imp.cc:591
+#, kde-format
+msgid "Select vector %1"
+msgstr ""
+
+#: objects/other_imp.cc:592
+msgid "Remove a Vector"
+msgstr ""
+
+#: objects/other_imp.cc:593
+msgid "Add a Vector"
+msgstr ""
+
+#: objects/other_imp.cc:594
+msgid "Move a Vector"
+msgstr ""
+
+#: objects/other_imp.cc:595
+msgid "Attach to this vector"
+msgstr ""
+
+#: objects/other_imp.cc:596
+msgid "Show a Vector"
+msgstr ""
+
+#: objects/other_imp.cc:597
+msgid "Hide a Vector"
+msgstr ""
+
+#: objects/other_imp.cc:605
+msgid "arc"
+msgstr ""
+
+#: objects/other_imp.cc:606
+msgid "Select this arc"
+msgstr ""
+
+#: objects/other_imp.cc:607
+#, kde-format
+msgid "Select arc %1"
+msgstr ""
+
+#: objects/other_imp.cc:608
+msgid "Remove an Arc"
+msgstr ""
+
+#: objects/other_imp.cc:609
+msgid "Add an Arc"
+msgstr ""
+
+#: objects/other_imp.cc:610
+msgid "Move an Arc"
+msgstr ""
+
+#: objects/other_imp.cc:611
+msgid "Attach to this arc"
+msgstr ""
+
+#: objects/other_imp.cc:612
+msgid "Show an Arc"
+msgstr ""
+
+#: objects/other_imp.cc:613
+msgid "Hide an Arc"
+msgstr ""
+
+#: objects/point_imp.cc:75
+msgid "Coordinate"
+msgstr ""
+
+#: objects/point_imp.cc:76
+msgid "X coordinate"
+msgstr ""
+
+#: objects/point_imp.cc:77
+msgid "Y coordinate"
+msgstr ""
+
+#: objects/point_imp.cc:163
+msgid "point"
+msgstr ""
+
+#: objects/point_imp.cc:164
+msgid "Select this point"
+msgstr ""
+
+#: objects/point_imp.cc:165
+#, kde-format
+msgid "Select point %1"
+msgstr ""
+
+#: objects/point_imp.cc:166
+msgid "Remove a Point"
+msgstr ""
+
+#: objects/point_imp.cc:167
+msgid "Add a Point"
+msgstr ""
+
+#: objects/point_imp.cc:168
+msgid "Move a Point"
+msgstr ""
+
+#: objects/point_imp.cc:169
+msgid "Attach to this point"
+msgstr ""
+
+#: objects/point_imp.cc:170
+msgid "Show a Point"
+msgstr ""
+
+#: objects/point_imp.cc:171
+msgid "Hide a Point"
+msgstr ""
+
+#: objects/point_type.cc:265 objects/point_type.cc:267
+msgid "Construct the midpoint of this point and another point"
+msgstr ""
+
+#: objects/point_type.cc:266
+msgid ""
+"Select the first of the two points of which you want to construct the "
+"midpoint..."
+msgstr ""
+
+#: objects/point_type.cc:268
+msgid ""
+"Select the other of the two points of which you want to construct the "
+"midpoint..."
+msgstr ""
+
+#: objects/point_type.cc:370
+msgid "Set &Coordinate..."
+msgstr ""
+
+#: objects/point_type.cc:371 objects/point_type.cc:379
+msgid "Redefine"
+msgstr ""
+
+#: objects/point_type.cc:378
+msgid "Set &Parameter..."
+msgstr ""
+
+#: objects/point_type.cc:401
+msgid "Set Coordinate"
+msgstr ""
+
+#: objects/point_type.cc:402
+msgid "Enter the new coordinate."
+msgstr ""
+
+#: objects/point_type.cc:443
+msgid "Set Point Parameter"
+msgstr ""
+
+#: objects/point_type.cc:443
+msgid "Choose the new parameter: "
+msgstr ""
+
+#: objects/point_type.cc:449
+msgid "Change Parameter of Constrained Point"
+msgstr ""
+
+#: objects/point_type.cc:732
+msgid "Select the circle on which to transport a measure..."
+msgstr ""
+
+#: objects/point_type.cc:734
+msgid "Select a point on the circle..."
+msgstr ""
+
+#: objects/point_type.cc:736
+msgid "Select the segment to transport on the circle..."
+msgstr ""
+
+#: objects/point_type.cc:783
+msgid "Select a number/length as x coordinate of the point..."
+msgstr ""
+
+#: objects/point_type.cc:785
+msgid "Select a number/length as y coordinate of the point..."
+msgstr ""
+
+#: objects/polygon_imp.cc:306 objects/polygon_imp.cc:320
+#: objects/polygon_imp.cc:334
+msgid "Number of sides"
+msgstr ""
+
+#: objects/polygon_imp.cc:307 objects/polygon_imp.cc:321
+msgid "Perimeter"
+msgstr ""
+
+#: objects/polygon_imp.cc:309
+msgid "Boundary Polygonal"
+msgstr ""
+
+#: objects/polygon_imp.cc:310
+msgid "Open Boundary Polygonal"
+msgstr ""
+
+#: objects/polygon_imp.cc:311 objects/polygon_imp.cc:325
+msgid "Center of Mass of the Vertices"
+msgstr ""
+
+#: objects/polygon_imp.cc:312 objects/polygon_imp.cc:326
+msgid "Winding Number"
+msgstr ""
+
+#: objects/polygon_imp.cc:323
+msgid "Inside Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:324
+msgid "Open Polygonal Curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:337
+msgid "Associated Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:338
+msgid "Closed Polygonal Curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:655 objects/polygon_imp.cc:664
+msgid "polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:656 objects/polygon_imp.cc:665
+msgid "Select this polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:666
+#, kde-format
+msgid "Select polygon %1"
+msgstr ""
+
+#: objects/polygon_imp.cc:667
+msgid "Remove a Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:668
+msgid "Add a Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:669
+msgid "Move a Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:670
+msgid "Attach to this polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:671
+msgid "Show a Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:672
+msgid "Hide a Polygon"
+msgstr ""
+
+#: objects/polygon_imp.cc:682
+msgid "closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:683
+msgid "Select this closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:684
+#, kde-format
+msgid "Select closed polygonal curve %1"
+msgstr ""
+
+#: objects/polygon_imp.cc:685
+msgid "Remove a closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:686
+msgid "Add a closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:687
+msgid "Move a closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:688
+msgid "Attach to this closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:689
+msgid "Show a closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:690
+msgid "Hide a closed polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:700
+msgid "polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:701
+msgid "Select this polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:702
+#, kde-format
+msgid "Select polygonal curve %1"
+msgstr ""
+
+#: objects/polygon_imp.cc:703
+msgid "Remove a polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:704
+msgid "Add a polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:705
+msgid "Move a polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:706
+msgid "Attach to this polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:707
+msgid "Show a polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:708
+msgid "Hide a polygonal curve"
+msgstr ""
+
+#: objects/polygon_imp.cc:718
+msgid "triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:719
+msgid "Select this triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:720
+#, kde-format
+msgid "Select triangle %1"
+msgstr ""
+
+#: objects/polygon_imp.cc:721
+msgid "Remove a Triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:722
+msgid "Add a Triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:723
+msgid "Move a Triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:724
+msgid "Attach to this triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:725
+msgid "Show a Triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:726
+msgid "Hide a Triangle"
+msgstr ""
+
+#: objects/polygon_imp.cc:736
+msgid "quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:737
+msgid "Select this quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:738
+#, kde-format
+msgid "Select quadrilateral %1"
+msgstr ""
+
+#: objects/polygon_imp.cc:739
+msgid "Remove a Quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:740
+msgid "Add a Quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:741
+msgid "Move a Quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:742
+msgid "Attach to this quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:743
+msgid "Show a Quadrilateral"
+msgstr ""
+
+#: objects/polygon_imp.cc:744
+msgid "Hide a Quadrilateral"
+msgstr ""
+
+#: objects/polygon_type.cc:38
+msgid "Construct a triangle with this vertex"
+msgstr ""
+
+#: objects/polygon_type.cc:39
+msgid "Select a point to be a vertex of the new triangle..."
+msgstr ""
+
+#: objects/polygon_type.cc:507
+msgid "Intersect this polygon with a line"
+msgstr ""
+
+#: objects/polygon_type.cc:508
+msgid "Select the polygon of which you want the intersection with a line..."
+msgstr ""
+
+#: objects/polygon_type.cc:510
+msgid "Intersect this line with a polygon"
+msgstr ""
+
+#: objects/polygon_type.cc:511
+msgid "Select the line of which you want the intersection with a polygon..."
+msgstr ""
+
+#: objects/polygon_type.cc:626 objects/polygon_type.cc:658
+msgid "Intersect this polygonal curve with a line"
+msgstr ""
+
+#: objects/polygon_type.cc:627 objects/polygon_type.cc:659
+msgid ""
+"Select the polygonal curve of which you want the intersection with a line..."
+msgstr ""
+
+#: objects/polygon_type.cc:629 objects/polygon_type.cc:661
+msgid "Intersect this line with a polygonal curve"
+msgstr ""
+
+#: objects/polygon_type.cc:630 objects/polygon_type.cc:662
+msgid ""
+"Select the line of which you want the intersection with a polygonal curve..."
+msgstr ""
+
+#: objects/polygon_type.cc:828
+msgid "Intersect this polygon with another polygon"
+msgstr ""
+
+#: objects/polygon_type.cc:829
+msgid ""
+"Select the polygon of which you want the intersection with another polygon..."
+msgstr ""
+
+#: objects/polygon_type.cc:830
+msgid "Intersect with this polygon"
+msgstr ""
+
+#: objects/polygon_type.cc:831
+msgid "Select the second polygon for the intersection..."
+msgstr ""
+
+#: objects/polygon_type.cc:977
+msgid "Construct the vertices of this polygon"
+msgstr ""
+
+#: objects/polygon_type.cc:978
+msgid "Select the polygon of which you want to construct the vertices..."
+msgstr ""
+
+#: objects/polygon_type.cc:1020
+msgid "Construct the sides of this polygon"
+msgstr ""
+
+#: objects/polygon_type.cc:1021
+msgid "Select the polygon of which you want to construct the sides..."
+msgstr ""
+
+#: objects/polygon_type.cc:1066
+msgid "Construct the convex hull of this polygon"
+msgstr ""
+
+#: objects/polygon_type.cc:1067
+msgid "Select the polygon of which you want to construct the convex hull..."
+msgstr ""
+
+#: objects/special_calcers.cc:23
+msgid "Project this point onto the circle"
+msgstr ""
+
+#: objects/tangent_type.cc:38
+msgid "Select the point for the tangent to go through..."
+msgstr ""
+
+#: objects/tests_type.cc:32
+msgid "Is this line parallel?"
+msgstr ""
+
+#: objects/tests_type.cc:33
+msgid "Select the first of the two possibly parallel lines..."
+msgstr ""
+
+#: objects/tests_type.cc:34
+msgid "Parallel to this line?"
+msgstr ""
+
+#: objects/tests_type.cc:35
+msgid "Select the other of the two possibly parallel lines..."
+msgstr ""
+
+#: objects/tests_type.cc:63
+msgid "These lines are parallel."
+msgstr ""
+
+#: objects/tests_type.cc:65
+msgid "These lines are not parallel."
+msgstr ""
+
+#: objects/tests_type.cc:76
+msgid "Is this line orthogonal?"
+msgstr ""
+
+#: objects/tests_type.cc:77
+msgid "Select the first of the two possibly orthogonal lines..."
+msgstr ""
+
+#: objects/tests_type.cc:78
+msgid "Orthogonal to this line?"
+msgstr ""
+
+#: objects/tests_type.cc:79
+msgid "Select the other of the two possibly orthogonal lines..."
+msgstr ""
+
+#: objects/tests_type.cc:107
+msgid "These lines are orthogonal."
+msgstr ""
+
+#: objects/tests_type.cc:109
+msgid "These lines are not orthogonal."
+msgstr ""
+
+#: objects/tests_type.cc:120
+msgid "Check collinearity of this point"
+msgstr ""
+
+#: objects/tests_type.cc:121
+msgid "Select the first of the three possibly collinear points..."
+msgstr ""
+
+#: objects/tests_type.cc:122
+msgid "and this second point"
+msgstr ""
+
+#: objects/tests_type.cc:123
+msgid "Select the second of the three possibly collinear points..."
+msgstr ""
+
+#: objects/tests_type.cc:124
+msgid "with this third point"
+msgstr ""
+
+#: objects/tests_type.cc:125
+msgid "Select the last of the three possibly collinear points..."
+msgstr ""
+
+#: objects/tests_type.cc:154
+msgid "These points are collinear."
+msgstr ""
+
+#: objects/tests_type.cc:156
+msgid "These points are not collinear."
+msgstr ""
+
+#: objects/tests_type.cc:166
+msgid "Check whether this point is on a curve"
+msgstr ""
+
+#: objects/tests_type.cc:167 objects/tests_type.cc:213
+msgid "Select the point you want to test..."
+msgstr ""
+
+#: objects/tests_type.cc:168
+msgid "Check whether the point is on this curve"
+msgstr ""
+
+#: objects/tests_type.cc:169
+msgid "Select the curve that the point might be on..."
+msgstr ""
+
+#: objects/tests_type.cc:196
+msgid "This curve contains the point."
+msgstr ""
+
+#: objects/tests_type.cc:198
+msgid "This curve does not contain the point."
+msgstr ""
+
+#: objects/tests_type.cc:212
+msgid "Check whether this point is in a polygon"
+msgstr ""
+
+#: objects/tests_type.cc:214
+msgid "Check whether the point is in this polygon"
+msgstr ""
+
+#: objects/tests_type.cc:215
+msgid "Select the polygon that the point might be in..."
+msgstr ""
+
+#: objects/tests_type.cc:242
+msgid "This polygon contains the point."
+msgstr ""
+
+#: objects/tests_type.cc:244
+msgid "This polygon does not contain the point."
+msgstr ""
+
+#: objects/tests_type.cc:258
+msgid "Check whether this polygon is convex"
+msgstr ""
+
+#: objects/tests_type.cc:259
+msgid "Select the polygon you want to test for convexity..."
+msgstr ""
+
+#: objects/tests_type.cc:285
+msgid "This polygon is convex."
+msgstr ""
+
+#: objects/tests_type.cc:287
+msgid "This polygon is not convex."
+msgstr ""
+
+#: objects/tests_type.cc:301
+msgid "Check if this point has the same distance"
+msgstr ""
+
+#: objects/tests_type.cc:302
+msgid ""
+"Select the point which might have the same distance from two other points..."
+msgstr ""
+
+#: objects/tests_type.cc:303
+msgid "from this point"
+msgstr ""
+
+#: objects/tests_type.cc:304
+msgid "Select the first of the two other points..."
+msgstr ""
+
+#: objects/tests_type.cc:305
+msgid "and from this second point"
+msgstr ""
+
+#: objects/tests_type.cc:306
+msgid "Select the other of the two other points..."
+msgstr ""
+
+#: objects/tests_type.cc:334
+msgid "The two distances are the same."
+msgstr ""
+
+#: objects/tests_type.cc:336
+msgid "The two distances are not the same."
+msgstr ""
+
+#: objects/tests_type.cc:346
+msgid "Check whether this vector is equal to another vector"
+msgstr ""
+
+#: objects/tests_type.cc:347
+msgid "Select the first of the two possibly equal vectors..."
+msgstr ""
+
+#: objects/tests_type.cc:348
+msgid "Check whether this vector is equal to the other vector"
+msgstr ""
+
+#: objects/tests_type.cc:349
+msgid "Select the other of the two possibly equal vectors..."
+msgstr ""
+
+#: objects/tests_type.cc:376
+msgid "The two vectors are the same."
+msgstr ""
+
+#: objects/tests_type.cc:378
+msgid "The two vectors are not the same."
+msgstr ""
+
+#: objects/tests_type.cc:388
+msgid "Check whether this object exists"
+msgstr ""
+
+#: objects/tests_type.cc:389
+msgid "Select the object for the existence check..."
+msgstr ""
+
+#: objects/tests_type.cc:413
+msgid "The object exists."
+msgstr ""
+
+#: objects/tests_type.cc:415
+msgid "The object does not exist."
+msgstr ""
+
+#: objects/text_imp.cc:84
+msgid "Text"
+msgstr ""
+
+#: objects/text_imp.cc:147
+msgid "label"
+msgstr ""
+
+#: objects/text_imp.cc:148
+msgid "Select this label"
+msgstr ""
+
+#: objects/text_imp.cc:149
+#, kde-format
+msgid "Select label %1"
+msgstr ""
+
+#: objects/text_imp.cc:150
+msgid "Remove a Label"
+msgstr ""
+
+#: objects/text_imp.cc:151
+msgid "Add a Label"
+msgstr ""
+
+#: objects/text_imp.cc:152
+msgid "Move a Label"
+msgstr ""
+
+#: objects/text_imp.cc:153
+msgid "Attach to this label"
+msgstr ""
+
+#: objects/text_imp.cc:154
+msgid "Show a Label"
+msgstr ""
+
+#: objects/text_imp.cc:155
+msgid "Hide a Label"
+msgstr ""
+
+#: objects/text_imp.cc:193
+msgid "numeric label"
+msgstr ""
+
+#: objects/text_imp.cc:194
+msgid "Select this numeric label"
+msgstr ""
+
+#: objects/text_imp.cc:195
+#, kde-format
+msgid "Select numeric label %1"
+msgstr ""
+
+#: objects/text_imp.cc:196
+msgid "Remove a Numeric Label"
+msgstr ""
+
+#: objects/text_imp.cc:197
+msgid "Add a Numeric Label"
+msgstr ""
+
+#: objects/text_imp.cc:198
+msgid "Move a Numeric Label"
+msgstr ""
+
+#: objects/text_imp.cc:199
+msgid "Attach to this numeric label"
+msgstr ""
+
+#: objects/text_imp.cc:200
+msgid "Show a Numeric Label"
+msgstr ""
+
+#: objects/text_imp.cc:201
+msgid "Hide a Numeric Label"
+msgstr ""
+
+#: objects/text_imp.cc:231 objects/text_imp.cc:323
+msgid "Numeric value"
+msgstr ""
+
+#: objects/text_imp.cc:285
+msgid "boolean label"
+msgstr ""
+
+#: objects/text_imp.cc:286
+msgid "Select this boolean label"
+msgstr ""
+
+#: objects/text_imp.cc:287
+#, kde-format
+msgid "Select boolean label %1"
+msgstr ""
+
+#: objects/text_imp.cc:288
+msgid "Remove a Boolean Label"
+msgstr ""
+
+#: objects/text_imp.cc:289
+msgid "Add a Boolean Label"
+msgstr ""
+
+#: objects/text_imp.cc:290
+msgid "Move a Boolean Label"
+msgstr ""
+
+#: objects/text_imp.cc:291
+msgid "Attach to this boolean label"
+msgstr ""
+
+#: objects/text_imp.cc:292
+msgid "Show a Boolean Label"
+msgstr ""
+
+#: objects/text_imp.cc:293
+msgid "Hide a Boolean Label"
+msgstr ""
+
+#: objects/text_type.cc:176
+msgid "&Copy Text"
+msgstr ""
+
+#: objects/text_type.cc:177
+msgid "&Toggle Frame"
+msgstr ""
+
+#: objects/text_type.cc:178
+msgid "Set &Font..."
+msgstr ""
+
+#: objects/text_type.cc:207
+msgid "Toggle Label Frame"
+msgstr ""
+
+#: objects/text_type.cc:219
+msgid "Change Label Font"
+msgstr ""
+
+#: objects/text_type.cc:246
+msgid "&Redefine..."
+msgstr ""
+
+#: objects/text_type.cc:297
+msgid "Change &Value..."
+msgstr ""
+
+#: objects/text_type.cc:325
+msgid "Enter the new value:"
+msgstr ""
+
+#: objects/text_type.cc:330
+msgid "Change Displayed Value"
+msgstr ""
+
+#: objects/transform_types.cc:35
+msgid "Translate this object"
+msgstr ""
+
+#: objects/transform_types.cc:36
+msgid "Select the object to translate..."
+msgstr ""
+
+#: objects/transform_types.cc:37
+msgid "Translate by this vector"
+msgstr ""
+
+#: objects/transform_types.cc:38
+msgid "Select the vector to translate by..."
+msgstr ""
+
+#: objects/transform_types.cc:70 objects/transform_types.cc:105
+msgid "Reflect this object"
+msgstr ""
+
+#: objects/transform_types.cc:71 objects/transform_types.cc:106
+msgid "Select the object to reflect..."
+msgstr ""
+
+#: objects/transform_types.cc:72
+msgid "Reflect in this point"
+msgstr ""
+
+#: objects/transform_types.cc:73
+msgid "Select the point to reflect in..."
+msgstr ""
+
+#: objects/transform_types.cc:107
+msgid "Reflect in this line"
+msgstr ""
+
+#: objects/transform_types.cc:108
+msgid "Select the line to reflect in..."
+msgstr ""
+
+#: objects/transform_types.cc:140
+msgid "Rotate this object"
+msgstr ""
+
+#: objects/transform_types.cc:141
+msgid "Select the object to rotate..."
+msgstr ""
+
+#: objects/transform_types.cc:142
+msgid "Rotate around this point"
+msgstr ""
+
+#: objects/transform_types.cc:143
+msgid "Select the center point of the rotation..."
+msgstr ""
+
+#: objects/transform_types.cc:146
+msgid "Rotate by this angle"
+msgstr ""
+
+#: objects/transform_types.cc:147
+msgid "Select the angle of the rotation..."
+msgstr ""
+
+#: objects/transform_types.cc:182 objects/transform_types.cc:223
+#: objects/transform_types.cc:272 objects/transform_types.cc:310
+msgid "Scale this object"
+msgstr ""
+
+#: objects/transform_types.cc:183 objects/transform_types.cc:224
+msgid "Select the object to scale..."
+msgstr ""
+
+#: objects/transform_types.cc:184 objects/transform_types.cc:225
+msgid "Scale with this center"
+msgstr ""
+
+#: objects/transform_types.cc:185 objects/transform_types.cc:226
+msgid "Select the center point of the scaling..."
+msgstr ""
+
+#: objects/transform_types.cc:188 objects/transform_types.cc:275
+msgid "Scale by this length"
+msgstr ""
+
+#: objects/transform_types.cc:189 objects/transform_types.cc:276
+msgid ""
+"Select a length or a segment whose length is the factor of the scaling..."
+msgstr ""
+
+#: objects/transform_types.cc:231 objects/transform_types.cc:314
+msgid "Scale this length..."
+msgstr ""
+
+#: objects/transform_types.cc:232 objects/transform_types.cc:315
+msgid ""
+"Select the first of two lengths whose ratio is the factor of the scaling..."
+msgstr ""
+
+#: objects/transform_types.cc:233 objects/transform_types.cc:316
+msgid "...to this other length"
+msgstr ""
+
+#: objects/transform_types.cc:234 objects/transform_types.cc:317
+msgid ""
+"Select the second of two lengths whose ratio is the factor of the scaling..."
+msgstr ""
+
+#: objects/transform_types.cc:272 objects/transform_types.cc:310
+msgid "Select the object to scale"
+msgstr ""
+
+#: objects/transform_types.cc:273 objects/transform_types.cc:311
+msgid "Scale over this line"
+msgstr ""
+
+#: objects/transform_types.cc:273 objects/transform_types.cc:311
+msgid "Select the line to scale over"
+msgstr ""
+
+#: objects/transform_types.cc:355
+msgid "Projectively rotate this object"
+msgstr ""
+
+#: objects/transform_types.cc:355
+msgid "Select the object to rotate projectively"
+msgstr ""
+
+#: objects/transform_types.cc:356
+msgid "Projectively rotate with this half-line"
+msgstr ""
+
+#: objects/transform_types.cc:356
+msgid ""
+"Select the half line of the projective rotation that you want to apply to "
+"the object"
+msgstr ""
+
+#: objects/transform_types.cc:357
+msgid "Projectively rotate by this angle"
+msgstr ""
+
+#: objects/transform_types.cc:357
+msgid ""
+"Select the angle of the projective rotation that you want to apply to the "
+"object"
+msgstr ""
+
+#: objects/transform_types.cc:392
+msgid "Harmonic Homology of this object"
+msgstr ""
+
+#: objects/transform_types.cc:393 objects/transform_types.cc:430
+#: objects/transform_types.cc:472 objects/transform_types.cc:529
+#: objects/transform_types.cc:571 objects/transform_types.cc:894
+msgid "Select the object to transform..."
+msgstr ""
+
+#: objects/transform_types.cc:394
+msgid "Harmonic Homology with this center"
+msgstr ""
+
+#: objects/transform_types.cc:395
+msgid "Select the center point of the harmonic homology..."
+msgstr ""
+
+#: objects/transform_types.cc:396
+msgid "Harmonic Homology with this axis"
+msgstr ""
+
+#: objects/transform_types.cc:397
+msgid "Select the axis of the harmonic homology..."
+msgstr ""
+
+#: objects/transform_types.cc:429 objects/transform_types.cc:471
+msgid "Generic affinity of this object"
+msgstr ""
+
+#: objects/transform_types.cc:431
+msgid "Map this triangle"
+msgstr ""
+
+#: objects/transform_types.cc:432
+msgid "Select the triangle that has to be transformed onto a given triangle..."
+msgstr ""
+
+#: objects/transform_types.cc:433
+msgid "onto this other triangle"
+msgstr ""
+
+#: objects/transform_types.cc:434
+msgid ""
+"Select the triangle that is the image by the affinity of the first "
+"triangle..."
+msgstr ""
+
+#: objects/transform_types.cc:473
+msgid "First of 3 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:474
+msgid ""
+"Select the first of the three starting points of the generic affinity..."
+msgstr ""
+
+#: objects/transform_types.cc:475
+msgid "Second of 3 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:476
+msgid ""
+"Select the second of the three starting points of the generic affinity..."
+msgstr ""
+
+#: objects/transform_types.cc:477
+msgid "Third of 3 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:478
+msgid ""
+"Select the third of the three starting points of the generic affinity..."
+msgstr ""
+
+#: objects/transform_types.cc:479 objects/transform_types.cc:580
+msgid "Transformed position of first point"
+msgstr ""
+
+#: objects/transform_types.cc:480
+msgid "Select the first of the three end points of the generic affinity..."
+msgstr ""
+
+#: objects/transform_types.cc:481 objects/transform_types.cc:582
+msgid "Transformed position of second point"
+msgstr ""
+
+#: objects/transform_types.cc:482
+msgid "Select the second of the three end points of the generic affinity..."
+msgstr ""
+
+#: objects/transform_types.cc:483 objects/transform_types.cc:584
+msgid "Transformed position of third point"
+msgstr ""
+
+#: objects/transform_types.cc:484
+msgid "Select the third of the three end points of the generic affinity..."
+msgstr ""
+
+#: objects/transform_types.cc:528 objects/transform_types.cc:570
+msgid "Generic projective transformation of this object"
+msgstr ""
+
+#: objects/transform_types.cc:530
+msgid "Map this quadrilateral"
+msgstr ""
+
+#: objects/transform_types.cc:531
+msgid ""
+"Select the quadrilateral that has to be transformed onto a given "
+"quadrilateral..."
+msgstr ""
+
+#: objects/transform_types.cc:532
+msgid "onto this other quadrilateral"
+msgstr ""
+
+#: objects/transform_types.cc:533
+msgid ""
+"Select the quadrilateral that is the image by the projective transformation "
+"of the first quadrilateral..."
+msgstr ""
+
+#: objects/transform_types.cc:572
+msgid "First of 4 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:573
+msgid ""
+"Select the first of the four starting points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:574
+msgid "Second of 4 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:575
+msgid ""
+"Select the second of the four starting points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:576
+msgid "Third of 4 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:577
+msgid ""
+"Select the third of the four starting points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:578
+msgid "Fourth of 4 starting points"
+msgstr ""
+
+#: objects/transform_types.cc:579
+msgid ""
+"Select the fourth of the four starting points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:581
+msgid "Select the first of the four end points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:583
+msgid "Select the second of the four end points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:585
+msgid "Select the third of the four end points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:586
+msgid "Transformed position of fourth point"
+msgstr ""
+
+#: objects/transform_types.cc:587
+msgid "Select the fourth of the four end points of the generic projectivity..."
+msgstr ""
+
+#: objects/transform_types.cc:631
+msgid "Cast the shadow of this object"
+msgstr ""
+
+#: objects/transform_types.cc:632
+msgid "Select the object of which you want to construct the shadow..."
+msgstr ""
+
+#: objects/transform_types.cc:633
+msgid "Cast a shadow from this light source"
+msgstr ""
+
+#: objects/transform_types.cc:634
+msgid "Select the light source from which the shadow should originate..."
+msgstr ""
+
+#: objects/transform_types.cc:636
+msgid "Cast a shadow on the horizon represented by this line"
+msgstr ""
+
+#: objects/transform_types.cc:637
+msgid "Select the horizon for the shadow..."
+msgstr ""
+
+#: objects/transform_types.cc:819
+msgid "Transform this object"
+msgstr ""
+
+#: objects/transform_types.cc:820
+msgid "Transform using this transformation"
+msgstr ""
+
+#: objects/transform_types.cc:893
+msgid "Apply a similitude to this object"
+msgstr ""
+
+#: objects/transform_types.cc:895
+msgid "Apply a similitude with this center"
+msgstr ""
+
+#: objects/transform_types.cc:896
+msgid "Select the center for the similitude..."
+msgstr ""
+
+#: objects/transform_types.cc:897
+msgid "Apply a similitude mapping this point onto another point"
+msgstr ""
+
+#: objects/transform_types.cc:898
+msgid "Select the point which the similitude should map onto another point..."
+msgstr ""
+
+#: objects/transform_types.cc:899
+msgid "Apply a similitude mapping a point onto this point"
+msgstr ""
+
+#: objects/transform_types.cc:900
+msgid ""
+"Select the point onto which the similitude should map the first point..."
+msgstr ""
+
+#: objects/vector_type.cc:26
+msgid "Construct a vector from this point"
+msgstr ""
+
+#: objects/vector_type.cc:27
+msgid "Select the start point of the new vector..."
+msgstr ""
+
+#: objects/vector_type.cc:28
+msgid "Construct a vector to this point"
+msgstr ""
+
+#: objects/vector_type.cc:29
+msgid "Select the end point of the new vector..."
+msgstr ""
+
+#: objects/vector_type.cc:61
+msgid "Construct the vector sum of this vector and another one."
+msgstr ""
+
+#: objects/vector_type.cc:62
+msgid ""
+"Select the first of the two vectors of which you want to construct the sum..."
+msgstr ""
+
+#: objects/vector_type.cc:63
+msgid "Construct the vector sum of this vector and the other one."
+msgstr ""
+
+#: objects/vector_type.cc:64
+msgid ""
+"Select the other of the two vectors of which you want to construct the sum..."
+msgstr ""
+
+#: objects/vector_type.cc:65
+msgid "Construct the vector sum starting at this point."
+msgstr ""
+
+#: objects/vector_type.cc:66
+msgid "Select the point to construct the sum vector in..."
+msgstr ""
+
+#: scripting/newscriptwizard.cc:63
+msgid "New Script"
+msgstr ""
+
+#: scripting/newscriptwizard.cc:73
+msgid ""
+"Select the argument objects (if any)\n"
+"in the Kig window and press \"Next\"."
+msgstr ""
+
+#: scripting/newscriptwizard.cc:79
+msgid "Enter Code"
+msgstr ""
+
+#: scripting/script-common.cc:35
+msgid "Now fill in the code:"
+msgstr ""
+
+#: scripting/script-common.cc:36
+msgid "Now fill in the Python code:"
+msgstr ""
+
+#: scripting/script-common.cc:54
+#, kde-format
+msgctxt ""
+"Note to translators: this should be a default name for an argument in a "
+"Python function. The default is \"arg%1\" which would become arg1, arg2, "
+"etc. Give something which seems appropriate for your language."
+msgid "arg%1"
+msgstr ""
+
+#: scripting/script_mode.cc:207
+msgid ""
+"The Python interpreter caught an error during the execution of your script. "
+"Please fix the script and click the Finish button again."
+msgstr ""
+
+#: scripting/script_mode.cc:209 scripting/script_mode.cc:351
+#, kde-format
+msgid ""
+"The Python Interpreter generated the following error output:\n"
+"%1"
+msgstr ""
+
+#: scripting/script_mode.cc:214
+msgid ""
+"There seems to be an error in your script. The Python interpreter reported "
+"no errors, but the script does not generate a valid object. Please fix the "
+"script, and click the Finish button again."
+msgstr ""
+
+#: scripting/script_mode.cc:317
+msgctxt "'Edit' is a verb"
+msgid "Edit Script"
+msgstr ""
+
+#: scripting/script_mode.cc:339
+msgid "Edit Python Script"
+msgstr ""
+
+#: scripting/script_mode.cc:349
+msgid ""
+"The Python interpreter caught an error during the execution of your script. "
+"Please fix the script."
+msgstr ""
+
+#: scripting/script_mode.cc:356
+msgid ""
+"There seems to be an error in your script. The Python interpreter reported "
+"no errors, but the script does not generate a valid object. Please fix the "
+"script."
+msgstr ""
+
+#: kig/kig_commands.cpp:100
+#, kde-format
+msgid "Remove %1 Object"
+msgid_plural "Remove %1 Objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kig/kig_commands.cpp:112
+#, kde-format
+msgid "Add %1 Object"
+msgid_plural "Add %1 Objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kig/kig.cpp:90
+msgid "Could not find the necessary Kig library, check your installation."
+msgstr ""
+
+#: kig/kig.cpp:203
+#, kde-format
+msgid "Save changes to document %1?"
+msgstr ""
+
+#: kig/kig.cpp:204
+msgid "Save Changes?"
+msgstr ""
+
+#: kig/kig.cpp:239
+msgid ""
+"*.kig *.kigz *.seg *.fgeo *.fig *.FIG|All Supported Files (*.kig *.kigz *."
+"seg *.fgeo *.fig)\n"
+"*.kig|Kig Documents (*.kig)\n"
+"*.kigz|Compressed Kig Documents (*.kigz)\n"
+"*.kgeo|KGeo Documents (*.kgeo)\n"
+"*.seg|KSeg Documents (*.seg)\n"
+"*.fgeo|Dr. Geo Documents (*.fgeo)\n"
+"*.fig *.FIG|Cabri Documents (*.fig *.FIG)"
+msgstr ""
+
+#: kig/kig_part.cpp:86
+msgid "KigPart"
+msgstr ""
+
+#: kig/kig_part.cpp:90
+msgid "&Set Coordinate System"
+msgstr ""
+
+#: kig/kig_part.cpp:131
+msgid "Kig Options"
+msgstr ""
+
+#: kig/kig_part.cpp:135
+msgid "Show grid"
+msgstr ""
+
+#: kig/kig_part.cpp:138
+msgid "Show axes"
+msgstr ""
+
+#: kig/kig_part.cpp:227
+msgid "Invert Selection"
+msgstr ""
+
+#: kig/kig_part.cpp:234
+msgid "&Delete Objects"
+msgstr ""
+
+#: kig/kig_part.cpp:238
+msgid "Delete the selected objects"
+msgstr ""
+
+#: kig/kig_part.cpp:240
+msgid "Cancel Construction"
+msgstr ""
+
+#: kig/kig_part.cpp:245
+msgid "Cancel the construction of the object being constructed"
+msgstr ""
+
+#: kig/kig_part.cpp:248
+msgid "Repeat Construction"
+msgstr ""
+
+#: kig/kig_part.cpp:253
+msgid "Repeat the last construction (with new data)"
+msgstr ""
+
+#: kig/kig_part.cpp:259
+msgid "Show all hidden objects"
+msgstr ""
+
+#: kig/kig_part.cpp:262
+msgid "&New Macro..."
+msgstr ""
+
+#: kig/kig_part.cpp:265
+msgid "Define a new macro"
+msgstr ""
+
+#: kig/kig_part.cpp:267
+msgid "Manage &Types..."
+msgstr ""
+
+#: kig/kig_part.cpp:270
+msgid "Manage macro types."
+msgstr ""
+
+#: kig/kig_part.cpp:272
+msgid "&Browse History..."
+msgstr ""
+
+#: kig/kig_part.cpp:275
+msgid "Browse the history of the current construction."
+msgstr ""
+
+#: kig/kig_part.cpp:282 kig/kig_part.cpp:283
+msgid "Zoom in on the document"
+msgstr ""
+
+#: kig/kig_part.cpp:287 kig/kig_part.cpp:288
+msgid "Zoom out of the document"
+msgstr ""
+
+#: kig/kig_part.cpp:294 kig/kig_part.cpp:295
+msgid "Recenter the screen on the document"
+msgstr ""
+
+#: kig/kig_part.cpp:298 kig/kig_part.cpp:299
+msgid "View this document full-screen."
+msgstr ""
+
+#: kig/kig_part.cpp:302
+msgid "&Select Shown Area"
+msgstr ""
+
+#: kig/kig_part.cpp:305 kig/kig_part.cpp:306
+msgid "Select the area that you want to be shown in the window."
+msgstr ""
+
+#: kig/kig_part.cpp:308
+msgid "S&elect Zoom Area"
+msgstr ""
+
+#: kig/kig_part.cpp:314
+msgid "Set Coordinate &Precision..."
+msgstr ""
+
+#: kig/kig_part.cpp:316
+msgid "Set the floating point precision of coordinates in the document. "
+msgstr ""
+
+#: kig/kig_part.cpp:319
+msgid "Show &Grid"
+msgstr ""
+
+#: kig/kig_part.cpp:321
+msgid "Show or hide the grid."
+msgstr ""
+
+#: kig/kig_part.cpp:325
+msgid "Show &Axes"
+msgstr ""
+
+#: kig/kig_part.cpp:327
+msgid "Show or hide the axes."
+msgstr ""
+
+#: kig/kig_part.cpp:331
+msgid "Wear Infrared Glasses"
+msgstr ""
+
+#: kig/kig_part.cpp:333
+msgid "Enable/disable hidden objects' visibility."
+msgstr ""
+
+#: kig/kig_part.cpp:365
+#, kde-format
+msgid "Repeat Construction (%1)"
+msgstr ""
+
+#: kig/kig_part.cpp:367
+#, kde-format
+msgid "Repeat %1 (with new data)"
+msgstr ""
+
+#: kig/kig_part.cpp:396
+#, kde-format
+msgid ""
+"The file \"%1\" you tried to open does not exist. Please verify that you "
+"entered the correct path."
+msgstr ""
+
+#: kig/kig_part.cpp:398
+msgid "File Not Found"
+msgstr ""
+
+#: kig/kig_part.cpp:416
+#, kde-format
+msgid ""
+"You tried to open a document of type \"%1\"; unfortunately, Kig does not "
+"support this format. If you think the format in question would be worth "
+"implementing support for, you can always ask us nicely on mailto:pino@kde."
+"org or do the work yourself and send me a patch."
+msgstr ""
+
+#: kig/kig_part.cpp:422 kig/kig_part.cpp:465
+msgid "Format Not Supported"
+msgstr ""
+
+#: kig/kig_part.cpp:463
+msgid ""
+"Kig does not support saving to any other file format than its own. Save to "
+"Kig's format instead?"
+msgstr ""
+
+#: kig/kig_part.cpp:465
+msgid "Save Kig Format"
+msgstr ""
+
+#: kig/kig_part.cpp:664
+msgid ""
+"*.kig|Kig Documents (*.kig)\n"
+"*.kigz|Compressed Kig Documents (*.kigz)"
+msgstr ""
+
+#: kig/kig_part.cpp:833
+msgid "Print Geometry"
+msgstr ""
+
+#: kig/kig_part.cpp:900
+#, kde-format
+msgid "Hide %1 Object"
+msgid_plural "Hide %1 Objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kig/kig_part.cpp:919
+#, kde-format
+msgid "Show %1 Object"
+msgid_plural "Show %1 Objects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: kig/kig_view.cpp:220
+msgid "Zoom In"
+msgstr ""
+
+#: kig/kig_view.cpp:240
+msgid "Zoom Out"
+msgstr ""
+
+#: kig/kig_view.cpp:520
+msgid "Recenter View"
+msgstr ""
+
+#: kig/kig_view.cpp:542
+msgid "Select the rectangle that should be shown."
+msgstr ""
+
+#: kig/kig_view.cpp:550 kig/kig_view.cpp:598
+msgid "Change Shown Part of Screen"
+msgstr ""
+
+#: kig/kig_view.cpp:587
+msgid "Select Zoom Area"
+msgstr ""
+
+#: kig/kig_view.cpp:588
+msgid ""
+"Select the zoom area by entering the coordinates<br />of the upper left "
+"corner and the lower right corner."
+msgstr ""
+
+#: kig/main.cpp:98
+msgid "Kig"
+msgstr ""
+
+#: kig/main.cpp:104
+msgid ""
+"Do not show a GUI. Convert the specified file to the native Kig format. "
+"Output goes to stdout unless --outfile is specified."
+msgstr ""
+
+#: kig/main.cpp:106
+msgid ""
+"File to output the created native file to. '-' means output to stdout. "
+"Default is stdout as well."
+msgstr ""
+
+#: kig/main.cpp:107
+msgid "Document to open"
+msgstr ""
+
+#: misc/coordinate_system.cpp:325
+msgid ""
+"Enter coordinates in the following format: \"x;y\",\n"
+"where x is the x coordinate, and y is the y coordinate."
+msgstr ""
+
+#: misc/coordinate_system.cpp:331
+msgid ""
+"Enter coordinates in the following format: <b>\"x;y\"</b>,<br />where x is "
+"the x coordinate, and y is the y coordinate."
+msgstr ""
+
+#: misc/coordinate_system.cpp:371
+msgid ""
+"Enter coordinates in the following format: \"r; θ°\",\n"
+"where r and θ are the polar coordinates."
+msgstr ""
+
+#: misc/coordinate_system.cpp:378
+msgid ""
+"Enter coordinates in the following format: <b>\"r; θ°\"</b>,<br />where r "
+"and θ are the polar coordinates."
+msgstr ""
+
+#: misc/coordinate_system.cpp:530
+msgid "&Euclidean"
+msgstr ""
+
+#: misc/coordinate_system.cpp:531
+msgid "&Polar"
+msgstr ""
+
+#: misc/coordinate_system.cpp:581
+msgid "Set Euclidean Coordinate System"
+msgstr ""
+
+#: misc/coordinate_system.cpp:583
+msgid "Set Polar Coordinate System"
+msgstr ""
+
+#: modes/typesdialog.cpp:130
+msgid "Macro"
+msgstr ""
+
+#: modes/typesdialog.cpp:313
+msgid "Type"
+msgstr ""
+
+#: modes/typesdialog.cpp:315
+msgid "Description"
+msgstr ""
+
+#: modes/typesdialog.cpp:339
+msgid "Manage Types"
+msgstr ""
+
+#: modes/typesdialog.cpp:426
+#, kde-format
+msgid "Are you sure you want to delete this type?"
+msgid_plural "Are you sure you want to delete these %1 types?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: modes/typesdialog.cpp:428
+msgid "Are You Sure?"
+msgstr ""
+
+#: modes/typesdialog.cpp:451 modes/typesdialog.cpp:466
+msgid ""
+"*.kigt|Kig Types Files\n"
+"*|All Files"
+msgstr ""
+
+#: modes/typesdialog.cpp:451
+msgid "Export Types"
+msgstr ""
+
+#: modes/typesdialog.cpp:466
+msgid "Import Types"
+msgstr ""
+
+#: modes/typesdialog.cpp:494
+msgid ""
+"There is more than one type selected. You can only edit one type at a time. "
+"Please select only the type you want to edit and try again."
+msgstr ""
+
+#: modes/typesdialog.cpp:497
+msgid "More Than One Type Selected"
+msgstr ""
