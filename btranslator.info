@@ -1,0 +1,113 @@
+name = B-Translator
+description = Drupal installation profile for B-Translator..
+;version = VERSION
+core = 7.x
+
+;--------------------
+; Core
+;--------------------
+dependencies[] = book
+dependencies[] = contact
+dependencies[] = blog
+dependencies[] = dblog
+dependencies[] = field
+dependencies[] = field_sql_storage
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = menu
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = block
+dependencies[] = aggregator
+dependencies[] = comment
+dependencies[] = dashboard
+dependencies[] = openid
+dependencies[] = filter
+dependencies[] = image
+dependencies[] = locale
+dependencies[] = node
+dependencies[] = search
+dependencies[] = system
+dependencies[] = toolbar
+dependencies[] = trigger
+dependencies[] = update
+dependencies[] = user
+dependencies[] = syslog
+dependencies[] = rdf
+dependencies[] = list
+dependencies[] = number
+dependencies[] = options
+dependencies[] = text
+
+;--------------------
+; Contrib
+;--------------------
+dependencies[] = admin
+dependencies[] = openidadmin
+dependencies[] = context
+dependencies[] = context_ui
+dependencies[] = ctools
+dependencies[] = diff
+dependencies[] = features
+dependencies[] = strongarm
+dependencies[] = views
+dependencies[] = views_ui
+dependencies[] = fusion_accelerator
+
+;--------------------
+; ; Drupal for Facebook
+;--------------------
+; dependencies[] = fb
+; dependencies[] = fb_app
+; dependencies[] = fb_canvas
+; dependencies[] = fb_connect
+; dependencies[] = fb_devel
+; dependencies[] = fb_form
+; dependencies[] = fb_stream
+; dependencies[] = fb_user
+; ; Drupal for Facebook - contrib
+; dependencies[] = fb_friend
+
+;--------------------
+; Filters
+;--------------------
+dependencies[] = geshifield
+dependencies[] = geshifilter
+
+;--------------------
+; B-Translator
+;--------------------
+dependencies[] = l10n_feedback
+; dependencies[] = fb_btranslator
+
+;--------------------
+; Other
+;--------------------
+dependencies[] = libraries
+dependencies[] = module_filter
+
+;--------------------
+; Development
+;--------------------
+dependencies[] = profiler_builder
+dependencies[] = reroute_email
+dependencies[] = devel
+
+;--------------------
+; Mail
+;--------------------
+dependencies[] = smtp
+
+;--------------------
+; User interface
+;--------------------
+dependencies[] = wysiwyg
+
+;--------------------
+; Performance and scalability
+;--------------------
+dependencies[] = boost
+
+files[] = btranslator.install
+files[] = btranslator.profile
+

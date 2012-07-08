@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ */
+function btranslator_install() {
+  include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
+  standard_install();
+  theme_enable(array('bartik'));
+  variable_set('theme_default', 'bartik');
+
+  //variable_set('cache', '1');
+  //variable_set('block_cache', '1');
+  //variable_set('cache_lifetime', '0');
+}
