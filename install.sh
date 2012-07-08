@@ -4,7 +4,7 @@
 output_dir=${1:-btranslator}
 
 ### get all the required files and modules
-drush make --working-copy "https://raw.github.com/dashohoxha/B-Translator/distro.make" $output_dir
+drush make --working-copy "https://raw.github.com/dashohoxha/B-Translator/master/distro.make" $output_dir
 ### for developing make files, comment the line above and use the following one
 #drush make --working-copy /var/www/B-Translator/distro.make $output_dir
 
