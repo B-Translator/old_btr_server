@@ -1,0 +1,144 @@
+# translation of desktop_kdeadmin.po to Français
+# translation of desktop_kdeadmin.po to
+# Robert Jacolin <rjacolin@ifrance.com>, 2003.
+# Matthieu Robin <kde@macolu.org>, 2005.
+# Matthieu Robin <matthieu@macolu.org>, 2005.
+# Mickael Sibelle <kimael@gmail.com>, 2008.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2008, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: desktop_kdeadmin\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-12-06 08:31+0000\n"
+"PO-Revision-Date: 2012-01-05 23:46+0100\n"
+"Last-Translator: \n"
+"Language-Team: French <kde-francophone@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: kcron/src/kcm_cron.desktop:14
+msgctxt "Name"
+msgid "Task Scheduler"
+msgstr "Planificateur de tâches"
+
+#: kcron/src/kcm_cron.desktop:71
+msgctxt "Comment"
+msgid "Configure and schedule tasks"
+msgstr "Configurer et planifier les tâches"
+
+#: kcron/src/kcm_cron.desktop:127
+msgctxt "X-KDE-Keywords"
+msgid "cron,crontab,scheduled,tasks,task,schedule,vixie"
+msgstr "cron,crontab,planification,tâche,tâches,planifiée,vixie"
+
+#: ksystemlog/src/ksystemlog.desktop:2
+msgctxt "Name"
+msgid "KSystemLog"
+msgstr "KSystemLog"
+
+#: ksystemlog/src/ksystemlog.desktop:64
+msgctxt "Comment"
+msgid "System log viewer tool"
+msgstr "Consultation des journaux du système"
+
+#: ksystemlog/src/ksystemlog.desktop:121
+msgctxt "GenericName"
+msgid "System Log Viewer"
+msgstr "Consultation des journaux du système"
+
+#: kuser/kuser.desktop:2
+msgctxt "Name"
+msgid "KUser"
+msgstr "KUser"
+
+#: kuser/kuser.desktop:80
+msgctxt "GenericName"
+msgid "User Manager"
+msgstr "Gestionnaire d'utilisateurs"
+
+#: strigi-analyzer/rpm/kfile_rpm.desktop:3
+msgctxt "Name"
+msgid "RPM Stats"
+msgstr "État RPM"
+
+#: system-config-printer-kde/system-config-printer-kde.desktop:14
+msgctxt "Name"
+msgid "Printer Configuration"
+msgstr "Configuration de l'imprimante"
+
+#: system-config-printer-kde/system-config-printer-kde.desktop:69
+msgctxt "Comment"
+msgid "Configure local and remote Printers"
+msgstr "Configurer les imprimantes locales et distantes"
+
+#: system-config-printer-kde/system-config-printer-kde.desktop:124
+msgctxt "X-KDE-Keywords"
+msgid "printer,printers,printing"
+msgstr "imprimante,imprimantes,impression"
+
+#~ msgctxt "Comment"
+#~ msgid "Configure Network Settings"
+#~ msgstr "Configuration des paramètres réseau"
+
+#~ msgctxt "Name"
+#~ msgid "Network Settings"
+#~ msgstr "Paramètres réseau"
+
+#~ msgctxt "Comment"
+#~ msgid "Configure TCP/IP settings"
+#~ msgstr "Configuration des paramètres TCP/IP"
+
+#~ msgctxt "Name"
+#~ msgid "KNetworkConf"
+#~ msgstr "KNetworkConf"
+
+#~ msgctxt "GenericName"
+#~ msgid "Configure TCP/IP Settings"
+#~ msgstr "Configuration des paramètres TCP/IP"
+
+#~ msgctxt "Name"
+#~ msgid "KDat"
+#~ msgstr "KDat"
+
+#~ msgctxt "GenericName"
+#~ msgid "Tape Backup Tool"
+#~ msgstr "Outil de sauvegarde sur bandes"
+
+#~ msgctxt "Name"
+#~ msgid "KSysV"
+#~ msgstr "KSysV"
+
+#~ msgctxt "GenericName"
+#~ msgid "SysV-Init Editor"
+#~ msgstr "Éditeur de l'initialisation SysV"
+
+#~ msgctxt "Comment"
+#~ msgid "Saved Init Configuration"
+#~ msgstr "Configuration de démarrage enregistrée"
+
+#~ msgctxt "Comment"
+#~ msgid "SysV-Init Editor Log File"
+#~ msgstr "Journal de l'éditeur de configuration de démarrage SysV"
+
+#~ msgctxt "Name"
+#~ msgid "Boot Manager (LILO)"
+#~ msgstr "Gestionnaire de démarrage (LILO)"
+
+#~ msgctxt "Comment"
+#~ msgid "Configure LILO (the Linux boot manager)"
+#~ msgstr "Configuration de LILO (le gestionnaire de démarrage de Linux)"
+
+#~ msgctxt "Name"
+#~ msgid "KPackage"
+#~ msgstr "KPackage"
+
+#~ msgctxt "GenericName"
+#~ msgid "Package Manager"
+#~ msgstr "Gestionnaire de paquetages"
+
+#~ msgctxt "Name"
+#~ msgid "Printing"
+#~ msgstr "Impression"

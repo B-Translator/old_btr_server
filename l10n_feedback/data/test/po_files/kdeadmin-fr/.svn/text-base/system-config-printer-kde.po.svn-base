@@ -1,0 +1,1928 @@
+# Copyright (C) YEAR This_file_is_part_of_KDE
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Julien Richard-Foy <julien.rf@no-log.org>, 2008, 2009, 2010.
+# Guillaume Pujol <guill.p@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: system-config-printer-kde\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2012-02-17 03:51+0100\n"
+"PO-Revision-Date: 2010-05-29 13:58+0200\n"
+"Last-Translator: Julien Richard-Foy <julien.rf@no-log.org>\n"
+"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: authconn.py:246 authconn.py:268
+msgid "Operation canceled"
+msgstr "Opération annulée"
+
+#: authconn.py:284
+#, python-format
+msgid "CUPS server error (%s)"
+msgstr "Erreur du serveur CUPS (%s)"
+
+#: authconn.py:286 system-config-printer-kde.py:1935
+#: system-config-printer-kde.py:1961 system-config-printer-kde.py:4135
+msgid "CUPS server error"
+msgstr "Erreur du serveur CUPS"
+
+# unreviewed-context
+#: authconn.py:295
+#, python-format
+msgid "There was an error during the CUPS operation: '%s'."
+msgstr "Une erreur s'est produite lors de l'opération CUPS : « %s »."
+
+#: authconn.py:298
+msgid "Retry"
+msgstr "Réessayer"
+
+#: authconn.py:429 authconn.py:431 pysmb.py:90 pysmb.py:92
+#: system-config-printer-kde.py:1931 system-config-printer-kde.py:1944
+#: system-config-printer-kde.py:4132
+msgid "Not authorized"
+msgstr "Non autorisé"
+
+#: authconn.py:432 pysmb.py:93 system-config-printer-kde.py:1931
+#: system-config-printer-kde.py:4132
+msgid "The password may be incorrect."
+msgstr "Le mot de passe est probablement incorrect."
+
+#: authconn.py:453
+#, python-format
+msgid "Authentication (%s)"
+msgstr "Authentification (%s)"
+
+#. i18n: file: new-printer.ui:410
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: authconn.py:455 pysmb.py:98 ui.py:102
+msgid "Authentication"
+msgstr "Authentification"
+
+#: optionwidgets.py:131
+msgid "Conflicts with:"
+msgstr "En conflit avec :"
+
+#: pysmb.py:113
+#, python-format
+msgid "You must log in to access %s."
+msgstr "Vous devez vous connecter pour accéder à %s."
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:496
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: pysmb.py:123 ui.py:114
+msgid "Username:"
+msgstr "Utilisateur :"
+
+# unreviewed-context
+#: pysmb.py:126
+msgid "Domain:"
+msgstr "Domaine :"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:473
+#. i18n: ectx: property (text), widget (QLabel, label_26)
+#: pysmb.py:129 ui.py:111
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: system-config-printer-kde.py:128
+msgctxt "Printer state"
+msgid "Idle"
+msgstr "Inactif"
+
+#: system-config-printer-kde.py:129
+msgctxt "Printer state"
+msgid "Processing"
+msgstr "Traitement"
+
+#: system-config-printer-kde.py:130
+msgctxt "Printer state"
+msgid "Busy"
+msgstr "Occupé"
+
+#: system-config-printer-kde.py:131
+msgctxt "Printer state"
+msgid "Stopped"
+msgstr "Stoppé"
+
+#: system-config-printer-kde.py:237
+msgid "Automatic rotation"
+msgstr "Rotation automatique"
+
+#: system-config-printer-kde.py:388 system-config-printer-kde.py:628
+#: system-config-printer-kde.py:2277
+msgid "New Printer"
+msgstr "Nouvelle imprimante"
+
+#: system-config-printer-kde.py:389
+msgid "Add a new printer"
+msgstr "Ajouter une nouvelle imprimante"
+
+#: system-config-printer-kde.py:481
+msgid "Do you want to save changes?"
+msgstr "Voulez-vous enregistrer ces changements ?"
+
+#: system-config-printer-kde.py:481
+msgid "Save Changes"
+msgstr "Enregistrer les changements"
+
+#: system-config-printer-kde.py:513
+msgid "Printer configuration - %1"
+msgstr "Configuration de l'imprimante - %1"
+
+#: system-config-printer-kde.py:516
+msgid "Connected to %1"
+msgstr "Connexion à %1"
+
+#: system-config-printer-kde.py:518
+msgid "Not connected"
+msgstr "Non connecté"
+
+#: system-config-printer-kde.py:629
+msgid "Server Settings"
+msgstr "Configuration du serveur"
+
+#: system-config-printer-kde.py:635
+msgid "Local Printers"
+msgstr "Imprimantes locales"
+
+#: system-config-printer-kde.py:636
+msgid "Local Classes"
+msgstr "Classes d'imprimantes locales"
+
+#: system-config-printer-kde.py:637
+msgid "Remote Printers"
+msgstr "Imprimantes distantes"
+
+#: system-config-printer-kde.py:638
+msgid "Remote Classes"
+msgstr "Classes d'imprimantes distantes"
+
+#: system-config-printer-kde.py:794
+msgid "Installable Options"
+msgstr "Options possibles"
+
+#. i18n: file: system-config-printer.ui:864
+#. i18n: ectx: attribute (title), widget (QWidget, tab_2)
+#: system-config-printer-kde.py:795 system-config-printer-kde.py:1280
+#: ui.py:370
+msgid "Printer Options"
+msgstr "Options de l'imprimante"
+
+#: system-config-printer-kde.py:797 system-config-printer-kde.py:799
+msgctxt "Conflicted entry"
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: system-config-printer-kde.py:828
+#, python-format
+msgid "modifying class %s"
+msgstr "modification de la classe %s"
+
+#: system-config-printer-kde.py:830
+#, python-format
+msgid "modifying printer %s"
+msgstr "modification d'imprimante %s"
+
+#: system-config-printer-kde.py:842
+msgid "Class now has no members. Proceed anyway?"
+msgstr ""
+"La classe ne comporte, pour l'instant, aucun membre. Continuer tout de même ?"
+
+#: system-config-printer-kde.py:842
+msgid "Class Empty"
+msgstr "Classe vide"
+
+#: system-config-printer-kde.py:936
+msgid "fetching server settings"
+msgstr "récupération des paramètres du serveur"
+
+#: system-config-printer-kde.py:993
+msgid "Test page submitted as job %1"
+msgstr "Page de test envoyée comme tâche %1"
+
+#: system-config-printer-kde.py:993
+msgctxt "Test page submitted"
+msgid "Submitted"
+msgstr "Envoyé"
+
+#: system-config-printer-kde.py:999 system-config-printer-kde.py:1031
+msgid "<b>Not possible</b>"
+msgstr "<b>Impossible</b>"
+
+#: system-config-printer-kde.py:1000 system-config-printer-kde.py:1032
+msgid ""
+"The remote server did not accept the print job, most likely because the "
+"printer is not shared."
+msgstr ""
+"Le serveur distant n'a pas accepté la tâche d'impression, certainement parce "
+"que l'imprimante n'est pas partagée."
+
+#: system-config-printer-kde.py:1021
+msgctxt "Maintenance command submitted"
+msgid "<b>Submitted</b>"
+msgstr "<b>Envoyé</b>"
+
+#: system-config-printer-kde.py:1022
+#, python-format
+msgid "Maintenance command submitted as job %d"
+msgstr "Commande de maintenance envoyée comme tâche %d"
+
+#: system-config-printer-kde.py:1148 system-config-printer-kde.py:1506
+msgid "This is the default printer"
+msgstr "C'est l'imprimante par défaut"
+
+#: system-config-printer-kde.py:1157
+msgid "Make default. (The current default is %1.)"
+msgstr "Définir par défaut (Le réglage par défaut est actuellement %1)."
+
+#: system-config-printer-kde.py:1159
+msgid "Make default. (There is no current default.)"
+msgstr "Définir par défaut (Il n'y a pas de réglage par défaut actuellement)."
+
+#: system-config-printer-kde.py:1235
+msgid "<b>Error</b>"
+msgstr "<b>Erreur</b>"
+
+#: system-config-printer-kde.py:1236
+msgid "Option '%1' has value '%2' and cannot be edited."
+msgstr "L'option « %1 » a pour valeur « %2 » et ne peut pas être modifiée."
+
+#: system-config-printer-kde.py:1239
+msgid "Error"
+msgstr "Erreur"
+
+#. i18n: file: system-config-printer.ui:804
+#. i18n: ectx: attribute (title), widget (QWidget, tab_3)
+#: system-config-printer-kde.py:1430 ui.py:364
+msgid "Members"
+msgstr "Membres"
+
+# unreviewed-context
+#: system-config-printer-kde.py:1468
+#, python-format
+msgid "Really delete printer %s?"
+msgstr "Voulez-vous vraiment supprimer l'imprimante %s ?"
+
+# unreviewed-context
+#: system-config-printer-kde.py:1470
+#, python-format
+msgid "Really delete class %s?"
+msgstr "Voulez-vous vraiment supprimer la classe d'imprimantes %s ?"
+
+#: system-config-printer-kde.py:1509
+msgid "Make Default. (The current default is %1)"
+msgstr "Définir par défaut. (Le réglage par défaut est actuellement %1)"
+
+#: system-config-printer-kde.py:1511
+msgid "Make Default. (There is no current default)"
+msgstr "Définir par défaut. (Il n'y a pas de réglage par défaut actuellement)"
+
+#: system-config-printer-kde.py:1652
+msgid "Add User"
+msgstr "Ajouter un utilisateur"
+
+# unreviewed-context
+#: system-config-printer-kde.py:1652
+msgid "Enter Username"
+msgstr "Sasissez le nom de l'utilisateur"
+
+# unreviewed-context
+#: system-config-printer-kde.py:1934 system-config-printer-kde.py:4134
+msgid "There was an error during the CUPS operation: '%1'."
+msgstr "Une erreur s'est produite lors de l'opération de CUPS : « %1 »."
+
+#: system-config-printer-kde.py:1941
+msgid ""
+"The password may be incorrect, or the server may be configured to deny "
+"remote administration."
+msgstr ""
+"Le mot de passe est probablement incorrect, ou le serveur est configuré pour "
+"rejeter l'administration à distance."
+
+#: system-config-printer-kde.py:1947
+msgctxt "HTTP error"
+msgid "Bad request"
+msgstr "Requête incorrecte"
+
+#: system-config-printer-kde.py:1949
+msgctxt "HTTP error"
+msgid "Not found"
+msgstr "Non trouvé"
+
+#: system-config-printer-kde.py:1951
+msgctxt "HTTP error"
+msgid "Request timeout"
+msgstr "Temps écoulé pour la requête"
+
+#: system-config-printer-kde.py:1953
+msgctxt "HTTP error"
+msgid "Upgrade required"
+msgstr "Mise à jour nécessaire"
+
+#: system-config-printer-kde.py:1955
+msgctxt "HTTP error"
+msgid "Server error"
+msgstr "Erreur du serveur"
+
+#: system-config-printer-kde.py:1957
+msgctxt "HTTP error"
+msgid "Not connected"
+msgstr "Non connecté"
+
+#: system-config-printer-kde.py:1959
+msgctxt "HTTP error"
+msgid "status %1"
+msgstr "état %1"
+
+# unreviewed-context
+#: system-config-printer-kde.py:1961
+msgid "There was an HTTP error: %1."
+msgstr "Une erreur HTTP s'est produite : %1"
+
+#: system-config-printer-kde.py:2007
+msgctxt "Printer state"
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: system-config-printer-kde.py:2046
+msgid "Cancel Tests"
+msgstr "Annuler les tests "
+
+#. i18n: file: system-config-printer.ui:575
+#. i18n: ectx: property (text), widget (KPushButton, btnPrintTestPage)
+#: system-config-printer-kde.py:2050 ui.py:322
+msgid "Print Test Page"
+msgstr "Imprimer la page de test"
+
+#. i18n: file: ipp-browse-dialog.ui:43
+#. i18n: ectx: property (text), widget (KPushButton, btnIPPBrowseRefresh)
+#. i18n: file: smb-browse-dialog.ui:43
+#. i18n: ectx: property (text), widget (KPushButton, btnSMBBrowseRefresh)
+#: system-config-printer-kde.py:2191 ui.py:6 ui.py:198
+msgid "Refresh"
+msgstr "Recharger"
+
+#. i18n: file: smb-browse-dialog.ui:25
+#. i18n: ectx: property (windowTitle), widget (QDialog, SMBBrowseDialog)
+#: system-config-printer-kde.py:2193 ui.py:195
+msgid "SMB Browser"
+msgstr "Navigateur SMB"
+
+#: system-config-printer-kde.py:2194 system-config-printer-kde.py:4257
+msgid "Share"
+msgstr "Partager"
+
+#: system-config-printer-kde.py:2194 system-config-printer-kde.py:4257
+msgid "Comment"
+msgstr "Commentaire"
+
+#: system-config-printer-kde.py:2286
+msgid "New Class"
+msgstr "Nouvelle classe d'imprimantes"
+
+#: system-config-printer-kde.py:2291
+msgid "Change Device URI"
+msgstr "Modifié l'URI du périphérique"
+
+#: system-config-printer-kde.py:2300
+msgid "Change Driver"
+msgstr "Modifier le pilote"
+
+#: system-config-printer-kde.py:2399 system-config-printer-kde.py:2677
+#: system-config-printer-kde.py:2856
+msgid "<b>Searching</b>"
+msgstr "<b>Recherche en cours</b>"
+
+#: system-config-printer-kde.py:2400 system-config-printer-kde.py:2678
+msgid "Searching for drivers"
+msgstr "Recherche de drivers"
+
+# unreviewed-context
+#: system-config-printer-kde.py:2486
+msgid ""
+"This printer supports both printing and sending faxes.  Which functionality "
+"should be used for this queue?"
+msgstr ""
+"Cette imprimante permet l'impression et l'envoi de fax. Quelle "
+"fonctionnalité devrait être utilisée pour cette file d'impressions ?"
+
+#: system-config-printer-kde.py:2492
+msgid "Printer"
+msgstr "Imprimante"
+
+#: system-config-printer-kde.py:2493
+msgid "Fax"
+msgstr "Fax"
+
+#: system-config-printer-kde.py:2857
+msgid "Searching for printers"
+msgstr "Recherche d'imprimantes"
+
+#: system-config-printer-kde.py:3122
+msgctxt "Other device"
+msgid "Other"
+msgstr "Autre"
+
+#: system-config-printer-kde.py:3124
+msgctxt "Current device"
+msgid "%1 (Current)"
+msgstr "%1 (actuel)"
+
+#: system-config-printer-kde.py:3161 system-config-printer-kde.py:4271
+msgid "Scanning..."
+msgstr "Analyse…"
+
+#: system-config-printer-kde.py:3219
+msgid ""
+"There were no SMB print shares found.  Please check that the Samba service "
+"is running and marked as trusted in your firewall configuration."
+msgstr ""
+"Aucun partage d'impression SMB trouvé. Veuillez vérifier que le service "
+"Samba est lancé et est autorisé dans la configuration de votre pare-feu."
+
+#: system-config-printer-kde.py:3222
+msgid "No SMB Print Shares"
+msgstr "Aucun partage d'impression SMB"
+
+#: system-config-printer-kde.py:3473 system-config-printer-kde.py:3529
+msgid "This print share is accessible."
+msgstr "Le partage d'imprimante est accessible."
+
+#: system-config-printer-kde.py:3474 system-config-printer-kde.py:3530
+msgid "Print Share Verified"
+msgstr "Partage d'imprimante vérifié"
+
+#: system-config-printer-kde.py:3478 system-config-printer-kde.py:3532
+msgid "This print share is not accessible."
+msgstr "Le partage d'imprimante n'est pas accessible."
+
+#: system-config-printer-kde.py:3481 system-config-printer-kde.py:3533
+msgid "Inaccessible"
+msgstr "Inaccessible"
+
+#: system-config-printer-kde.py:3548
+msgid "A printer connected to the parallel port."
+msgstr "Une imprimante connectée au port parallèle."
+
+#: system-config-printer-kde.py:3550
+msgid "A printer connected to a USB port."
+msgstr "Une imprimante connectée à un port USB."
+
+#: system-config-printer-kde.py:3552
+msgid ""
+"HPLIP software driving a printer, or the printer function of a multi-"
+"function device."
+msgstr ""
+"Logiciel HPLIP pilotant l'imprimante, ou fonction imprimante d'un "
+"périphérique multi-fonction."
+
+#: system-config-printer-kde.py:3555
+msgid ""
+"HPLIP software driving a fax machine, or the fax function of a multi-"
+"function device."
+msgstr ""
+"Logiciel HPLIP pilotant un fax, ou fonction fax d'un périphérique multi-"
+"fonction."
+
+#: system-config-printer-kde.py:3558
+msgid "Local printer detected by the Hardware Abstraction Layer (HAL)."
+msgstr ""
+"Imprimante locale détectée par la couche d'abstraction matérielle (HAL)."
+
+#: system-config-printer-kde.py:3860
+msgctxt "Recommended driver"
+msgid "%1 (recommended)"
+msgstr "%1 (recommandé)"
+
+#: system-config-printer-kde.py:3897
+msgid "Database error"
+msgstr "Erreur de la base de données"
+
+# unreviewed-context
+#: system-config-printer-kde.py:3906
+msgid "You will need to install the '%1' package in order to use this driver."
+msgstr "Vous devez installer le paquetage « %1 » pour utiliser ce pilote."
+
+# unreviewed-context
+#: system-config-printer-kde.py:3910
+msgid "The '%1' driver cannot be used with printer '%2 %3'."
+msgstr "Impossible d'utiliser le pilote « %1 » avec l'imprimante « %2 %3 »."
+
+#: system-config-printer-kde.py:3914
+msgid "PPD error"
+msgstr "Erreur PPD"
+
+# unreviewed-context
+#: system-config-printer-kde.py:3916
+msgid "Failed to read PPD file.  Possible reason follows:"
+msgstr ""
+"Impossible de lire le fichier PPD. Les raisons possibles sont les suivantes :"
+
+#: system-config-printer-kde.py:3927
+msgid "Downloadable drivers"
+msgstr "Pilotes à télécharger"
+
+#: system-config-printer-kde.py:3928
+msgid "Support for downloadable drivers is not yet completed."
+msgstr "La gestion des pilotes à télécharger n'est pas encore complète."
+
+#: system-config-printer-kde.py:3932
+msgctxt "Error title"
+msgid "<b>%1</b>"
+msgstr "<b>%1</b>"
+
+#: system-config-printer-kde.py:3999
+msgid "<b>Adding</b>"
+msgstr "<b>Ajout</b>"
+
+#: system-config-printer-kde.py:4000
+msgid "Adding printer"
+msgstr "Ajout de l'imprimante"
+
+#: system-config-printer-kde.py:4173
+msgid "Install driver"
+msgstr "Installer le pilote"
+
+# unreviewed-context
+#: system-config-printer-kde.py:4174
+msgid "Printer '%1' requires the %2 package but it is not currently installed."
+msgstr ""
+"L'imprimante « %1 » a besoin du paquetage « %2 » mais il n'est pas installé "
+"actuellement."
+
+#: system-config-printer-kde.py:4180
+msgid "Missing driver"
+msgstr "Pilote manquant"
+
+# unreviewed-context
+#: system-config-printer-kde.py:4181
+msgid ""
+"Printer '%1' requires the '%2' program but it is not currently installed.  "
+"Please install it before using this printer."
+msgstr ""
+"L'imprimante « %1 » a besoin du programme « %2 » mais il n'est pas installé "
+"actuellement. Veuillez l'installer avant d'utiliser cette imprimante."
+
+#: system-config-printer-kde.py:4184
+msgid "Missing Driver"
+msgstr "Pilote manquant"
+
+#: system-config-printer-kde.py:4312
+msgid "Not possible"
+msgstr "Impossible"
+
+#: system-config-printer-kde.py:4313
+#, python-format
+msgid "It is not possible to obtain a list of queues from `%s'."
+msgstr "Impossible d'obtenir une liste des files d'impressions depuis « %s »."
+
+#: system-config-printer-kde.py:4315
+msgid ""
+"Obtaining a list of queues is a CUPS extension to IPP.  Network printers do "
+"not support it."
+msgstr ""
+"L'obtention d'une liste de files d'impressions est une extension CUPS à IPP. "
+"Les imprimantes réseau ne permettent pas cela."
+
+#: system-config-printer-kde.py:4318
+msgid "No queues"
+msgstr "Pas de file d'impressions"
+
+#: system-config-printer-kde.py:4319
+msgid "There are no queues available."
+msgstr "Aucune file d'impressions n'est disponible"
+
+#. i18n: file: ipp-browse-dialog.ui:25
+#. i18n: ectx: property (windowTitle), widget (QDialog, IPPBrowseDialog)
+#: ui.py:3
+msgid "IPP Browser"
+msgstr "Navigateur IPP"
+
+#. i18n: file: ipp-browse-dialog.ui:63
+#. i18n: ectx: property (text), widget (KPushButton, btnIPPBrowseOk)
+#. i18n: file: smb-browse-dialog.ui:63
+#. i18n: ectx: property (text), widget (KPushButton, btnSMBBrowseOk)
+#: ui.py:9 ui.py:201
+msgid "Ok"
+msgstr "Ok"
+
+#. i18n: file: ipp-browse-dialog.ui:66
+#. i18n: ectx: property (shortcut), widget (KPushButton, btnIPPBrowseOk)
+#. i18n: file: smb-browse-dialog.ui:66
+#. i18n: ectx: property (shortcut), widget (KPushButton, btnSMBBrowseOk)
+#: ui.py:12 ui.py:204
+msgid "Ctrl+O"
+msgstr "Ctrl+O"
+
+#. i18n: file: ipp-browse-dialog.ui:73
+#. i18n: ectx: property (text), widget (KPushButton, btnIPPBrowseCancel)
+#. i18n: file: new-printer.ui:934
+#. i18n: ectx: property (text), widget (QPushButton, btnNPCancel)
+#. i18n: file: smb-browse-dialog.ui:73
+#. i18n: ectx: property (text), widget (KPushButton, btnSMBBrowseCancel)
+#: ui.py:15 ui.py:192 ui.py:207
+msgid "Cancel"
+msgstr "Annuler"
+
+#. i18n: file: ipp-browse-dialog.ui:105
+#. i18n: ectx: property (text), widget (QTreeWidget, twIPPBrowser)
+#. i18n: file: ipp-browse-dialog.ui:110
+#. i18n: ectx: property (text), widget (QTreeWidget, twIPPBrowser)
+#. i18n: file: smb-browse-dialog.ui:105
+#. i18n: ectx: property (text), widget (QTreeWidget, twSMBBrowser)
+#. i18n: file: smb-browse-dialog.ui:110
+#. i18n: ectx: property (text), widget (QTreeWidget, twSMBBrowser)
+#. i18n: file: system-config-printer.ui:764
+#. i18n: ectx: property (text), widget (QTreeWidget, tvPUsers)
+#. i18n: file: system-config-printer.ui:1021
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUp)
+#: ui.py:18 ui.py:21 ui.py:210 ui.py:213 ui.py:355 ui.py:417
+msgid "1"
+msgstr "1"
+
+#. i18n: file: new-printer.ui:14
+#. i18n: ectx: property (windowTitle), widget (QDialog, form)
+#: ui.py:24
+msgid "Dialog"
+msgstr "Dialogue"
+
+#. i18n: file: new-printer.ui:31
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: ui.py:27
+msgid "Printer Name"
+msgstr "Nom de l'imprimante"
+
+#. i18n: file: new-printer.ui:41
+#. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: file: new-printer.ui:95
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: ui.py:30 ui.py:39
+msgid "Description"
+msgstr "Description"
+
+#. i18n: file: new-printer.ui:51
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: ui.py:33
+msgid "Location"
+msgstr "Emplacement"
+
+#. i18n: file: new-printer.ui:78
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: ui.py:36
+msgid "Select Connection"
+msgstr "Sélectionner une connexion"
+
+#. i18n: file: new-printer.ui:102
+#. i18n: ectx: property (text), widget (QLabel, lblNPDeviceDescription)
+#: ui.py:42
+msgid "Device Description"
+msgstr "Description du périphérique"
+
+#. i18n: file: new-printer.ui:126
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: ui.py:45
+msgid "Enter Device URI"
+msgstr "Saisissez l'URI du périphérique"
+
+#. i18n: file: new-printer.ui:153
+#. i18n: ectx: property (text), widget (QLabel, label_10)
+#: ui.py:48
+msgid "Location of the Network Printer"
+msgstr "Emplacement de l'imprimante réseau"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:160
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#. i18n: file: new-printer.ui:204
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#. i18n: file: new-printer.ui:292
+#. i18n: ectx: property (text), widget (QLabel, label_18)
+#: ui.py:51 ui.py:60 ui.py:81
+msgid "Host:"
+msgstr "Hôte :"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:170
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: ui.py:54
+msgid "Port number:"
+msgstr "Numéro de port :"
+
+#. i18n: file: new-printer.ui:197
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: ui.py:57
+msgid "IPP Printer"
+msgstr "Imprimante IPP"
+
+#. i18n: file: new-printer.ui:217
+#. i18n: ectx: property (text), widget (QPushButton, btnIPPFindQueue)
+#: ui.py:63
+msgid "Find Queue..."
+msgstr "Trouver une file d'impressions…"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:224
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#. i18n: file: new-printer.ui:318
+#. i18n: ectx: property (text), widget (QLabel, label_19)
+#: ui.py:66 ui.py:90
+msgid "Queue:"
+msgstr "File d'impressions :"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:234
+#. i18n: ectx: property (text), widget (QLabel, label_34)
+#: ui.py:69
+msgid "URI:"
+msgstr "URI :"
+
+#. i18n: file: new-printer.ui:241
+#. i18n: ectx: property (text), widget (QLabel, lblIPPURI)
+#: ui.py:72
+msgid "..."
+msgstr "…"
+
+#. i18n: file: new-printer.ui:248
+#. i18n: ectx: property (text), widget (QPushButton, btnIPPVerify)
+#: ui.py:75
+msgid "Verify..."
+msgstr "Vérification…"
+
+#. i18n: file: new-printer.ui:285
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: ui.py:78
+msgid "Location of the LPD network printer"
+msgstr "Emplacement de l'imprimante réseau LPD"
+
+#. i18n: file: new-printer.ui:303
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbentNPTLpdHost)
+#: ui.py:84
+msgid "localhost"
+msgstr "localhost"
+
+#. i18n: file: new-printer.ui:311
+#. i18n: ectx: property (text), widget (QPushButton, btnNPTLpdProbe)
+#: ui.py:87
+msgctxt "Try to discover network printers"
+msgid "Probe"
+msgstr "Détecter"
+
+#. i18n: file: new-printer.ui:379
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: ui.py:93
+msgid "SMB Printer"
+msgstr "Imprimante SMB"
+
+#. i18n: file: new-printer.ui:396
+#. i18n: ectx: property (text), widget (QPushButton, btnSMBBrowse)
+#. i18n: file: new-printer.ui:628
+#. i18n: ectx: property (text), widget (QPushButton, filechooserPPDButton)
+#: ui.py:96 ui.py:132
+msgid "Browse"
+msgstr "Parcourir"
+
+#. i18n: file: new-printer.ui:403
+#. i18n: ectx: property (text), widget (QLabel, lblSMBHint)
+#: ui.py:99
+msgid "<i>smb://[workgroup/]server[:port]/printer</i>"
+msgstr "<i>smb://[groupe]serveur[:port]/imprimante</i>"
+
+#. i18n: file: new-printer.ui:417
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnSMBAuthPrompt)
+#: ui.py:105
+msgid "Prompt user if authentication is required"
+msgstr "Demander à l'utilisateur si une authentification est nécessaire"
+
+#. i18n: file: new-printer.ui:424
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnSMBAuthSet)
+#: ui.py:108
+msgid "Set authentication details now"
+msgstr "Définir maintenant les détails d'authentification"
+
+#. i18n: file: new-printer.ui:540
+#. i18n: ectx: property (text), widget (QPushButton, btnSMBVerify)
+#: ui.py:117
+msgid "Verify"
+msgstr "Vérifier"
+
+#. i18n: file: new-printer.ui:588
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnNPFoomatic)
+#: ui.py:120
+msgid "Select printer from database"
+msgstr "Sélectionner une imprimante dans la base de données "
+
+#. i18n: file: new-printer.ui:595
+#. i18n: ectx: property (text), widget (QLabel, label_27)
+#: ui.py:123
+msgid ""
+"The foomatic printer database contains various manufacturer provided "
+"PostScript Printer Description (PPD) files and also can generate PPD files "
+"for a large number of (non PostScript) printers. But in general manufacturer "
+"provided PPD files provide better access to the specific features of the "
+"printer."
+msgstr ""
+"La base d'imprimantes foomatic contient divers fichiers de descriptions "
+"d'imprimantes PostScript (PPD) fournis par les fabricants et peut également "
+"générer des fichiers PPD pour un grand nombre d'imprimantes (non "
+"PostScript). Cependant, en général les fichiers PPD fournis par les "
+"fabricants permettent une meilleure utilisation des fonctionnalités "
+"spécifiques d'une imprimante."
+
+#. i18n: file: new-printer.ui:608
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnNPPPD)
+#: ui.py:126
+msgid "Provide PPD file"
+msgstr "Fournir un fichier PPD"
+
+#. i18n: file: new-printer.ui:615
+#. i18n: ectx: property (text), widget (QLabel, label_28)
+#: ui.py:129
+msgid ""
+"<qt>PostScript Printer Description (PPD) files can often be found on the "
+"driver disk that comes with the printer. For PostScript printers they are "
+"often part of the Windows<sup>®</sup> driver.</qt>"
+msgstr ""
+"<qt>Les fichiers de description d'imprimante PostScript (PPD) peuvent "
+"souvent être trouvés sur le support contenant les pilotes fourni avec "
+"l'imprimante. Pour les imprimantes PostScript, ils font souvent partie du "
+"pilote Windows<sup>®</sup>.</qt>"
+
+#. i18n: file: new-printer.ui:638
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnNPDownloadableDriverSearch)
+#: ui.py:135
+msgid "Search for a printer driver to download"
+msgstr "Rechercher un pilote d'impression à télécharger"
+
+#. i18n: file: new-printer.ui:645
+#. i18n: ectx: property (text), widget (QLabel, label_29)
+#: ui.py:138
+msgid "Enter some search terms for the model of your printer."
+msgstr "Saisissez quelques mots correspondant au modèle de votre imprimante."
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:652
+#. i18n: ectx: property (text), widget (QLabel, label_30)
+#: ui.py:141
+msgid "Search terms:"
+msgstr "Mots de recherche :"
+
+#. i18n: file: new-printer.ui:662
+#. i18n: ectx: property (text), widget (QPushButton, btnNPDownloadableDriverSearch)
+#: ui.py:144
+msgid "Search"
+msgstr "Recherche"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:669
+#. i18n: ectx: property (text), widget (QLabel, label_31)
+#: ui.py:147
+msgid "Printer model:"
+msgstr "Modèle d'imprimante :"
+
+#. i18n: file: new-printer.ui:705
+#. i18n: ectx: property (text), widget (QPushButton, btnNPPDComments)
+#: ui.py:150
+msgid "Comments"
+msgstr "Commentaires"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:712
+#. i18n: ectx: property (text), widget (QLabel, label_32)
+#: ui.py:153
+msgid "Models:"
+msgstr "Modèles :"
+
+# unreviewed-context
+#. i18n: file: new-printer.ui:719
+#. i18n: ectx: property (text), widget (QLabel, label_33)
+#: ui.py:156
+msgid "Driver:"
+msgstr "Pilote :"
+
+#. i18n: file: new-printer.ui:730
+#. i18n: ectx: property (text), widget (QLabel, label_4)
+#: ui.py:159
+msgid "Printers to be members of this class"
+msgstr "Imprimantes devant faire partie de cette classe"
+
+#. i18n: file: new-printer.ui:739
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: ui.py:162
+msgid "Members of this class"
+msgstr "Membres de cette classe"
+
+#. i18n: file: new-printer.ui:790
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: ui.py:165
+msgid "Others"
+msgstr "Autres"
+
+#. i18n: file: new-printer.ui:809
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: ui.py:168
+msgid "Try to transfer the current settings"
+msgstr "Essayer de transférer la configuration actuelle"
+
+#. i18n: file: new-printer.ui:816
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnChangePPDasIs)
+#: ui.py:171
+msgid "Use the new PPD (Postscript Printer Description) as is."
+msgstr ""
+"Utiliser le nouveau PPD (fichier de description d'imprimante PostScript) tel "
+"quel."
+
+#. i18n: file: new-printer.ui:823
+#. i18n: ectx: property (text), widget (QLabel, label_37)
+#: ui.py:174
+msgid ""
+"This way all current option settings will be lost. The default settings of "
+"the new PPD will be used. "
+msgstr ""
+"Toutes les options de configuration actuelles seront perdues. Les paramètres "
+"par défaut du nouveau PPD seront utilisés."
+
+#. i18n: file: new-printer.ui:833
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnChangePPDKeepSettings)
+#: ui.py:177
+msgid "Try to copy the option settings over from the old PPD. "
+msgstr "Essayer de copier la configuration des options depuis l'ancien PPD."
+
+#. i18n: file: new-printer.ui:840
+#. i18n: ectx: property (text), widget (QLabel, label_38)
+#: ui.py:180
+msgid ""
+"This is done by assuming that options with the same name do have the same "
+"meaning. Settings of options that are not present in the new PPD will be "
+"lost and options only present in the new PPD will be set to default."
+msgstr ""
+"Cela est réalisé en supposant que les options portant le même nom ont la "
+"même signification. La configuration d'options non présentes sur le nouveau "
+"PPD sera perdue et les options présentes seulement sur le nouveau PPD seront "
+"définies à leur valeur par défaut."
+
+#. i18n: file: new-printer.ui:913
+#. i18n: ectx: property (text), widget (QPushButton, btnNPBack)
+#: ui.py:183
+msgid "Back"
+msgstr "Précédent"
+
+#. i18n: file: new-printer.ui:920
+#. i18n: ectx: property (text), widget (QPushButton, btnNPForward)
+#: ui.py:186
+msgid "Forward"
+msgstr "Suivant"
+
+#. i18n: file: new-printer.ui:927
+#. i18n: ectx: property (text), widget (QPushButton, btnNPApply)
+#: ui.py:189
+msgid "OK"
+msgstr "Ok"
+
+#. i18n: file: system-config-printer.ui:64
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: ui.py:216
+msgid "Add New Printer"
+msgstr "Ajouter une nouvelle imprimante"
+
+#. i18n: file: system-config-printer.ui:73
+#. i18n: ectx: property (text), widget (KPushButton, btnNewPrinter)
+#: ui.py:219
+msgid "New Local Printer"
+msgstr "Nouvelle imprimante locale"
+
+#. i18n: file: system-config-printer.ui:87
+#. i18n: ectx: property (text), widget (QLabel, newPrinterLabel)
+#: ui.py:222
+msgid ""
+"Add a new printer which is directly connected to your\n"
+"computer."
+msgstr "Ajouter une imprimante directement reliée à l'ordinateur."
+
+#. i18n: file: system-config-printer.ui:94
+#. i18n: ectx: property (text), widget (KPushButton, btnNewPrinterNetwork)
+#: ui.py:226
+msgid "New Network Printer"
+msgstr "Nouvelle imprimante réseau"
+
+#. i18n: file: system-config-printer.ui:108
+#. i18n: ectx: property (text), widget (QLabel, newPrinterNetworkLabel)
+#: ui.py:229
+msgid ""
+"Add a new printer which is connected to your home\n"
+"network or on the Internet."
+msgstr "Ajouter une imprimante connectée à votre réseau local ou à Internet."
+
+#. i18n: file: system-config-printer.ui:115
+#. i18n: ectx: property (text), widget (KPushButton, btnNewPrinterSpecial)
+#: ui.py:233
+msgid "New Special Printer"
+msgstr "Nouvelle imprimante spéciale"
+
+#. i18n: file: system-config-printer.ui:129
+#. i18n: ectx: property (text), widget (QLabel, newPrinterSpecialLabel)
+#: ui.py:236
+msgid ""
+"Add a new special printer such as a Fax or PDF by\n"
+"specifying an executable command."
+msgstr ""
+"Ajouter une imprimante spéciale comme un fax ou une imprimante PDF\n"
+"en indiquant une commande exécutable."
+
+#. i18n: file: system-config-printer.ui:136
+#. i18n: ectx: property (text), widget (KPushButton, btnNewClass)
+#: ui.py:240
+msgid "New Printer Class"
+msgstr "Nouvelle classe d'imprimantes"
+
+#. i18n: file: system-config-printer.ui:150
+#. i18n: ectx: property (text), widget (QLabel, label_5)
+#: ui.py:243
+msgid ""
+"Add a new printer class to specify a group of computers to\n"
+"print to."
+msgstr ""
+"Ajouter une classe d'imprimantes pour indiquer à un groupe\n"
+"d'ordinateurs d'y imprimer."
+
+#. i18n: file: system-config-printer.ui:178
+#. i18n: ectx: property (text), widget (QLabel, label_6)
+#: ui.py:247
+msgid "Basic Server Settings"
+msgstr "Configuration de base du serveur"
+
+#. i18n: file: system-config-printer.ui:208
+#. i18n: ectx: property (text), widget (QCheckBox, chkServerBrowse)
+#: ui.py:250
+msgid "Show printers shared by other systems"
+msgstr "Afficher les imprimantes partagées par d'autres systèmes"
+
+#. i18n: file: system-config-printer.ui:215
+#. i18n: ectx: property (text), widget (QCheckBox, chkServerShare)
+#: ui.py:253
+msgid "Share published printers connected to this system"
+msgstr "Partager les imprimantes publiées connectées à ce système"
+
+#. i18n: file: system-config-printer.ui:244
+#. i18n: ectx: property (text), widget (QCheckBox, chkServerShareAny)
+#: ui.py:256
+msgid "Allow printing from the Internet"
+msgstr "Autoriser l'impression depuis Internet"
+
+#. i18n: file: system-config-printer.ui:251
+#. i18n: ectx: property (text), widget (QCheckBox, chkServerRemoteAdmin)
+#: ui.py:259
+msgid "Allow remote administration"
+msgstr "Autoriser l'administration à distance"
+
+#. i18n: file: system-config-printer.ui:258
+#. i18n: ectx: property (text), widget (QCheckBox, chkServerAllowCancelAll)
+#: ui.py:262
+msgid "Allow users to cancel any job (not just their own)"
+msgstr ""
+"Autoriser les utilisateurs à annuler n'importe quelle tâche (pas seulement "
+"les leurs)"
+
+#. i18n: file: system-config-printer.ui:265
+#. i18n: ectx: property (text), widget (QCheckBox, chkServerLogDebug)
+#: ui.py:265
+msgid "Save debugging information for troubleshooting"
+msgstr "Enregistrer les informations de débogage pour le dépannage"
+
+#. i18n: file: system-config-printer.ui:299
+#. i18n: ectx: property (text), widget (QLabel, printerNameLabel)
+#: ui.py:268
+msgid "My Printer"
+msgstr "Mon imprimante"
+
+#. i18n: file: system-config-printer.ui:331
+#. i18n: ectx: attribute (title), widget (QWidget, settings)
+#: ui.py:271
+msgid "Settings"
+msgstr "Configuration"
+
+#. i18n: file: system-config-printer.ui:343
+#. i18n: ectx: property (text), widget (QLabel, label_3)
+#: ui.py:274
+msgid "Printer Description"
+msgstr "Description de l'imprimante"
+
+#. i18n: file: system-config-printer.ui:352
+#. i18n: ectx: property (text), widget (QLabel, lblPName)
+#: ui.py:277
+msgid "Printer Name:"
+msgstr "Nom de l'imprimante :"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:365
+#. i18n: ectx: property (text), widget (QLabel, lblPLocation)
+#: ui.py:280
+msgid "Location:"
+msgstr "Emplacement :"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:378
+#. i18n: ectx: property (text), widget (QLabel, lblPDescription)
+#: ui.py:283
+msgid "Printer Description:"
+msgstr "Description de l'imprimante :"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:391
+#. i18n: ectx: property (text), widget (QLabel, lblPDevice2)
+#: ui.py:286
+msgid "Device URI:"
+msgstr "URI du périphérique :"
+
+#. i18n: file: system-config-printer.ui:429
+#. i18n: ectx: property (text), widget (QLabel, label_7)
+#: ui.py:289
+msgid "Driver Details"
+msgstr "Détails du pilote"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:444
+#. i18n: ectx: property (text), widget (QLabel, lblPMakeModel2)
+#: ui.py:292
+msgid "Printer Model:"
+msgstr "Modèle d'imprimante :"
+
+#. i18n: file: system-config-printer.ui:460
+#. i18n: ectx: property (text), widget (QLabel, lblPMakeModel)
+#. i18n: file: system-config-printer.ui:499
+#. i18n: ectx: property (text), widget (QLabel, lblPState)
+#: ui.py:295 ui.py:304
+msgid "-"
+msgstr "-"
+
+#. i18n: file: system-config-printer.ui:470
+#. i18n: ectx: property (text), widget (KPushButton, btnChangePPD)
+#: ui.py:298
+msgid "Change..."
+msgstr "Modifier…"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:483
+#. i18n: ectx: property (text), widget (QLabel, lblPType2)
+#: ui.py:301
+msgid "Printer State:"
+msgstr "État de l'imprimante :"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:521
+#. i18n: ectx: property (text), widget (QLabel, label_12)
+#: ui.py:307
+msgid "Printer Status"
+msgstr "État de l'imprimante :"
+
+#. i18n: file: system-config-printer.ui:530
+#. i18n: ectx: property (text), widget (QCheckBox, chkPEnabled)
+#: ui.py:310
+msgid "Enable"
+msgstr "Activer"
+
+#. i18n: file: system-config-printer.ui:537
+#. i18n: ectx: property (text), widget (QCheckBox, chkPAccepting)
+#: ui.py:313
+msgid "Accepting"
+msgstr "Acceptation"
+
+#. i18n: file: system-config-printer.ui:544
+#. i18n: ectx: property (text), widget (QCheckBox, chkPShared)
+#: ui.py:316
+msgid "Sharing"
+msgstr "Partage"
+
+#. i18n: file: system-config-printer.ui:551
+#. i18n: ectx: property (text), widget (QLabel, lblNotPublished)
+#: ui.py:319
+msgid "<i>Not published, see server settings</i>"
+msgstr "<i>Non publié, reportez-vous à la configuration du serveur</i>"
+
+#. i18n: file: system-config-printer.ui:582
+#. i18n: ectx: property (text), widget (KPushButton, btnSelfTest)
+#: ui.py:325
+msgid "Print Self Test"
+msgstr "Imprimer la page de test"
+
+#. i18n: file: system-config-printer.ui:589
+#. i18n: ectx: property (text), widget (KPushButton, btnCleanHeads)
+#: ui.py:328
+msgid "Clean Print Heads"
+msgstr "Nettoyer les têtes d'impression"
+
+#. i18n: file: system-config-printer.ui:613
+#. i18n: ectx: property (text), widget (KPushButton, btnDelete)
+#: ui.py:331
+msgid "Remove Printer"
+msgstr "Supprimer l'imprimante"
+
+#. i18n: file: system-config-printer.ui:636
+#. i18n: ectx: attribute (title), widget (QWidget, policies)
+#: ui.py:334
+msgid "Policies"
+msgstr "Règles"
+
+#. i18n: file: system-config-printer.ui:648
+#. i18n: ectx: property (text), widget (QLabel, label_8)
+#: ui.py:337
+msgid "Banner Settings"
+msgstr "Configuration des en-tête et pied de page"
+
+#. i18n: file: system-config-printer.ui:663
+#. i18n: ectx: property (text), widget (QLabel, label_10)
+#: ui.py:340
+msgid "Starting Banner:"
+msgstr "En-tête de page :"
+
+#. i18n: file: system-config-printer.ui:695
+#. i18n: ectx: property (text), widget (QLabel, label_11)
+#: ui.py:343
+msgid "Ending Banner:"
+msgstr "Pied de page :"
+
+#. i18n: file: system-config-printer.ui:736
+#. i18n: ectx: property (text), widget (QLabel, label_9)
+#: ui.py:346
+msgid "User and Group Permissions"
+msgstr "Droits d'accès de l'utilisateur et du groupe"
+
+#. i18n: file: system-config-printer.ui:743
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnPAllow)
+#: ui.py:349
+#, fuzzy
+#| msgid "Allow printing for everyone except these users."
+msgid "Allow printing for everyone except these users"
+msgstr "Permettre à tout le monde d'imprimer sauf à ces utilisateurs."
+
+#. i18n: file: system-config-printer.ui:750
+#. i18n: ectx: property (text), widget (QRadioButton, rbtnPDeny)
+#: ui.py:352
+msgid "Deny printing for everyone except these users"
+msgstr "Empêcher tout le monde d'imprimer sauf ces utilisateurs."
+
+#. i18n: file: system-config-printer.ui:774
+#. i18n: ectx: property (text), widget (KPushButton, btnPAddUser)
+#. i18n: file: system-config-printer.ui:1718
+#. i18n: ectx: property (text), widget (QPushButton, btnNewJobOption)
+#: ui.py:358 ui.py:702
+msgid "Add"
+msgstr "Ajouter"
+
+#. i18n: file: system-config-printer.ui:781
+#. i18n: ectx: property (text), widget (KPushButton, btnPDelUser)
+#: ui.py:361
+msgid "Remove"
+msgstr "Supprimer"
+
+#. i18n: file: system-config-printer.ui:810
+#. i18n: ectx: property (text), widget (QLabel, label_47)
+#: ui.py:367
+msgid "Add or Remove Members"
+msgstr "Ajouter ou supprimer des membres"
+
+#. i18n: file: system-config-printer.ui:896
+#. i18n: ectx: attribute (title), widget (QWidget, joboptions)
+#: ui.py:373
+msgid "Job Options"
+msgstr "Options de la tâche"
+
+#. i18n: file: system-config-printer.ui:928
+#. i18n: ectx: property (text), widget (QLabel, label136)
+#: ui.py:376
+msgid ""
+"Specify the default job options for this printer.  Jobs\n"
+"arriving at this print server will have these options added\n"
+"if they are not already set by the application."
+msgstr ""
+"Précisez les options par défaut des tâches d'impression pour cette "
+"imprimante.\n"
+"Les tâches adressées à ce serveur d'impression auront ces options ajoutées\n"
+"si elles ne sont pas déjà indiquées par l'application."
+
+#. i18n: file: system-config-printer.ui:935
+#. i18n: ectx: property (text), widget (QLabel, label_13)
+#: ui.py:381
+msgid "<b>Common Options</b>"
+msgstr "<b>Options communes</b>"
+
+#. i18n: file: system-config-printer.ui:944
+#. i18n: ectx: property (text), widget (QLabel, label_14)
+#: ui.py:384
+#, fuzzy
+#| msgid "Copies"
+msgid "Copies:"
+msgstr "Copies"
+
+#. i18n: file: system-config-printer.ui:954
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetCopies)
+#. i18n: file: system-config-printer.ui:992
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetOrientationRequested)
+#. i18n: file: system-config-printer.ui:1006
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetFitplot)
+#. i18n: file: system-config-printer.ui:1054
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetNumberUp)
+#. i18n: file: system-config-printer.ui:1089
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetNumberUpLayout)
+#. i18n: file: system-config-printer.ui:1113
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetBrightness)
+#. i18n: file: system-config-printer.ui:1271
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetFinishings)
+#. i18n: file: system-config-printer.ui:1288
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetJobPriority)
+#. i18n: file: system-config-printer.ui:1305
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetMedia)
+#. i18n: file: system-config-printer.ui:1338
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetSides)
+#. i18n: file: system-config-printer.ui:1355
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetHoldUntil)
+#. i18n: file: system-config-printer.ui:1382
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetMirror)
+#. i18n: file: system-config-printer.ui:1406
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetScaling)
+#. i18n: file: system-config-printer.ui:1432
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetSaturation)
+#. i18n: file: system-config-printer.ui:1456
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetHue)
+#. i18n: file: system-config-printer.ui:1473
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetGamma)
+#. i18n: file: system-config-printer.ui:1519
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetCpi)
+#. i18n: file: system-config-printer.ui:1536
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetLpi)
+#. i18n: file: system-config-printer.ui:1560
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetPageLeft)
+#. i18n: file: system-config-printer.ui:1584
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetPageRight)
+#. i18n: file: system-config-printer.ui:1608
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetPageTop)
+#. i18n: file: system-config-printer.ui:1632
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetPageBottom)
+#. i18n: file: system-config-printer.ui:1648
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetPrettyPrint)
+#. i18n: file: system-config-printer.ui:1662
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetWrap)
+#. i18n: file: system-config-printer.ui:1679
+#. i18n: ectx: property (text), widget (QPushButton, btnJOResetColumns)
+#: ui.py:387 ui.py:405 ui.py:411 ui.py:435 ui.py:450 ui.py:460 ui.py:550
+#: ui.py:556 ui.py:562 ui.py:577 ui.py:583 ui.py:592 ui.py:602 ui.py:612
+#: ui.py:621 ui.py:627 ui.py:636 ui.py:642 ui.py:651 ui.py:660 ui.py:669
+#: ui.py:678 ui.py:684 ui.py:690 ui.py:696
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#. i18n: file: system-config-printer.ui:961
+#. i18n: ectx: property (text), widget (QLabel, label_15)
+#: ui.py:390
+#, fuzzy
+#| msgid "Orientation"
+msgid "Orientation:"
+msgstr "Orientation"
+
+#. i18n: file: system-config-printer.ui:969
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOOrientationRequested)
+#: ui.py:393
+msgid "Portrait (no rotation)"
+msgstr "Portrait (pas de rotation)"
+
+#. i18n: file: system-config-printer.ui:974
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOOrientationRequested)
+#: ui.py:396
+msgid "Landscape (90°)"
+msgstr "Paysage (90°)"
+
+#. i18n: file: system-config-printer.ui:979
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOOrientationRequested)
+#: ui.py:399
+msgid "Reverse landscape (270°)"
+msgstr "Paysage inversé (270°)"
+
+#. i18n: file: system-config-printer.ui:984
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOOrientationRequested)
+#: ui.py:402
+msgid "Reverse portrait (180°)"
+msgstr "Portrait inversé (180°) "
+
+#. i18n: file: system-config-printer.ui:999
+#. i18n: ectx: property (text), widget (QCheckBox, cbJOFitplot)
+#: ui.py:408
+msgid "Scale to fit"
+msgstr "Mettre à l'échelle pour remplir la page"
+
+#. i18n: file: system-config-printer.ui:1013
+#. i18n: ectx: property (text), widget (QLabel, label_17)
+#: ui.py:414
+#, fuzzy
+#| msgid "Pages per side"
+msgid "Pages per side:"
+msgstr "Pages par côté"
+
+#. i18n: file: system-config-printer.ui:1026
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUp)
+#: ui.py:420
+msgid "2"
+msgstr "2"
+
+#. i18n: file: system-config-printer.ui:1031
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUp)
+#: ui.py:423
+msgid "4"
+msgstr "4"
+
+#. i18n: file: system-config-printer.ui:1036
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUp)
+#: ui.py:426
+msgid "6"
+msgstr "6"
+
+#. i18n: file: system-config-printer.ui:1041
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUp)
+#: ui.py:429
+msgid "9"
+msgstr "9"
+
+#. i18n: file: system-config-printer.ui:1046
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUp)
+#: ui.py:432
+msgid "16"
+msgstr "16"
+
+#. i18n: file: system-config-printer.ui:1063
+#. i18n: ectx: property (text), widget (QLabel, label_37)
+#: ui.py:438
+msgid "Pages per side layout:"
+msgstr "Disposition des pages dans la feuille :"
+
+#. i18n: file: system-config-printer.ui:1071
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUpLayout)
+#: ui.py:441
+msgid "Left to right, top to bottom"
+msgstr "De gauche à droite, de haut en bas"
+
+#. i18n: file: system-config-printer.ui:1076
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUpLayout)
+#: ui.py:444
+msgid "Left to right, bottom to top"
+msgstr "De gauche à droite, de bas en haut"
+
+#. i18n: file: system-config-printer.ui:1081
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJONumberUpLayout)
+#: ui.py:447
+msgid "Right to left, top to bottom"
+msgstr "De droite à gauche, de haut en bas"
+
+#. i18n: file: system-config-printer.ui:1096
+#. i18n: ectx: property (text), widget (QLabel, label_38)
+#: ui.py:453
+msgid "Brightness:"
+msgstr "Luminosité :"
+
+#. i18n: file: system-config-printer.ui:1106
+#. i18n: ectx: property (text), widget (QLabel, label_44)
+#. i18n: file: system-config-printer.ui:1399
+#. i18n: ectx: property (text), widget (QLabel, label_30)
+#. i18n: file: system-config-printer.ui:1425
+#. i18n: ectx: property (text), widget (QLabel, label_34)
+#: ui.py:457 ui.py:599 ui.py:609
+#, no-c-format
+msgid "%"
+msgstr "%"
+
+#. i18n: file: system-config-printer.ui:1120
+#. i18n: ectx: property (text), widget (QLabel, label_39)
+#: ui.py:463
+msgid "Finishings:"
+msgstr "Finitions :"
+
+#. i18n: file: system-config-printer.ui:1128
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:466
+msgid "None"
+msgstr "Aucune"
+
+#. i18n: file: system-config-printer.ui:1133
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:469
+msgid "Staple"
+msgstr "Agrafer"
+
+#. i18n: file: system-config-printer.ui:1138
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:472
+msgid "Punch"
+msgstr "Poinçonner"
+
+#. i18n: file: system-config-printer.ui:1143
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:475
+msgid "Cover"
+msgstr "Couvrir"
+
+#. i18n: file: system-config-printer.ui:1148
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:478
+msgid "Bind"
+msgstr "Relier"
+
+#. i18n: file: system-config-printer.ui:1153
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:481
+msgid "Saddle stitch"
+msgstr "Point sellier"
+
+#. i18n: file: system-config-printer.ui:1158
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:484
+msgid "Edge stitch"
+msgstr "Maille lisière"
+
+#. i18n: file: system-config-printer.ui:1163
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:487
+msgid "Fold"
+msgstr "Plier"
+
+#. i18n: file: system-config-printer.ui:1168
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:490
+msgid "Trim"
+msgstr "Rogner"
+
+#. i18n: file: system-config-printer.ui:1173
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:493
+msgid "Bale"
+msgstr "Bale"
+
+#. i18n: file: system-config-printer.ui:1178
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:496
+msgid "Booklet maker"
+msgstr "Fabricant de livret"
+
+#. i18n: file: system-config-printer.ui:1183
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:499
+msgid "Job offset"
+msgstr "Décalage de la tâche"
+
+#. i18n: file: system-config-printer.ui:1188
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:502
+msgid "Staple (top left)"
+msgstr "Agrafer (en haut à gauche)"
+
+#. i18n: file: system-config-printer.ui:1193
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:505
+msgid "Staple (bottom left)"
+msgstr "Agrafer (en bas à gauche)"
+
+#. i18n: file: system-config-printer.ui:1198
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:508
+msgid "Staple (top right)"
+msgstr "Agrafer (en haut à droite)"
+
+#. i18n: file: system-config-printer.ui:1203
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:511
+msgid "Staple (bottom right)"
+msgstr "Agrafer (en bas à droite)"
+
+#. i18n: file: system-config-printer.ui:1208
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:514
+msgid "Edge stitch (left)"
+msgstr "Maille lisière (à gauche)"
+
+#. i18n: file: system-config-printer.ui:1213
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:517
+msgid "Edge stitch (top)"
+msgstr "Maille lisière (en haut)"
+
+#. i18n: file: system-config-printer.ui:1218
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:520
+msgid "Edge stitch (right)"
+msgstr "Maille lisière (à droite)"
+
+#. i18n: file: system-config-printer.ui:1223
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:523
+msgid "Edge stitch (bottom)"
+msgstr "Maille lisière (en bas)"
+
+#. i18n: file: system-config-printer.ui:1228
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:526
+msgid "Staple dual (left)"
+msgstr "Double agrafe (à gauche) "
+
+#. i18n: file: system-config-printer.ui:1233
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:529
+msgid "Staple dual (top)"
+msgstr "Double agrafe (en haut) "
+
+#. i18n: file: system-config-printer.ui:1238
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:532
+msgid "Staple dual (right)"
+msgstr "Double agrafe (à droite)"
+
+#. i18n: file: system-config-printer.ui:1243
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:535
+msgid "Staple dual (bottom)"
+msgstr "Double agrafe (en bas)"
+
+#. i18n: file: system-config-printer.ui:1248
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:538
+msgid "Bind (left)"
+msgstr "Relier (à gauche)"
+
+#. i18n: file: system-config-printer.ui:1253
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:541
+msgid "Bind (top)"
+msgstr "Relier (en haut)"
+
+#. i18n: file: system-config-printer.ui:1258
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:544
+msgid "Bind (right)"
+msgstr "Relier (à droite)"
+
+#. i18n: file: system-config-printer.ui:1263
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOFinishings)
+#: ui.py:547
+msgid "Bind (bottom)"
+msgstr "Relier (en bas)"
+
+#. i18n: file: system-config-printer.ui:1278
+#. i18n: ectx: property (text), widget (QLabel, label_42)
+#: ui.py:553
+msgid "Job priority:"
+msgstr "Priorité de la tâche :"
+
+#. i18n: file: system-config-printer.ui:1295
+#. i18n: ectx: property (text), widget (QLabel, label_40)
+#: ui.py:559
+msgid "Media:"
+msgstr "Média :"
+
+# unreviewed-context
+#. i18n: file: system-config-printer.ui:1312
+#. i18n: ectx: property (text), widget (QLabel, label_41)
+#: ui.py:565
+msgid "Sides:"
+msgstr "Côtés :"
+
+#. i18n: file: system-config-printer.ui:1320
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOSides)
+#: ui.py:568
+msgid "One-sided"
+msgstr "Recto"
+
+#. i18n: file: system-config-printer.ui:1325
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOSides)
+#: ui.py:571
+msgid "Two-sided (long edge)"
+msgstr "Recto-verso (grand côté)"
+
+#. i18n: file: system-config-printer.ui:1330
+#. i18n: ectx: property (text), item, widget (QComboBox, cmbJOSides)
+#: ui.py:574
+msgid "Two-sided (short edge)"
+msgstr "Recto-verso (petit côté)"
+
+#. i18n: file: system-config-printer.ui:1345
+#. i18n: ectx: property (text), widget (QLabel, label_43)
+#: ui.py:580
+msgid "Hold until:"
+msgstr "Maintenir jusqu'à :"
+
+#. i18n: file: system-config-printer.ui:1366
+#. i18n: ectx: property (text), widget (QLabel, label_16)
+#: ui.py:586
+msgid "<b>Image Options</b>"
+msgstr "<b>Options pour les images</b>"
+
+#. i18n: file: system-config-printer.ui:1375
+#. i18n: ectx: property (text), widget (QCheckBox, cbJOMirror)
+#: ui.py:589
+msgid "Mirror"
+msgstr "Miroir"
+
+#. i18n: file: system-config-printer.ui:1389
+#. i18n: ectx: property (text), widget (QLabel, label_18)
+#: ui.py:595
+#, fuzzy
+#| msgid "Scaling"
+msgid "Scaling:"
+msgstr "Agrandissement"
+
+#. i18n: file: system-config-printer.ui:1415
+#. i18n: ectx: property (text), widget (QLabel, label_31)
+#: ui.py:605
+#, fuzzy
+#| msgid "Saturation"
+msgid "Saturation:"
+msgstr "Saturation"
+
+#. i18n: file: system-config-printer.ui:1439
+#. i18n: ectx: property (text), widget (QLabel, label_32)
+#: ui.py:615
+#, fuzzy
+#| msgid "Hue adjustment"
+msgid "Hue adjustment:"
+msgstr "Ajustement des teintes"
+
+#. i18n: file: system-config-printer.ui:1449
+#. i18n: ectx: property (text), widget (QLabel, label_35)
+#: ui.py:618
+msgid "°"
+msgstr "°"
+
+#. i18n: file: system-config-printer.ui:1463
+#. i18n: ectx: property (text), widget (QLabel, label_33)
+#: ui.py:624
+#, fuzzy
+#| msgid "Gamma"
+msgid "Gamma:"
+msgstr "Gamma"
+
+#. i18n: file: system-config-printer.ui:1497
+#. i18n: ectx: property (text), widget (QLabel, label_19)
+#: ui.py:630
+msgid "<b>Text Options</b>"
+msgstr "<b>Options pour le texte</b>"
+
+#. i18n: file: system-config-printer.ui:1506
+#. i18n: ectx: property (text), widget (QLabel, label_20)
+#: ui.py:633
+msgid "Character per inch:"
+msgstr "Caractères par pouce :"
+
+#. i18n: file: system-config-printer.ui:1526
+#. i18n: ectx: property (text), widget (QLabel, label_21)
+#: ui.py:639
+#, fuzzy
+#| msgid "Lines per inch"
+msgid "Lines per inch:"
+msgstr "Lignes par pouce"
+
+#. i18n: file: system-config-printer.ui:1543
+#. i18n: ectx: property (text), widget (QLabel, label_22)
+#: ui.py:645
+#, fuzzy
+#| msgid "Left margin"
+msgid "Left margin:"
+msgstr "Marge de gauche"
+
+#. i18n: file: system-config-printer.ui:1553
+#. i18n: ectx: property (text), widget (QLabel, label_26)
+#. i18n: file: system-config-printer.ui:1577
+#. i18n: ectx: property (text), widget (QLabel, label_27)
+#. i18n: file: system-config-printer.ui:1601
+#. i18n: ectx: property (text), widget (QLabel, label_28)
+#. i18n: file: system-config-printer.ui:1625
+#. i18n: ectx: property (text), widget (QLabel, label_29)
+#: ui.py:648 ui.py:657 ui.py:666 ui.py:675
+msgid "Points"
+msgstr "Points"
+
+#. i18n: file: system-config-printer.ui:1567
+#. i18n: ectx: property (text), widget (QLabel, label_23)
+#: ui.py:654
+#, fuzzy
+#| msgid "Right margin"
+msgid "Right margin:"
+msgstr "Marge de droite"
+
+#. i18n: file: system-config-printer.ui:1591
+#. i18n: ectx: property (text), widget (QLabel, label_24)
+#: ui.py:663
+#, fuzzy
+#| msgid "Top margin"
+msgid "Top margin:"
+msgstr "Marge du haut"
+
+#. i18n: file: system-config-printer.ui:1615
+#. i18n: ectx: property (text), widget (QLabel, label_25)
+#: ui.py:672
+#, fuzzy
+#| msgid "Bottom margin"
+msgid "Bottom margin:"
+msgstr "Marge du bas"
+
+#. i18n: file: system-config-printer.ui:1641
+#. i18n: ectx: property (text), widget (QCheckBox, cbJOPrettyPrint)
+#: ui.py:681
+msgid "Pretty print"
+msgstr "Pretty print"
+
+#. i18n: file: system-config-printer.ui:1655
+#. i18n: ectx: property (text), widget (QCheckBox, cbJOWrap)
+#: ui.py:687
+msgid "Word wrap"
+msgstr "Retour à la ligne"
+
+#. i18n: file: system-config-printer.ui:1669
+#. i18n: ectx: property (text), widget (QLabel, label_36)
+#: ui.py:693
+#, fuzzy
+#| msgid "Columns"
+msgid "Columns:"
+msgstr "Colonnes"
+
+#. i18n: file: system-config-printer.ui:1706
+#. i18n: ectx: property (text), widget (QLabel, label_46)
+#: ui.py:699
+msgid "To add a new option, enter its name in the box below and click to add."
+msgstr ""
+"Pour ajouter une option, saisissez son nom ci-dessous et cliquez sur ajouter."
+
+#~ msgid "Options"
+#~ msgstr "Options"
+
+#~ msgid "Make Default (Current Default is Foo at Bar)"
+#~ msgstr "Définir par défaut (le réglage actuel est Foo sur Bar)"
+
+#~ msgid "TextLabel"
+#~ msgstr "Étiquette"
+
+#~ msgid ""
+#~ "CUPS is not currently running. CUPS is required for complete printing "
+#~ "functionality. Please start CUPS then restart this application."
+#~ msgstr ""
+#~ "CUPS ne fonctionne pas en ce moment. CUPS est nécessaire pour avoir accès "
+#~ "à des fonctionnalités d'impression plus complètes. Veuillez démarrer CUPS "
+#~ "puis relancer cette application."
+
+#~ msgid "Print Server Not Running"
+#~ msgstr "Le serveur d'impression n'est pas en fonctionnement"
+
+#~ msgid "No default printer set."
+#~ msgstr "Pas d'imprimante par défaut définie"
+
+#~ msgid "&Yes"
+#~ msgstr "Oui"
+
+#~ msgid "&No"
+#~ msgstr "Non"
+
+#~ msgid "System Config Printer KDE"
+#~ msgstr "Système de configuration des imprimantes de KDE"
+
+#~ msgid "Printer configuration tool"
+#~ msgstr "Outil de configuration des imprimantes"
+
+#~ msgid "2007 Tim Waugh, Red Hat Inc, 2007-2008 Canonical Ltd"
+#~ msgstr "2007 Tim Waugh, Red Hat Inc, 2007-2008 Canonical Ltd"
+
+#~ msgid "Jonathan Riddell"
+#~ msgstr "Jonathan Riddell"
+
+#~ msgid "Author"
+#~ msgstr "Auteur"
+
+#~ msgid "Tim Waugh/Red Hat"
+#~ msgstr "Tim Waugh/Red Hat"
+
+#~ msgid "System Config Printer Author"
+#~ msgstr "Auteur du système de configuration des imprimantes de KDE"
+
+#~ msgid "<"
+#~ msgstr "<"
+
+#~ msgid ">"
+#~ msgstr ">"
+
+#~ msgid "New printer attached to this computer."
+#~ msgstr "Nouvelle imprimante reliée à cet ordinateur"
+
+#~ msgid "Make and Model:"
+#~ msgstr "Marque et modèle :"
+
+# unreviewed-context
+#~ msgid "Default Printer:"
+#~ msgstr "Imprimante par défaut :"
+
+#~ msgid "Make Default"
+#~ msgstr "Définir par défaut"
+
+#~ msgid "Error Policy"
+#~ msgstr "Politique d'erreurs"
+
+#~ msgid "Apply"
+#~ msgstr "Appliquer"

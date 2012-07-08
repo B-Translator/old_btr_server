@@ -1,0 +1,2820 @@
+# translation of ksystemlog.po to Français
+# translation of ksystemlog.po to
+# translation of fr.po to
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Nicolas Ternisien <nicolast@libertysurf.fr>, 2005.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2005, 2006, 2008.
+# Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008.
+# Mickael Sibelle <kimael@gmail.com>, 2008.
+# Guillaume Pujol <guill.p@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: ksystemlog\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2012-06-26 06:52+0200\n"
+"PO-Revision-Date: 2008-12-31 14:43+0100\n"
+"Last-Translator: Nicolas Ternisien <nicolas.ternisien@gmail.com>\n"
+"Language-Team: Français <kde-francophone@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/lib/logModeItemBuilder.cpp:68 src/lib/logModeItemBuilder.cpp:85
+#: src/modes/acpid/acpidItemBuilder.h:57
+#: src/modes/kernel/kernelItemBuilder.h:57
+#: src/modes/apache/apacheAccessItemBuilder.h:55
+#: src/modes/apache/apacheItemBuilder.h:55 src/modes/cron/cronItemBuilder.h:55
+#: src/modes/samba/sambaItemBuilder.h:55
+#: src/modes/cups/cupsPdfItemBuilder.h:55
+#: src/modes/cups/cupsPageItemBuilder.h:55 src/modes/cups/cupsItemBuilder.h:53
+#: src/modes/cups/cupsAccessItemBuilder.h:55
+msgid "Date:"
+msgstr "Date :"
+
+#: src/lib/logModeItemBuilder.cpp:69 src/modes/cron/cronItemBuilder.h:56
+#: src/modes/cups/cupsAccessItemBuilder.h:57
+msgid "Hostname:"
+msgstr "Nom d'hôte :"
+
+#: src/lib/logModeItemBuilder.cpp:70 src/modes/cron/cronItemBuilder.h:57
+msgid "Process:"
+msgstr "Processus :"
+
+#: src/lib/logModeItemBuilder.cpp:71 src/lib/logModeItemBuilder.cpp:86
+#: src/modes/acpid/acpidItemBuilder.h:58
+#: src/modes/kernel/kernelItemBuilder.h:58
+#: src/modes/apache/apacheAccessItemBuilder.h:56
+#: src/modes/apache/apacheItemBuilder.h:56 src/modes/cron/cronItemBuilder.h:59
+#: src/modes/samba/sambaItemBuilder.h:56
+#: src/modes/cups/cupsPdfItemBuilder.h:56
+#: src/modes/cups/cupsPageItemBuilder.h:56 src/modes/cups/cupsItemBuilder.h:54
+#: src/modes/cups/cupsAccessItemBuilder.h:56
+msgid "Level:"
+msgstr "Niveau :"
+
+#: src/lib/logModeItemBuilder.cpp:72 src/lib/logModeItemBuilder.cpp:87
+#: src/modes/xorg/xorgItemBuilder.h:78 src/modes/cron/cronItemBuilder.h:60
+#: src/modes/xsession/xsessionItemBuilder.h:78
+msgid "Original file:"
+msgstr "Fichier original :"
+
+#: src/lib/logModeConfiguration.cpp:217 src/lib/logModeConfiguration.cpp:245
+#: src/modes/base/genericConfiguration.cpp:100
+#, kde-format
+msgid "URL '%1' is not valid, skipping this URL."
+msgstr "L'URL « %1 » n'est pas valable, celle-ci ne sera pas lue."
+
+#: src/lib/globals.cpp:135
+msgid "None"
+msgstr "Aucun"
+
+#: src/lib/globals.cpp:138
+msgid "Debug"
+msgstr "Débogage"
+
+#: src/lib/globals.cpp:141
+msgid "Information"
+msgstr "Information"
+
+#: src/lib/globals.cpp:144
+msgid "Notice"
+msgstr "Remarque"
+
+#: src/lib/globals.cpp:147
+msgid "Warning"
+msgstr "Avertissement"
+
+#: src/lib/globals.cpp:150
+msgid "Error"
+msgstr "Erreur"
+
+#: src/lib/globals.cpp:153
+msgid "Critical"
+msgstr "Critique"
+
+#: src/lib/globals.cpp:156
+msgid "Alert"
+msgstr "Alerte"
+
+#: src/lib/globals.cpp:159
+msgid "Emergency"
+msgstr "Urgence"
+
+#: src/lib/processOutputLogFileReader.cpp:109
+#: src/lib/localLogFileReader.cpp:115
+msgid "This file is not valid. Please adjust it in the settings of KSystemLog."
+msgstr ""
+"Ce fichier n'est pas valable. Veuillez modifier les paramètres dans la "
+"configuration de KSystemLog."
+
+#: src/lib/processOutputLogFileReader.cpp:110
+#: src/lib/localLogFileReader.cpp:116 src/lib/localLogFileReader.cpp:130
+msgid "File Does Not Exist"
+msgstr "Le fichier n'existe pas"
+
+#: src/lib/processOutputLogFileReader.cpp:156
+#, kde-format
+msgid "The process '%1' crashed."
+msgstr "Le processus « %1 » s'est interrompu prématurément."
+
+#: src/lib/processOutputLogFileReader.cpp:157
+msgid "Process Crashed"
+msgstr "Plantage du processus"
+
+#: src/lib/analyzer.cpp:146
+#, kde-format
+msgid "Opening '%1'..."
+msgstr "Ouverture de « %1 »..."
+
+#: src/lib/analyzer.cpp:153
+#, kde-format
+msgid "Log file '%1' loaded successfully."
+msgstr "Fichier de journalisation « %1 » chargé correctement."
+
+#: src/lib/analyzer.cpp:167
+#, kde-format
+msgid "Log file '%1' has changed."
+msgstr "Fichier de journalisation « %1 » modifié."
+
+#: src/lib/loadingBar.cpp:66
+msgid "Loading Progress..."
+msgstr "Chargement en cours..."
+
+#: src/lib/loadingBar.cpp:94
+#, kde-format
+msgid "Loading <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>)"
+msgid_plural "Loading <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>/%1 files)"
+msgstr[0] "Chargement de <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>)"
+msgstr[1] ""
+"Chargement de <b>%2</b>...<br /><i>%3</i> - (<b>%4</b> / %1 fichiers)"
+
+#: src/lib/loadingBar.cpp:98
+#, kde-format
+msgid "Reloading <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>)"
+msgid_plural "Reloading <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>/%1 files)"
+msgstr[0] "Rechargement de <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>)"
+msgstr[1] ""
+"Rechargement de <b>%2</b>...<br /><i>%3</i> - (<b>%4</b> / %1 fichiers)"
+
+#: src/lib/loadingBar.cpp:105
+#, kde-format
+msgid "Loading <b>%1</b>...<br /><i>%2</i>"
+msgstr "Chargement de <b>%1</b>...<br /><i>%2</i>"
+
+#: src/lib/loadingBar.cpp:107
+#, kde-format
+msgid "Reloading <b>%1</b>...<br /><i>%2</i>"
+msgstr "Rechargement de <b>%1</b>...<br /><i>%2</i>"
+
+#: src/lib/logViewSearchWidget.cpp:185
+msgid "Reached end of list."
+msgstr "Fin de la liste atteinte."
+
+#: src/lib/logViewSearchWidget.cpp:272
+msgid "Phrase not found."
+msgstr "Impossible de trouver la phrase."
+
+#: src/lib/logManager.cpp:82
+msgid "Loading log..."
+msgstr "Chargement du journal..."
+
+#: src/lib/logManager.cpp:105
+msgid "Log successfully loaded."
+msgstr "Journal correctement chargé."
+
+#: src/lib/logViewExport.cpp:57
+msgid "Here are my logs:\n"
+msgstr "Voici les lignes de mon journal :\n"
+
+#: src/lib/logViewExport.cpp:59 src/lib/logViewExport.cpp:73
+msgid "---------------------------------------\n"
+msgstr "---------------------------------------\n"
+
+#: src/lib/logViewExport.cpp:77
+msgid ""
+"You have selected too many lines. Please only select important log lines."
+msgstr ""
+"Vous avez sélectionné un nombre de lignes trop important. Veuillez ne "
+"choisir que les lignes principales du journal."
+
+#: src/lib/logViewExport.cpp:77
+msgid "Too Many Lines Selected"
+msgstr "Trop de lignes sélectionnées"
+
+#: src/lib/logViewExport.cpp:90
+msgid "Log Lines of my problem"
+msgstr "Lignes problématiques du journal"
+
+#: src/lib/logViewExport.cpp:213
+msgid "No items selected. Nothing copied to clipboard."
+msgstr "Aucun élément sélectionné. Rien n'a été copié dans le presse-papiers."
+
+#: src/lib/logViewExport.cpp:219
+#, kde-format
+msgid "1 log line copied to clipboard."
+msgid_plural "%1 log lines copied to clipboard."
+msgstr[0] "1 ligne copiée dans le presse-papiers."
+msgstr[1] "%1 lignes copiées dans le presse-papiers."
+
+#: src/lib/logViewExport.cpp:233
+msgid "No items selected. Please select items to be able to save them."
+msgstr ""
+"Aucun élément sélectionné. Veuillez en sélectionner au moins un afin de "
+"pouvoir les enregistrer."
+
+#: src/lib/logViewExport.cpp:264
+#, kde-format
+msgid "1 log line saved to '%2'."
+msgid_plural "%1 log lines saved to '%2'."
+msgstr[0] "1 ligne enregistrée dans le fichier « %2 »."
+msgstr[1] "%1 lignes enregistrées dans le fichier « %2 »."
+
+#: src/lib/logViewExport.cpp:267
+#, kde-format
+msgid "Unable to save file '%1': Permission Denied."
+msgstr "Impossible d'enregistrer le fichier « %1 » : permission refusée."
+
+#: src/lib/logViewExport.cpp:268
+msgid "Unable to save file."
+msgstr "Impossible d'enregistrer le fichier."
+
+#: src/lib/localLogFileReader.cpp:129
+#, kde-format
+msgid "The file '%1' does not exist."
+msgstr "Le fichier « %1 » n'existe pas."
+
+#: src/lib/localLogFileReader.cpp:149
+#, kde-format
+msgid "Unable to uncompress the '%2' format of '%1'."
+msgstr "Impossible de décompresser le format « %2 » de « %1 »."
+
+#: src/lib/localLogFileReader.cpp:150
+msgid "Unable to Uncompress File"
+msgstr "Impossible de décompresser le fichier"
+
+#: src/lib/localLogFileReader.cpp:157
+#, kde-format
+msgid "You do not have sufficient permissions to read '%1'."
+msgstr "Vous n'avez pas les permissions suffisantes pour lire « %1 »."
+
+#: src/lib/localLogFileReader.cpp:158
+msgid "Insufficient Permissions"
+msgstr "Permissions insuffisantes"
+
+#: src/lib/logViewWidget.cpp:124
+#, kde-format
+msgid "Display/Hide the '%1' column"
+msgstr "Afficher/cacher la colonne « %1 »"
+
+#: src/lib/levelPrintPage.cpp:41
+msgid "Log Level Printing"
+msgstr "Niveau de log pour l'impression"
+
+#: src/lib/levelPrintPage.cpp:48
+msgid "Choose which log levels you wish to print in color."
+msgstr "Choisissez les niveaux d'importances à imprimer en couleurs."
+
+#: src/lib/logViewFilterWidget.cpp:80
+msgid "Type your filter here"
+msgstr "Saisissez votre filtre ici"
+
+#: src/lib/logViewFilterWidget.cpp:81
+msgid "Allows you to only list items that match the content of this text."
+msgstr ""
+"Vous permet de sélectionner uniquement les éléments de la liste "
+"correspondant au texte saisi."
+
+#: src/lib/logViewFilterWidget.cpp:82
+msgid "Enter your search here..."
+msgstr "Saisissez votre recherche ici..."
+
+#: src/lib/logViewFilterWidget.cpp:89
+msgid "Filter:"
+msgstr "Filtre :"
+
+#: src/lib/logViewFilterWidget.cpp:109
+msgid "Choose the filtered column here"
+msgstr "Sélectionnez ici la colonne à filtrer"
+
+#: src/lib/logViewFilterWidget.cpp:110
+msgid ""
+"Allows you to apply the item filter only on the specified column here. "
+"\"<i>All</i>\" column means no specific filter."
+msgstr ""
+"Permet d'appliquer un filtre sur les éléments appartenant à la colonne "
+"indiquée ici. « <i>Toutes</i> » signifie qu'aucun filtre n'est appliqué sur "
+"une colonne particulière."
+
+#: src/lib/logViewFilterWidget.cpp:112 src/lib/logViewFilterWidget.cpp:129
+msgid "All"
+msgstr "Toutes"
+
+#: src/modes/authentication/authenticationConfigurationWidget.h:49
+#: src/modes/authentication/authenticationLogMode.cpp:38
+msgid "Authentication Log"
+msgstr "Authentification"
+
+#: src/modes/authentication/authenticationConfigurationWidget.h:56
+msgid "Authentication Log File"
+msgstr "Fichier d'authentification"
+
+#: src/modes/authentication/authenticationConfigurationWidget.h:62
+msgid "Authentication log file:"
+msgstr "Fichier d'authentification :"
+
+#: src/modes/authentication/authenticationConfigurationWidget.h:67
+msgid ""
+"You can type or choose the authentication log file (example: <i>/var/log/"
+"auth.log</i>)."
+msgstr ""
+"Vous pouvez saisir ou sélectionner le fichier des authentifications "
+"(exemple : <i>/var/log/auth.log</i>)."
+
+#: src/modes/authentication/authenticationConfigurationWidget.h:68
+msgid ""
+"You can type or choose here the authentication log file. This file will be "
+"analyzed when you select the <b>Authentication log</b> menu. Generally, its "
+"name is <i>/var/log/auth.log</i>"
+msgstr ""
+"Vous pouvez saisir ou sélectionner le fichier de journal des "
+"authentifications. Ce fichier sera analysé lorsque vous sélectionnez le menu "
+"<b>Authentification</b>. Généralement, il porte le nom <i>/var/log/auth.log</"
+"i>."
+
+#: src/modes/authentication/authenticationLogMode.cpp:47
+msgid "Display the authentication log."
+msgstr "Afficher les authentifications."
+
+#: src/modes/authentication/authenticationLogMode.cpp:48
+msgid ""
+"Displays the authentication log in the current tab. This log displays all "
+"logins made by each user of the system, and can help you to know if someone "
+"tried to crack your system."
+msgstr ""
+"Affiche le journal des authentifications dans l'onglet courant. Ce journal "
+"affiche toutes les connexions effectués par les utilisateurs du système, et "
+"peut vous aider à savoir si quelqu'un tente de pirater votre système."
+
+#: src/modes/xorg/xorgConfigurationWidget.h:46
+#: src/modes/xorg/xorgLogMode.cpp:38
+msgid "X.org Log"
+msgstr "X.org"
+
+#: src/modes/xorg/xorgConfigurationWidget.h:52
+msgid "<p>These files will be analyzed to show the <b>X.org log</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal de X.org</b>.</p>"
+
+#: src/modes/xorg/xorgLogMode.cpp:47
+msgid "Display the X.org log."
+msgstr "Afficher le journal de X.org."
+
+#: src/modes/xorg/xorgLogMode.cpp:48
+msgid ""
+"Displays the X.org log in the current tab. X.org is the service which "
+"displays on screen your desktop and manage your graphical hardware. See this "
+"log if you want to know why you do not have 3D accelerations or why your "
+"input device is not recognized."
+msgstr ""
+"Affiche le journal de X.org dans l'onglet courant. X.org est le service "
+"affichant votre bureau sur votre écran, et gérant votre matériel graphique. "
+"Consultez par exemple ce journal si vous souhaitez savoir pourquoi "
+"l'accélération 3D ne fonctionne pas ou pourquoi votre périphérique d'entrée "
+"n'est pas reconnu."
+
+#: src/modes/xorg/xorgAnalyzer.h:59 src/modes/samba/sambaAnalyzer.h:57
+#: src/modes/xsession/xsessionAnalyzer.h:53
+msgid "Line"
+msgstr "Ligne"
+
+#: src/modes/xorg/xorgAnalyzer.h:60 src/modes/acpid/acpidAnalyzer.h:50
+msgid "Type"
+msgstr "Type"
+
+#. i18n: file: src/detailDialogBase.ui:28
+#. i18n: ectx: property (text), widget (KTextEdit, message)
+#. i18n: file: src/loggerDialogBase.ui:33
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: src/modes/xorg/xorgAnalyzer.h:61 src/modes/acpid/acpidAnalyzer.h:51
+#: src/modes/kernel/kernelAnalyzer.h:60 src/modes/apache/apacheAnalyzer.h:55
+#: src/modes/samba/sambaAnalyzer.h:58 src/modes/base/syslogAnalyzer.cpp:61
+#: src/modes/cups/cupsPdfAnalyzer.h:55 src/modes/cups/cupsAnalyzer.h:56
+#: src/modes/xsession/xsessionAnalyzer.h:55 rc.cpp:339 rc.cpp:393
+msgid "Message"
+msgstr "Message"
+
+#: src/modes/xorg/xorgAnalyzer.h:116
+msgid "Probed"
+msgstr "Détecté"
+
+#: src/modes/xorg/xorgAnalyzer.h:117
+msgid "From config file"
+msgstr "Fichier de configuration"
+
+#: src/modes/xorg/xorgAnalyzer.h:118
+msgid "Default setting"
+msgstr "Configuration par défaut"
+
+#: src/modes/xorg/xorgAnalyzer.h:119
+msgid "From command Line"
+msgstr "Depuis la ligne de commande"
+
+#: src/modes/xorg/xorgAnalyzer.h:124
+msgid "Not implemented"
+msgstr "Non implémenté"
+
+#: src/modes/xorg/xorgItemBuilder.h:74 src/modes/xorg/xorgItemBuilder.h:76
+#: src/modes/acpid/acpidItemBuilder.h:59
+msgid "Type:"
+msgstr "Type :"
+
+#: src/modes/xorg/xorgItemBuilder.h:74
+#: src/modes/xsession/xsessionItemBuilder.h:74
+msgid "none"
+msgstr "aucun"
+
+#: src/modes/acpid/acpidConfigurationWidget.h:47
+msgid "Acpid Log"
+msgstr "Acpid"
+
+#: src/modes/acpid/acpidConfigurationWidget.h:53
+msgid "<p>These files will be analyzed to show the <b>Acpid log</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal Acpid</b>.</p>"
+
+#: src/modes/acpid/acpidLogMode.cpp:38
+msgid "ACPI Log"
+msgstr "ACPI"
+
+#: src/modes/acpid/acpidLogMode.cpp:47
+msgid "Display the ACPI log."
+msgstr "Afficher le journal ACPI."
+
+#: src/modes/acpid/acpidLogMode.cpp:48
+msgid ""
+"Displays the ACPI log in the current tab. ACPI is used to manage the "
+"hardware components of your computer, like notebook batteries, reset "
+"buttons..."
+msgstr ""
+"Affiche le journal ACPI dans l'onglet courant. L'ACPI est utilisé pour gérer "
+"les composants matériels de votre ordinateur, comme les batteries de "
+"portables, les boutons de redémarrage..."
+
+#: src/modes/acpid/acpidAnalyzer.h:49 src/modes/kernel/kernelAnalyzer.h:58
+#: src/modes/apache/apacheAccessAnalyzer.h:53
+#: src/modes/apache/apacheAnalyzer.h:53 src/modes/cron/cronAnalyzer.h:51
+#: src/modes/samba/sambaAnalyzer.h:54 src/modes/base/syslogAnalyzer.cpp:58
+#: src/modes/cups/cupsAccessAnalyzer.h:53 src/modes/cups/cupsPdfAnalyzer.h:54
+#: src/modes/cups/cupsPageAnalyzer.h:53 src/modes/cups/cupsAnalyzer.h:55
+msgid "Date"
+msgstr "Date"
+
+#: src/modes/kernel/kernelLogMode.cpp:38
+msgid "Kernel Log"
+msgstr "Noyau"
+
+#: src/modes/kernel/kernelLogMode.cpp:47
+msgid "Display the kernel log."
+msgstr "Afficher le journal du noyau."
+
+#: src/modes/kernel/kernelLogMode.cpp:48
+msgid ""
+"Displays the kernel log in the current tab. This log is only useful for "
+"users who want to know why the Kernel does not detect their hardware or what "
+"is the cause of the last <i>kernel panic/oops</i>."
+msgstr ""
+"Affiche le journal du noyau dans l'onglet courant. Ce journal est uniquement "
+"utile aux utilisateurs souhaitant savoir pourquoi le noyau n'a pas détecté "
+"leur matériel, ou ceux désirant connaître l'explication du dernier <i>kernel "
+"panic/oops</i>."
+
+#: src/modes/kernel/kernelAnalyzer.h:59
+msgid "Component"
+msgstr "Composant"
+
+#: src/modes/kernel/kernelItemBuilder.h:59
+msgid "Component:"
+msgstr "Composant :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:57
+msgid "Host Name:"
+msgstr "Nom d'hôte :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:58
+#: src/modes/cups/cupsAccessItemBuilder.h:58
+msgid "Identification:"
+msgstr "Identification :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:59
+#: src/modes/cups/cupsPageItemBuilder.h:58
+#: src/modes/cups/cupsAccessItemBuilder.h:59
+msgid "Username:"
+msgstr "Nom d'utilisateur :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:60
+#: src/modes/cups/cupsAccessItemBuilder.h:60
+msgid "HTTP Response:"
+msgstr "Réponse HTTP :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:61
+#: src/modes/cups/cupsAccessItemBuilder.h:61
+msgid "Bytes Sent:"
+msgstr "Octets envoyés :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:62
+msgid "Agent Identity:"
+msgstr "Identité du navigateur :"
+
+#: src/modes/apache/apacheAccessItemBuilder.h:63
+msgid "HTTP Request:"
+msgstr "Requête HTTP :"
+
+#: src/modes/apache/apacheFactory.cpp:54
+msgid "Apache"
+msgstr "Apache"
+
+#: src/modes/apache/apacheAccessLogMode.cpp:39
+msgid "Apache Access Log"
+msgstr "Accès Apache"
+
+#: src/modes/apache/apacheAccessLogMode.cpp:48
+msgid "Display the Apache Access log."
+msgstr "Afficher le journal d'Apache."
+
+#: src/modes/apache/apacheAccessLogMode.cpp:49
+msgid ""
+"Displays the Apache Access log in the current tab. Apache is the main used "
+"Web server in the world. This log saves all requests performed by the Apache "
+"web server."
+msgstr ""
+"Affiche le journal des accès au serveur Apache dans l'onglet courant. Apache "
+"est le serveur Web le plus utilisé dans le monde. Ce journal enregistre les "
+"requêtes effectuées sur le serveur Apache."
+
+#: src/modes/apache/apacheItemBuilder.h:57
+msgid "Client:"
+msgstr "Client :"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:54
+msgid "Host Name"
+msgstr "Nom d'hôte"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:55
+msgid "Id."
+msgstr "Id."
+
+#: src/modes/apache/apacheAccessAnalyzer.h:56 src/modes/cron/cronAnalyzer.h:54
+#: src/modes/cups/cupsAccessAnalyzer.h:56 src/modes/cups/cupsPageAnalyzer.h:55
+#: src/loggerDialog.cpp:91 src/loggerDialog.cpp:124
+msgid "User"
+msgstr "Utilisateur"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:57
+msgid "Response"
+msgstr "Réponse"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:58
+msgid "Bytes Sent"
+msgstr "Octets envoyés"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:59
+msgid "Agent Identity"
+msgstr "Identité du navigateur"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:60
+#: src/modes/cups/cupsAccessAnalyzer.h:57
+msgid "HTTP Request"
+msgstr "Requête HTTP"
+
+#: src/modes/apache/apacheAccessAnalyzer.h:61
+msgid "URL"
+msgstr "URL"
+
+#: src/modes/apache/apacheConfigurationWidget.h:45
+#: src/modes/apache/apacheLogMode.cpp:39
+msgid "Apache Log"
+msgstr "Apache"
+
+#: src/modes/apache/apacheConfigurationWidget.h:51
+msgid ""
+"<p>These files will be analyzed to show the <b>Apache log</b> and the "
+"<b>Apache Access log</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal d'Apache</b> et "
+"le <b>journal des accès Apache</b>.</p>"
+
+#: src/modes/apache/apacheConfigurationWidget.h:53
+msgid "Apache Log Files"
+msgstr "Fichiers Apache"
+
+#: src/modes/apache/apacheConfigurationWidget.h:53
+msgid "Add Apache File..."
+msgstr "Ajouter un fichier Apache..."
+
+#: src/modes/apache/apacheConfigurationWidget.h:54
+msgid "Apache Access Log Files"
+msgstr "Fichiers des accès Apache"
+
+#: src/modes/apache/apacheConfigurationWidget.h:54
+msgid "Add Apache Access File..."
+msgstr "Ajouter un fichier des accès Apache..."
+
+#: src/modes/apache/apacheLogMode.cpp:48
+msgid "Display the Apache log."
+msgstr "Afficher le journal d'Apache."
+
+#: src/modes/apache/apacheLogMode.cpp:49
+msgid ""
+"Displays the Apache log in the current tab. Apache is the main used Web "
+"server in the world."
+msgstr ""
+"Affiche le journal d'Apache dans l'onglet courant. Apache est le serveur Web "
+"le plus utilisé dans le monde."
+
+#: src/modes/apache/apacheAnalyzer.h:54
+msgid "Client"
+msgstr "Client"
+
+#: src/modes/cron/cronConfigurationWidget.h:49
+#: src/modes/cron/cronLogMode.cpp:38
+msgid "Cron Log"
+msgstr "Cron"
+
+#: src/modes/cron/cronConfigurationWidget.h:55
+msgid ""
+"<p>These files will be analyzed to show the <b>Cron Logs</b> (i.e. planned "
+"tasks logs). <a href='man:/cron'>More information...</a></p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal de Cron</b> "
+"(tâches planifiées). <a href='man:/cron'>Plus d'informations...</a></p>"
+
+#: src/modes/cron/cronConfigurationWidget.h:63
+msgid "Enable Process Filtering"
+msgstr "Activer le filtrage de processus"
+
+#: src/modes/cron/cronConfigurationWidget.h:75
+msgid "Only keeps lines which matches this process :"
+msgstr "Ne conserver que les lignes qui correspondent à ce processus :"
+
+#: src/modes/cron/cronLogMode.cpp:47
+msgid "Display the planned tasks log (Cron log)."
+msgstr "Afficher le journal des tâches planifiées (Cron)."
+
+#: src/modes/cron/cronLogMode.cpp:48
+msgid ""
+"Displays the planned tasks log in the current tab. Cron process is a program "
+"in charge of launching planned tasks on your system, like security checks, "
+"or auto-restarting of some services. Use this menu to see the recently "
+"launched processes."
+msgstr ""
+"Affiche le journal des tâches planifiées dans l'onglet courant. Le programme "
+"Cron est chargé du lancement des tâches planifiées sur votre système, comme "
+"les vérifications de sécurité, ou le redémarrage de certains services. "
+"Utilisez cette action du menu pour observer les derniers processus lancés."
+
+#: src/modes/cron/cronAnalyzer.h:52 src/modes/base/syslogAnalyzer.cpp:59
+#: src/modes/cups/cupsAccessAnalyzer.h:54
+msgid "Host"
+msgstr "Hôte"
+
+#: src/modes/cron/cronAnalyzer.h:53 src/modes/base/syslogAnalyzer.cpp:60
+msgid "Process"
+msgstr "Processus"
+
+#: src/modes/cron/cronAnalyzer.h:55
+msgid "Command"
+msgstr "Commande"
+
+#: src/modes/cron/cronItemBuilder.h:58
+msgid "User:"
+msgstr "Utilisateur :"
+
+#: src/modes/open/openLogMode.cpp:43
+msgid "Log File"
+msgstr "Fichier de journalisation"
+
+#: src/modes/open/openLogMode.cpp:66
+msgid "Open Location"
+msgstr "Ouvrir l'emplacement"
+
+#: src/modes/open/openLogMode.cpp:82
+msgid "Malformed URL. Unable to open this file."
+msgstr "URL mal formée. Impossible d'ouvrir ce fichier."
+
+#: src/modes/open/openLogMode.cpp:83
+msgid "Unable to open this file."
+msgstr "Impossible d'ouvrir ce fichier."
+
+#: src/modes/daemon/daemonConfigurationWidget.h:47
+#: src/modes/daemon/daemonLogMode.cpp:39
+msgid "Daemons' Logs"
+msgstr "Démons"
+
+#: src/modes/daemon/daemonConfigurationWidget.h:53
+msgid "<p>These files will be analyzed to show the <b>Daemons' Logs</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal des démons</b>.</"
+"p>"
+
+#: src/modes/daemon/daemonLogMode.cpp:48
+msgid "Display the daemons' logs."
+msgstr "Afficher le journal des démons."
+
+#: src/modes/daemon/daemonLogMode.cpp:49
+msgid ""
+"Displays the daemons' logs in the current tab. The daemons are all processes "
+"launched in the background of the system. See this log if you want to know "
+"what occurs in the background of your system."
+msgstr ""
+"Affiche le journal des démons dans l'onglet courant. Les démons sont les "
+"processus lancés en arrière-plan du système. Consultez ce journal si vous "
+"souhaitez savoir ce qui se passe en arrière-plan de votre système."
+
+#: src/modes/samba/sambaAnalyzer.h:55
+msgid "Source File"
+msgstr "Fichier source"
+
+#: src/modes/samba/sambaAnalyzer.h:56
+msgid "Function"
+msgstr "Fonction"
+
+#: src/modes/samba/netbiosLogMode.cpp:39
+msgid "Netbios Log"
+msgstr "Netbios"
+
+#: src/modes/samba/netbiosLogMode.cpp:47
+msgid "Display the Netbios log."
+msgstr "Afficher le journal Netbios."
+
+#: src/modes/samba/netbiosLogMode.cpp:48
+msgid ""
+"Displays the Netbios log in the current tab. Netbios is the file sharing "
+"protocol developed by Microsoft."
+msgstr ""
+"Affiche le journal Netbios dans l'onglet courant. Netbios est le protocole "
+"de partage de fichiers développé par Microsoft."
+
+#: src/modes/samba/sambaFactory.cpp:58
+msgid "Samba"
+msgstr "Samba"
+
+#: src/modes/samba/sambaAccessLogMode.cpp:39
+msgid "Samba Access Log"
+msgstr "Accès Samba"
+
+#: src/modes/samba/sambaAccessLogMode.cpp:47
+msgid "Display the Samba Access log."
+msgstr "Afficher les accès Samba."
+
+#: src/modes/samba/sambaAccessLogMode.cpp:48
+msgid ""
+"Displays the Samba Access log in the current tab. This log mode allows you "
+"to see connections between your shares and remote hosts."
+msgstr ""
+"Affiche le journal des accès Samba dans l'onglet courant. Ce mode vous "
+"permet de consulter les connexions établies entre vos partages de fichiers "
+"et les machines distantes."
+
+# unreviewed-context
+#: src/modes/samba/sambaItemBuilder.h:57
+msgid "Source File:"
+msgstr "Fichier source :"
+
+#: src/modes/samba/sambaItemBuilder.h:58
+msgid "Function:"
+msgstr "Fonction :"
+
+# unreviewed-context
+#: src/modes/samba/sambaItemBuilder.h:59
+msgid "Line:"
+msgstr "Ligne :"
+
+#: src/modes/samba/sambaConfigurationWidget.h:45
+#: src/modes/samba/sambaLogMode.cpp:39
+msgid "Samba Log"
+msgstr "Samba"
+
+#: src/modes/samba/sambaConfigurationWidget.h:51
+msgid ""
+"<p>These files will be analyzed to show <b>Samba log</b>, <b>Samba Access "
+"log</b> and <b>Netbios log</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal de Samba</b>, le "
+"<b>journal des accès Samba</b> et le <b>journal Netbios</b>.</p>"
+
+#: src/modes/samba/sambaConfigurationWidget.h:53
+msgid "Samba Log Files"
+msgstr "Fichiers Samba"
+
+#: src/modes/samba/sambaConfigurationWidget.h:53
+msgid "Add Samba File..."
+msgstr "Ajouter un fichier Samba..."
+
+#: src/modes/samba/sambaConfigurationWidget.h:54
+msgid "Samba Access Log Files"
+msgstr "Fichiers des accès Samba"
+
+#: src/modes/samba/sambaConfigurationWidget.h:54
+msgid "Add Samba Access File..."
+msgstr "Ajouter un fichier des accès Samba..."
+
+#: src/modes/samba/sambaConfigurationWidget.h:55
+msgid "Netbios Log Files"
+msgstr "Fichiers Netbios"
+
+#: src/modes/samba/sambaConfigurationWidget.h:55
+msgid "Add Netbios File..."
+msgstr "Ajouter un fichier Netbios..."
+
+#: src/modes/samba/sambaLogMode.cpp:47
+msgid "Display the Samba log."
+msgstr "Afficher le journal de Samba."
+
+#: src/modes/samba/sambaLogMode.cpp:48
+msgid ""
+"Displays the Samba log in the current tab. Samba is the file sharing server "
+"which interacts with Microsoft Windows network."
+msgstr ""
+"Affiche le journal de Samba dans l'onglet courant. Samba est le serveur de "
+"partage de fichiers communiquant avec les réseaux Microsoft Windows."
+
+#: src/modes/system/systemConfigurationWidget.h:48
+#: src/modes/system/systemLogMode.cpp:39
+msgid "System Log"
+msgstr "Système"
+
+#: src/modes/system/systemConfigurationWidget.h:54
+msgid "<p>These files will be analyzed to show the <b>System logs</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal du système</b>.</"
+"p>"
+
+#: src/modes/system/systemLogMode.cpp:48
+msgid "Display the system log."
+msgstr "Afficher le journal système."
+
+#: src/modes/system/systemLogMode.cpp:49
+msgid ""
+"Displays the system log in the current tab. This log is generally used by "
+"non-specialized processes (like \"sudo\" or \"fsck\" commands)"
+msgstr ""
+"Affiche le journal du système dans l'onglet courant. Ce journal est "
+"généralement utilisé par les processus non-spécialisés (comme les commandes "
+"« sudo » ou « fsck »)"
+
+#: src/modes/base/parsingHelper.cpp:164
+#, kde-format
+msgctxt "HttpResponseNumber HttpResponseDescription"
+msgid "%1 %2"
+msgstr "%1 %2"
+
+#: src/modes/base/genericConfiguration.cpp:80
+msgid "The two arrays size are different, skipping the reading of log files."
+msgstr ""
+"Les tailles des tableaux sont différentes, passage de la lecture des "
+"fichiers de journalisation."
+
+#: src/modes/base/logLevelFileList.cpp:59
+msgid "&Change Status..."
+msgstr "&Modifier l'état..."
+
+#: src/modes/base/logLevelFileList.cpp:60
+msgid "Change the level of the current file(s)"
+msgstr "Modifier le niveau du ou des fichier(s) courant(s)"
+
+#: src/modes/base/logLevelFileList.cpp:61
+msgid ""
+"Changes the level of the current file(s). See KSystemLog documentation for "
+"more information about each log level."
+msgstr ""
+"Change le niveau du ou des fichiers sélectionnés. Consultez la documentation "
+"de KSystemLog pour plus d'informations sur chaque niveau."
+
+#: src/modes/base/logLevelFileList.cpp:168
+msgid ""
+"The two arrays size are different, skipping the reading of generic paths."
+msgstr ""
+"Les tailles des tableaux sont différentes, on ignore la lecture des "
+"emplacements génériques."
+
+#: src/modes/base/fileListHelper.cpp:113
+#, kde-format
+msgid "'%1' is not a local file."
+msgstr "« %1 » n'est pas un fichier local."
+
+#: src/modes/base/fileListHelper.cpp:114
+msgid "File selection failed"
+msgstr "La sélection du fichier a échouée"
+
+#: src/modes/base/fileListHelper.cpp:127 src/modes/base/fileListHelper.cpp:136
+msgid "All Files (*)"
+msgstr "Tous les fichiers (*)"
+
+#: src/modes/base/fileListHelper.cpp:127 src/modes/base/fileListHelper.cpp:136
+msgid "Log Files (*.log)"
+msgstr "Fichiers de journalisation (*.log)"
+
+#: src/modes/base/fileListHelper.cpp:128 src/modes/base/fileListHelper.cpp:137
+msgid "Choose Log File"
+msgstr "Sélectionnez un journal"
+
+#: src/modes/base/multipleFileList.cpp:395
+msgid "No log file..."
+msgstr "Aucun journal..."
+
+#: src/modes/cups/cupsPdfItemBuilder.h:57
+msgid "Message:"
+msgstr "Message :"
+
+#: src/modes/cups/cupsPageItemBuilder.h:57
+msgid "Printer:"
+msgstr "Imprimante :"
+
+#: src/modes/cups/cupsPageItemBuilder.h:59
+msgid "Job Id:"
+msgstr "Identifiant de tâche :"
+
+#: src/modes/cups/cupsPageItemBuilder.h:60
+msgid "Page Number:"
+msgstr "Numéro de page :"
+
+#: src/modes/cups/cupsPageItemBuilder.h:61
+msgid "Num Copies:"
+msgstr "Nombre de copies :"
+
+#: src/modes/cups/cupsPageItemBuilder.h:62
+msgid "Job Billing:"
+msgstr "Facture de la tâche :"
+
+#: src/modes/cups/cupsFactory.cpp:58
+msgid "Cups"
+msgstr "Cups"
+
+#: src/modes/cups/cupsAccessLogMode.cpp:39
+msgid "Cups Web Log"
+msgstr "Serveur Web de Cups"
+
+#: src/modes/cups/cupsAccessLogMode.cpp:48
+msgid "Display the CUPS Web Server Access log."
+msgstr "Afficher le journal des accès au serveur Web de CUPS."
+
+#: src/modes/cups/cupsAccessLogMode.cpp:49
+msgid ""
+"Displays the CUPS Web Server Access log in the current tab. CUPS is the "
+"program which manages printing on your computer. This log saves all requests "
+"performed to the CUPS embedded web server (default: <i>http://localhost:631</"
+"i>)."
+msgstr ""
+"Affiche le journal des accès au serveur Web de CUPS dans l'onglet courant. "
+"CUPS est le programme qui gère l'impression sur votre ordinateur. Ce journal "
+"enregistre toutes les requêtes effectuées sur le serveur Web inclus dans "
+"CUPS (par défaut : <i>http://localhost:631</i>)."
+
+#: src/modes/cups/cupsAccessAnalyzer.h:55
+msgid "Group"
+msgstr "Groupe"
+
+#: src/modes/cups/cupsAccessAnalyzer.h:58
+msgid "Status"
+msgstr "État"
+
+#: src/modes/cups/cupsAccessAnalyzer.h:59
+msgid "Bytes"
+msgstr "Octets"
+
+#: src/modes/cups/cupsAccessAnalyzer.h:60
+msgid "IPP Operation"
+msgstr "Opération IPP"
+
+#: src/modes/cups/cupsAccessAnalyzer.h:61
+msgid "IPP Status"
+msgstr "État IPP"
+
+#: src/modes/cups/cupsPdfLogMode.cpp:39
+msgid "Cups PDF Log"
+msgstr "Cups PDF"
+
+#: src/modes/cups/cupsPdfLogMode.cpp:48
+msgid "Display the CUPS PDF log."
+msgstr "Afficher le journal CUPS PDF."
+
+#: src/modes/cups/cupsPdfLogMode.cpp:49
+msgid ""
+"Displays the CUPS PDF log in the current tab. CUPS is the program which "
+"manages printing on your computer. This log saves all requests performed to "
+"the CUPS embedded web server (default: <i>http://localhost:631</i>)."
+msgstr ""
+"Affiche le journal de CUPS PDF dans l'onglet courant. CUPS gère l'impression "
+"sur votre ordinateur. Ce journal enregistre toutes les requêtes effectuées "
+"sur le serveur Web inclus dans CUPS (par défaut : <i>http://localhost:631/</"
+"i>)."
+
+#: src/modes/cups/cupsConfigurationWidget.h:45
+#: src/modes/cups/cupsLogMode.cpp:39
+msgid "Cups Log"
+msgstr "Cups"
+
+#: src/modes/cups/cupsConfigurationWidget.h:45
+msgid "Cups &amp; Cups Web Server Log"
+msgstr "Cups &amp; serveur Web Cups"
+
+#: src/modes/cups/cupsConfigurationWidget.h:51
+msgid ""
+"<p>These files will be analyzed to show the <b>Cups log</b> and the <b>Cups "
+"Web Access log</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal Cups</b> et le "
+"<b>journal des accès Web de Cups</b>.</p>"
+
+#: src/modes/cups/cupsConfigurationWidget.h:53
+msgid "Cups Log Files"
+msgstr "Fichiers Cups"
+
+#: src/modes/cups/cupsConfigurationWidget.h:53
+msgid "Add Cups File..."
+msgstr "&Ajouter un fichier Cups..."
+
+#: src/modes/cups/cupsConfigurationWidget.h:54
+msgid "Cups Access Log Files"
+msgstr "Fichiers d'accès Cups"
+
+#: src/modes/cups/cupsConfigurationWidget.h:54
+msgid "Add Cups Access File..."
+msgstr "&Ajouter un fichier d'accès Cups..."
+
+#: src/modes/cups/cupsConfigurationWidget.h:55
+msgid "Cups Page Log Files"
+msgstr "Fichiers de pages Cups"
+
+#: src/modes/cups/cupsConfigurationWidget.h:55
+msgid "Add Cups Page File..."
+msgstr "Ajouter un fichier de page Cups..."
+
+#: src/modes/cups/cupsConfigurationWidget.h:56
+msgid "Cups PDF Log Files"
+msgstr "Fichiers Cups PDF"
+
+#: src/modes/cups/cupsConfigurationWidget.h:56
+msgid "Add Cups PDF File..."
+msgstr "Ajouter un fichier Cups PDF..."
+
+#: src/modes/cups/cupsPageLogMode.cpp:39
+msgid "Cups Page Log"
+msgstr "Pages Cups"
+
+#: src/modes/cups/cupsPageLogMode.cpp:48
+msgid "Display the CUPS Page log."
+msgstr "Afficher le journal des pages CUPS."
+
+#: src/modes/cups/cupsPageLogMode.cpp:49
+msgid ""
+"Displays the CUPS Page log in the current tab. CUPS is the program which "
+"manages printing on your computer. This log saves all requests performed to "
+"the CUPS embedded web server (default: <i>http://localhost:631</i>)."
+msgstr ""
+"Affiche le journal des pages CUPS dans l'onglet courant. CUPS gère "
+"l'impression sur votre ordinateur. Ce journal enregistre toutes les requêtes "
+"effectuées sur le serveur Web inclus dans CUPS (par défaut : <i>http://"
+"localhost:631</i>)."
+
+#: src/modes/cups/cupsLogMode.cpp:48
+msgid "Display the Cups log."
+msgstr "Afficher le journal ACPI."
+
+#: src/modes/cups/cupsLogMode.cpp:49
+msgid ""
+"Displays the CUPS log in the current tab. CUPS is the program which manages "
+"printing on your computer."
+msgstr ""
+"Affiche le journal de CUPS dans l'onglet courant. CUPS prend en charge "
+"l'impression sur votre ordinateur."
+
+#: src/modes/cups/cupsPageAnalyzer.h:54
+msgid "Printer"
+msgstr "Imprimante"
+
+#: src/modes/cups/cupsPageAnalyzer.h:56
+msgid "Job Id"
+msgstr "Identifiant de tâche"
+
+#: src/modes/cups/cupsPageAnalyzer.h:57
+msgid "Page Number"
+msgstr "Numéro de page"
+
+#: src/modes/cups/cupsPageAnalyzer.h:58
+msgid "Num Copies"
+msgstr "Nombre de copies"
+
+#: src/modes/cups/cupsPageAnalyzer.h:59
+msgid "Job Billing"
+msgstr "Facture de la tâche"
+
+#: src/modes/cups/cupsAnalyzer.h:119
+msgid "debug 2"
+msgstr "Débogage 2"
+
+#: src/modes/cups/cupsAnalyzer.h:139
+msgid ""
+"New Log Level detected: Please send this log file to the KSystemLog "
+"developer to add it."
+msgstr ""
+"Nouveau niveau de journalisation détecté. Veuillez envoyer ce journal au "
+"développeur de KSystemLog pour l'ajouter."
+
+#: src/modes/xsession/xsessionLogMode.cpp:38
+#: src/modes/xsession/xsessionConfigurationWidget.h:51
+msgid "X Session Log"
+msgstr "Session X"
+
+#: src/modes/xsession/xsessionLogMode.cpp:47
+msgid "Display the X Session log."
+msgstr "Afficher le journal de la session X."
+
+#: src/modes/xsession/xsessionLogMode.cpp:48
+msgid ""
+"Displays the X Session log in the current tab. X Session log is the place "
+"where graphical programs write their output. See this log if you want to "
+"know why a program has crashed, or why your display manager (KDE, Gnome,...) "
+"has not started."
+msgstr ""
+"Affiche le journal de la session X dans l'onglet courant. Le journal de la "
+"session X est l'endroit où les applications graphiques écrivent des messages "
+"en sortie. Consultez ce journal si vous souhaitez savoir pourquoi votre "
+"programme s'est planté, ou pourquoi votre environnement bureautique (KDE, "
+"Gnome...) n'a pas démarré."
+
+#: src/modes/xsession/xsessionAnalyzer.h:54
+msgid "Program"
+msgstr "Programme"
+
+#: src/modes/xsession/xsessionItemBuilder.h:74
+#: src/modes/xsession/xsessionItemBuilder.h:76
+msgid "Program:"
+msgstr "Programme :"
+
+#: src/modes/xsession/xsessionConfigurationWidget.h:79
+msgid ""
+"You can type or choose the X Session log file (example: <i>~/.xsession-"
+"errors</i>)."
+msgstr ""
+"Vous pouvez saisir ou sélectionner le fichier de journal de la session X "
+"(exemple : <i>~/.xsession-errors</i>)."
+
+#: src/modes/xsession/xsessionConfigurationWidget.h:80
+msgid ""
+"You can type or choose here the X Session log file. This file will be "
+"analyzed when you select the <b>X Session log</b> menu. Generally, its name "
+"is <i>~/.xsession-errors</i>"
+msgstr ""
+"Vous pouvez saisir ou sélectionner le fichier de journal de la session X. Ce "
+"fichier sera analysé lorsque vous sélectionnez le menu <b>Session X</b>. "
+"Généralement, il porte le nom <i>~/.xsession-errors</i>."
+
+#: src/modes/xsession/xsessionConfigurationWidget.h:140
+#, kde-format
+msgid "<li><b>%1</b>: ...</li>"
+msgstr "<li><b>%1</b> : ...</li>"
+
+#: src/modes/postfix/postfixLogMode.cpp:39
+#: src/modes/postfix/postfixConfigurationWidget.h:48
+msgid "Postfix Log"
+msgstr "Postfix"
+
+#: src/modes/postfix/postfixLogMode.cpp:48
+msgid "Display the Postfix log."
+msgstr "Afficher le journal de Postfix."
+
+#: src/modes/postfix/postfixLogMode.cpp:49
+msgid ""
+"Displays the Postfix log in the current tab. Postfix is the most known and "
+"used mail server in the Linux world."
+msgstr ""
+"Affiche le journal de Postfix dans l'onglet courant. Postfix est le serveur "
+"de courriers électroniques le plus connu et utilisé dans le monde Linux."
+
+#: src/modes/postfix/postfixConfigurationWidget.h:54
+msgid "<p>These files will be analyzed to show the <b>Postfix Logs</b>.</p>"
+msgstr ""
+"<p>Ces fichiers seront analysés pour afficher le <b>journal Postfix</b>.</p>"
+
+#: src/loggerDialog.cpp:114
+msgid "Authentication"
+msgstr "Authentification"
+
+#: src/loggerDialog.cpp:115
+msgid "Private Authentication"
+msgstr "Authentification privée"
+
+#: src/loggerDialog.cpp:116
+msgid "Cron"
+msgstr "Cron"
+
+#: src/loggerDialog.cpp:117
+msgid "Daemon"
+msgstr "Démon"
+
+#: src/loggerDialog.cpp:118
+msgid "FTP"
+msgstr "FTP"
+
+#: src/loggerDialog.cpp:119
+msgid "Kernel"
+msgstr "Noyau"
+
+#: src/loggerDialog.cpp:120
+msgid "LPR"
+msgstr "LPR"
+
+#: src/loggerDialog.cpp:121
+msgid "Mail"
+msgstr "Courriel"
+
+#: src/loggerDialog.cpp:122
+msgid "News"
+msgstr "Nouvelles"
+
+#: src/loggerDialog.cpp:123
+msgid "Syslog"
+msgstr "Syslog"
+
+#: src/loggerDialog.cpp:125
+msgid "UUCP"
+msgstr "UUCP"
+
+#: src/loggerDialog.cpp:127
+msgid "Local 0"
+msgstr "Local 0"
+
+#: src/loggerDialog.cpp:128
+msgid "Local 1"
+msgstr "Local 1"
+
+#: src/loggerDialog.cpp:129
+msgid "Local 2"
+msgstr "Local 2"
+
+#: src/loggerDialog.cpp:130
+msgid "Local 3"
+msgstr "Local 3"
+
+#: src/loggerDialog.cpp:131
+msgid "Local 4"
+msgstr "Local 4"
+
+#: src/loggerDialog.cpp:132
+msgid "Local 5"
+msgstr "Local 5"
+
+#: src/loggerDialog.cpp:133
+msgid "Local 6"
+msgstr "Local 6"
+
+#: src/loggerDialog.cpp:134
+msgid "Local 7"
+msgstr "Local 7"
+
+#: src/loggerDialog.cpp:242
+msgid ""
+"Unable to find the 'logger' command on your system. Please type 'logger' in "
+"a Konsole to determine whether this command is installed."
+msgstr ""
+"Impossible de trouver la commande « logger » sur votre système. Veuillez "
+"saisir « logger » dans Konsole pour vous assurer que cette commande n'est "
+"pas installée."
+
+#: src/loggerDialog.cpp:242
+msgid "Command not found"
+msgstr "Impossible de trouver la commande"
+
+#: src/loggerDialog.cpp:247
+msgid "The 'logger' command has not been properly exited."
+msgstr "La commande « logger » ne s'est pas terminée convenablement."
+
+#: src/loggerDialog.cpp:247
+msgid "Execution problem"
+msgstr "Problème d'exécution"
+
+#: src/loggerDialog.cpp:253
+msgid "This file does not exist, please choose another."
+msgstr "Ce fichier n'existe pas, veuillez en sélectionner un autre."
+
+#: src/loggerDialog.cpp:253
+msgid "File not valid"
+msgstr "Fichier non valable"
+
+# unreviewed-context
+#: src/tabLogManager.cpp:77
+#, kde-format
+msgctxt "Log mode name (added lines count)"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: src/tabLogManager.cpp:82 src/mainWindow.cpp:488
+msgctxt "Newly created tab"
+msgid "Empty Log"
+msgstr "Journal vide"
+
+#: src/statusBar.cpp:118
+#, kde-format
+msgid "Last updated: %1."
+msgstr "Dernière mise à jour : %1."
+
+#: src/statusBar.cpp:123
+#, kde-format
+msgid "%1: %2"
+msgstr "%1 : %2"
+
+#: src/generalConfigurationWidget.cpp:50
+msgid "No Log Mode"
+msgstr "Aucun mode"
+
+# unreviewed-context
+#: src/generalConfigurationWidget.cpp:95
+#, kde-format
+msgctxt "Date format Option (Date example)"
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
+
+#: src/mainWindow.cpp:383
+#, kde-format
+msgctxt "Total displayed lines"
+msgid "1 line."
+msgid_plural "%1 lines."
+msgstr[0] "1 ligne."
+msgstr[1] "%1 lignes."
+
+#: src/mainWindow.cpp:386
+#, kde-format
+msgctxt "Line not hidden by search / Total displayed lines"
+msgid "1 line / %2 total."
+msgid_plural "%1 lines / %2 total."
+msgstr[0] "1 ligne/%2 au total."
+msgstr[1] "%1 lignes/%2 au total."
+
+#: src/mainWindow.cpp:407
+msgid "Resu&me"
+msgstr "Repre&ndre"
+
+#: src/mainWindow.cpp:410
+msgid "Resume the watching of the current log"
+msgstr "Relance la surveillance du journal courant"
+
+#: src/mainWindow.cpp:411
+msgid ""
+"Resumes the watching of the current log. This action is only available when "
+"the user has already paused the reading."
+msgstr ""
+"Relance la surveillance du journal courant. Cette action est uniquement "
+"disponible si l'utilisateur a mis en pause la lecture."
+
+#: src/mainWindow.cpp:415
+msgid "S&top"
+msgstr "Arrê&ter"
+
+#: src/mainWindow.cpp:418
+msgid "Pause the watching of the current log"
+msgstr "Met en pause la surveillance du journal courant"
+
+#: src/mainWindow.cpp:419
+msgid ""
+"Pauses the watching of the current log. This action is particularly useful "
+"when the system is writing too many lines to log files, causing KSystemLog "
+"to reload too frequently."
+msgstr ""
+"Met en pause la surveillance du journal actuel. Cette action est "
+"particulièrement utile lorsque le système inscrit trop de lignes dans les "
+"fichiers de journalisation, ayant pour conséquence des rechargements "
+"réguliers dans KSystemLog."
+
+#: src/mainWindow.cpp:581
+msgid "Open a file in KSystemLog"
+msgstr "Ouvrir un fichier dans KSystemLog"
+
+#: src/mainWindow.cpp:582
+msgid "Opens a file in KSystemLog and displays its content in the current tab."
+msgstr ""
+"Ouvre un fichier dans KSystemLog et affiche son contenu dans l'onglet "
+"courant."
+
+#: src/mainWindow.cpp:585
+msgid "&Print Selection..."
+msgstr "Im&primer la sélection..."
+
+#: src/mainWindow.cpp:586
+msgid "Print the selection"
+msgstr "Imprimer la sélection"
+
+#: src/mainWindow.cpp:587
+msgid ""
+"Prints the selection. Simply select the important lines and click on this "
+"menu entry to print the selection."
+msgstr ""
+"Imprime la sélection. Sélectionnez simplement les lignes importantes, puis "
+"cliquez sur cette action pour envoyer imprimer la sélection."
+
+#: src/mainWindow.cpp:593
+msgid "Save the selection to a file"
+msgstr "Enregistrer la sélection dans un fichier"
+
+#: src/mainWindow.cpp:594
+msgid ""
+"Saves the selection to a file. This action is useful if you want to create "
+"an attachment or a backup of a particular log."
+msgstr ""
+"Enregistre la sélection dans un fichier. Cette action est utile si vous "
+"souhaitez créer une pièce jointe ou une sauvegarde d'un journal particulier."
+
+#: src/mainWindow.cpp:598
+msgid "Quit KSystemLog"
+msgstr "Quitter KSystemlog"
+
+#: src/mainWindow.cpp:599
+msgid "Quits KSystemLog."
+msgstr "Quitte KSystemlog."
+
+#: src/mainWindow.cpp:602
+msgid "Copy the selection to the clipboard"
+msgstr "Copier la sélection dans le presse-papiers"
+
+#: src/mainWindow.cpp:603
+msgid ""
+"Copies the selection to the clipboard. This action is useful if you want to "
+"paste the selection in a chat or an email."
+msgstr ""
+"Copie la sélection dans le presse-papiers. Cette action est utile si vous "
+"souhaitez coller la sélection dans une fenêtre de discussion ou dans un "
+"courriel."
+
+#: src/mainWindow.cpp:607
+msgid "Ex&pand All"
+msgstr "To&ut développer"
+
+#: src/mainWindow.cpp:609
+msgid "Expand all categories"
+msgstr "Développer toutes les catégories"
+
+#: src/mainWindow.cpp:610
+msgid ""
+"This action opens all main categories. This is enabled only if an option has "
+"been selected in the <b>Group By</b> menu."
+msgstr ""
+"Cette action ouvre les catégories principales. Cette action est activée "
+"uniquement si une option est sélectionnée dans le menu <b>Grouper par</b>."
+
+#: src/mainWindow.cpp:614
+msgid "Col&lapse All"
+msgstr "Tout ré&duire"
+
+#: src/mainWindow.cpp:616
+msgid "Collapse all categories"
+msgstr "Réduire toutes les catégories"
+
+#: src/mainWindow.cpp:617
+msgid ""
+"This action closes all main categories. This is enabled only if an option "
+"has been selected in the <b>Group By</b> menu."
+msgstr ""
+"Cette action réduit les catégories principales. Cette action est activée "
+"uniquement si une option est sélectionnée dans le menu <b>Grouper par</b>."
+
+#: src/mainWindow.cpp:621
+msgid "&Email Selection..."
+msgstr "&Envoyer la sélection..."
+
+#: src/mainWindow.cpp:624
+msgid "Send the selection by mail"
+msgstr "Envoyer la sélection par courrier électronique."
+
+#: src/mainWindow.cpp:625
+msgid ""
+"Sends the selection by mail. Simply select the important lines and click on "
+"this menu entry to send the selection to a friend or a mailing list."
+msgstr ""
+"Envoie la sélection par courrier électronique. Sélectionnez simplement les "
+"lignes importantes, puis cliquez sur cette entrée de menu pour envoyer la "
+"sélection à un ami ou à une liste de diffusion."
+
+#: src/mainWindow.cpp:629
+msgid "&Add Log Entry..."
+msgstr "&Ajouter une entrée..."
+
+#: src/mainWindow.cpp:632
+msgid "Add a log entry to the log system"
+msgstr "Ajouter une entrée au système de journalisation"
+
+#: src/mainWindow.cpp:633
+msgid ""
+"This action will open a dialog which lets you send a message to the log "
+"system."
+msgstr ""
+"Cette action ouvrira une fenêtre permettant d'envoyer un message au système "
+"de journalisation."
+
+#: src/mainWindow.cpp:636
+msgid "Select all lines of the current log"
+msgstr "Sélectionner toutes les lignes du journal courant"
+
+#: src/mainWindow.cpp:637
+msgid ""
+"Selects all lines of the current log. This action is useful if you want, for "
+"example, to save all the content of the current log in a file."
+msgstr ""
+"Sélectionne toutes les lignes du journal courant. Cette action est utile si "
+"vous souhaitez, par exemple, enregistrer l'ensemble du contenu de ce journal "
+"dans un fichier."
+
+#: src/mainWindow.cpp:648
+msgid "Show &Filter Bar"
+msgstr "Afficher la barre de &filtre"
+
+#: src/mainWindow.cpp:654
+msgid "&New Tab"
+msgstr "&Nouvel onglet"
+
+#: src/mainWindow.cpp:657 src/tabLogViewsWidget.cpp:59
+msgid "Create a new tab"
+msgstr "Créer un nouvel onglet"
+
+#: src/mainWindow.cpp:658 src/tabLogViewsWidget.cpp:60
+msgid "Creates a new tab which can display another log."
+msgstr "Crée un nouvel onglet dans lequel afficher un nouveau journal."
+
+#: src/mainWindow.cpp:662
+msgid "&Close Tab"
+msgstr "Fer&mer l'onglet"
+
+#: src/mainWindow.cpp:665 src/tabLogViewsWidget.cpp:65
+msgid "Close the current tab"
+msgstr "Fermer l'onglet courant"
+
+#: src/mainWindow.cpp:666 src/tabLogViewsWidget.cpp:66
+msgid "Closes the current tab."
+msgstr "Ferme l'onglet courant."
+
+#: src/mainWindow.cpp:670
+msgid "&Duplicate Tab"
+msgstr "&Dupliquer l'onglet"
+
+#: src/mainWindow.cpp:673
+msgid "Duplicate the current tab"
+msgstr "Dupliquer l'onglet courant"
+
+#: src/mainWindow.cpp:674
+msgid "Duplicates the current tab."
+msgstr "Duplique l'onglet courant."
+
+#: src/mainWindow.cpp:682
+msgid "Move Tab &Left"
+msgstr "Déplacer l'onglet à &gauche"
+
+#: src/mainWindow.cpp:685
+msgid "Move the current tab to the left"
+msgstr "Déplacer l'onglet courant à gauche"
+
+#: src/mainWindow.cpp:686
+msgid "Moves the current tab to the left."
+msgstr "Déplace l'onglet courant à gauche."
+
+#: src/mainWindow.cpp:690
+msgid "Move Tab &Right"
+msgstr "Déplacer l'onglet à &droite"
+
+#: src/mainWindow.cpp:693
+msgid "Move the current tab to the right"
+msgstr "Déplacer l'onglet courant à droite"
+
+#: src/mainWindow.cpp:694
+msgid "Moves the current tab to the right."
+msgstr "Déplace l'onglet courant à droite."
+
+#: src/mainWindow.cpp:698
+msgid "&Reload"
+msgstr "&Recharger"
+
+#: src/mainWindow.cpp:701
+msgid "Reload the current log"
+msgstr "Recharger le journal actuel"
+
+#: src/mainWindow.cpp:702
+msgid ""
+"Reloads the current log, if you want to be sure that the view is correctly "
+"updated."
+msgstr ""
+"Recharge le journal courant, si vous souhaitez être sûr que la vue est "
+"correctement actualisée."
+
+#: src/mainWindow.cpp:711
+msgid "&Details"
+msgstr "&Détails"
+
+#: src/mainWindow.cpp:714
+msgid "Display details on the selected line"
+msgstr "Afficher les détails sur la ligne sélectionnée"
+
+#: src/mainWindow.cpp:715
+msgid ""
+"Displays a dialog box which contains details on the selected line. You are "
+"able to navigate through the logs from this dialog box with the <b>Previous</"
+"b> and <b>Next</b> buttons."
+msgstr ""
+"Affiche une fenêtre contenant des détails sur la ligne sélectionnée. Vous "
+"pouvez continuer naviguer dans les journaux grâce aux boutons <b>Précédente</"
+"b> et <b>Suivante</b>."
+
+#: src/mainWindow.cpp:719
+msgid "&Enable Detailed Tooltips"
+msgstr "&Activer les bulles de détails"
+
+#: src/mainWindow.cpp:720
+msgid "Disable/Enable the tooltip on the current view"
+msgstr "Activer/désactiver les bulles d'aide sur les lignes"
+
+#: src/mainWindow.cpp:721
+msgid ""
+"Disables/Enables the tooltip displayed when the cursor hovers a log line."
+msgstr ""
+"Active/désactive les bulles d'aide affichées lorsque le curseur passe au-"
+"dessus d'une ligne."
+
+#: src/mainWindow.cpp:727
+msgid "&Scroll to New Lines"
+msgstr "&Aller aux nouvelles lignes"
+
+#: src/mainWindow.cpp:728
+msgid "Scrolls or not to the new lines when the log changes"
+msgstr "Se déplace ou non vers les nouvelles lignes qui apparaissent"
+
+#: src/mainWindow.cpp:729
+msgid ""
+"Scrolls or not to the new lines when the log changes. Check this option if "
+"you do not want the application to scroll automatically at the bottom of the "
+"log each time it is refreshed."
+msgstr ""
+"Se déplace ou non vers les nouvelles lignes qui apparaissent. Cochez cette "
+"option si vous ne voulez pas que l'application fasse défiler automatiquement "
+"la liste vers le bas lorsque le journal est actualisé."
+
+#: src/mainWindow.cpp:776
+msgid "Services"
+msgstr "Services"
+
+#: src/mainWindow.cpp:777
+msgid "Others"
+msgstr "Autres"
+
+#. i18n: file: src/lib/logViewSearchWidgetBase.ui:68
+#. i18n: ectx: property (text), widget (QPushButton, previous)
+#: src/detailDialog.cpp:41 rc.cpp:41
+msgid "&Previous"
+msgstr "&Précédente"
+
+#. i18n: file: src/lib/logViewSearchWidgetBase.ui:58
+#. i18n: ectx: property (text), widget (QPushButton, next)
+#: src/detailDialog.cpp:45 rc.cpp:38
+msgid "&Next"
+msgstr "&Suivante"
+
+#: src/main.cpp:36
+msgid "KSystemlog"
+msgstr "KSystemlog"
+
+#: src/main.cpp:38
+msgid "System Logs Viewer for KDE"
+msgstr "Consultation des journaux système pour KDE"
+
+#: src/main.cpp:40
+msgid "(C) 2007, Nicolas Ternisien"
+msgstr "(C) 2007, Nicolas Ternisien"
+
+#: src/main.cpp:41
+msgid ""
+"Do not hesitate to report bugs and problems to Nicolas Ternisien <a "
+"href='mailto:nicolas.ternisien@gmail.com'>nicolas.ternisien@gmail.com</a>"
+msgstr ""
+"N'hésitez pas à rapporter vos problèmes à Nicolas Ternisien <a href='mailto:"
+"nicolas.ternisien@gmail.com'>nicolas.ternisien@gmail.com</a>"
+
+#: src/main.cpp:47
+msgid "Nicolas Ternisien"
+msgstr "Nicolas Ternisien"
+
+#: src/main.cpp:48
+msgid "Main developer"
+msgstr "Développeur principal"
+
+#: src/main.cpp:54
+msgid "Bojan Djurkovic"
+msgstr "Bojan Djurkovic"
+
+#: src/main.cpp:54
+msgid "Log Printing"
+msgstr "Impression des journaux"
+
+#: src/main.cpp:59
+msgid "Document to open"
+msgstr "Document à ouvrir"
+
+#: src/configurationDialog.cpp:54
+msgid "Settings"
+msgstr "Configuration"
+
+#: src/configurationDialog.cpp:108
+msgid "General"
+msgstr "Général"
+
+#: src/tabLogViewsWidget.cpp:109
+msgid "No Log"
+msgstr "Aucun journal"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Nicolas Ternisien"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "nicolas.ternisien@gmail.com"
+
+#. i18n: file: src/config/ksystemlog.kcfg:13
+#. i18n: ectx: label, entry (StartupLogMode), group (KSystemLogGeneral)
+#: rc.cpp:5
+msgid "Load this log mode at startup."
+msgstr "Charge ce journal au démarrage."
+
+#. i18n: file: src/config/ksystemlog.kcfg:18
+#. i18n: ectx: label, entry (MaxLines), group (KSystemLogGeneral)
+#: rc.cpp:8
+msgid "The log view line count limit."
+msgstr "Le nombre limite de lignes affichées."
+
+#. i18n: file: src/config/ksystemlog.kcfg:23
+#. i18n: ectx: label, entry (DeleteDuplicatedLines), group (KSystemLogGeneral)
+#: rc.cpp:11
+msgid "Option is true if the user wants to delete repeated log lines."
+msgstr ""
+"Cette option est activée lorsque l'utilisateur veut supprimer les lignes de "
+"journal en double."
+
+# unreviewed-context
+#. i18n: file: src/config/ksystemlog.kcfg:28
+#. i18n: ectx: label, entry (DeleteProcessIdentifier), group (KSystemLogGeneral)
+#: rc.cpp:14
+msgid ""
+"Option is true if the PID in the process column of the SystemLog is to be "
+"omitted."
+msgstr ""
+"Cette option est activée lorsque le PID dans la colonne processus du journal "
+"système doit être masqué."
+
+# unreviewed-context
+#. i18n: file: src/config/ksystemlog.kcfg:33
+#. i18n: ectx: label, entry (ColorizeLogLines), group (KSystemLogGeneral)
+#: rc.cpp:17
+msgid ""
+"Option is true if the log lines are to be colored depending on their log "
+"level."
+msgstr ""
+"Cette option est activée lorsque les lignes du journal sont colorées en "
+"fonction de leur niveau."
+
+#. i18n: file: src/config/ksystemlog.kcfg:39
+#. i18n: ectx: label, entry (TooltipEnabled), group (KSystemLogGeneral)
+#: rc.cpp:20
+msgid "Whether the tooltips are enabled."
+msgstr "L'infobulle est activée ou non."
+
+#. i18n: file: src/config/ksystemlog.kcfg:44
+#. i18n: ectx: label, entry (NewLinesDisplayed), group (KSystemLogGeneral)
+#: rc.cpp:23
+msgid "Whether new lines are displayed."
+msgstr "Les nouvelles lignes sont affichées ou non."
+
+#. i18n: file: src/config/ksystemlog.kcfg:49
+#. i18n: ectx: label, entry (ToggleFilterBar), group (KSystemLogGeneral)
+#: rc.cpp:26
+msgid "Whether the filter bar is shown."
+msgstr "La recherche rapide est affichée ou non."
+
+#. i18n: file: src/config/ksystemlog.kcfg:54
+#. i18n: ectx: label, entry (DateFormat), group (KSystemLogGeneral)
+#: rc.cpp:29
+msgid "The date format of log lines."
+msgstr "Le format de la date dans les lignes de journal."
+
+#. i18n: file: src/config/ksystemlog.kcfg:70
+#. i18n: ectx: label, entry (SambaPaths), group (KSystemLogGeneral)
+#: rc.cpp:32
+msgid "The Samba log file paths."
+msgstr "L'emplacement des journaux de Samba."
+
+# unreviewed-context
+#. i18n: file: src/lib/logViewSearchWidgetBase.ui:41
+#. i18n: ectx: property (text), widget (QLabel, searchLabel)
+#: rc.cpp:35
+msgid "Find:"
+msgstr "Rechercher :"
+
+#. i18n: file: src/lib/logViewSearchWidgetBase.ui:78
+#. i18n: ectx: property (text), widget (QCheckBox, caseSensitive)
+#: rc.cpp:44
+msgid "Match &case"
+msgstr "Respecter la &casse"
+
+#. i18n: file: src/lib/logViewSearchWidgetBase.ui:85
+#. i18n: ectx: property (text), widget (QCheckBox, highlightAllButton)
+#: rc.cpp:47
+msgid "&Highlight all"
+msgstr "Tout sur&ligner"
+
+#. i18n: file: src/modes/base/fileListBase.ui:31
+#. i18n: ectx: property (text), widget (QLabel, description)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:31
+#. i18n: ectx: property (text), widget (QLabel, description)
+#: rc.cpp:50 rc.cpp:152
+msgid "File List Description"
+msgstr "Description de la liste de fichiers"
+
+#. i18n: file: src/modes/base/fileListBase.ui:44
+#. i18n: ectx: property (title), widget (QGroupBox, filesBox)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:44
+#. i18n: ectx: property (title), widget (QGroupBox, filesBox)
+#: rc.cpp:53 rc.cpp:155
+msgid "Log Files"
+msgstr "Fichiers de journalisation"
+
+#. i18n: file: src/modes/base/fileListBase.ui:55
+#. i18n: ectx: property (toolTip), widget (QPushButton, add)
+#: rc.cpp:56
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Choose a new file</p></"
+"body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Sélectionnez un nouveau "
+"fichier</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:61
+#. i18n: ectx: property (whatsThis), widget (QPushButton, add)
+#: rc.cpp:62
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Opens a dialog box to "
+"choose a new file to be added to the list.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Ouvre une boîte de "
+"dialogue pour sélectionner un nouveau fichier à ajouter à la liste.</p></"
+"body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:64
+#. i18n: ectx: property (text), widget (QPushButton, add)
+#: rc.cpp:68
+msgid "&Add File..."
+msgstr "&Ajouter un fichier..."
+
+#. i18n: file: src/modes/base/fileListBase.ui:71
+#. i18n: ectx: property (text), widget (QPushButton, modify)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:70
+#. i18n: ectx: property (text), widget (QPushButton, modify)
+#: rc.cpp:71 rc.cpp:161
+msgid "&Modify File..."
+msgstr "&Modifier un fichier..."
+
+#. i18n: file: src/modes/base/fileListBase.ui:81
+#. i18n: ectx: property (toolTip), widget (QPushButton, remove)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:80
+#. i18n: ectx: property (toolTip), widget (QPushButton, remove)
+#: rc.cpp:74 rc.cpp:164
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Delete the current file(s)"
+"</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Supprime les fichiers "
+"courants</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:87
+#. i18n: ectx: property (whatsThis), widget (QPushButton, remove)
+#: rc.cpp:80
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Deletes the files selected "
+"on the list.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Enlève les fichiers "
+"sélectionnés de la liste.</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:90
+#. i18n: ectx: property (text), widget (QPushButton, remove)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:89
+#. i18n: ectx: property (text), widget (QPushButton, remove)
+#: rc.cpp:86 rc.cpp:176
+msgid "&Remove"
+msgstr "&Enlever"
+
+#. i18n: file: src/modes/base/fileListBase.ui:100
+#. i18n: ectx: property (toolTip), widget (QPushButton, removeAll)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:99
+#. i18n: ectx: property (toolTip), widget (QPushButton, removeAll)
+#: rc.cpp:89 rc.cpp:179
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Remove all files</p></"
+"body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Enlève tous les fichiers</"
+"p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:106
+#. i18n: ectx: property (whatsThis), widget (QPushButton, removeAll)
+#: rc.cpp:95
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Remove all the files on "
+"the list, even if they are not selected.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Enlève tous les fichiers "
+"de la liste, même si ils ne sont pas sélectionnés.</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:109
+#. i18n: ectx: property (text), widget (QPushButton, removeAll)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:108
+#. i18n: ectx: property (text), widget (QPushButton, removeAll)
+#: rc.cpp:101 rc.cpp:191
+msgid "Rem&ove All"
+msgstr "Enlever t&out"
+
+#. i18n: file: src/modes/base/fileListBase.ui:122
+#. i18n: ectx: property (toolTip), widget (QPushButton, up)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:121
+#. i18n: ectx: property (toolTip), widget (QPushButton, up)
+#: rc.cpp:104 rc.cpp:194
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Move up the current file(s)"
+"</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Déplace les fichiers "
+"sélectionnés vers le haut</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:128
+#. i18n: ectx: property (whatsThis), widget (QPushButton, up)
+#: rc.cpp:110
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Moves the selected files "
+"up in the list. This option allows the files to be read <span style=\" font-"
+"weight:600;\">in first</span> by KSystemLog.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Déplace les fichiers "
+"sélectionnés vers le haut de la liste. Ainsi, ces fichiers seront lus <span "
+"style=\" font-weight:600;\">en premier</span> par KSystemLog.</p></body></"
+"html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:131
+#. i18n: ectx: property (text), widget (QPushButton, up)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:130
+#. i18n: ectx: property (text), widget (QPushButton, up)
+#: rc.cpp:116 rc.cpp:206
+msgid "Move &Up"
+msgstr "Monter"
+
+#. i18n: file: src/modes/base/fileListBase.ui:141
+#. i18n: ectx: property (toolTip), widget (QPushButton, down)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:140
+#. i18n: ectx: property (toolTip), widget (QPushButton, down)
+#: rc.cpp:119 rc.cpp:209
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Move down the current file"
+"(s)</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Déplace les fichiers "
+"sélectionnés vers le bas.</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:147
+#. i18n: ectx: property (whatsThis), widget (QPushButton, down)
+#: rc.cpp:125
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Moves the selected files "
+"down in the list. This option allows the files to be read <span style=\" "
+"font-weight:600;\">in last</span> by KSystemLog.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Déplace les fichiers "
+"sélectionnés vers le bas de la liste. Ainsi, ces fichiers seront lus <span "
+"style=\" font-weight:600;\">en dernier</span> par KSystemLog.</p></body></"
+"html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:150
+#. i18n: ectx: property (text), widget (QPushButton, down)
+#. i18n: file: src/modes/base/multipleFileListBase.ui:149
+#. i18n: ectx: property (text), widget (QPushButton, down)
+#: rc.cpp:131 rc.cpp:221
+msgid "Move &Down"
+msgstr "&Descendre"
+
+# unreviewed-context
+#. i18n: file: src/modes/base/fileListBase.ui:175
+#. i18n: ectx: property (text), widget (QLabel, notes)
+#: rc.cpp:134
+msgid ""
+"<p style='margin-top:0px;margin-bottom:0px;'><b>Notes:</b></p><ul "
+"style='margin-top:0px'><li>Files are read using the order of this list.</"
+"li><li>Compressed and plain text files are accepted <i>(*.log, *.gz, *."
+"bz2,...)</i>.</li><li>Use the <b>'*'</b> wildcard to select multiple log "
+"files when adding files.</li></ul>"
+msgstr ""
+"<p style='margin-top:0px;margin-bottom:0px;'><b>Remarques :</b></p><ul "
+"style='margin-top:0px'><li>Les fichiers sont lus dans l'ordre de cette liste."
+"</li><li>Les fichiers en texte brut ou compressés sont pris en charge <i>(*."
+"log, *.gz, *.bz2...)</i>.</li><li>Utilisez le symbole joker <b>*</b> pour "
+"sélectionner plusieurs fichiers de journalisation au moment de l'ajout.</"
+"li></ul>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:191
+#. i18n: ectx: property (toolTip), widget (QListWidget, fileList)
+#: rc.cpp:137
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">List of files used by this "
+"log type.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Liste des fichiers "
+"utilisés par ce type de journaux.</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:197
+#. i18n: ectx: property (whatsThis), widget (QListWidget, fileList)
+#: rc.cpp:143
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Here is a list of every "
+"file that will be read by KSystemLog to display the current log lines.</p></"
+"body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Voici une liste de tous "
+"les fichiers qui seront lus par KSystemLog pour afficher les lignes du "
+"journal courant.</p></body></html>"
+
+#. i18n: file: src/modes/base/fileListBase.ui:210
+#. i18n: ectx: property (text), widget (QListWidget, fileList)
+#: rc.cpp:149
+msgid "add"
+msgstr "ajouter"
+
+#. i18n: file: src/modes/base/multipleFileListBase.ui:60
+#. i18n: ectx: property (text), widget (QTreeWidget, fileList)
+#: rc.cpp:158
+msgid "1"
+msgstr "1"
+
+#. i18n: file: src/modes/base/multipleFileListBase.ui:86
+#. i18n: ectx: property (whatsThis), widget (QPushButton, remove)
+#: rc.cpp:170
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Deletes the selected files "
+"of the list.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Enlève le(s) fichier(s) "
+"sélectionné(s) de la liste.</p></body></html>"
+
+#. i18n: file: src/modes/base/multipleFileListBase.ui:105
+#. i18n: ectx: property (whatsThis), widget (QPushButton, removeAll)
+#: rc.cpp:185
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Remove all files of the "
+"list, even if they are not selected.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Enlève tous les fichiers "
+"de la liste, même si ils ne sont pas sélectionnés.</p></body></html>"
+
+#. i18n: file: src/modes/base/multipleFileListBase.ui:127
+#. i18n: ectx: property (whatsThis), widget (QPushButton, up)
+#: rc.cpp:200
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Moves up the selected "
+"files in the list. This option allows the files to be read <span style=\" "
+"font-weight:600;\">in first</span> by KSystemLog.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Déplace le(s) fichier(s) "
+"sélectionné(s) vers le haut de la liste. Ainsi, ces fichiers seront lus "
+"<span style=\" font-weight:600;\">en premier</span> par KSystemLog.</p></"
+"body></html>"
+
+#. i18n: file: src/modes/base/multipleFileListBase.ui:146
+#. i18n: ectx: property (whatsThis), widget (QPushButton, down)
+#: rc.cpp:215
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Moves down the selected "
+"files in the list. This option allows the files to be read <span style=\" "
+"font-weight:600;\">at last</span> by KSystemLog.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Déplace le(s) fichier(s) "
+"sélectionné(s) vers le bas de la liste. Ainsi, ces fichiers seront lus <span "
+"style=\" font-weight:600;\">en dernier</span> par KSystemLog.</p></body></"
+"html>"
+
+# unreviewed-context
+#. i18n: file: src/modes/base/multipleFileListBase.ui:174
+#. i18n: ectx: property (text), widget (QLabel, notes)
+#: rc.cpp:224
+msgid ""
+"<p style='margin-top:0px;margin-bottom:0px;'><b>Notes:</b></p><ul "
+"style='margin-top:0px'><li>Files are read using the order of this list.</"
+"li><li>Compressed and plain text files are accepted <i>(*.log, *.gz, *."
+"bz2,...)</i>.</li><li>Use the <b>'*'</b> joker to select multiple log files "
+"when adding files.</li></ul>"
+msgstr ""
+"<p style='margin-top:0px;margin-bottom:0px;'><b>Remarques :</b></p><ul "
+"style='margin-top:0px'><li>Les fichiers sont lus dans l'ordre de cette liste."
+"</li><li>Les fichiers en texte brut ou compressés sont pris en charge <i>(*."
+"log, *.gz, *.bz2...)</i>.</li><li>Utilisez le symbole joker <b>*</b> pour "
+"sélectionner plusieurs fichiers de journalisation au moment de l'ajout.</"
+"li></ul>"
+
+#. i18n: file: src/modes/base/logLevelSelectionDialogBase.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, LogLevelSelectionDialogBase)
+#: rc.cpp:227
+msgid "Selecting File Type"
+msgstr "Sélection du type du fichier"
+
+# unreviewed-context
+#. i18n: file: src/modes/base/logLevelSelectionDialogBase.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:230
+msgid "Please select the type of this file:"
+msgstr "Veuillez sélectionner le type de ce fichier :"
+
+#. i18n: file: src/modes/base/logLevelSelectionDialogBase.ui:35
+#. i18n: ectx: property (toolTip), widget (QListWidget, logLevelsList)
+#: rc.cpp:233
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">List of existing log "
+"levels</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Liste des niveaux de "
+"journalisation existants</p></body></html>"
+
+#. i18n: file: src/modes/base/logLevelSelectionDialogBase.ui:42
+#. i18n: ectx: property (whatsThis), widget (QListWidget, logLevelsList)
+#: rc.cpp:239
+msgid ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">This is the list of all "
+"existing log levels. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Please select one of them "
+"to be used for the files selected on the list.</p></body></html>"
+msgstr ""
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Ceci est la liste de tous "
+"les niveaux de journalisation existant. </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Veuillez sélectionner un "
+"niveau à utiliser pour les fichiers sélectionnés de la liste.</p></body></"
+"html>"
+
+#. i18n: file: src/modes/xsession/xsessionConfigurationWidgetBase.ui:16
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:246
+msgid "X Session Log File"
+msgstr "Fichier la session X"
+
+# unreviewed-context
+#. i18n: file: src/modes/xsession/xsessionConfigurationWidgetBase.ui:22
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:249
+msgid "Log file:"
+msgstr "Fichier de journalisation :"
+
+#. i18n: file: src/modes/xsession/xsessionConfigurationWidgetBase.ui:45
+#. i18n: ectx: property (toolTip), widget (QCheckBox, ignoreXorgErrors)
+#. i18n: file: src/modes/xsession/xsessionConfigurationWidgetBase.ui:48
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, ignoreXorgErrors)
+#: rc.cpp:252 rc.cpp:255
+msgid "Check this option to remove Xorg errors"
+msgstr "Activez cette option pour enlever les erreurs de Xorg"
+
+#. i18n: file: src/modes/xsession/xsessionConfigurationWidgetBase.ui:51
+#. i18n: ectx: property (text), widget (QCheckBox, ignoreXorgErrors)
+#: rc.cpp:258
+msgid "Ignore Xorg errors"
+msgstr "Ignorer les erreurs de Xorg"
+
+# unreviewed-context
+#. i18n: file: src/modes/xsession/xsessionConfigurationWidgetBase.ui:58
+#. i18n: ectx: property (text), widget (QLabel, xorgErrorsDescription)
+#: rc.cpp:261
+msgid ""
+"<p><b>Note:</b> Check this option to remove X.org errors.</p><p style="
+"\"margin-bottom:0px\">The following lines will be ignored:</p>"
+msgstr ""
+"<p><b>Remarque :</b> Activez cette option pour enlever les erreurs de X.org."
+"</p><p style=\"margin-bottom:0px\">Les lignes suivantes seront ignorées :</p>"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:17
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
+#: rc.cpp:264
+msgid "Startup"
+msgstr "Démarrage"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:23
+#. i18n: ectx: property (text), widget (QLabel, label)
+#: rc.cpp:267
+msgid "Load this log mode at startup:"
+msgstr "Charger ce journal au démarrage :"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:33
+#. i18n: ectx: property (toolTip), widget (QComboBox, startupLogMode)
+#: rc.cpp:270
+msgid "The log mode which is loaded by default at startup"
+msgstr "Le journal qui sera chargé au démarrage de l'application"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:36
+#. i18n: ectx: property (whatsThis), widget (QComboBox, startupLogMode)
+#: rc.cpp:273
+msgid ""
+"The log mode loaded by default at startup. Choose 'No Log Mode' if you do "
+"not want this to happen."
+msgstr ""
+"Le journal qui sera chargé au démarrage de l'application. Sélectionnez "
+"« Aucun journal » pour ne rien faire au démarrage."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:46
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:276
+msgid "Log Lines List"
+msgstr "Liste des lignes du journal"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:54
+#. i18n: ectx: property (text), widget (QLabel, maxLinesLabel)
+#: rc.cpp:279
+msgid "Maximum lines displayed:"
+msgstr "Nombre maximal de lignes affichées :"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:70
+#. i18n: ectx: property (toolTip), widget (KIntSpinBox, maxLines)
+#: rc.cpp:282
+msgid "Choose here the maximum number of log lines displayed in the main view."
+msgstr ""
+"Sélectionnez ici le nombre maximal de lignes affichées dans la liste "
+"principale."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:73
+#. i18n: ectx: property (whatsThis), widget (KIntSpinBox, maxLines)
+#: rc.cpp:285
+msgid ""
+"You can choose here the maximum number of log lines displayed in the main "
+"view."
+msgstr ""
+"Vous pouvez choisir ici le nombre maximal de lignes affichées dans la liste "
+"principale."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:91
+#. i18n: ectx: property (toolTip), widget (QCheckBox, deleteDuplicatedLines)
+#: rc.cpp:288
+msgid ""
+"Select this option if you want to delete duplicate log lines <b>(may be slow)"
+"</b>."
+msgstr ""
+"Sélectionnez cette option si vous souhaitez supprimer les lignes dupliquées "
+"du journal <b>(peut ralentir l'application)</b>."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:94
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, deleteDuplicatedLines)
+#: rc.cpp:291
+msgid ""
+"Select this option if you want to delete duplicate log lines. <b>This option "
+"can slow log reading</b>."
+msgstr ""
+"Vous pouvez sélectionner cette option si vous souhaitez supprimer les lignes "
+"de journal en double. <b>Cette option peut ralentir la lecture.</b>"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:97
+#. i18n: ectx: property (text), widget (QCheckBox, deleteDuplicatedLines)
+#: rc.cpp:294
+msgid "Remove &duplicate log lines (may be slower)"
+msgstr "Supprimer les lignes i&dentiques (peut prendre plus de temps)"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:107
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#. i18n: file: src/loggerDialogBase.ui:206
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
+#: rc.cpp:297 rc.cpp:411
+msgid "Options"
+msgstr "Options"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:113
+#. i18n: ectx: property (toolTip), widget (QCheckBox, deleteProcessId)
+#: rc.cpp:300
+msgid "Remove process identifier from process name."
+msgstr "Supprimer l'identifiant dans le nom du processus."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:116
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, deleteProcessId)
+#: rc.cpp:303
+msgid ""
+"Select this option if you want to remove the process identifier from the "
+"process name. For example, the <b>Process</b> column may contain entries "
+"such as <i>cron<b>[3433]</b></i>. If this option is activated, the bold part "
+"will be removed."
+msgstr ""
+"Sélectionnez cette option si vous souhaitez supprimer l'identifiant du nom "
+"du processus. Vous pouvez par exemple voir dans la colonne <b>Processus</b> "
+"des chaînes comme <i>cron<b>[3433]</b></i>. Si cette option est activée, la "
+"partie en gras sera supprimée."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:119
+#. i18n: ectx: property (text), widget (QCheckBox, deleteProcessId)
+#: rc.cpp:306
+msgid "Remove &identifier from process name"
+msgstr "Supprimer l'&identifiant du nom du processus"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:126
+#. i18n: ectx: property (toolTip), widget (QCheckBox, colorizeLogLines)
+#: rc.cpp:309
+msgid ""
+"This option allows log lines to be colored depending on their log level."
+msgstr ""
+"Cette option permet de colorer les lignes, selon leurs niveaux d'importances."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:129
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, colorizeLogLines)
+#: rc.cpp:312
+msgid ""
+"This option allows log lines to be colored depending on their log level. For "
+"example, errors will be shown in red, warnings in orange, and so on. This "
+"will help you to see problems more easily."
+msgstr ""
+"Cette option permet de colorer les lignes de journalisation, selon leurs "
+"niveaux. Une erreur sera par exemple colorée en rouge, un avertissement en "
+"orange... Ceci vous permettra de mieux consulter les problèmes."
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:132
+#. i18n: ectx: property (text), widget (QCheckBox, colorizeLogLines)
+#: rc.cpp:315
+msgid "&Colored log lines"
+msgstr "&Colorer les lignes"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:142
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
+#: rc.cpp:318
+msgid "Date Format"
+msgstr "Format de date"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:151
+#. i18n: ectx: property (text), widget (QRadioButton, formatShortDate)
+#: rc.cpp:321
+msgid "&Short date format"
+msgstr "Format de date &court"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:158
+#. i18n: ectx: property (text), widget (QRadioButton, formatFancyShortDate)
+#: rc.cpp:324
+msgid "&Fancy short date format"
+msgstr "Format de date &fantaisiste"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:165
+#. i18n: ectx: property (text), widget (QRadioButton, formatLongDate)
+#: rc.cpp:327
+msgid "&Long date format"
+msgstr "Format de date &long"
+
+#. i18n: file: src/generalConfigurationWidgetBase.ui:172
+#. i18n: ectx: property (text), widget (QRadioButton, formatFancyLongDate)
+#: rc.cpp:330
+msgid "Fanc&y long date format"
+msgstr "Format de date fantais&iste long"
+
+#. i18n: file: src/detailDialogBase.ui:13
+#. i18n: ectx: property (windowTitle), widget (QDialog, DetailDialogBase)
+#: rc.cpp:333
+msgid "Log Line Details"
+msgstr "Détails de la ligne"
+
+#. i18n: file: src/detailDialogBase.ui:16
+#. i18n: ectx: property (whatsThis), widget (QDialog, DetailDialogBase)
+#: rc.cpp:336
+msgid ""
+"This dialog displays detailed information about the currently selected log "
+"line."
+msgstr ""
+"Cette fenêtre affiche des informations détaillées sur la ligne du journal "
+"actuellement sélectionnée."
+
+#. i18n: file: src/detailDialogBase.ui:44
+#. i18n: ectx: property (text), widget (QLabel, icon)
+#: rc.cpp:342
+msgid "Icon"
+msgstr "Icône"
+
+#. i18n: file: src/detailDialogBase.ui:60
+#. i18n: ectx: property (text), widget (QLabel, header)
+#: rc.cpp:345
+msgid "Main information"
+msgstr "Informations principales"
+
+#. i18n: file: src/detailDialogBase.ui:90
+#. i18n: ectx: property (toolTip), widget (KPushButton, previous)
+#: rc.cpp:348
+msgid "Move to the previous line"
+msgstr "Aller à la ligne précédente"
+
+#. i18n: file: src/detailDialogBase.ui:93
+#. i18n: ectx: property (whatsThis), widget (KPushButton, previous)
+#: rc.cpp:351
+msgid ""
+"Moves to the previous line. This button is deactivated if there is no "
+"previous log line."
+msgstr ""
+"Aller à la ligne précédente. Ce bouton est désactivé s'il n'existe pas de "
+"ligne suivante dans le journal."
+
+#. i18n: file: src/detailDialogBase.ui:96
+#. i18n: ectx: property (text), widget (KPushButton, previous)
+#: rc.cpp:354
+msgid "&Back"
+msgstr "&Retour"
+
+#. i18n: file: src/detailDialogBase.ui:112
+#. i18n: ectx: property (toolTip), widget (KPushButton, next)
+#: rc.cpp:357
+msgid "Move to the next line"
+msgstr "Aller à la ligne suivante"
+
+#. i18n: file: src/detailDialogBase.ui:115
+#. i18n: ectx: property (whatsThis), widget (KPushButton, next)
+#: rc.cpp:360
+msgid ""
+"Moves to the next line. This button is deactivated if there is no next log "
+"line."
+msgstr ""
+"Aller à la ligne suivante. Ce bouton est désactivé s'il n'existe pas de "
+"ligne suivante dans le journal."
+
+#. i18n: file: src/detailDialogBase.ui:118
+#. i18n: ectx: property (text), widget (KPushButton, next)
+#: rc.cpp:363
+msgid "&Forward"
+msgstr "Mouvement &suivant"
+
+#. i18n: file: src/detailDialogBase.ui:150
+#. i18n: ectx: property (toolTip), widget (KPushButton, closeButton)
+#: rc.cpp:366
+msgid "Close the Detail dialog."
+msgstr "Fermer la fenêtre de détails."
+
+#. i18n: file: src/detailDialogBase.ui:153
+#. i18n: ectx: property (whatsThis), widget (KPushButton, closeButton)
+#: rc.cpp:369
+msgid "Closes this Detail dialog."
+msgstr "Ferme la fenêtre de détails."
+
+#. i18n: file: src/detailDialogBase.ui:156
+#. i18n: ectx: property (text), widget (KPushButton, closeButton)
+#: rc.cpp:372
+msgid "&Close"
+msgstr "&Fermer"
+
+#. i18n: file: src/ksystemlogui.rc:13
+#. i18n: ectx: Menu (edit)
+#: rc.cpp:375
+msgid "&Edit"
+msgstr "&Édition"
+
+#. i18n: file: src/ksystemlogui.rc:31
+#. i18n: ectx: Menu (logs)
+#: rc.cpp:378
+msgid "Logs"
+msgstr "Journaux"
+
+#. i18n: file: src/ksystemlogui.rc:36
+#. i18n: ectx: Menu (window)
+#: rc.cpp:381
+msgid "&Window"
+msgstr "&Fenêtre"
+
+#. i18n: file: src/ksystemlogui.rc:55
+#. i18n: ectx: ToolBar (logToolBar)
+#: rc.cpp:384
+msgid "Logs Toolbar"
+msgstr "Barre des journaux"
+
+#. i18n: file: src/ksystemlogui.rc:60
+#. i18n: ectx: ToolBar (mainToolBar)
+#: rc.cpp:387
+msgid "Main Toolbar"
+msgstr "Barre principale"
+
+#. i18n: file: src/loggerDialogBase.ui:24
+#. i18n: ectx: property (windowTitle), widget (QDialog, LoggerDialogBase)
+#: rc.cpp:390
+msgid "Log Message"
+msgstr "Message du journal"
+
+#. i18n: file: src/loggerDialogBase.ui:39
+#. i18n: ectx: property (text), widget (QRadioButton, messageActivation)
+#: rc.cpp:396
+msgid "&Message:"
+msgstr "&Message :"
+
+#. i18n: file: src/loggerDialogBase.ui:52
+#. i18n: ectx: property (text), widget (QRadioButton, fileActivation)
+#: rc.cpp:399
+msgid "&File content:"
+msgstr "Contenu du &fichier :"
+
+#. i18n: file: src/loggerDialogBase.ui:75
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:402
+msgid "Properties"
+msgstr "Propriétés"
+
+#. i18n: file: src/loggerDialogBase.ui:101
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:405
+msgid "&Priority:"
+msgstr "&Priorité :"
+
+#. i18n: file: src/loggerDialogBase.ui:162
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2)
+#: rc.cpp:408
+msgid "&Facility:"
+msgstr "&Envoyer vers :"
+
+#. i18n: file: src/loggerDialogBase.ui:229
+#. i18n: ectx: property (text), widget (QCheckBox, tagActivation)
+#: rc.cpp:414
+msgid "&Tag:"
+msgstr "&Balise :"
+
+#. i18n: file: src/loggerDialogBase.ui:241
+#. i18n: ectx: property (text), widget (QCheckBox, useProcessIdentifier)
+#: rc.cpp:417
+msgid "Log process &identifier"
+msgstr "Envoyer l'&identifiant du processus"
+
+#. i18n: file: src/loggerDialogBase.ui:290
+#. i18n: ectx: property (toolTip), widget (QLabel, loggerManual)
+#: rc.cpp:420
+msgid "Open the 'logger' command manual."
+msgstr "Ouverture de la documentation de la commande « logger »."
+
+#. i18n: file: src/loggerDialogBase.ui:293
+#. i18n: ectx: property (statusTip), widget (QLabel, loggerManual)
+#: rc.cpp:423
+msgid "This link opens the 'logger' command manual."
+msgstr "Ce lien ouvre la documentation de la commande « logger »."
+
+#. i18n: file: src/loggerDialogBase.ui:296
+#. i18n: ectx: property (text), widget (QLabel, loggerManual)
+#: rc.cpp:426
+msgid "<a href=\"man:/logger\">Logger Manual</a>"
+msgstr "<a href=\"man:/logger\">Manuel de « Logger »</a>"
+
+#. i18n: file: src/loggerDialogBase.ui:322
+#. i18n: ectx: property (text), widget (QPushButton, buttonOK)
+#: rc.cpp:429
+msgid "&OK"
+msgstr "&Valider"
+
+#. i18n: file: src/loggerDialogBase.ui:338
+#. i18n: ectx: property (text), widget (QPushButton, buttonCancel)
+#: rc.cpp:432
+msgid "&Cancel"
+msgstr "&Annuler"
+
+#~ msgctxt "Size format"
+#~ msgid "%1 B"
+#~ msgstr "%1 o"
+
+#~ msgctxt "Size format"
+#~ msgid "%1 KB"
+#~ msgstr "%1 Ko"
+
+#~ msgctxt "Size format"
+#~ msgid "%1 MB"
+#~ msgstr "%1 Mo"
+
+#~ msgid "The file does not exist"
+#~ msgstr "Le fichier n'existe pas"
+
+#, fuzzy
+#~| msgid "Loading <b>%1</b>...<br /><i>%2</i>"
+#~ msgid "Loading <b>%2</b>...<br /><i>%3</i>"
+#~ msgid_plural "Loading <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>/%1 files)"
+#~ msgstr[0] "Chargement de <b>%1</b>...<br /><i>%2</i>"
+#~ msgstr[1] "Chargement de <b>%1</b>...<br /><i>%2</i>"
+
+#, fuzzy
+#~| msgid "Reloading <b>%1</b>...<br /><i>%2</i>"
+#~ msgid "Reloading <b>%2</b>...<br /><i>%3</i>"
+#~ msgid_plural "Reloading <b>%2</b>...<br /><i>%3</i> - (<b>%4</b>/%1 files)"
+#~ msgstr[0] "Rechargement de <b>%1</b>...<br /><i>%2</i>"
+#~ msgstr[1] "Rechargement de <b>%1</b>...<br /><i>%2</i>"

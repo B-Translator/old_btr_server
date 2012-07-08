@@ -1,0 +1,837 @@
+# Albanian translation for kdeadmin
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the kdeadmin package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeadmin\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2012-06-26 06:52+0200\n"
+"PO-Revision-Date: 2009-07-21 02:08+0000\n"
+"Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
+"Language-Team: Albanian <sq@li.org>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Launchpad-Export-Date: 2011-04-22 04:17+0000\n"
+"X-Generator: Launchpad (build 12883)\n"
+
+#: src/crontablib/cthost.cpp:60
+msgid ""
+"You have been blocked from using KCron\t                      by either the /"
+"etc/cron.allow file or the /etc/cron.deny file.\t                      \n"
+"\n"
+"Check the crontab man page for further details."
+msgstr ""
+
+#: src/crontablib/cthost.cpp:142
+#, kde-format
+msgctxt "User login: errorMessage"
+msgid "User %1: %2"
+msgstr "Përdoruesi %1: %2"
+
+#: src/crontablib/ctunit.cpp:172
+msgid ","
+msgstr ","
+
+#: src/crontablib/ctunit.cpp:173 src/crontablib/cttask.cpp:318
+msgid " and "
+msgstr " dhe "
+
+#: src/crontablib/ctunit.cpp:176 src/crontablib/cttask.cpp:321
+msgid ", "
+msgstr ", "
+
+#: src/crontablib/ctHelper.cpp:22
+msgid "No comment"
+msgstr "Asnjë koment"
+
+#: src/crontablib/ctdom.cpp:23 src/crontablib/ctdow.cpp:44
+#: src/crontablib/cttask.cpp:266
+msgid "every day "
+msgstr "çdo ditë "
+
+#: src/crontablib/ctdom.cpp:33
+msgid "1st"
+msgstr "1-ri"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "2nd"
+msgstr "2-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "3rd"
+msgstr "3-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "4th"
+msgstr "4-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "5th"
+msgstr "5-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "6th"
+msgstr "6-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "7th"
+msgstr "7-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "8th"
+msgstr "8-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "9th"
+msgstr "9-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "10th"
+msgstr "10-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "11th"
+msgstr "11-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "12th"
+msgstr "12-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "13th"
+msgstr "13-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "14th"
+msgstr "14-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "15th"
+msgstr "15-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "16th"
+msgstr "16-ti"
+
+#: src/crontablib/ctdom.cpp:33
+msgid "17th"
+msgstr "17-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "18th"
+msgstr "18-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "19th"
+msgstr "19-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "20th"
+msgstr "20-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "21st"
+msgstr "21-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "22nd"
+msgstr "22-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "23rd"
+msgstr "23-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "24th"
+msgstr "24-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "25th"
+msgstr "25-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "26th"
+msgstr "26-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "27th"
+msgstr "27-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "28th"
+msgstr "28-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "29th"
+msgstr "29-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "30th"
+msgstr "30-ti"
+
+#: src/crontablib/ctdom.cpp:34
+msgid "31st"
+msgstr "31-ti"
+
+#: src/crontablib/ctGlobalCron.cpp:39
+msgid "All users"
+msgstr "Të gjithë përdoruesit"
+
+#: src/crontablib/ctvariable.cpp:126
+msgid "Override default home folder."
+msgstr ""
+
+#: src/crontablib/ctvariable.cpp:129
+msgid "Email output to specified account."
+msgstr ""
+
+#: src/crontablib/ctvariable.cpp:132
+msgid "Override default shell."
+msgstr ""
+
+#: src/crontablib/ctvariable.cpp:135
+msgid "Folders to search for program files."
+msgstr ""
+
+#: src/crontablib/ctvariable.cpp:138
+msgid "Dynamic libraries location."
+msgstr ""
+
+#: src/crontablib/ctvariable.cpp:141
+msgid "Local Variable"
+msgstr ""
+
+#: src/crontablib/ctmonth.cpp:23
+msgid "every month"
+msgstr "çdo muaj"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "January"
+msgstr "Janar"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "February"
+msgstr "Shkurt"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "March"
+msgstr "Mars"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "April"
+msgstr "Prill"
+
+#: src/crontablib/ctmonth.cpp:33
+msgctxt "May long"
+msgid "May"
+msgstr "Maj"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "June"
+msgstr "Qershor"
+
+#: src/crontablib/ctmonth.cpp:33
+msgctxt "July long"
+msgid "July"
+msgstr "Korrik"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "August"
+msgstr "Gusht"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "September"
+msgstr "Shtator"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "October"
+msgstr "Tetor"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "November"
+msgstr "Nëntor"
+
+#: src/crontablib/ctmonth.cpp:33
+msgid "December"
+msgstr "Dhjetor"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Mon"
+msgstr "Hën"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Tue"
+msgstr "Mar"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Wed"
+msgstr "Mër"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Thu"
+msgstr "Enj"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Fri"
+msgstr "Pre"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Sat"
+msgstr "Sht"
+
+#: src/crontablib/ctdow.cpp:56
+msgid "Sun"
+msgstr "Die"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Monday"
+msgstr "E Hënë"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Tuesday"
+msgstr "E Martë"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Wednesday"
+msgstr "E Mërkurë"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Thursday"
+msgstr "E Enjte"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Friday"
+msgstr "E Premte"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Saturday"
+msgstr "E Shtunë"
+
+#: src/crontablib/ctdow.cpp:58
+msgid "Sunday"
+msgstr "E Diel"
+
+#: src/crontablib/ctcron.cpp:104
+#, kde-format
+msgid "No password entry found for uid '%1'"
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:241
+#, kde-format
+msgctxt "Generation Message + current date"
+msgid "File generated by KCron the %1."
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:279
+msgid "<em>No output.</em>"
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:285
+msgid "<em>No error.</em>"
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:291
+#, kde-format
+msgid ""
+"<p><strong>Command:</strong> %1</p><strong>Command could not be started</"
+"strong>"
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:293
+#, kde-format
+msgid ""
+"<p><strong>Command:</strong> %1</p><strong>Standard Output :</strong><pre>"
+"%2</pre><strong>Error Output :</strong><pre>%3</pre>"
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:295
+msgid "An error occurred while updating crontab."
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:302
+msgid "Unable to open crontab file for writing"
+msgstr ""
+
+#: src/crontablib/ctcron.cpp:302
+#, kde-format
+msgid "The file %1 could not be opened."
+msgstr ""
+
+#: src/crontablib/cttask.cpp:240
+msgid "At system startup"
+msgstr "Në nisjen e sistemit"
+
+#: src/crontablib/cttask.cpp:247
+#, kde-format
+msgctxt "1:Time Description, 2:Date Description"
+msgid "%1, %2"
+msgstr "%1, %2"
+
+#: src/crontablib/cttask.cpp:251
+#, kde-format
+msgctxt "Every 'days of week'"
+msgid "every %1"
+msgstr "çdo %1"
+
+#: src/crontablib/cttask.cpp:255
+#, kde-format
+msgctxt "'Days of month' of 'Months'"
+msgid "%1 of %2"
+msgstr "%1 nga %2"
+
+#: src/crontablib/cttask.cpp:277
+#, kde-format
+msgctxt "1:Day of month, 2:Day of week"
+msgid "%1 as well as %2"
+msgstr ""
+
+#: src/crontablib/cttask.cpp:307
+#, kde-format
+msgctxt "1:Hour, 2:Minute"
+msgid "%1:%2"
+msgstr "%1:%2"
+
+#: src/crontablib/cttask.cpp:316
+msgid ", and "
+msgstr ", dhe "
+
+#: src/crontablib/cttask.cpp:329
+#, kde-format
+msgctxt "Hour::Minute list"
+msgid "At %1"
+msgstr "Në %1"
+
+#: src/crontablib/cttask.cpp:337
+#, kde-format
+msgid "Every minute"
+msgid_plural "Every %1 minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/crontablib/ctSystemCron.cpp:53 src/crontabPrinter.cpp:187
+msgid "System Crontab"
+msgstr ""
+
+#: src/crontabPrinterWidget.cpp:24
+msgid "Cron Options"
+msgstr ""
+
+#: src/crontabPrinterWidget.cpp:30
+msgid "Print cron&tab"
+msgstr ""
+
+#: src/crontabPrinterWidget.cpp:34
+msgid "Print &all users"
+msgstr ""
+
+#: src/taskWidget.cpp:49 src/variableWidget.cpp:44
+msgid "Enabled"
+msgstr "I Aktivizuar"
+
+#: src/taskWidget.cpp:52 src/variableWidget.cpp:48
+msgid "Disabled"
+msgstr "Çaktivizuar"
+
+#: src/variablesWidget.cpp:48
+msgid "<b>Environment Variables</b>"
+msgstr ""
+
+#: src/variablesWidget.cpp:83
+msgid "Modify Variable"
+msgstr ""
+
+#: src/variablesWidget.cpp:159
+msgid "New Variable"
+msgstr ""
+
+#: src/variablesWidget.cpp:197 src/tasksWidget.cpp:240
+msgid "User"
+msgstr "Përdoruesi"
+
+#: src/variablesWidget.cpp:200
+msgid "Variable"
+msgstr "Ndryshore"
+
+#: src/variablesWidget.cpp:201
+msgid "Value"
+msgstr "Vlera"
+
+#: src/variablesWidget.cpp:202 src/tasksWidget.cpp:246
+msgid "Status"
+msgstr "Gjendja"
+
+#: src/variablesWidget.cpp:203
+msgid "Comment"
+msgstr "Komento"
+
+#: src/variablesWidget.cpp:218
+msgctxt "Adds a new variable"
+msgid "New &Variable..."
+msgstr ""
+
+#: src/variablesWidget.cpp:219
+msgid "Create a new variable."
+msgstr ""
+
+#: src/variablesWidget.cpp:223 src/tasksWidget.cpp:277
+msgid "M&odify..."
+msgstr "M&odifiko..."
+
+#: src/variablesWidget.cpp:225
+msgid "Modify the selected variable."
+msgstr ""
+
+#: src/variablesWidget.cpp:229 src/tasksWidget.cpp:283
+msgid "&Delete"
+msgstr "&Fshije"
+
+#: src/variablesWidget.cpp:231
+msgid "Delete the selected variable."
+msgstr ""
+
+#: src/variableEditorDialog.cpp:60
+msgid "Add or modify a variable"
+msgstr ""
+
+#: src/variableEditorDialog.cpp:64
+msgctxt "The environmental variable name ie HOME, MAILTO etc"
+msgid "&Variable:"
+msgstr "&Variabël:"
+
+#: src/variableEditorDialog.cpp:93
+msgid "Va&lue:"
+msgstr ""
+
+#: src/variableEditorDialog.cpp:102 src/taskEditorDialog.cpp:106
+msgid "&Run as:"
+msgstr "&Nise si:"
+
+#: src/variableEditorDialog.cpp:120 src/taskEditorDialog.cpp:122
+msgid "Co&mment:"
+msgstr "Ko&mento:"
+
+#: src/variableEditorDialog.cpp:128
+msgid "&Enable this variable"
+msgstr ""
+
+#: src/variableEditorDialog.cpp:156
+msgid "<i>This variable will be used by scheduled tasks.</i>"
+msgstr ""
+
+#: src/variableEditorDialog.cpp:200
+msgid "<i>This variable is disabled.</i>"
+msgstr ""
+
+#: src/variableEditorDialog.cpp:207
+msgid "<i>Please enter the variable name...</i>"
+msgstr ""
+
+#: src/variableEditorDialog.cpp:214
+msgid "<i>Please enter the variable value ...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:76
+msgid "Add or modify a scheduled task"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:77 src/taskEditorDialog.cpp:848
+msgid "<i>This task will be executed at the specified intervals.</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:86
+msgid "&Command:"
+msgstr "&Komandë:"
+
+#: src/taskEditorDialog.cpp:135
+msgid "&Enable this task"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:140
+msgid "Run at system &bootup"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:146
+msgid "Run &every day"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:248
+msgid "Days of Month"
+msgstr "Ditët e Muajit"
+
+#: src/taskEditorDialog.cpp:286
+msgid "Months"
+msgstr "Muajt"
+
+#: src/taskEditorDialog.cpp:323
+msgid "Days of Week"
+msgstr "Ditët e Javës"
+
+#: src/taskEditorDialog.cpp:461
+msgid "Minutes"
+msgstr "Minutat"
+
+#: src/taskEditorDialog.cpp:471
+msgid "Preselection:"
+msgstr "Para zgjedhja:"
+
+#: src/taskEditorDialog.cpp:478
+msgid "Clear selection"
+msgstr "Pastro zgjedhjen"
+
+#: src/taskEditorDialog.cpp:479
+msgid "Custom selection"
+msgstr "Përzgjedhej vetjake"
+
+#: src/taskEditorDialog.cpp:480
+msgid "Each minute"
+msgstr "Çdo minutë"
+
+#: src/taskEditorDialog.cpp:481
+msgid "Every 2 minutes"
+msgstr "Çdo 2 minuta"
+
+#: src/taskEditorDialog.cpp:482
+msgid "Every 5 minutes"
+msgstr "Çdo 5 minuta"
+
+#: src/taskEditorDialog.cpp:483
+msgid "Every 10 minutes"
+msgstr "Çdo 10 minuta"
+
+#: src/taskEditorDialog.cpp:484
+msgid "Every 15 minutes"
+msgstr "Çdo 15 minuta"
+
+#: src/taskEditorDialog.cpp:485
+msgid "Every 20 minutes"
+msgstr "Çdo 20 minuta"
+
+#: src/taskEditorDialog.cpp:486
+msgid "Every 30 minutes"
+msgstr "Çdo 30 minuta"
+
+#: src/taskEditorDialog.cpp:518
+msgid "Hours"
+msgstr "Orë"
+
+#: src/taskEditorDialog.cpp:522
+msgid "AM:"
+msgstr "AM:"
+
+#: src/taskEditorDialog.cpp:539
+msgid "PM:"
+msgstr "PM:"
+
+#: src/taskEditorDialog.cpp:705 src/taskEditorDialog.cpp:716
+msgid "<i>Please type a valid command line...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:738
+msgid "<i>Please select an executable program...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:746 src/taskEditorDialog.cpp:772
+msgid "<i>Please browse for a program to execute...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:759
+msgid "<i>This task is disabled.</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:766
+msgid "<i>This task will be run on system bootup.</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:791
+msgid "<i>Please select from the 'Months' section...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:810
+msgid ""
+"<i>Please select from either the 'Days of Month' or the 'Days of Week' "
+"section...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:825
+msgid "<i>Please select from the 'Hours' section...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:840
+msgid "<i>Please select from the 'Minutes' section...</i>"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:1047
+msgid "Set All"
+msgstr ""
+
+#: src/taskEditorDialog.cpp:1049
+msgid "Clear All"
+msgstr "Pastro gjithçka"
+
+#: src/tasksWidget.cpp:57
+msgid "<b>Scheduled Tasks</b>"
+msgstr ""
+
+#: src/tasksWidget.cpp:111
+msgctxt "Do not use any quote characters (') in this string"
+msgid "End of script execution. Type Enter or Ctrl+C to exit."
+msgstr ""
+
+#: src/tasksWidget.cpp:144
+msgid "New Task"
+msgstr "Detyrë e Re"
+
+#: src/tasksWidget.cpp:180
+msgid "Modify Task"
+msgstr "Modifiko Detyrën"
+
+#: src/tasksWidget.cpp:243 src/crontabPrinter.cpp:140
+msgid "Scheduling"
+msgstr "Skedimi"
+
+#: src/tasksWidget.cpp:245 src/crontabPrinter.cpp:140
+msgid "Command"
+msgstr "Komanda"
+
+#: src/tasksWidget.cpp:247 src/crontabPrinter.cpp:140
+msgid "Description"
+msgstr "Përshkrimi"
+
+#: src/tasksWidget.cpp:248
+msgid "Scheduling Details"
+msgstr "Detajet e Skedës"
+
+#: src/tasksWidget.cpp:272
+msgctxt "Adds a new task"
+msgid "New &Task..."
+msgstr ""
+
+#: src/tasksWidget.cpp:273
+msgid "Create a new task."
+msgstr ""
+
+#: src/tasksWidget.cpp:279
+msgid "Modify the selected task."
+msgstr ""
+
+#: src/tasksWidget.cpp:285
+msgid "Delete the selected task."
+msgstr ""
+
+#: src/tasksWidget.cpp:289
+msgid "&Run Now"
+msgstr ""
+
+#: src/tasksWidget.cpp:291
+msgid "Run the selected task now."
+msgstr ""
+
+#: src/kcmCron.cpp:75
+msgid "Task Scheduler"
+msgstr "Skeduesi i Detyrave"
+
+#: src/kcmCron.cpp:76
+msgid "KDE Task Scheduler"
+msgstr ""
+
+#: src/kcmCron.cpp:76
+msgid ""
+"(c) 2008, Nicolas Ternisien\n"
+"(c) 1999-2000, Gary Meyer"
+msgstr ""
+"(c) 2008, Nicolas Ternisien\n"
+"(c) 1999-2000, Gary Meyer"
+
+#: src/kcmCron.cpp:78
+msgid "Nicolas Ternisien"
+msgstr "Nicolas Ternisien"
+
+#: src/kcmCron.cpp:79
+msgid "Gary Meyer"
+msgstr "Gary Meyer"
+
+#: src/kcmCron.cpp:80
+msgid "Robert Berry"
+msgstr "Robert Berry"
+
+#: src/kcmCron.cpp:81
+msgid "James Ots"
+msgstr "James Ots"
+
+#: src/kcmCron.cpp:82
+msgid "Alberto G. Hierro"
+msgstr "Alberto G. Hierro"
+
+#: src/kcmCron.cpp:91
+#, kde-format
+msgid ""
+"The following error occurred while initializing KCron:\n"
+"\n"
+"%1\n"
+"\n"
+"KCron will now exit.\n"
+msgstr ""
+
+#: src/kcmCron.cpp:158
+msgid ""
+"You can use this application to schedule programs to run in the background.\n"
+"To schedule a new task now, click on the Tasks folder and select Edit/New "
+"from the menu."
+msgstr ""
+
+#: src/kcmCron.cpp:158
+msgid "Welcome to the Task Scheduler"
+msgstr ""
+
+#: src/crontabWidget.cpp:164
+msgid "Show the following Cron:"
+msgstr ""
+
+#: src/crontabWidget.cpp:168
+msgid "Personal Cron"
+msgstr ""
+
+#: src/crontabWidget.cpp:173
+msgid "System Cron"
+msgstr ""
+
+#: src/crontabWidget.cpp:177
+msgid "Cron of User:"
+msgstr ""
+
+#: src/crontabWidget.cpp:200
+msgid "Show All Personal Crons"
+msgstr ""
+
+#: src/crontabPrinter.cpp:125
+msgid "Scheduled Tasks"
+msgstr ""
+
+#: src/crontabPrinter.cpp:164
+msgid "Environment Variables"
+msgstr ""
+
+#: src/crontabPrinter.cpp:189
+msgid "All Users Crontabs"
+msgstr ""
+
+#: src/crontabPrinter.cpp:191
+#, kde-format
+msgctxt "Crontab of user login"
+msgid "Crontab of user %1"
+msgstr ""
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE Shqip, Launchpad Contributions: Vilson Gjeci"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-shqip@yahoogroups.com,vilsongjeci@gmail.com"

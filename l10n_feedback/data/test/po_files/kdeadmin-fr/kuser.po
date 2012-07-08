@@ -1,0 +1,2130 @@
+# translation of kuser.po to Français
+# traduction de kuser.po en Français
+# traduction de kuser.po en français
+# translation of kuser.po to
+# translation of kuser.po to
+# translation of kuser.po to
+# translation of kuser.po to
+# translation of kuser.po to
+# translation of kuser.po to
+# translation of kuser.po to
+# Copyright (C) 2002,2003,2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
+#
+# Gérard Delafond <gerard@delafond.org>, 2002, 2004.
+# Matthieu Robin <kde@macolu.org>, 2002,2003.
+# Robert Jacolin <rjacolin@ifrance.com>, 2003,2004.
+# Matthieu Robin <kde@macolu.org>, 2005, 2006.
+# Nicolas Ternisien <nicolas.ternisien@gmail.com>, 2005, 2008, 2010.
+# Matthieu Robin <matthieu@macolu.org>, 2005.
+# Guillaume Pujol <guill.p@gmail.com>, 2007.
+# Bruno Patri <bruno.patri@gmail.com>, 2008.
+# Mickael Sibelle <kimael@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: kuser\n"
+"Report-Msgid-Bugs-To: http://bugs.kde.org\n"
+"POT-Creation-Date: 2011-08-02 05:12+0200\n"
+"PO-Revision-Date: 2010-01-21 00:32+0100\n"
+"Last-Translator: Nicolas Ternisien <nicolas.ternisien@gmail.com>\n"
+"Language-Team: Français <kde-francophone@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ku_adduser.cpp:47
+msgid "New Account Options"
+msgstr "Options pour un nouveau compte"
+
+#. i18n: file: ku_generalsettings.ui:127
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_createHomeDir)
+#. i18n: file: kuser.kcfg:55
+#. i18n: ectx: label, entry (createHomeDir), group (connection-$(connection))
+#: ku_adduser.cpp:53 rc.cpp:59 rc.cpp:240
+msgid "Create home folder"
+msgstr "Créer le dossier personnel de l'utilisateur"
+
+#: ku_adduser.cpp:56
+msgid "Copy skeleton"
+msgstr "Copier le dossier squelette"
+
+#: ku_adduser.cpp:74
+#, kde-format
+msgid "User with UID %1 already exists."
+msgstr "Un utilisateur possède déjà le numéro %1."
+
+#: ku_adduser.cpp:81
+#, kde-format
+msgid "User with RID %1 already exists."
+msgstr "Un utilisateur possède déjà le numéro de ressource %1."
+
+#: ku_adduser.cpp:123
+#, kde-format
+msgid ""
+"Folder %1 already exists.\n"
+"%2 may become owner and permissions may change.\n"
+"Do you really want to use %3?"
+msgstr ""
+"Le dossier « %1 » existe déjà !\n"
+"« %2 » peut en devenir le propriétaire et les droits d'accès changeront en "
+"conséquence.\n"
+"Voulez-vous vraiment utiliser %3 ?"
+
+#: ku_adduser.cpp:130
+#, kde-format
+msgid "%1 is not a folder."
+msgstr "« %1 » n'est pas un dossier."
+
+#: ku_adduser.cpp:132 ku_adduser.cpp:159
+#, kde-format
+msgid "stat() failed on %1."
+msgstr "Échec de la commande « stat() » sur %1."
+
+#: ku_adduser.cpp:152
+#, kde-format
+msgid "Mailbox %1 already exists (uid=%2)."
+msgstr "La boîte aux lettres %1 existe déjà (numéro d'utilisateur %2)."
+
+#: ku_adduser.cpp:156
+#, kde-format
+msgid "%1 exists but is not a regular file."
+msgstr "« %1 » existe mais n'est pas un fichier régulier."
+
+#: ku_configdlg.cpp:55 ku_edituser.cpp:153
+msgid "<Empty>"
+msgstr "<Vide>"
+
+#: ku_configdlg.cpp:57 ku_configdlg.cpp:97
+msgid "Connection"
+msgstr "Connexion"
+
+#: ku_configdlg.cpp:63
+msgid "Password Policy"
+msgstr "Politique des mots de passe"
+
+#: ku_configdlg.cpp:64 ku_configdlg.cpp:65 ku_configdlg.cpp:66
+#: ku_configdlg.cpp:67
+msgid " day"
+msgid_plural " days"
+msgstr[0] " jour"
+msgstr[1] " jours"
+
+#: ku_configdlg.cpp:69
+msgid "General"
+msgstr "Général"
+
+#: ku_configdlg.cpp:69
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+#. i18n: file: ku_generalsettings.ui:41
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_source)
+#: ku_configdlg.cpp:75 rc.cpp:38
+msgid "Files"
+msgstr "Fichiers"
+
+#: ku_configdlg.cpp:75
+msgid "File Source Settings"
+msgstr "Paramètres des sources du fichier"
+
+#: ku_configdlg.cpp:103
+msgid "Settings"
+msgstr "Configuration"
+
+#. i18n: file: ku_ldapsamba.ui:21
+#. i18n: ectx: property (windowTitle), widget (QWidget, KU_LdapSamba)
+#: ku_configdlg.cpp:110 ku_edituser.cpp:271 rc.cpp:71
+msgid "Samba"
+msgstr "Samba"
+
+#. i18n: file: ku_generalsettings.ui:46
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_source)
+#: ku_configdlg.cpp:112 rc.cpp:41
+msgid "LDAP"
+msgstr "LDAP"
+
+#: ku_configdlg.cpp:112
+msgid "LDAP Source Settings"
+msgstr "Configuration de la source LDAP"
+
+#: ku_deluser.cpp:34
+msgid "Delete User"
+msgstr "Suppression de l'utilisateur"
+
+#: ku_deluser.cpp:39
+#, kde-format
+msgid "<p>Deleting user <b>%1</b><br />Also perform the following actions:</p>"
+msgstr ""
+"<p>La suppression de l'utilisateur <b>%1</b><br/>implique les actions "
+"suivantes :</p>"
+
+#: ku_deluser.cpp:42
+#, kde-format
+msgid "Delete &home folder: %1"
+msgstr "Suppression du &dossier personnel : %1"
+
+#: ku_deluser.cpp:44
+#, kde-format
+msgid "Delete &mailbox: %1"
+msgstr "&Suppression de la boîte aux lettres : %1"
+
+#: ku_editgroup.cpp:39
+msgid "Group Properties"
+msgstr "Propriétés du groupe"
+
+#: ku_editgroup.cpp:50
+msgid "Domain Admins"
+msgstr "Administrateurs du domaine"
+
+#: ku_editgroup.cpp:50
+msgid "Admins"
+msgstr "Administrateurs"
+
+#: ku_editgroup.cpp:51
+msgid "Domain Users"
+msgstr "Utilisateurs du domaine"
+
+#: ku_editgroup.cpp:51 ku_mainview.cpp:61
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: ku_editgroup.cpp:52
+msgid "Domain Guests"
+msgstr "Invités du domaine"
+
+#: ku_editgroup.cpp:52
+msgid "Guests"
+msgstr "Invités"
+
+#: ku_editgroup.cpp:63
+msgid "Group number:"
+msgstr "Numéro du groupe :"
+
+#: ku_editgroup.cpp:78
+msgid "Group rid:"
+msgstr "Numéro de ressource :"
+
+#: ku_editgroup.cpp:96
+msgid "Group name:"
+msgstr "Nom du groupe :"
+
+#: ku_editgroup.cpp:110
+msgid "Description:"
+msgstr "Description :"
+
+#: ku_editgroup.cpp:119
+msgid "Display name:"
+msgstr "Nom affiché :"
+
+#: ku_editgroup.cpp:128
+msgid "Type:"
+msgstr "Type :"
+
+#: ku_editgroup.cpp:130 ku_groupmodel.cpp:75
+msgid "Domain"
+msgstr "Domaine"
+
+#: ku_editgroup.cpp:131 ku_groupmodel.cpp:76
+msgid "Local"
+msgstr "Local"
+
+#: ku_editgroup.cpp:132 ku_groupmodel.cpp:77
+msgid "Builtin"
+msgstr "Embarqué"
+
+#: ku_editgroup.cpp:149 ku_edituser.cpp:313
+msgid "Domain SID:"
+msgstr "Identifiant de sécurité du domaine :"
+
+#: ku_editgroup.cpp:157
+msgid "Disable Samba group information"
+msgstr "Désactiver les informations du groupe Samba"
+
+#: ku_editgroup.cpp:171
+msgid "Users in Group"
+msgstr "Utilisateurs dans le groupe"
+
+#: ku_editgroup.cpp:178
+msgid "Add"
+msgstr "Ajouter"
+
+#: ku_editgroup.cpp:179
+msgid "Remove"
+msgstr "Supprimer"
+
+#: ku_editgroup.cpp:191
+msgid "Users NOT in Group"
+msgstr "Utilisateurs absents du groupe"
+
+#: ku_editgroup.cpp:281
+msgid "You need to type a group name."
+msgstr "Vous devez saisir un nom de groupe."
+
+#: ku_editgroup.cpp:289
+#, kde-format
+msgid "Group with name %1 already exists."
+msgstr "Un groupe possède déjà le nom « %1 »."
+
+#: ku_editgroup.cpp:296
+#, kde-format
+msgid "Group with SID %1 already exists."
+msgstr "Un groupe possède déjà le numéro SID %1."
+
+#: ku_editgroup.cpp:301
+#, kde-format
+msgid "Group with gid %1 already exists."
+msgstr "Un groupe possède déjà le numéro de groupe %1."
+
+#: ku_edituser.cpp:61 ku_edituser.cpp:92
+msgid "Do not change"
+msgstr "Ne pas changer"
+
+#: ku_edituser.cpp:77
+msgid " days"
+msgstr " jours"
+
+#. i18n: file: ku_passwordpolicy.ui:77
+#. i18n: ectx: property (specialValueText), widget (KIntSpinBox, kcfg_smax)
+#. i18n: file: ku_passwordpolicy.ui:90
+#. i18n: ectx: property (specialValueText), widget (KIntSpinBox, kcfg_sinact)
+#. i18n: file: ku_passwordpolicy.ui:116
+#. i18n: ectx: property (specialValueText), widget (KIntSpinBox, kcfg_swarn)
+#. i18n: file: ku_passwordpolicy.ui:159
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_sneverexpire)
+#: ku_edituser.cpp:82 ku_edituser.cpp:260 rc.cpp:185 rc.cpp:188 rc.cpp:194
+#: rc.cpp:200
+msgid "Never"
+msgstr "Jamais"
+
+#: ku_edituser.cpp:109
+msgid "User Info"
+msgstr "Informations sur l'utilisateur"
+
+#: ku_edituser.cpp:118
+msgid "User login:"
+msgstr "Nom de connexion :"
+
+#: ku_edituser.cpp:123
+msgid "&User ID:"
+msgstr "&Identifiant utilisateur :"
+
+#: ku_edituser.cpp:127
+msgid "Set &Password..."
+msgstr "&Changer le mot de passe..."
+
+#: ku_edituser.cpp:135
+msgid "Full &name:"
+msgstr "&Nom complet :"
+
+#: ku_edituser.cpp:142
+msgid "Surname:"
+msgstr "Nom complet :"
+
+#: ku_edituser.cpp:147
+msgid "Email address:"
+msgstr "Adresse électronique :"
+
+#: ku_edituser.cpp:161
+msgid "&Login shell:"
+msgstr "&Shell de connexion :"
+
+#: ku_edituser.cpp:166
+msgid "&Home folder:"
+msgstr "&Dossier personnel :"
+
+#: ku_edituser.cpp:174
+msgid "&Office:"
+msgstr "&Bureau :"
+
+#: ku_edituser.cpp:179
+msgid "Offi&ce Phone:"
+msgstr "&Téléphone professionnel :"
+
+#: ku_edituser.cpp:184
+msgid "Ho&me Phone:"
+msgstr "Téléphone &personnel :"
+
+#: ku_edituser.cpp:189
+msgid "Login class:"
+msgstr "Classe de connexion :"
+
+#: ku_edituser.cpp:194
+msgid "&Office #1:"
+msgstr "Bureau &1 :"
+
+#: ku_edituser.cpp:199
+msgid "O&ffice #2:"
+msgstr "Bureau &2 :"
+
+#: ku_edituser.cpp:204
+msgid "&Address:"
+msgstr "&Adresse :"
+
+#: ku_edituser.cpp:208
+msgid "Account &disabled"
+msgstr "Compte &désactivé"
+
+#: ku_edituser.cpp:214
+msgid "Disable &POSIX account information"
+msgstr "Désactiver les informations du compte &POSIX"
+
+#: ku_edituser.cpp:227
+msgid "Password Management"
+msgstr "Politique de mot de passe"
+
+#: ku_edituser.cpp:233
+msgid "Last password change:"
+msgstr "Dernier changement du mot de passe :"
+
+#: ku_edituser.cpp:239
+msgid "POSIX parameters:"
+msgstr "Paramètres POSIX :"
+
+#: ku_edituser.cpp:240
+msgid "Time before password may &not be changed after last password change:"
+msgstr ""
+"Durée après la dernière modification avant laquelle il n'est pas possible de "
+"changer le mot de passe :"
+
+#: ku_edituser.cpp:241
+msgid "Time when password &expires after last password change:"
+msgstr ""
+"Durée après laquelle le mot de passe e&xpire après le dernier changement de "
+"mot de passe :"
+
+#: ku_edituser.cpp:242
+msgid "Time before password expires to &issue an expire warning:"
+msgstr ""
+"Durée avant laquelle le mot de passe expire pour provoquer un &avertissement "
+"d'expiration :"
+
+#: ku_edituser.cpp:243
+msgid "Time when account will be &disabled after expiration of password:"
+msgstr ""
+"Durée après laquelle le compte sera &désactivé après expiration du mot de "
+"passe :"
+
+#: ku_edituser.cpp:254
+msgid "&Account will expire on:"
+msgstr "Le compte e&xpirera le :"
+
+#: ku_edituser.cpp:278
+msgid "RID:"
+msgstr "RID :"
+
+#: ku_edituser.cpp:283
+msgid "Login script:"
+msgstr "Script de connexion :"
+
+#: ku_edituser.cpp:288
+msgid "Profile path:"
+msgstr "Emplacement du profil :"
+
+#. i18n: file: ku_ldapsamba.ui:74
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_2_2)
+#: ku_edituser.cpp:293 rc.cpp:80
+msgid "Home drive:"
+msgstr "Lecteur du dossier personnel :"
+
+#: ku_edituser.cpp:298
+msgid "Home path:"
+msgstr "Emplacement du dossier personnel :"
+
+#: ku_edituser.cpp:303
+msgid "User workstations:"
+msgstr "Stations de travail de l'utilisateur :"
+
+#. i18n: file: ku_ldapsamba.ui:157
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: ku_edituser.cpp:308 rc.cpp:92
+msgid "Domain name:"
+msgstr "Nom du domaine :"
+
+#: ku_edituser.cpp:319
+msgid "Disable &Samba account information"
+msgstr "Désactiver les informations du compte &Samba"
+
+#: ku_edituser.cpp:325 ku_mainview.cpp:69
+msgid "Groups"
+msgstr "Groupes"
+
+#: ku_edituser.cpp:335 ku_edituser.cpp:664 ku_edituser.cpp:695
+msgid "Primary group: "
+msgstr "Groupe principal : "
+
+#: ku_edituser.cpp:338
+msgid "Set as Primary"
+msgstr "Rendre principal"
+
+#: ku_edituser.cpp:352 ku_edituser.cpp:375
+msgid "User Properties"
+msgstr "Propriétés de l'utilisateur"
+
+#: ku_edituser.cpp:358
+#, kde-format
+msgid "User Properties - %1 Selected Users"
+msgstr "Propriétés de l'utilisateur - %1 utilisateurs sélectionnés"
+
+#: ku_edituser.cpp:531 ku_mainview.cpp:145
+msgid "Do Not Change"
+msgstr "Ne pas changer"
+
+#: ku_edituser.cpp:910
+msgid "You need to specify an UID."
+msgstr "Vous devez spécifier un identifiant utilisateur."
+
+#: ku_edituser.cpp:915
+msgid "You must specify a home directory."
+msgstr "Vous devez spécifier un dossier personnel."
+
+#: ku_edituser.cpp:921
+msgid "You must fill the surname field."
+msgstr "Vous devez remplir le champ « Nom »."
+
+#: ku_edituser.cpp:928
+msgid "You need to specify a samba RID."
+msgstr "Vous devez spécifier un identifiant relatif (RID) samba."
+
+#: ku_edituser.cpp:973
+#, kde-format
+msgid "User with UID %1 already exists"
+msgstr "Un utilisateur possède déjà le numéro %1"
+
+#: ku_edituser.cpp:983
+#, kde-format
+msgid "User with RID %1 already exists"
+msgstr "Un utilisateur possède déjà le numéro de ressource %1"
+
+#: ku_edituser.cpp:997
+#, kde-format
+msgid ""
+"<p>The shell %1 is not yet listed in the file %2. In order to use this shell "
+"you must add it to this file first.<br />Do you want to add it now?</p>"
+msgstr ""
+"<p>L'interpréteur de commande %1 n'est pas encore listé dans le fichier %2. "
+"Pour l'utiliser, vous devrez d'abord l'ajouter dans ce fichier.<br />Voulez-"
+"vous l'ajouter maintenant ?</p>"
+
+#: ku_edituser.cpp:1001
+msgid "Unlisted Shell"
+msgstr "Interpréteur de commandes non listé"
+
+#: ku_edituser.cpp:1002
+msgid "&Add Shell"
+msgstr "&Ajouter l'interpréteur de commandes"
+
+#: ku_edituser.cpp:1003
+msgid "Do &Not Add"
+msgstr "&Ne pas ajouter"
+
+#: ku_groupfiles.cpp:74
+msgid "Groups file name not set, please check 'Settings/Files'"
+msgstr ""
+"Le nom du fichier de groupes n'est pas indiqué, veuillez vérifier les "
+"paramètres dans « Configuration / Fichiers »"
+
+#: ku_groupfiles.cpp:82
+#, kde-format
+msgid ""
+"stat() call on file %1 failed: %2\n"
+"Check KUser settings."
+msgstr ""
+"Échec de l'appel de la fonction « stat() » sur le fichier « %1 » : %2\n"
+"Vérifiez la configuration de KUser."
+
+#: ku_groupfiles.cpp:96 ku_userfiles.cpp:195
+#, kde-format
+msgid "Error opening %1 for reading."
+msgstr "Impossible d'ouvrir « %1 » en lecture."
+
+#: ku_groupfiles.cpp:172 ku_groupfiles.cpp:179 ku_userfiles.cpp:294
+#: ku_userfiles.cpp:301
+#, kde-format
+msgid "Error opening %1 for writing."
+msgstr "Impossible d'ouvrir « %1 » en écriture."
+
+#: ku_groupldap.cpp:156
+msgid "Loading Groups From LDAP"
+msgstr "Chargement des groupes venant de LDAP"
+
+#: ku_groupldap.cpp:208 ku_userldap.cpp:512
+msgid "LDAP Operation"
+msgstr "Opération LDAP"
+
+#: ku_groupmodel.cpp:48
+msgid "GID"
+msgstr "Numéro de groupe"
+
+#: ku_groupmodel.cpp:49
+msgid "Group Name"
+msgstr "Nom du groupe"
+
+#: ku_groupmodel.cpp:50 ku_usermodel.cpp:53
+msgid "Domain SID"
+msgstr "Identifiant de sécurité du domaine"
+
+#: ku_groupmodel.cpp:51 ku_usermodel.cpp:54
+msgid "RID"
+msgstr "Numéro de ressource"
+
+#: ku_groupmodel.cpp:52
+msgid "Type"
+msgstr "Type"
+
+#: ku_groupmodel.cpp:53
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#: ku_groupmodel.cpp:54
+msgid "Description"
+msgstr "Description"
+
+#: ku_groupmodel.cpp:78
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: ku_main.cpp:37
+msgid "KDE User Editor"
+msgstr "Gestionnaire d'utilisateurs pour KDE"
+
+#: ku_main.cpp:42
+msgid "KUser"
+msgstr "KUser"
+
+#: ku_main.cpp:44
+msgid ""
+"(c) 1997-2000, Denis Perchine\n"
+"(c) 2004, Szombathelyi György"
+msgstr ""
+"(c) 1997-2000, Denis Perchine\n"
+"(c) 2004, Szombathelyi György"
+
+#: ku_main.cpp:45
+msgid "Denis Perchine"
+msgstr "Denis Perchine"
+
+#: ku_main.cpp:45 ku_main.cpp:47
+msgid "kuser author"
+msgstr "Auteur de KUser"
+
+#: ku_main.cpp:47
+msgid "Szombathelyi György"
+msgstr "Szombathelyi György"
+
+#: ku_main.cpp:58
+msgid "KDE User Manager"
+msgstr "Gestionnaire d'utilisateurs pour KDE"
+
+#: ku_mainview.cpp:144
+#, kde-format
+msgid ""
+"You have selected %1 users. Do you really want to change the password for "
+"all the selected users?"
+msgstr ""
+"Vous avez sélectionné %1 utilisateurs. Voulez-vous vraiment modifier le mot "
+"de passe pour tous ces utilisateurs ?"
+
+#: ku_mainview.cpp:145
+msgid "Change"
+msgstr "Modifier"
+
+#: ku_mainview.cpp:186
+msgid "You have run out of uid space."
+msgstr "Vous avez dépassé le nombre possible d'identifiants utilisateur."
+
+#: ku_mainview.cpp:198
+msgid "Please type the name of the new user:"
+msgstr "Veuillez saisir le nom du nouvel utilisateur :"
+
+#: ku_mainview.cpp:204
+#, kde-format
+msgid "User with name %1 already exists."
+msgstr "Un utilisateur possède déjà le nom « %1 »."
+
+#: ku_mainview.cpp:359
+#, kde-format
+msgid ""
+"You are using private groups.\n"
+"Do you want to delete the user's private group '%1'?"
+msgstr ""
+"Vous utilisez des groupes privés.\n"
+"Voulez-vous supprimer le groupe privé de l'utilisateur « %1 » ?"
+
+#: ku_mainview.cpp:362
+msgid "Do Not Delete"
+msgstr "Ne pas supprimer"
+
+#: ku_mainview.cpp:380
+msgid "You have run out of gid space."
+msgstr "Vous avez dépassé le nombre possible d'identifiants de groupe."
+
+#: ku_mainview.cpp:457
+#, kde-format
+msgid ""
+"The group '%1' is the primary group of one or more users (such as '%2'); it "
+"cannot be deleted."
+msgstr ""
+"Le groupe « %1 » est le groupe principal d'un ou de plusieurs utilisateurs "
+"(tel que « %2 »), il ne peut donc être supprimé."
+
+#: ku_mainview.cpp:466
+#, kde-format
+msgid "Do you really want to delete the group '%1'?"
+msgstr "Voulez-vous vraiment supprimer le groupe « %1 » ?"
+
+#: ku_mainview.cpp:470
+#, kde-format
+msgid "Do you really want to delete the %1 selected groups?"
+msgstr "Voulez-vous vraiment supprimer les %1 groupes sélectionnés  ?"
+
+#: ku_mainwidget.cpp:51
+msgid "Reading configuration"
+msgstr "Lecture de la configuration"
+
+#: ku_mainwidget.cpp:57
+msgid "Ready"
+msgstr "Prêt"
+
+#: ku_mainwidget.cpp:78 ku_mainwidget.cpp:94
+msgid "&Add..."
+msgstr "&Ajouter..."
+
+#: ku_mainwidget.cpp:82 ku_mainwidget.cpp:98
+msgid "&Edit..."
+msgstr "Modi&fier..."
+
+#: ku_mainwidget.cpp:86 ku_mainwidget.cpp:102
+msgid "&Delete..."
+msgstr "&Supprimer..."
+
+#: ku_mainwidget.cpp:90
+msgid "&Set Password..."
+msgstr "Changer le &mot de passe..."
+
+#: ku_mainwidget.cpp:106
+msgid "&Reload..."
+msgstr "&Recharger..."
+
+#: ku_mainwidget.cpp:110
+msgid "&Select Connection..."
+msgstr "&Sélectionner la connexion..."
+
+#: ku_mainwidget.cpp:114
+msgid "Show System Users/Groups"
+msgstr "Afficher les groupes / utilisateurs système"
+
+#: ku_misc.cpp:55
+#, kde-format
+msgid "Can not create backup file for %1"
+msgstr "Impossible de créer le fichier de secours pour %1"
+
+#: ku_misc.cpp:105
+#, kde-format
+msgid ""
+"Error creating symlink %1.\n"
+"Error: %2"
+msgstr ""
+"Erreur lors de la création du lien symbolique %1.\n"
+"Erreur : %2"
+
+#: ku_misc.cpp:115
+#, kde-format
+msgid ""
+"Cannot change owner of folder %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer le propriétaire du dossier « %1 ».\n"
+"Problème : %2"
+
+#: ku_misc.cpp:120
+#, kde-format
+msgid ""
+"Cannot change permissions on folder %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer les permissions au dossier « %1 ».\n"
+"Problème : %2"
+
+#: ku_misc.cpp:130
+#, kde-format
+msgid ""
+"Cannot change owner of file %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer le propriétaire du fichier « %1 ».\n"
+"Problème : %2"
+
+#: ku_misc.cpp:135
+#, kde-format
+msgid ""
+"Cannot change permissions on file %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer les permissions du fichier « %1 ».\n"
+"Problème : %2"
+
+#: ku_misc.cpp:154
+#, kde-format
+msgid "File %1 does not exist."
+msgstr "Le fichier « %1 » n'existe pas."
+
+#: ku_misc.cpp:159
+#, kde-format
+msgid "Cannot open file %1 for reading."
+msgstr "Impossible d'ouvrir le fichier « %1 » en lecture."
+
+#: ku_misc.cpp:164
+#, kde-format
+msgid "Cannot open file %1 for writing."
+msgstr "Impossible d'ouvrir le fichier « %1 » en écriture."
+
+#: ku_pwdlg.cpp:33
+msgid "Enter Password"
+msgstr "Saisir le mot de passe"
+
+#: ku_pwdlg.cpp:39
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: ku_pwdlg.cpp:55
+msgid "Verify:"
+msgstr "Vérifier :"
+
+#: ku_pwdlg.cpp:86
+msgid ""
+"Passwords are not identical.\n"
+"Try again."
+msgstr ""
+"Les mots de passe ne sont pas identiques.\n"
+"Veuillez réessayer."
+
+#: ku_selectconn.cpp:39
+msgid "Connection Selection"
+msgstr "Sélection de la connexion"
+
+#: ku_selectconn.cpp:40
+msgid "&New..."
+msgstr "&Nouveau..."
+
+#: ku_selectconn.cpp:41
+msgid "&Edit"
+msgstr "Modi&fier"
+
+#: ku_selectconn.cpp:42
+msgid "&Delete"
+msgstr "&Supprimer"
+
+#: ku_selectconn.cpp:48
+msgid "Defined connections:"
+msgstr "Connexions définies :"
+
+#: ku_selectconn.cpp:87
+msgid "Please type the name of the new connection:"
+msgstr "Veuillez saisir le nom de la nouvelle connexion :"
+
+#: ku_selectconn.cpp:90
+msgid "A connection with this name already exists."
+msgstr "Une connexion possède déjà ce nom."
+
+#: ku_selectconn.cpp:130
+#, kde-format
+msgid "Do you really want to delete the connection '%1'?"
+msgstr "Voulez-vous vraiment supprimer la connexion « %1 » ?"
+
+#: ku_selectconn.cpp:131
+msgid "Delete Connection"
+msgstr "Supprimer la connexion"
+
+#: ku_user.cpp:161
+#, kde-format
+msgid "Cannot create home folder for %1: it is null or empty."
+msgstr ""
+"Impossible de créer le dossier personnel de « %1 » : il est vide ou "
+"inexistant."
+
+#: ku_user.cpp:167
+#, kde-format
+msgid ""
+"Cannot create home folder %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de créer le dossier personnel « %1 ».\n"
+"Problème : %2"
+
+#: ku_user.cpp:173
+#, kde-format
+msgid ""
+"Cannot change owner of home folder %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer le propriétaire du dossier personnel « %1 ».\n"
+"Problème : %2"
+
+#: ku_user.cpp:178
+#, kde-format
+msgid ""
+"Cannot change permissions on home folder %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer les permissions du dossier personnel « %1 ».\n"
+"Problème : %2"
+
+#: ku_user.cpp:193
+#, kde-format
+msgid ""
+"Folder %1 already exists.\n"
+"Will make %2 owner and change permissions.\n"
+"Do you want to continue?"
+msgstr ""
+"Le dossier « %1 » existe déjà !\n"
+"« %2 » en deviendra le propriétaire et les permissions seront modifiées.\n"
+"Voulez-vous continuer ?"
+
+#: ku_user.cpp:197 ku_user.cpp:215
+#, kde-format
+msgid ""
+"Cannot change owner of %1 folder.\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer le propriétaire du dossier « %1 ».\n"
+"Problème : %2"
+
+#: ku_user.cpp:201
+#, kde-format
+msgid ""
+"Folder %1 left 'as is'.\n"
+"Verify ownership and permissions for user %2 who may not be able to log in."
+msgstr ""
+"Le dossier « %1 » n'a pas été modifié.\n"
+"Assurez-vous que ses droits d'accès et son propriétaire sont corrects pour "
+"l'utilisateur « %2 », sans quoi ce dernier ne pourra pas se connecter !"
+
+#: ku_user.cpp:205
+#, kde-format
+msgid "%1 exists and is not a folder. User %2 will not be able to log in."
+msgstr ""
+"« %1 » existe déjà et n'est pas un dossier. L'utilisateur « %2 » ne pourra "
+"pas se connecter !"
+
+#: ku_user.cpp:211
+#, kde-format
+msgid ""
+"Cannot create %1 folder.\n"
+"Error: %2"
+msgstr ""
+"Impossible de créer le dossier « %1 ».\n"
+"Problème : %2"
+
+#: ku_user.cpp:219
+#, kde-format
+msgid ""
+"stat call on %1 failed.\n"
+"Error: %2"
+msgstr ""
+"Problème lors de l'appel de la fonction « stat » sur %1.\n"
+"Erreur : %2"
+
+#: ku_user.cpp:234
+#, kde-format
+msgid "Cannot create %1: %2"
+msgstr "Impossible de créer %1 : %2"
+
+#: ku_user.cpp:244
+#, kde-format
+msgid ""
+"Cannot change owner on mailbox: %1\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer le propriétaire de la boîte aux lettres : %1.\n"
+"Problème : %2"
+
+#: ku_user.cpp:250
+#, kde-format
+msgid ""
+"Cannot change permissions on mailbox: %1\n"
+"Error: %2"
+msgstr ""
+"Impossible de changer les droits d'accès à la boîte aux lettres : %1.\n"
+"Problème : %2"
+
+#: ku_user.cpp:265
+#, kde-format
+msgid "Folder %1 does not exist, cannot copy skeleton for %2."
+msgstr ""
+"Le dossier « %1 » n'existe pas. Impossible de copier le dossier squelette "
+"pour %2."
+
+#: ku_user.cpp:270
+#, kde-format
+msgid "Folder %1 does not exist, cannot copy skeleton."
+msgstr ""
+"Le dossier « %1 » n'existe pas. Impossible de copier le dossier squelette."
+
+#: ku_user.cpp:288
+#, kde-format
+msgid ""
+"Cannot remove home folder %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de supprimer le dossier personnel « %1 ».\n"
+"Problème : %2"
+
+#: ku_user.cpp:292
+#, kde-format
+msgid "Removal of home folder %1 failed (uid = %2, gid = %3)."
+msgstr ""
+"Impossible de supprimer le dossier personnel « %1 » (numéro d'utilisateur = "
+"%2, numéro de groupe = %3)."
+
+#: ku_user.cpp:295
+#, kde-format
+msgid ""
+"stat call on file %1 failed.\n"
+"Error: %2"
+msgstr ""
+"Problème lors de l'appel de la fonction « stat » sur le fichier « %1 ».\n"
+"Erreur : %2"
+
+#: ku_user.cpp:313
+#, kde-format
+msgid ""
+"Cannot remove crontab %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de supprimer la liste des tâches planifiées %1.\n"
+"Problème : %2"
+
+#: ku_user.cpp:327
+#, kde-format
+msgid ""
+"Cannot remove mailbox %1.\n"
+"Error: %2"
+msgstr ""
+"Impossible de supprimer la boîte aux lettres « %1 ».\n"
+"Problème : %2"
+
+#: ku_userfiles.cpp:103
+msgid ""
+"KUser sources were not configured.\n"
+"Set 'Password file' in Settings/Files"
+msgstr ""
+"Les sources de KUser n'ont pas été configurées.\n"
+"Veuillez paramétrer l'emplacement du fichier de mots de passe dans "
+"« Configuration / Fichiers »"
+
+#: ku_userfiles.cpp:111
+#, kde-format
+msgid ""
+"Stat call on file %1 failed: %2\n"
+"Check KUser settings."
+msgstr ""
+"Échec de l'appel de la fonction « stat » sur le fichier « %1 » : %2\n"
+"Vérifiez la configuration de KUser."
+
+#: ku_userfiles.cpp:125
+#, kde-format
+msgid "Error opening %1 for reading.\n"
+msgstr "Impossible d'ouvrir « %1 » en lecture.\n"
+
+#: ku_userfiles.cpp:207
+#, kde-format
+msgid ""
+"No /etc/passwd entry for %1.\n"
+"Entry will be removed at the next `Save'-operation."
+msgstr ""
+"Il n'y a pas de référence à « %1 » dans /etc/passwd.\n"
+"Cette entrée sera supprimée lors du prochain enregistrement."
+
+#: ku_userfiles.cpp:441
+msgid "Unable to build password database."
+msgstr "Impossible de créer la base de données de mots de passe."
+
+#: ku_userldap.cpp:228
+msgid "Loading Users From LDAP"
+msgstr "Chargement des utilisateurs venant de LDAP"
+
+#: ku_usermodel.cpp:48
+msgid "UID"
+msgstr "Numéro d'utilisateur"
+
+#: ku_usermodel.cpp:49
+msgid "User Login"
+msgstr "Nom de connexion de l'utilisateur"
+
+#: ku_usermodel.cpp:50
+msgid "Full Name"
+msgstr "Nom complet"
+
+#: ku_usermodel.cpp:51
+msgid "Home Directory"
+msgstr "Dossier personnel"
+
+#: ku_usermodel.cpp:52
+msgid "Login Shell"
+msgstr "Shell de connexion"
+
+#: ku_usermodel.cpp:55
+msgid "Samba Login Script"
+msgstr "Script de connexion Samba"
+
+#: ku_usermodel.cpp:56
+msgid "Samba Profile Path"
+msgstr "Emplacement du profil Samba"
+
+#: ku_usermodel.cpp:57
+msgid "Samba Home Drive"
+msgstr "Lecteur du dossier de Samba"
+
+#: ku_usermodel.cpp:58
+msgid "Samba Home Path"
+msgstr "Emplacement du dossier de Samba"
+
+#: rc.cpp:1
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Thibaut Cousin,Robert Jacolin"
+
+#: rc.cpp:2
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "cousin@kde.org,rjacolin@ifrance.com"
+
+#. i18n: file: kuserui.rc:4
+#. i18n: ectx: Menu (file)
+#: rc.cpp:5
+msgid "&File"
+msgstr "&Fichier"
+
+#. i18n: file: kuserui.rc:8
+#. i18n: ectx: Menu (user)
+#: rc.cpp:8
+msgid "&User"
+msgstr "&Utilisateur"
+
+#. i18n: file: kuserui.rc:14
+#. i18n: ectx: Menu (group)
+#: rc.cpp:11
+msgid "&Group"
+msgstr "&Groupe"
+
+#. i18n: file: kuserui.rc:19
+#. i18n: ectx: Menu (settings)
+#: rc.cpp:14
+msgid "&Settings"
+msgstr "&Configuration"
+
+#. i18n: file: ku_filessettings.ui:30
+#. i18n: ectx: property (title), widget (QGroupBox, groupBox)
+#: rc.cpp:17
+msgid "User/group database locations"
+msgstr "Emplacement de la base de données utilisateur / groupes"
+
+#. i18n: file: ku_filessettings.ui:42
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_md5shadow)
+#: rc.cpp:20
+msgid "MD5 shadow passwords"
+msgstr "Mots de passe cachés par MD5"
+
+#. i18n: file: ku_filessettings.ui:52
+#. i18n: ectx: property (text), widget (QLabel, textLabel6_3)
+#: rc.cpp:23
+msgid "Shadow group file:"
+msgstr "Fichier des groupes cachés :"
+
+#. i18n: file: ku_filessettings.ui:65
+#. i18n: ectx: property (text), widget (QLabel, textLabel5_3)
+#: rc.cpp:26
+msgid "Shadow password file:"
+msgstr "Fichier des mots de passe cachés :"
+
+#. i18n: file: ku_filessettings.ui:78
+#. i18n: ectx: property (text), widget (QLabel, textLabel4_3)
+#: rc.cpp:29
+msgid "Group file:"
+msgstr "Fichier des groupes :"
+
+#. i18n: file: ku_filessettings.ui:88
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_3)
+#: rc.cpp:32
+msgid "Password file:"
+msgstr "Fichier de mots de passe :"
+
+#. i18n: file: ku_generalsettings.ui:30
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:35
+msgid "Source of user/group database:"
+msgstr "Source de la base de données utilisateur / groupes :"
+
+#. i18n: file: ku_generalsettings.ui:51
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_source)
+#: rc.cpp:44
+msgid "System"
+msgstr "Système"
+
+#. i18n: file: ku_generalsettings.ui:72
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:47
+msgid "First normal GID:"
+msgstr "Premier identifiant de groupe normal :"
+
+#. i18n: file: ku_generalsettings.ui:82
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#. i18n: file: ku_ldapsamba.ui:103
+#. i18n: ectx: property (text), widget (QLabel, textLabel5_2_2)
+#: rc.cpp:50 rc.cpp:86
+msgid "Home path template:"
+msgstr "Modèle d'emplacement de dossier personnel :"
+
+#. i18n: file: ku_generalsettings.ui:92
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
+#: rc.cpp:53
+msgid "Shell:"
+msgstr "Interpréteur de commandes :"
+
+#. i18n: file: ku_generalsettings.ui:109
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3_2)
+#: rc.cpp:56
+msgid "First normal UID:"
+msgstr "Premier identifiant d'utilisateur normal :"
+
+#. i18n: file: ku_generalsettings.ui:137
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_copySkel)
+#. i18n: file: kuser.kcfg:60
+#. i18n: ectx: label, entry (copySkel), group (connection-$(connection))
+#: rc.cpp:62 rc.cpp:246
+msgid "Copy skeleton to home folder"
+msgstr "Copier le dossier squelette dans le dossier personnel"
+
+#. i18n: file: ku_generalsettings.ui:152
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_userPrivateGroup)
+#. i18n: file: kuser.kcfg:65
+#. i18n: ectx: label, entry (userPrivateGroup), group (connection-$(connection))
+#: rc.cpp:65 rc.cpp:252
+msgid "User private groups"
+msgstr "Groupes privés pour les utilisateurs"
+
+#. i18n: file: ku_generalsettings.ui:159
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_4)
+#: rc.cpp:68
+msgid "Default group:"
+msgstr "Groupe par défaut :"
+
+#. i18n: file: ku_ldapsamba.ui:36
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ldapsam)
+#: rc.cpp:74
+msgid "Manage Samba user accounts/groups"
+msgstr "Gérer les groupes et comptes Samba de l'utilisateur"
+
+#. i18n: file: ku_ldapsamba.ui:61
+#. i18n: ectx: property (text), widget (QLabel, textLabel2_2_2)
+#: rc.cpp:77
+msgid "Default login script:"
+msgstr "Script de connexion par défaut :"
+
+#. i18n: file: ku_ldapsamba.ui:87
+#. i18n: ectx: property (text), widget (QLabel, textLabel3_2_2)
+#: rc.cpp:83
+msgid "Profile path template:"
+msgstr "Modèle d'emplacement du profil :"
+
+#. i18n: file: ku_ldapsamba.ui:139
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_lanmanhash)
+#. i18n: file: kuser.kcfg:304
+#. i18n: ectx: label, entry (lanmanhash), group (connection-$(connection))
+#: rc.cpp:89 rc.cpp:491
+msgid "Store LanManager hashed password"
+msgstr "Enregistrer le mot de passe LanManager haché"
+
+#. i18n: file: ku_ldapsamba.ui:177
+#. i18n: ectx: property (text), widget (KPushButton, domQuery)
+#: rc.cpp:95
+msgid "&Query Server"
+msgstr "&Interroger le serveur"
+
+#. i18n: file: ku_ldapsamba.ui:189
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:98
+msgid "Domain SID (you can obtain with 'net getlocalsid domain_name'):"
+msgstr ""
+"SID du domaine (vous pouvez l'obtenir par « net getlocalsid domain_name ») :"
+
+#. i18n: file: ku_ldapsamba.ui:217
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
+#: rc.cpp:101
+msgid "Algorithmic RID base:"
+msgstr "Base algorithmique des RID :"
+
+#. i18n: file: ku_ldapsettings.ui:34
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapgrouprdn)
+#. i18n: file: ku_ldapsettings.ui:165
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapuserrdn)
+#: rc.cpp:104 rc.cpp:155
+msgid "cn"
+msgstr "cn"
+
+#. i18n: file: ku_ldapsettings.ui:39
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapgrouprdn)
+#: rc.cpp:107
+msgid "gidNumber"
+msgstr "Numéro gid"
+
+#. i18n: file: ku_ldapsettings.ui:51
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldappasswordhash)
+#: rc.cpp:110
+msgid "Plain Text"
+msgstr "Texte clair"
+
+#. i18n: file: ku_ldapsettings.ui:56
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldappasswordhash)
+#: rc.cpp:113
+msgid "CRYPT"
+msgstr "CRYPT"
+
+#. i18n: file: ku_ldapsettings.ui:61
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldappasswordhash)
+#: rc.cpp:116
+msgid "MD5"
+msgstr "MD5"
+
+#. i18n: file: ku_ldapsettings.ui:66
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldappasswordhash)
+#: rc.cpp:119
+msgid "SMD5"
+msgstr "SMD5"
+
+#. i18n: file: ku_ldapsettings.ui:71
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldappasswordhash)
+#: rc.cpp:122
+msgid "SHA"
+msgstr "SHA"
+
+#. i18n: file: ku_ldapsettings.ui:76
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldappasswordhash)
+#: rc.cpp:125
+msgid "SSHA"
+msgstr "SSHA"
+
+#. i18n: file: ku_ldapsettings.ui:84
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:128
+msgid "User base:"
+msgstr "Base de l'utilisateur :"
+
+#. i18n: file: ku_ldapsettings.ui:94
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_4_2)
+#: rc.cpp:131
+msgid "Group filter:"
+msgstr "Filtre de groupes :"
+
+#. i18n: file: ku_ldapsettings.ui:104
+#. i18n: ectx: property (text), widget (QLabel, textLabel5)
+#: rc.cpp:134
+msgid "Structural objectclass:"
+msgstr "Classe d'objet structurel :"
+
+#. i18n: file: ku_ldapsettings.ui:114
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_4)
+#: rc.cpp:137
+msgid "User filter:"
+msgstr "Filtre d'utilisateurs :"
+
+#. i18n: file: ku_ldapsettings.ui:131
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapstructural)
+#: rc.cpp:140
+msgid "account"
+msgstr "account"
+
+#. i18n: file: ku_ldapsettings.ui:136
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapstructural)
+#: rc.cpp:143
+msgid "inetOrgPerson"
+msgstr "inetOrgPerson"
+
+#. i18n: file: ku_ldapsettings.ui:144
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#: rc.cpp:146
+msgid "Group RDN prefix:"
+msgstr "Préfixe RDN du groupe :"
+
+#. i18n: file: ku_ldapsettings.ui:155
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapuserrdn)
+#: rc.cpp:149
+msgid "uid"
+msgstr "Identifiant utilisateur"
+
+#. i18n: file: ku_ldapsettings.ui:160
+#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ldapuserrdn)
+#: rc.cpp:152
+msgid "uidNumber"
+msgstr "Numéro uid"
+
+#. i18n: file: ku_ldapsettings.ui:173
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:158
+msgid "Group base:"
+msgstr "Base du groupe :"
+
+#. i18n: file: ku_ldapsettings.ui:183
+#. i18n: ectx: property (text), widget (QLabel, textLabel2)
+#: rc.cpp:161
+msgid "User RDN prefix:"
+msgstr "Préfixe RDN utilisateur :"
+
+#. i18n: file: ku_ldapsettings.ui:193
+#. i18n: ectx: property (text), widget (QLabel, textLabel4)
+#: rc.cpp:164
+msgid "Password hash:"
+msgstr "Algo. signature des mots de passe :"
+
+#. i18n: file: ku_ldapsettings.ui:205
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ldapshadow)
+#: rc.cpp:167
+msgid "Manage shadowAccount objectclass"
+msgstr "Gestion de la classe d'objet shadowAccount"
+
+#. i18n: file: ku_ldapsettings.ui:212
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ldapcnfullname)
+#. i18n: file: kuser.kcfg:225
+#. i18n: ectx: label, entry (ldapcnfullname), group (connection-$(connection))
+#: rc.cpp:170 rc.cpp:405
+msgid "Store the user's full name in the cn attribute"
+msgstr "Enregistrer le nom complet de l'utilisateur dans l'attribut « cn »"
+
+#. i18n: file: ku_ldapsettings.ui:219
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ldapgecos)
+#: rc.cpp:173
+msgid "Update the gecos attribute"
+msgstr "Actualiser l'attribut « gecos »"
+
+#. i18n: file: ku_passwordpolicy.ui:38
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_3)
+#: rc.cpp:176
+msgid "Time before password expires to issue an expire warning:"
+msgstr ""
+"Durée avant laquelle le mot de passe expire pour lancer un avertissement "
+"d'expiration :"
+
+#. i18n: file: ku_passwordpolicy.ui:51
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
+#: rc.cpp:179
+msgid "Time when password expires after last password change:"
+msgstr ""
+"Durée après laquelle le mot de passe expire après le dernier changement de "
+"mot de passe :"
+
+#. i18n: file: ku_passwordpolicy.ui:64
+#. i18n: ectx: property (text), widget (QLabel, textLabel1_4)
+#: rc.cpp:182
+msgid "Time when account will be disabled after expiration of password:"
+msgstr ""
+"Durée après laquelle le compte sera désactivé après expiration du mot de "
+"passe :"
+
+#. i18n: file: ku_passwordpolicy.ui:103
+#. i18n: ectx: property (text), widget (QLabel, textLabel1)
+#: rc.cpp:191
+msgid "Time before password may not be changed after last password change:"
+msgstr ""
+"Durée avant laquelle le mot de passe ne peut être changé après le dernier "
+"changement de mot de passe :"
+
+#. i18n: file: ku_passwordpolicy.ui:149
+#. i18n: ectx: property (text), widget (QLabel, textLabel3)
+#: rc.cpp:197
+msgid "Account will expire on:"
+msgstr "Le compte expirera le :"
+
+#. i18n: file: kuser.kcfg:16
+#. i18n: ectx: label, entry (connection), group (general)
+#: rc.cpp:203
+msgid "Default connection"
+msgstr "Connexion par défaut"
+
+#. i18n: file: kuser.kcfg:20
+#. i18n: ectx: label, entry (showsys), group (general)
+#: rc.cpp:206
+msgid "Show system users"
+msgstr "Afficher les utilisateurs système"
+
+#. i18n: file: kuser.kcfg:26
+#. i18n: ectx: label, entry (source), group (connection-$(connection))
+#: rc.cpp:209
+msgid "The source of the user and group database"
+msgstr "La source de la base de données utilisateurs et groupes"
+
+#. i18n: file: kuser.kcfg:27
+#. i18n: ectx: whatsthis, entry (source), group (connection-$(connection))
+#: rc.cpp:212
+msgid ""
+"This option allows you to select where the user/group data stored. Currently "
+"three storage backends are supported. <BR><B>Files</B> stores user/group "
+"data in traditional /etc/passwd and /etc/group flat files. <BR><B>LDAP</B> "
+"stores data in a directory server using the posixAccount and posixGroup "
+"object classes; this backend allows the management of Samba users/groups via "
+"the sambaSamAccount object class.<BR><B>System</B> provides a read-only "
+"access to all users and groups which your installation knows about."
+msgstr ""
+"Cette option vous permet de choisir l'emplacement où seront stockées les "
+"données des utilisateurs / des groupes. Actuellement, trois interfaces sont "
+"gérées.<BR><B>Fichiers</B> stocke les données des utilisateurs / des groupes "
+"dans les fichiers traditionnels « /etc/passwd » et « /etc/group ». "
+"<BR><B>LDAP</B> stocke les données dans un serveur d'annuaire en utilisant "
+"les classes d'objets « posixAccount » et « posixGroup ». Cette interface "
+"permet la gestion des utilisateurs / des groupes via la classe d'objet "
+"« sambaSamAccount ». <BR><B>Système</B> fournit un accès en lecture seule "
+"pour tous les utilisateurs et les groupes dont votre installation a "
+"connaissance."
+
+#. i18n: file: kuser.kcfg:36
+#. i18n: ectx: label, entry (shell), group (connection-$(connection))
+#: rc.cpp:215
+msgid "Shell"
+msgstr "Interpréteur de commande"
+
+#. i18n: file: kuser.kcfg:37
+#. i18n: ectx: whatsthis, entry (shell), group (connection-$(connection))
+#: rc.cpp:218
+msgid ""
+"This option allows you to select the shell which will be the default for new "
+"users."
+msgstr ""
+"Cette option vous permet de choisir l'interpréteur de commandes (shell) par "
+"défaut pour les nouveaux utilisateurs."
+
+#. i18n: file: kuser.kcfg:40
+#. i18n: ectx: label, entry (homepath), group (connection-$(connection))
+#: rc.cpp:221
+msgid "Home path template"
+msgstr "Modèle d'emplacement de dossier personnel"
+
+#. i18n: file: kuser.kcfg:41
+#. i18n: ectx: whatsthis, entry (homepath), group (connection-$(connection))
+#: rc.cpp:225
+#, no-c-format
+msgid ""
+"This option specifies the UNIX home path template for new users. The '%U' "
+"macro will replaced with the actual user name."
+msgstr ""
+"Cette option spécifie le modèle d'emplacement du dossier personnel UNIX des "
+"nouveaux utilisateurs. La macro « %U » sera remplacée par le nom de "
+"l'utilisateur en cours."
+
+#. i18n: file: kuser.kcfg:45
+#. i18n: ectx: label, entry (firstUID), group (connection-$(connection))
+#: rc.cpp:228
+msgid "First UID"
+msgstr "Premier id. utilisateur"
+
+#. i18n: file: kuser.kcfg:46
+#. i18n: ectx: whatsthis, entry (firstUID), group (connection-$(connection))
+#: rc.cpp:231
+msgid ""
+"This options specifies the first user ID where searching for an available "
+"UID starts."
+msgstr ""
+"Cette option spécifie le premier identifiant utilisateur où la recherche "
+"d'un identifiant utilisateur disponible débute."
+
+#. i18n: file: kuser.kcfg:50
+#. i18n: ectx: label, entry (firstGID), group (connection-$(connection))
+#: rc.cpp:234
+msgid "First GID"
+msgstr "Premier id. de groupe"
+
+#. i18n: file: kuser.kcfg:51
+#. i18n: ectx: whatsthis, entry (firstGID), group (connection-$(connection))
+#: rc.cpp:237
+msgid ""
+"This options specifies the first group ID where searching for an available "
+"GID starts."
+msgstr ""
+"Cette option spécifie le premier identifiant de groupe où la recherche d'un "
+"identifiant de groupe disponible débute."
+
+#. i18n: file: kuser.kcfg:56
+#. i18n: ectx: whatsthis, entry (createHomeDir), group (connection-$(connection))
+#: rc.cpp:243
+msgid ""
+"If this option is checked then a home directory will created for the new "
+"user."
+msgstr ""
+"Si cette option est cochée, un dossier utilisateur sera créé pour le nouvel "
+"utilisateur."
+
+#. i18n: file: kuser.kcfg:61
+#. i18n: ectx: whatsthis, entry (copySkel), group (connection-$(connection))
+#: rc.cpp:249
+msgid ""
+"If this option is checked then the contents of the skeleton folder will "
+"copied to the new user's home directory"
+msgstr ""
+"Si cette option est cochée, le contenu du dossier squelette sera copié dans "
+"le dossier personnel du nouvel utilisateur."
+
+#. i18n: file: kuser.kcfg:66
+#. i18n: ectx: whatsthis, entry (userPrivateGroup), group (connection-$(connection))
+#: rc.cpp:255
+msgid ""
+"If this option is enabled, new user creation will create a private group "
+"named as the user, and the primary group of the user will assigned to this "
+"private group."
+msgstr ""
+"Si cette option est activée, la création d'un nouvel utilisateur créera un "
+"groupe privé avec le même nom que celui de l'utilisateur et le groupe "
+"primaire de l'utilisateur sera assigné à ce groupe privé."
+
+#. i18n: file: kuser.kcfg:70
+#. i18n: ectx: label, entry (defaultgroup), group (connection-$(connection))
+#: rc.cpp:258
+msgid "Default primary group"
+msgstr "Groupe principal par défaut"
+
+#. i18n: file: kuser.kcfg:71
+#. i18n: ectx: whatsthis, entry (defaultgroup), group (connection-$(connection))
+#: rc.cpp:261
+msgid ""
+"This is the default primary group which will be assigned to a newly created "
+"user."
+msgstr ""
+"Voici le premier groupe par défaut qui sera assigné à un nouvel utilisateur."
+
+#. i18n: file: kuser.kcfg:76
+#. i18n: ectx: label, entry (smin), group (connection-$(connection))
+#: rc.cpp:264
+msgid "smin"
+msgstr "smin"
+
+#. i18n: file: kuser.kcfg:80
+#. i18n: ectx: label, entry (smax), group (connection-$(connection))
+#: rc.cpp:267
+msgid "smax"
+msgstr "smax"
+
+#. i18n: file: kuser.kcfg:84
+#. i18n: ectx: label, entry (swarn), group (connection-$(connection))
+#: rc.cpp:270
+msgid "swarn"
+msgstr "swarn"
+
+#. i18n: file: kuser.kcfg:88
+#. i18n: ectx: label, entry (sinact), group (connection-$(connection))
+#: rc.cpp:273
+msgid "sinact"
+msgstr "sinact"
+
+#. i18n: file: kuser.kcfg:92
+#. i18n: ectx: label, entry (sexpire), group (connection-$(connection))
+#: rc.cpp:276
+msgid "sexpire"
+msgstr "sexpire"
+
+#. i18n: file: kuser.kcfg:93
+#. i18n: ectx: whatsthis, entry (sexpire), group (connection-$(connection))
+#: rc.cpp:279
+msgid "This setting is for specifying a date when user accounts will expire."
+msgstr ""
+"Ce paramètre sert à spécifier une date d'expiration des comptes utilisateurs."
+
+#. i18n: file: kuser.kcfg:97
+#. i18n: ectx: label, entry (sneverexpire), group (connection-$(connection))
+#: rc.cpp:282
+msgid "sneverexpire"
+msgstr "sneverexpire"
+
+#. i18n: file: kuser.kcfg:98
+#. i18n: ectx: whatsthis, entry (sneverexpire), group (connection-$(connection))
+#: rc.cpp:285
+msgid "Check this if you want to user accounts never expire."
+msgstr ""
+"À vérifier si vous désirez que les comptes utilisateurs n'expirent jamais."
+
+#. i18n: file: kuser.kcfg:103
+#. i18n: ectx: label, entry (passwdsrc), group (connection-$(connection))
+#: rc.cpp:288
+msgid "Password file"
+msgstr "Fichier de mot de passe"
+
+#. i18n: file: kuser.kcfg:104
+#. i18n: ectx: whatsthis, entry (passwdsrc), group (connection-$(connection))
+#: rc.cpp:291
+msgid "This specifies the users database file (usually /etc/passwd)."
+msgstr ""
+"Spécifie le fichier de base de données des utilisateurs (habituellement /etc/"
+"passwd)."
+
+#. i18n: file: kuser.kcfg:108
+#. i18n: ectx: label, entry (groupsrc), group (connection-$(connection))
+#: rc.cpp:294
+msgid "Group file"
+msgstr "Fichier des groupes"
+
+#. i18n: file: kuser.kcfg:109
+#. i18n: ectx: whatsthis, entry (groupsrc), group (connection-$(connection))
+#: rc.cpp:297
+msgid "This specifies the groups database file (usually /etc/group)."
+msgstr ""
+"Spécifie le fichier de base de données des groupes (habituellement /etc/"
+"group)."
+
+#. i18n: file: kuser.kcfg:113
+#. i18n: ectx: label, entry (md5shadow), group (connection-$(connection))
+#: rc.cpp:300
+msgid "MD5 Shadow passwords"
+msgstr "Mots de passe cachés par MD5"
+
+#. i18n: file: kuser.kcfg:114
+#. i18n: ectx: whatsthis, entry (md5shadow), group (connection-$(connection))
+#: rc.cpp:303
+msgid ""
+"Check this if you want the passwords in the shadow file MD5 hashed. Leave "
+"this unchecked if DES encryption should be used."
+msgstr ""
+"À cocher si vous désirez mettre les mots de passe dans le fichier de mots de "
+"passe caché soient hachés par MD5. Laissez-la décochée si le chiffrage DES "
+"doit être utilisé."
+
+#. i18n: file: kuser.kcfg:117
+#. i18n: ectx: label, entry (shadowsrc), group (connection-$(connection))
+#: rc.cpp:306
+msgid "Shadow password file"
+msgstr "Fichier des mots de passe cachés"
+
+#. i18n: file: kuser.kcfg:118
+#. i18n: ectx: whatsthis, entry (shadowsrc), group (connection-$(connection))
+#: rc.cpp:309
+msgid ""
+"Specifies the shadow password file (usually /etc/shadow). Leave this empty "
+"if your system does not use a shadow password file."
+msgstr ""
+"Spécifie le fichier de mots de passe cachés (habituellement /etc/shadow). "
+"Laissez-le vide si votre système n'utilise pas un fichier de mots de passe "
+"cachés."
+
+#. i18n: file: kuser.kcfg:122
+#. i18n: ectx: label, entry (gshadowsrc), group (connection-$(connection))
+#: rc.cpp:312
+msgid "Group shadow file"
+msgstr "Fichier des groupes cachés"
+
+#. i18n: file: kuser.kcfg:123
+#. i18n: ectx: whatsthis, entry (gshadowsrc), group (connection-$(connection))
+#: rc.cpp:315
+msgid ""
+"Specifies the shadow group file (usually /etc/gshadow). Leave this empty if "
+"your system does not use a shadow group file."
+msgstr ""
+"Spécifie le fichier de groupes cachés (habituellement /etc/gshadow). Laissez-"
+"le vide si votre système n'utilise pas un fichier de groupes cachés."
+
+#. i18n: file: kuser.kcfg:128
+#. i18n: ectx: label, entry (ldapuser), group (connection-$(connection))
+#: rc.cpp:318
+msgid "LDAP User"
+msgstr "Utilisateur LDAP"
+
+#. i18n: file: kuser.kcfg:131
+#. i18n: ectx: label, entry (ldappassword), group (connection-$(connection))
+#: rc.cpp:321
+msgid "LDAP Password"
+msgstr "Mot de passe LDAP"
+
+#. i18n: file: kuser.kcfg:134
+#. i18n: ectx: label, entry (ldaprealm), group (connection-$(connection))
+#: rc.cpp:324
+msgid "LDAP SASL Realm"
+msgstr "Royaume SASL LDAP"
+
+#. i18n: file: kuser.kcfg:137
+#. i18n: ectx: label, entry (ldapbinddn), group (connection-$(connection))
+#: rc.cpp:327
+msgid "LDAP Bind DN"
+msgstr "Nom de domaine Bind LDAP"
+
+#. i18n: file: kuser.kcfg:140
+#. i18n: ectx: label, entry (ldaphost), group (connection-$(connection))
+#: rc.cpp:330
+msgid "LDAP Host"
+msgstr "Serveur LDAP"
+
+#. i18n: file: kuser.kcfg:143
+#. i18n: ectx: label, entry (ldapport), group (connection-$(connection))
+#: rc.cpp:333
+msgid "LDAP Port"
+msgstr "Port LDAP"
+
+#. i18n: file: kuser.kcfg:147
+#. i18n: ectx: label, entry (ldapver), group (connection-$(connection))
+#: rc.cpp:336
+msgid "LDAP version"
+msgstr "Version LDAP"
+
+#. i18n: file: kuser.kcfg:151
+#. i18n: ectx: label, entry (ldapsizelimit), group (connection-$(connection))
+#: rc.cpp:339
+msgid "LDAP Size limit"
+msgstr "Limite de la taille LDAP"
+
+#. i18n: file: kuser.kcfg:155
+#. i18n: ectx: label, entry (ldaptimelimit), group (connection-$(connection))
+#. i18n: file: kuser.kcfg:159
+#. i18n: ectx: label, entry (ldappagesize), group (connection-$(connection))
+#: rc.cpp:342 rc.cpp:345
+msgid "LDAP Time limit"
+msgstr "Limite de la durée LDAP"
+
+#. i18n: file: kuser.kcfg:163
+#. i18n: ectx: label, entry (ldapdn), group (connection-$(connection))
+#: rc.cpp:348
+msgid "LDAP Base DN"
+msgstr "Nom de domaine de base LDAP"
+
+#. i18n: file: kuser.kcfg:166
+#. i18n: ectx: label, entry (ldapfilter), group (connection-$(connection))
+#: rc.cpp:351
+msgid "LDAP Filter"
+msgstr "Filtre LDAP"
+
+#. i18n: file: kuser.kcfg:169
+#. i18n: ectx: label, entry (ldapnosec), group (connection-$(connection))
+#: rc.cpp:354
+msgid "LDAP no encryption"
+msgstr "LDAP sans chiffrement"
+
+#. i18n: file: kuser.kcfg:173
+#. i18n: ectx: label, entry (ldaptls), group (connection-$(connection))
+#: rc.cpp:357
+msgid "LDAP TLS"
+msgstr "LDAP TLS"
+
+#. i18n: file: kuser.kcfg:177
+#. i18n: ectx: label, entry (ldapssl), group (connection-$(connection))
+#: rc.cpp:360
+msgid "LDAP SSL"
+msgstr "LDAP SSL"
+
+#. i18n: file: kuser.kcfg:181
+#. i18n: ectx: label, entry (ldapanon), group (connection-$(connection))
+#: rc.cpp:363
+msgid "LDAP Anonymous"
+msgstr "LDAP Anonyme"
+
+#. i18n: file: kuser.kcfg:185
+#. i18n: ectx: label, entry (ldapsimple), group (connection-$(connection))
+#: rc.cpp:366
+msgid "LDAP Simple auth"
+msgstr "LDAP avec auth. simple"
+
+#. i18n: file: kuser.kcfg:189
+#. i18n: ectx: label, entry (ldapsasl), group (connection-$(connection))
+#: rc.cpp:369
+msgid "LDAP SASL auth"
+msgstr "LDAP avec auth. SASL"
+
+#. i18n: file: kuser.kcfg:193
+#. i18n: ectx: label, entry (ldapsaslmech), group (connection-$(connection))
+#: rc.cpp:372
+msgid "LDAP SASL mechanism"
+msgstr "Mécanisme SASL LDAP"
+
+#. i18n: file: kuser.kcfg:197
+#. i18n: ectx: label, entry (ldapuserbase), group (connection-$(connection))
+#: rc.cpp:375
+msgid "LDAP User container"
+msgstr "Conteneur d'utilisateurs LDAP"
+
+#. i18n: file: kuser.kcfg:198
+#. i18n: ectx: whatsthis, entry (ldapuserbase), group (connection-$(connection))
+#: rc.cpp:378
+msgid ""
+"This specifies where to store users' entries relative to the LDAP base DN."
+msgstr ""
+"Spécifie l'emplacement de stockage des entrées des utilisateurs relatives au "
+"nom de domaine de base LDAP."
+
+#. i18n: file: kuser.kcfg:202
+#. i18n: ectx: label, entry (ldapuserfilter), group (connection-$(connection))
+#: rc.cpp:381
+msgid "LDAP User filter"
+msgstr "Filtre d'utilisateurs LDAP"
+
+#. i18n: file: kuser.kcfg:203
+#. i18n: ectx: whatsthis, entry (ldapuserfilter), group (connection-$(connection))
+#: rc.cpp:384
+msgid "This specifies the filter used for user entries."
+msgstr ""
+"Ceci spécifie le filtre qui sera utilisé pour les entrées de l'utilisateur."
+
+#. i18n: file: kuser.kcfg:206
+#. i18n: ectx: label, entry (ldapgroupbase), group (connection-$(connection))
+#: rc.cpp:387
+msgid "LDAP Group container"
+msgstr "Conteneur de groupes LDAP"
+
+#. i18n: file: kuser.kcfg:207
+#. i18n: ectx: whatsthis, entry (ldapgroupbase), group (connection-$(connection))
+#: rc.cpp:390
+msgid ""
+"This specifies where to store groups' entries relative to the LDAP base DN."
+msgstr ""
+"Spécifie l'emplacement de stockage des entrées des groupes relatifs au nom "
+"de domaine de base LDAP."
+
+#. i18n: file: kuser.kcfg:211
+#. i18n: ectx: label, entry (ldapgroupfilter), group (connection-$(connection))
+#: rc.cpp:393
+msgid "LDAP Group filter"
+msgstr "Filtre de groupes LDAP"
+
+#. i18n: file: kuser.kcfg:212
+#. i18n: ectx: whatsthis, entry (ldapgroupfilter), group (connection-$(connection))
+#: rc.cpp:396
+msgid "This specifies the filter used for group entries."
+msgstr "Ceci spécifie le filtre qui sera utilisé pour les entrées de groupe."
+
+#. i18n: file: kuser.kcfg:215
+#. i18n: ectx: label, entry (ldapuserrdn), group (connection-$(connection))
+#: rc.cpp:399
+msgid "LDAP User RDN prefix"
+msgstr "Préfixe RDN des utilisateurs LDAP"
+
+#. i18n: file: kuser.kcfg:216
+#. i18n: ectx: whatsthis, entry (ldapuserrdn), group (connection-$(connection))
+#: rc.cpp:402
+msgid "This specifies what prefix will used for user entries."
+msgstr "Spécifie le préfixe à utiliser pour les entrées de l'utilisateur."
+
+#. i18n: file: kuser.kcfg:226
+#. i18n: ectx: whatsthis, entry (ldapcnfullname), group (connection-$(connection))
+#: rc.cpp:408
+msgid ""
+"Check this if the user's full name should be stored in the cn (Canonical "
+"Name) attribute."
+msgstr ""
+"Cochez cette option si le nom complet de l'utilisateur doit être enregistré "
+"dans l'attribut « cn » (nom canonique)."
+
+#. i18n: file: kuser.kcfg:230
+#. i18n: ectx: label, entry (ldapgecos), group (connection-$(connection))
+#: rc.cpp:411
+msgid "Update the gecos field"
+msgstr "Actualiser le champ « gecos »"
+
+#. i18n: file: kuser.kcfg:231
+#. i18n: ectx: whatsthis, entry (ldapgecos), group (connection-$(connection))
+#: rc.cpp:414
+msgid "Check this if the gecos attribute should be updated."
+msgstr "Cochez cette option si l'attribut « gecos » doit être actualisé."
+
+#. i18n: file: kuser.kcfg:235
+#. i18n: ectx: label, entry (ldapshadow), group (connection-$(connection))
+#: rc.cpp:417
+msgid "Manage LDAP shadowAccount objectclass"
+msgstr "Gestion des classes d'objet LDAP « shadowAccount »"
+
+#. i18n: file: kuser.kcfg:236
+#. i18n: ectx: whatsthis, entry (ldapshadow), group (connection-$(connection))
+#: rc.cpp:420
+msgid ""
+"Check this if the shadowAccount object should be used in the users' entries. "
+"It allows to enforce password change/expiration policies."
+msgstr ""
+"À cocher si l'objet « shadowAccount » doit être utilisé dans les entrées des "
+"utilisateurs. Il permet de forcer les politiques de "
+"modification / d'expiration des mots de passe."
+
+#. i18n: file: kuser.kcfg:240
+#. i18n: ectx: label, entry (ldapstructural), group (connection-$(connection))
+#: rc.cpp:423
+msgid "LDAP Structural objectclass"
+msgstr "Classe d'objet structurel LDAP"
+
+#. i18n: file: kuser.kcfg:241
+#. i18n: ectx: whatsthis, entry (ldapstructural), group (connection-$(connection))
+#: rc.cpp:426
+msgid ""
+"This option allows to specify the structural objectclass used with users' "
+"entries. If you want to use these entries not just for authentication, but "
+"for an address book, too, then choose inetOrgPerson."
+msgstr ""
+"Cette option permet de spécifier la classe de l'objet de structure utilisée "
+"avec les entrées des utilisateurs. Si vous souhaitez utiliser ces entrées "
+"autant pour l'authentification que pour un carnet d'adresses, choisissez "
+"« inetOrgPerson »."
+
+#. i18n: file: kuser.kcfg:249
+#. i18n: ectx: label, entry (ldapgrouprdn), group (connection-$(connection))
+#: rc.cpp:429
+msgid "LDAP Group RDN prefix"
+msgstr "Préfixe RDN des groupes LDAP"
+
+#. i18n: file: kuser.kcfg:250
+#. i18n: ectx: whatsthis, entry (ldapgrouprdn), group (connection-$(connection))
+#: rc.cpp:432
+msgid "This specifies what prefix will used for group entries."
+msgstr "Spécifie le préfixe qui sera utilisé pour les entrées de groupe."
+
+#. i18n: file: kuser.kcfg:258
+#. i18n: ectx: label, entry (ldappasswordhash), group (connection-$(connection))
+#: rc.cpp:435
+msgid "LDAP Password hash method"
+msgstr "Méthode de hachage des mots de passe LDAP"
+
+#. i18n: file: kuser.kcfg:259
+#. i18n: ectx: whatsthis, entry (ldappasswordhash), group (connection-$(connection))
+#: rc.cpp:438
+msgid "This specifies the password hashing method. The most secure is SSHA."
+msgstr ""
+"Spécifie la méthode de hachage des mots de passe. Le plus sûr est SSHA."
+
+#. i18n: file: kuser.kcfg:271
+#. i18n: ectx: label, entry (ldapsam), group (connection-$(connection))
+#: rc.cpp:441
+msgid "Enable samba account management"
+msgstr "Activer la gestion des comptes samba"
+
+#. i18n: file: kuser.kcfg:272
+#. i18n: ectx: whatsthis, entry (ldapsam), group (connection-$(connection))
+#: rc.cpp:444
+msgid ""
+"Check this if you want to use the user/group entries in a Samba domain. "
+"KUser will create sambaSamAccount objectclass for each entry which is usable "
+"with the ldapsam passdb backend with Samba version greater than 3.0."
+msgstr ""
+"À cocher si vous désirez utiliser les entrées d'utilisateur / de groupe d'un "
+"domaine Samba. KUser créera une classe d'objet sambaSamAccount pour chaque "
+"entrée utilisable avec l'interface passdb ldapsam avec une version de Samba "
+"supérieure à 3.0."
+
+#. i18n: file: kuser.kcfg:275
+#. i18n: ectx: label, entry (samdomain), group (connection-$(connection))
+#: rc.cpp:447
+msgid "Samba domain name"
+msgstr "Nom du domaine Samba"
+
+#. i18n: file: kuser.kcfg:276
+#. i18n: ectx: whatsthis, entry (samdomain), group (connection-$(connection))
+#: rc.cpp:450
+msgid "This specifies the samba domain name."
+msgstr "Ceci spécifie le nom du domaine Samba."
+
+#. i18n: file: kuser.kcfg:279
+#. i18n: ectx: label, entry (samdomsid), group (connection-$(connection))
+#: rc.cpp:453
+msgid "Samba domain SID"
+msgstr "Identifiant de sécurité de domaine Samba"
+
+#. i18n: file: kuser.kcfg:280
+#. i18n: ectx: whatsthis, entry (samdomsid), group (connection-$(connection))
+#: rc.cpp:456
+msgid ""
+"This specifies the domain Security IDentifier. It is unique in a single "
+"domain. You can query the value of the domain SID with 'net getlocalsid "
+"domain_name'."
+msgstr ""
+"Spécifie l'identifiant de sécurité du domaine (SID). Il est unique pour un "
+"simple domaine. Vous pouvez retrouver la valeur du SID du domaine avec « net "
+"getlocalsid domain_name »."
+
+#. i18n: file: kuser.kcfg:283
+#. i18n: ectx: label, entry (samridbase), group (connection-$(connection))
+#: rc.cpp:459
+msgid "Algorithmic RID base"
+msgstr "Base algorithmique des RID :"
+
+#. i18n: file: kuser.kcfg:284
+#. i18n: ectx: whatsthis, entry (samridbase), group (connection-$(connection))
+#: rc.cpp:462
+msgid ""
+"This value is an offset for the algorithmic mapping from uids and gids to "
+"rids. The default (and minimum) value is 1000, it must be even, and the LDAP "
+"database and smb.conf must store the same values."
+msgstr ""
+"Cette valeur est un décalage (offset) pour la correspondance algorithmique "
+"des UID et GID vers les RID. La valeur par défaut, qui est également la "
+"valeur minimum, est de 1000. Cette valeur doit être paire ; la base de "
+"données LDAP et le fichier smb.conf doivent utiliser les mêmes valeurs."
+
+#. i18n: file: kuser.kcfg:288
+#. i18n: ectx: label, entry (samloginscript), group (connection-$(connection))
+#: rc.cpp:465
+msgid "Samba login script"
+msgstr "Script de connexion Samba"
+
+#. i18n: file: kuser.kcfg:289
+#. i18n: ectx: whatsthis, entry (samloginscript), group (connection-$(connection))
+#: rc.cpp:468
+msgid ""
+"This specifies a name of a login script (in the `Netlogon` share) which will "
+"be executed as the user logs in to a Windows machine."
+msgstr ""
+"Spécifie un nom d'un script de connexion (dans le partage « Netlogon ») qui "
+"sera exécuté sous les sessions de l'utilisateur avec une machine sous "
+"Windows."
+
+#. i18n: file: kuser.kcfg:292
+#. i18n: ectx: label, entry (samhomedrive), group (connection-$(connection))
+#: rc.cpp:471
+msgid "Samba home drive"
+msgstr "Lecteur du dossier de Samba"
+
+#. i18n: file: kuser.kcfg:293
+#. i18n: ectx: whatsthis, entry (samhomedrive), group (connection-$(connection))
+#: rc.cpp:474
+msgid ""
+"Specifies a drive letter where the user's home directory will automatically "
+"mapped when he/she logs into a Windows machine."
+msgstr ""
+"Spécifie une lettre de lecteur sur lequel le dossier personnel de "
+"l'utilisateur sera automatiquement monté lorsqu'il / elle ouvrira une "
+"session sur la machine sous Windows."
+
+#. i18n: file: kuser.kcfg:296
+#. i18n: ectx: label, entry (samprofilepath), group (connection-$(connection))
+#: rc.cpp:477
+msgid "Samba profile path template"
+msgstr "Modèle d'emplacement du profil Samba"
+
+#. i18n: file: kuser.kcfg:297
+#. i18n: ectx: whatsthis, entry (samprofilepath), group (connection-$(connection))
+#: rc.cpp:481
+#, no-c-format
+msgid ""
+"This specifies the location of the roaming profile of the user. The '%U' "
+"macro will be replaced with the actual user name."
+msgstr ""
+"Spécifie l'emplacement du profil itinérant de l'utilisateur. La macro « %U » "
+"sera remplacée par le nom de l'utilisateur en cours."
+
+#. i18n: file: kuser.kcfg:300
+#. i18n: ectx: label, entry (samhomepath), group (connection-$(connection))
+#: rc.cpp:484
+msgid "Samba home path template"
+msgstr "Modèle d'emplacement du dossier utilisateur Samba"
+
+#. i18n: file: kuser.kcfg:301
+#. i18n: ectx: whatsthis, entry (samhomepath), group (connection-$(connection))
+#: rc.cpp:488
+#, no-c-format
+msgid ""
+"This specifies the location of the home directory of the user. This field is "
+"meaningful only for Windows machines. The '%U' macro will be replaced with "
+"the actual user name."
+msgstr ""
+"Spécifie l'emplacement du dossier personnel de l'utilisateur. Ce champ n'est "
+"significatif que pour les machines Windows. La macro « %U » sera remplacée "
+"par le nom de l'utilisateur en cours."
+
+#. i18n: file: kuser.kcfg:305
+#. i18n: ectx: whatsthis, entry (lanmanhash), group (connection-$(connection))
+#: rc.cpp:494
+msgid ""
+"Store the LanManager hashed password in the sambaLMPassword attribute. Check "
+"this if you have older clients (Win9x series and before) on your network."
+msgstr ""
+"Enregistrer le mot de passe haché de LanManager dans l'attribut "
+"« sambaLMPassword ». Cochez cette option si vous possédez de vieux clients "
+"(série des Win9x et plus anciens) sur votre réseau."
+
+#~ msgid "Hide System Users/Groups"
+#~ msgstr "Masquer les groupes / utilisateurs système"
