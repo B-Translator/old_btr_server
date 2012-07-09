@@ -31,16 +31,6 @@ projects[fusion_accelerator][version] = "2.0-beta1"
 ; Additional Contrib
 ;--------------------
 
-;projects[admin][version] = "2.0-beta3"
-;projects[openidadmin][version] = "1.0"
-;projects[context][version] = "3.0-beta3"
-;projects[ctools][version] = "1.0"
-;projects[diff][version] = "2.0"
-;projects[features][version] = "1.0-rc2"
-;projects[strongarm][version] = "2.0"
-;projects[views][version] = "3.3"
-;projects[devel][version] = "1.3"
-
 projects[boost][version] = "1.x-dev"
 projects[fb][version] = "3.x-dev"
 projects[geshifilter][version] = "1.0"
@@ -69,12 +59,3 @@ libraries[tinymce][type] = "library"
 libraries[tinymce][directory_name] = "tinymce"
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce/tinymce_3.5b3.zip"
-
-;--------------------
-; Custom
-;--------------------
-
-;projects[B-Translator][type] = "module"
-;projects[B-Translator][download][type] = "git"
-;projects[B-Translator][download][url] = "https://github.com/dashohoxha/B-Translator.git"
-

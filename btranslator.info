@@ -1,6 +1,6 @@
 name = B-Translator
-description = Drupal installation profile for B-Translator..
-;version = VERSION
+description = Drupal installation profile for B-Translator.
+version = 1.x
 core = 7.x
 
 ;--------------------
@@ -54,19 +54,19 @@ dependencies[] = views
 dependencies[] = views_ui
 dependencies[] = fusion_accelerator
 
-;--------------------
-; ; Drupal for Facebook
-;--------------------
-; dependencies[] = fb
-; dependencies[] = fb_app
-; dependencies[] = fb_canvas
-; dependencies[] = fb_connect
-; dependencies[] = fb_devel
-; dependencies[] = fb_form
-; dependencies[] = fb_stream
-; dependencies[] = fb_user
-; ; Drupal for Facebook - contrib
-; dependencies[] = fb_friend
+;;--------------------
+;; Drupal for Facebook
+;;--------------------
+;dependencies[] = fb
+;dependencies[] = fb_app
+;dependencies[] = fb_canvas
+;dependencies[] = fb_connect
+;dependencies[] = fb_devel
+;dependencies[] = fb_form
+;dependencies[] = fb_stream
+;dependencies[] = fb_user
+;; Drupal for Facebook - contrib
+;dependencies[] = fb_friend
 
 ;--------------------
 ; Filters
@@ -78,7 +78,7 @@ dependencies[] = geshifilter
 ; B-Translator
 ;--------------------
 dependencies[] = l10n_feedback
-; dependencies[] = fb_btranslator
+;;;dependencies[] = fb_btranslator
 
 ;--------------------
 ; Other
@@ -108,6 +108,9 @@ dependencies[] = wysiwyg
 ;--------------------
 dependencies[] = boost
 
+;--------------------
+; Files
+;--------------------
 files[] = btranslator.install
 files[] = btranslator.profile
 

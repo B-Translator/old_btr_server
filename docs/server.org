@@ -1,0 +1,217 @@
+
+* Packages
+  #+BEGIN_EXAMPLE
+  apt-get update
+  apt-get install aptitude
+  aptitude update
+  aptitude upgrade
+  tasksel install lamp-server
+  aptitude install phpmyadmin
+  aptitude install drush php5-curl php-apc
+  aptitude install git
+  aptitude install gawk
+  aptitude install mercurial           ### for getting Mozilla files
+  aptitude install translate-toolkit   ### provides moz2po and po2moz
+  #+END_EXAMPLE
+
+* Apache2 configuration
+
+  + Enable SSL Name-Based virtual hosting.
+    - Enable mode /ssl/: ~a2enmod ssl~
+
+    - Edit ~/etc/apache2/ports.conf~ and add the line
+      ~NameVirtualHost *:443~:
+      #+BEGIN_EXAMPLE
+      <IfModule mod_ssl.c>
+        # If you add NameVirtualHost *:443 here, you will also have to change
+        # the VirtualHost statement in /etc/apache2/sites-available/default-ssl
+        # to <VirtualHost *:443>
+        # Server Name Indication for SSL named virtual hosts is currently not
+        # supported by MSIE on Windows XP.
+        NameVirtualHost *:443
+	  Listen 443
+      </IfModule>
+      #+END_EXAMPLE
+
+    - Edit ~/etc/apache2/sites-available/default-ssl~ and change
+      the VirtualHost statement (at the top) to ~<VirtualHost
+      *:443>~, like this:
+      #+BEGIN_EXAMPLE
+      <IfModule mod_ssl.c>
+      <VirtualHost *:443>
+      #+END_EXAMPLE
+
+    - Then restart apache: ~service apache2 restart~
+
+  + Enable apache modules /headers/ and /rewrite/:
+    #+BEGIN_EXAMPLE
+    a2enmod headers
+    a2enmod rewrite
+    service apache2 restart
+    #+END_EXAMPLE
+
+  + Create configuration files ~/etc/apache2/sites-available/l10n~,
+    and ~/etc/apache2/sites-available/l10n-ssl~ by copying ~default~
+    and ~default-ssl~ and modifying them like this:
+    #+BEGIN_EXAMPLE
+    <VirtualHost *:80>
+        ServerName l10n.cit.edu.al
+	ServerAdmin l10n@cit.edu.al
+
+	DocumentRoot /var/www/drupal
+	<Directory />
+	    Options FollowSymLinks
+	    AllowOverride None
+        </Directory>
+        <Directory /var/www/drupal/>
+            Options Indexes FollowSymLinks MultiViews
+	    #AllowOverride None
+	    AllowOverride All
+            Order allow,deny
+	    allow from all
+        </Directory>    
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    <IfModule mod_ssl.c>
+    <VirtualHost *:443>
+        ServerName l10n.cit.edu.al
+        ServerAdmin l10n@cit.edu.al
+
+        DocumentRoot /var/www/drupal
+        <Directory />
+            Options FollowSymLinks
+            AllowOverride None
+        </Directory>
+	<Directory /var/www/drupal/>
+	    Options Indexes FollowSymLinks MultiViews
+	    #AllowOverride None
+	    AllowOverride All
+	    Order allow,deny
+	    allow from all
+	</Directory>
+    #+END_EXAMPLE
+
+  + Enable the sites ~l10n~ and ~l10n-ssl~:
+    #+BEGIN_EXAMPLE
+    a2ensite l10n
+    a2ensite l10n-ssl
+    #+END_EXAMPLE
+
+    Then rename the links on ~/etc/apache2/sites-enables~ like this:
+    #+BEGIN_EXAMPLE
+    000-l10n  000-l10n-ssl  001-default  001-default-ssl
+    #+END_EXAMPLE
+
+  + Finally restart apache: =service apache2 restart=.
+
+* Drupal configuration
+
+  + Disable temporarily the facebook app, at
+    =/admin/structure/fb/app/l10nsq/fb_app=
+
+  + Install module SMTP Authentication support and enable and
+    configure it at ~/admin/config/system/smtp~:
+    - Set SMTP server to: ~smtp.googlemail.com~
+    - SMTP Port: ~465~
+    - Use encrypted protocol: ~Use SSL~
+    - SMTP authentication username: ~Dashamir.Hoxha@cit.edu.al~ (set
+      the password as well)
+    - Email from address: ~l10n@cit.edu.al~
+    - Email from name: ~l10n sq~
+    - Allow to send email formatted as html: ~checked~
+    - Sends also a test email to ~dashohoxha@gmail.com~
+
+  + On the configuration of Boost (~/admin/config/system/boost~)
+    disable cache for the page /translations/.
+
+  + Create directory ~cache/~ (which is used by /Boost/) and make it
+    writable by /apache/:
+    #+BEGIN_EXAMPLE
+    mkdir -p cache/
+    chown www-data: -R cache/
+    #+END_EXAMPLE
+
+  + Enable displaying file upload progress through APC:
+    - Install /php-apc/: ~aptitude install php-apc~
+    - Edit ~/etc/php5/apache2/php.ini~ and add this line: ~apc.rfc1867 = 1~
+    - Restart /apache2/: ~service apache2 restart~
+
+  + At /Site information/ ~/admin/config/system/site-information~
+    change /Email address/ to: ~l10n@cit.edu.al~ (this address is
+    actually an alias to ~Dashamir.Hoxha@cit.edu.al~, created on
+    Google Apps).
+
+  + Configure /cron/:
+    - Enable rerouting of emails, at
+      ~/admin/config/development/reroute_email~ and set the reroute
+      email to ~dashohoxha@gmail.com~
+    - Disable the internal cron at ~/admin/config/system/cron~
+    - Run =crontab -e= and add these lines:
+      #+BEGIN_EXAMPLE
+      ### https://l10n.cit.edu.al
+      0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://l10n.cit.edu.al/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+      #+END_EXAMPLE
+    - Test it by running this command from command line:
+      #+BEGIN_EXAMPLE
+      wget -O - -q -t 1 --no-check-certificate https://l10n.cit.edu.al/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+      #+END_EXAMPLE
+    - Disable rerouting of emails at
+      ~/admin/config/development/reroute_email~
+
+* Sending email using MSMTP with Gmail
+
+  + Install msmtp and ca-certificates for use with SSL:
+    #+BEGIN_EXAMPLE
+    aptitude install msmtp ca-certificates
+    #+END_EXAMPLE
+
+  + Create the file ~/etc/msmtprc~
+    #+BEGIN_EXAMPLE
+    defaults
+    tls on
+    tls_starttls off
+    tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+    account default
+    host smtp.googlemail.com
+    port 465
+    auth on
+    user l10n-admin@cit.edu.al
+    password xyz..
+    from l10n@cit.edu.al
+    logfile /var/log/msmtp.log
+    #+END_EXAMPLE
+    #+BEGIN_EXAMPLE
+    chmod 0644 /etc/msmtprc    
+    #+END_EXAMPLE
+
+  + Edit ~/etc/php5/apache2/php.ini~ and add this line:
+    #+BEGIN_EXAMPLE
+    sendmail_path = '/usr/bin/msmtp -t'
+    #+END_EXAMPLE
+    Then restart /apache2/:
+    #+BEGIN_EXAMPLE
+    service apache2 restart
+    #+END_EXAMPLE
+
+  + For testing it, create the file ~/var/www/drupal/testmail.php~
+    with a content like this:
+    #+BEGIN_EXAMPLE
+    <?php
+    if (mail('dashohoxha@gmail.com', 'Test mail from localhost', 'Working Fine.' ) ){
+    echo 'Mail sent';
+    }
+    else{
+    echo 'Error. Please check error log.';
+    }
+    ?>
+    #+END_EXAMPLE
+    Then open it on a browser: http://l10n.cit.edu.al/testmail.php
+
+  Referencies:
+  + http://www.absolutelytech.com/2010/07/17/howto-configure-msmtp-to-work-with-gmail-on-linux/
+  + http://www.absolutelytech.com/2010/07/18/howto-send-emailsusing-mail-function-from-localhost-in-php-through-msmtp-using-gmail-account-on-linux/
+  + http://www.cecilieokada.com/blog/web-development/sending-email-from-localhost-using-msmtp-with-gmail/
+  + http://grault.wordpress.com/2009/04/23/command-line-gmail-msmtp-465/
+

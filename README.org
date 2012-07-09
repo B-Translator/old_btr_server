@@ -6,15 +6,17 @@ This is a Drupal installation profile for B-Translator.
   /btranslation/ installation profile can be built like this:
   #+BEGIN_EXAMPLE
   cd /var/www/
-  sudo wget https://raw.github.com/dashohoxha/B-Translator/master/install.sh
-  sudo ./install.sh [directory]
+  sudo wget https://raw.github.com/dashohoxha/B-Translator/master/install-btranslator.sh
+  echo "edit install-btranslator.sh and make sure that you undestand what is going on"
+  sudo ./install-btranslator.sh [directory]
   #+END_EXAMPLE
 
 * Requirements
 
   + LAMP:
     #+BEGIN_EXAMPLE
-    sudo apt-get install apache2 php5 mysql-server phpmyadmin php5-curl php-apc
+    sudo tasksel install lamp-server
+    sudo apt-get install phpmyadmin php5-curl php-apc
     #+END_EXAMPLE
 
   + drush make:
@@ -29,6 +31,23 @@ This is a Drupal installation profile for B-Translator.
   + Other tools:
     #+BEGIN_EXAMPLE
     sudo apt-get install git gawk mercurial translate-toolkit
+    #+END_EXAMPLE
+
+  + Apache modules:
+    #+BEGIN_EXAMPLE
+    a2enmod headers
+    a2enmod rewrite
+    #+END_EXAMPLE
+
+  + Apache config:
+    #+BEGIN_EXAMPLE
+    <Directory /var/www/drupal/>
+        Options Indexes FollowSymLinks MultiViews
+        #AllowOverride None
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
     #+END_EXAMPLE
 
 

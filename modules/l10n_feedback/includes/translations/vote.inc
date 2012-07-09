@@ -23,7 +23,8 @@ function l10n_feedback_vote($sguid =NULL, $one_time_login =NULL) {
   }
 
   // TODO: Get the translation language from the user settings.
-  $lng = 'sq';
+  //$lng = 'sq';
+  $lng = 'fr';
 
   // Add the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');
