@@ -78,7 +78,8 @@ function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
     ),
   );
 
-  if (user_access('submit suggestions')) {
+  //if (user_access('submit suggestions')) {
+  if (user_is_logged_in()) {
     $form['source']['edit'] = array(
       '#markup' => t('Translate'),
       '#prefix' => '<label title="' . t('Translate') . '">',
@@ -117,7 +118,8 @@ function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
   }
 
   // If the user may add new suggestions, display a textarea.
-  if (user_access('submit suggestions')) {
+  //if (user_access('submit suggestions')) {
+  if (user_is_logged_in()) {
     $textarea = _l10n_feedback_translate_translation_textarea($string, $lng);
     $form[$textarea->tguid] = _l10n_feedback_translate_translation($textarea, $string->sguid, $lng);
   }
@@ -208,7 +210,8 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
 
   }
   else {
-    if (user_access('submit suggestions')) {
+    //if (user_access('submit suggestions')) {
+    if (user_is_logged_in()) {
       $form['edit'] = array(
         '#markup' => t('Edit a copy'),
         '#prefix' => '<label title="' . t('Edit a copy') . '">',
