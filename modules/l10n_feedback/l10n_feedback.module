@@ -262,13 +262,9 @@ function l10n_feedback_init() {
   //drupal_cron_run();  //test
 
   /* This is usually done in hook_install().
-  variable_set('mail_system',
-    array_merge(
-      variable_get('mail_system', array('default-system' => 'DefaultMailSystem')),  // Previously set mail_system variable
-      array('l10n_feedback' => 'HTMLMailSystem')
-    )
-  );
+  $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
+  $mail_system['l10n_feedback'] = 'HTMLMailSystem';
+  variable_set('mail_system', $mail_system);
   */
-
 }
 ?>
