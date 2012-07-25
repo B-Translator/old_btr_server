@@ -3,5 +3,7 @@ description =  Getting feedback and suggestions from people about l10n translati
 package = B-Translator
 core = 7.x
 
+dependencies[] = disqus
+
 files[] = l10n_feedback.test
 files[] = includes/html_mail.php

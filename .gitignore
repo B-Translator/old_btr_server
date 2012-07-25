@@ -24,3 +24,4 @@ modules/strongarm/
 modules/views/
 modules/wysiwyg/
 themes/
+modules/disqus/

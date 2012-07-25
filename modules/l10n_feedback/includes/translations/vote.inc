@@ -14,17 +14,19 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/vote
  * Vote the best translation for a string, or suggest a better translation.
  */
-function l10n_feedback_vote($sguid =NULL, $one_time_login =NULL) {
+function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   if ($one_time_login != NULL) {
     l10n_feedback_login_one_time($one_time_login);
-    drupal_goto("translations/$sguid");
+    drupal_goto("translations/$lng/$sguid");
     return;
   }
 
-  // TODO: Get the translation language from the user settings.
-  //$lng = 'sq';
-  $lng = 'fr';
+  if ($lng == NULL) {
+    // TODO: Get the translation language from the user settings.
+    //$lng = 'sq';
+    $lng = 'fr';
+  }
 
   // Add the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');

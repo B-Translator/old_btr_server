@@ -53,6 +53,7 @@ dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
 dependencies[] = fusion_accelerator
+dependencies[] = disqus
 
 ;;--------------------
 ;; Drupal for Facebook

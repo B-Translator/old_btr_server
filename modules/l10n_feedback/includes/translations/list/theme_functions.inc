@@ -26,7 +26,7 @@ function theme_l10n_feedback_translate_table($variables) {
     $rows[] = array(
       array(
         'class' => array('sguid'),
-        'data' => l('#', "translations/$sguid", array(), array('attributes' => array('title' => t('Direct and permanent link to this string.')))),
+        'data' => l('#', "translations/$lng/$sguid", array(), array('attributes' => array('title' => t('Direct and permanent link to this string.')))),
       ),
       array(
         'class' => array('source'),

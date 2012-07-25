@@ -53,9 +53,27 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     ),
   );
 
+  if (sizeof($strings)==1) {
+    $disqus = 'full';
+  }
+
   // Fill in string values for the editor.
   foreach ($strings as $sguid => $string) {
     $form['strings'][$sguid] = _l10n_feedback_translate_form_item($form_state, $string, $lng);
+    if ($disqus == 'full') {
+      $form['disqus'] = array(
+        '#type' => 'disqus',
+        '#disqus' => array(
+          'domain' => 'l10n-sq',
+          'status' => true,
+          'url' => url("translations/$lng/$sguid", array('absolute' => true)),
+          'title' => 'Test',
+          'identifier' => "translations/$lng/$sguid",
+          'developer' => '1',
+        ),
+        '#weight' => variable_get('disqus_weight', 50),
+      );
+    }
   }
 
   //dpm($form, '$form');  //debug

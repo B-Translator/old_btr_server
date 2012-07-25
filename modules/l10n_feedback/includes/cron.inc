@@ -46,7 +46,7 @@ function send_string_by_email($account) {
   $uid = $account->uid;
   $timestamp = REQUEST_TIME;
   $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
-  $url = url("translations/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
+  $url = url("translations/$lng/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
 
   // Get a short url.
   $short_url = get_short_url($url);
