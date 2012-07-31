@@ -6,4 +6,3 @@ core = 7.x
 dependencies[] = disqus
 
 files[] = l10n_feedback.test
-files[] = includes/html_mail.php

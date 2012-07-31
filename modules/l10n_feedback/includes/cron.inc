@@ -58,29 +58,20 @@ function send_string_by_email($account) {
     $url = $short_url;
   }
 
-  $text_message = "
-If you have time, please help to review the translation of the string at this link:
-$url
-
-Thanks.
-";
-  $html_message = "
-<p>If you have time, please help to review the translation of the string at this link:
-<a href='$url'>$url</a></p>
-
-<p>Thanks.</p>
-";
-
   $module = 'l10n_feedback';
   $key = 'send_string_by_email';
-  $from = "l10n-sq <l10n@cit.edu.al>";
+  $smtp_from = variable_get('smtp_from');
+  $smtp_fromname = variable_get('smtp_fromname');
+  $from = "$smtp_fromname <$smtp_from>";
   $to = $account->name . ' <' .$account->mail . '>';
   $language = $account->lng;
   $send = TRUE;
 
   $params['subject'] = t('Translation Review');
-  $params['text_message'] = $text_message;
-  $params['html_message'] = $html_message;
+  $params['body'] = array(
+    t("If you have time, please help to review the translation of the string at this link: $url"),
+    t('Thanks'),
+  );
 
   $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
   return $result;

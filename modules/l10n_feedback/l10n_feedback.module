@@ -225,8 +225,7 @@ function l10n_feedback_mail($key, &$message, $params) {
     // Send a string for review.
     case 'send_string_by_email':
       $message['subject'] = $params['subject'];
-      $message['body_text'] = $params['text_message'];
-      $message['body_html'] = $params['html_message'];
+      $message['body'] = $params['body'];
       break;
   }
 }
