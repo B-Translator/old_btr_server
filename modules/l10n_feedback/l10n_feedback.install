@@ -5,24 +5,32 @@
  */
 
 /**
+ * Implements hook_enable().
+ */
+function l10n_feedback_enable() {
+  mailsystem_set(array('l10n_feedback' => 'HTMLMailSystem'));
+}
+
+/**
+ * Implements hook_disable().
+ */
+function l10n_feedback_disable() {
+  mailsystem_clear(array('l10n_feedback' => 'HTMLMailSystem'));
+}
+
+/**
  * Implements hook_install().
  */
 function l10n_feedback_install() {
-
-  $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
-  $mail_system['l10n_feedback'] = 'HTMLMailSystem';
-  variable_set('mail_system', $mail_system);
+  $path = drupal_get_path('module', 'l10n_feedback');
+  $output = shell_exec($path . '/data/install.sh');
+  drupal_set_message("<xmp>$output</xmp>");
 }
 
 /**
  * Implements hook_uninstall().
  */
 function l10n_feedback_uninstall() {
-
-  // Unset module keys in variable mail_system
-  $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
-  unset($mail_system['l10n_feedback']);
-  variable_set('mail_system', $mail_system);
 }
 
 /**

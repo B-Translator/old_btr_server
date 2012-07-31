@@ -48,12 +48,13 @@ dependencies[] = context
 dependencies[] = context_ui
 dependencies[] = ctools
 dependencies[] = diff
-dependencies[] = features
+;dependencies[] = features
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
 dependencies[] = fusion_accelerator
 dependencies[] = disqus
+dependencies[] = mailsystem
 
 ;;--------------------
 ;; Drupal for Facebook

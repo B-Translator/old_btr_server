@@ -41,6 +41,7 @@ projects[reroute_email][version] = "1.1"
 projects[smtp][version] = "1.0-beta1"
 projects[wysiwyg][version] = "2.1"
 projects[disqus][version] = "1.9"
+projects[mailsystem][version] = "2.34"
 
 ;--------------------
 ; Libraries
