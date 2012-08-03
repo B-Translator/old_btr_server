@@ -1,4 +1,7 @@
 
+Instructions for installing a development/production copy of
+B-Translator.
+
 * Packages
   #+BEGIN_EXAMPLE
   apt-get update
@@ -7,7 +10,7 @@
   aptitude upgrade
   tasksel install lamp-server
   aptitude install phpmyadmin
-  aptitude install drush php5-curl php-apc
+  aptitude install drush php5-curl php-apc php-elisp
   aptitude install git
   aptitude install gawk
   aptitude install mercurial           ### for getting Mozilla files
@@ -55,30 +58,30 @@
     and ~default-ssl~ and modifying them like this:
     #+BEGIN_EXAMPLE
     <VirtualHost *:80>
-        ServerName l10n.cit.edu.al
-	ServerAdmin l10n@cit.edu.al
+        ServerName l10n-dev.org.al
+	ServerAdmin dashohoxha@gmail.com
 
-	DocumentRoot /var/www/drupal
+	DocumentRoot /var/www/l10n-dev.org.al
 	<Directory />
 	    Options FollowSymLinks
 	    AllowOverride None
         </Directory>
-        <Directory /var/www/drupal/>
+        <Directory /var/www/l10n-dev.org.al/>
             Options Indexes FollowSymLinks MultiViews
 	    #AllowOverride None
-	    AllowOverride All
+	    AllowOverride All   ### this is needed for clean URLs
             Order allow,deny
 	    allow from all
-        </Directory>    
+        </Directory>
     #+END_EXAMPLE
 
     #+BEGIN_EXAMPLE
     <IfModule mod_ssl.c>
     <VirtualHost *:443>
-        ServerName l10n.cit.edu.al
-        ServerAdmin l10n@cit.edu.al
+        ServerName l10n-dev.org.al
+	ServerAdmin dashohoxha@gmail.com
 
-        DocumentRoot /var/www/drupal
+	DocumentRoot /var/www/l10n-dev.org.al
         <Directory />
             Options FollowSymLinks
             AllowOverride None
@@ -86,10 +89,15 @@
 	<Directory /var/www/drupal/>
 	    Options Indexes FollowSymLinks MultiViews
 	    #AllowOverride None
-	    AllowOverride All
+	    AllowOverride All   ### this is needed for clean URLs
 	    Order allow,deny
 	    allow from all
 	</Directory>
+    #+END_EXAMPLE
+
+  + Add this line to ~/etc/fstab~
+    #+BEGIN_EXAMPLE
+    127.0.0.1    l10n-dev.org.al
     #+END_EXAMPLE
 
   + Enable the sites ~l10n~ and ~l10n-ssl~:
@@ -103,24 +111,32 @@
     000-l10n  000-l10n-ssl  001-default  001-default-ssl
     #+END_EXAMPLE
 
+  + At ~/etc/php5/apache2/php.ini~ set ~display_errors = On~ and restart apache.
+
   + Finally restart apache: =service apache2 restart=.
+
 
 * Drupal configuration
 
+  + On /Site information/ page
+    (=/admin/config/system/site-information=) set email address to your
+    email address (for example ~dashohoxha+btranslator@gmail.com~).  Modify
+    also the site name and slogan.
+
   + Disable temporarily the facebook app, at
-    =/admin/structure/fb/app/l10nsq/fb_app=
+    =/admin/structure/fb/app=
 
   + Install module SMTP Authentication support and enable and
-    configure it at ~/admin/config/system/smtp~:
+    configure it (at =/admin/config/system/smtp=):
     - Set SMTP server to: ~smtp.googlemail.com~
     - SMTP Port: ~465~
     - Use encrypted protocol: ~Use SSL~
-    - SMTP authentication username: ~Dashamir.Hoxha@cit.edu.al~ (set
+    - SMTP authentication username: ~dashohoxha@gmail.com~ (set
       the password as well)
-    - Email from address: ~l10n@cit.edu.al~
-    - Email from name: ~l10n sq~
+    - Email from address: ~dashohoxha+btranslator@gmail.com~
+    - Email from name: ~btranslator~
     - Allow to send email formatted as html: ~checked~
-    - Sends also a test email to ~dashohoxha@gmail.com~
+    - Sends also a test email to ~dashohoxha+test@gmail.com~
 
   + On the configuration of Boost (~/admin/config/system/boost~)
     disable cache for the page /translations/.
@@ -137,81 +153,19 @@
     - Edit ~/etc/php5/apache2/php.ini~ and add this line: ~apc.rfc1867 = 1~
     - Restart /apache2/: ~service apache2 restart~
 
-  + At /Site information/ ~/admin/config/system/site-information~
-    change /Email address/ to: ~l10n@cit.edu.al~ (this address is
-    actually an alias to ~Dashamir.Hoxha@cit.edu.al~, created on
-    Google Apps).
-
   + Configure /cron/:
     - Enable rerouting of emails, at
-      ~/admin/config/development/reroute_email~ and set the reroute
+      =/admin/config/development/reroute_email= and set the reroute
       email to ~dashohoxha@gmail.com~
-    - Disable the internal cron at ~/admin/config/system/cron~
+    - Disable the internal cron at =/admin/config/system/cron=
     - Run =crontab -e= and add these lines:
       #+BEGIN_EXAMPLE
-      ### https://l10n.cit.edu.al
-      0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://l10n.cit.edu.al/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+      ### https://l10n-dev.org.al
+      0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
       #+END_EXAMPLE
     - Test it by running this command from command line:
       #+BEGIN_EXAMPLE
-      wget -O - -q -t 1 --no-check-certificate https://l10n.cit.edu.al/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+      wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
       #+END_EXAMPLE
-    - Disable rerouting of emails at
-      ~/admin/config/development/reroute_email~
-
-* Sending email using MSMTP with Gmail
-
-  + Install msmtp and ca-certificates for use with SSL:
-    #+BEGIN_EXAMPLE
-    aptitude install msmtp ca-certificates
-    #+END_EXAMPLE
-
-  + Create the file ~/etc/msmtprc~
-    #+BEGIN_EXAMPLE
-    defaults
-    tls on
-    tls_starttls off
-    tls_trust_file /etc/ssl/certs/ca-certificates.crt
-
-    account default
-    host smtp.googlemail.com
-    port 465
-    auth on
-    user l10n-admin@cit.edu.al
-    password xyz..
-    from l10n@cit.edu.al
-    logfile /var/log/msmtp.log
-    #+END_EXAMPLE
-    #+BEGIN_EXAMPLE
-    chmod 0644 /etc/msmtprc    
-    #+END_EXAMPLE
-
-  + Edit ~/etc/php5/apache2/php.ini~ and add this line:
-    #+BEGIN_EXAMPLE
-    sendmail_path = '/usr/bin/msmtp -t'
-    #+END_EXAMPLE
-    Then restart /apache2/:
-    #+BEGIN_EXAMPLE
-    service apache2 restart
-    #+END_EXAMPLE
-
-  + For testing it, create the file ~/var/www/drupal/testmail.php~
-    with a content like this:
-    #+BEGIN_EXAMPLE
-    <?php
-    if (mail('dashohoxha@gmail.com', 'Test mail from localhost', 'Working Fine.' ) ){
-    echo 'Mail sent';
-    }
-    else{
-    echo 'Error. Please check error log.';
-    }
-    ?>
-    #+END_EXAMPLE
-    Then open it on a browser: http://l10n.cit.edu.al/testmail.php
-
-  Referencies:
-  + http://www.absolutelytech.com/2010/07/17/howto-configure-msmtp-to-work-with-gmail-on-linux/
-  + http://www.absolutelytech.com/2010/07/18/howto-send-emailsusing-mail-function-from-localhost-in-php-through-msmtp-using-gmail-account-on-linux/
-  + http://www.cecilieokada.com/blog/web-development/sending-email-from-localhost-using-msmtp-with-gmail/
-  + http://grault.wordpress.com/2009/04/23/command-line-gmail-msmtp-465/
+      For the correct cron URL to be used, check =/admin/reports/status=
 

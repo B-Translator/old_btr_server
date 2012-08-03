@@ -26,13 +26,14 @@ test/update.sh
 ### Then you can check the progress at any time by:
 ###   tail -f nohup.out
 
+dir=$(dirname $0)
 echo "
   In order to import the real data, first of all check/modify
-  'config.sh', and then run 'update.sh'.
+  '$dir/config.sh', and then run '$dir/update.sh'.
   Importing all the data can take a lot of time (many hours,
   maybe days), so it is a good idea to run the update script
   like this:
-    nohup ./update.sh &
+    nohup $dir/update.sh &
   Then you can check the progress at any time by:
     tail -f nohup.out
 
