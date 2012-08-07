@@ -55,6 +55,10 @@ dependencies[] = views_ui
 dependencies[] = fusion_accelerator
 dependencies[] = disqus
 dependencies[] = mailsystem
+;dependencies[] = google_analytics
+;dependencies[] = token
+;dependencies[] = rpx
+
 
 ;;--------------------
 ;; Drupal for Facebook

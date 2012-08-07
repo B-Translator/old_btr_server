@@ -1,119 +1,164 @@
 
-Instructions for installing a development/production copy of
+Instructions for installing a development/testing copy of
 B-Translator.
 
-* Packages
+* Install packages
+
+  + Install *LAMP* and related packages:
+    #+BEGIN_EXAMPLE
+    tasksel install lamp-server
+    aptitude install phpmyadmin php5-curl php-apc
+    #+END_EXAMPLE
+
+  + Install *drush-4* and *drush_make* (drush-5 still has some
+    problems with 'make'):
+    #+BEGIN_EXAMPLE
+    aptitude install drush php-pear
+    pear channel-discover pear.drush.org
+    pear upgrade drush/drush-4.6.0
+
+    mkdir -p ~/.drush
+    cd ~/.drush/
+    wget http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz
+    tar xfz drush_make-6.x-2.3.tar.gz
+    #+END_EXAMPLE
+
+  + Install some tools needed by the scripts:
+    #+BEGIN_EXAMPLE
+    aptitude install gawk
+    aptitude install git mercurial subversion  ### for getting PO files etc
+    aptitude install translate-toolkit         ### provides moz2po and po2moz
+
+    svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology  /usr/local/lib/pology
+    #+END_EXAMPLE
+
+  For those like me that use Emacs for development, checkout this:
+  http://drupal.org/project/emacs
+
+
+* Install the profile btranslator
+
   #+BEGIN_EXAMPLE
-  apt-get update
-  apt-get install aptitude
-  aptitude update
-  aptitude upgrade
-  tasksel install lamp-server
-  aptitude install phpmyadmin
-  aptitude install drush php5-curl php-apc php-elisp
-  aptitude install git
-  aptitude install gawk
-  aptitude install mercurial           ### for getting Mozilla files
-  aptitude install translate-toolkit   ### provides moz2po and po2moz
+  cd /var/www/
+  sudo wget https://raw.github.com/dashohoxha/B-Translator/master/install-btranslator.sh
+  sudo ./install-btranslator.sh l10n-dev
+  sudo ./install-btranslator.sh l10n-tst
   #+END_EXAMPLE
+
 
 * Apache2 configuration
 
-  + Enable SSL Name-Based virtual hosting.
-    - Enable mode /ssl/: ~a2enmod ssl~
+** Enable SSL Name-Based virtual hosting.
 
-    - Edit ~/etc/apache2/ports.conf~ and add the line
-      ~NameVirtualHost *:443~:
-      #+BEGIN_EXAMPLE
-      <IfModule mod_ssl.c>
-        # If you add NameVirtualHost *:443 here, you will also have to change
-        # the VirtualHost statement in /etc/apache2/sites-available/default-ssl
-        # to <VirtualHost *:443>
-        # Server Name Indication for SSL named virtual hosts is currently not
-        # supported by MSIE on Windows XP.
-        NameVirtualHost *:443
-	  Listen 443
-      </IfModule>
-      #+END_EXAMPLE
+   + Enable mode /ssl/: ~a2enmod ssl~
 
-    - Edit ~/etc/apache2/sites-available/default-ssl~ and change
-      the VirtualHost statement (at the top) to ~<VirtualHost
-      *:443>~, like this:
-      #+BEGIN_EXAMPLE
-      <IfModule mod_ssl.c>
-      <VirtualHost *:443>
-      #+END_EXAMPLE
+   + Edit ~/etc/apache2/ports.conf~ and add the line
+     ~NameVirtualHost *:443~:
+     #+BEGIN_EXAMPLE
+     <IfModule mod_ssl.c>
+       # If you add NameVirtualHost *:443 here, you will also have to change
+       # the VirtualHost statement in /etc/apache2/sites-available/default-ssl
+       # to <VirtualHost *:443>
+       # Server Name Indication for SSL named virtual hosts is currently not
+       # supported by MSIE on Windows XP.
+       NameVirtualHost *:443  ### add this line
+       Listen 443
+     </IfModule>
+     #+END_EXAMPLE
 
-    - Then restart apache: ~service apache2 restart~
+   + Edit ~/etc/apache2/sites-available/default-ssl~ and change
+     the VirtualHost statement (at the top) to ~<VirtualHost
+     *:443>~, like this:
+     #+BEGIN_EXAMPLE
+     <IfModule mod_ssl.c>
+     <VirtualHost *:443>
+     #+END_EXAMPLE
 
-  + Enable apache modules /headers/ and /rewrite/:
+   + Then restart apache: ~service apache2 restart~
+
+** Enable additonal apache modules
+
     #+BEGIN_EXAMPLE
     a2enmod headers
     a2enmod rewrite
     service apache2 restart
     #+END_EXAMPLE
 
-  + Create configuration files ~/etc/apache2/sites-available/l10n~,
-    and ~/etc/apache2/sites-available/l10n-ssl~ by copying ~default~
-    and ~default-ssl~ and modifying them like this:
-    #+BEGIN_EXAMPLE
-    <VirtualHost *:80>
-        ServerName l10n-dev.org.al
-	ServerAdmin dashohoxha@gmail.com
+** Site configurations for development and testing
 
-	DocumentRoot /var/www/l10n-dev.org.al
-	<Directory />
-	    Options FollowSymLinks
-	    AllowOverride None
-        </Directory>
-        <Directory /var/www/l10n-dev.org.al/>
-            Options Indexes FollowSymLinks MultiViews
-	    #AllowOverride None
-	    AllowOverride All   ### this is needed for clean URLs
-            Order allow,deny
-	    allow from all
-        </Directory>
-    #+END_EXAMPLE
+   + Create configuration files ~/etc/apache2/sites-available/l10n-dev~,
+     and ~/etc/apache2/sites-available/l10n-dev-ssl~ by copying ~default~
+     and ~default-ssl~ and modifying them like this:
+     #+BEGIN_EXAMPLE
+     <VirtualHost *:80>
+	 ServerName l10n-dev.org.al
+	 ServerAdmin dashohoxha@gmail.com
+	 DocumentRoot /var/www/l10n-dev
 
-    #+BEGIN_EXAMPLE
-    <IfModule mod_ssl.c>
-    <VirtualHost *:443>
-        ServerName l10n-dev.org.al
-	ServerAdmin dashohoxha@gmail.com
+	 <Directory />
+	     Options FollowSymLinks
+	     AllowOverride None
+	 </Directory>
 
-	DocumentRoot /var/www/l10n-dev.org.al
-        <Directory />
-            Options FollowSymLinks
-            AllowOverride None
-        </Directory>
-	<Directory /var/www/drupal/>
-	    Options Indexes FollowSymLinks MultiViews
-	    #AllowOverride None
-	    AllowOverride All   ### this is needed for clean URLs
-	    Order allow,deny
-	    allow from all
-	</Directory>
-    #+END_EXAMPLE
+	 ### directory where application is installed
+	 <Directory /var/www/l10n-dev/>
+	     Options Indexes FollowSymLinks MultiViews
+	     # AllowOverride None
+	     AllowOverride All   ### this is needed for clean URLs
+	     Order allow,deny
+	     allow from all
+	 </Directory>
+     #+END_EXAMPLE
 
-  + Add this line to ~/etc/fstab~
-    #+BEGIN_EXAMPLE
-    127.0.0.1    l10n-dev.org.al
-    #+END_EXAMPLE
+     #+BEGIN_EXAMPLE
+     <IfModule mod_ssl.c>
+     <VirtualHost *:443>
+	 ServerName l10n-dev.org.al
+	 ServerAdmin dashohoxha@gmail.com
+	 DocumentRoot /var/www/l10n-dev
 
-  + Enable the sites ~l10n~ and ~l10n-ssl~:
-    #+BEGIN_EXAMPLE
-    a2ensite l10n
-    a2ensite l10n-ssl
-    #+END_EXAMPLE
+	 <Directory />
+	     Options FollowSymLinks
+	     AllowOverride None
+	 </Directory>
 
-    Then rename the links on ~/etc/apache2/sites-enables~ like this:
-    #+BEGIN_EXAMPLE
-    000-l10n  000-l10n-ssl  001-default  001-default-ssl
-    #+END_EXAMPLE
+	 ### directory where application is installed
+	 <Directory /var/www/l10n-dev/>
+	     Options Indexes FollowSymLinks MultiViews
+	     # AllowOverride None
+	     AllowOverride All   ### this is needed for clean URLs
+	     Order allow,deny
+	     allow from all
+	 </Directory>
+     #+END_EXAMPLE
 
-  + At ~/etc/php5/apache2/php.ini~ set ~display_errors = On~ and restart apache.
+   + Similarly, create the configuration files
+     ~/etc/apache2/sites-available/l10n-tst~, and
+     ~/etc/apache2/sites-available/l10n-tst-ssl~ for a testing
+     installation.
 
-  + Finally restart apache: =service apache2 restart=.
+   + Enable the sites:
+     #+BEGIN_EXAMPLE
+     a2ensite l10n-dev l10n-dev-ssl l10n-tst l10n-tst-ssl
+     #+END_EXAMPLE
+
+   + Add these line to ~/etc/hosts~
+     #+BEGIN_EXAMPLE
+     127.0.0.1    l10n-dev.org.al
+     127.0.0.1    l10n-tst.org.al
+     #+END_EXAMPLE
+
+   + Finally restart apache: =service apache2 restart=.
+
+
+* Customize PHP settings
+  Do these modifications to ~/etc/php5/apache2/php.ini~:
+  + Add this line: ~apc.rfc1867 = 1~ at the begining, after /[PHP]/.
+    This is neede tp enable displaying file upload progress. Make sure
+    that the package ~php-apc~ is already installed.
+  + Set ~display_errors = On~.
+
+  Finally restart apache.
 
 
 * Drupal configuration
@@ -122,9 +167,6 @@ B-Translator.
     (=/admin/config/system/site-information=) set email address to your
     email address (for example ~dashohoxha+btranslator@gmail.com~).  Modify
     also the site name and slogan.
-
-  + Disable temporarily the facebook app, at
-    =/admin/structure/fb/app=
 
   + Install module SMTP Authentication support and enable and
     configure it (at =/admin/config/system/smtp=):
@@ -138,9 +180,6 @@ B-Translator.
     - Allow to send email formatted as html: ~checked~
     - Sends also a test email to ~dashohoxha+test@gmail.com~
 
-  + On the configuration of Boost (~/admin/config/system/boost~)
-    disable cache for the page /translations/.
-
   + Create directory ~cache/~ (which is used by /Boost/) and make it
     writable by /apache/:
     #+BEGIN_EXAMPLE
@@ -148,24 +187,32 @@ B-Translator.
     chown www-data: -R cache/
     #+END_EXAMPLE
 
-  + Enable displaying file upload progress through APC:
-    - Install /php-apc/: ~aptitude install php-apc~
-    - Edit ~/etc/php5/apache2/php.ini~ and add this line: ~apc.rfc1867 = 1~
-    - Restart /apache2/: ~service apache2 restart~
+  + On the configuration of Boost (=/admin/config/system/boost=)
+    disable cache for the page /translations/.
 
-  + Configure /cron/:
-    - Enable rerouting of emails, at
-      =/admin/config/development/reroute_email= and set the reroute
-      email to ~dashohoxha@gmail.com~
-    - Disable the internal cron at =/admin/config/system/cron=
-    - Run =crontab -e= and add these lines:
-      #+BEGIN_EXAMPLE
-      ### https://l10n-dev.org.al
-      0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
-      #+END_EXAMPLE
-    - Test it by running this command from command line:
-      #+BEGIN_EXAMPLE
-      wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
-      #+END_EXAMPLE
-      For the correct cron URL to be used, check =/admin/reports/status=
+  + Create one or more test users (at =/admin/people/create=).
+    For example:
+    - Username: ~user1~
+    - Email address: ~dashohoxha+user1@gmail.com~
 
+
+* Cron configuration
+
+  + Enable rerouting of emails, at
+    =/admin/config/development/reroute_email= and set the reroute
+    email to your email address (for example ~dashohoxha@gmail.com~)
+
+  + Disable the internal cron at =/admin/config/system/cron= (make it *Never*).
+
+  + Run =crontab -e= and add these lines:
+    #+BEGIN_EXAMPLE
+    ### https://l10n-dev.org.al
+    0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+    #+END_EXAMPLE
+
+  + Test it by running this command from command line:
+    #+BEGIN_EXAMPLE
+    wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+    #+END_EXAMPLE
+
+  For the correct cron URL to be used, check =/admin/reports/status=

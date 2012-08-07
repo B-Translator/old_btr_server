@@ -26,3 +26,6 @@ modules/wysiwyg/
 themes/
 modules/disqus/
 modules/mailsystem/
+modules/google_analytics/
+modules/rpx/
+modules/token/

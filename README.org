@@ -2,54 +2,16 @@
 This is a Drupal installation profile for B-Translator.
 
 * Installation
+
   A full distro including Drupal core (with patches) and the
   /btranslation/ installation profile can be built like this:
   #+BEGIN_EXAMPLE
   cd /var/www/
   sudo wget https://raw.github.com/dashohoxha/B-Translator/master/install-btranslator.sh
-  echo "edit install-btranslator.sh and make sure that you undestand what is going on"
   sudo ./install-btranslator.sh [directory]
   #+END_EXAMPLE
 
-* Requirements
-
-  + LAMP:
-    #+BEGIN_EXAMPLE
-    sudo tasksel install lamp-server
-    sudo apt-get install phpmyadmin php5-curl php-apc
-    #+END_EXAMPLE
-
-  + drush make:
-    #+BEGIN_EXAMPLE
-    sudo apt-get install drush
-    mkdir ~/.drush
-    cd ~/.drush
-    wget http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz
-    tar xfz drush_make-6.x-2.3.tar.gz
-    #+END_EXAMPLE
-
-  + Other tools:
-    #+BEGIN_EXAMPLE
-    sudo apt-get install git gawk mercurial translate-toolkit
-    #+END_EXAMPLE
-
-  + Apache modules:
-    #+BEGIN_EXAMPLE
-    a2enmod headers
-    a2enmod rewrite
-    #+END_EXAMPLE
-
-  + Apache config:
-    #+BEGIN_EXAMPLE
-    <Directory /var/www/drupal/>
-        Options Indexes FollowSymLinks MultiViews
-        #AllowOverride None
-        AllowOverride All
-        Order allow,deny
-        allow from all
-    </Directory>
-    #+END_EXAMPLE
-
+  For more detailed information about installation see *docs/INSTALL.org*.
 
 * What means B-Translator
 
@@ -101,6 +63,6 @@ This is a Drupal installation profile for B-Translator.
     the same string), or it can be a new alternative translation (for
     an existing translation), or it can be a new translation
     suggestion (for a string that is not translated yet).
-    
+
 
 
