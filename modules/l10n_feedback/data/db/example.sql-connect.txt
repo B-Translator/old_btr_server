@@ -1,0 +1,1 @@
+mysql --database=l10n_dev --host=localhost --user=l10n_dev --password=l10n_dev

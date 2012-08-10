@@ -1,1 +1,0 @@
-mysql --database=test1 --host=localhost --user=test1 --password=test1
