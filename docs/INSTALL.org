@@ -142,7 +142,7 @@ B-Translator.
      a2ensite l10n-dev l10n-dev-ssl l10n-tst l10n-tst-ssl
      #+END_EXAMPLE
 
-   + Add these line to ~/etc/hosts~
+   + Add these lines to ~/etc/hosts~
      #+BEGIN_EXAMPLE
      127.0.0.1    l10n-dev.org.al
      127.0.0.1    l10n-tst.org.al
@@ -154,7 +154,7 @@ B-Translator.
 * Customize PHP settings
   Do these modifications to ~/etc/php5/apache2/php.ini~:
   + Add this line: ~apc.rfc1867 = 1~ at the begining, after /[PHP]/.
-    This is neede tp enable displaying file upload progress. Make sure
+    This is neede to enable displaying file upload progress. Make sure
     that the package ~php-apc~ is already installed.
   + Set ~display_errors = On~.
 

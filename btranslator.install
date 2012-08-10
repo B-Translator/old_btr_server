@@ -8,10 +8,27 @@
 function btranslator_install() {
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
   standard_install();
+
+  // set the default theme
   theme_enable(array('bartik'));
   variable_set('theme_default', 'bartik');
 
-  //variable_set('cache', '1');
-  //variable_set('block_cache', '1');
-  //variable_set('cache_lifetime', '0');
+  // user settings
+  variable_set('user_register', USER_REGISTER_VISITORS);
+  variable_set('user_email_verification', TRUE);
+  variable_set('user_signatures', TRUE);
+
+  // mailsystem
+  variable_set('mailsystem_theme', 'current');
+  $mail_system = variable_get('mail_system');
+  $mail_system['default-system'] = 'SmtpMailSystem';
+  $mail_system['l10n_feedback'] = 'SmtpMailSystem';
+  variable_set('mail_system', $mail_system);
+
+  // cache and boost
+  variable_set('cache', '1');
+  variable_set('block_cache', '1');
+  variable_set('cache_lifetime', '0');
+  variable_set('boost_cacheability_option', 0);
+  variable_set('boost_cacheability_pages', 'translations');
 }
