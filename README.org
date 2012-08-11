@@ -7,8 +7,8 @@ This is a Drupal installation profile for B-Translator.
   /btranslation/ installation profile can be built like this:
   #+BEGIN_EXAMPLE
   cd /var/www/
-  sudo wget https://raw.github.com/dashohoxha/B-Translator/master/install-btranslator.sh
-  sudo ./install-btranslator.sh [directory]
+  sudo git clone https://github.com/dashohoxha/B-Translator.git
+  sudo B-Translator/install/all.sh
   #+END_EXAMPLE
 
   For more detailed information about installation see *docs/INSTALL.org*.

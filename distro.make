@@ -10,6 +10,5 @@ projects[buildkit] = FALSE
 projects[btranslator][type] = profile
 projects[btranslator][download][type] = git
 projects[btranslator][download][url] = https://github.com/dashohoxha/B-Translator.git
-;;;for developing make files, comment the line above and use the following url and branch
 ;projects[btranslator][download][url] = /var/www/B-Translator
-;projects[btranslator][download][branch] = test
+;projects[btranslator][download][branch] = dev

@@ -40,9 +40,8 @@ B-Translator.
 
   #+BEGIN_EXAMPLE
   cd /var/www/
-  sudo wget https://raw.github.com/dashohoxha/B-Translator/master/install-btranslator.sh
-  sudo ./install-btranslator.sh l10n-dev
-  sudo ./install-btranslator.sh l10n-tst
+  sudo git clone https://github.com/dashohoxha/B-Translator.git
+  sudo B-Translator/install/all.sh
   #+END_EXAMPLE
 
 
