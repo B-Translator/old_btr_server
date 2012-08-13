@@ -162,6 +162,70 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   :ARCHIVE_TODO: DONE
   :END:
 
+* DONE For each l10n string, display in which projects it occurs (related locations), etc.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-08-14 Tue 00:58
+  :ARCHIVE_FILE: /var/www-ssl/B-Translator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/UI
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Add FB comments for each string-lng
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-08-14 Tue 00:58
+  :ARCHIVE_FILE: /var/www-ssl/B-Translator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Integration with Facebook
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Implemented with Disqus comments.
+* DONE Build a Drupal Installation Profile for l10n.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-08-14 Tue 00:58
+  :ARCHIVE_FILE: /var/www-ssl/B-Translator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Can be improved later.
+
+* DONE Add the possibility to leave comments/discussions under each string-lng
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-08-14 Tue 00:58
+  :ARCHIVE_FILE: /var/www-ssl/B-Translator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  These can be drupal comments, or facebook comments, etc.
+  (Implemented with Disqus comments.)
+
+* DONE Is it possible to integrate with translation review with StackOverflow API?
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-08-14 Tue 00:58
+  :ARCHIVE_FILE: /var/www-ssl/B-Translator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Already integrated with Disqus, which is better.
+
+* DONE Use GoogleTranslate API to make an initial suggestion for strings with no translation.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-08-14 Tue 00:58
+  :ARCHIVE_FILE: /var/www-ssl/B-Translator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  It has become commercial. Cannot be done.
+
+
+
+
+
+
+
 
 
 

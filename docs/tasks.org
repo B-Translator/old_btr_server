@@ -66,8 +66,6 @@
     + When the votes are changed, the old (removed) votes should be stored on
       an archive table, in order to keep the history of changing votes as well.
 
-*** DONE For each l10n string, display in which projects it occurs (related locations), etc.
-
 ** Workflow
 
 *** When a new suggestion is added, notify previous voters to review their votes.
@@ -83,8 +81,6 @@
     Or some other web-service (API) interface.
 
 ** Integration with Facebook
-*** DONE Add FB comments for each string-lng
-    Implemented with Disqus comments.
 *** For each translation review add a button for posting it on FB as a poll.
 *** When a FB user votes or leaves a comment, update his status.
 
@@ -92,21 +88,6 @@
 ** Misc
 
 *** Start with simple tests (l10n_feedback.test)
-*** DONE Build a Drupal Installation Profile for l10n.
-    Can be improved later.
 *** Send full html pages by email.
 *** Improve the look of number of votes.
-
-*** DONE Add the possibility to leave comments/discussions under each string-lng
-    These can be drupal comments, or facebook comments, etc.
-    (Implemented with Disqus comments.)
-
 *** Add in l10n-sq.org a page for each project which can be liked, +1-d, etc.
-
-*** DONE Is it possible to integrate with translation review with StackOverflow API?
-    Already integrated with Disqus, which is better.
-
-*** DONE Use GoogleTranslate API to make an initial suggestion for strings with no translation.
-    It has become commercial. Cannot be done.
-
-
