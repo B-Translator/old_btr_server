@@ -5,7 +5,7 @@
 scripts=$(dirname $0)
 
 ### get the app_dir from the config file
-. $scripts/config.sh
+. btranslator-config.sh
 
 ### get the application directory
 while true
@@ -31,7 +31,7 @@ git checkout dev
 
 ### create a customized distro.make, which gets the project from the local repository
 cd $current_dir
-cat <<EOF > B-Translator-dev.distro.make
+cat <<EOF > btranslator-distro.make
 ; Include Build Kit distro makefile via URL
 includes[] = http://drupalcode.org/project/buildkit.git/blob_plain/refs/heads/7.x-2.x:/distro.make
 projects[buildkit] = FALSE
@@ -43,4 +43,4 @@ projects[btranslator][download][branch] = dev
 EOF
 
 ### retrieve all the projects/modules and build the application directory
-drush make --working-copy B-Translator-dev.distro.make $appdir
+drush make --working-copy btranslator-distro.make $appdir

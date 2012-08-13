@@ -5,7 +5,7 @@
 scripts=$(dirname $0)
 
 ### get the DB connection settings
-. $scripts/config.sh
+. btranslator-config.sh
 
 ### confirm/modify the settings
 echo "Give db_name, db_user and db_pass."

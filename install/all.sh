@@ -3,6 +3,12 @@
 ### get the directory of the installation scripts
 scripts=$(dirname $0)
 
+### get a copy of config.sh on the current directory
+if [ ! -f btranslator-config.sh ]
+then
+    cp $scripts/config.sh btranslator-config.sh
+fi
+
 ### install the required packages and tools
 read -p "Install packages? (Y/n): " answer
 if [ "$answer" != 'n' ]

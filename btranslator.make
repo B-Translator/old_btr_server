@@ -43,7 +43,7 @@ projects[wysiwyg][version] = "2.1"
 projects[disqus][version] = "1.9"
 projects[mailsystem][version] = "2.34"
 projects[google_analytics][version] = "1.2"
-projects[token][version] = "1.1"
+projects[token][version] = "1.2"
 projects[rpx][version] = "2.2"
 
 ;--------------------

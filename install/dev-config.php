@@ -64,7 +64,7 @@ variable_set('date_default_timezone', 'Europe/Tirane');
 variable_set('date_first_day', 1);
 //variable_set('site_default_country', 'AL');
 
-// disquss
+// disqus
 variable_set('disqus_developer', true);
 variable_set('disqus_domain', 'l10n-sq');
 variable_set('disqus_inherit_login', true);
@@ -76,6 +76,49 @@ variable_set('disqus_nodetypes',
     'book' => 'book',
   ));
 variable_set('disqus_userapikey', 'jY36xKWOn1MibB0RiZ2zonErZfEx0q6h0SF9Ht5zwsAP0dSFpSBKNSufLfiTsI6x');
-variable_set('disqus_weight', 50);
+variable_set('disqus_weight', 100);
+
+// blocks
+$blocks = array(
+  // disable 'Powered by Drupal'
+  array(
+    'module' => 'system',
+    'delta'  => 'powered-by',
+    'region' => '-1',
+    'status' => 0,
+    'weight' => 0,
+    'cache'  => DRUPAL_CACHE_GLOBAL,
+  ),
+
+  // show the devel menu on the footer
+  array(
+    'module' => 'menu',
+    'delta'  => 'devel',
+    'region' => 'footer',
+    'status' => 1,
+    'weight' => -15,
+    'cache'  => DRUPAL_NO_CACHE,
+  ),
+);
+$default_theme = variable_get('theme_default', 'bartik');
+foreach ($blocks as $block) {
+  extract($block);
+  db_update('block')
+    ->fields(array(
+        'status' => $status,
+        'region' => $region,
+        'weight' => $weight,
+        'cache'  => $cache,
+      ))
+    ->condition('module', $module)
+    ->condition('delta', $delta)
+    ->condition('theme', $default_theme)
+    ->execute();
+}
+
+// cron
+variable_set('cron_safe_threshold', 0);   //disable internal cron
+$cron_key = variable_get('cron_key');
+drush_print("cron_key='$cron_key'");
 
 ?>

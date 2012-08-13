@@ -18,17 +18,155 @@ function btranslator_install() {
   variable_set('user_email_verification', TRUE);
   variable_set('user_signatures', TRUE);
 
-  // mailsystem
+  btranslator_install_mailsystem();
+  btranslator_install_cache();
+  btranslator_install_blocks();
+  btranslator_install_roles();
+  btranslator_install_menus();
+  btranslator_install_nodes();
+}
+
+function btranslator_install_mailsystem()
+{
   variable_set('mailsystem_theme', 'current');
+
   $mail_system = variable_get('mail_system');
   $mail_system['default-system'] = 'SmtpMailSystem';
   $mail_system['l10n_feedback'] = 'SmtpMailSystem';
-  variable_set('mail_system', $mail_system);
 
-  // cache and boost
+  variable_set('mail_system', $mail_system);
+}
+
+function btranslator_install_cache()
+{
   variable_set('cache', '1');
   variable_set('block_cache', '1');
   variable_set('cache_lifetime', '0');
+
   variable_set('boost_cacheability_option', 0);
   variable_set('boost_cacheability_pages', 'translations');
+}
+
+function btranslator_install_blocks()
+{
+  $blocks = array(
+    // show Disqus blocks on the first sidebar
+    array(
+      'module' => 'disqus',
+      'delta'  => 'disqus_recent_comments',
+      'region' => 'sidebar_first',
+      'status' => 1,
+      'weight' => 10,
+      'cache'  => DRUPAL_CACHE_GLOBAL,
+    ),
+    array(
+      'module' => 'disqus',
+      'delta'  => 'disqus_popular_threads',
+      'region' => 'sidebar_first',
+      'status' => 1,
+      'weight' => 11,
+      'cache'  => DRUPAL_CACHE_GLOBAL,
+    ),
+    array(
+      'module' => 'disqus',
+      'delta'  => 'disqus_top_commenters',
+      'region' => 'sidebar_first',
+      'status' => 1,
+      'weight' => 12,
+      'cache'  => DRUPAL_CACHE_GLOBAL,
+    ),
+  );
+
+  $default_theme = variable_get('theme_default', 'bartik');
+
+  foreach ($blocks as $block) {
+    extract($block);
+    db_update('block')
+      ->fields(array(
+          'status' => $status,
+          'region' => $region,
+          'weight' => $weight,
+          'cache'  => $cache,
+        ))
+      ->condition('module', $module)
+      ->condition('delta', $delta)
+      ->condition('theme', $default_theme)
+      ->execute();
+  }
+}
+
+function btranslator_install_roles()
+{
+  // revoke access to comments, since commenting is done through disqus
+  $roles = user_roles(false, 'access comments');
+  foreach ($roles as $rid=>$permission) {
+    user_role_revoke_permissions($rid, array('access comments', 'post comments'));
+  }
+
+  // create a role for translators
+  $translator_role = new stdClass();
+  $translator_role->name = 'translator';
+  $translator_role->weight = 3;
+  user_role_save($translator_role);
+
+  // grant to role translator the same permissions as an authenticated user
+  $permissions = user_role_permissions(array(DRUPAL_AUTHENTICATED_RID => 'authenticated user'));
+  user_role_grant_permissions($translator_role->rid, array_keys($permissions[DRUPAL_AUTHENTICATED_RID]));
+}
+
+function btranslator_install_menus()
+{
+  // add some menu items
+  $menu_item = array(
+    'link_title' => st('Translations'),
+    'link_path' => 'translations',
+    'menu_name' => 'main-menu',
+    'weight' => 10,
+  );
+  menu_link_save($menu_item);
+
+  $menu_item = array(
+    'link_title' => st('Contact'),
+    'link_path' => 'contact',
+    'menu_name' => 'main-menu',
+    'weight' => 11,
+  );
+  menu_link_save($menu_item);
+
+  // update the menu router information
+  menu_rebuild();
+}
+
+function btranslator_install_nodes()
+{
+  $node = new stdClass();
+  $node->type = 'page';
+  node_object_prepare($node);
+  $node->title = 'Terms of Service';
+  $node->path = array('alias' => 'terms');
+  $node->language = LANGUAGE_NONE;
+  $node->body[LANGUAGE_NONE][0]['format']  = 'filtered_html';
+  $node->body[LANGUAGE_NONE][0]['value']   = '
+      The services of this application will be used in good faith. Any
+      disputes will be solved with agreement and mutual understanding.
+  ';
+  $node = node_submit($node);
+  node_save($node);
+
+  /* ------------------- */
+
+  $node = new stdClass();
+  $node->type = 'page';
+  node_object_prepare($node);
+  $node->title = 'Privacy Policy';
+  $node->path = array('alias' => 'privacy');
+  $node->language = LANGUAGE_NONE;
+  $node->body[LANGUAGE_NONE][0]['format']  = 'filtered_html';
+  $node->body[LANGUAGE_NONE][0]['value']   = '
+      The user data provided to this application (for example email address)
+      will be kept confident and will be used only for the purposes of the
+      application.
+  ';
+  $node = node_submit($node);
+  node_save($node);
 }

@@ -5,7 +5,7 @@
 scripts=$(dirname $0)
 
 ### get the site cofiguration settings
-. $scripts/config.sh
+. btranslator-config.sh
 
 ### confirm/modify the settings
 echo "Give site-name, site-email, account-name, account-pass and account-mail."
