@@ -65,4 +65,17 @@ This is a Drupal installation profile for B-Translator.
     suggestion (for a string that is not translated yet).
 
 
+* Contacts
+
+  - Discussion group/forum
+    + Email: /btranslator@googlegroups.com/
+    + Web: https://groups.google.com/forum/?fromgroups&hl=en#!forum/btranslator
+
+  - Chat/IRC: *#btranslator* on *irc.freenode.net* 
+
+  - Misc
+    + Issues: https://github.com/dashohoxha/B-Translator/issues
+    + Wiki: https://github.com/dashohoxha/B-Translator/issues
+
+
 
