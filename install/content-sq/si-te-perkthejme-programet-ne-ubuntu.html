@@ -1,0 +1,45 @@
+<p>Kjo faqe ka disa udhëzime bazë si mund të fillohet puna për përkthimin e programeve në Ubuntu.</p>
+<ol>
+  <li>Fillimisht duhet instaluar gjuha shqipe (shiko:
+    <a href="https://l10n.org.al/ubuntu-shqip">https://l10n.org.al/ubuntu-shqip</a>).
+  </li>
+  <li>Duhet instaluar edhe tastiera shqipe, për ti nxjerrë kollaj shkronjat
+    <strong>ë</strong>,
+    <strong>ç</strong>, etj. (shiko:&nbsp;
+    <a href="https://l10n.org.al/tastiera-shqip">https://l10n.org.al/tastiera-shqip</a>).
+  </li>
+  <li>Pastaj duhet instaluar programi i përkthimit, Lokalize (me komandën:&nbsp;
+    <strong>sudo apt-get install lokalize</strong>&nbsp;)
+  </li>
+  <li>Sigurohu që programi që do përkthehet të jetë i instaluar, p.sh. Nqs do përkthehet
+    <em>kubrick</em>, jep komandën:
+    <strong>sudo apt-get install kubrick</strong>
+  </li>
+  <li>Shkarko skedarin me tekstet e përkthyeshme
+    <strong>kubrick.po</strong> (për të gjetur këtë skedar, më kontakto mua që të të ndihmoj)
+  </li>
+  <li>Fillo përkthimin e skedarit
+    <strong>kubrick.po</strong> me ndihmën e programit
+    <em>Lokalize</em>.
+  </li>
+  <li>Për të parë se si duket përkthimi, mund të përdorësh këto komanda:
+    <ul>
+      <li>
+	<strong>msgfmt -o kubrick.mo kubrick.po</strong>
+      </li>
+      <li>
+	<strong>sudo cp kubrick.mo /usr/share/locale-langpack/sq/LC_MESSAGES/</strong>
+      </li>
+      <li>Pastaj hape programin
+	<em>kubrik</em> dhe ndrysho gjuhën (te
+	<em>Hdihmë &gt; Ndrysho Gjuhën...</em>).
+      </li>
+    </ul>
+  </li>
+  <li>Kur ta kesh mbaruar përkthimin (ose kur të jesh lodhur apo mërzitur dhe do që ta lësh), ma dërgo mua skedarin
+    <strong>kubrick.po</strong>, aq sa të kesh përkthyer, që ta çoj te serverat e ubuntu-së.
+  </li>
+</ol>
+<p>Mirë është që të instalohet edhe Fjalori Drejtshkrimor (shiko:&nbsp;
+  <a href="https://l10n.org.al/fjalori-drejtshkrimor">https://l10n.org.al/fjalori-drejtshkrimor</a>) i cili ndihmon për të korrigjuar gabimet e shkrimit.</p>
+<p>Po qe se të del ndonjë problem ose vështirësi mund të më kontaktosh për ndihmë (ose shkruaj një koment në fund të kësaj faqes).</p>
