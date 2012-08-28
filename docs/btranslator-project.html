@@ -1,0 +1,2626 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>B-Translator as a Software Engineering Project</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-08-28 11:47:56 CEST"/>
+<meta name="author" content="Dashamir Hoxha"/>
+<meta name="description" content="Using the project B-Translator as an example for illustrating some of software development concepts and practices."/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">B-Translator as a Software Engineering Project</h1>
+
+
+<p>
+The project B-Translator will be presented, trying to illustrate
+through it some software development/engineering concepts and
+practices (how they are actually applied in this project).
+</p>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Introduction </a></li>
+<li><a href="#sec-2">2 Conception of the software </a>
+<ul>
+<li><a href="#sec-2.1">2.1 The problems that B-Translator tries to solve and its goals </a></li>
+<li><a href="#sec-2.2">2.2 Are there any existing alternatives to B-Translator? </a></li>
+<li><a href="#sec-2.3">2.3 The meaning of B-Translator </a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Description of its features and functionality </a>
+<ul>
+<li><a href="#sec-3.1">3.1 The features of B-Translator </a>
+<ul>
+<li><a href="#sec-3.1.1">3.1.1 Open access </a></li>
+<li><a href="#sec-3.1.2">3.1.2 Authenticated voting </a></li>
+<li><a href="#sec-3.1.3">3.1.3 Tracking votes </a></li>
+<li><a href="#sec-3.1.4">3.1.4 Highly customizable </a></li>
+<li><a href="#sec-3.1.5">3.1.5 Evaluation algorithms </a></li>
+<li><a href="#sec-3.1.6">3.1.6 Detailed and comprehensive reporting and statistics </a></li>
+<li><a href="#sec-3.1.7">3.1.7 Integration with the existing workflow of the project translations </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Analyzing the functionality in more details </a>
+<ul>
+<li><a href="#sec-4.1">4.1 The actors and use-cases of B-Translator </a></li>
+<li><a href="#sec-4.2">4.2 Interfaces </a>
+<ul>
+<li><a href="#sec-4.2.1">4.2.1 Suggestion interface </a></li>
+<li><a href="#sec-4.2.2">4.2.2 Query interface </a></li>
+<li><a href="#sec-4.2.3">4.2.3 User configuration interface </a></li>
+<li><a href="#sec-4.2.4">4.2.4 Export and import interfaces </a></li>
+<li><a href="#sec-4.2.5">4.2.5 Admin interfaces </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Designing the software </a>
+<ul>
+<li><a href="#sec-5.1">5.1 The DB schema of B-Translator </a></li>
+<li><a href="#sec-5.2">5.2 API </a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 Construction (implementation/development) </a></li>
+<li><a href="#sec-7">7 Managing the project </a></li>
+<li><a href="#sec-8">8 Documentation </a>
+<ul>
+<li><a href="#sec-8.1">8.1 Installation of B-Translator </a></li>
+<li><a href="#sec-8.2">8.2 How B-Translator works </a>
+<ul>
+<li><a href="#sec-8.2.1">8.2.1 Build a dictionary of l10n strings </a></li>
+<li><a href="#sec-8.2.2">8.2.2 Collect feedback from users/reviewers </a></li>
+<li><a href="#sec-8.2.3">8.2.3 Export the revised translations </a></li>
+<li><a href="#sec-8.2.4">8.2.4 The process/workflow for a project without translation </a></li>
+<li><a href="#sec-8.2.5">8.2.5 Exporting only the latest suggestions (diffs) </a></li>
+<li><a href="#sec-8.2.6">8.2.6 The process/workflow for an integrated translation </a></li>
+</ul>
+</li>
+<li><a href="#sec-8.3">8.3 Drupal interfaces (paths) </a>
+<ul>
+<li><a href="#sec-8.3.1">8.3.1 translations[/&lt;lng&gt;/&lt;sguid&gt;] </a></li>
+<li><a href="#sec-8.3.2">8.3.2 translations/search?lng=..&amp;limit=..&amp;mode=..&amp;words=.. </a></li>
+<li><a href="#sec-8.3.3">8.3.3 translations/project </a></li>
+<li><a href="#sec-8.3.4">8.3.4 translations/user_settings </a></li>
+<li><a href="#sec-8.3.5">8.3.5 translations/admin </a></li>
+</ul>
+</li>
+<li><a href="#sec-8.4">8.4 Importing and exporting translation files </a>
+<ul>
+<li><a href="#sec-8.4.1">8.4.1 Translation files </a></li>
+<li><a href="#sec-8.4.2">8.4.2 Importing </a></li>
+<li><a href="#sec-8.4.3">8.4.3 Exporting </a></li>
+<li><a href="#sec-8.4.4">8.4.4 Snapshots and diffs </a></li>
+<li><a href="#sec-8.4.5">8.4.5 Misc </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction </h2>
+<div class="outline-text-2" id="text-1">
+
+
+<p>
+Software Engineering is an interdisciplinary branch between
+programing and project management, that tries to make efficient and
+effective the process of developing new software, by identifying and
+trying to use principles and practices that have proved to be
+successful on the past projects. It was born as a response to the
+failures in software projects for a long time.
+</p>
+<p>
+Programing is an art, and so is the project management. As a result
+software engineering cannot be an exact discipline, although the
+word 'engineering' seems to imply a set of well defined steps and
+rules. However, some guiding principles can be useful when applied
+wisely to the current situation. Anyway, the most important factor
+still remains the experience: you are good at managing software
+projects if you have enough experience with doing it.
+</p>
+<p>
+There are several models (or methods, or approaches, or paradigms)
+for managing a software project. The simples (and oldest) one is the
+waterfall model. The basic steps of the waterfall model are these:
+</p><ul>
+<li>
+requirements
+</li>
+<li>
+analysis
+</li>
+<li>
+design
+</li>
+<li>
+implementation
+</li>
+<li>
+testing
+</li>
+<li>
+deployment
+</li>
+<li>
+maintenance
+
+</li>
+</ul>
+
+<p>These steps should be performed in the life cycle of every software
+development project. However the waterfall model is not very
+realistic, because in practice is very difficult to get everything
+right with the first attempt. For example while gathering the
+software requirement, most probably we can miss something; or maybe
+later there can be a request for updating the requirements.
+</p>
+<p>
+A better approach is the Iterative and Incremental model. The basic
+steps are the same, however the development is performed in several
+cycles, with each of these steps performed in almost each
+cycle. During the cycles the software is improved from an initial
+prototype to a full featured product.
+</p>
+<p>
+There are other methodologies and variations as well, like Agile
+Software Development, Extreme Programing, etc. However the bottom
+line remains that the best method to use depends on the concrete
+software that is to be developed, and any method that can be used
+should be adopted to match the current case.
+</p>
+<p>
+Therefore, here I will describe what I have done on the project
+B-Translator, trying to identify the principles and practices of
+Software Engineering that are used, instead of trying to fit this
+project to one of the standard approaches.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Conception of the software </h2>
+<div class="outline-text-2" id="text-2">
+
+
+<p>
+Before a software starts to be built, the idea of such a software
+has to come somehow to mind. The idea for building such a software
+usually comes to mind because there is some problem to be solved, or
+some need to be fulfilled, which for some reasons, cannot be done
+(or cannot be done properly) by the existing software. Before
+anything else, a software engineer/developer should have a clear
+idea of the problem (or problems) that the software is trying to
+solve, and the overall aim (or goal) or the software.
+</p>
+
+</div>
+
+<div id="outline-container-2.1" class="outline-3">
+<h3 id="sec-2.1"><span class="section-number-3">2.1</span> The problems that B-Translator tries to solve and its goals </h3>
+<div class="outline-text-3" id="text-2.1">
+
+
+<p>
+First of all, B-Translator is a software that helps to get feedback
+about l10n (localization, translations of programs into other
+languages). It also helps to unify all the different translations
+and to ensure consistency among the translations. It is intended to
+be used for the translations of programs into Albanian, but it can
+be used for any other languages as well.
+</p>
+<p>
+The motivation for developing such a software is that the
+traditional (current) l10n work-flow requires highly dedicated
+people, and does not allow (or at least does not facilitate) small
+contributions from random people that do not have such a high
+dedication, determination and enough free time.
+</p>
+<p>
+Also, the process of reviewing and correcting translations is not
+easy and does not facilitate the feedback from the users of the
+translated programs. Although the translators are usually very good
+and professional, they can make mistakes too, and sometimes they
+may miss the best translation for some certain terms. Some feedback
+from the crowd of the users would be more than welcome, if there
+are tools to collect and facilitate it.
+</p>
+<p>
+Another problem with translations is that sometimes they are not
+consistent. The same string has different translations in different
+programs, and sometimes even the same translator may have provided
+different translations for the same string in different cases. This
+happens mainly because each program/project has its own
+translations and there is no central repository for all the
+translations.
+</p>
+<p>
+To summarize, the goals of this software are these:
+</p><ul>
+<li>
+Getting feedback about the translations from a wide crowd of
+people and users. This feedback can be in terms of votes for the
+best translation (when there are more than one translations for
+the same string), or it can be a new alternative translation (for
+an existing translation), or it can be a new translation
+suggestion (for a string that is not translated yet).
+</li>
+<li>
+Helping to ensure consistency among the translations.
+</li>
+<li>
+Merging translations from different sources (for example
+translations made on Launchpad and those made on KDE or GNOME).
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.2" class="outline-3">
+<h3 id="sec-2.2"><span class="section-number-3">2.2</span> Are there any existing alternatives to B-Translator? </h3>
+<div class="outline-text-3" id="text-2.2">
+
+
+<p>
+To my knowledge, there are no such existing tools.  People
+frequently ask how B-Translator is different from Pootle.  Pootle,
+as far as I know, is just an online PO file editor; it doesn't have
+any features for collecting feedback from a crowd of people that
+are not translators.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2.3" class="outline-3">
+<h3 id="sec-2.3"><span class="section-number-3">2.3</span> The meaning of B-Translator </h3>
+<div class="outline-text-3" id="text-2.3">
+
+
+<p>
+The name of the software is not the most important thing, however
+it should be somehow related to the basic idea of the software and
+to its goals, and it should be different from any other software.
+And of course it is better to be a nice name, rather than an ugly
+one.
+</p>
+<p>
+The codename <b>B-Translator</b> can be decoded like <b>Bee Translator</b>,
+since it aims at collecting very small translation contributions
+from a wide crowd of people and to dilute them into something
+useful.
+</p>
+<p>
+It can also be decoded like <b>Be Translator</b>, as an invitation to
+anybody to give his small contribution for translating programs or
+making their translations better.
+</p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Description of its features and functionality </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<p>
+After having a clear idea of the overall aim and goals of the
+software, the software engineer should go into details about the
+features that the software should have and how it should work, so
+that it can properly achieve its goals. This is mainly a description
+of what the software should do and how it should do it, preferably
+in a simple language that even non-technical people (non-developers)
+can understand.
+</p>
+<p>
+Maybe we cannot get everything 100% correct right from the
+beginning, however this approach is much better than starting to
+code right away, having just some vague ideas of what we are trying
+to build. Of course, we will take the chance later to correct and
+improve the feature requirements, as things become more clear.
+</p>
+
+</div>
+
+<div id="outline-container-3.1" class="outline-3">
+<h3 id="sec-3.1"><span class="section-number-3">3.1</span> The features of B-Translator </h3>
+<div class="outline-text-3" id="text-3.1">
+
+
+<p>
+Here is a description of the main desired features of B-Translator.
+</p>
+
+</div>
+
+<div id="outline-container-3.1.1" class="outline-4">
+<h4 id="sec-3.1.1"><span class="section-number-4">3.1.1</span> Open access </h4>
+<div class="outline-text-4" id="text-3.1.1">
+
+
+<p>
+Everybody should be able to use the system for the purpose of
+getting translation suggestions for a certain string, even
+unauthenticated (anonymous/guest) users.  Furthermore, it should
+be possible to use an API (web services), so that these
+suggestions can be retrieved and used even by external
+applications.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.2" class="outline-4">
+<h4 id="sec-3.1.2"><span class="section-number-4">3.1.2</span> Authenticated voting </h4>
+<div class="outline-text-4" id="text-3.1.2">
+
+
+<p>
+Submitting votes or new suggestions will be allowed only for the
+subscribed users (which have agreed to help and contribute). No
+contributions from anonymous/guests will be accepted.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.3" class="outline-4">
+<h4 id="sec-3.1.3"><span class="section-number-4">3.1.3</span> Tracking votes </h4>
+<div class="outline-text-4" id="text-3.1.3">
+
+
+<p>
+Votes and suggestions will not be anonymous. For each vote or
+suggestion, the user who submitted it will be recorded and
+saved. This will allow the user to see all the strings that he has
+already voted for, and also to change any of the votes, if he
+later changed his mind. At the same time it will prevent multiple
+votes by the same user for the same translation.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.4" class="outline-4">
+<h4 id="sec-3.1.4"><span class="section-number-4">3.1.4</span> Highly customizable </h4>
+<div class="outline-text-4" id="text-3.1.4">
+
+
+<p>
+The system should have a flexible configuration and customization
+page. This means that the user should be able to customize how much
+he would like to help and contribute. For example:
+</p><ul>
+<li>
+how many translation votes per day (an upper limit)
+</li>
+<li>
+which communication means he prefers (email, facebook,
+google+, twitter, website, android app, iPhone app, etc.)
+</li>
+<li>
+which projects or packages he would like to focus on (for
+example, if the user selects the package KDE, only strings that
+belong to a project on this package will be sent to him for
+review and feedback)
+</li>
+<li>
+which languages he would like to use as primary and secondary
+source languages (for example a user that is not confident in
+English, may choose to use French as a primary language and
+Italian+Spanish as secondary/helper languages)
+</li>
+<li>
+sequential or random selection of strings (random is the
+default, but if the user is interested in just one or a few
+projects, he may prefer to review the strings sequentially)
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.5" class="outline-4">
+<h4 id="sec-3.1.5"><span class="section-number-4">3.1.5</span> Evaluation algorithms </h4>
+<div class="outline-text-4" id="text-3.1.5">
+
+
+<p>
+The contribution and performance of the users should be measured
+and evaluated using certain algorithms and/or heuristics. The
+users will be awarded points based on their performance. Probably
+some rewarding mechanisms can be integrated later for the top
+contributors.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.6" class="outline-4">
+<h4 id="sec-3.1.6"><span class="section-number-4">3.1.6</span> Detailed and comprehensive reporting and statistics </h4>
+<div class="outline-text-4" id="text-3.1.6">
+
+
+<p>
+Different kinds of reports and statistics related to users,
+projects, activity etc. should be supported and provided.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.1.7" class="outline-4">
+<h4 id="sec-3.1.7"><span class="section-number-4">3.1.7</span> Integration with the existing workflow of the project translations </h4>
+<div class="outline-text-4" id="text-3.1.7">
+
+
+<p>
+Project translators will continue to work with their preferred
+tools (like Pootle, Lokalize, etc.). They will also continue to
+use their preferred workflows (the way that they coordinate their
+translation work with each-other and with the project releases).
+</p>
+<p>
+This system should help them to get feedback and possibly any new
+suggestions or translations from a big crowd of the
+contributors. The system should provide means and tools for easy
+integration with the workflow of the project translations.
+</p>
+<p>
+For example, it should allow the translation maintainers to import
+their existing translation files (PO files), and to export
+translation files that contain the most voted translations, as
+well as new suggestions (for translated strings) or new
+translations (for untranslated strings). It should also allow them
+to get the latest changes (suggestions, translations, etc.) since
+the last time that they checked, or since a predefined moment in
+the past.
+</p>
+<p>
+The latest changes should be exported in a format that is easy to
+review, modify and apply (diff or ediff).
+</p>
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Analyzing the functionality in more details </h2>
+<div class="outline-text-2" id="text-4">
+
+
+<p>
+In the previous sections we discussed defining the aim and scope of
+the software (conception) and describing the desired features and
+functionality in general terms. Both of these steps belong to the
+phase called <b>defining requirements of the software</b>. The next step
+(or phase) is to analyze in more details how the software is
+supposed to work, and it is called <b>analysis</b> (or <b>functional   analysis</b>).
+</p>
+<p>
+Functional analysis is usually performed by identifying the <b>actors</b>
+(users or other programs/components that are interacting with our
+software/system), by identifying <b>use cases</b> (all the different
+cases when the actors need to interact with our software/system),
+and describing each <b>use case</b> (the details of how each interaction
+is done).
+</p>
+<p>
+In order to be clear and concise in describing such things, diagrams
+are often useful. The standard for drawing diagrams in software
+engineering domain is UML (Unified Modeling Language).
+</p>
+
+</div>
+
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1"><span class="section-number-3">4.1</span> The actors and use-cases of B-Translator </h3>
+<div class="outline-text-3" id="text-4.1">
+
+
+<p>
+The actors and use-cases that can be identified for B-Translator
+are these:
+</p>
+<ul>
+<li>
+<b>guest</b> (anonymous user)
+<ul>
+<li>
+<b>get</b> translation suggestions for a string
+</li>
+<li>
+<b>search</b> strings and translations
+</li>
+<li>
+<b>export</b> translations
+</li>
+<li>
+<b>comment</b> on translations
+
+</li>
+</ul>
+</li>
+<li>
+<b>contributor</b> (authenticated user)
+<ul>
+<li>
+all the use-cases of guest
+</li>
+<li>
+customize his own <b>preferences</b> and settings
+</li>
+<li>
+<b>vote</b> (or <b>like</b>) translations
+</li>
+<li>
+<b>suggest</b> new translations
+</li>
+<li>
+<b>flag</b> inappropriate comments or translations
+</li>
+<li>
+check his own contribution details in a <b>dashboard</b>, and how it
+compares with the others
+
+</li>
+</ul>
+</li>
+<li>
+<b>translator</b>
+<ul>
+<li>
+all the use-cases of contributor
+</li>
+<li>
+<b>import</b> translation files
+</li>
+<li>
+<b>export</b> translations and suggestions
+
+</li>
+</ul>
+</li>
+<li>
+<b>moderator</b>
+<ul>
+<li>
+all the use-cases of contributor
+</li>
+<li>
+access <b>statistics</b> and other details
+</li>
+<li>
+<b>resolve</b> flagged comments and translations
+
+</li>
+</ul>
+</li>
+<li>
+<b>administrator</b>
+<ul>
+<li>
+manage overall software <b>configuration</b>
+</li>
+<li>
+manage user access rights and <b>permissions</b>
+
+</li>
+</ul>
+</li>
+<li>
+<b>script</b>
+<ul>
+<li>
+<b>update</b> translation data with the latest versions
+</li>
+<li>
+<b>notify</b> users about relevant issues
+</li>
+<li>
+apply suggested translations <b>upstream</b>, wherever possible and
+suitable
+
+</li>
+</ul>
+</li>
+<li>
+<b>peer</b> B-Translator installation
+<ul>
+<li>
+request <b>sync</b> data (in case there are several B-Translation
+installations, they should be able to synchronize the data with
+each-other, if needed)
+
+</li>
+</ul>
+</li>
+</ul>
+
+<p>These actors and use-cases are also presented in the following
+diagram (which is drawn using <a href="http://www.umlet.com/">Umlet</a>):
+</p>
+
+<div id="fig:functional_analysis" class="figure">
+<p><img src="./uml/functional_analysis.png"  alt="./uml/functional_analysis.png" /></p>
+<p>Actors and Use-cases of B-Translator.</p>
+</div>
+
+<p>
+There are also the cases when the software is accessed through a
+third party application (for example a Facebook, LinkedIn, Google+,
+Android, iPhone, or desktop application), through a web-service
+API, however these use-cases can be reduced to either the <b>guest</b>
+or <b>contributor</b> cases.
+</p>
+<p>
+I am not going to describe the details of each use-case because it
+would take lots of space. Anyway, most of them are almost obvious.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4.2" class="outline-3">
+<h3 id="sec-4.2"><span class="section-number-3">4.2</span> Interfaces </h3>
+<div class="outline-text-3" id="text-4.2">
+
+
+
+</div>
+
+<div id="outline-container-4.2.1" class="outline-4">
+<h4 id="sec-4.2.1"><span class="section-number-4">4.2.1</span> Suggestion interface </h4>
+<div class="outline-text-4" id="text-4.2.1">
+
+
+<p>
+This is the form where the (authenticated) user is presented with
+an English string and several translation suggestions for it, and
+he votes the one that he thinks is the best, or provides another
+suggestion which he thinks is better.
+</p>
+<p>
+The string to be translated is selected randomly, unless the user
+has selected 'sequential' on his settings. The selection of the
+string is also done so that it complies with the restrictions
+imposed by the user on his settings (for example only from a
+certain project).
+</p>
+<p>
+The selection of the string should be also influenced by certain
+algorithms and heuristics, which should try to give more exposure
+to the strings that need more votes. For example if a string
+already got 10 votes and another one got just 2 votes, the second
+one should be more likely to be selected.
+</p>
+<p>
+This interface should be able to integrate somehow with facebook,
+email, google+, etc.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4.2.2" class="outline-4">
+<h4 id="sec-4.2.2"><span class="section-number-4">4.2.2</span> Query interface </h4>
+<div class="outline-text-4" id="text-4.2.2">
+
+
+<p>
+On this form anybody (registered user or anonymous) can supply a
+string in English, and the system will return the translation
+suggestions related to it and the corresponding votes that each
+suggestion has.
+</p>
+<p>
+If the English string does not have an exact match on the DB, a
+list of similar strings will be returned and the user will choose
+to check one of them.
+</p>
+<p>
+This functionality of querying suggestions will be offered also by
+a web service so that it can be used by any external programs.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4.2.3" class="outline-4">
+<h4 id="sec-4.2.3"><span class="section-number-4">4.2.3</span> User configuration interface </h4>
+<div class="outline-text-4" id="text-4.2.3">
+
+
+<p>
+Here the user customizes his settings, as described in the
+functional requirements.  Some of the things that he can customize
+are:
+</p><ul>
+<li>
+how many translation reviews per day (default one)
+</li>
+<li>
+which communication means he prefers (email, facebook, google+,
+twitter, website, android app, iPhone app, etc.)
+</li>
+<li>
+which projects or packages he would like to focus on (for
+example, if the user selects the package KDE, only strings that
+belong to a project on this package will be sent to him for
+review and feedback)
+</li>
+<li>
+which languages he would like to use as primary and secondary
+source languages (for example a user that is not confident in
+English, may choose to use French as a primary language and
+Italian+Spanish as secondary/helper languages)
+</li>
+<li>
+sequential or random selection of strings (random is the
+default, but if the user is interested in just one or a few
+projects, he may prefer to review the strings sequentially)
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-4.2.4" class="outline-4">
+<h4 id="sec-4.2.4"><span class="section-number-4">4.2.4</span> Export and import interfaces </h4>
+<div class="outline-text-4" id="text-4.2.4">
+
+
+<p>
+Usually everybody can export PO files, but only the users with
+certain permissions can import.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4.2.5" class="outline-4">
+<h4 id="sec-4.2.5"><span class="section-number-4">4.2.5</span> Admin interfaces </h4>
+<div class="outline-text-4" id="text-4.2.5">
+
+
+<p>
+The admin should be able to customize the overall behavior of the
+module, to check activity, to get reports and statistics, to
+maintain the data (backup, restore, update) etc.
+</p>
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Designing the software </h2>
+<div class="outline-text-2" id="text-5">
+
+
+<p>
+Design is a description in logical (abstract) terms of the parts and
+components that will make up the software, how they are composed,
+how they interact with each-other, etc. The UML diagrams can be
+useful again for describing concisely and clearly the entities,
+their relationships and interactions.  It is the last layer of
+abstract description, before the implementation (coding) of the
+software starts. However frequently there is not a clear distinction
+line between analysis and design, and between design and
+implementation.
+</p>
+<p>
+The design usually describes the database entities and
+relationships, the interfaces of the application, APIs (Application
+Programing Interfaces), classes and objects and their relationships,
+the most important processes and algorithms, etc. A good design
+should try to capture only the most important things, leaving out
+the obvious or unimportant things.
+</p>
+
+</div>
+
+<div id="outline-container-5.1" class="outline-3">
+<h3 id="sec-5.1"><span class="section-number-3">5.1</span> The DB schema of B-Translator </h3>
+<div class="outline-text-3" id="text-5.1">
+
+
+<p>
+The DB tables and their fields:
+</p>
+<dl>
+<dt>Files</dt><dd>
+A PO file that is imported and can be exported from the
+DB.
+<dl>
+<dt>fid : serial</dt><dd>
+Auto-increment internal identifier.
+</dd>
+<dt>filename : varchar(250)</dt><dd>
+The path and filename of the
+imported PO file.
+</dd>
+<dt>hash : char(40)</dt><dd>
+The SHA1() hash of the whole file content.
+</dd>
+<dt>potid : int</dt><dd>
+Reference to the template (POT) for which this
+PO file is a translation.
+</dd>
+<dt>lng : varchar(10)</dt><dd>
+The code of the translation language.
+</dd>
+<dt>headers : text</dt><dd>
+Headers of the imported PO file, as a long
+line. Needed mainly for exporting.
+</dd>
+<dt>comments : text</dt><dd>
+Translator comments of the file (above the
+header entry). Needed mainly for exporting.
+</dd>
+<dt>uid : int</dt><dd>
+Id of the user that imported the file.
+</dd>
+<dt>time : datetime</dt><dd>
+The date and time that the record was
+registered.
+
+</dd>
+</dl>
+</dd>
+<dt>Templates</dt><dd>
+POT files that are imported.
+<dl>
+<dt>potid : serial</dt><dd>
+Auto-increment internal identifier.
+</dd>
+<dt>tplname : varchar(50)</dt><dd>
+The name of the POT template (to
+distinguish it from the other templates of the same
+project).
+</dd>
+<dt>filename : varchar(250)</dt><dd>
+The path and name of the imported
+POT file.
+</dd>
+<dt>pguid : char(40)</dt><dd>
+Reference to the project to which this PO
+template belongs.  it come from).
+</dd>
+<dt>uid : int(11)</dt><dd>
+Id of the user that registered the project.
+</dd>
+<dt>time : datetime</dt><dd>
+The date and time that the template was
+imported.
+
+</dd>
+</dl>
+</dd>
+<dt>Projects</dt><dd>
+A project is the software/application which is
+translated by the PO files.
+<dl>
+<dt>pguid : char(40)</dt><dd>
+Project Globally Unique ID, pguid =
+SHA1(CONCAT(origin,project))
+</dd>
+<dt>project : varchar(100)</dt><dd>
+Project name (with the release
+appended if needed).
+</dd>
+<dt>origin : varchar(100)</dt><dd>
+The origin of the project (where does
+it come from).
+</dd>
+<dt>uid : int(11)</dt><dd>
+Id of the user that registered the project.
+</dd>
+<dt>time : datetime</dt><dd>
+The date and time that the project was
+registered.
+
+</dd>
+</dl>
+</dd>
+<dt>Locations</dt><dd>
+Locations (lines) where a l10n string is found.
+<dl>
+<dt>lid : serial</dt><dd>
+Internal numeric identifier of a line.
+</dd>
+<dt>sguid : char(40)</dt><dd>
+Reference to the id of the l10n string
+contained in this line.
+</dd>
+<dt>potid : int</dt><dd>
+Reference to the id of the template (POT) that
+contains this line.
+</dd>
+<dt>translator_comments : varchar(500)</dt><dd>
+Translator comments in
+the PO entry (starting with "# ").
+</dd>
+<dt>extracted_comments : varchar(500)</dt><dd>
+Extracted comments in the
+PO entry (starting with "#. ").
+</dd>
+<dt>line_references : varchar(500)</dt><dd>
+Line numbers where the sting
+occurs (starting with "#: ").
+</dd>
+<dt>flags : varchar(100)</dt><dd>
+Flags of the PO entry (starting with
+"#, ").
+</dd>
+<dt>previous_msgctxt : varchar(500)</dt><dd>
+Previous msgctxt in the PO
+entry (starting with "#| msgctxt ").
+</dd>
+<dt>previous_msgid : varchar(500)</dt><dd>
+Previous msgid in the PO entry
+(starting with "#| msgid ").
+</dd>
+<dt>previous_msgid_plural : varchar(500)</dt><dd>
+Previous msgid_plural
+in the PO entry (starting with "#| msgid_plural ").
+
+</dd>
+</dl>
+</dd>
+<dt>Strings</dt><dd>
+Translatable strings that are extracted from projects.
+<dl>
+<dt>string : text</dt><dd>
+The string to be translated:
+CONCAT(msgid,CHAR(0),msgid_plural)
+</dd>
+<dt>context : varchar(500)</dt><dd>
+The string context (msgctxt of the PO
+entry).
+</dd>
+<dt>sguid : char(40)</dt><dd>
+Globally Unique ID of the string, as hash
+of the string and context: SHA1(CONCAT(string,context))
+</dd>
+<dt>uid : int</dt><dd>
+ID of the user that inserted this string
+on the DB.
+</dd>
+<dt>time : datetime</dt><dd>
+The time that this string was
+entered on the DB.
+</dd>
+<dt>count : int/tiny</dt><dd>
+How often this string is encountered in
+all the projects. Can be useful for any heuristics that try
+to find out which strings should be translated first.
+</dd>
+<dt>active : boolean</dt><dd>
+The active/deleted status of the record.
+
+</dd>
+</dl>
+</dd>
+<dt>Translations</dt><dd>
+Translations/suggestions of the l10n strings.
+For each string there can be translations for different
+languages, and more than one translation for each language.
+<dl>
+<dt>sguid : int</dt><dd>
+Reference to the id of the l10n string that is
+translated.
+</dd>
+<dt>lng : varchar(5)</dt><dd>
+Language code (en, fr, sq_AL, etc.)
+</dd>
+<dt>translation : varchar(1000)</dt><dd>
+The (suggested) translation of
+the string.
+</dd>
+<dt>tguid : char(40)</dt><dd>
+Globally Unique ID of the translation,
+defined as the hash: SHA1(CONCAT(translation,lng,sguid))
+</dd>
+<dt>count : int/tiny</dt><dd>
+Count of votes received so far. This can be
+counted on the table Votes, but for convenience is stored
+here as well.
+</dd>
+<dt>uid : int</dt><dd>
+id of the user that initially suggested/submitted
+this translation
+</dd>
+<dt>time : datetime</dt><dd>
+Time that the translation was
+entered into the database.
+</dd>
+<dt>active : boolean</dt><dd>
+The active or deleted status of the record.
+
+</dd>
+</dl>
+</dd>
+<dt>Votes</dt><dd>
+Votes for each translation/suggestion.
+<dl>
+<dt>vid : serial</dt><dd>
+Internal numeric identifier for a vote.
+</dd>
+<dt>tguid : char(40)</dt><dd>
+Reference to the id of the translation
+which is voted.
+</dd>
+<dt>uid : int</dt><dd>
+Reference to the id of the user that submitted the
+vote.
+</dd>
+<dt>time : datetime</dt><dd>
+Timestamp of the voting time.
+</dd>
+<dt>active : boolean</dt><dd>
+The active or deleted status of the record.
+
+</dd>
+</dl>
+</dd>
+<dt>Users</dt><dd>
+Users that contribute translations/suggestions/votes.
+<dl>
+<dt>uid : int</dt><dd>
+The numeric identifier of the user.
+</dd>
+<dt>points : int</dt><dd>
+Number of points rewarded for his activity.
+</dd>
+<dt>config : varchar(250)</dt><dd>
+Serialized configuration variables.
+
+</dd>
+</dl>
+</dd>
+<dt>Snapshots</dt><dd>
+Snapshots are tgz archives of project-lng
+translation files.
+<dl>
+<dt>pguid : char(40)</dt><dd>
+Reference to the project.
+</dd>
+<dt>lng : varchar(10)</dt><dd>
+The language of translation.
+</dd>
+<dt>snapshot : mediumblob</dt><dd>
+The content of the tgz archive.
+</dd>
+<dt>uid : int</dt><dd>
+Id of the user that updated the snapshot for the
+last time.
+</dd>
+<dt>time : datetime</dt><dd>
+The time of last update.
+
+</dd>
+</dl>
+</dd>
+<dt>Diffs</dt><dd>
+Diffs between the current state and the last snapshot.
+<dl>
+<dt>pguid : char(40)</dt><dd>
+Reference to the project.
+</dd>
+<dt>lng : varchar(10)</dt><dd>
+The language of translation.
+</dd>
+<dt>nr : smallint</dt><dd>
+Incremental number of the diffs of a
+project-language.
+</dd>
+<dt>diff : text</dt><dd>
+The content of the unified diff (diff -u).
+</dd>
+<dt>ediff : text</dt><dd>
+The embedded diff (generated with the command
+poediff of pology).
+</dd>
+<dt>comment : varchar(200)</dt><dd>
+Comment/description of the diff.
+</dd>
+<dt>uid : int</dt><dd>
+Id of the user that inserted the diff.
+</dd>
+<dt>time : datetime</dt><dd>
+The date and time that the diff was saved.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+<p>Files, Templates, Locations and Projects are related to the
+import/export of the PO files.  Snapshots and Diffs are used to
+export/extract the suggestions .  Projects and Categories can be
+used to limit the scope of the search (and other operations).
+</p>
+<p>
+A project contains the translations of a certain application
+(software).  A project can have several template (POT) files. A
+template file can have several PO files (one for each different
+language). Each of these PO files has many PO entries, which are
+stored in the table Locations.
+</p>
+<p>
+The table Locations stores only the comments, line references,
+flags, previous strings, etc. of each PO entry.
+</p>
+<p>
+The msgid (and msgctxt) of the entry is stored on the table
+Strings. A string can be connected to several locations, since the
+same string can be used on different projects.
+</p>
+<p>
+Each string can have several translations (or suggestions) in each
+language. Each translation can have many votes. Each vote is given
+by a certain user.
+</p>
+
+<div id="fig:db_diagram" class="figure">
+<p><img src="./uml/db_diagram.png"  alt="./uml/db_diagram.png" /></p>
+<p>Tables and their relations.</p>
+</div>
+
+
+<div id="fig:object_diagram_1" class="figure">
+<p><img src="./uml/object_diagram_1.png"  alt="./uml/object_diagram_1.png" /></p>
+<p>Structure of the DB.</p>
+</div>
+
+
+<div id="fig:object_diagram_2" class="figure">
+<p><img src="./uml/object_diagram_2.png"  alt="./uml/object_diagram_2.png" /></p>
+<p>Structure of the DB.</p>
+</div>
+
+
+<div id="fig:object_diagram_3" class="figure">
+<p><img src="./uml/object_diagram_3.png"  alt="./uml/object_diagram_3.png" /></p>
+<p>Structure of the DB.</p>
+</div>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5.2" class="outline-3">
+<h3 id="sec-5.2"><span class="section-number-3">5.2</span> API </h3>
+<div class="outline-text-3" id="text-5.2">
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Construction (implementation/development) </h2>
+<div class="outline-text-2" id="text-6">
+
+
+<p>
+Implementation is the process of actually building the software.
+Before the implementation starts, several decisions have to be done, like:
+</p><ul>
+<li>
+what platform to use
+</li>
+<li>
+what programing language or framework should be used
+</li>
+<li>
+what database should be used
+</li>
+<li>
+what tools to use for development
+</li>
+<li>
+how to coordinate the work of several developers
+</li>
+<li>
+programing standards to be used
+</li>
+<li>
+etc.
+
+</li>
+</ul>
+
+<p>For B-Translator it was obvious that it was going to be a web
+application, running on a LAMP platform (Linux+Apache+MySQL+PHP).
+Moreover, I decided to implement it as a Drupal module, in order to
+take advantage of the other existing Drupal modules. Drupal is a
+powerful framework for building web application, it has a powerful
+API, and there are lots of available modules that implement various
+features. This way I could focus on building only the functionality
+that is specific for my problem, and use the available modules for
+building a fully functional web application. Furthermore, I decided
+to use Drupal7, since that was the latest version of Drupal when I
+started, although the support of the additional modules was not so
+good at that time.
+</p>
+<p>
+For programing and development I use the Emacs editor, which is
+quite powerful. Also this is the editor that I am most familiar
+with, and I always use it for my programing tasks.
+</p>
+<p>
+As a version control system I use git. Actually the repository of
+the project is hosted on github.com
+(<a href="https://github.com/dashohoxha/B-Translator">https://github.com/dashohoxha/B-Translator</a>). Usage of a version control
+system is a must for every software development project, because:
+</p><ul>
+<li>
+It keeps all the history of changes in the project and allows you
+to roll back to a previous state, in case that something goes
+wrong.
+</li>
+<li>
+It allows you to have tags and branches, which help the management
+of the development process.
+</li>
+<li>
+It allows several developers to easily coordinate and merge their
+work with each other.
+</li>
+<li>
+It simplifies the task of providing patches for external
+contributors.
+
+</li>
+</ul>
+
+<p>The coding style and standards of B-Translator are those used by
+Drupal.  For unit testing and functional testing the module
+'simpletest' of Drupal is used. It works by defining several test
+cases, and then making sure that the module passes successfully all
+of them.
+</p>
+<p>
+For communication/discussions among the developers there is an IRC
+chatroom named <b>#btranslator</b> on <b>irc.freenode.net</b>. There is also
+the group/forum/mailing-list <a href="https://groups.google.com/forum/?hl=en&amp;fromgroups#!categories/btranslator">B-Translator</a> on Google, for
+notifications, discussions, etc. There is as well the channel
+<b>@btranslator</b> on Twitter, mostly for notifications.
+</p>
+<p>
+Actually, right now I am the only developer of the project, however
+I do hope that in the future there will be other developers and
+contributors as well. If you are interested to help, please contact
+me (at dashohoxha@gmail.com) or join the forum above.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Managing the project </h2>
+<div class="outline-text-2" id="text-7">
+
+
+<p>
+Software engineering is not just about programing or development,
+but it is also about project management. Project management includes
+making a plan about how we are going to build the software, defining
+the things or tasks that need to be done, breaking down the tasks
+into smaller ones, assigning importance or priorities to the tasks,
+deciding which ones should be done earlier and which ones can be
+done later, defining milestones and grouping tasks to them
+(according to the time that they should be completed), assigning
+tasks to people, etc.
+</p>
+<p>
+The majority of tasks usually are related to programing and
+implementation, however anything else can be a task (for example,
+collecting requirements, performing the functional analysis, etc.).
+</p>
+<p>
+There are some steps or phases that are common for all software
+engineering projects, like:
+</p><ul>
+<li>
+collecting/updating the requirements
+</li>
+<li>
+defining/refining features and functionality
+</li>
+<li>
+analyzing/understanding/describing the details of each feature
+</li>
+<li>
+making/correcting design decisions
+</li>
+<li>
+implementing or improving features
+</li>
+<li>
+testing, debugging and making sure that they work correctly
+</li>
+<li>
+etc.
+
+</li>
+</ul>
+
+<p>How these phases are combined together depends on the software that
+is to be build. If you have enough experience with building such
+kind of software, and you have a clear idea from the beginning about
+what is to be built, then a waterfall approach might be OK.
+</p>
+<p>
+However, in most cases things are not very clear right from the
+beginning, and they become more clear as you work on the project, do
+some implementation and testing, get feedback from the users,
+etc. This is especially true if the software that you are trying to
+build is kind of innovative, something that nobody else has tried to
+build before. In this case an 'iterative and incremental' model could
+be more suitable. In this model you build and release an initial
+product (or prototype), and with the experience collected during the
+process and any feedback from the users, start again from the
+beginning and refine the requirements, analysis etc. and build
+another release of the software. These cycles can be repeated as
+many times as necessary, and in each cycle incremental
+changes/improvements are made to the software.
+</p>
+<p>
+B-Translator has followed an iterative and incremental life cycle.
+Although from the previous sections it may appear that things
+happened in a clean waterfall model, the truth is that the current
+requirements, functional analysis, design, etc. are the result of
+several iterations (cycles). For example:
+</p><ul>
+<li>
+The design of the database became more clear only after starting
+to implement it. Actually I had to change the structure of the
+database several times, until it was suitable.
+</li>
+<li>
+Initially I depended on importing the data collected by
+<a href="http://open-tran.eu/">open-tran.eu</a>. However, I decided later to implement my own scripts
+for getting translation files and importing them on the DB.
+</li>
+<li>
+Integration with the existing workflow of the project translations
+was something that occurred to me later, after I had started
+implementation.
+</li>
+<li>
+Integration required the ability to import and export PO files,
+and this made me add some extra tables for keeping the relevant
+information.
+</li>
+<li>
+Initially I did not think about the possibility of exporting diff
+(and ediff) files.  After deciding to implement such a feature, I
+had to add a few more tables in the design of the database.
+</li>
+<li>
+The possibility for appending comments to each translation was
+suggested to me by one of the translators.
+
+</li>
+</ul>
+
+<p>The tool that I use for keeping the project organized is the
+<a href="http://orgmode.org/">mode-org of Emacs</a>. It is a wonderful tool, simple and flexible, but
+has also advanced features if you need them. It can be used for
+keeping notes, for task management, and also for documentation
+writing (all the documents related to B-Translator, including this
+one, are composed with it). Its wiki-like syntax, combined with the
+power of Emacs, make it very practical.
+</p>
+<p>
+Right now, for bug reporting, feature requests, etc. the issues
+section on GitHub can be used:
+<a href="https://github.com/dashohoxha/B-Translator/issues">https://github.com/dashohoxha/B-Translator/issues</a> . Later maybe I
+can install <a href="http://trac.edgewall.org/">trac</a>, which is nice tool for software project
+management.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Documentation </h2>
+<div class="outline-text-2" id="text-8">
+
+
+<p>
+Documentation describes how to install the software, how it works,
+how it should be used, etc.
+</p>
+
+</div>
+
+<div id="outline-container-8.1" class="outline-3">
+<h3 id="sec-8.1"><span class="section-number-3">8.1</span> Installation of B-Translator </h3>
+<div class="outline-text-3" id="text-8.1">
+
+
+<p>
+A full distro including Drupal core (with patches) and the
+<i>btranslation</i> installation profile can be built like this:
+</p>
+
+
+<pre class="example">cd /var/www/
+sudo git clone https://github.com/dashohoxha/B-Translator.git
+sudo B-Translator/install/all.sh
+</pre>
+
+
+
+
+<p>
+For more detailed information about installation see:
+<a href="https://github.com/dashohoxha/B-Translator/blob/master/docs/INSTALL.org">https://github.com/dashohoxha/B-Translator/blob/master/docs/INSTALL.org</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8.2" class="outline-3">
+<h3 id="sec-8.2"><span class="section-number-3">8.2</span> How B-Translator works </h3>
+<div class="outline-text-3" id="text-8.2">
+
+
+
+</div>
+
+<div id="outline-container-8.2.1" class="outline-4">
+<h4 id="sec-8.2.1"><span class="section-number-4">8.2.1</span> Build a dictionary of l10n strings </h4>
+<div class="outline-text-4" id="text-8.2.1">
+
+
+<p>
+The source of the translation data used by the software are the
+POT/PO files of the projects.  The PO template files (POT) contain
+the list of translatable strings of a project (in English), and the
+PO translation files contain the strings and the corresponding
+translations for a certain language.  (More information and details
+about PO/POT formats and the translation process is provided by
+`info gettext`.)
+</p>
+<p>
+These PO files are imported into the DB of the software. This
+import creates a dictionary of strings and their corresponding
+translations. The same string can be used in more than one
+projects, but in the dictionary it is stored only once. However, if
+the same string has different translations in several projects, all
+of the distinct translations will be stored into the DB.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8.2.2" class="outline-4">
+<h4 id="sec-8.2.2"><span class="section-number-4">8.2.2</span> Collect feedback from users/reviewers </h4>
+<div class="outline-text-4" id="text-8.2.2">
+
+
+<p>
+These strings and the corresponding translations are presented for
+review to a large community of reviewers/users. The reviewers
+indicate which translation they think is the best by voting for it.
+They can also suggest any new translations (or suggest translations
+for strings that are yet un-translated). These new translations and
+the votes/likes of the reviewers are stored in the DB as well
+</p>
+<p>
+The review process happens slowly and gradually during a long
+time. We can assume that each reviewer checks only one string each
+day, and that there is a very large number of reviewers that give
+feedback each day. The feedback can be collected through different
+channels, like web interface, social networks (Facebook,
+Google+, Twitter), email, mobile apps, etc.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8.2.3" class="outline-4">
+<h4 id="sec-8.2.3"><span class="section-number-4">8.2.3</span> Export the revised translations </h4>
+<div class="outline-text-4" id="text-8.2.3">
+
+
+<p>
+Besides the dictionary of strings and translations, the import of
+PO files saves also the structure of these files and all the
+relevant data that are needed to export them again from the
+DB. However, during the export of the PO files, the most voted
+translations for each string are retrieved from the DB, instead of
+the original translations that were imported. This is how the
+input/feedback of the reviewers is transferred into the PO
+files. These exported PO files can then be uploaded/committed into
+the repositories of the corresponding projects.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8.2.4" class="outline-4">
+<h4 id="sec-8.2.4"><span class="section-number-4">8.2.4</span> The process/workflow for a project without translation </h4>
+<div class="outline-text-4" id="text-8.2.4">
+
+
+<p>
+According to the steps described above, the process/workflow for a
+project that has no translation yet, would be like this:
+</p><ol>
+<li>
+Checkout POT files from the repository of the project.
+</li>
+<li>
+Import them into the DB.
+</li>
+<li>
+Over some time, collect translation suggestions from the users.
+These translations can also be reviewed and evaluated by other
+users.
+</li>
+<li>
+Export the PO files from the DB.
+</li>
+<li>
+Review, fix and reformat them as needed.
+</li>
+<li>
+Upload/commit the PO files into the repository of the project.
+</li>
+<li>
+When a new POT file is released, start over again from the
+beginning (but this time we also import the PO file, besides the
+POT file).
+
+</li>
+</ol>
+
+<p>This process works well if there are no traditional translators to
+the project, and there is no other translation workflow happening
+concurrently (in parallel) with this one. Otherwise there would be
+a need to integrate these two workflows so that they don't override
+each-other.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8.2.5" class="outline-4">
+<h4 id="sec-8.2.5"><span class="section-number-4">8.2.5</span> Exporting only the latest suggestions (diffs) </h4>
+<div class="outline-text-4" id="text-8.2.5">
+
+
+<p>
+In practice actually there is an existing translation workflow for
+almost all the projects. This translation is done either by using a
+Pootle system or by using PO editors. So, it is important that our
+workflow integrates with this existing workflow.
+</p>
+<p>
+This integration is helped by exporting diffs instead of exporting
+PO files. These diffs are retrieved by the maintainers of the
+existing translation workflow (translators), and they contain the
+latest translation suggestions made by the reviewers through the
+feedback system. Such diffs can then be easily checked by the
+translators, and if they find them appropriate they can apply them
+to the PO files on the existing workflow.
+</p>
+<p>
+Diffs are made between the current state of translations and the
+last snapshot of the translations. This ensures that diffs do not
+contain any suggestions that have been included already in the
+previous diffs, and so making more easy the work of the
+translators. The translator is usually interested only on the last
+diff, however the previous diffs are saved in the DB as well, in
+order to have a full history of the suggested translations over the
+time. Whenever a translator checks the latest diff, he should also
+make a snapshot, so that the translations that have been already
+suggested to him are not suggested again. Making a snapshot will
+also generate the diff with the previous snapshot and store this
+diff on the DB as well.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8.2.6" class="outline-4">
+<h4 id="sec-8.2.6"><span class="section-number-4">8.2.6</span> The process/workflow for an integrated translation </h4>
+<div class="outline-text-4" id="text-8.2.6">
+
+
+<p>
+The process/workflow for the case when the feedback provided by the
+system is integrated in the mainstream translation workflow is like
+this:
+</p><ol>
+<li>
+Checkout the latest version of the POT and PO files from the
+repository of the project.
+</li>
+<li>
+Import POT files and PO files into the DB.
+</li>
+<li>
+Over some time, collect votes and new translation suggestions
+from the users.
+</li>
+<li>
+Time after time (for example each month), the mainstream
+translator checks out the last diffs, containing the latest
+suggestions (and makes a snapshot as well).
+</li>
+<li>
+The translator reviews the latest suggestions and applies them
+in the mainstream translation, if he finds them appropriate.
+</li>
+<li>
+Periodically (for example once or twice a year) go back to steps
+(1) and (2) and import the POT and PO files again. This
+re-import may introduce new strings and translations, but will
+not affect the existing strings, translations and votes.
+
+</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8.3" class="outline-3">
+<h3 id="sec-8.3"><span class="section-number-3">8.3</span> Drupal interfaces (paths) </h3>
+<div class="outline-text-3" id="text-8.3">
+
+
+
+</div>
+
+<div id="outline-container-8.3.1" class="outline-4">
+<h4 id="sec-8.3.1"><span class="section-number-4">8.3.1</span> translations[/&lt;lng&gt;/&lt;sguid&gt;] </h4>
+<div class="outline-text-4" id="text-8.3.1">
+
+
+<p>
+This interface presents a string and its available translations to
+the user. The user will vote one of them as the best translation,
+or will provide a new translation that he thinks is better.
+</p>
+<p>
+&lt;sguid&gt; is the hash of the string that is being translated. If not
+given, then a random string will be selected.
+</p>
+<p>
+The original string is usually presented in English, but
+additional languages can be presented as well, if the user is not
+confident with English. (He can select these options on the user
+settings page as well.)
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-8.3.2" class="outline-4">
+<h4 id="sec-8.3.2"><span class="section-number-4">8.3.2</span> translations/search?lng=..&amp;limit=..&amp;mode=..&amp;words=.. </h4>
+<div class="outline-text-4" id="text-8.3.2">
+
+
+<p>
+Displays a list of strings and the corresponding suggestions, which
+match some filter conditions. Filter conditions can be modified on
+the interface. Search can be done by the content of the strings and
+suggestions, and can be limited in scope by the project, by the author
+of suggestions, by the submission date, etc.
+</p>
+<p>
+From the displayed list, it is also possible to view details (for
+string or suggestion), to submit votes, etc.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-8.3.3" class="outline-4">
+<h4 id="sec-8.3.3"><span class="section-number-4">8.3.3</span> translations/project </h4>
+<div class="outline-text-4" id="text-8.3.3">
+
+<ul>
+<li>
+translations/project/list ([/origin[/project[/format]]])
+</li>
+<li>
+translations/project/export (/origin/project/language)
+</li>
+<li>
+translations/project/export_tgz (/origin/project/language)
+</li>
+<li>
+translations/project/diff (/origin/project/lng[/nr[/ediff]])
+Return the diff/ediff of the PO files for a given
+origin/project/lng/nr.  If the parameter 'nr' is '-', it returns
+the latest most-voted suggestions since the last snapshot.  If
+the parameter 'nr' is missing, it returns a list of the saved
+diffs instead.
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8.3.4" class="outline-4">
+<h4 id="sec-8.3.4"><span class="section-number-4">8.3.4</span> translations/user_settings </h4>
+<div class="outline-text-4" id="text-8.3.4">
+
+<p>The user can set:
+</p><ul>
+<li>
+translation language
+</li>
+<li>
+the preferred source language(s)
+</li>
+<li>
+how many reviews per day is willing to make
+</li>
+<li>
+etc.
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8.3.5" class="outline-4">
+<h4 id="sec-8.3.5"><span class="section-number-4">8.3.5</span> translations/admin </h4>
+<div class="outline-text-4" id="text-8.3.5">
+
+<ul>
+<li>
+translations/admin/config
+</li>
+<li>
+translations/admin/dashboard
+</li>
+<li>
+translations/admin/reports
+</li>
+<li>
+translations/admin/stats
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8.4" class="outline-3">
+<h3 id="sec-8.4"><span class="section-number-3">8.4</span> Importing and exporting translation files </h3>
+<div class="outline-text-3" id="text-8.4">
+
+
+
+</div>
+
+<div id="outline-container-8.4.1" class="outline-4">
+<h4 id="sec-8.4.1"><span class="section-number-4">8.4.1</span> Translation files </h4>
+<div class="outline-text-4" id="text-8.4.1">
+
+
+<p>
+The translation files that are imported into the DB are retrieved
+from the repository of the corresponding projects. This is done by
+the scripts in the directory <code>get/</code>, which checkout (or update)
+these files from each projects' repository.
+</p>
+<p>
+The way of getting these files is slightly different for different
+projects. However all of them are placed in the directory
+<code>$data_root</code>, which is defined in <code>config.sh</code>. Besides <code>$data_root</code>,
+<code>config.sh</code> defines also the variable <code>$languages</code>, which is a list
+of the codes of the languages that are supported by the system.
+</p>
+<p>
+Projects on the <code>$data_root</code> are also grouped (categorized) by
+origin.  For example all the GNOME projects are placed on the same
+directory, all the KDE projects on another directory, and so on.
+Under the 'origin' directory, there is a subdirectory for each
+language, and under it usually there is a subdirectory for each
+project, containing all the translation files of the project, in
+any structure that is suitable for the project.
+</p>
+<p>
+Some projects have just a single translation (PO) file (for example
+those of GNOME or ubuntu), some others have several translation
+files (like those of KDE), and some others have many translation
+files (like those of LibreOffice and Mozilla).
+</p>
+<p>
+In the case of Mozilla, translation files are not in gettext format,
+so they are converted to PO files using <code>moz2po</code> (from Translation
+Toolkit).
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-8.4.2" class="outline-4">
+<h4 id="sec-8.4.2"><span class="section-number-4">8.4.2</span> Importing </h4>
+<div class="outline-text-4" id="text-8.4.2">
+
+
+<p>
+Translation files are imported into the database by the scripts in
+the directory <code>import/</code>.
+</p>
+<p>
+Importing is done in two steps: the first step is to import the
+template (POT) files of the project, and the second step is to
+import the translation (PO) files for each language.  A POT file
+usually has a corresponding PO file for each language. 
+</p>
+<p>
+The template (POT) files contain the translatable strings of the
+project, with empty translations (this is why they are called
+templates). The translation (PO) files contain the same strings
+as the POT files, but with the corresponding translations for a
+certain language. In the import scripts, usually the French (fr)
+translation files are used as template files.
+</p>
+<ul>
+<li id="sec-8.4.2.1">Importing template files (pot_import.php) <br/>
+
+<p>
+Template files are imported by <code>pot_import.php</code>, which is called
+like this:
+</p>
+
+
+<pre class="example">$ ./pot_import.php
+
+Usage: ./pot_import.php origin project tplname file.pot
+  origin   -- The origin of the project (ubuntu, GNOME, KDE, LibreOffice, etc.)
+  project  -- The name of the project that is being imported.
+  tplname  -- The name of the PO template.
+  file.pot -- The POT file of the project.
+
+Examples:
+  ./pot_import.php KDE kdeedu kturtle test/kturtle.pot
+  ./pot_import.php KDE kdeedu kturtle test/kturtle_fr.po
+
+</pre>
+
+
+
+
+<p>
+<code>pot_import.php</code> creates a new template and a new project (if
+needed).  If the given <span style="text-decoration:underline;">origin+project</span> already exists, then the
+existing project is used.  However, if the given template already
+exists (for this project), then it is deleted first (along with the
+locations and files related to it), and then recreated.
+</p>
+<p>
+Along with the template, locations that are contained in this
+template are created as well. The string corresponding to each
+location is created only if it does not already exist. Otherwise
+the existing string is referenced instead (and the reference count
+of the string is incremented).
+</p>
+</li>
+<li id="sec-8.4.2.2">Importing translation files (po_import.php) <br/>
+
+<p>
+Translation files are imported by <code>po_import.php</code>, which is called
+like this:
+</p>
+
+
+<pre class="example">$ ./po_import.php
+
+Usage: ./po_import.php origin project tplname lng file.po
+  origin  -- The origin of the project (ubuntu, GNOME, KDE, LibreOffice, etc.)
+  project -- The name of the project.
+  tplname -- The name of the PO template.
+  lng     -- The language of translation (de, fr, sq, en_GB, etc.).
+  file.po -- The PO file to be imported.
+
+Example:
+  ./po_import.php KDE kdeedu kturtle fr test/kturtle.po
+
+</pre>
+
+
+
+
+<p>
+<code>po_import.php</code> imports a new PO (translation) file.  It assumes
+that the POT file of the project has already been imported,
+otherwise it will quit without doing anything.  If the file has
+been already imported, then it is skipped.
+</p>
+<p>
+For each file, all the information that is needed for exporting it
+is stored, like the file name and path, the headers of the file,
+the content of the file, etc.
+</p>
+<p>
+Along with the file, it also inserts the translations for the
+corresponding strings, when such translations do not exist.
+</p>
+
+</li>
+<li id="sec-8.4.2.3">Import example (pingus.sh) <br/>
+
+<p>
+The most simple example of importing a project is <code>pingus.sh</code>. The
+other scripts import many projects from the same origin at once,
+and have logic about getting the project name, finding the files,
+etc. Also, they may have several (or many) template files for each
+project, which makes the logic even more complex.
+</p>
+<p>
+The basic import code of <code>pingus.sh</code> is this:
+</p>
+
+
+<pre class="example">### make last snapshots before re-import
+make-last-snapshot $origin $project fr
+make-last-snapshot $origin $project sq
+
+### import the template
+potemplate=pingus
+./pot_import.php $origin $project $potemplate $po_dir/pingus-fr.po
+
+### import the PO files
+./po_import.php $origin $project $potemplate fr $po_dir/pingus-fr.po
+./po_import.php $origin $project $potemplate sq $po_dir/pingus-sq.po
+
+## make initial snapshots after (re)import
+make-snapshot $origin $project fr $po_dir/pingus-fr.po
+make-snapshot $origin $project sq $po_dir/pingus-sq.po
+</pre>
+
+
+
+
+<p>
+The main import code is: importing first the template, and then
+importing the translation file for each language. However, before
+the import we <i>make a last snapshot</i> of the existing project, and
+after the import we also <i>make a snapshot</i>. These two functions,
+<code>make-last-snapshot</code> and <code>make-snapshot</code> are defined on
+<code>make-snapshot.sh</code>, which is included in <code>pingus.sh</code>. They will be
+discussed in more details in the section about the snapshots and
+diffs.
+</p>
+
+</li>
+<li id="sec-8.4.2.4">Import scripts <br/>
+
+<p>
+The other scripts in the directory import are used to import
+projects from a certain origin. For example <code>kde.sh</code> imports (or
+re-imports) all the KDE projects, <code>office.sh</code> imports/re-imports
+all the LibreOffice projects, and so on.
+</p>
+<p>
+If a list of projects is passed on the command-line to these
+scripts, then only the specified projects will be imported (instead
+of all the projects.)
+</p>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8.4.3" class="outline-4">
+<h4 id="sec-8.4.3"><span class="section-number-4">8.4.3</span> Exporting </h4>
+<div class="outline-text-4" id="text-8.4.3">
+
+
+<p>
+As we have seen, besides the strings and translations, the import of
+PO files saves also the structure of these files and all the
+relevant data that are needed to export them again from the DB.
+</p>
+<p>
+Export scripts are in the directory <code>export/</code>.
+</p>
+<ul>
+<li id="sec-8.4.3.1">Exporting PO files (po_export.php) <br/>
+
+<p>
+The script <code>po_export.php</code> is used to export a single PO file. It
+is used like this:
+</p>
+
+
+<pre class="example">$ ./po_export.php
+
+Usage: ./po_export.php origin project tplname lng [file.po [export_mode]]
+  origin      -- the origin of the project (ubuntu, GNOME, KDE, etc.)
+  project     -- the name of the project to be exported
+  tplname     -- The name of the PO template.
+  lng         -- translation to be exported (de, fr, sq, en_GB, etc.)
+  file.po     -- output file (stdout if not given)
+  export_mode -- 'most_voted' (default) or 'original'
+
+The export mode 'most_voted' (which is the default one) exports the
+most voted translations and suggestions.
+The export mode 'original' exports the translations of the original
+file that was imported (useful for making an initial snapshot of
+the project).
+If the export mode is not given as an argument, then the env variable
+PO_EXPORT_MODE will be tried.
+
+Examples:
+  ./po_export.php KDE kdeedu kturtle fr &gt; test/kturtle_fr.po
+  ./po_export.php KDE kdeedu kturtle fr test/kturtle_fr.po original
+
+</pre>
+
+
+
+
+<p>
+The PO file to be exported is identified by <code>{origin, project,      tplname, lng}</code>.
+</p>
+<p>
+If the export mode is <i>original</i>, then the same translations that
+were imported are exported again. This is useful for making initial
+snapshots and diffs, which we will discuss later. However it should
+be noted that the exported file is not exactly the same as the
+imported file.  One reason is that the formatting can be different,
+although the strings and translations are the same. Another reason
+is that during import some entries are skipped. like
+'translator-credits' etc.
+</p>
+<p>
+If the export mode is <i>most_voted</i>, and some of the translations
+have been voted, then the most voted translation is exported
+instead. This is how the input/feedback of the reviewers is
+transferred into the PO files. But since the formatting of the
+exported file is not exactly the same as the imported file, this
+exported file cannot be used directly to be committed to the project
+repository. Instead it is merged somehow with the existing PO file
+of the project. This merge can be simply done by <code>msgmerge</code>, or by
+tools like <code>lokalize</code> that facilitate merging of PO files. Another
+option is to get the differences between the exported file and the
+original file and to apply them to the current PO file.
+</p>
+</li>
+<li id="sec-8.4.3.2">Exporting projects (export.sh) <br/>
+
+<p>
+To export all the PO files of a project, the script <code>export.sh</code> is
+used:
+</p>
+
+
+<pre class="example">$ ./export.sh
+Usage: ./export.sh origin project lng output_dir
+</pre>
+
+
+
+
+<p>
+If <code>project==all</code>, then all the projects of the given origin will be
+exported. It the environments variable QUIET is defined, then it
+will be less verbose (will not output much progress/debug info).
+</p>
+<p>
+The exported files are saved under the directory <code>output_dir</code>.
+Their path under the <code>output_dir</code> is the same as the path of the
+imported files. This is useful for making diffs with the original
+files of the project.
+</p>
+</li>
+<li id="sec-8.4.3.3">Exporting projects in tgz format (export_tgz.sh) <br/>
+
+<p>
+This script is usually called from the web (through the REST API)
+to export all the PO files of a project, in .tgz format.
+</p>
+
+
+<pre class="example">$ ./export_tgz.sh
+Usage: ./export_tgz.sh origin project lng [output_dir]
+</pre>
+
+
+
+
+<p>
+If project==all, then all the projects of the given origin will be
+exported. If the <code>output_dir</code> is not given, then the <code>/tmp</code>
+directory will be used.
+</p>
+<p>
+It outputs the path of the created archive.
+</p>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8.4.4" class="outline-4">
+<h4 id="sec-8.4.4"><span class="section-number-4">8.4.4</span> Snapshots and diffs </h4>
+<div class="outline-text-4" id="text-8.4.4">
+
+
+<p>
+A <i>snapshot</i> is an export from the DB of the current PO files of a
+project-language. This export (which is a .tgz archive) is stored in
+the DB. A project has a snapshot for each language. Snapshots are
+useful for generating the <i>diffs</i>.
+</p>
+<p>
+A <i>diff</i> is the difference between the snapshot and the previous
+snapshot.  The diffs are stored in the DB as well. They are
+sequentially numbered and keep the history of changes.
+</p>
+<p>
+There are two types of diffs that are generated and stored. One is
+the <i>unified diff</i> (<code>diff -u</code>) and the other the <i>embedded diff</i>
+(generated by pology
+<a href="http://websvn.kde.org/trunk/l10n-support/pology/">http://websvn.kde.org/trunk/l10n-support/pology/</a>)
+</p>
+<p>
+Diffs ensure that translators get only the latest feedback (since
+the last snapshot), without having to review again the suggestions
+made previously. So, they make easier the work of the translators.
+However the previous diffs are saved in the DB as well, in order to
+have a full history of the suggested translations over the time.
+</p>
+
+<ul>
+<li id="sec-8.4.4.1">Keeping diffs in the DB (db_diff.php) <br/>
+
+<p>
+The script <code>db_diff.php</code> is used to <i>add</i>, <i>list</i> or <i>get</i> the diffs
+from the DB. It is just an interface to the DB.
+</p>
+
+
+
+<pre class="example">$ ./db_diff.php
+
+Usage: ./db_diff.php add  origin project lng file.diff file.ediff [comment [user_id]]
+       ./db_diff.php list origin project lng
+       ./db_diff.php get  origin project lng number (diff|ediff) [file]
+
+  origin     -- the origin of the project (ubuntu, GNOME, KDE, etc.)
+  project    -- the name of the project to be exported
+  lng        -- language of translation (de, fr, sq, en_GB, etc.)
+  file.diff  -- file in `diff -u` format
+  file.ediff -- file in ediff (embedded diff) format
+  comment    -- optional comment about the ediff file that is being added
+  user_id    -- optional (drupal) uid of the user that is adding the ediff
+  number     -- the number of ediff that is being retrieved
+
+Examples:
+  ./db_diff.php add LibreOffice sw fr LibreOffice-sw-fr.diff LibreOffice-sw-fr.ediff
+  ./db_diff.php list LibreOffice sw fr
+  ./db_diff.php get LibreOffice sw fr 5 diff &gt; LibO/fr/sw_5.diff
+  ./db_diff.php get LibreOffice sw fr 5 ediff &gt; LibO/fr/sw_5.ediff
+
+</pre>
+
+
+
+
+<p>
+This script is usually called from other scripts (not directly from
+the command line).
+</p>
+
+</li>
+<li id="sec-8.4.4.2">Keeping snapshots in the DB (db_snapshot.php) <br/>
+
+<p>
+The script <code>db_snapshot.php</code> is used as a DB interface for the snapshots.
+</p>
+
+
+
+<pre class="example">$ ./db_snapshot.php
+
+Usage: ./db_snapshot.php (init|update|get) origin project lng file.tgz
+
+  origin   -- the origin of the project (ubuntu, GNOME, KDE, etc.)
+  project  -- the name of the project to be exported
+  lng      -- language of translation (de, fr, sq, en_GB, etc.)
+  file.tgz -- tgz archive of the snapshot of the project
+
+The operation 'init' is used to insert into the DB the snapshot
+for the first time. The operation 'update' to update it, and
+'get' to retrive it from the DB.
+
+Examples:
+  ./db_snapshot.php init   LibreOffice sw fr LibreOffice-sw-fr.tgz
+  ./db_snapshot.php update LibreOffice sw fr LibreOffice-sw-fr.tgz
+  ./db_snapshot.php get    LibreOffice sw fr LibreOffice-sw-fr.tgz
+
+</pre>
+
+
+
+
+<p>
+The operation <code>init</code> will first delete a snapshot, if it already
+exists in the DB. This script is usually called from other scripts
+(not directly from the command line).
+</p>
+</li>
+<li id="sec-8.4.4.3">Making a diff (make_diff.sh) <br/>
+
+<p>
+This script compares the current translation files of an <code>{origin,      project, lng}</code> with the last snapshot.
+</p>
+
+
+
+<pre class="example">$ ./make_diff.sh
+
+Usage: ./make_diff.sh origin project lng
+
+Export the current state of translation files of a project-language
+and make a diff with the last snapshot.
+
+</pre>
+
+
+
+
+<p>
+It does these:
+</p><ol>
+<li>
+Export the current files for the given <code>{origin, project, lng}</code>
+(by calling <code>export.sh</code>)
+</li>
+<li>
+Get the (last) snapshot for <code>{origin, project, lng}</code>
+</li>
+<li>
+Make the difference between them with <code>diff -rubB</code> and with <code>pology</code>
+
+</li>
+</ol>
+
+<p>When it is done, it leaves in its own directory the files
+<code>origin-project-lng.tgz</code> (which contains the exported files),
+<code>origin-project-lng.diff</code> and <code>origin-project-lng.ediff</code>.
+</p>
+<p>
+It outputs some debug information as well, but if the <code>QUIET</code>
+environment variable is define, this output is suppressed.
+</p>
+
+</li>
+<li id="sec-8.4.4.4">Making a snapshot (make_snapshot.sh) <br/>
+
+
+
+
+<pre class="example">$ ./make_snapshot.sh
+
+Usage: ./make_snapshot.sh origin project lng [diff_comment]
+
+Make the diff with the last snapshot and store it in DB.
+Save in DB the current snapshot.
+
+</pre>
+
+
+
+
+<p>
+This script just calls <code>make_diff.sh</code> and stores in DB the files
+<code>origin-project-lng.diff</code> and <code>origin-project-lng.ediff</code>, if they
+are not empty. It also updates the snapshot of <code>{origin, project,      lng}</code> with the file <code>origin-project-lng.tgz</code>. Finally it cleans all
+the three files generated by <code>make_diff.sh</code>.
+</p>
+<p>
+<code>make_diff.sh</code> is separated from <code>make_snapshot.sh</code> because it
+needs to be used also by the REST API
+<code>translations/project/diff/origin/project/lng/-</code> to generate the
+changes (diffs) since the last snapshot.
+</p>
+
+</li>
+<li id="sec-8.4.4.5">Lifecycle of the diffs and snapshots <br/>
+
+<p>
+When a project is imported, an initial snapshot is created and
+stored in the DB as well. This initial snapshot contains the
+original files that were used for the import. It is done like this:
+</p>
+
+
+<pre class="example">### store the tgz file into the DB as a snapshot
+../export/db_snapshot.php init $origin $project $lng $snapshot_tgz
+</pre>
+
+
+
+
+<p>
+Immediately after the initial snapshot, another snapshot is done,
+by exporting files in the <i>original</i> mode.
+</p>
+
+
+<pre class="example">### make a second snapshot, which will generate a diff
+### with the initial snapshot, and will save it into the DB
+export PO_EXPORT_MODE='original'   ## set the export mode for po_export.php
+diff_comment="Import diff. Contains formating changes, any skipped entries, etc."
+../export/make_snapshot.sh $origin $project $lng "$diff_comment"
+</pre>
+
+
+
+<p>
+This snapshot will also generate a diff, which contains the
+differences that come as a result of formatting changes between the
+original format and the exported format. It also contains the
+entries that are skipped during the import.
+</p>
+<p>
+Whenever a translator checks the latest diff, he should also make a
+snapshot, which will also generate the diff with the previous
+snapshot (and store it on the DB). As a result, the translations
+that have been already suggested to him will not be suggested
+again.
+</p>
+<p>
+When the time comes to re-import a project, a last snapshot is made
+automatically before the import, in order to store as a diff any
+latest (unchecked) suggestions.
+</p>
+
+
+<pre class="example">### make a last snapshot before the import (useful in the case of re-import)
+export PO_EXPORT_MODE='most_voted'   ## set the export mode for po_export.php
+diff_comment="Contains the latest suggestions before import."
+../export/make_snapshot.sh $origin $project $lng "$diff_comment"
+</pre>
+
+
+
+
+<p>
+Then an initial snapshot is made again with the original files,
+using <code>db_snapshot.php init ...</code> (which will not generate any
+diff).  After it, a snapshot using the <code>original</code> mode of export is
+made again, which will generate again any formatting changes and
+save them as a diff.
+</p>
+<p>
+However, in the case of re-import, another snapshot is needed,
+using the <code>most_voted</code> mode of export, which will generate a diff
+that contains all the feedback and suggestions made before the
+re-import.
+</p>
+
+
+<pre class="example">### make another snapshot, which will contain all the previous suggestions
+### (before the import), in a single diff
+export PO_EXPORT_MODE='most_voted'   ## set the export mode for po_export.php
+diff_comment="Initial diff after import. Contains all the previous suggestions (before the last import)."
+../export/make_snapshot.sh $origin $project $lng "$diff_comment"
+</pre>
+
+
+
+<p>
+Usually this diff contains the suggestions that the translator has
+already rejected, and making this snapshot ensures that they are
+not suggested again to him.
+</p>
+<p>
+This logic of the initial snapshots and diffs is applied by calling
+the functions <code>make-last-snapshot()</code> and <code>make-snapshot()</code>, which
+are defined on the file <code>import/make-snapshot.sh</code>. They are
+included and called automatically by the import scripts, before and
+after each import.
+</p>
+</li>
+<li id="sec-8.4.4.6">Getting diffs from the web (wget_diff.sh) <br/>
+
+<p>
+This script can be used by the translators to get the diffs of the
+projects from the server, through the REST API.
+</p>
+
+
+
+<pre class="example">$ ./wget-diffs.sh
+
+Usage: ./wget-diffs.sh origin project lng [nr]
+
+    Get the diffs of a project using wget and the REST API.
+    If 'nr' is missing, then the list of diffs will be retrieved instead.
+    If 'nr' is '-', then the latest diffs (since the last snapshot)
+    will be computed and returned (it will take longer to execute, since
+    the diffs are calculated on the fly). 
+
+Examples:
+    ./wget-diffs.sh KDE kdelibs sq
+    ./wget-diffs.sh KDE kdelibs sq 1
+    ./wget-diffs.sh KDE kdelibs sq 2
+    ./wget-diffs.sh KDE kdelibs sq -
+
+</pre>
+
+
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8.4.5" class="outline-4">
+<h4 id="sec-8.4.5"><span class="section-number-4">8.4.5</span> Misc </h4>
+<div class="outline-text-4" id="text-8.4.5">
+
+
+<ul>
+<li id="sec-8.4.5.1">Connecting to the DB <br/>
+
+<p>
+The files <code>*.db.php</code> contain DB classes that encapsulate the
+interaction of import/export scripts with the database of the
+application. All of them extend <code>db/class.DB.php</code>, which creates a
+connection to the database. The parameters of the DB connection are
+included from <code>db/settings.php</code>, which is generated automatically
+during installation.  The shell scripts use <code>db/sql-connect.txt</code>
+instead, for getting the connection parameters.
+</p>
+</li>
+<li id="sec-8.4.5.2">Working with PO files <br/>
+
+<p>
+<code>gettext/POParser.php</code> is a parser used to extract the data from a
+PO/POT file, in order to import them into the DB . It is taken from:
+<a href="http://code.google.com/p/php-po-parser/issues/detail?id=2">http://code.google.com/p/php-po-parser/issues/detail?id=2</a> It makes
+no validity checks, but this is OK, since the PO files that are
+imported are supposed to be valid. (Anyway, if needed, PO files can
+be checked with msgfmt before being imported).
+</p>
+<p>
+<code>gettext/POWriter.php</code> is used during export to generate a PO file
+from the projects, locations, strings and translations that are
+stored in the DB.
+</p>
+
+
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Dashamir Hoxha
+<a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
+</p>
+<p class="date"> Date: 2012-08-28 11:47:56 CEST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

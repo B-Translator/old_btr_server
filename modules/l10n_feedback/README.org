@@ -75,7 +75,7 @@
 
 * Drupal paths
 
-** translations[/<sguid>]
+** translations[/<lng>/<sguid>]
 
    This interface presents a string and its available translations to
    the user. The user will vote one of them as the best translation,

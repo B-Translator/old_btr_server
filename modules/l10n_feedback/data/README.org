@@ -492,11 +492,9 @@
    interaction of import/export scripts with the database of the
    application. All of them extend ~db/class.DB.php~, which creates a
    connection to the database. The paramaters of the DB connection are
-   retrieved from ~db/get-connection.php~, which extracts them from
-   ~db/settings.php~.  ~db/settings.php~ should be a symbolic link to
-   the configuration file of the site (it can also be a copy of it,
-   modified or not).
-   
+   included from ~db/settings.php~, which is generated automatically
+   during installation.  The shell scripts use ~db/sql-connect.txt~
+   instead, for getting the connection parameters.
 
 ** Working with PO files
 

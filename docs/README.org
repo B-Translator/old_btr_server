@@ -3,7 +3,9 @@
 
   This software helps to get feedback about l10n (translations of the
   programs). It also helps to unify all the different translations and
-  to ensure consistency among the translations.
+  to ensure consistency among the translations. It is intended to be
+  used for the translations of programs into Albanian, but it can be
+  used for any other languages as well.
 
   The motivation for developing such a software is that the
   traditional (current) l10n workflow requires highly dedicated
@@ -22,19 +24,21 @@
   Another problem with translations is that sometimes they are not
   consistent. The same string has different translations in different
   programs, and sometimes even the same translator may have provided
-  different translations for the same string in different cases.
+  different translations for the same string in different cases. This
+  happens mainly because each program/project has its own translations
+  and there is no central repository for all the translations.
 
   To summarize, the problems that this software tries to solve are
   these:
-  + Merging translations from different sources (for example
-    translations made on Launchpad and those made on KDE or GNOME).
-  + Helping to ensure consistency among the translations.
   + Getting feedback about the translations from a wide crowd of
     people and users. This feedback can be in terms of votes for the
     best translation (when there are more than one translations for
     the same string), or it can be a new alternative translation (for
     an existing translation), or it can be a new translation
     suggestion (for a string that is not translated yet).
+  + Helping to ensure consistency among the translations.
+  + Merging translations from different sources (for example
+    translations made on Launchpad and those made on KDE or GNOME).
     
 
 * What means B-Translator

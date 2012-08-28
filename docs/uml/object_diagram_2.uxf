@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>10</x>
+      <y>330</y>
+      <w>520</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>The same string can occur in more than one project, so it can be
+related to more than one locations (from different projects).
+A string can have more than one translation for each language.
+fg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <group>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>10</x>
+        <y>90</y>
+        <w>90</w>
+        <h>50</h>
+      </coordinates>
+      <panel_attributes>bg=pink
+_:Location_
+--
+project-1</panel_attributes>
+      <additional_attributes/>
+    </element>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>10</x>
+        <y>170</y>
+        <w>90</w>
+        <h>50</h>
+      </coordinates>
+      <panel_attributes>bg=magenta
+_:Location_
+--
+project-2</panel_attributes>
+      <additional_attributes/>
+    </element>
+    <element>
+      <type>com.umlet.element.Relation</type>
+      <coordinates>
+        <x>70</x>
+        <y>90</y>
+        <w>160</w>
+        <h>80</h>
+      </coordinates>
+      <panel_attributes>lt=&lt;-</panel_attributes>
+      <additional_attributes>140;60;30;30</additional_attributes>
+    </element>
+    <element>
+      <type>com.umlet.element.Relation</type>
+      <coordinates>
+        <x>70</x>
+        <y>130</y>
+        <w>160</w>
+        <h>90</h>
+      </coordinates>
+      <panel_attributes>lt=&lt;-</panel_attributes>
+      <additional_attributes>140;30;30;70</additional_attributes>
+    </element>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>210</x>
+        <y>140</y>
+        <w>80</w>
+        <h>30</h>
+      </coordinates>
+      <panel_attributes>bg=yellow
+_:String_</panel_attributes>
+      <additional_attributes/>
+    </element>
+    <element>
+      <type>com.umlet.element.Relation</type>
+      <coordinates>
+        <x>230</x>
+        <y>50</y>
+        <w>110</w>
+        <h>110</h>
+      </coordinates>
+      <panel_attributes>lt=&gt;-</panel_attributes>
+      <additional_attributes>90;30;30;90</additional_attributes>
+    </element>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>290</x>
+        <y>30</y>
+        <w>110</w>
+        <h>50</h>
+      </coordinates>
+      <panel_attributes>bg=blue
+_translation-1:_
+--
+lng="fr"</panel_attributes>
+      <additional_attributes/>
+    </element>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>420</x>
+        <y>90</y>
+        <w>110</w>
+        <h>50</h>
+      </coordinates>
+      <panel_attributes>bg=red
+_translation-2:_
+--
+lng="sq"</panel_attributes>
+      <additional_attributes/>
+    </element>
+    <element>
+      <type>com.umlet.element.Relation</type>
+      <coordinates>
+        <x>260</x>
+        <y>90</y>
+        <w>180</w>
+        <h>80</h>
+      </coordinates>
+      <panel_attributes>lt=&gt;-</panel_attributes>
+      <additional_attributes>160;30;30;60</additional_attributes>
+    </element>
+    <element>
+      <type>com.umlet.element.Relation</type>
+      <coordinates>
+        <x>260</x>
+        <y>130</y>
+        <w>180</w>
+        <h>90</h>
+      </coordinates>
+      <panel_attributes>lt=&gt;-</panel_attributes>
+      <additional_attributes>160;70;30;30</additional_attributes>
+    </element>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>420</x>
+        <y>170</y>
+        <w>110</w>
+        <h>50</h>
+      </coordinates>
+      <panel_attributes>bg=red
+_translation-3:_
+--
+lng="sq"</panel_attributes>
+      <additional_attributes/>
+    </element>
+    <element>
+      <type>com.umlet.element.Relation</type>
+      <coordinates>
+        <x>230</x>
+        <y>140</y>
+        <w>120</w>
+        <h>110</h>
+      </coordinates>
+      <panel_attributes>lt=&gt;-</panel_attributes>
+      <additional_attributes>100;90;30;30</additional_attributes>
+    </element>
+    <element>
+      <type>com.umlet.element.Class</type>
+      <coordinates>
+        <x>300</x>
+        <y>230</y>
+        <w>110</w>
+        <h>50</h>
+      </coordinates>
+      <panel_attributes>bg=green
+_translation-4:_
+--
+lng="de"</panel_attributes>
+      <additional_attributes/>
+    </element>
+  </group>
+</diagram>
