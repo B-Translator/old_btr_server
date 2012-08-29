@@ -33,6 +33,15 @@ function l10n_feedback_help($path, $args) {
  */
 function l10n_feedback_menu() {
 
+  $items['admin/config/system/btranslator'] = array(
+    'title'            => 'B-Translator',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('l10n_feedback_config'),
+    'access arguments' => array('administer btranslator'),
+    'description'      => 'B-Translator configuration settings.',
+    'file'             => 'l10n_feedback.admin.inc',
+  );
+
   $items['translations'] = array(
     'type'            => MENU_NORMAL_ITEM,
     'title'           => 'Translations',
@@ -170,6 +179,17 @@ function l10n_feedback_menu() {
 }
 
 /**
+ * Implementation of hook_permission().
+ */
+function l10n_feedback_permission() {
+  return array(
+    'administer btranslator' => array(
+      'title' => t('Administer B-Translator.'),
+      'description' => t('Perform administration tasks for B-Translator.'))
+  );
+}  //  End of l10n_feedback_permission().
+
+/**
  * Implements hook_theme().
  */
 function l10n_feedback_theme($existing, $type, $theme, $path) {
@@ -252,18 +272,7 @@ function l10n_feedback_init() {
     }
   }
 
-  //variable_set('l10n_feedback_voting_mode', 'multiple');  //debug
-  //variable_set('l10n_feedback_voting_mode', 'single');  //debug
-
   // Disable breadcrumb.
   drupal_set_breadcrumb(array());
-
-  //drupal_cron_run();  //test
-
-  /* This is usually done in hook_install().
-  $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
-  $mail_system['l10n_feedback'] = 'HTMLMailSystem';
-  variable_set('mail_system', $mail_system);
-  */
 }
 ?>
