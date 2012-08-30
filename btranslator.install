@@ -103,15 +103,36 @@ function btranslator_install_roles()
     user_role_revoke_permissions($rid, array('access comments', 'post comments'));
   }
 
-  // create a role for translators
-  $translator_role = new stdClass();
-  $translator_role->name = 'translator';
-  $translator_role->weight = 3;
-  user_role_save($translator_role);
+  // create new roles for contributora, translators and moderators (role administrator already exists)
+  $new_role_names = array('contributor', 'translator', 'moderator');
+  foreach ($new_role_names as $role_name) {
+    $role = new stdClass();
+    $role->name = $role_name;
+    user_role_save($role);
+  }
 
-  // grant to role translator the same permissions as an authenticated user
-  $permissions = user_role_permissions(array(DRUPAL_AUTHENTICATED_RID => 'authenticated user'));
-  user_role_grant_permissions($translator_role->rid, array_keys($permissions[DRUPAL_AUTHENTICATED_RID]));
+  // assign permissions to the roles
+  $contributor = user_role_load_by_name('contributor');
+  $contributor_permissions['btranslator-vote'] = true;
+  $contributor_permissions['btranslator-suggest'] = true;
+  $contributor_permissions['btranslator-flag'] = true;
+  user_role_change_permissions($contributor->rid, $contributor_permissions);
+
+  $translator = user_role_load_by_name('translator');
+  $translator_permissions = $contributor_permissions;
+  $translator_permissions['btranslator-import'] = true;
+  $translator_permissions['btranslator-export'] = true;
+  user_role_change_permissions($translator->rid, $translator_permissions);
+
+  $moderator = user_role_load_by_name('moderator');
+  $moderator_permissions = $contributor_permissions;
+  $moderator_permissions['btranslator-stats'] = true;
+  $moderator_permissions['btranslator-resolve'] = true;
+  user_role_change_permissions($moderator->rid, $moderator_permissions);
+
+  $administrator = user_role_load_by_name('administrator');
+  $administrator_permissions['btranslator-admin'] = true;
+  user_role_change_permissions($administrator->rid, $administrator_permissions);
 }
 
 function btranslator_install_menus()
