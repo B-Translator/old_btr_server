@@ -33,7 +33,7 @@ function l10n_feedback_config() {
   $form['config']['l10n_feedback_voting_mode'] = array(
     '#type'          => 'radios',
     '#title'         => t('Select Voting Mode'),
-    '#default_value' => variable_get('voting_mode', 'single'),
+    '#default_value' => variable_get('l10n_feedback_voting_mode', 'single'),
     '#options'       => $voting_mode_options,
     '#description'   => $voting_mode_description,
   );
