@@ -45,6 +45,8 @@ projects[mailsystem][version] = "2.34"
 projects[google_analytics][version] = "1.2"
 projects[token][version] = "1.2"
 projects[rpx][version] = "2.2"
+projects[edit_profile][version] = "1.0-beta2"
+projects[examples][version] = "1.x-dev"
 
 ;--------------------
 ; Libraries

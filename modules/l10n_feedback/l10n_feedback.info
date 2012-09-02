@@ -4,5 +4,6 @@ package = B-Translator
 core = 7.x
 
 dependencies[] = disqus
+dependencies[] = edit_profile
 
 files[] = l10n_feedback.test

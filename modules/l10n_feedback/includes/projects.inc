@@ -56,6 +56,9 @@ function l10n_feedback_project_list($origin =NULL, $project =NULL, $format =NULL
   if (strtoupper($format) == 'JSON') {
     print drupal_json_encode($lines);
   }
+  else if (strtoupper($format) == 'TXT') {
+    print "<xmp>" . implode("\n", $lines). "</xmp>";
+  }
   else {  //TEXT
     print implode("\n", $lines);
   }
