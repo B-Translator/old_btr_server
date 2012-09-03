@@ -142,7 +142,7 @@ function l10n_feedback_create_userprofile_fields() {
       'bundle' => 'user',
       'label' => 'Auxiliary Languages',
       'description' => 'You may select one or two auxiliary (helping) languages, especially if you are not very familiar with English. If the translation of the string in these languages exists, it will be displayed below the original (English) string. This may help you to get a better idea about how it could be translated.',
-      'settings' => array('user_register_form' => 1),
+      //'settings' => array('user_register_form' => 1),
       'widget' => array(
         'weight' => '4',
         'type' => 'options_buttons',
@@ -164,7 +164,7 @@ function l10n_feedback_create_userprofile_fields() {
       'bundle' => 'user',
       'label' => 'Translations per Day',
       'description' => 'Each day an automatic email will be sent to you with some strings for review/translation (if you enable the email feedback channel). This is the number of strings that will be sent for review/translation each day by email.',
-      'settings' => array('user_register_form' => 1),
+      //'settings' => array('user_register_form' => 1),
       'widget' => array(
         'weight' => '5',
         'type' => 'number',
@@ -199,7 +199,7 @@ function l10n_feedback_create_userprofile_fields() {
       'bundle' => 'user',
       'label' => 'Feedback Channels',
       'description' => "The ways that you would prefer to provide the feedback. <br/>\r\n<strong>Note</strong>: Currently only <em>Website</em> and <em>Email</em> are implemented. You will be sent an email each day with the strings to be reviewed, and you can also provide feedback through the website",
-      'settings' => array('user_register_form' => 1),
+      //'settings' => array('user_register_form' => 1),
       'widget' => array(
         'weight' => '6',
         'type' => 'options_buttons',
