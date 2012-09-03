@@ -38,5 +38,15 @@ function l10n_feedback_config() {
     '#description'   => $voting_mode_description,
   );
 
+  $languages = l10n_feedback_get_languages();
+  foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
+  $form['config']['l10n_feedback_default_lng'] = array(
+    '#type' => 'select',
+    '#title' => t('Default Translation Language'),
+    '#description' => t('The default language of translations, which is used wherever the translations language in not specified (for example for the guest users).'),
+    '#options' => $lang_options,
+    '#default_value' => variable_get('l10n_feedback_default_lng', 'fr'),
+  );
+
   return system_settings_form($form);
 }  //  End of l10n_feedback_config().
