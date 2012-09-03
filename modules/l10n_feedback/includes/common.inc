@@ -34,4 +34,24 @@ function l10n_feedback_get_languages() {
 
   return $arr_langs;
 }
+
+/**
+ * Get and return the translation lng from the settings (profile)
+ * of the current user. If not specified, return the default
+ * translation language of the site.
+ */
+function l10n_feedback_get_translation_lng() {
+
+  global $user;
+  $account = user_load($user->uid);
+  $field_translation_language = field_get_items('user', $account, 'field_translation_language');
+
+  if (isset($field_translation_language[0]['value'])) {
+    $lng = $field_translation_language[0]['value'];
+  } else {
+    $lng = variable_get('l10n_feedback_default_lng', 'fr');
+  }
+
+  return $lng;
+}
 ?>

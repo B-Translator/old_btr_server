@@ -23,9 +23,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   if ($lng == NULL) {
-    // TODO: Get the translation language from the user settings.
-    //$lng = 'sq';
-    $lng = 'fr';
+    $lng = l10n_feedback_get_translation_lng();
   }
 
   // Add the CSS and JS files.

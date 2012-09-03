@@ -25,7 +25,7 @@ function l10n_feedback_build_filter() {
     $sql = 'SELECT string FROM l10n_feedback_strings WHERE sguid = :sguid';
     $string = db_query($sql, array(':sguid' => $sguid))->fetchField();
     if ($string) {
-      $lng = 'sq';  // TODO: set the default translation lng for the user.
+      $lng = l10n_feedback_get_translation_lng();
       $request['words'] = $string;
     }
   }

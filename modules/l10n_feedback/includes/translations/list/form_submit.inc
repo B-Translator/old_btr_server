@@ -167,9 +167,6 @@ function _l10n_feedback_clean_previous_votes($tguid, $uid, $sguid, $lng) {
   //      an archive table, so that the history of changing
   //      votes can be preserved.
 
-  //TODO: Add the configuration variable l10n_feedback_voting_mode
-  //      which can be changed by the admin.
-
   // Get the voting mode.
   $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');
 
