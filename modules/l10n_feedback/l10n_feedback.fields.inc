@@ -34,6 +34,11 @@ function l10n_feedback_delete_userprofile_fields() {
  */
 function l10n_feedback_create_userprofile_fields() {
 
+  // get a list of translation languages available
+  $languages = l10n_feedback_get_languages();
+  foreach ($languages as $code => $lang)  $arr_langs[$code] = $lang['name'];
+  unset($arr_langs['en']);
+
   // create a field and instance for 'field_translation_language'
   field_create_field(
     array(
@@ -41,14 +46,7 @@ function l10n_feedback_create_userprofile_fields() {
       'type' => 'list_text',
       'cardinality' => 1,
       'entity_types' => array('user'),
-      'settings' => array(
-        'allowed_values' => array(
-          'sq' => 'Albanian',
-          'fr' => 'French',
-          'de' => 'German',
-          'it' => 'Italian',
-        ),
-      ),
+      'settings' => array('allowed_values' => $arr_langs),
     ));
   field_create_instance(
     array(
@@ -88,7 +86,7 @@ function l10n_feedback_create_userprofile_fields() {
       'widget' => array(
         'weight' => '2',
         'type' => 'text_textfield',
-        //'settings' => array('size' => '60'),
+        'settings' => array('size' => '30'),
       ),
     ));
 
@@ -126,14 +124,7 @@ function l10n_feedback_create_userprofile_fields() {
       'type' => 'list_text',
       'cardinality' => 2,
       'entity_types' => array('user'),
-      'settings' => array(
-        'allowed_values' => array(
-          'fr' => 'French',
-          'de' => 'German',
-          'es' => 'Spanish',
-          'it' => 'Italian',
-        ),
-      ),
+      'settings' => array('allowed_values' => $arr_langs),
     ));
   field_create_instance(
     array(

@@ -40,6 +40,7 @@ function l10n_feedback_config() {
 
   $languages = l10n_feedback_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
+  unset($lang_options['en']);
   $form['config']['l10n_feedback_default_lng'] = array(
     '#type' => 'select',
     '#title' => t('Default Translation Language'),
