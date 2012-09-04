@@ -37,13 +37,18 @@ function l10n_feedback_get_languages() {
 
 /**
  * Get and return the translation lng from the settings (profile)
- * of the current user. If not specified, return the default
- * translation language of the site.
+ * of the given user. If no user is given, use the current user.
+ * If user has not specified a translation language, return the
+ * default translation lng of the site (specified by admin on the
+ * config page of B-Translator).
  */
-function l10n_feedback_get_translation_lng() {
+function l10n_feedback_get_translation_lng($account =NULL) {
 
-  global $user;
-  $account = user_load($user->uid);
+  if ($account == NULL) {
+    global $user;
+    $account = user_load($user->uid);
+  }
+
   $field_translation_language = field_get_items('user', $account, 'field_translation_language');
 
   if (isset($field_translation_language[0]['value'])) {

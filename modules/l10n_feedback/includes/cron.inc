@@ -18,7 +18,8 @@ function l10n_feedback_cron() {
       'name' => $account->name,
       'pass' => $account->pass,
       'mail' => $account->mail,
-      'lng' => $account->language,
+      'language' => $account->language,
+      'lng' => l10n_feedback_get_translation_lng($account),
       'login' => $account->login,
     );
     $queue->createItem($account_data);
@@ -38,17 +39,18 @@ function l10n_feedback_cron_queue_info() {
 
 function send_string_by_email($account) {
 
-  // Get a random sguid.
-  require_once(dirname(__FILE__) . '/translations/vote.inc');
-  $sguid = l10n_feedback_get_random_sguid();
-
   $lng = $account->lng;
   $uid = $account->uid;
   $timestamp = REQUEST_TIME;
+
+  // get a sguid according to the user preferencies
+  require_once(dirname(__FILE__) . '/translations/vote.inc');
+  $sguid = l10n_feedback_get_sguid($uid);
+
   $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
   $url = url("translations/$lng/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
 
-  // Get a short url.
+  // get a short url
   $short_url = get_short_url($url);
   if ($short_url == 'wait') {
     sleep(60);
@@ -64,7 +66,7 @@ function send_string_by_email($account) {
   $smtp_fromname = variable_get('smtp_fromname');
   $from = "$smtp_fromname <$smtp_from>";
   $to = $account->name . ' <' .$account->mail . '>';
-  $language = $account->lng;
+  $language = $account->language;
   $send = TRUE;
 
   $params['subject'] = t('Translation Review');

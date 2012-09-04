@@ -38,15 +38,40 @@ function l10n_feedback_config() {
     '#description'   => $voting_mode_description,
   );
 
+  $form['defaults'] = array(
+    '#type'  => 'fieldset',
+    '#title' => t('B-Translator default settings'),
+  );
+
   $languages = l10n_feedback_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   unset($lang_options['en']);
-  $form['config']['l10n_feedback_default_lng'] = array(
+  $form['defaults']['l10n_feedback_default_lng'] = array(
     '#type' => 'select',
     '#title' => t('Default Translation Language'),
     '#description' => t('The default language of translations, which is used wherever the translations language in not specified (for example for the guest users).'),
     '#options' => $lang_options,
     '#default_value' => variable_get('l10n_feedback_default_lng', 'fr'),
+  );
+
+  $preferred_projects_description = t("
+       Select the projects that will be used for review and translations.
+       Only strings from these projects will be presented to the users. <br/>
+       You can enter projects in the form <em>origin/project</em>, for example:
+       <em>KDE/kdeedu</em>, <em>Mozilla/browser</em>, etc.
+       Or you can include all the projects from a certain origin,
+       like this: <em>KDE</em>, <em>LibreOffice</em>, etc. <br/>
+       Enter each project on a separate line.
+       See a list of the imported projects <a href='/translations/project/list/*/*/txt' target='_blank'>here</a>.<br/>
+       <strong>Note</strong>: The user can override the preferred projects on his profile/settings.
+       If the user does not select any preferred projects on his profile, then the projects listed here
+       will be used. If this list is empty, then all the imported projects will be used.
+  ");
+  $form['defaults']['l10n_feedback_preferred_projects'] = array(
+    '#type' => 'textarea',
+    '#title' => t('The List of Projects that Will be Used for Voting and Translation'),
+    '#description' => $preferred_projects_description,
+    '#default_value' => variable_get('l10n_feedback_preferred_projects', ''),
   );
 
   return system_settings_form($form);

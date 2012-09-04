@@ -53,10 +53,10 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   // Set the title.
   drupal_set_title(t('Vote Translations'));
 
-  // If no $sguid is given as parameter,
-  // get the sguid of a random string.
+  // If no $sguid is given as parameter, get the sguid of a string,
+  // according to the preferencies of the current user.
   if ($sguid == NULL) {
-    $sguid = l10n_feedback_get_random_sguid();
+    $sguid = l10n_feedback_get_sguid();
   }
 
   // Get the matching string and its translations.
@@ -111,20 +111,88 @@ function l10n_feedback_login_one_time($one_time_login =NULL)
   return true;
 }
 
-/**
- * Return a random sguid from the strings that should be voted.
- */
-function l10n_feedback_get_random_sguid() {
 
-  // Condition for selecting projects
-  // from which to get a random string.
-  /*
-  $where = "(origin='KDE' AND project='kdelibs')"
-         . " OR (origin='misc' AND project='pingus')"
-         . " OR (origin='LibreOffice' AND project='sw')"
-         . " OR (origin='Mozilla' AND project='browser')";
-  */
-  $where = "(origin='test')";
+/**
+ * Return a sguid from the strings that should be voted.
+ * This string is selected according to the preferencies
+ * of the given user. If no uid is given as parameter,
+ * then the current user is assumed.
+ */
+function l10n_feedback_get_sguid($uid =NULL) {
+
+  // if no parameter is given, get the uid of the current user
+  if ($uid == NULL) {
+    global $user;
+    $uid = $user->uid;
+  }
+
+  // get the string-order preference for the user
+  $string_order = l10n_feedback_get_string_order($uid);
+
+  // select the string according to the string-order preference
+  switch ($string_order) {
+    default:
+    case 'random':
+      $sguid = l10n_feedback_get_random_sguid($uid);
+      break;
+
+    case 'sequential':
+      $sguid = l10n_feedback_get_sequential_sguid($uid);
+      break;
+  }
+
+  return $sguid;
+}
+
+
+/**
+ * Return the value of the field 'field_order_of_strings'
+ * (which can be either 'random' or 'sequential'),
+ * for the given user.
+ * Return 'random' if the field has no value.
+ */
+function l10n_feedback_get_string_order($uid) {
+
+  $account = user_load($uid);
+  $field_order_of_strings = field_get_items('user', $account, 'field_order_of_strings');
+
+  if (isset($field_order_of_strings[0]['value'])) {
+    $string_order = $field_order_of_strings[0]['value'];
+  } else {
+    $string_order = 'random';
+  }
+
+  return $string_order;
+}
+
+
+/**
+ * Return a random sguid from the preferred projects of the user.
+ * If the user has not defined any preferred projects in his profile,
+ * then the preferred projects selected by admin are used.
+ */
+function l10n_feedback_get_random_sguid($uid) {
+
+  // get the preferred projects (as an array)
+  $arr_preferred_projects = l10n_feedback_get_preferred_projects($uid);
+
+  // build the WHERE condition for selecting projects
+  $arr_conditions = array();
+  foreach ($arr_preferred_projects as $preferred_project) {
+    $arr_parts = preg_split('#/#', $preferred_project, 2);
+    if (isset($arr_parts[1])) {
+      $origin = $arr_parts[0];
+      $project = $arr_parts[1];
+      $arr_conditions[] = "(origin='$origin' AND project='$project')";
+    }
+    else {
+      $origin = $arr_parts[0];
+      $arr_conditions[] = "(origin='$origin')";
+    }
+  }
+  $where = implode(' OR ', $arr_conditions);
+  if ($where == '')  $where = '(1=1)';
+  // $where = "(origin='test')";
 
   // Get the total number of strings from which we can choose.
   $sql_count = "
@@ -154,5 +222,53 @@ function l10n_feedback_get_random_sguid() {
   $_SESSION['random_sguid'] = $random_sguid;
 
   return $random_sguid;
+}
+
+
+/**
+ * Return the value of the field 'field_preferred_projects'
+ * as an array of strings. If the user has not defined any
+ * preferred projects on his profile/settings, then get the
+ * the preferred projects defined by admin on the config page.
+ */
+function l10n_feedback_get_preferred_projects($uid) {
+
+  // get the preferred projects from the user settings
+  $account = user_load($uid);
+  $field_preferred_projects = field_get_items('user', $account, 'field_preferred_projects');
+
+  $arr_preferred_projects = array();
+  if (is_array($field_preferred_projects) and sizeof($field_preferred_projects) > 0) {
+    foreach ($field_preferred_projects as $project) {
+      $arr_preferred_projects[] = $project['safe_value'];
+    }
+  } else {
+    // get the preferred projects from the site config
+    $preferred_projects_txt = variable_get('l10n_feedback_preferred_projects', '');
+    $lines = preg_split('#\r\n|\r|\n#', $preferred_projects_txt);
+    foreach ($lines as $line) {
+      $line = trim($line);
+      if ($line != '') {
+        $arr_preferred_projects[] = $line;
+      }
+    }
+  }
+
+  return $arr_preferred_projects;
+}
+
+
+/**
+ * Return a sequential sguid from the preferred projects of the user.
+ * If the user has not defined any preferred projects in his profile,
+ * then the preferred projects selected by admin are used.
+ */
+function l10n_feedback_get_sequential_sguid($uid) {
+
+  // TODO
+
+  $arr_preferred_projects = l10n_feedback_get_preferred_projects($uid);
+
+  return $sguid;
 }
 ?>
