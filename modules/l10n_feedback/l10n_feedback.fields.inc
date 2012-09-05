@@ -17,6 +17,8 @@ function l10n_feedback_delete_userprofile_fields() {
     'field_auxiliary_languages',
     'field_translations_per_day',
     'field_feedback_channels',
+    'field_data_sequential',
+    'field_sequential_state',
   );
 
   foreach ($field_names as $field_name) {
@@ -197,6 +199,20 @@ function l10n_feedback_create_userprofile_fields() {
       ),
       'default_value' => array(array('value' => 'website')),
     ));
-}
 
+  // create a field and instance for 'field_data_sequential'
+  // it is for internal use only, will not be viewed/edited by the user
+  field_create_field(array(
+      'field_name' => 'field_data_sequential',
+      'type' => 'text',
+      'entity_types' => array('user'),
+      'settings' => array('max_length' => 20000),
+    ));
+  field_create_instance(array(
+      'field_name' => 'field_data_sequential',
+      'entity_type' => 'user',
+      'bundle' => 'user',
+    ));
+
+}
 ?>

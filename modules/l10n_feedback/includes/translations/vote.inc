@@ -127,7 +127,7 @@ function l10n_feedback_get_sguid($uid =NULL) {
   }
 
   // get the string-order preference for the user
-  $string_order = l10n_feedback_get_string_order($uid);
+  $string_order = l10n_feedback_get_string_order(user_load($uid));
 
   // select the string according to the string-order preference
   switch ($string_order) {
@@ -146,27 +146,6 @@ function l10n_feedback_get_sguid($uid =NULL) {
 
 
 /**
- * Return the value of the field 'field_order_of_strings'
- * (which can be either 'random' or 'sequential'),
- * for the given user.
- * Return 'random' if the field has no value.
- */
-function l10n_feedback_get_string_order($uid) {
-
-  $account = user_load($uid);
-  $field_order_of_strings = field_get_items('user', $account, 'field_order_of_strings');
-
-  if (isset($field_order_of_strings[0]['value'])) {
-    $string_order = $field_order_of_strings[0]['value'];
-  } else {
-    $string_order = 'random';
-  }
-
-  return $string_order;
-}
-
-
-/**
  * Return a random sguid from the preferred projects of the user.
  * If the user has not defined any preferred projects in his profile,
  * then the preferred projects selected by admin are used.
@@ -174,35 +153,21 @@ function l10n_feedback_get_string_order($uid) {
 function l10n_feedback_get_random_sguid($uid) {
 
   // get the preferred projects (as an array)
-  $arr_preferred_projects = l10n_feedback_get_preferred_projects($uid);
+  $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
 
   // build the WHERE condition for selecting projects
-  $arr_conditions = array();
-  foreach ($arr_preferred_projects as $preferred_project) {
-    $arr_parts = preg_split('#/#', $preferred_project, 2);
-    if (isset($arr_parts[1])) {
-      $origin = $arr_parts[0];
-      $project = $arr_parts[1];
-      $arr_conditions[] = "(origin='$origin' AND project='$project')";
-    }
-    else {
-      $origin = $arr_parts[0];
-      $arr_conditions[] = "(origin='$origin')";
-    }
-  }
-  $where = implode(' OR ', $arr_conditions);
+  list($where, $args) = l10n_feedback_projects_to_where_condition($arr_preferred_projects);
   if ($where == '')  $where = '(1=1)';
-  // $where = "(origin='test')";
 
   // Get the total number of strings from which we can choose.
   $sql_count = "
     SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pguid FROM l10n_feedback_projects WHERE $where) p
-    LEFT JOIN l10n_feedback_templates tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN l10n_feedback_locations l ON (l.potid = tpl.potid)
-    LEFT JOIN l10n_feedback_strings s ON (s.sguid = l.sguid)
+    FROM (SELECT pguid FROM {l10n_feedback_projects} WHERE $where) p
+    LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
   ";
-  $nr_strings = db_query($sql_count)->fetchField();
+  $nr_strings = db_query($sql_count, $args)->fetchField();
 
   // Get a random row number.
   $row_number = rand(0, $nr_strings - 1);
@@ -210,51 +175,19 @@ function l10n_feedback_get_random_sguid($uid) {
   // Get the sguid of the random row.
   $sql_get_sguid = "
     SELECT s.sguid
-    FROM (SELECT pguid FROM l10n_feedback_projects WHERE $where) p
-    LEFT JOIN l10n_feedback_templates tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN l10n_feedback_locations l ON (l.potid = tpl.potid)
-    LEFT JOIN l10n_feedback_strings s ON (s.sguid = l.sguid)
+    FROM (SELECT pguid FROM {l10n_feedback_projects} WHERE $where) p
+    LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
     LIMIT $row_number, 1
   ";
-  $random_sguid = db_query($sql_get_sguid)->fetchField();
+  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
+  $random_sguid = db_query($sql_get_sguid, $args)->fetchField();
 
   // Save it in the session.
   $_SESSION['random_sguid'] = $random_sguid;
 
   return $random_sguid;
-}
-
-
-/**
- * Return the value of the field 'field_preferred_projects'
- * as an array of strings. If the user has not defined any
- * preferred projects on his profile/settings, then get the
- * the preferred projects defined by admin on the config page.
- */
-function l10n_feedback_get_preferred_projects($uid) {
-
-  // get the preferred projects from the user settings
-  $account = user_load($uid);
-  $field_preferred_projects = field_get_items('user', $account, 'field_preferred_projects');
-
-  $arr_preferred_projects = array();
-  if (is_array($field_preferred_projects) and sizeof($field_preferred_projects) > 0) {
-    foreach ($field_preferred_projects as $project) {
-      $arr_preferred_projects[] = $project['safe_value'];
-    }
-  } else {
-    // get the preferred projects from the site config
-    $preferred_projects_txt = variable_get('l10n_feedback_preferred_projects', '');
-    $lines = preg_split('#\r\n|\r|\n#', $preferred_projects_txt);
-    foreach ($lines as $line) {
-      $line = trim($line);
-      if ($line != '') {
-        $arr_preferred_projects[] = $line;
-      }
-    }
-  }
-
-  return $arr_preferred_projects;
 }
 
 
@@ -265,9 +198,43 @@ function l10n_feedback_get_preferred_projects($uid) {
  */
 function l10n_feedback_get_sequential_sguid($uid) {
 
-  // TODO
+  // get the sequential data
+  $account = user_load($uid);
+  $sequential = l10n_feedback_get_data_sequential($account);
 
-  $arr_preferred_projects = l10n_feedback_get_preferred_projects($uid);
+  // if sequential data are not set, then just return a random sguid
+  if ($sequential == NULL) {
+    drupal_set_message(t("It seems that there is something wrong with your preferences. Please <a href='/user/$uid/edit-profile'>check your profile</a>.", 'warning'));
+    return l10n_feedback_get_random_sguid($uid);
+  }
+
+  $lid = $sequential->lid;
+  $idx = $sequential->idx;
+  $proj = $sequential->projects[$idx];
+
+  // get the id of the next string location
+  $lid++;
+  if ($lid > $proj->lmax) {
+    $idx++;
+    if ($idx >= sizeof($sequential->projects)) {
+      drupal_set_message(t("You have reached the end of the preferred project. Please <a href='/user/$uid/edit-profile'>visit your profile</a> and modify them.", 'status'));
+      return l10n_feedback_get_random_sguid($uid);
+    }
+    $proj = $sequential->projects[$idx];
+    $lid = $proj->lmin;
+  }
+
+  // save the new index of the object $sequential
+  $sequential->lid = $lid;
+  $sequential->idx = $idx;
+  //dpm($sequential);  //debug
+  $edit['field_data_sequential']['und'][0]['value'] = serialize($sequential);
+  $edit['skip_presave'] = true;
+  user_save($account, $edit);
+
+  // get and return the $sguid
+  $query = 'SELECT sguid FROM {l10n_feedback_locations} WHERE lid=:lid';
+  $sguid = db_query($query, array(':lid'=>$lid))->fetchField();
 
   return $sguid;
 }
