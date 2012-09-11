@@ -204,7 +204,7 @@ function l10n_feedback_get_sequential_sguid($uid) {
 
   // if sequential data are not set, then just return a random sguid
   if ($sequential == NULL) {
-    drupal_set_message(t("It seems that there is something wrong with your preferences. Please <a href='/user/$uid/edit-profile'>check your profile</a>.", 'warning'));
+    drupal_set_message(t("It seems that there is something wrong with your preferences. Please <a href='/user/$uid/edit-profile'>check your profile</a>."), 'warning');
     return l10n_feedback_get_random_sguid($uid);
   }
 
@@ -217,7 +217,7 @@ function l10n_feedback_get_sequential_sguid($uid) {
   if ($lid > $proj->lmax) {
     $idx++;
     if ($idx >= sizeof($sequential->projects)) {
-      drupal_set_message(t("You have reached the end of the preferred project. Please <a href='/user/$uid/edit-profile'>visit your profile</a> and modify them.", 'status'));
+      drupal_set_message(t("You have reached the end of the preferred project. Please <a href='/user/$uid/edit-profile'>visit your profile</a> and modify them."), 'status');
       return l10n_feedback_get_random_sguid($uid);
     }
     $proj = $sequential->projects[$idx];
