@@ -31,3 +31,5 @@ modules/mailsystem/
 modules/google_analytics/
 modules/rpx/
 modules/token/
+modules/drupalchat/
+modules/edit_profile/

@@ -47,6 +47,7 @@ projects[token][version] = "1.2"
 projects[rpx][version] = "2.2"
 projects[edit_profile][version] = "1.0-beta2"
 projects[examples][version] = "1.x-dev"
+projects[drupalchat][version] = "1.0-beta6"
 
 ;--------------------
 ; Libraries
