@@ -44,9 +44,20 @@ function send_string_by_email($account) {
   $timestamp = REQUEST_TIME;
 
   // get a sguid according to the user preferencies
+  // get also the details of the selected sguid
   require_once(dirname(__FILE__) . '/translations/vote.inc');
   $sguid = l10n_feedback_get_sguid($uid);
+  $query = db_select('l10n_feedback_strings', 's')
+    ->fields('s', array('sguid'))
+    ->where('s.sguid = :sguid', array(':sguid' => $sguid));
+  $strings = l10n_feedback_get_strings($query, $lng);
+  $string = $strings[$sguid]->string;
+  $translations = array();
+  foreach ($strings[$sguid]->translations as $tguid => $obj_translation) {
+    $translations[] = $obj_translation->translation;
+  }
 
+  // get the url of the string
   $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
   $url = url("translations/$lng/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
 
@@ -60,6 +71,28 @@ function send_string_by_email($account) {
     $url = $short_url;
   }
 
+  // build the subject of the message
+  $subject = strip_tags(str_replace("\n", ' ', $string));
+  if (strlen($subject) > 60) {
+    $subject = substr($subject, 0, strrpos(substr($subject, 0, 57), ' '));
+    $subject .= '...';
+  }
+  $subject = '[l10n-sq] ' . $subject;
+
+  // build the body of the message
+  $body = array(
+    'Greetings ' . $account->name . ',',
+    t("If you have time, please help to review the translation into '$lng' of the string at this link: $url"),
+    t('Thanks'),
+    '----- Original (English) String:',
+    $string,
+    '----- Available Translations:',
+  );
+  foreach ($translations as $translation) {
+    $body[] = ' * ' . $translation;
+  }
+
+  // set the drupal_mail() parameters
   $module = 'l10n_feedback';
   $key = 'send_string_by_email';
   $smtp_from = variable_get('smtp_from');
@@ -68,15 +101,11 @@ function send_string_by_email($account) {
   $to = $account->name . ' <' .$account->mail . '>';
   $language = $account->language;
   $send = TRUE;
+  $params['subject'] = $subject;
+  $params['body'] = $body;
 
-  $params['subject'] = t('Translation Review');
-  $params['body'] = array(
-    t("If you have time, please help to review the translation of the string at this link: $url"),
-    t('Thanks'),
-  );
-
-  $result = drupal_mail($module, $key, $to, $language, $params, $from, $send);
-  return $result;
+  // send the mail
+  drupal_mail($module, $key, $to, $language, $params, $from, $send);
 }
 
 /**

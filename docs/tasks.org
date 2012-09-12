@@ -99,7 +99,7 @@
 *** Improve the look of number of votes.
 *** Add in l10n.org.al a page for each project which can be liked, +1-d, etc.
 
-*** Improve the content of the notification emails.
+*** DONE Improve the content of the notification emails.
     Include in the message the string that is to be translated and any
     existing translations. Include in the subject part of the string
     that is to be translated.
@@ -108,7 +108,7 @@
     Replace one-time-login with one-time-submittion on the
     notification emails
 
-*** Disqus: 
+*** Disqus:
     - improve the title of the disqus threads
     - transfer domain l10n_sq to btranslator
     - create also a domain btranslator_dev
@@ -126,7 +126,7 @@
 *** Try to use on l10n.org.al the theme sky or some other suitable theme.
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
-    
+
 *** Import the translation data (PO files) of other languages.
     Import the translation data of Slovenian. Try to import the
     translation data of German and Italian as well. Maybe the server
