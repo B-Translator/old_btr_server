@@ -145,6 +145,7 @@ function l10n_feedback_get_data_sequential($account) {
  */
 function l10n_feedback_projects_to_where_condition($arr_projects) {
 
+  $arr_conditions = array();
   $arguments = array();
   $arg_origin  = ':origin01';
   $arg_project = ':project01';

@@ -66,7 +66,7 @@ variable_set('date_first_day', 1);
 
 // disqus
 variable_set('disqus_developer', true);
-variable_set('disqus_domain', 'l10n-sq');
+variable_set('disqus_domain', 'btranslator-dev');
 variable_set('disqus_inherit_login', true);
 variable_set('disqus_location', 'content_area');
 variable_set('disqus_nodetypes',
