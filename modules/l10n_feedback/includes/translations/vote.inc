@@ -22,8 +22,15 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     return;
   }
 
-  if ($lng == NULL) {
-    $lng = l10n_feedback_get_translation_lng();
+  // If no $sguid is given as parameter, get the sguid of a string
+  // and the lng, according to the preferencies of the current user.
+  if ($sguid == NULL) {
+    if ($lng == NULL) {
+      $lng = l10n_feedback_get_translation_lng();
+    }
+    $sguid = l10n_feedback_get_sguid();
+    drupal_goto("translations/$lng/$sguid");
+    return;
   }
 
   // Add the CSS and JS files.
@@ -52,12 +59,6 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   // Set the title.
   drupal_set_title(t('Vote Translations'));
-
-  // If no $sguid is given as parameter, get the sguid of a string,
-  // according to the preferencies of the current user.
-  if ($sguid == NULL) {
-    $sguid = l10n_feedback_get_sguid();
-  }
 
   // Get the matching string and its translations.
   $query = db_select('l10n_feedback_strings', 's')

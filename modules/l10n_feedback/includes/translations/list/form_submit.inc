@@ -8,7 +8,17 @@
  * @see l10n_feedback_translate_form().
  */
 function l10n_feedback_translate_form_submit($form, &$form_state) {
+
+  if ($form_state['values']['op'] == t('Next')) {
+    $lng = $form_state['values']['langcode'];
+    drupal_goto("translations/$lng/");
+    return;
+  }
+  //else if ($form_state['values']['op'] == t('Save')) {
+
   $form_values = $form_state['values'];
+  //dpm($form_values);  //debug
+
   $lng = $form_values['langcode'];
   // Get the voting mode.
   $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');

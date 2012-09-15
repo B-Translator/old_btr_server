@@ -38,13 +38,9 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       '#theme' => 'l10n_feedback_translate_table',
     ),
 
-    // The submit buttons will appear only when the user has
-    // permissions to submit votes and suggestions.
-    'submit' => array(
-      '#type' => 'submit',
-      '#value' => t('Save'),
-      //'#access' => user_access('submit suggestions'),
-      '#access' => user_is_logged_in(),
+    'buttons' => array(
+      //'#prefix' => '<div class="filter-submit">',
+      //'#suffix' => '</div>',
     ),
 
     'pager_bottom' => array(
@@ -52,6 +48,20 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       '#markup' => $pager,
     ),
   );
+
+  // The submit buttons will appear only when the user has
+  // permissions to submit votes and suggestions.
+  $form['buttons']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+    '#access' => user_access('btranslator-vote') or user_access('btranslator-suggest'),
+  );
+  if (sizeof($strings)==1) {
+    $form['buttons']['next'] = array(
+      '#type' => 'submit',
+      '#value' => t('Next'),
+    );
+  }
 
   $disqus = sizeof($strings)==1 ? 'comments' : 'link';
 
@@ -107,7 +117,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     */
   }
 
-  dpm($form, '$form');  //debug
+  //dpm($form, '$form');  //debug
   return $form;
 }
 
