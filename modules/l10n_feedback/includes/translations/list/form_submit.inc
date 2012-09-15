@@ -27,7 +27,6 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   foreach ($form_values['strings'] as $sguid => $string) {
 
     if ($voting_mode == 'single') {
-      $tguid = $string['approved'];
       _l10n_feedback_translate_form_submit_single($sguid, $lng, $string);
     }
 
@@ -58,11 +57,10 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
 function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
 
   $tguid = $string['approved'];
-  if ($tguid == '')  return;
 
-  if ($tguid == 'new') {
+  if ($tguid == 'new' or $tguid == '') {
     //add a new suggestion
-    $values = $string[$tguid]['value'];
+    $values = $string['new']['value'];
     l10n_feedback_add_suggestion($sguid, $lng, $values);
     return;
   }
