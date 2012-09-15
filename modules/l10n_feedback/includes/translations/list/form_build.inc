@@ -53,30 +53,61 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     ),
   );
 
-  if (sizeof($strings)==1) {
-    $disqus = 'full';
-  }
+  $disqus = sizeof($strings)==1 ? 'comments' : 'link';
 
   // Fill in string values for the editor.
   foreach ($strings as $sguid => $string) {
     $form['strings'][$sguid] = _l10n_feedback_translate_form_item($form_state, $string, $lng);
-    if ($disqus == 'full') {
+    if ($disqus == 'comments') {
+      // get the comment title (no longer than 50 chars)
+      $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
+      if (strlen($title) > 50) {
+	$title = substr($title, 0, strrpos(substr($title, 0, 47), ' '));
+	$title .= '...';
+      }
+      // define the disqus form element
       $form['disqus'] = array(
         '#type' => 'disqus',
         '#disqus' => array(
           'domain' => 'l10n-sq',
           'status' => true,
           'url' => url("translations/$lng/$sguid", array('absolute' => true)),
-          'title' => 'Test',
+          'title' => $title,
           'identifier' => "translations/$lng/$sguid",
           'developer' => '1',
         ),
         '#weight' => variable_get('disqus_weight', 50),
       );
     }
+    /*
+    else {
+      $form['strings'][$sguid]['disqus'] = array(
+          '#theme' => 'links',
+          '#links' => array('disqus_comments_num' => array(
+                      'title' => t('Comments'),
+                      'href' => "translations/$lng/$sguid",
+                      'fragment' => 'disqus_thread',
+                      'attributes' => array(
+                        // Identify the node for Disqus with the unique identifier:
+                        // http://docs.disqus.com/developers/universal/#comment-count
+                        'data-disqus-identifier' => "translations/$lng/$sguid",
+                      )
+                    )),
+          '#attributes' => array(
+            'class' => array('links', 'inline'),
+          ),
+      );
+      $form['strings'][$sguid]['#attached']['js'][] = drupal_get_path('module', 'disqus') . '/disqus.js';
+      $form['strings'][$sguid]['#attached']['js'][] = array(
+        'data' => array('disqusComments' => 'l10n-sq'),
+        'type' => 'setting',
+      );
+
+    }
+    */
   }
 
-  //dpm($form, '$form');  //debug
+  dpm($form, '$form');  //debug
   return $form;
 }
 
