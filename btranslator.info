@@ -102,11 +102,6 @@ dependencies[] = reroute_email
 dependencies[] = devel
 
 ;--------------------
-; Mail
-;--------------------
-dependencies[] = smtp
-
-;--------------------
 ; User interface
 ;--------------------
 dependencies[] = wysiwyg

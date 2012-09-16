@@ -34,3 +34,5 @@ modules/token/
 modules/drupalchat/
 modules/edit_profile/
 modules/examples/
+modules/entity/
+modules/rules/
