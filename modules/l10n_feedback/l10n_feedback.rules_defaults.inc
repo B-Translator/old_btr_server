@@ -12,6 +12,8 @@ function l10n_feedback_default_rules_configuration() {
   // to vote or make suggestions, so for the time being we assign it
   // automatically to each registered user.
   // The rule configuration is exported from the Rules UI.
+  $role = user_role_load_by_name('contributor');
+  $rid = $role->rid;
   $rules_assign_contributor_role = '{ "rules_assign_contributor_role" : {
     "LABEL" : "Assign contributor role",
     "PLUGIN" : "reaction rule",
@@ -19,7 +21,7 @@ function l10n_feedback_default_rules_configuration() {
     "REQUIRES" : [ "rules" ],
     "ON" : [ "user_insert" ],
     "DO" : [
-      { "user_add_role" : { "account" : [ "account" ], "roles" : { "value" : { "4" : "4" } } } }
+      { "user_add_role" : { "account" : [ "account" ], "roles" : { "value" : { "' . $rid . '" : "' . $rid . '" } } } }
     ]
   }
 }';
