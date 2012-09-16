@@ -23,6 +23,16 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   // Get the voting mode.
   $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');
 
+  // keep track of the status, so that propper notification
+  // can be displayed to the user
+  global $l10n_feedback_save_status;
+  $l10n_feedback_save_status = array(
+    'cannot_vote' => 0,
+    'cannot_suggest' => 0,
+    'nr_votes' => 0,
+    'nr_suggestions' => 0,
+  );
+
   // Iterate outer structure built in l10n_feedback_translate_form().
   foreach ($form_values['strings'] as $sguid => $string) {
 
@@ -42,11 +52,8 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
     }
   }
 
-  /*
-  // TODO:
   // Tell the user what happened.
-  l10n_feedback_update_message();
-  */
+  l10n_feedback_display_notification_messages();
 
   // Keep existing filters and other query arguments on form submission.
   $redirect_args = $form_state['values']['target'];
@@ -115,6 +122,14 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
  *   The ID of the new vote, or NULL.
  */
 function l10n_feedback_add_vote($tguid, $uid) {
+
+  // Check access permissions.
+  if (!user_access('btranslator-vote')) {
+    global $l10n_feedback_save_status;
+    $l10n_feedback_save_status['cannot_vote']++;
+    return NULL;
+  }
+
   // Fetch the translation details from the DB.
   $sql = 'SELECT * FROM {l10n_feedback_translations} WHERE tguid = :tguid';
   $trans = db_query($sql, array(':tguid' => $tguid))->fetchObject();
@@ -141,6 +156,10 @@ function l10n_feedback_add_vote($tguid, $uid) {
     ->fields(array('count' => $count))
     ->condition('tguid', $tguid)
     ->execute();
+
+  // Increment the number of the saved votes.
+  global $l10n_feedback_save_status;
+  $l10n_feedback_save_status['nr_votes']++;
 
   return $vid;
 }
@@ -170,6 +189,13 @@ function l10n_feedback_add_vote($tguid, $uid) {
  *   something must be wrong.)
  */
 function _l10n_feedback_clean_previous_votes($tguid, $uid, $sguid, $lng) {
+
+  // Check access permissions.
+  if (!user_access('btranslator-vote')) {
+    global $l10n_feedback_save_status;
+    $l10n_feedback_save_status['cannot_vote']++;
+    return 0;
+  }
 
   //TODO: Instead of deleting previous votes, save them in
   //      an archive table, so that the history of changing
@@ -237,6 +263,13 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $uid =NULL) {
   // Don't add empty translations.
   if (trim($translation) == '')  return false;
 
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    global $l10n_feedback_save_status;
+    $l10n_feedback_save_status['cannot_suggest']++;
+    return false;
+  }
+
   // Load the string and adjust translation whitespace based on source.
   $query = 'SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid';
   $source_string = db_query($query, array(':sguid' => $sguid))->fetchField();
@@ -270,6 +303,10 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $uid =NULL) {
   //      has been submitted. Maybe they would like to review it and
   //      change their vote.
 
+  // Increment the number of the saved suggestions.
+  global $l10n_feedback_save_status;
+  $l10n_feedback_save_status['nr_suggestions']++;
+
   return $tguid;
 }
 
@@ -289,4 +326,25 @@ function l10n_feedback_trim($translation, $source) {
   return $matches[1] . trim($translation) . $matches[2];
 }
 
+function l10n_feedback_display_notification_messages() {
+
+  global $l10n_feedback_save_status;
+  extract($l10n_feedback_save_status);
+
+  if ($cannot_vote > 0) {
+    drupal_set_message(t('You do not have enough rights for submitting votes!'), 'error');
+  }
+
+  if ($cannot_suggest > 0) {
+    drupal_set_message(t('You do not have enough rights for making suggestions!'), 'error');
+  }
+
+  if ($nr_suggestions > 0) {
+    drupal_set_message(t("The number of saved suggestions: $nr_suggestions"));
+  }
+
+  if ($nr_votes > 0) {
+    drupal_set_message(t("The number of saved votes: $nr_votes"));
+  }
+}
 ?>

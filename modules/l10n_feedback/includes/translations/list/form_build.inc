@@ -56,7 +56,8 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     '#value' => t('Save'),
     '#access' => user_access('btranslator-vote') or user_access('btranslator-suggest'),
   );
-  if (sizeof($strings)==1) {
+  // don't show the Next button on the search interface
+  if (current_path() != 'translations/search') {
     $form['buttons']['next'] = array(
       '#type' => 'submit',
       '#value' => t('Next'),
@@ -218,7 +219,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
   $is_own = ($user->uid == $translation->uid);
   $is_approved = in_array($user->uid, array_keys($translation->votes));
   $is_new = ($translation->tguid == 'new');
-  $may_moderate = ($is_own ? user_access('moderate own suggestions') : user_access('moderate suggestions from others'));
+  $may_moderate = ($is_own or user_access('btranslator-resolve'));
 
   $form = array(
     '#theme' => 'l10n_feedback_translate_translation',
@@ -238,8 +239,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
     '#title' => _l10n_feedback_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tguid,
     '#default_value' => $is_approved ? $translation->tguid : '',
-    //'#disabled' => !user_access('submit votes'),
-    '#disabled' => !user_is_logged_in(),
+    '#disabled' => !user_access('btranslator-vote'),
     '#attributes' => array('class' => array('selector')),
   );
   if ($voting_mode == 'single') {
@@ -267,8 +267,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
 
   }
   else {
-    //if (user_access('submit suggestions')) {
-    if (user_is_logged_in()) {
+    if (user_access('btranslator-suggest')) {
       $form['edit'] = array(
         '#markup' => t('Edit a copy'),
         '#prefix' => '<label title="' . t('Edit a copy') . '">',
