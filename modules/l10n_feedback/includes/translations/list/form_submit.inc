@@ -132,7 +132,7 @@ function l10n_feedback_add_vote($tguid, $uid) {
 
   // Fetch the translation details from the DB.
   $sql = 'SELECT * FROM {l10n_feedback_translations} WHERE tguid = :tguid';
-  $trans = db_query($sql, array(':tguid' => $tguid))->fetchObject();
+  $trans = $GLOBALS['l10n_feedback_db']->query($sql, array(':tguid' => $tguid))->fetchObject();
 
   // If there is no such translation, return NULL.
   if (empty($trans))  return NULL;
@@ -141,7 +141,7 @@ function l10n_feedback_add_vote($tguid, $uid) {
   $nr = _l10n_feedback_clean_previous_votes($tguid, $uid, $trans->sguid, $trans->lng);
 
   // Add the vote.
-  $vid = db_insert('l10n_feedback_votes')
+  $vid = $GLOBALS['l10n_feedback_db']->insert('l10n_feedback_votes')
     ->fields(array(
         'tguid' => $tguid,
         'uid' => $uid,
@@ -151,8 +151,8 @@ function l10n_feedback_add_vote($tguid, $uid) {
 
   // Update vote count of the translation.
   $sql = 'SELECT COUNT(*) FROM {l10n_feedback_votes} WHERE tguid = :tguid';
-  $count = db_query($sql, array(':tguid' => $tguid))->fetchField();
-  db_update('l10n_feedback_translations')
+  $count = $GLOBALS['l10n_feedback_db']->query($sql, array(':tguid' => $tguid))->fetchField();
+  $GLOBALS['l10n_feedback_db']->update('l10n_feedback_translations')
     ->fields(array('count' => $count))
     ->condition('tguid', $tguid)
     ->execute();
@@ -216,19 +216,19 @@ function _l10n_feedback_clean_previous_votes($tguid, $uid, $sguid, $lng) {
       LEFT JOIN {l10n_feedback_votes} v ON (v.tguid = t.tguid)
       WHERE t.sguid = :sguid AND t.lng = :lng AND v.uid = :uid';
     $params = array(':sguid' => $sguid, ':lng' => $lng, ':uid' => $uid);
-    $arr_tguid = db_query($sql, $params)->fetchCol();
+    $arr_tguid = $GLOBALS['l10n_feedback_db']->query($sql, $params)->fetchCol();
   }
 
   if (empty($arr_tguid))  return 0;
 
   // Remove any votes by the user for each translation in $arr_tguid.
-  $num_deleted = db_delete('l10n_feedback_votes')
+  $num_deleted = $GLOBALS['l10n_feedback_db']->delete('l10n_feedback_votes')
     ->condition('uid', $uid)
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
 
   // Decrement the vote count for each translation in $arr_tguid.
-  $num_updated = db_update('l10n_feedback_translations')
+  $num_updated = $GLOBALS['l10n_feedback_db']->update('l10n_feedback_translations')
     ->expression('count', 'count - 1')
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
@@ -272,19 +272,19 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $uid =NULL) {
 
   // Load the string and adjust translation whitespace based on source.
   $query = 'SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid';
-  $source_string = db_query($query, array(':sguid' => $sguid))->fetchField();
+  $source_string = $GLOBALS['l10n_feedback_db']->query($query, array(':sguid' => $sguid))->fetchField();
   $translation = l10n_feedback_trim($translation, $source_string);
 
   // Look for an existing translation, if any.
   $tguid = sha1($translation . $lng . $sguid);
   $query = 'SELECT translation FROM {l10n_feedback_translations} WHERE tguid = :tguid';
-  $existing = db_query($query, array(':tguid' => $tguid))->fetchField();
+  $existing = $GLOBALS['l10n_feedback_db']->query($query, array(':tguid' => $tguid))->fetchField();
 
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  return false;
 
   // Insert the new suggestion.
-  db_insert('l10n_feedback_translations')
+  $GLOBALS['l10n_feedback_db']->insert('l10n_feedback_translations')
     ->fields(array(
         'sguid' => $sguid,
         'lng' => $lng,

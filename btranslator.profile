@@ -15,9 +15,6 @@ function btranslator_form_install_configure_form_alter(&$form, $form_state) {
  */
 function btranslator_install_tasks($install_state) {
 
-  //include 'profiles/btranslator/modules/smtp/smtp.admin.inc';
-  //include 'profiles/btranslator/modules/disqus/disqus.admin.inc';
-
   $tasks = array(
     'btranslator_config' => array(
       'display_name' => st('B-Translator Settings'),

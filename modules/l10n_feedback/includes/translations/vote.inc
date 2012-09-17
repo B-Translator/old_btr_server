@@ -61,7 +61,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   drupal_set_title(t('Vote Translations'));
 
   // Get the matching string and its translations.
-  $query = db_select('l10n_feedback_strings', 's')
+  $query = $GLOBALS['l10n_feedback_db']->select('l10n_feedback_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = l10n_feedback_get_strings($query, $lng);
@@ -168,7 +168,7 @@ function l10n_feedback_get_random_sguid($uid) {
     LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
     LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
   ";
-  $nr_strings = db_query($sql_count, $args)->fetchField();
+  $nr_strings = $GLOBALS['l10n_feedback_db']->query($sql_count, $args)->fetchField();
 
   // Get a random row number.
   $row_number = rand(0, $nr_strings - 1);
@@ -183,7 +183,7 @@ function l10n_feedback_get_random_sguid($uid) {
     LIMIT $row_number, 1
   ";
   //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
-  $random_sguid = db_query($sql_get_sguid, $args)->fetchField();
+  $random_sguid = $GLOBALS['l10n_feedback_db']->query($sql_get_sguid, $args)->fetchField();
 
   // Save it in the session.
   $_SESSION['random_sguid'] = $random_sguid;
@@ -235,7 +235,7 @@ function l10n_feedback_get_sequential_sguid($uid) {
 
   // get and return the $sguid
   $query = 'SELECT sguid FROM {l10n_feedback_locations} WHERE lid=:lid';
-  $sguid = db_query($query, array(':lid'=>$lid))->fetchField();
+  $sguid = $GLOBALS['l10n_feedback_db']->query($query, array(':lid'=>$lid))->fetchField();
 
   return $sguid;
 }

@@ -281,11 +281,38 @@ function l10n_feedback_mail($key, &$message, $params) {
 
 /**
  * Implements hook_init().
- *
- * Add stylesheets and block search engines from web application pages.
  */
 function l10n_feedback_init() {
-  if (arg(0) == 'translation') {
+
+  /*
+  // Set the parameters of the l10n_feedback database.
+  global $databases;
+  $databases['l10n_feedback_db']['default'] = array (
+      'database' => 'l10n_tst',
+      'username' => 'l10n_tst',
+      'password' => 'l10n_tst',
+      'host' => 'localhost',
+      'port' => '',
+      'driver' => 'mysql',
+      'prefix' => '',
+   );
+
+  // Somehow, declaring the database here does not work.
+  // Instead, this should be added to settings.php, and then
+  // it will work.
+
+  */
+
+  // Get a connection to the l10n_feedback_db. All the queries
+  // of the l10n_feedback module will use this connection.
+  if (isset($GLOBALS['databases']['l10n_feedback_db']['default'])) {
+    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'l10n_feedback_db');
+  }
+  else {
+    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'default');
+  }
+
+  if (arg(0) == 'translations') {
     drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback.css');
     // For the translation overview pages. This is used to present admin page like panels.
     drupal_add_css(drupal_get_path('module', 'system') . '/admin.css');
@@ -293,7 +320,7 @@ function l10n_feedback_init() {
 
   // Check if language is RTL
   $languages = l10n_feedback_get_languages();
-  $lng = arg(2);
+  $lng = arg(1);
   if (array_key_exists($lng, $languages)) {
     // Add RTL style if the current language's direction is RTL
     if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
@@ -372,7 +399,7 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
       WHERE $where_condition
       GROUP BY p.project
     ";
-    $result = db_query($get_all_min_and_max_locations, $args);
+    $result = $GLOBALS['l10n_feedback_db']->query($get_all_min_and_max_locations, $args);
     $sequential->projects = $result->fetchAll();
     $sequential->idx = 0;
     $sequential->lid = $sequential->projects[0]->lmin;

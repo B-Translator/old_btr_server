@@ -11,7 +11,7 @@ function l10n_feedback_project_autocomplete($string = '') {
     $query = "SELECT DISTINCT project
               FROM {l10n_feedback_projects}
               WHERE project LIKE :str ORDER BY project";
-    $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
+    $result = $GLOBALS['l10n_feedback_db']->query_range($query, 0, 10, array(':str' => $string.'%'));
     foreach ($result as $project) {
       $matches[$project->project] = check_plain($project->project);
     }
@@ -29,7 +29,7 @@ function l10n_feedback_origin_autocomplete($string = '') {
     $query = "SELECT DISTINCT origin
               FROM {l10n_feedback_projects}
               WHERE origin LIKE :str ORDER BY origin";
-    $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
+    $result = $GLOBALS['l10n_feedback_db']->query_range($query, 0, 10, array(':str' => $string.'%'));
     foreach ($result as $project) {
       $matches[$project->origin] = check_plain($project->origin);
     }
@@ -45,7 +45,7 @@ function l10n_feedback_user_autocomplete($string = '') {
   $matches = array();
   if ($string) {
     $query = "SELECT name FROM {users} WHERE name LIKE :str ORDER BY name";
-    $result = db_query_range($query, 0, 10, array(':str' => $string.'%'));
+    $result = $GLOBALS['l10n_feedback_db']->query_range($query, 0, 10, array(':str' => $string.'%'));
     foreach ($result as $user) {
       $matches[$user->name] = check_plain($user->name);
     }
@@ -67,7 +67,7 @@ function l10n_feedback_string_details($sguid) {
   $output = '';
 
   // Get the context of this string.
-  $context = db_query("SELECT context FROM l10n_feedback_strings WHERE sguid = :sguid",
+  $context = $GLOBALS['l10n_feedback_db']->query("SELECT context FROM {l10n_feedback_strings} WHERE sguid = :sguid",
              array(':sguid' => $sguid))
     ->fetchField();
   if (!empty($context)) {
@@ -83,7 +83,7 @@ function l10n_feedback_string_details($sguid) {
           RIGHT JOIN l10n_feedback_projects p ON (p.pguid = t.pguid)
           WHERE s.sguid = :sguid
           ORDER BY p.origin, p.project";
-  $project_list = db_query($sql, array(':sguid' => $sguid))->fetchCol();
+  $project_list = $GLOBALS['l10n_feedback_db']->query($sql, array(':sguid' => $sguid))->fetchCol();
   $output .= theme('item_list', array('items' => $project_list));
 
   print $output;
@@ -103,7 +103,7 @@ function l10n_feedback_string_details($sguid) {
 function l10n_feedback_translation_details($tid = 0, $ajax = 0) {
 
   // Get data about this translation.
-  $string = db_query(
+  $string = $GLOBALS['l10n_feedback_db']->query(
     'SELECT * FROM {l10n_server_translation} WHERE tid = :tid',
     array(':tid' => $tid)
   )->fetchObject();
@@ -119,7 +119,7 @@ function l10n_feedback_translation_details($tid = 0, $ajax = 0) {
   }
 
   // List of project releases, where this string is used.
-  $result = db_query('SELECT h.*, u.name FROM {l10n_server_translation_history} h INNER JOIN {users} u ON h.uid_action = u.uid WHERE tid = :tid ORDER BY time_action DESC, type_action DESC', array(':tid' => $tid));
+  $result = $GLOBALS['l10n_feedback_db']->query('SELECT h.*, u.name FROM {l10n_server_translation_history} h INNER JOIN {users} u ON h.uid_action = u.uid WHERE tid = :tid ORDER BY time_action DESC, type_action DESC', array(':tid' => $tid));
 
   $uid_submitted = 0;
   $history_list = array();

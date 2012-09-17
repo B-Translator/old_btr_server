@@ -31,7 +31,7 @@
  */
 function l10n_feedback_build_query($filter) {
 
-  $query = db_select('l10n_feedback_strings', 's')
+  $query = $GLOBALS['l10n_feedback_db']->select('l10n_feedback_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
   $query->addField('s', 'sguid');
   $query->groupBy('s.sguid');
@@ -133,9 +133,9 @@ function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $vo
   //get the uid $translated_by and $voted_by
   $get_uid = 'SELECT uid FROM {users} WHERE name = :name';
   $t_uid = ($translated_by == '') ? '' :
-    db_query($get_uid, array(':name'=>$translated_by))->fetchField();
+    $GLOBALS['l10n_feedback_db']->query($get_uid, array(':name'=>$translated_by))->fetchField();
   $v_uid = ($voted_by == '') ? '' :
-    db_query($get_uid, array(':name'=>$voted_by))->fetchField();
+    $GLOBALS['l10n_feedback_db']->query($get_uid, array(':name'=>$voted_by))->fetchField();
 
   //if it is the same user, then search for strings
   //translated OR voted by this user

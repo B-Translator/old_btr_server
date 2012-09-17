@@ -22,8 +22,8 @@ function l10n_feedback_build_filter() {
   //by default search for strings similar to the one that is being voted
   if ($lng == '' && isset($_SESSION['random_sguid'])) {
     $sguid = $_SESSION['random_sguid'];
-    $sql = 'SELECT string FROM l10n_feedback_strings WHERE sguid = :sguid';
-    $string = db_query($sql, array(':sguid' => $sguid))->fetchField();
+    $sql = 'SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid';
+    $string = $GLOBALS['l10n_feedback_db']->query($sql, array(':sguid' => $sguid))->fetchField();
     if ($string) {
       $lng = l10n_feedback_get_translation_lng();
       $request['words'] = $string;

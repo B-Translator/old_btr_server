@@ -28,7 +28,7 @@ function l10n_feedback_get_strings($filter_query, $lng) {
     " SELECT sguid, string
       FROM {l10n_feedback_strings}
       WHERE sguid IN (:arr_sguid)";
-  $result = db_query($get_strings, array(':arr_sguid' => $arr_sguid));
+  $result = $GLOBALS['l10n_feedback_db']->query($get_strings, array(':arr_sguid' => $arr_sguid));
   $arr_strings = $result->fetchAllAssoc('sguid');
 
   //get translations
@@ -40,7 +40,7 @@ function l10n_feedback_get_strings($filter_query, $lng) {
       LEFT OUTER JOIN {users} u ON (u.uid = t.uid)
       WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
       ORDER BY t.count DESC";
-  $result = db_query($get_translations, array(':lng' => $lng, ':arr_sguid' => $arr_sguid));
+  $result = $GLOBALS['l10n_feedback_db']->query($get_translations, array(':lng' => $lng, ':arr_sguid' => $arr_sguid));
   $arr_translations = $result->fetchAllAssoc('tguid');
 
   //get votes
@@ -56,7 +56,7 @@ function l10n_feedback_get_strings($filter_query, $lng) {
         LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
         WHERE t.tguid IN (:arr_tguid)
         ORDER BY v.time DESC";
-    $result = db_query($get_votes, array(':arr_tguid' => $arr_tguid));
+    $result = $GLOBALS['l10n_feedback_db']->query($get_votes, array(':arr_tguid' => $arr_tguid));
     $arr_votes = $result->fetchAllAssoc('vid');
   }
 
@@ -73,7 +73,7 @@ function l10n_feedback_get_strings($filter_query, $lng) {
 	    ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
       GROUP BY t.sguid, t.lng, t.count";
   $arr_lng = array('fr', 'sq');
-  $result = db_query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid));
+  $result = $GLOBALS['l10n_feedback_db']->query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid));
   $arr_alternatives = $result->fetchAllAssoc('tguid');
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
