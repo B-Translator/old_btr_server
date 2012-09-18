@@ -85,14 +85,14 @@ B-Translator.
 
 ** Site configurations for development and testing
 
-   + Create configuration files ~/etc/apache2/sites-available/l10n-dev~,
-     and ~/etc/apache2/sites-available/l10n-dev-ssl~ by copying ~default~
+   + Create configuration files ~/etc/apache2/sites-available/btranslator-dev~,
+     and ~/etc/apache2/sites-available/btranslator-dev-ssl~ by copying ~default~
      and ~default-ssl~ and modifying them like this:
      #+BEGIN_EXAMPLE
      <VirtualHost *:80>
-	 ServerName l10n-dev.org.al
+	 ServerName dev.btranslator.org
 	 ServerAdmin dashohoxha@gmail.com
-	 DocumentRoot /var/www/l10n-dev
+	 DocumentRoot /var/www/btranslator-dev
 
 	 <Directory />
 	     Options FollowSymLinks
@@ -100,7 +100,7 @@ B-Translator.
 	 </Directory>
 
 	 ### directory where application is installed
-	 <Directory /var/www/l10n-dev/>
+	 <Directory /var/www/btranslator-dev/>
 	     Options Indexes FollowSymLinks MultiViews
 	     # AllowOverride None
 	     AllowOverride All   ### this is needed for clean URLs
@@ -112,9 +112,9 @@ B-Translator.
      #+BEGIN_EXAMPLE
      <IfModule mod_ssl.c>
      <VirtualHost *:443>
-	 ServerName l10n-dev.org.al
+	 ServerName dev.btranslator.org
 	 ServerAdmin dashohoxha@gmail.com
-	 DocumentRoot /var/www/l10n-dev
+	 DocumentRoot /var/www/btranslator-dev
 
 	 <Directory />
 	     Options FollowSymLinks
@@ -122,7 +122,7 @@ B-Translator.
 	 </Directory>
 
 	 ### directory where application is installed
-	 <Directory /var/www/l10n-dev/>
+	 <Directory /var/www/btranslator-dev/>
 	     Options Indexes FollowSymLinks MultiViews
 	     # AllowOverride None
 	     AllowOverride All   ### this is needed for clean URLs
@@ -132,19 +132,19 @@ B-Translator.
      #+END_EXAMPLE
 
    + Similarly, create the configuration files
-     ~/etc/apache2/sites-available/l10n-tst~, and
-     ~/etc/apache2/sites-available/l10n-tst-ssl~ for a testing
+     ~/etc/apache2/sites-available/btranslator-tst~, and
+     ~/etc/apache2/sites-available/btranslator-tst-ssl~ for a testing
      installation.
 
    + Enable the sites:
      #+BEGIN_EXAMPLE
-     a2ensite l10n-dev l10n-dev-ssl l10n-tst l10n-tst-ssl
+     a2ensite btranslator-dev btranslator-dev-ssl btranslator-tst btranslator-tst-ssl
      #+END_EXAMPLE
 
    + Add these lines to ~/etc/hosts~
      #+BEGIN_EXAMPLE
-     127.0.0.1    l10n-dev.org.al
-     127.0.0.1    l10n-tst.org.al
+     127.0.0.1    dev.btranslator.org
+     127.0.0.1    tst.btranslator.org
      #+END_EXAMPLE
 
    + Finally restart apache: =service apache2 restart=.
@@ -205,13 +205,13 @@ B-Translator.
 
   + Run =crontab -e= and add these lines:
     #+BEGIN_EXAMPLE
-    ### https://l10n-dev.org.al
-    0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+    ### https://dev.btranslator.org
+    0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://dev.btranslator.org/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
     #+END_EXAMPLE
 
   + Test it by running this command from command line:
     #+BEGIN_EXAMPLE
-    wget -O - -q -t 1 --no-check-certificate https://l10n-dev.org.al/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+    wget -O - -q -t 1 --no-check-certificate https://dev.btranslator.org/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
     #+END_EXAMPLE
 
   For the correct cron URL to be used, check =/admin/reports/status=

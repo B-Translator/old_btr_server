@@ -66,7 +66,7 @@ variable_set('date_first_day', 1);
 
 // disqus
 variable_set('disqus_developer', true);
-variable_set('disqus_domain', 'btranslator-dev');
+variable_set('disqus_domain', 'dev-btranslator');
 variable_set('disqus_inherit_login', true);
 variable_set('disqus_location', 'content_area');
 variable_set('disqus_nodetypes',
@@ -75,7 +75,7 @@ variable_set('disqus_nodetypes',
     'article' => 'article',
     'book' => 'book',
   ));
-variable_set('disqus_userapikey', 'jY36xKWOn1MibB0RiZ2zonErZfEx0q6h0SF9Ht5zwsAP0dSFpSBKNSufLfiTsI6x');
+variable_set('disqus_userapikey', 'uYaFvxvy3KhogEgnn8mr8QzS0H1TzZH4yzJFdGVzmnXJvZNLRVd2neAc9YwpTSa5');
 variable_set('disqus_weight', 100);
 
 // blocks
