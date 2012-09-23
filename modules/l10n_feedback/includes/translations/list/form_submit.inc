@@ -19,7 +19,16 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
 
+  // get the langcode submitted with the form
   $lng = $form_values['langcode'];
+
+  // check whether the submitted lng is valid for providing feedback on this site
+  $translation_lng = variable_get('l10n_feedback_translation_lng');
+  if ($lng != $translation_lng) {
+    drupal_set_message(t("You cannot give feedback for the language '$lng' on this site!"), 'error');
+    return;
+  }
+
   // Get the voting mode.
   $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');
 

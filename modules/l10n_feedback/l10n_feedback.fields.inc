@@ -11,7 +11,6 @@
 function l10n_feedback_delete_userprofile_fields() {
 
   $field_names = array(
-    'field_translation_language',
     'field_preferred_projects',
     'field_order_of_strings',
     'field_auxiliary_languages',
@@ -35,36 +34,6 @@ function l10n_feedback_delete_userprofile_fields() {
  * B-Translator.
  */
 function l10n_feedback_create_userprofile_fields() {
-
-  // get a list of translation languages available
-  $languages = l10n_feedback_get_languages();
-  foreach ($languages as $code => $lang)  $arr_langs[$code] = $lang['name'];
-  unset($arr_langs['en']);
-
-  // create a field and instance for 'field_translation_language'
-  field_create_field(
-    array(
-      'field_name' => 'field_translation_language',
-      'type' => 'list_text',
-      'cardinality' => 1,
-      'entity_types' => array('user'),
-      'settings' => array('allowed_values' => $arr_langs),
-    ));
-  field_create_instance(
-    array(
-      'field_name' => 'field_translation_language',
-      'entity_type' => 'user',
-      'bundle' => 'user',
-      'label' => 'Translation Language',
-      'description' => 'The language of translations for which you are giving feedback (usually your mother language).',
-      'settings' => array('user_register_form' => 1),
-      'widget' => array(
-        'weight' => '1',
-        'type' => 'options_select',
-      ),
-      'default_value' => array(array('value' => 'sq')),
-      'required' => 1,
-    ));
 
   // create a field and instance for 'field_preferred_projects'
   field_create_field(

@@ -26,7 +26,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   // and the lng, according to the preferencies of the current user.
   if ($sguid == NULL) {
     if ($lng == NULL) {
-      $lng = l10n_feedback_get_translation_lng();
+      $lng = variable_get('l10n_feedback_translation_lng', 'fr');
     }
     $sguid = l10n_feedback_get_sguid();
     drupal_goto("translations/$lng/$sguid");

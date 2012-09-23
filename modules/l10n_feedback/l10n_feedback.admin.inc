@@ -17,6 +17,21 @@ function l10n_feedback_config() {
     '#title' => t('B-Translator configuration options'),
   );
 
+  // get a list of available languages
+  $languages = l10n_feedback_get_languages();
+  foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
+  unset($lang_options['en']);
+
+  // l10n_feedback_translation_lng
+  $form['config']['l10n_feedback_translation_lng'] = array(
+    '#type' => 'select',
+    '#title' => t('Translation Language'),
+    '#description' => t('The language of translations. This site is about collecting feedback for the translations of this language.'),
+    '#options' => $lang_options,
+    '#default_value' => variable_get('l10n_feedback_translation_lng', 'fr'),
+  );
+
+  // l10n_feedback_voting_mode
   $voting_mode_options = array(
     'single'   => t('Single'),
     'multiple' => t('Multiple'),
@@ -43,17 +58,7 @@ function l10n_feedback_config() {
     '#title' => t('B-Translator default settings'),
   );
 
-  $languages = l10n_feedback_get_languages();
-  foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
-  unset($lang_options['en']);
-  $form['defaults']['l10n_feedback_default_lng'] = array(
-    '#type' => 'select',
-    '#title' => t('Default Translation Language'),
-    '#description' => t('The default language of translations, which is used wherever the translations language in not specified (for example for the guest users).'),
-    '#options' => $lang_options,
-    '#default_value' => variable_get('l10n_feedback_default_lng', 'fr'),
-  );
-
+  // l10n_feedback_preferred_projects
   $preferred_projects_description = t("
        Select the projects that will be used for review and translations.
        Only strings from these projects will be presented to the users. <br/>

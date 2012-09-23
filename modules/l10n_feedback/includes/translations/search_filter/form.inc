@@ -25,7 +25,7 @@ function l10n_feedback_build_filter() {
     $sql = 'SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid';
     $string = $GLOBALS['l10n_feedback_db']->query($sql, array(':sguid' => $sguid))->fetchField();
     if ($string) {
-      $lng = l10n_feedback_get_translation_lng();
+      $lng = variable_get('l10n_feedback_translation_lng', 'fr');
       $request['words'] = $string;
     }
   }

@@ -36,6 +36,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     'strings' => array(
       '#tree' => TRUE,
       '#theme' => 'l10n_feedback_translate_table',
+      '#lng' => $lng,
     ),
 
     'buttons' => array(
@@ -51,11 +52,14 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
 
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
+  $translation_lng = variable_get('l10n_feedback_translation_lng');
+  $enable_submit = ($lng==$translation_lng) && (user_access('btranslator-vote') || user_access('btranslator-suggest'));
   $form['buttons']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
-    '#access' => user_access('btranslator-vote') or user_access('btranslator-suggest'),
+    '#access' => $enable_submit,
   );
+
   // don't show the Next button on the search interface
   if (current_path() != 'translations/search') {
     $form['buttons']['next'] = array(

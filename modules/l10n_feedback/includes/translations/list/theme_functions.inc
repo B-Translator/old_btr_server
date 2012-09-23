@@ -10,12 +10,13 @@
 function theme_l10n_feedback_translate_table($variables) {
 
   $element = $variables['element'];
+  $lng = $element['#lng'];
   $header = array(
     array(
       'data' => t('Source text'),
       'colspan' => 2,
     ),
-    t('Translations'),
+    t('Translations') . " ($lng)",
   );
 
   $rows = array();

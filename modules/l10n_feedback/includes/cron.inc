@@ -19,7 +19,7 @@ function l10n_feedback_cron() {
       'pass' => $account->pass,
       'mail' => $account->mail,
       'language' => $account->language,
-      'lng' => l10n_feedback_get_translation_lng($account),
+      'lng' => variable_get('l10n_feedback_translation_lng', 'fr'),
       'login' => $account->login,
     );
     $queue->createItem($account_data);
