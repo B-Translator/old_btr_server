@@ -74,6 +74,15 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
   foreach ($strings as $sguid => $string) {
     $form['strings'][$sguid] = _l10n_feedback_translate_form_item($form_state, $string, $lng);
     if ($disqus == 'comments') {
+
+      // set the page title (no longer than 20 chars)
+      $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
+      if (strlen($title) > 20) {
+	$title = substr($title, 0, strrpos(substr($title, 0, 17), ' '));
+	$title .= '...';
+      }
+      drupal_set_title(t('String: ') . $title);
+
       // get the comment title (no longer than 50 chars)
       $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
       if (strlen($title) > 50) {
