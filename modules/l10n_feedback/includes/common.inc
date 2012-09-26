@@ -91,6 +91,28 @@ function l10n_feedback_get_preferred_projects($account) {
   return $arr_preferred_projects;
 }
 
+
+/**
+ * Return the value of the field 'field_auxiliary_languages' as an array.
+ */
+function l10n_feedback_get_auxiliary_languages($account) {
+
+  $lang = 'und';
+  $arr_auxiliary_languages = array();
+  if ( isset($account->field_auxiliary_languages[$lang])
+       and is_array($account->field_auxiliary_languages[$lang]) )
+    {
+      // get the preferred projects from the user settings
+      $field_auxiliary_languages = $account->field_auxiliary_languages[$lang];
+      foreach ($field_auxiliary_languages as $language) {
+	$arr_auxiliary_languages[] = $language['value'];
+      }
+    }
+
+  return $arr_auxiliary_languages;
+}
+
+
 /**
  * Get the sequential data from the field 'field_data_sequential'.
  * Return NULL if no such data is found.

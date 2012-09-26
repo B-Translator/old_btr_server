@@ -82,7 +82,8 @@ function l10n_feedback_get_strings($filter_query, $lng) {
 	    ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
       GROUP BY t.sguid, t.lng, t.count
   ";
-  $arr_lng = array('fr', 'sq');
+  global $user;
+  $arr_lng = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
   $args = array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid);
   $result = $db->query($get_alternatives, $args);
   $arr_alternatives = $result->fetchAllAssoc('tguid');
