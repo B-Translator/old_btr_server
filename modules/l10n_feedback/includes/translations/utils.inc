@@ -71,22 +71,27 @@ function l10n_feedback_get_strings($filter_query, $lng) {
 
   //get alternatives (from other languages)
   //they are the best translations (max count) from the alternative languages
-  $get_alternatives = "
-      SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
-      FROM (SELECT sguid, lng, MAX(count) AS max_count
-	    FROM l10n_feedback_translations
-	    WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
-	    GROUP BY sguid, lng
-	    ) AS m
-      INNER JOIN l10n_feedback_translations AS t
-	    ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
-      GROUP BY t.sguid, t.lng, t.count
-  ";
   global $user;
   $arr_lng = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
-  $args = array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid);
-  $result = $db->query($get_alternatives, $args);
-  $arr_alternatives = $result->fetchAllAssoc('tguid');
+  if (empty($arr_lng)) {
+    $arr_alternatives = array();
+  }
+  else {
+    $get_alternatives = "
+        SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
+        FROM (SELECT sguid, lng, MAX(count) AS max_count
+	      FROM l10n_feedback_translations
+	      WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
+	      GROUP BY sguid, lng
+	      ) AS m
+        INNER JOIN l10n_feedback_translations AS t
+	      ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
+        GROUP BY t.sguid, t.lng, t.count
+    ";
+    $args = array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid);
+    $result = $db->query($get_alternatives, $args);
+    $arr_alternatives = $result->fetchAllAssoc('tguid');
+  }
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
   // Put alternatives as nested array under strings.
