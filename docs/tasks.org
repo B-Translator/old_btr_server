@@ -99,6 +99,8 @@
 *** Improve the look of number of votes.
 *** Add in l10n.org.al a page for each project which can be liked, +1-d, etc.
 
+*** Separate the display interface from the database logic with a web-server API.
+
 *** DONE Improve the content of the notification emails.
     Include in the message the string that is to be translated and any
     existing translations. Include in the subject part of the string
@@ -108,7 +110,7 @@
     Replace one-time-login with one-time-submittion on the
     notification emails
 
-*** Disqus:
+*** DONE Disqus:
     - improve the title of the disqus threads
     - transfer domain l10n_sq to btranslator
     - create also a domain btranslator_dev
@@ -117,21 +119,29 @@
     Try:
     - simplenews
     - masscontact
-
 *** Invite all the existing users to customize their profile/settings.
 
-*** Fix the irc proxy on the server.
+*** Install any module for sending invitations to other users.
+
+*** DONE Fix the irc proxy on the server.
     + https://wiki.linaro.org/Resources/HowTo/BIP
 
 *** Try to use on l10n.org.al the theme sky or some other suitable theme.
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
 
-*** Import the translation data (PO files) of other languages.
+*** DONE Use a different database for the translation data
+    See:
+    http://stackoverflow.com/questions/4839063/multiple-concurrent-database-connections-in-drupal-7
+
+
+*** DONE Import the translation data (PO files) of other languages.
     Import the translation data of Slovenian. Try to import the
-    translation data of German and Italian as well. Maybe the server
-    will need to be upgraded (from 512MB RAM and 20GB HDD, to 1024MB
-    RAM and 40GB HDD).
+    translation data of German and Italian as well.
+
+*** Upgrade the server on rackspace
+    From 512MB RAM and 20GB HDD, to 1024MB RAM and 40GB HDD.
+    Need to find some funds or sponsors, to support this.
 
 *** Create user dashboards/stats/reports.
     - http://drupal.org/project/homebox
@@ -141,7 +151,7 @@
 *** Admin dashboards/stats/reports.
     - http://drupal.org/documentation/modules/dashboard
 
-*** Create a twitter account for btranslator and connect it to the github account.
+*** DONE Create a twitter account for btranslator and connect it to the github account.
 
 *** Improve the website (homepage) of the project on GitHub.
 *** Create a page on Google+ for l10n-sq and btranslator.
