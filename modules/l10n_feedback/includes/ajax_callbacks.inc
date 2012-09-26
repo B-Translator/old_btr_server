@@ -8,10 +8,12 @@
 function l10n_feedback_project_autocomplete($string = '') {
   $matches = array();
   if ($string) {
+    $db = $GLOBALS['l10n_feedback_db'];
     $query = "SELECT DISTINCT project
               FROM {l10n_feedback_projects}
               WHERE project LIKE :str ORDER BY project";
-    $result = $GLOBALS['l10n_feedback_db']->query_range($query, 0, 10, array(':str' => $string.'%'));
+    $args = array(':str' => $string . '%');
+    $result = $db->queryRange($query, 0, 10, $args);
     foreach ($result as $project) {
       $matches[$project->project] = check_plain($project->project);
     }
@@ -26,10 +28,12 @@ function l10n_feedback_project_autocomplete($string = '') {
 function l10n_feedback_origin_autocomplete($string = '') {
   $matches = array();
   if ($string) {
+    $db = $GLOBALS['l10n_feedback_db'];
     $query = "SELECT DISTINCT origin
               FROM {l10n_feedback_projects}
               WHERE origin LIKE :str ORDER BY origin";
-    $result = $GLOBALS['l10n_feedback_db']->query_range($query, 0, 10, array(':str' => $string.'%'));
+    $args = array(':str' => $string . '%');
+    $result = $db->queryRange($query, 0, 10, $args);
     foreach ($result as $project) {
       $matches[$project->origin] = check_plain($project->origin);
     }
@@ -44,8 +48,15 @@ function l10n_feedback_origin_autocomplete($string = '') {
 function l10n_feedback_user_autocomplete($string = '') {
   $matches = array();
   if ($string) {
-    $query = "SELECT name FROM {users} WHERE name LIKE :str ORDER BY name";
-    $result = $GLOBALS['l10n_feedback_db']->query_range($query, 0, 10, array(':str' => $string.'%'));
+    $db = $GLOBALS['l10n_feedback_db'];
+    $query = "SELECT name FROM {l10n_feedback_users}
+              WHERE name LIKE :str AND ulng = :ulng
+              ORDER BY name";
+    $args = array(
+      ':str' => $string . '%',
+      ':ulng' => variable_get('l10n_feedback_translation_lng'),
+    );
+    $result = $db->queryRange($query, 0, 10, $args);
     foreach ($result as $user) {
       $matches[$user->name] = check_plain($user->name);
     }
@@ -67,23 +78,27 @@ function l10n_feedback_string_details($sguid) {
   $output = '';
 
   // Get the context of this string.
-  $context = $GLOBALS['l10n_feedback_db']->query("SELECT context FROM {l10n_feedback_strings} WHERE sguid = :sguid",
-             array(':sguid' => $sguid))
-    ->fetchField();
+  $db = $GLOBALS['l10n_feedback_db'];
+  $query = "SELECT context FROM {l10n_feedback_strings} WHERE sguid = :sguid";
+  $args = array(':sguid' => $sguid);
+  $context = $db->query($query, $args)->fetchField();
   if (!empty($context)) {
     $output .= '<h3>' . t('Used with context: %context', array('%context' => $context)) . '</h3>';
   }
 
   // List projects where this string is used.
   $output .= '<h3>' .  t('Used on these projects:') . '</h3>';
-  $sql = "SELECT CONCAT(p.origin, ' / ', p.project) AS proj
-          FROM l10n_feedback_strings s
-          RIGHT JOIN l10n_feedback_locations l ON (l.sguid = s.sguid)
-          RIGHT JOIN l10n_feedback_templates t ON (t.potid = l.potid)
-          RIGHT JOIN l10n_feedback_projects p ON (p.pguid = t.pguid)
-          WHERE s.sguid = :sguid
-          ORDER BY p.origin, p.project";
-  $project_list = $GLOBALS['l10n_feedback_db']->query($sql, array(':sguid' => $sguid))->fetchCol();
+  $sql = "
+    SELECT CONCAT(p.origin, ' / ', p.project) AS proj
+    FROM {l10n_feedback_strings} s
+    RIGHT JOIN {l10n_feedback_locations} l ON (l.sguid = s.sguid)
+    RIGHT JOIN {l10n_feedback_templates} t ON (t.potid = l.potid)
+    RIGHT JOIN {l10n_feedback_projects} p ON (p.pguid = t.pguid)
+    WHERE s.sguid = :sguid
+    ORDER BY p.origin, p.project
+  ";
+  $args = array(':sguid' => $sguid);
+  $project_list = $db->query($sql, $args)->fetchCol();
   $output .= theme('item_list', array('items' => $project_list));
 
   print $output;
@@ -91,6 +106,8 @@ function l10n_feedback_string_details($sguid) {
 }
 
 /**
+ * TODO: modify or delete this function
+ *
  * Provide full history information about translation.
  *
  * @param $tid

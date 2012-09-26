@@ -207,7 +207,9 @@ function _l10n_feedback_translate_translation_textarea($string, $lng) {
     'tguid' => 'new',
     'lng' => $lng,
     'translation' => $translation,
+    'author' => null,
     'uid' => $user->uid,
+    'count' => '0',
     'votes' => array(),
   );
 }
@@ -216,12 +218,13 @@ function _l10n_feedback_translate_translation_textarea($string, $lng) {
  * Creates the form fragment for a translated string.
  */
 function _l10n_feedback_translate_translation($translation, $string_sguid, $lng) {
+
   global $user;
 
   $translation->translation = l10n_feedback_unpack_string($translation->translation);
 
-  $is_own = ($user->uid == $translation->uid);
-  $is_approved = in_array($user->uid, array_keys($translation->votes));
+  $is_own = ($user->uid && ($user->name == $translation->author));
+  $is_approved = ($user->uid && in_array($user->name, array_keys($translation->votes)));
   $is_new = ($translation->tguid == 'new');
   $may_moderate = ($is_own or user_access('btranslator-resolve'));
 
@@ -278,8 +281,8 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
         '#suffix' => '</label>',
       );
     }
-    if (isset($translation->author)) {
-      $title = l10n_feedback_translate_byline($translation->author, $translation->uid, $translation->time, -1, -1, FALSE);
+    if ($translation->author != null) {
+      $title = l10n_feedback_translate_byline($translation->author, $translation->uid, $translation->time);
 
       $form['author'] = array(
         '#markup' => $title,
@@ -290,8 +293,8 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
     //TODO: Improve displaying of vote count and the voters.
     if ($translation->count != '0') {
       $voters = array();
-      foreach ($translation->votes as $uid=>$vote) {
-        $voters[] = theme('username', array('account' => (object) array('name' => $vote->name, 'uid' => $uid)));
+      foreach ($translation->votes as $name=>$vote) {
+        $voters[] = theme('username', array('account' => (object) array('name' => $name, 'uid' => $vote->uid)));
       }
       $form['votes'] = array(
         '#type' => 'fieldset',
@@ -330,9 +333,12 @@ function _l10n_feedback_translate_render_textarray($textarray, $empty = '') {
 /**
  * Generates the byline containing meta information about a string.
  */
-function l10n_feedback_translate_byline($name, $uid, $time, $medium, $type, $link_user = TRUE) {
+function l10n_feedback_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =true) {
+  $account = (object) array('name' => $name, 'uid' => $uid);
+  $username = ($link_user ? theme('username', array('account' => $account)) : check_plain($name));
+  //dpm($username);  //debug
   $params = array(
-    '!author' => $uid ? ($link_user ? theme('username', array('account' => (object) array('name' => $name, 'uid' => $uid))) : check_plain($name)) : t('uknown user'),
+    '!author' => $uid ? $username : t('uknown user'),
     // Also skip handling time if uid was not specified (for decline entries
     // in the update, which have time for ordering reasons, but no uid).
     '@date' => $time && $uid ? format_date(strtotime($time)) : t('unknown time'),

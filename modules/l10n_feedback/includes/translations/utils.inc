@@ -18,29 +18,36 @@
  *   associative arrays.
  */
 function l10n_feedback_get_strings($filter_query, $lng) {
+
+  $db = $GLOBALS['l10n_feedback_db'];
+
   //get the IDs of the strings that are returned by the filter query
   $assoc_arr_sguid = $filter_query->execute()->fetchAllAssoc('sguid');
   if (empty($assoc_arr_sguid))  return array();
   $arr_sguid = array_keys($assoc_arr_sguid);
 
   //get string details
-  $get_strings =
-    " SELECT sguid, string
+  $get_strings = "
+      SELECT sguid, string
       FROM {l10n_feedback_strings}
-      WHERE sguid IN (:arr_sguid)";
-  $result = $GLOBALS['l10n_feedback_db']->query($get_strings, array(':arr_sguid' => $arr_sguid));
+      WHERE sguid IN (:arr_sguid)
+  ";
+  $args = array(':arr_sguid' => $arr_sguid);
+  $result = $db->query($get_strings, $args);
   $arr_strings = $result->fetchAllAssoc('sguid');
 
   //get translations
-  $get_translations =
-    " SELECT s.sguid, t.tguid, t.lng, t.translation,
-             t.time, t.uid, u.name AS author, t.count
+  $get_translations = "
+      SELECT s.sguid, t.tguid, t.lng, t.translation,
+             t.time, u.name AS author, u.umail, u.ulng, u.uid, t.count
       FROM {l10n_feedback_strings} s
       LEFT OUTER JOIN {l10n_feedback_translations} t ON (s.sguid = t.sguid)
-      LEFT OUTER JOIN {users} u ON (u.uid = t.uid)
+      LEFT OUTER JOIN {l10n_feedback_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
       WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
-      ORDER BY t.count DESC";
-  $result = $GLOBALS['l10n_feedback_db']->query($get_translations, array(':lng' => $lng, ':arr_sguid' => $arr_sguid));
+      ORDER BY t.count DESC
+  ";
+  $args = array(':lng' => $lng, ':arr_sguid' => $arr_sguid);
+  $result = $db->query($get_translations, $args);
   $arr_translations = $result->fetchAllAssoc('tguid');
 
   //get votes
@@ -49,21 +56,23 @@ function l10n_feedback_get_strings($filter_query, $lng) {
     $arr_votes = array();
   }
   else {
-    $get_votes =
-      " SELECT t.tguid, v.vid, v.uid, u.name, v.time
+    $get_votes = "
+        SELECT t.tguid, v.vid, u.name, u.umail, u.ulng, u.uid, v.time
         FROM {l10n_feedback_translations} t
         LEFT OUTER JOIN {l10n_feedback_votes} v ON (v.tguid = t.tguid)
-        LEFT OUTER JOIN {users} u ON (u.uid = v.uid)
+        LEFT OUTER JOIN {l10n_feedback_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
         WHERE t.tguid IN (:arr_tguid)
-        ORDER BY v.time DESC";
-    $result = $GLOBALS['l10n_feedback_db']->query($get_votes, array(':arr_tguid' => $arr_tguid));
+        ORDER BY v.time DESC
+    ";
+    $args = array(':arr_tguid' => $arr_tguid);
+    $result = $db->query($get_votes, $args);
     $arr_votes = $result->fetchAllAssoc('vid');
   }
 
   //get alternatives (from other languages)
   //they are the best translations (max count) from the alternative languages
-  $get_alternatives =
-    " SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
+  $get_alternatives = "
+      SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
       FROM (SELECT sguid, lng, MAX(count) AS max_count
 	    FROM l10n_feedback_translations
 	    WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
@@ -71,9 +80,11 @@ function l10n_feedback_get_strings($filter_query, $lng) {
 	    ) AS m
       INNER JOIN l10n_feedback_translations AS t
 	    ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
-      GROUP BY t.sguid, t.lng, t.count";
+      GROUP BY t.sguid, t.lng, t.count
+  ";
   $arr_lng = array('fr', 'sq');
-  $result = $GLOBALS['l10n_feedback_db']->query($get_alternatives, array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid));
+  $args = array(':arr_lng' => $arr_lng, ':arr_sguid' => $arr_sguid);
+  $result = $db->query($get_alternatives, $args);
   $arr_alternatives = $result->fetchAllAssoc('tguid');
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
 
@@ -88,8 +99,8 @@ function l10n_feedback_get_strings($filter_query, $lng) {
   // Votes are already ordered by time (desc).
   foreach ($arr_votes as $vid => $vote) {
     $tguid = $vote->tguid;
-    $uid = $vote->uid;
-    $arr_translations[$tguid]->votes[$uid] = $vote;
+    $name = $vote->name;
+    $arr_translations[$tguid]->votes[$name] = $vote;
   }
 
   // Put translations as nested arrays inside strings.

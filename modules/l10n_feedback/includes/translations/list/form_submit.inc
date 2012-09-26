@@ -86,13 +86,15 @@ function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
     // then add a new vote for this translation.
     $previous_votes = $string[$tguid]['original']->votes;
     global $user;
-    if (!in_array($user->uid, array_keys($previous_votes))) {
-      l10n_feedback_add_vote($tguid, $user->uid);
+    if (!in_array($user->name, array_keys($previous_votes))) {
+      $umail = $user->init;  //initial mail of the user
+      l10n_feedback_add_vote($tguid, $umail);
     }
   }
 }
 
 function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation) {
+
   global $user;
 
   $approved = $translation['approved'];
@@ -105,15 +107,17 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
     // Add a new vote for this translation
     // if such a vote does not exist.
     $previous_votes = $translation['original']->votes;
-    if (!in_array($user->uid, array_keys($previous_votes))) {
-      l10n_feedback_add_vote($tguid, $user->uid);
+    if (!in_array($user->name, array_keys($previous_votes))) {
+      $umail = $user->init;  // initial mail of the user
+      l10n_feedback_add_vote($tguid, $umail);
     }
   }
   elseif ($approved == '') {
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']->votes;
-    if (in_array($user->uid, array_keys($previous_votes))) {
-      _l10n_feedback_clean_previous_votes($tguid, $user->uid, $sguid, $lng);
+    if (in_array($user->name, array_keys($previous_votes))) {
+      $umail = $user->init;  // initial mail of the user
+      _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng);
     }
   }
 }
@@ -125,12 +129,12 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
  *
  * @param $tguid
  *   ID of the translation.
- * @param $uid
- *   ID of the user.
+ * @param $umail
+ *   The user email.
  * @return
  *   The ID of the new vote, or NULL.
  */
-function l10n_feedback_add_vote($tguid, $uid) {
+function l10n_feedback_add_vote($tguid, $umail) {
 
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
@@ -140,28 +144,31 @@ function l10n_feedback_add_vote($tguid, $uid) {
   }
 
   // Fetch the translation details from the DB.
+  $db = $GLOBALS['l10n_feedback_db'];
   $sql = 'SELECT * FROM {l10n_feedback_translations} WHERE tguid = :tguid';
-  $trans = $GLOBALS['l10n_feedback_db']->query($sql, array(':tguid' => $tguid))->fetchObject();
+  $args = array(':tguid' => $tguid);
+  $trans = $db->query($sql, $args)->fetchObject();
 
   // If there is no such translation, return NULL.
   if (empty($trans))  return NULL;
 
   // Clean any previous vote.
-  $nr = _l10n_feedback_clean_previous_votes($tguid, $uid, $trans->sguid, $trans->lng);
+  $nr = _l10n_feedback_clean_previous_votes($tguid, $umail, $trans->sguid, $trans->lng);
 
   // Add the vote.
-  $vid = $GLOBALS['l10n_feedback_db']->insert('l10n_feedback_votes')
+  $vid = $db->insert('l10n_feedback_votes')
     ->fields(array(
         'tguid' => $tguid,
-        'uid' => $uid,
+        'umail' => $umail,
+        'ulng' => variable_get('l10n_feedback_translation_lng'),
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
 
   // Update vote count of the translation.
   $sql = 'SELECT COUNT(*) FROM {l10n_feedback_votes} WHERE tguid = :tguid';
-  $count = $GLOBALS['l10n_feedback_db']->query($sql, array(':tguid' => $tguid))->fetchField();
-  $GLOBALS['l10n_feedback_db']->update('l10n_feedback_translations')
+  $count = $db->query($sql, $args)->fetchField();
+  $db->update('l10n_feedback_translations')
     ->fields(array('count' => $count))
     ->condition('tguid', $tguid)
     ->execute();
@@ -186,8 +193,8 @@ function l10n_feedback_add_vote($tguid, $uid) {
  *
  * @param $tguid
  *   ID of the translation.
- * @param $uid
- *   ID of the user.
+ * @param $umail
+ *   The mail of the user.
  * @param $sguid
  *   ID of the source string.
  * @param $lng
@@ -197,7 +204,9 @@ function l10n_feedback_add_vote($tguid, $uid) {
  *   (Normally should be 0, but can also be 1. If it is >1,
  *   something must be wrong.)
  */
-function _l10n_feedback_clean_previous_votes($tguid, $uid, $sguid, $lng) {
+function _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng) {
+
+  $db = $GLOBALS['l10n_feedback_db'];
 
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
@@ -223,21 +232,23 @@ function _l10n_feedback_clean_previous_votes($tguid, $uid, $sguid, $lng) {
     $sql = '
       SELECT DISTINCT t.tguid FROM {l10n_feedback_translations} t
       LEFT JOIN {l10n_feedback_votes} v ON (v.tguid = t.tguid)
-      WHERE t.sguid = :sguid AND t.lng = :lng AND v.uid = :uid';
-    $params = array(':sguid' => $sguid, ':lng' => $lng, ':uid' => $uid);
-    $arr_tguid = $GLOBALS['l10n_feedback_db']->query($sql, $params)->fetchCol();
+      WHERE t.sguid = :sguid AND t.lng = :lng AND v.umail = :umail AND v.ulng = :ulng
+    ';
+    $params = array(':sguid' => $sguid, ':lng' => $lng, ':umail' => $umail, ':ulng' => $lng);
+    $arr_tguid = $db->query($sql, $params)->fetchCol();
   }
 
   if (empty($arr_tguid))  return 0;
 
   // Remove any votes by the user for each translation in $arr_tguid.
-  $num_deleted = $GLOBALS['l10n_feedback_db']->delete('l10n_feedback_votes')
-    ->condition('uid', $uid)
+  $num_deleted = $db->delete('l10n_feedback_votes')
+    ->condition('umail', $umail)
+    ->condition('ulng', $lng)
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
 
   // Decrement the vote count for each translation in $arr_tguid.
-  $num_updated = $GLOBALS['l10n_feedback_db']->update('l10n_feedback_translations')
+  $num_updated = $db->update('l10n_feedback_translations')
     ->expression('count', 'count - 1')
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
@@ -255,15 +266,15 @@ function _l10n_feedback_clean_previous_votes($tguid, $uid, $sguid, $lng) {
  * @param $values
  *   Array of strings containing the new translation suggestion
  *   for the singular version and for plural version(s) (if any).
- * @param $uid
- *   ID of the user that submitted the suggestion. If missing,
- *   the logged in user will be used.
+ * @param $umail
+ *   The mail of the user that submitted the suggestion. If missing,
+ *   the mail of the logged in user will be used.
  */
-function l10n_feedback_add_suggestion($sguid, $lng, $values, $uid =NULL) {
+function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
 
-  if ($uid == NULL) {
+  if ($umail == NULL) {
     global $user;
-    $uid = $user->uid;
+    $umail = $user->init;
   }
 
   $translation = l10n_feedback_pack_string($values);
@@ -280,33 +291,35 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $uid =NULL) {
   }
 
   // Load the string and adjust translation whitespace based on source.
+  $db = $GLOBALS['l10n_feedback_db'];
   $query = 'SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid';
-  $source_string = $GLOBALS['l10n_feedback_db']->query($query, array(':sguid' => $sguid))->fetchField();
+  $source_string = $db->query($query, array(':sguid' => $sguid))->fetchField();
   $translation = l10n_feedback_trim($translation, $source_string);
 
   // Look for an existing translation, if any.
   $tguid = sha1($translation . $lng . $sguid);
   $query = 'SELECT translation FROM {l10n_feedback_translations} WHERE tguid = :tguid';
-  $existing = $GLOBALS['l10n_feedback_db']->query($query, array(':tguid' => $tguid))->fetchField();
+  $existing = $db->query($query, array(':tguid' => $tguid))->fetchField();
 
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  return false;
 
   // Insert the new suggestion.
-  $GLOBALS['l10n_feedback_db']->insert('l10n_feedback_translations')
+  $db->insert('l10n_feedback_translations')
     ->fields(array(
         'sguid' => $sguid,
         'lng' => $lng,
         'translation' => $translation,
 	'tguid' => $tguid,
         'count' => 1,
-        'uid' => $uid,
+	'umail' => $umail,
+        'ulng' => $lng,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
 
   // Add also a vote for the new suggestion.
-  $vid = l10n_feedback_add_vote($tguid, $uid);
+  $vid = l10n_feedback_add_vote($tguid, $umail);
 
   //TODO: Notify previous voters of this string that a new suggestion
   //      has been submitted. Maybe they would like to review it and

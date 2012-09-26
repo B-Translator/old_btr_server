@@ -355,10 +355,17 @@ function l10n_feedback_schema() {
         'not null' => FALSE,
         'default' => 1,
       ),
-      'uid' => array(
-        'description' => 'The uid of the user that initially suggested/submitted this translation.',
-        'type' => 'int',
-        'not null' => FALSE,
+      'umail' => array(
+        'description' => 'The email of the user that submitted this suggestion.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => TRUE,
+      ),
+      'ulng' => array(
+        'description' => 'The translation language of the user that submitted this suggestion.',
+        'type' => 'varchar',
+        'length' => '5',
+        'not null' => TRUE,
       ),
       'time' => array(
         'description' => 'Time when the translation was entered into the database.',
@@ -379,7 +386,7 @@ function l10n_feedback_schema() {
       'sguid' => array('sguid'),
       'time' => array('time'),
       'translation_text' => array('translation'),
-      'uid' => array('uid'),
+      'umail' => array(array('umail', 10)),
     ),
   );
 
@@ -398,9 +405,16 @@ function l10n_feedback_schema() {
         'length' => '40',
         'not null' => TRUE,
       ),
-      'uid' => array(
-        'description' => 'Reference to the id of the user that submitted the vote.',
-        'type' => 'int',
+      'umail' => array(
+        'description' => 'The email of the user that submitted this suggestion.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => TRUE,
+      ),
+      'ulng' => array(
+        'description' => 'The translation language of the user that submitted this suggestion.',
+        'type' => 'varchar',
+        'length' => '5',
         'not null' => TRUE,
       ),
       'time' => array(
@@ -418,13 +432,10 @@ function l10n_feedback_schema() {
       ),
     ),
     'primary key' => array('vid'),
-    'unique keys' => array(
-      'tid_uid' => array('tguid', 'uid')
-    ),
     'indexes' => array(
-      'tid' => array('tguid'),
+      'tguid_umail_ulng' => array('tguid', array('umail', 20), 'ulng'),
+      'tguid' => array('tguid'),
       'time' => array('time'),
-      'uid' => array('uid'),
     ),
   );
 
@@ -432,10 +443,35 @@ function l10n_feedback_schema() {
   $schema['l10n_feedback_users'] = array(
     'description' => 'Users that contribute translations/suggestions/votes.',
     'fields' => array(
+      'umail' => array(
+        'description' => 'The email of the user.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => TRUE,
+      ),
+      'ulng' => array(
+        'description' => 'The translation language of the user.',
+        'type' => 'varchar',
+        'length' => '5',
+        'not null' => TRUE,
+      ),
       'uid' => array(
         'description' => 'The numeric identifier of the user.',
         'type' => 'int',
         'not null' => TRUE,
+      ),
+      'name' => array(
+        'description' => 'Username.',
+        'type' => 'varchar',
+        'length' => '60',
+        'not null' => TRUE,
+      ),
+      'status' => array(
+        'description' => 'Disabled (0) or active (1).',
+        'type' => 'int',
+        'size' => 'tiny',
+        'not null' => TRUE,
+        'default' => 1,
       ),
       'points' => array(
         'description' => 'Number of points rewarded for his activity.',
@@ -450,7 +486,10 @@ function l10n_feedback_schema() {
         'not null' => FALSE,
       ),
     ),
-    'primary key' => array('uid'),
+    'primary key' => array('umail', 'ulng', 'uid'),
+    'indexes' => array(
+      'name' => array('name'),
+    ),
   );
 
   // Snapshots are tgz archives of project-lng translation files.

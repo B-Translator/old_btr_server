@@ -10,7 +10,7 @@
   import/export of the PO files.  Snapshots and Diffs are used to
   export/extract the suggestions .  Projects and Categories can be
   used to limit the scope of the search (and other operations).
- 
+
   A project contains the translations of a certain application
   (software).  A project can have several template (POT) files. A
   template file can have several PO files (one for each different
@@ -122,8 +122,10 @@
     - count : int/tiny :: Count of votes received so far. This can be
 	 counted on the table Votes, but for convenience is stored
 	 here as well.
-    - uid : int :: id of the user that initially suggested/submitted
-	 this translation
+    - umail : varchar(250) :: The email of the user that submitted
+         this suggestion.
+    - ulng : varchar(5) :: The translation language of the user that
+         submitted this suggestion.
     - time : datetime :: Time that the translation was
 	 entered into the database.
     - active : boolean :: The active or deleted status of the record.
@@ -132,13 +134,19 @@
     - vid : serial :: Internal numeric identifier for a vote.
     - tguid : char(40) :: Reference to the id of the translation
 	 which is voted.
-    - uid : int :: Reference to the id of the user that submitted the
-	 vote.
+    - umail : varchar(250) :: The email of the user that submitted
+         this suggestion.
+    - ulng : varchar(5) :: The translation language of the user that
+         submitted this suggestion.
     - time : datetime :: Timestamp of the voting time.
     - active : boolean :: The active or deleted status of the record.
 
   + Users :: Users that contribute translations/suggestions/votes.
+    - umail : varchar(250) :: The email of the user.
+    - ulng : varchar(5) :: The translation language of the user.
     - uid : int :: The numeric identifier of the user.
+    - name : varchar(6) :: Username.
+    - status : tinyint(4) :: Disabled (0) or active (1).
     - points : int :: Number of points rewarded for his activity.
     - config : varchar(250) :: Serialized configuration variables.
 

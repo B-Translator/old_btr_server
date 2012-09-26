@@ -50,6 +50,7 @@ function l10n_feedback_build_query($filter) {
     $query->condition('t.lng', $filter['lng']);
   }
 
+  //dpq($query);  //debug
   return $query;
 }
 
@@ -119,44 +120,62 @@ function _l10n_feedback_filter_by_project($query, $project, $origin) {
  */
 function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
 
+  $lng = variable_get('l10n_feedback_translation_lng');
   if ($only_mine) {
     _l10n_feedback_join_table($query, 'votes');
+
     global $user;
+    $umail = $user->init;  // initial mail used for registration
     $query->condition(db_or()
-      ->condition('t.uid', $user->uid)
-      ->condition('v.uid', $user->uid)
+      ->condition(db_and()
+        ->condition('t.umail', $umail)
+        ->condition('t.ulng', $lng)
+      )
+      ->condition(db_and()
+        ->condition('v.umail', $umail)
+        ->condition('v.ulng', $lng)
+      )
     );
     //done, ignore $translated_by and $voted_by
     return;
   }
 
-  //get the uid $translated_by and $voted_by
-  $get_uid = 'SELECT uid FROM {users} WHERE name = :name';
-  $t_uid = ($translated_by == '') ? '' :
-    $GLOBALS['l10n_feedback_db']->query($get_uid, array(':name'=>$translated_by))->fetchField();
-  $v_uid = ($voted_by == '') ? '' :
-    $GLOBALS['l10n_feedback_db']->query($get_uid, array(':name'=>$voted_by))->fetchField();
+  //get the umail for $translated_by and $voted_by
+  $db = $GLOBALS['l10n_feedback_db'];
+  $get_umail = 'SELECT umail FROM {l10n_feedback_users} WHERE name = :name AND ulng = :ulng';
+  $args = array();
+  $args[':ulng'] = $lng;
+  $args[':name'] = $translated_by;
+  $t_umail = ($translated_by == '') ? '' : $db->query($get_umail, $args)->fetchField();
+  $args[':name'] = $voted_by;
+  $v_umail = ($voted_by == '') ? '' : $db->query($get_umail, $args)->fetchField();
 
   //if it is the same user, then search for strings
   //translated OR voted by this user
-  if ($t_uid==$v_uid and $t_uid!='') {
+  if ($t_umail==$v_umail and $t_umail!='') {
     _l10n_feedback_join_table($query, 'votes');
-    $query->condition(db_or()
-      ->condition('t.uid', $t_uid)
-      ->condition('v.uid', $t_uid)
+    $query ->condition(db_or()
+      ->condition(db_and()
+        ->condition('t.umail', $t_umail)
+        ->condition('t.ulng', $lng)
+      )
+      ->condition(db_and()
+        ->condition('v.umail', $v_umail)
+        ->condition('v.ulng', $lng)
+      )
     );
     return;
   }
 
   //if the users are different, then search for strings
-  //translated by $t_uid AND voted by $v_uid
-  if ($t_uid != '') {
+  //translated by $t_umail AND voted by $v_umail
+  if ($t_umail != '') {
     _l10n_feedback_join_table($query, 'translations');
-    $query->condition('t.uid', $t_uid);
+    $query->condition('t.umail', $t_umail)->condition('t.ulng', $lng);
   }
-  if ($v_uid != '') {
+  if ($v_umail != '') {
     _l10n_feedback_join_table($query, 'votes');
-    $query->condition('v.uid', $v_uid);
+    $query->condition('v.umail', $v_umail)->condition('v.ulng', $lng);
   }
 }
 

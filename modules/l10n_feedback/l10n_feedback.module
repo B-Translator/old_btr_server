@@ -7,6 +7,7 @@
 
 require_once(dirname(__FILE__) . '/includes/common.inc');
 require_once(dirname(__FILE__) . '/includes/cron.inc');
+require_once(dirname(__FILE__) . '/includes/hook_user.inc');
 
 /**
  * Implements hook_help().
@@ -340,72 +341,5 @@ function l10n_feedback_form_user_profile_form_alter(&$form, &$form_state, $form_
   // remove the field 'field_data_sequential' from the form
   // it is for internal usage only
   $form['field_data_sequential']['#access'] = FALSE;
-}
-
-
-/**
- * Implements hook_user_presave().
- * It is called before the user profile page is saved.
- * Store the value for 'field_data_sequential'.
- */
-function l10n_feedback_user_presave(&$edit, $account, $category) {
-
-  //dpm($edit);  dpm($account);  //debug
-
-  // if skip_presave is defined, then user data is being saved
-  // from the code, not from the profile interface
-  if (isset($edit['skip_presave'])) {
-    unset($edit['skip_presave']);
-    return;
-  }
-
-  $lang = 'und';
-  $obj_edit = (object)$edit;
-
-  // get the string-order (random|sequential)
-  $string_order = l10n_feedback_get_string_order($obj_edit);
-
-  // if string-order is random, no need for 'field_data_sequential'
-  if ($string_order == 'random') {
-    $edit['field_data_sequential'] = serialize(null);
-    return;
-  }
-
-  // get the preferred projects from the user settings
-  $arr_projects = l10n_feedback_get_preferred_projects($obj_edit);
-
-  // if there is no change on the preferred projects,
-  // then there is nothing to do, just keep the existing value of 'field_data_sequential'
-  $prev_string_order = l10n_feedback_get_string_order($account);
-  $prev_projects = l10n_feedback_get_preferred_projects($account);
-  if ( $prev_string_order=='sequential'
-    and implode(';', $prev_projects) == implode(';', $arr_projects) )
-    {
-      return;
-    }
-
-  // for each preferred project, get the min and max location ids
-  // and store them on the object $sequential
-  list($where_condition, $args) = l10n_feedback_projects_to_where_condition($arr_projects);
-  if ($where_condition == '') {
-    $sequential = null;
-  }
-  else {
-    $get_all_min_and_max_locations = "
-      SELECT min(l.lid) AS lmin, max(l.lid) AS lmax
-      FROM {l10n_feedback_locations} l
-      RIGHT JOIN {l10n_feedback_templates} t ON (l.potid = t.potid)
-      RIGHT JOIN {l10n_feedback_projects} p ON (t.pguid = p.pguid)
-      WHERE $where_condition
-      GROUP BY p.project
-    ";
-    $result = $GLOBALS['l10n_feedback_db']->query($get_all_min_and_max_locations, $args);
-    $sequential->projects = $result->fetchAll();
-    $sequential->idx = 0;
-    $sequential->lid = $sequential->projects[0]->lmin;
-  }
-
-  // save the object $sequential on the field 'field_data_sequential'
-  $edit['field_data_sequential'] = serialize($sequential);
 }
 ?>
