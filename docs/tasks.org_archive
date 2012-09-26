@@ -220,6 +220,78 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   :END:
   It has become commercial. Cannot be done.
 
+* DONE Fix the irc proxy on the server.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-09-26 Wed 11:56
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  + https://wiki.linaro.org/Resources/HowTo/BIP
+
+* DONE Use a different database for the translation data
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-09-26 Wed 11:56
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  See:
+  http://stackoverflow.com/questions/4839063/multiple-concurrent-database-connections-in-drupal-7
+
+
+* DONE Import the translation data (PO files) of other languages.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-09-26 Wed 11:57
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Import the translation data of Slovenian. Try to import the
+  translation data of German and Italian as well.
+
+* DONE Create a twitter account for btranslator and connect it to the github account.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-09-26 Wed 11:57
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE Disqus:
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-09-26 Wed 11:57
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  - improve the title of the disqus threads
+  - transfer domain l10n_sq to btranslator
+  - create also a domain btranslator_dev
+
+* DONE Improve the content of the notification emails.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-09-26 Wed 11:57
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Include in the message the string that is to be translated and any
+  existing translations. Include in the subject part of the string
+  that is to be translated.
+
+
+
+
+
+
+
 
 
 
