@@ -102,7 +102,7 @@ function l10n_feedback_create_userprofile_fields() {
       'type' => 'list_text',
       'cardinality' => 2,
       'entity_types' => array('user'),
-      'settings' => array('allowed_values' => $arr_langs),
+      'settings' => array('allowed_values' => $languages),
     ));
   field_create_instance(
     array(
