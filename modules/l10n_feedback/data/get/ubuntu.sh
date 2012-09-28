@@ -24,7 +24,7 @@ change_dir ubuntu
 ### Get the base pack and the latest update:
 wget https://translations.launchpad.net/ubuntu/precise/+latest-full-language-pack
 mv +latest-full-language-pack ubuntu-precise-translations.tar.gz
-wget http://launchpadlibrarian.net/109392762/ubuntu-precise-translations-update.tar.gz
+wget http://launchpadlibrarian.net/116413828/ubuntu-precise-translations-update.tar.gz
 
 
 ### downloaded language packs
