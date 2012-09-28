@@ -1,11 +1,6 @@
 #!/bin/bash
 ### Get the diffs of a project using wget and the REST API.
 
-base_url="https://l10n-sq.org/"
-diff_url="$base_url/translations/project/diff"
-wget="wget -q --no-check-certificate"
-
-
 ### get the arguments $lng and $nr
 if [ $# -lt 3 ]
 then
@@ -15,7 +10,7 @@ then
     If 'nr' is missing, then the list of diffs will be retrieved instead.
     If 'nr' is '-', then the latest diffs (since the last snapshot)
     will be computed and returned (it will take longer to execute, since
-    the diffs are calculated on the fly). 
+    the diffs are calculated on the fly).
 
 Examples:
     $0 KDE kdelibs sq
@@ -30,6 +25,12 @@ project=$2
 lng=$3
 nr=$4
 echo "$0 $origin $project $lng $nr"
+
+#base_url="https://$lng.btranslator.org/"
+base_url="https://dev.btranslator.org/"
+diff_url="$base_url/translations/project/diff"
+wget="wget -q --no-check-certificate"
+
 
 if [ "$nr" = '' ]
 then

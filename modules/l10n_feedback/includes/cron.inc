@@ -47,7 +47,8 @@ function send_string_by_email($account) {
   // get also the details of the selected sguid
   require_once(dirname(__FILE__) . '/translations/vote.inc');
   $sguid = l10n_feedback_get_sguid($uid);
-  $query = $GLOBALS['l10n_feedback_db']->select('l10n_feedback_strings', 's')
+  $db = $GLOBALS['l10n_feedback_db'];
+  $query = $db->select('l10n_feedback_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = l10n_feedback_get_strings($query, $lng);
@@ -77,7 +78,7 @@ function send_string_by_email($account) {
     $subject = substr($subject, 0, strrpos(substr($subject, 0, 57), ' '));
     $subject .= '...';
   }
-  $subject = '[l10n-sq] ' . $subject;
+  $subject = "[l10n-$lng] $subject";
 
   // build the body of the message
   $body = array(

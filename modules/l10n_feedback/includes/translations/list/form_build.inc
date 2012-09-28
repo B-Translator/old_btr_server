@@ -123,7 +123,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       );
       $form['strings'][$sguid]['#attached']['js'][] = drupal_get_path('module', 'disqus') . '/disqus.js';
       $form['strings'][$sguid]['#attached']['js'][] = array(
-        'data' => array('disqusComments' => 'l10n-sq'),
+        'data' => array('disqusComments' => "l10n-$lng"),
         'type' => 'setting',
       );
 

@@ -8,7 +8,8 @@ cd $(dirname $0)
 . ../config.sh
 
 ### get a list of all the projects
-base_url='https://l10n-sq.org'
+#base_url='https://fr.btranslator.org'
+base_url='https://dev.btranslator.org'
 wget --no-check-certificate -O project_list.txt $base_url/translations/project/list
 
 ### make a snapshot for each project and for each language
