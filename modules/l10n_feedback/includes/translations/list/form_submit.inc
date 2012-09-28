@@ -9,15 +9,14 @@
  */
 function l10n_feedback_translate_form_submit($form, &$form_state) {
 
-  if ($form_state['values']['op'] == t('Next')) {
-    $lng = $form_state['values']['langcode'];
-    drupal_goto("translations/$lng/");
-    return;
-  }
-  //else if ($form_state['values']['op'] == t('Save')) {
-
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
+
+  $op = $form_values['op'];
+  if ( $op != t('Save') && $op != t('Next') ) {
+    return;
+  }
+
 
   // get the langcode submitted with the form
   $lng = $form_values['langcode'];
@@ -64,10 +63,16 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   // Tell the user what happened.
   l10n_feedback_display_notification_messages();
 
-  // Keep existing filters and other query arguments on form submission.
-  $redirect_args = $form_state['values']['target'];
-  unset($redirect_args['q']);
-  $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
+  if ($form_state['values']['op'] == t('Next')) {
+    $lng = $form_state['values']['langcode'];
+    drupal_goto("translations/$lng/");
+  }
+  else if ($form_state['values']['op'] == t('Save')) {
+    // Keep existing filters and other query arguments on form submission.
+    $redirect_args = $form_state['values']['target'];
+    unset($redirect_args['q']);
+    $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
+  }
 }
 
 function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
