@@ -50,6 +50,16 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     ),
   );
 
+  // don't show the Back button on the search interface
+  if ( current_path() != 'translations/search'
+    && isset($_SESSION['previous_url']) )
+    {
+      $form['buttons']['previous'] = array(
+        '#type' => 'submit',
+        '#value' => t('Previous'),
+      );
+    }
+
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
   $translation_lng = variable_get('l10n_feedback_translation_lng');

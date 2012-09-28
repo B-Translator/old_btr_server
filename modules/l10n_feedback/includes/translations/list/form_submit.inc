@@ -12,11 +12,45 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
 
+  // Check that the button  clicked was either Save or Next or Previous.
   $op = $form_values['op'];
-  if ( $op != t('Save') && $op != t('Next') ) {
+  if ( $op != t('Save') && $op != t('Next') && $op != t('Previous') ) {
     return;
   }
 
+  // Save the values selected on the form (votes or new suggestions).
+  _l10n_feedback_translate_form_save($form_values);
+
+  if ($op == t('Previous')) {
+    if (isset($_SESSION['previous_url'])) {
+      $previous_url = $_SESSION['previous_url'];
+      $_SESSION['previous_url'] = htmlentities($_SERVER['REQUEST_URI']);
+      drupal_goto($previous_url);
+    }
+  }
+  else if ($op == t('Next')) {
+    $_SESSION['previous_url'] = htmlentities($_SERVER['REQUEST_URI']);
+    $lng = $form_values['langcode'];
+    drupal_goto("translations/$lng/");
+  }
+  else if ($op == t('Save')) {
+    // Keep existing filters and other query arguments on form submission.
+    $redirect_args = $form_values['target'];
+    unset($redirect_args['q']);
+    $form_state['redirect'] = array($form_values['target']['q'], array('query' => $redirect_args));
+  }
+}
+
+/**
+ * Save the values selected on the form (votes or new suggestions).
+ */
+function _l10n_feedback_translate_form_save($form_values) {
+
+  $save_access = (user_access('btranslator-vote') || user_access('btranslator-suggest'));
+  if (!$save_access) {
+    drupal_set_message(t("You don't have access for giving feedback!"), 'error');
+    return;
+  }
 
   // get the langcode submitted with the form
   $lng = $form_values['langcode'];
@@ -62,17 +96,6 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
 
   // Tell the user what happened.
   l10n_feedback_display_notification_messages();
-
-  if ($form_state['values']['op'] == t('Next')) {
-    $lng = $form_state['values']['langcode'];
-    drupal_goto("translations/$lng/");
-  }
-  else if ($form_state['values']['op'] == t('Save')) {
-    // Keep existing filters and other query arguments on form submission.
-    $redirect_args = $form_state['values']['target'];
-    unset($redirect_args['q']);
-    $form_state['redirect'] = array($form_state['values']['target']['q'], array('query' => $redirect_args));
-  }
 }
 
 function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
