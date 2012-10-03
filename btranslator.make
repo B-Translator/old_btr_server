@@ -50,6 +50,8 @@ projects[examples][version] = "1.x-dev"
 projects[drupalchat][version] = "1.0-beta6"
 projects[entity][version] = "1.0-rc3"
 projects[rules][version] = "2.2"
+projects[l10n_update][version] = "1.0-beta3"
+projects[l10n_client][version] = "1.1"
 
 ;--------------------
 ; Libraries

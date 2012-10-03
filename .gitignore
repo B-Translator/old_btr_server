@@ -36,3 +36,5 @@ modules/edit_profile/
 modules/examples/
 modules/entity/
 modules/rules/
+modules/l10n_update/
+modules/l10n_client/

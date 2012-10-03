@@ -60,6 +60,8 @@ dependencies[] = drupalchat
 ;dependencies[] = google_analytics
 ;dependencies[] = token
 ;dependencies[] = rpx
+dependencies[] = l10n_update
+dependencies[] = l10n_client
 
 
 ;;--------------------

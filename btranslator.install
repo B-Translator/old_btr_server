@@ -18,6 +18,16 @@ function btranslator_install() {
   variable_set('user_email_verification', TRUE);
   variable_set('user_signatures', TRUE);
 
+  // l10n_client settings
+  variable_set('l10n_client_server', 'http://localize.drupal.org');
+  variable_set('l10n_client_use_server', true);
+  // assign translation permissions to the authenticated users
+  $permissions = array(
+    'use on-page translation' => true,
+    'submit translations to localization server' => true,
+  );
+  user_role_change_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
+
   btranslator_install_mailsystem();
   btranslator_install_cache();
   btranslator_install_blocks();
