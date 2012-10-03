@@ -15,7 +15,7 @@
   3. [ ] Add *admin config*, *user settings*, *permissions*,
      permission checking, etc.
   4. [ ] Improve the *integration with facebook* (for voting).
-  5. [ ] Put it online.
+  5. [X] Put it online.
   6. [ ] Improve the *email interface* (for voting).
   7. [ ] Add a *mobile interface* (or theme).
   8. [ ] Build the pages for admin dashboard, reports and stats.
@@ -95,45 +95,80 @@
 ** Misc
 
 *** Start with simple tests (l10n_feedback.test)
-*** Send full html pages by email.
 *** Improve the look of number of votes.
-*** Add in l10n.org.al a page for each project which can be liked, +1-d, etc.
 
-*** Separate the display interface from the database logic with a web-server API.
+*** TODO Install any module for sending email to all the users of l10n.org.al
+    Try:
+    - simplenews
+    - mass_contact
+*** TODO Invite all the existing users to customize their profile/settings.
+*** TODO Install any module for sending invitations to other users.
+
+*** TODO Try to use on l10n.org.al the theme sky or some other suitable theme.
+    Try to configure a responsive layout (which changes automatically
+    for different screen sizes).
+
+*** TODO Create user dashboards/stats/reports.
+    - http://drupal.org/project/homebox
+    - http://drupal.org/project/user_dashboard
+    - Create custom blocks.
+
+*** TODO Admin dashboards/stats/reports.
+    - http://drupal.org/documentation/modules/dashboard
+
+*** TODO Import PO files of Drupal.
+*** TODO Generate a POT file for B-Translator and import it.
+*** TODO Import Wordpress translations into B-Translator.
+
+*** TODO Try to improve the performance.
+
+**** DONE Try fastcgi:
+     + http://www.netmagazine.com/features/top-15-drupal-performance-tips?goback=%2Egde_35920_member_169858052
+     + http://www.failover.co/blog/quick-setup-apache-worker-fastcgi-php-fpm-and-apc
+     + http://www.failover.co/blog/drupal-7-memcache-pecl-memcache-memcached-and-sockets-ubuntu-12-04
+
+**** TODO Try NGINX:
+     + http://arstechnica.com/business/2011/11/a-faster-web-server-ripping-out-apache-for-nginx/
+     + http://blog.celogeek.com/201209/202/how-to-configure-nginx-php-fpm-drupal-7-0/
+     + http://insready.com/blog/build-nginx-php-fpm-apc-memcache-drupal-7-bare-bone-ubuntu-1004-or-debian-5-server
+     + http://groups.drupal.org/node/238983
+     + http://groups.drupal.org/nginx
 
 *** Send out HTML notification emails.
     Replace one-time-login with one-time-submittion on the
     notification emails
 
-*** Install any module for sending email to all the users of l10n.org.al
-    Try:
-    - simplenews
-    - masscontact
-*** Invite all the existing users to customize their profile/settings.
+*** Create custom blocks
+    - Most active users and their stats.
+    - Latest vote/suggestion activity (like a stream).
+    - Personal latest activity.
 
-*** Install any module for sending invitations to other users.
+*** Improve the website (homepage) of the project on GitHub.
+*** Create a page on Google+ for l10n-sq and btranslator.
+*** Add in l10n.org.al a page for each project which can be liked, +1-d, etc.
 
-*** Try to use on l10n.org.al the theme sky or some other suitable theme.
-    Try to configure a responsive layout (which changes automatically
-    for different screen sizes).
+*** Separate the display interface from the database logic with a web-server API.
 
 *** Upgrade the server on rackspace
     From 512MB RAM and 20GB HDD, to 1024MB RAM and 40GB HDD.
     Need to find some funds or sponsors, to support this.
 
-*** Create user dashboards/stats/reports.
-    - http://drupal.org/project/homebox
-    - http://drupal.org/project/user_dashboard
-    - Create custom blocks.
-
-*** Admin dashboards/stats/reports.
-    - http://drupal.org/documentation/modules/dashboard
-
-*** Improve the website (homepage) of the project on GitHub.
-*** Create a page on Google+ for l10n-sq and btranslator.
-
-*** Try to improve the performance.
 *** Enable export again.
 *** Apply mod_security on l10n.org.al
 *** Generate code documentation by phpDocu and doxygen.
 *** Use modules: views, pannels, views_slideshow, invite, etc.
+
+*** Publish/export incremental dumps of the database
+    Maybe it should be a synch API which allows different instances of
+    B-Translator to synchronize with each-other, according to the
+    rules defined and agreed by the administrators.
+
+*** Context information about the strings
+    - External link to google.com, which tries to get more details
+      about the context in which a string is used.
+    - External link to open-trans.eu
+    - Other external links (related to the projects to which the
+      string appears).
+
+*** Publish Disqus comments to twitter account @l10n_sq
+
