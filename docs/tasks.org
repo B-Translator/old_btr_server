@@ -108,12 +108,12 @@
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
 
-*** TODO Create user dashboards/stats/reports.
+*** DONE Create user dashboards/stats/reports.
     - http://drupal.org/project/homebox
     - http://drupal.org/project/user_dashboard
     - Create custom blocks.
 
-*** TODO Admin dashboards/stats/reports.
+*** DONE Admin dashboards/stats/reports.
     - http://drupal.org/documentation/modules/dashboard
 
 *** TODO Import PO files of Drupal.
@@ -134,11 +134,11 @@
      + http://groups.drupal.org/node/238983
      + http://groups.drupal.org/nginx
 
-*** Send out HTML notification emails.
+*** TODO Send out HTML notification emails.
     Replace one-time-login with one-time-submittion on the
     notification emails
 
-*** Create custom blocks
+*** TODO Create custom blocks
     - Most active users and their stats.
     - Latest vote/suggestion activity (like a stream).
     - Personal latest activity.

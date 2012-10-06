@@ -59,6 +59,12 @@ dependencies[] = drupalchat
 ;dependencies[] = google_analytics
 ;dependencies[] = token
 ;dependencies[] = rpx
+dependencies[] = invite
+dependencies[] = homebox
+
+;--------------------
+; Drupal Localization
+;--------------------
 dependencies[] = l10n_update
 dependencies[] = l10n_client
 
@@ -120,6 +126,7 @@ dependencies[] = wysiwyg
 ; Performance and scalability
 ;--------------------
 dependencies[] = boost
+dependencies[] = memcache
 
 ;--------------------
 ; Files

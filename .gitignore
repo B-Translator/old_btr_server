@@ -48,3 +48,6 @@ modules/mimemail/
 modules/phpmailer/
 modules/simplenews/
 modules/mass_contact/
+modules/invite/
+modules/homebox/
+modules/memcache/

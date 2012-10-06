@@ -31,28 +31,47 @@ projects[fusion_accelerator][version] = "2.0-beta1"
 ; Additional Contrib
 ;--------------------
 
-projects[boost][version] = "1.x-dev"
-projects[fb][version] = "3.x-dev"
 projects[geshifilter][version] = "1.0"
 projects[libraries][version] = "2.0"
 projects[module_filter][version] = "1.7"
 projects[profiler_builder][version] = "1.0-alpha2"
-projects[reroute_email][version] = "1.1"
 projects[wysiwyg][version] = "2.1"
-projects[disqus][version] = "1.9"
-projects[mailsystem][version] = "2.34"
 projects[google_analytics][version] = "1.2"
 projects[token][version] = "1.2"
-projects[rpx][version] = "2.2"
 projects[edit_profile][version] = "1.0-beta2"
 projects[examples][version] = "1.x-dev"
-projects[drupalchat][version] = "1.0-beta6"
 projects[entity][version] = "1.0-rc3"
 projects[rules][version] = "2.2"
+projects[homebox][version] = "2.0-beta6"
+
+;--------------------
+; Performance
+;--------------------
+projects[boost][version] = "1.x-dev"
+projects[memcache][version] = "1.0"
+
+;--------------------
+; Community and Social
+;--------------------
+projects[drupalchat][version] = "1.0-beta6"
+projects[disqus][version] = "1.9"
+projects[rpx][version] = "2.2"
+projects[fb][version] = "3.x-dev"
+projects[invite][version] = "2.1-beta2"
+
+;--------------------
+; Drupal Localization
+;--------------------
 projects[l10n_update][version] = "1.0-beta3"
 projects[l10n_client][version] = "1.1"
+
+;--------------------
+; Mail Related
+;--------------------
+projects[mailsystem][version] = "2.34"
 projects[phpmailer][version] = "7.x-3.x"
 projects[mimemail][version] = "1.0-alpha2"
+projects[reroute_email][version] = "1.1"
 projects[simplenews][version] = "1.0"
 projects[mass_contact][version] = "1.0-alpha6"
 
