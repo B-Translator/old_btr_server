@@ -97,12 +97,12 @@
 *** Start with simple tests (l10n_feedback.test)
 *** Improve the look of number of votes.
 
-*** TODO Install any module for sending email to all the users of l10n.org.al
+*** DONE Install any module for sending email to all the users of l10n.org.al
     Try:
     - simplenews
     - mass_contact
-*** TODO Invite all the existing users to customize their profile/settings.
-*** TODO Install any module for sending invitations to other users.
+*** DONE Invite all the existing users to customize their profile/settings.
+*** DONE Install any module for sending invitations to other users.
 
 *** TODO Try to use on l10n.org.al the theme sky or some other suitable theme.
     Try to configure a responsive layout (which changes automatically

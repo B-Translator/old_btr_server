@@ -43,18 +43,17 @@ dependencies[] = text
 ; Contrib
 ;--------------------
 dependencies[] = admin
-dependencies[] = openidadmin
+;dependencies[] = openidadmin
 dependencies[] = context
 dependencies[] = context_ui
 dependencies[] = ctools
-dependencies[] = diff
+;dependencies[] = diff
 ;dependencies[] = features
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
 dependencies[] = fusion_accelerator
 dependencies[] = disqus
-dependencies[] = mailsystem
 dependencies[] = edit_profile
 dependencies[] = drupalchat
 ;dependencies[] = google_analytics
@@ -62,6 +61,15 @@ dependencies[] = drupalchat
 ;dependencies[] = rpx
 dependencies[] = l10n_update
 dependencies[] = l10n_client
+
+;--------------------
+; Contrib Mail
+;--------------------
+dependencies[] = mailsystem
+dependencies[] = phpmailer
+dependencies[] = mimemail
+dependencies[] = simplenews
+dependencies[] = mass_contact
 
 
 ;;--------------------

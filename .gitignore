@@ -4,7 +4,10 @@ TAGS
 *.sql.gz
 modules/l10n_feedback/data/db/settings.php
 modules/l10n_feedback/data/db/sql-connect.txt
-libraries/
+libraries/facebook-php-sdk/
+libraries/tinymce/
+libraries/geshi/
+libraries/phpmailer/
 modules/admin/
 modules/boost/
 modules/context/
@@ -21,11 +24,14 @@ modules/module_filter/
 modules/openidadmin/
 modules/profiler_builder/
 modules/reroute_email/
-modules/smtp/
 modules/strongarm/
 modules/views/
 modules/wysiwyg/
-themes/
+themes/tao/
+themes/rubik/
+themes/fusion/
+themes/abessive/
+themes/acquia_marina/
 modules/disqus/
 modules/mailsystem/
 modules/google_analytics/
@@ -38,3 +44,7 @@ modules/entity/
 modules/rules/
 modules/l10n_update/
 modules/l10n_client/
+modules/mimemail/
+modules/phpmailer/
+modules/simplenews/
+modules/mass_contact/

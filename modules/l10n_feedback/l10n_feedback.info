@@ -3,8 +3,9 @@ description =  Getting feedback and suggestions from people about l10n translati
 package = B-Translator
 core = 7.x
 
-dependencies[] = smtp
 dependencies[] = mailsystem
+dependencies[] = mimemail
+dependencies[] = phpmailer
 dependencies[] = disqus
 dependencies[] = edit_profile
 dependencies[] = entity

@@ -11,14 +11,14 @@ include drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback.fields.inc'
  * Implements hook_enable().
  */
 function l10n_feedback_enable() {
-  mailsystem_set(array('l10n_feedback' => 'SmtpMailSystem'));
+  mailsystem_set(array('l10n_feedback' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_disable().
  */
 function l10n_feedback_disable() {
-  mailsystem_clear(array('l10n_feedback' => 'SmtpMailSystem'));
+  mailsystem_clear(array('l10n_feedback' => 'MimeMailSystem'));
 }
 
 /**

@@ -38,10 +38,11 @@ variable_set('theme_bartik_settings', $theme_bartik_settings);
 
 // smtp
 variable_set('smtp_on', true);
+variable_set('smtp_keepalive', true);
 variable_set('smtp_allowhtml', true);
-variable_set('smtp_library', 'profiles/btranslator/modules/smtp/smtp.module');
 variable_set('smtp_fromname', $site_name);
 variable_set('smtp_from', $site_mail);
+variable_set('smtp_always_reply_to', true);
 variable_set('smtp_host', 'smtp.googlemail.com');
 variable_set('smtp_protocol', 'ssl');
 variable_set('smtp_port', '465');
@@ -56,6 +57,7 @@ echo "\n";
 
 variable_set('smtp_username', $site_mail);
 variable_set('smtp_password', $password);
+variable_set('smtp_hide_password', true);
 
 // date and time
 variable_set('configurable_timezones', true);

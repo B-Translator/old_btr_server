@@ -38,7 +38,6 @@ projects[libraries][version] = "2.0"
 projects[module_filter][version] = "1.7"
 projects[profiler_builder][version] = "1.0-alpha2"
 projects[reroute_email][version] = "1.1"
-projects[smtp][version] = "1.0-beta1"
 projects[wysiwyg][version] = "2.1"
 projects[disqus][version] = "1.9"
 projects[mailsystem][version] = "2.34"
@@ -52,6 +51,11 @@ projects[entity][version] = "1.0-rc3"
 projects[rules][version] = "2.2"
 projects[l10n_update][version] = "1.0-beta3"
 projects[l10n_client][version] = "1.1"
+projects[phpmailer][version] = "7.x-3.x"
+projects[mimemail][version] = "1.0-alpha2"
+projects[simplenews][version] = "1.0"
+projects[mass_contact][version] = "1.0-alpha6"
+
 
 ;--------------------
 ; Libraries
@@ -71,3 +75,8 @@ libraries[tinymce][type] = "library"
 libraries[tinymce][directory_name] = "tinymce"
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce/tinymce_3.5b3.zip"
+
+libraries[phpmailer][type] = "library"
+libraries[phpmailer][directory_name] = "phpmailer"
+libraries[phpmailer][download][type] = "get"
+libraries[phpmailer][download][url] = "http://downloads.sourceforge.net/project/phpmailer/phpmailer%20for%20php5_6/PHPMailer%20v5.1/PHPMailer_v5.1.tar.gz"
