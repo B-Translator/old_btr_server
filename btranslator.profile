@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Installation steps for the profile B-Translator.
+ */
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -312,7 +316,7 @@ function btranslator_mail_config_form_submit($form, &$form_state) {
       watchdog('phpmailer', 'PHPMailer has been enabled.');
     }
   }
-  else if (phpmailer_enabled()) {
+  elseif (phpmailer_enabled()) {
     // Remove PHPMailer from all mail keys it is configured for.
     $mail_system = variable_get('mail_system', array('default-system' => 'DefaultMailSystem'));
     foreach ($mail_system as $key => $class) {

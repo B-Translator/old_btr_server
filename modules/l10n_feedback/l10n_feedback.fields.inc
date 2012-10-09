@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * This file contains functions for creating and deleting
  * user profile fields (which actually contain user preferencies).
  */
@@ -91,7 +92,7 @@ function l10n_feedback_create_userprofile_fields() {
   // create a field and instance for 'field_auxiliary_languages'
   $languages = array();
   $arr_langs = l10n_feedback_get_languages();
-  foreach ($arr_langs as $lng=>$language) {
+  foreach ($arr_langs as $lng => $language) {
     $languages[$lng] = $language['name'];
   }
   unset($languages['en']);
@@ -191,4 +192,3 @@ function l10n_feedback_create_userprofile_fields() {
     ));
 
 }
-?>

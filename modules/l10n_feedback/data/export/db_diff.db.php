@@ -23,7 +23,7 @@ class DB_PO_Diff extends DB
     return $max_nr;
   }
 
-  public function insert_diff($origin, $project, $lng, $file_diff, $file_ediff, $comment =null, $uid =null)
+  public function insert_diff($origin, $project, $lng, $file_diff, $file_ediff, $comment =NULL, $uid =NULL)
   {
     // get the revision number
     $nr = $this->get_max_nr($origin, $project, $lng);
@@ -84,7 +84,7 @@ class DB_PO_Diff extends DB
     $get_diff->execute($params);
 
     $row = $get_diff->fetch();
-    $diff = isset($row[$diff_field]) ? $row[$diff_field] : null;
+    $diff = isset($row[$diff_field]) ? $row[$diff_field] : NULL;
 
     return $diff;
   }

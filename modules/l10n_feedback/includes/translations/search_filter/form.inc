@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @file
  * Functions related to the filter form
  * of the translations/search interface.
  */
@@ -63,14 +64,14 @@ function l10n_feedback_build_filter() {
 
   //from_date
   $from_date = isset($request['from_date']) ? trim($request['from_date']) : '';
-  list($year, $month, $day) = explode('-', $from_date, 3) + array('','','');
+  list($year, $month, $day) = explode('-', $from_date, 3) + array('', '', '');
   $filter['from_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
     array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
     array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
 
   //to_date
   $to_date = isset($request['to_date']) ? trim($request['to_date']) : '';
-  list($year, $month, $day) = explode('-', $to_date, 3) + array('','','');
+  list($year, $month, $day) = explode('-', $to_date, 3) + array('', '', '');
   $filter['to_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
     array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
     array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
@@ -136,11 +137,9 @@ function l10n_feedback_get_query_values($form_values) {
 
   //date_filter
   list($date_filter_options, $default_date_filter) = _l10n_feedback_get_filter_options('date_filter');
-  if ( in_array($form_values['date_filter'], $date_filter_options)
-    && $form_values['date_filter'] != $default_date_filter )
-    {
-      $query['date_filter'] = $form_values['date_filter'];
-    }
+  if ( in_array($form_values['date_filter'], $date_filter_options) && $form_values['date_filter'] != $default_date_filter ) {
+    $query['date_filter'] = $form_values['date_filter'];
+  }
 
   //from_date
   $arr_date = $form_values['from_date'];
@@ -156,19 +155,15 @@ function l10n_feedback_get_query_values($form_values) {
 
   //limit
   list($limit_options, $default_limit) = _l10n_feedback_get_filter_options('limit');
-  if ( in_array($form_values['limit'], $limit_options)
-    && $form_values['limit'] != $default_limit )
-    {
-      $query['limit'] = $form_values['limit'];
-    }
+  if ( in_array($form_values['limit'], $limit_options) && $form_values['limit'] != $default_limit ) {
+    $query['limit'] = $form_values['limit'];
+  }
 
   //search mode and words
   list($search_mode_options, $default_search_mode) = _l10n_feedback_get_filter_options('mode');
-  if ( in_array($form_values['mode'], $search_mode_options)
-    && $form_values['mode'] != $default_search_mode )
-    {
-      $query['mode'] = $form_values['mode'];
-    }
+  if ( in_array($form_values['mode'], $search_mode_options) && $form_values['mode'] != $default_search_mode ) {
+    $query['mode'] = $form_values['mode'];
+  }
   if (trim($form_values['words']) != '' )
     $query['words'] = $form_values['words'];
 
@@ -300,7 +295,7 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#autocomplete_path' => 'translations/autocomplete/user',
     '#states' => array(
       'visible' => array(
-        ':input[name="only_mine"]' => array('checked' => false),
+        ':input[name="only_mine"]' => array('checked' => FALSE),
       ),
     ),
   );
@@ -313,7 +308,7 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#autocomplete_path' => 'translations/autocomplete/user',
     '#states' => array(
       'visible' => array(
-        ':input[name="only_mine"]' => array('checked' => false),
+        ':input[name="only_mine"]' => array('checked' => FALSE),
       ),
     ),
   );
@@ -422,4 +417,3 @@ function _l10n_feedback_get_filter_options($field, $assoc =FALSE) {
   if (!$assoc) $options = array_keys($options);
   return array($options, $default);
 }
-?>

@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * Simple REST API for listing and exporting projects.
  */
 
@@ -56,8 +57,8 @@ function l10n_feedback_project_list($origin =NULL, $project =NULL, $format =NULL
   if (strtoupper($format) == 'JSON') {
     print drupal_json_encode($lines);
   }
-  else if (strtoupper($format) == 'TXT') {
-    print "<xmp>" . implode("\n", $lines). "</xmp>";
+  elseif (strtoupper($format) == 'TXT') {
+    print "<xmp>" . implode("\n", $lines) . "</xmp>";
   }
   else {  //TEXT
     print implode("\n", $lines);
@@ -114,9 +115,9 @@ function l10n_feedback_project_export_tgz($origin ='LibreOffice', $project ='all
 
   // Send the headers.
   header('Content-Type: application/octet-stream');
-  header('Content-Disposition: attachment; filename="'. basename($tgz_file) .'"');
+  header('Content-Disposition: attachment; filename="' . basename($tgz_file) . '"');
   header('Content-Transfer-Encoding: binary');
-  header("Content-Length: ".filesize($tgz_file));
+  header("Content-Length: " . filesize($tgz_file));
 
   // Open the file in a binary mode and dump it to the browser.
   $fp = fopen($tgz_file, 'rb');
@@ -148,10 +149,10 @@ function l10n_feedback_project_diff($origin, $project, $lng, $nr =NULL, $format 
   if (empty($nr)) {
     $output = shell_exec("$path/db_diff.php list $origin $project $lng");
   }
-  else if ($nr == '-') {
+  elseif ($nr == '-') {
     shell_exec("$path/export/make_diff.sh $origin $project $lng");
     $fname = "$path/export/$origin-$project-$lng";
-    $output = file_get_contents($fname.".$fmt");
+    $output = file_get_contents($fname . ".$fmt");
     shell_exec("rm $fname.tgz $fname.diff $fname.ediff");
   }
   else {
@@ -161,4 +162,3 @@ function l10n_feedback_project_diff($origin, $project, $lng, $nr =NULL, $format 
 
   exit();
 }
-?>

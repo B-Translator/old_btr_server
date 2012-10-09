@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Export the most voted translations of a project into a PO file.
+ * Export the most voted translations of a project into a PO file.
  */
 
 /**
@@ -67,5 +67,3 @@ function l10n_feedback_export() {
 </xmp>
 ';
 }
-
-?>

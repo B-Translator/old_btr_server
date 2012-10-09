@@ -18,7 +18,7 @@ class DB_PO_Export extends DB
     $get_template_potid->execute($params);
 
     $row = $get_template_potid->fetch();
-    $potid = isset($row['potid']) ? $row['potid'] : null;
+    $potid = isset($row['potid']) ? $row['potid'] : NULL;
 
     return $potid;
   }
@@ -36,8 +36,8 @@ class DB_PO_Export extends DB
     $get_file_headers->execute($params);
 
     $row = $get_file_headers->fetch();
-    $headers = isset($row['headers']) ? $row['headers'] : null;
-    $comments = isset($row['comments']) ? $row['comments'] : null;
+    $headers = isset($row['headers']) ? $row['headers'] : NULL;
+    $comments = isset($row['comments']) ? $row['comments'] : NULL;
 
     return array($headers, $comments);
   }

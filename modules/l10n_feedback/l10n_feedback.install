@@ -1,7 +1,7 @@
 <?php
 /**
  * @file l10n_suggestion.install
- * Contains install and update functions for l10n_feedback.
+ * Install and update functions for the module l10n_feedback.
  */
 
 // get the functions for creating/deleting user preference fields and instancies
@@ -586,4 +586,4 @@ function l10n_feedback_schema() {
 
   return $schema;
 }
-?>
+

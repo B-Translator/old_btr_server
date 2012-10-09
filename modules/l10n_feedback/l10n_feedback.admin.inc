@@ -1,9 +1,9 @@
 <?php
 /**
  * @file
- * Administrative page code for the l10n_feedback module.
- *
+ * Administrative pages for the l10n_feedback module.
  */
+
 /**
  * General configuration settings for the module l10n_feedback.
  *

@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * hook_user functions
+ */
+
+/**
  * Implements hook_user_isert().
  * It is called when a new user account is created.
  */
@@ -120,7 +125,7 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
 
   // if string-order is random, no need for 'field_data_sequential'
   if ($string_order == 'random') {
-    $edit['field_data_sequential'] = serialize(null);
+    $edit['field_data_sequential'] = serialize(NULL);
     return;
   }
 
@@ -132,16 +137,16 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
   $prev_string_order = l10n_feedback_get_string_order($account);
   $prev_projects = l10n_feedback_get_preferred_projects($account);
   if ( $prev_string_order=='sequential'
-    and implode(';', $prev_projects) == implode(';', $arr_projects) )
-    {
-      return;
-    }
+    and implode(';', $prev_projects) == implode(';', $arr_projects) ) {
+
+    return;
+  }
 
   // for each preferred project, get the min and max location ids
   // and store them on the object $sequential
   list($where_condition, $args) = l10n_feedback_projects_to_where_condition($arr_projects);
   if ($where_condition == '') {
-    $sequential = null;
+    $sequential = NULL;
   }
   else {
     $get_all_min_and_max_locations = "
@@ -161,4 +166,3 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
   // save the object $sequential on the field 'field_data_sequential'
   $edit['field_data_sequential'] = serialize($sequential);
 }
-?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Translation view and editing pages for localization community.
+ * Translation view and editing pages for localization community.
  */
 
 /**
@@ -74,5 +74,3 @@ function l10n_feedback_search() {
   //dpm($output[1], 'translate_form');  //debug
   return $output;
 }
-
-?>

@@ -36,7 +36,7 @@ $origin = $argv[1];
 $project = $argv[2];
 $tplname = $argv[3];
 $lng = $argv[4];
-$filename = isset($argv[5]) ? $argv[5] : null;
+$filename = isset($argv[5]) ? $argv[5] : NULL;
 $export_mode = isset($argv[6]) ? $argv[6] : getenv('PO_EXPORT_MODE');
 if (!$export_mode) {
   $export_mode = 'most_voted';
@@ -51,7 +51,7 @@ $db = new DB_PO_Export;
 
 // Get the id of the template.
 $potid = $db->get_template_potid($origin, $project, $tplname);
-if ($potid === null) {
+if ($potid === NULL) {
   print "Template $origin/$project/$tplname not found!";
 }
 

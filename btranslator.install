@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Install functions for the profile B-Translator.
+ */
 
 /**
  * Implements hook_install().
@@ -20,11 +24,11 @@ function btranslator_install() {
 
   // l10n_client settings
   variable_set('l10n_client_server', 'http://localize.drupal.org');
-  variable_set('l10n_client_use_server', true);
+  variable_set('l10n_client_use_server', TRUE);
   // assign translation permissions to the authenticated users
   $permissions = array(
-    'use on-page translation' => true,
-    'submit translations to localization server' => true,
+    'use on-page translation' => TRUE,
+    'submit translations to localization server' => TRUE,
   );
   user_role_change_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
 
@@ -109,7 +113,7 @@ function btranslator_install_blocks()
 function btranslator_install_roles()
 {
   // revoke access to comments, since commenting is done through disqus
-  $roles = user_roles(false, 'access comments');
+  $roles = user_roles(FALSE, 'access comments');
   foreach ($roles as $rid=>$permission) {
     user_role_revoke_permissions($rid, array('access comments', 'post comments'));
   }
@@ -124,25 +128,25 @@ function btranslator_install_roles()
 
   // assign permissions to the roles
   $contributor = user_role_load_by_name('contributor');
-  $contributor_permissions['btranslator-vote'] = true;
-  $contributor_permissions['btranslator-suggest'] = true;
-  $contributor_permissions['btranslator-flag'] = true;
+  $contributor_permissions['btranslator-vote'] = TRUE;
+  $contributor_permissions['btranslator-suggest'] = TRUE;
+  $contributor_permissions['btranslator-flag'] = TRUE;
   user_role_change_permissions($contributor->rid, $contributor_permissions);
 
   $translator = user_role_load_by_name('translator');
   $translator_permissions = $contributor_permissions;
-  $translator_permissions['btranslator-import'] = true;
-  $translator_permissions['btranslator-export'] = true;
+  $translator_permissions['btranslator-import'] = TRUE;
+  $translator_permissions['btranslator-export'] = TRUE;
   user_role_change_permissions($translator->rid, $translator_permissions);
 
   $moderator = user_role_load_by_name('moderator');
   $moderator_permissions = $contributor_permissions;
-  $moderator_permissions['btranslator-stats'] = true;
-  $moderator_permissions['btranslator-resolve'] = true;
+  $moderator_permissions['btranslator-stats'] = TRUE;
+  $moderator_permissions['btranslator-resolve'] = TRUE;
   user_role_change_permissions($moderator->rid, $moderator_permissions);
 
   $administrator = user_role_load_by_name('administrator');
-  $administrator_permissions['btranslator-admin'] = true;
+  $administrator_permissions['btranslator-admin'] = TRUE;
   user_role_change_permissions($administrator->rid, $administrator_permissions);
 }
 

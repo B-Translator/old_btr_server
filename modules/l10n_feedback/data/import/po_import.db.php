@@ -37,7 +37,7 @@ class DB_PO_Import extends DB
 		    );
     $stmt->execute($params);
     $row = $stmt->fetch();
-    $potid = isset($row['potid']) ? $row['potid'] : null;
+    $potid = isset($row['potid']) ? $row['potid'] : NULL;
 
     return $potid;
   }
@@ -76,7 +76,7 @@ class DB_PO_Import extends DB
     $params = array(':sguid' => $sguid);
     $this->queries['check_string_sguid']->execute($params);
     $row = $this->queries['check_string_sguid']->fetch();
-    $found = isset($row['sguid']) ? true : false;
+    $found = isset($row['sguid']) ? TRUE : FALSE;
 
     return $found;
   }

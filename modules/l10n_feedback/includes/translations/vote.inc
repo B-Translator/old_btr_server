@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Functions specific to the menu path: translations/vote .
+ * Functions specific to the menu path: translations/vote .
  */
 
 /**
@@ -73,43 +73,43 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   return $output;
 }
 
-function l10n_feedback_login_one_time($one_time_login =NULL)
-{
-  if ($one_time_login == NULL)  return false;
+function l10n_feedback_login_one_time($one_time_login =NULL) {
+
+  if ($one_time_login == NULL)  return FALSE;
 
   // Check if the user is already logged in.
   global $user;
-  if ($user->uid)  return false;
+  if ($user->uid)  return FALSE;
 
   // Get $timestamp, $uid, and $hashed_pass
   $parts = preg_split('/\./', $one_time_login, 3);
   $timestamp = isset($parts[0]) ? $parts[0] : '';
   $uid = isset($parts[1]) ? $parts[1] : '';
   $hashed_pass = isset($parts[2]) ? $parts[2] : '';
-  if ($timestamp == '' or $uid == '' or $hashed_pass == '')  return false;
+  if ($timestamp == '' or $uid == '' or $hashed_pass == '')  return FALSE;
 
   // Get the user details.
   $account = user_load($uid);
-  if (!isset($account) || $account->status == 0)  return false;
+  if (!isset($account) || $account->status == 0)  return FALSE;
 
   // Check the timestamp.
   $timeout = 86400;  // 24 hours
   $current = REQUEST_TIME;
   if ($current - $timestamp > $timeout) {
     drupal_set_message(t('Login link has expired.'));
-    return false;
+    return FALSE;
   }
 
   // Check the hashed password.
   if ($hashed_pass != user_pass_rehash($account->pass, $timestamp, $account->login)) {
     drupal_set_message(t('Could not validate login link.'));
-    return false;
+    return FALSE;
   }
 
   // Login the new user.
   $user = $account;
   user_login_finalize();
-  return true;
+  return TRUE;
 }
 
 
@@ -205,7 +205,10 @@ function l10n_feedback_get_sequential_sguid($uid) {
 
   // if sequential data are not set, then just return a random sguid
   if ($sequential == NULL) {
-    drupal_set_message(t("It seems that there is something wrong with your preferences. Please <a href='/user/$uid/edit-profile'>check your profile</a>."), 'warning');
+    drupal_set_message(t(
+        "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
+        array('@edit-profile' => '/user/$uid/edit-profile')),
+      'warning');
     return l10n_feedback_get_random_sguid($uid);
   }
 
@@ -218,7 +221,10 @@ function l10n_feedback_get_sequential_sguid($uid) {
   if ($lid > $proj->lmax) {
     $idx++;
     if ($idx >= sizeof($sequential->projects)) {
-      drupal_set_message(t("You have reached the end of the preferred project. Please <a href='/user/$uid/edit-profile'>visit your profile</a> and modify them."), 'status');
+      drupal_set_message(t(
+          "You have reached the end of the preferred project. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
+        array('@edit-profile' => '/user/$uid/edit-profile')),
+      'status');
       return l10n_feedback_get_random_sguid($uid);
     }
     $proj = $sequential->projects[$idx];
@@ -230,13 +236,12 @@ function l10n_feedback_get_sequential_sguid($uid) {
   $sequential->idx = $idx;
   //dpm($sequential);  //debug
   $edit['field_data_sequential']['und'][0]['value'] = serialize($sequential);
-  $edit['skip_presave'] = true;
+  $edit['skip_presave'] = TRUE;
   user_save($account, $edit);
 
   // get and return the $sguid
   $query = 'SELECT sguid FROM {l10n_feedback_locations} WHERE lid=:lid';
-  $sguid = $GLOBALS['l10n_feedback_db']->query($query, array(':lid'=>$lid))->fetchField();
+  $sguid = $GLOBALS['l10n_feedback_db']->query($query, array(':lid' => $lid))->fetchField();
 
   return $sguid;
 }
-?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- *   Functions specific to the menu path: translations/get/lng/sguid .
+ * Functions specific to the menu path: translations/get/lng/sguid .
  */
 
 /**
@@ -40,13 +40,13 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
 
   //check that the given language code is correct
   if (!in_array($lng, $lng_codes)) {
-    drupal_set_message(t("There are no translations for the language '@lng'.", array('@lng'=>$lng)), 'error');
+    drupal_set_message(t("There are no translations for the language '@lng'.", array('@lng' => $lng)), 'error');
     $output = array(
-      '#markup' => t("The language '<strong>!lng</strong>' is not supported yet. Available languages are: <strong>!lng_codes</strong> . <br/> Try instead to search with: !search_path",
+      '#markup' => t("The language '<strong>@lng</strong>' is not supported yet. Available languages are: <strong>@lng_codes</strong> . <br/> Try instead to search with: @search_path",
                  array(
-                   '!lng' => $lng,
-                   '!lng_codes' => implode(', ', $lng_codes),
-                   '!search_path' => l('translations/search', 'translations/search')
+                   '@lng' => $lng,
+                   '@lng_codes' => implode(', ', $lng_codes),
+                   '@search_path' => l('translations/search', 'translations/search'),
                  )),
     );
     return $output;
@@ -79,7 +79,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
 
   // If no strings were returned, display an empty message.
   if (!$strings) {
-    drupal_set_message(t("No strings with GUID '<strong>!sguid</strong>' found.", array('!sguid'=>$sguid)), 'error');
+    drupal_set_message(t("No strings with GUID '<strong>@sguid</strong>' found.", array('@sguid' => $sguid)), 'error');
     $output = array(
       '#markup' => t("No strings with GUID '<strong>!sguid</strong>' found. <br/> Try instead to search with: !search_path",
                  array(
@@ -95,5 +95,3 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
 
   return $output;
 }
-
-?>

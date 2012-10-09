@@ -94,7 +94,7 @@ class POParser
 	$line = $lines[$i];
 
 	$colonIndex = strpos($line, ':');
-	if ($colonIndex === false)  continue;
+	if ($colonIndex === FALSE)  continue;
 
 	$headerName = substr($line, 0, $colonIndex);
 	if (!isset($headers[$headerName]))  continue;

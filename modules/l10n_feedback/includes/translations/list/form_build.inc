@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * The function l10n_feedback_translate_form() builds a render array
  * for the strings and their corresponding translations/suggestions.
  * The edit and submit functionality will be available only when suitable.
@@ -51,14 +52,12 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
   );
 
   // don't show the Back button on the search interface
-  if ( current_path() != 'translations/search'
-    && isset($_SESSION['previous_url']) )
-    {
-      $form['buttons']['previous'] = array(
-        '#type' => 'submit',
-        '#value' => t('Previous'),
-      );
-    }
+  if ( current_path() != 'translations/search' && isset($_SESSION['previous_url']) ) {
+    $form['buttons']['previous'] = array(
+      '#type' => 'submit',
+      '#value' => t('Previous'),
+    );
+  }
 
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
@@ -88,24 +87,25 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       // set the page title (no longer than 20 chars)
       $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
       if (strlen($title) > 20) {
-	$title = substr($title, 0, strrpos(substr($title, 0, 17), ' '));
-	$title .= '...';
+        $title = substr($title, 0, strrpos(substr($title, 0, 17), ' '));
+        $title .= '...';
       }
-      drupal_set_title(t('String: ') . $title);
+      drupal_set_title(t('String: !string', array('!string' => $title),
+          array('context' => 'set the page title')));
 
       // get the comment title (no longer than 50 chars)
       $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
       if (strlen($title) > 50) {
-	$title = substr($title, 0, strrpos(substr($title, 0, 47), ' '));
-	$title .= '...';
+        $title = substr($title, 0, strrpos(substr($title, 0, 47), ' '));
+        $title .= '...';
       }
       // define the disqus form element
       $form['disqus'] = array(
         '#type' => 'disqus',
         '#disqus' => array(
           'domain' => variable_get('disqus_domain', 'dev-btranslator'),
-          'status' => true,
-          'url' => url("translations/$lng/$sguid", array('absolute' => true)),
+          'status' => TRUE,
+          'url' => url("translations/$lng/$sguid", array('absolute' => TRUE)),
           'title' => $title,
           'identifier' => "translations/$lng/$sguid",
           'developer' => variable_get('disqus_developer', '1'),
@@ -114,30 +114,30 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       );
     }
     /*
-    else {
+      else {
       $form['strings'][$sguid]['disqus'] = array(
-          '#theme' => 'links',
-          '#links' => array('disqus_comments_num' => array(
-                      'title' => t('Comments'),
-                      'href' => "translations/$lng/$sguid",
-                      'fragment' => 'disqus_thread',
-                      'attributes' => array(
-                        // Identify the node for Disqus with the unique identifier:
-                        // http://docs.disqus.com/developers/universal/#comment-count
-                        'data-disqus-identifier' => "translations/$lng/$sguid",
-                      )
-                    )),
-          '#attributes' => array(
-            'class' => array('links', 'inline'),
-          ),
+      '#theme' => 'links',
+      '#links' => array('disqus_comments_num' => array(
+      'title' => t('Comments'),
+      'href' => "translations/$lng/$sguid",
+      'fragment' => 'disqus_thread',
+      'attributes' => array(
+      // Identify the node for Disqus with the unique identifier:
+      // http://docs.disqus.com/developers/universal/#comment-count
+      'data-disqus-identifier' => "translations/$lng/$sguid",
+      )
+      )),
+      '#attributes' => array(
+      'class' => array('links', 'inline'),
+      ),
       );
       $form['strings'][$sguid]['#attached']['js'][] = drupal_get_path('module', 'disqus') . '/disqus.js';
       $form['strings'][$sguid]['#attached']['js'][] = array(
-        'data' => array('disqusComments' => "l10n-$lng"),
-        'type' => 'setting',
+      'data' => array('disqusComments' => "l10n-$lng"),
+      'type' => 'setting',
       );
 
-    }
+      }
     */
   }
 
@@ -172,21 +172,21 @@ function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
   // Add alternative strings (in other languages).
   /*******
    * TODO: Improve alternatives in other languages.
-  $arr_items = array();
-  foreach ($string->alternatives as $langcode => $string) {
-    $string = l10n_feedback_unpack_string($string);
-    $rendered_string = _l10n_feedback_translate_render_textarray($string);
-    $arr_items = array(
-      '#markup' => "<strong>$langcode:</strong><label class='l10n-string'>$rendered_string</label>",
-    );
-  }
-  $form['alternatives'] = array(
-    '#theme' => 'item_list',
-    '#title' => t('Alternatives in other languages:'),
-    '#items' => $arr_items,
-    '#prefix' => '<div class="l10n-usage">',
-    '#suffix' => '</div>',
-  );
+   $arr_items = array();
+   foreach ($string->alternatives as $langcode => $string) {
+   $string = l10n_feedback_unpack_string($string);
+   $rendered_string = _l10n_feedback_translate_render_textarray($string);
+   $arr_items = array(
+   '#markup' => "<strong>$langcode:</strong><label class='l10n-string'>$rendered_string</label>",
+   );
+   }
+   $form['alternatives'] = array(
+   '#theme' => 'item_list',
+   '#title' => t('Alternatives in other languages:'),
+   '#items' => $arr_items,
+   '#prefix' => '<div class="l10n-usage">',
+   '#suffix' => '</div>',
+   );
   */
 
   //---------------- Add translations. --------------------
@@ -226,7 +226,7 @@ function _l10n_feedback_translate_translation_textarea($string, $lng) {
     'tguid' => 'new',
     'lng' => $lng,
     'translation' => $translation,
-    'author' => null,
+    'author' => NULL,
     'uid' => $user->uid,
     'count' => '0',
     'votes' => array(),
@@ -277,7 +277,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
     $form['declined'] = array(
       '#type' => 'checkbox',
       '#title' => t('Decline'),
-      '#default_value' => false,
+      '#default_value' => FALSE,
     );
   }
 
@@ -300,7 +300,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
         '#suffix' => '</label>',
       );
     }
-    if ($translation->author != null) {
+    if ($translation->author != NULL) {
       $title = l10n_feedback_translate_byline($translation->author, $translation->uid, $translation->time);
 
       $form['author'] = array(
@@ -312,16 +312,16 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
     //TODO: Improve displaying of vote count and the voters.
     if ($translation->count != '0') {
       $voters = array();
-      foreach ($translation->votes as $name=>$vote) {
+      foreach ($translation->votes as $name => $vote) {
         $voters[] = theme('username', array('account' => (object) array('name' => $name, 'uid' => $vote->uid)));
       }
       $form['votes'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Number of Votes: @count', array('@count' => $translation->count)),
+        '#title' => t('Number of Votes: !count', array('!count' => $translation->count)),
         //'#prefix' => '<div class="l10n-more-info">',
         //'#suffix' => '</div>',
-        '#collapsible' => true,
-        '#collapsed' => true,
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
         'voters' => array(
           '#markup' => implode(', ', $voters),
         ),
@@ -352,7 +352,7 @@ function _l10n_feedback_translate_render_textarray($textarray, $empty = '') {
 /**
  * Generates the byline containing meta information about a string.
  */
-function l10n_feedback_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =true) {
+function l10n_feedback_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =TRUE) {
   $account = (object) array('name' => $name, 'uid' => $uid);
   $username = ($link_user ? theme('username', array('account' => $account)) : check_plain($name));
   //dpm($username);  //debug
@@ -367,45 +367,42 @@ function l10n_feedback_translate_byline($name, $uid, $time, $medium =-1, $type =
   return t('by !author <span title="@ago">on @date</span>', $params);
 
   /*
-  switch ($type) {
+    switch ($type) {
     case L10N_SERVER_ACTION_ADD:
-      switch ($medium) {
-        case L10N_SERVER_MEDIUM_IMPORT:
-          return t('imported by !author <span title="@ago">on @date</span>', $params);
-        case L10N_SERVER_MEDIUM_REMOTE:
-          return t('remotely submitted by !author <span title="@ago">on @date</span>', $params);
-        case L10N_SERVER_MEDIUM_WEB:
-          return t('suggested on the web by !author <span title="@ago">on @date</span>', $params);
-        case L10N_SERVER_MEDIUM_UNKNOWN:
-          return t('suggested by !author <span title="@ago">on @date</span> (source unknown)', $params);
-      }
-      return;
+    switch ($medium) {
+    case L10N_SERVER_MEDIUM_IMPORT:
+    return t('imported by !author <span title="@ago">on @date</span>', $params);
+    case L10N_SERVER_MEDIUM_REMOTE:
+    return t('remotely submitted by !author <span title="@ago">on @date</span>', $params);
+    case L10N_SERVER_MEDIUM_WEB:
+    return t('suggested on the web by !author <span title="@ago">on @date</span>', $params);
+    case L10N_SERVER_MEDIUM_UNKNOWN:
+    return t('suggested by !author <span title="@ago">on @date</span> (source unknown)', $params);
+    }
+    return;
     case L10N_SERVER_ACTION_READD:
-      switch ($medium) {
-        case L10N_SERVER_MEDIUM_IMPORT:
-          return t('re-imported by !author <span title="@ago">on @date</span>', $params);
-        case L10N_SERVER_MEDIUM_REMOTE:
-          return t('remotely re-submitted by !author <span title="@ago">on @date</span>', $params);
-        case L10N_SERVER_MEDIUM_WEB:
-          return t('re-suggested on the web by !author <span title="@ago">on @date</span>', $params);
-          // L10N_SERVER_MEDIUM_UNKNOWN does not apply, because we only have that
-          // for backwards compatibility and L10N_SERVER_ACTION_READD did not
-          // happen with data migrated (at least we did not know about it).
-      }
-      return;
+    switch ($medium) {
+    case L10N_SERVER_MEDIUM_IMPORT:
+    return t('re-imported by !author <span title="@ago">on @date</span>', $params);
+    case L10N_SERVER_MEDIUM_REMOTE:
+    return t('remotely re-submitted by !author <span title="@ago">on @date</span>', $params);
+    case L10N_SERVER_MEDIUM_WEB:
+    return t('re-suggested on the web by !author <span title="@ago">on @date</span>', $params);
+    // L10N_SERVER_MEDIUM_UNKNOWN does not apply, because we only have that
+    // for backwards compatibility and L10N_SERVER_ACTION_READD did not
+    // happen with data migrated (at least we did not know about it).
+    }
+    return;
     case L10N_SERVER_ACTION_APPROVE:
-      return t('approved by !author <span title="@ago">on @date</span>', $params);
+    return t('approved by !author <span title="@ago">on @date</span>', $params);
     case L10N_SERVER_ACTION_DECLINE:
-      return t('declined by !author <span title="@ago">on @date</span>', $params);
+    return t('declined by !author <span title="@ago">on @date</span>', $params);
     case L10N_SERVER_ACTION_DEMOTE:
-      return t('demoted by !author <span title="@ago">on @date</span>', $params);
+    return t('demoted by !author <span title="@ago">on @date</span>', $params);
     default:
-      // Default byline that work as a click-target to get more information.
-      return t('by !author <span title="@ago">on @date</span>', $params);
-  }
+    // Default byline that work as a click-target to get more information.
+    return t('by !author <span title="@ago">on @date</span>', $params);
+    }
   */
 
 }
-
-
-?>

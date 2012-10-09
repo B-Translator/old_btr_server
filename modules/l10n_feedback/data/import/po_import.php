@@ -5,11 +5,11 @@
     * that the POT file of the project has already been imported,
     * otherwise it will quit without doing anything.  If the file has
     * been already imported, then it is skiped.
-    * 
+    *
     * For each file, all the information that is needed for exporting
     * it is stored, like the file name and path, the headers of the
     * file, the content of the file, etc.
-    * 
+    *
     * Along with the file, it also inserts the translations for the
     * corresponding strings, when such translations do not exist.
     *
@@ -57,7 +57,7 @@ $db = new DB_PO_Import;
 
 // Get the template id.
 $potid = $db->get_template_potid($origin, $project, $tplname);
-if ($potid === null) {
+if ($potid === NULL) {
   print "Error: The template '$origin/$project/$tplname' does not exist.\n";
   print "       Import first the POT file of the project.";
   exit(1);
@@ -69,7 +69,7 @@ $parser = new POParser;
 $entries = $parser->parse($filename);
 
 // Get headers and comments.
-$headers = $comments = null;
+$headers = $comments = NULL;
 if ($entries[0]['msgid'] == '') {
   $headers = $entries[0]['msgstr'];
   $comments = isset($entries[0]['translator-comments']) ? $entries[0]['translator-comments'] : '';

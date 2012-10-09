@@ -46,10 +46,10 @@ $db = new DB_Snapshot;
 if ($operation == 'init') {
   $db->insert_snapshot($origin, $project, $lng, $file);
 }
-else if ($operation == 'update') {
+elseif ($operation == 'update') {
   $db->update_snapshot($origin, $project, $lng, $file);
 }
-else if ($operation == 'get') {
+elseif ($operation == 'get') {
   $db->get_snapshot($origin, $project, $lng, $file);
 }
 else {

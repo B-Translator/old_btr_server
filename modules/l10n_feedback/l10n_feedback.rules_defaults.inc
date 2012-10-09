@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * Configuration of the default rules.
+ */
+
+/**
  * Implements hook_default_rules_configuration().
  *
  * http://drupal.org/node/884584
@@ -29,4 +34,3 @@ function l10n_feedback_default_rules_configuration() {
 
   return $configs;
 }
-?>

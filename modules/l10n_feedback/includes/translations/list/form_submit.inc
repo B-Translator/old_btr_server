@@ -1,6 +1,9 @@
 <?php
-
-// = Translation form submission ===============================================
+/**
+ * @file
+ * Translation form submission.
+ * The form may contain more than one translations.
+ */
 
 /**
  * Form submit callback for l10n_feedback_translate_form().
@@ -24,16 +27,16 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   if ($op == t('Previous')) {
     if (isset($_SESSION['previous_url'])) {
       $previous_url = $_SESSION['previous_url'];
-      $_SESSION['previous_url'] = htmlentities($_SERVER['REQUEST_URI']);
+      $_SESSION['previous_url'] = htmlentities(request_uri());
       drupal_goto($previous_url);
     }
   }
-  else if ($op == t('Next')) {
-    $_SESSION['previous_url'] = htmlentities($_SERVER['REQUEST_URI']);
+  elseif ($op == t('Next')) {
+    $_SESSION['previous_url'] = htmlentities(request_uri());
     $lng = $form_values['langcode'];
     drupal_goto("translations/$lng/");
   }
-  else if ($op == t('Save')) {
+  elseif ($op == t('Save')) {
     // Keep existing filters and other query arguments on form submission.
     $redirect_args = $form_values['target'];
     unset($redirect_args['q']);
@@ -58,7 +61,7 @@ function _l10n_feedback_translate_form_save($form_values) {
   // check whether the submitted lng is valid for providing feedback on this site
   $translation_lng = variable_get('l10n_feedback_translation_lng');
   if ($lng != $translation_lng) {
-    drupal_set_message(t("You cannot give feedback for the language '$lng' on this site!"), 'error');
+    drupal_set_message(t("You cannot give feedback for the language '@lng' on this site!", array('@lng' => $lng)), 'error');
     return;
   }
 
@@ -67,8 +70,8 @@ function _l10n_feedback_translate_form_save($form_values) {
 
   // keep track of the status, so that propper notification
   // can be displayed to the user
-  global $l10n_feedback_save_status;
-  $l10n_feedback_save_status = array(
+  global $_l10n_feedback_save_status;
+  $_l10n_feedback_save_status = array(
     'cannot_vote' => 0,
     'cannot_suggest' => 0,
     'nr_votes' => 0,
@@ -86,10 +89,10 @@ function _l10n_feedback_translate_form_save($form_values) {
     // Form items have numeric $tguid values and other keys here.
     foreach ($string as $tguid => $translation) {
       if ($voting_mode == 'multiple') {
-	_l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
+        _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
       }
       if ((strlen($tguid) == 40) && !empty($translation['declined'])) {
-	//do something for declined translations
+        //do something for declined translations
       }
     }
   }
@@ -166,8 +169,8 @@ function l10n_feedback_add_vote($tguid, $umail) {
 
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
-    global $l10n_feedback_save_status;
-    $l10n_feedback_save_status['cannot_vote']++;
+    global $_l10n_feedback_save_status;
+    $_l10n_feedback_save_status['cannot_vote']++;
     return NULL;
   }
 
@@ -202,8 +205,8 @@ function l10n_feedback_add_vote($tguid, $umail) {
     ->execute();
 
   // Increment the number of the saved votes.
-  global $l10n_feedback_save_status;
-  $l10n_feedback_save_status['nr_votes']++;
+  global $_l10n_feedback_save_status;
+  $_l10n_feedback_save_status['nr_votes']++;
 
   return $vid;
 }
@@ -238,8 +241,8 @@ function _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng) {
 
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
-    global $l10n_feedback_save_status;
-    $l10n_feedback_save_status['cannot_vote']++;
+    global $_l10n_feedback_save_status;
+    $_l10n_feedback_save_status['cannot_vote']++;
     return 0;
   }
 
@@ -309,13 +312,13 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   $translation = str_replace(t('<New translation>'), '', $translation);
 
   // Don't add empty translations.
-  if (trim($translation) == '')  return false;
+  if (trim($translation) == '')  return FALSE;
 
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
-    global $l10n_feedback_save_status;
-    $l10n_feedback_save_status['cannot_suggest']++;
-    return false;
+    global $_l10n_feedback_save_status;
+    $_l10n_feedback_save_status['cannot_suggest']++;
+    return FALSE;
   }
 
   // Load the string and adjust translation whitespace based on source.
@@ -330,7 +333,7 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   $existing = $db->query($query, array(':tguid' => $tguid))->fetchField();
 
   // If this translation already exists, there is nothing to be added.
-  if (!empty($existing))  return false;
+  if (!empty($existing))  return FALSE;
 
   // Insert the new suggestion.
   $db->insert('l10n_feedback_translations')
@@ -338,9 +341,9 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
         'sguid' => $sguid,
         'lng' => $lng,
         'translation' => $translation,
-	'tguid' => $tguid,
+        'tguid' => $tguid,
         'count' => 1,
-	'umail' => $umail,
+        'umail' => $umail,
         'ulng' => $lng,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
@@ -354,8 +357,8 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   //      change their vote.
 
   // Increment the number of the saved suggestions.
-  global $l10n_feedback_save_status;
-  $l10n_feedback_save_status['nr_suggestions']++;
+  global $_l10n_feedback_save_status;
+  $_l10n_feedback_save_status['nr_suggestions']++;
 
   return $tguid;
 }
@@ -378,8 +381,8 @@ function l10n_feedback_trim($translation, $source) {
 
 function l10n_feedback_display_notification_messages() {
 
-  global $l10n_feedback_save_status;
-  extract($l10n_feedback_save_status);
+  global $_l10n_feedback_save_status;
+  extract($_l10n_feedback_save_status);
 
   if ($cannot_vote > 0) {
     drupal_set_message(t('You do not have enough rights for submitting votes!'), 'error');
@@ -390,11 +393,10 @@ function l10n_feedback_display_notification_messages() {
   }
 
   if ($nr_suggestions > 0) {
-    drupal_set_message(t("The number of saved suggestions: $nr_suggestions"));
+    drupal_set_message(format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved'));
   }
 
   if ($nr_votes > 0) {
-    drupal_set_message(t("The number of saved votes: $nr_votes"));
+    drupal_set_message(format_plural($nr_votes, '1 vote saved', '@count votes saved'));
   }
 }
-?>

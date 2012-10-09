@@ -39,22 +39,22 @@ $lng = $argv[4];
 
 // Get the additional parameters for each operation.
 if ($operation == 'add') {
-  $file_diff = isset($argv[5]) ? $argv[5] : null;
-  if ($file_diff == null)  print_usage($argv);
-  $file_ediff = isset($argv[6]) ? $argv[6] : null;
-  if ($file_ediff == null)  print_usage($argv);
-  $comment = isset($argv[7]) ? $argv[7] : null;
-  $user_id = isset($argv[8]) ? $argv[8] : null;
+  $file_diff = isset($argv[5]) ? $argv[5] : NULL;
+  if ($file_diff == NULL)  print_usage($argv);
+  $file_ediff = isset($argv[6]) ? $argv[6] : NULL;
+  if ($file_ediff == NULL)  print_usage($argv);
+  $comment = isset($argv[7]) ? $argv[7] : NULL;
+  $user_id = isset($argv[8]) ? $argv[8] : NULL;
   print "$script $operation $origin $project $lng $file_diff $file_ediff '$comment' $user_id\n";
 }
-else if ($operation == 'list') {
+elseif ($operation == 'list') {
 }
-else if ($operation == 'get') {
-  $number = isset($argv[5]) ? $argv[5] : null;
-  if ($number == null)  print_usage($argv);
-  $format = isset($argv[6]) ? $argv[6] : null;
-  if ($format == null)  print_usage($argv);
-  $file = isset($argv[7]) ? $argv[7] : null;
+elseif ($operation == 'get') {
+  $number = isset($argv[5]) ? $argv[5] : NULL;
+  if ($number == NULL)  print_usage($argv);
+  $format = isset($argv[6]) ? $argv[6] : NULL;
+  if ($format == NULL)  print_usage($argv);
+  $file = isset($argv[7]) ? $argv[7] : NULL;
 }
 else {
   print_usage($argv);
@@ -70,7 +70,7 @@ if ($operation == 'add')
   {
     $db->insert_diff($origin, $project, $lng, $file_diff, $file_ediff, $comment, $user_id);
   }
-else if ($operation == 'list')
+elseif ($operation == 'list')
   // Print a list of diffs that are in the DB.
   {
     $diff_list = $db->get_diff_list($origin, $project, $lng);
@@ -79,11 +79,11 @@ else if ($operation == 'list')
       print $diff_line . "\n";
     }
   }
-else if ($operation == 'get')
+elseif ($operation == 'get')
   // Retrive a specific diff from the DB.
   {
     $diff = $db->get_diff($origin, $project, $lng, $number, $format);
-    if ($file == null) {
+    if ($file == NULL) {
       print $diff;
     }
     else {

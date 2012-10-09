@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Module file for l10n_feedback.
@@ -342,4 +341,3 @@ function l10n_feedback_form_user_profile_form_alter(&$form, &$form_state, $form_
   // it is for internal usage only
   $form['field_data_sequential']['#access'] = FALSE;
 }
-?>

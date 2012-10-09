@@ -55,4 +55,3 @@ class L10nFeedbackUnitTestCase extends DrupalUnitTestCase {
     // nothing yet
   }
 }
-?>

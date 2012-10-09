@@ -1,8 +1,7 @@
 <?php
-
 /**
  * @file
- *   Drush commands for importing/exporting *.po files.
+ * Drush commands for importing/exporting *.po files.
  */
 
 /**
@@ -149,4 +148,3 @@ function drush_l10n_feedback_po_export($origin, $project, $lng, $file =NULL) {
   $output = shell_exec("$path/po_export.php $origin $project $lng $file");
   print $output;
 }
-?>

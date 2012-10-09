@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * Functions that are common for all the translation pages.
  */
 
@@ -166,5 +167,3 @@ function l10n_feedback_pack_string($strings) {
     return $strings;
   }
 }
-
-?>

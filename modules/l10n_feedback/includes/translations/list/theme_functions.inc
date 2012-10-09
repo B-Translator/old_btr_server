@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @file
  * Theme functions.
  */
 
@@ -27,7 +28,7 @@ function theme_l10n_feedback_translate_table($variables) {
     $rows[] = array(
       array(
         'class' => array('sguid'),
-        'data' => l('#', "translations/$lng/$sguid", array(), array('attributes' => array('title' => t('Direct and permanent link to this string.')))),
+        'data' => l(t('#'), "translations/$lng/$sguid", array(), array('attributes' => array('title' => t('Direct and permanent link to this string.')))),
       ),
       array(
         'class' => array('source'),
@@ -152,7 +153,7 @@ function theme_l10n_feedback_translate_translation($variables) {
   if (isset($element['value'])) {
     $output .= drupal_render($element['value']);
   }
-  return $output  . '</li>';
+  return $output . '</li>';
 }
 
 /**
@@ -162,7 +163,7 @@ function theme_l10n_feedback_translate_radio($variables) {
   $element = $variables['element'];
   $type = $element['#type'];  // radio or checkbox
   _form_set_class($element, array('form-radio'));
-  $output = '<input type="'.$type.'" ';
+  $output = '<input type="' . $type . '" ';
   $output .= 'id="' . $element['#id'] . '" ';
   $output .= 'name="' . $element['#name'] . '" ';
   $output .= 'value="' . $element['#return_value'] . '" ';
@@ -189,5 +190,3 @@ function theme_l10n_feedback_translate_translation_list($variables) {
   $output .= '</ul>';
   return $output;
 }
-
-?>

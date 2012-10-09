@@ -63,7 +63,7 @@ class DB_POT_Import extends DB
     $params = array(':pguid' => sha1($origin . $project));
     $this->queries['get_project_pguid']->execute($params);
     $row = $this->queries['get_project_pguid']->fetch();
-    $pguid = isset($row['pguid']) ? $row['pguid'] : null;
+    $pguid = isset($row['pguid']) ? $row['pguid'] : NULL;
 
     return $pguid;
   }
@@ -97,7 +97,7 @@ class DB_POT_Import extends DB
 		    );
     $this->queries['get_template_potid']->execute($params);
     $row = $this->queries['get_template_potid']->fetch();
-    $potid = isset($row['potid']) ? $row['potid'] : null;
+    $potid = isset($row['potid']) ? $row['potid'] : NULL;
 
     return $potid;
   }
@@ -139,13 +139,13 @@ class DB_POT_Import extends DB
   /** Insert a location into DB. */
   public function insert_location($potid, $sguid, $entry)
   {
-    $translator_comments = isset($entry['translator-comments']) ? $entry['translator-comments'] : null;
-    $extracted_comments = isset($entry['extracted-comments']) ? $entry['extracted-comments'] : null;
-    $line_references = isset($entry['references']) ? implode(' ', $entry['references']) : null;
-    $flags = isset($entry['flags']) ? implode(' ', $entry['flags']) : null;
-    $previous_msgctxt = isset($entry['previous-msgctxt']) ? $entry['previous-msgctxt'] : null;
-    $previous_msgid = isset($entry['previous-msgid']) ? $entry['previous-msgid'] : null;
-    $previous_msgid_plural = isset($entry['previous-msgid_plural']) ? $entry['previous-msgid_plural'] : null;
+    $translator_comments = isset($entry['translator-comments']) ? $entry['translator-comments'] : NULL;
+    $extracted_comments = isset($entry['extracted-comments']) ? $entry['extracted-comments'] : NULL;
+    $line_references = isset($entry['references']) ? implode(' ', $entry['references']) : NULL;
+    $flags = isset($entry['flags']) ? implode(' ', $entry['flags']) : NULL;
+    $previous_msgctxt = isset($entry['previous-msgctxt']) ? $entry['previous-msgctxt'] : NULL;
+    $previous_msgid = isset($entry['previous-msgid']) ? $entry['previous-msgid'] : NULL;
+    $previous_msgid_plural = isset($entry['previous-msgid_plural']) ? $entry['previous-msgid_plural'] : NULL;
     $params = array(
 		    ':sguid' => $sguid,
 		    ':potid' => $potid,

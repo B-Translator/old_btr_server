@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Build the query that selects the strings that match the given filter.
+ */
 
 /**
  * Build the query that selects the strings that match
@@ -41,9 +45,9 @@ function l10n_feedback_build_query($filter) {
   _l10n_feedback_filter_by_author($query, $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
   _l10n_feedback_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
 
-  //if nothing has been selected yet, then return false
+  //if nothing has been selected yet, then return FALSE
   //dpm($query->conditions(), 'query_conditions');  //debug
-  if (sizeof($query->conditions()) == 1) return false;
+  if (sizeof($query->conditions()) == 1) return FALSE;
 
   //if translations are joined, then filter by the language as well
   if ($query->hasTag('join-translations')) {
@@ -206,7 +210,7 @@ function _l10n_feedback_filter_by_date($query, $date_filter, $from_date, $to_dat
   if ($date_filter == 'translations') {
     _l10n_feedback_join_table($query, 'translations');
   }
-  else if ($date_filter == 'votes') {
+  elseif ($date_filter == 'votes') {
     _l10n_feedback_join_table($query, 'votes');
   }
 
@@ -220,10 +224,10 @@ function _l10n_feedback_filter_by_date($query, $date_filter, $from_date, $to_dat
   if ($from_date_str != $today_str and $to_date_str != $today_str) {
     $query->condition($field, array($from_date_str, $to_date_str), 'BETWEEN');
   }
-  else if ($from_date_str == $today_str and $to_date_str != $today_str) {
+  elseif ($from_date_str == $today_str and $to_date_str != $today_str) {
     $query->condition($field, $to_date_str, '<=');
   }
-  else if ($from_date_str != $today_str and $to_date_str == $today_str) {
+  elseif ($from_date_str != $today_str and $to_date_str == $today_str) {
     $query->condition($field, $from_date_str, '>=');
   }
   else {
@@ -266,4 +270,3 @@ function _l10n_feedback_join_table($query, $table) {
       break;
   }
 }
-?>

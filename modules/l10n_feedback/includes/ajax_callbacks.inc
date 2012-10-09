@@ -1,6 +1,8 @@
 <?php
-
-// = AJAX callbacks ============================================================
+/**
+ * @file
+ * AJAX callback functions.
+ */
 
 /**
  * Retrieve a JSON list of autocomplete suggestions for projects.
@@ -87,7 +89,7 @@ function l10n_feedback_string_details($sguid) {
   }
 
   // List projects where this string is used.
-  $output .= '<h3>' .  t('Used on these projects:') . '</h3>';
+  $output .= '<h3>' . t('Used on these projects:') . '</h3>';
   $sql = "
     SELECT CONCAT(p.origin, ' / ', p.project) AS proj
     FROM {l10n_feedback_strings} s
@@ -170,5 +172,3 @@ function l10n_feedback_translation_details($tid = 0, $ajax = 0) {
     return $output;
   }
 }
-
-?>

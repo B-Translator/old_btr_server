@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Functions called by cron.
+ */
+
 /*
  * Implements hook_cron().
  */
@@ -68,7 +73,7 @@ function send_string_by_email($account) {
     sleep(60);
     $short_url = get_short_url($url);
   }
-  if ($short_url != null and $short_url != 'wait') {
+  if ($short_url != NULL and $short_url != 'wait') {
     $url = $short_url;
   }
 
@@ -82,12 +87,13 @@ function send_string_by_email($account) {
 
   // build the body of the message
   $body = array(
-    'Greetings ' . $account->name . ',',
-    t("If you have time, please help to review the translation into '$lng' of the string at this link: $url"),
+    t('Greetings !username,', array('!username' => $account->name)),
+    t("If you have time, please help to review the translation into '!lng' of the string at this link: !url",
+      array('!lng' => $lng, '!url' => $url)),
     t('Thanks'),
-    '----- Original (English) String:',
+    t('----- Original (English) String:'),
     $string,
-    '----- Available Translations:',
+    t('----- Available Translations:'),
   );
   foreach ($translations as $translation) {
     $body[] = ' * ' . $translation;
@@ -99,7 +105,7 @@ function send_string_by_email($account) {
   $smtp_from = variable_get('smtp_from');
   $smtp_fromname = variable_get('smtp_fromname');
   $from = "$smtp_fromname <$smtp_from>";
-  $to = $account->name . ' <' .$account->mail . '>';
+  $to = $account->name . ' <' . $account->mail . '>';
   $language = $account->language;
   $send = TRUE;
   $params['subject'] = $subject;
@@ -112,36 +118,35 @@ function send_string_by_email($account) {
 /**
  * Get a short URL, using http://is.gd/ .
  */
-function get_short_url($url)
-{
+function get_short_url($url) {
+
   $url = urlencode($url);
   $path = "http://v.gd/create.php?format=simple&url=$url";
 
   //We need to set a context with ignore_errors on otherwise PHP doesn't fetch
   //page content for failure HTTP status codes (v.gd needs this to return error
   //messages when using simple format)
-  $opts = array("http" => array("ignore_errors" => true));
+  $opts = array("http" => array("ignore_errors" => TRUE));
   $context = stream_context_create($opts);
 
-  $response = @file_get_contents($path,false,$context);
+  $response = @file_get_contents($path, FALSE, $context);
 
-  if(!isset($http_response_header)) {
-    return null;
+  if (!isset($http_response_header)) {
+    return NULL;
   }
 
   //Hacky way of getting the HTTP status code from the response headers
-  if (!preg_match("{[0-9]{3}}",$http_response_header[0],$httpStatus)) {
-    return null;
+  if (!preg_match("{[0-9]{3}}", $http_response_header[0], $http_status)) {
+    return NULL;
   }
 
-  if ($httpStatus[0] == 200) {
+  if ($http_status[0] == 200) {
     return $response;
   }
-  else if ($httpStatus[0] == 502) {
+  elseif ($http_status[0] == 502) {
     return 'wait';
   }
   else {
-    return null;
+    return NULL;
   }
 }
-?>

@@ -1,5 +1,6 @@
 <?php
 /**
+ * @file
  * Functions that are common for all the pages.
  */
 
@@ -67,26 +68,25 @@ function l10n_feedback_get_preferred_projects($account) {
   $lang = 'und';
   $arr_preferred_projects = array();
   if ( isset($account->field_preferred_projects[$lang])
-       and is_array($account->field_preferred_projects[$lang]) )
-    {
-      // get the preferred projects from the user settings
-      $field_preferred_projects = $account->field_preferred_projects[$lang];
-      foreach ($field_preferred_projects as $project) {
-	$arr_preferred_projects[] = $project['value'];
+    and is_array($account->field_preferred_projects[$lang]) ) {
+
+    // get the preferred projects from the user settings
+    $field_preferred_projects = $account->field_preferred_projects[$lang];
+    foreach ($field_preferred_projects as $project) {
+      $arr_preferred_projects[] = $project['value'];
+    }
+  }
+  else {
+    // get the preferred projects from the site config
+    $preferred_projects_txt = variable_get('l10n_feedback_preferred_projects', '');
+    $lines = preg_split('#\r\n|\r|\n#', $preferred_projects_txt);
+    foreach ($lines as $line) {
+      $line = trim($line);
+      if ($line != '') {
+        $arr_preferred_projects[] = $line;
       }
     }
-  else
-    {
-      // get the preferred projects from the site config
-      $preferred_projects_txt = variable_get('l10n_feedback_preferred_projects', '');
-      $lines = preg_split('#\r\n|\r|\n#', $preferred_projects_txt);
-      foreach ($lines as $line) {
-	$line = trim($line);
-	if ($line != '') {
-	  $arr_preferred_projects[] = $line;
-	}
-      }
-    }
+  }
 
   return $arr_preferred_projects;
 }
@@ -100,14 +100,14 @@ function l10n_feedback_get_auxiliary_languages($account) {
   $lang = 'und';
   $arr_auxiliary_languages = array();
   if ( isset($account->field_auxiliary_languages[$lang])
-       and is_array($account->field_auxiliary_languages[$lang]) )
-    {
-      // get the preferred projects from the user settings
-      $field_auxiliary_languages = $account->field_auxiliary_languages[$lang];
-      foreach ($field_auxiliary_languages as $language) {
-	$arr_auxiliary_languages[] = $language['value'];
-      }
+    and is_array($account->field_auxiliary_languages[$lang]) ) {
+
+    // get the preferred projects from the user settings
+    $field_auxiliary_languages = $account->field_auxiliary_languages[$lang];
+    foreach ($field_auxiliary_languages as $language) {
+      $arr_auxiliary_languages[] = $language['value'];
     }
+  }
 
   return $arr_auxiliary_languages;
 }
@@ -124,7 +124,7 @@ function l10n_feedback_get_data_sequential($account) {
     $sequential = unserialize($account->field_data_sequential[$lang][0]['value']);
   }
   else {
-    $sequential = null;
+    $sequential = NULL;
   }
 
   return $sequential;
@@ -167,4 +167,3 @@ function l10n_feedback_projects_to_where_condition($arr_projects) {
 
   return array($where_condition, $arguments);
 }
-?>
