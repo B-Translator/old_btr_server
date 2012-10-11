@@ -15,9 +15,9 @@ class DB_PO_Import extends DB
     // insert_translation
     $this->queries['insert_translation'] = $this->dbh->prepare("
       INSERT INTO l10n_feedback_translations
-	 (sguid, lng, translation, tguid, count, uid, time)
+	 (sguid, lng, translation, tguid, count, umail, ulng, time)
       VALUES
-	 (:sguid, :lng, :translation, :tguid, :count, :uid, :time)
+	 (:sguid, :lng, :translation, :tguid, :count, :umail, :ulng, :time)
     ");
   }
 
@@ -91,7 +91,8 @@ class DB_PO_Import extends DB
 		    ':translation' => $translation,
 		    ':tguid' => $tguid,
 		    ':count' => 0,
-		    ':uid' => 1,  //admin
+		    ':umail' => 'admin@example.com',
+		    ':ulng' => $lng,
 		    ':time' => $this->time,
 		    );
     $this->queries['insert_translation']->execute($params);
