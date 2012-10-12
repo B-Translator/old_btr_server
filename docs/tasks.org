@@ -116,9 +116,9 @@
 *** DONE Admin dashboards/stats/reports.
     - http://drupal.org/documentation/modules/dashboard
 
-*** TODO Import PO files of Drupal.
-*** TODO Generate a POT file for B-Translator and import it.
-*** TODO Import Wordpress translations into B-Translator.
+*** DONE Import PO files of Drupal.
+*** DONE Generate a POT file for B-Translator and import it.
+*** DONE Import Wordpress translations into B-Translator.
 
 *** TODO Try to improve the performance.
 
