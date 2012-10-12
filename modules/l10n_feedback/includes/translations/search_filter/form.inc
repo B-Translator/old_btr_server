@@ -221,7 +221,11 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
   $form['basic_search']['words'] = array(
     '#type' => 'textarea',
     '#title' => t('The String Or Words To Be Searched'),
-    '#description' => t('Search for l10n strings or translations that contain the given words. The <emphasized>natural</emphasized> search will try to find strings similar to the given one (see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-natural-language.html">Natural Language Full-Text Searches</a>). The <emphasized>boolean</emphasized> search will try to match words according to logical rules. The words can be preceded by + (plus), - (minus), etc. (for more details see: <a href="http://dev.mysql.com/doc/refman/5.1/en/fulltext-boolean.html">Boolean Full-Text Searches</a>).'),
+    '#description' => t('Search for l10n strings or translations that contain the given words. The <emphasized>natural</emphasized> search will try to find strings similar to the given one (see: <a href="!url1">Natural Language Full-Text Searches</a>). The <emphasized>boolean</emphasized> search will try to match words according to logical rules. The words can be preceded by + (plus), - (minus), etc. (for more details see: <a href="!url2">Boolean Full-Text Searches</a>).',
+                    array(
+                      '!url1' => 'http://dev.mysql.com/doc/refman/5.1/en/fulltext-natural-language.html',
+                      '!url2' => 'http://dev.mysql.com/doc/refman/5.1/en/fulltext-boolean.html',
+                    )),
     '#default_value' => $form_state['values']['words'],
     '#rows' => 2,
   );

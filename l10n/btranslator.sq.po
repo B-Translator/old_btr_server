@@ -1,0 +1,339 @@
+# #-#-#-#-#  installer.pot (PROJECT VERSION)  #-#-#-#-#
+# $Id$
+#
+# LANGUAGE translation of Drupal (installer)
+# Copyright 2012 NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  btranslator.install: n/a
+#  btranslator.profile: n/a
+#
+# #-#-#-#-#  general.pot (PROJECT VERSION)  #-#-#-#-#
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright 2012 NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  btranslator.info: n/a
+#  btranslator.install: n/a
+#  btranslator.profile: n/a
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 7.x-dev\n"
+"POT-Creation-Date: 2012-10-12 01:41+0200\n"
+"PO-Revision-Date: 2012-10-12 01:49+0200\n"
+"Last-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\n"
+"Language-Team: Albanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sq\n"
+
+#: btranslator.install:157
+msgid "Translations"
+msgstr ""
+
+#: btranslator.install:165
+msgid "Contact"
+msgstr ""
+
+#: btranslator.profile:24
+msgid "B-Translator Settings"
+msgstr ""
+
+#: btranslator.profile:30
+msgid "Mail Settings"
+msgstr ""
+
+#: btranslator.info:0
+msgid "B-Translator"
+msgstr ""
+
+#: btranslator.info:0
+msgid "Drupal installation profile for B-Translator."
+msgstr ""
+
+#: btranslator.install:189
+msgid "Send e-mail to admin when a new user is registered"
+msgstr ""
+
+#: btranslator.install:199
+msgid "Send e-mail to admin when user modifies his account"
+msgstr ""
+
+#: btranslator.profile:59
+msgid "B-Translator configuration options"
+msgstr ""
+
+#: btranslator.profile:70
+msgid "Translation Language"
+msgstr ""
+
+#: btranslator.profile:71
+msgid ""
+"The language of translations. This site is about collecting feedback for the "
+"translations of this language."
+msgstr ""
+
+#: btranslator.profile:77
+msgid "Single"
+msgstr ""
+
+#: btranslator.profile:78
+msgid "Multiple"
+msgstr ""
+
+#: btranslator.profile:80
+msgid ""
+"When voting mode is <em>Single</em>, only one translation can be voted as "
+"suitable for each string. When voting mode is <em>Multiple</em>, more than "
+"one translation can be selected as suitable for each string. <br/> "
+"<strong>Note:</strong> Switching back from <em>Multiple</em> to <em>Single</"
+"em> may have a bad impact on the existing votes."
+msgstr ""
+
+#: btranslator.profile:84
+msgid "Select Voting Mode"
+msgstr ""
+
+#: btranslator.profile:92
+msgid "B-Translator default settings"
+msgstr ""
+
+#: btranslator.profile:96
+msgid ""
+"Select the projects that will be used for review and translations. Only "
+"strings from these projects will be presented to the users. <br/> You can "
+"enter projects in the form <em>origin/project</em>, for example: <em>KDE/"
+"kdeedu</em>, <em>Mozilla/browser</em>, etc. Or you can include all the "
+"projects from a certain origin, like this: <em>KDE</em>, <em>LibreOffice</"
+"em>, etc. <br/> Enter each project on a separate line. See a list of the "
+"imported projects <a href='@project-list' target='_blank'>here</a>.<br/> "
+"<strong>Note</strong>: The user can override the preferred projects on his "
+"profile/settings. If the user does not select any preferred projects on his "
+"profile, then the projects listed here will be used. If this list is empty, "
+"then all the imported projects will be used."
+msgstr ""
+
+#: btranslator.profile:100
+msgid "The List of Projects that Will be Used for Voting and Translation"
+msgstr ""
+
+#: btranslator.profile:115
+msgid "Use PHPMailer to send e-mails"
+msgstr ""
+
+#: btranslator.profile:117
+msgid "When enabled, PHPMailer will be used to deliver all site e-mails."
+msgstr ""
+
+#: btranslator.profile:124
+msgid ""
+"MimeMail has been detected. To enable PHPMailer for mail transport, go to "
+"the <a href=\"@url\">MimeMail settings page</a> and select PHPMailer from "
+"the available e-mail engines."
+msgstr ""
+
+#: btranslator.profile:127
+msgid "PHPMailer is currently disabled."
+msgstr ""
+
+#: btranslator.profile:132
+msgid "Primary SMTP server"
+msgstr ""
+
+#: btranslator.profile:134
+msgid ""
+"The host name or IP address of your primary SMTP server.  Use !gmail-smtp "
+"for Google Mail."
+msgstr ""
+
+#: btranslator.profile:139
+msgid "Backup SMTP server"
+msgstr ""
+
+#: btranslator.profile:141
+msgid ""
+"Optional host name or IP address of a backup server, if the primary server "
+"fails.  You may override the default port below by appending it to the host "
+"name separated by a colon.  Example: !hostname"
+msgstr ""
+
+#: btranslator.profile:145
+msgid "SMTP port"
+msgstr ""
+
+#: btranslator.profile:149
+msgid "The standard SMTP port is 25, for Google Mail use 465."
+msgstr ""
+
+#: btranslator.profile:154
+msgid "Use secure protocol"
+msgstr ""
+
+#: btranslator.profile:156
+msgid "No"
+msgstr ""
+
+#: btranslator.profile:156
+msgid "SSL"
+msgstr ""
+
+#: btranslator.profile:156
+msgid "TLS"
+msgstr ""
+
+#: btranslator.profile:157
+msgid ""
+"Whether to use an encrypted connection to communicate with the SMTP server.  "
+"Google Mail requires SSL."
+msgstr ""
+
+#: btranslator.profile:162
+msgid ""
+"Note: This option has been disabled since your PHP installation does not "
+"seem to have support for OpenSSL."
+msgstr ""
+
+#: btranslator.profile:168
+msgid "SMTP authentication"
+msgstr ""
+
+#: btranslator.profile:169
+msgid "Leave blank if your SMTP server does not require authentication."
+msgstr ""
+
+#: btranslator.profile:175
+msgid "Username"
+msgstr ""
+
+#: btranslator.profile:177
+msgid "For Google Mail, enter your username including \"@gmail.com\"."
+msgstr ""
+
+#: btranslator.profile:182;196
+msgid "Password"
+msgstr ""
+
+#: btranslator.profile:187
+msgid "Hide password"
+msgstr ""
+
+#: btranslator.profile:189
+msgid ""
+"Check this option to permanently hide the plaintext password from peeking "
+"eyes. You may still change the password afterwards, but it won't be "
+"displayed anymore."
+msgstr ""
+
+#: btranslator.profile:196
+msgid "Change password"
+msgstr ""
+
+#: btranslator.profile:197
+msgid "Leave empty if you do not intend to change the current password."
+msgstr ""
+
+#: btranslator.profile:203
+msgid "Advanced SMTP settings"
+msgstr ""
+
+#: btranslator.profile:209
+msgid "\"From\" name"
+msgstr ""
+
+#: btranslator.profile:211
+msgid ""
+"Enter a name that should appear as the sender for all messages.  If left "
+"blank the site name will be used instead: %sitename."
+msgstr ""
+
+#: btranslator.profile:215
+msgid "Always set \"Reply-To\" address"
+msgstr ""
+
+#: btranslator.profile:217
+msgid ""
+"Enables setting the \"Reply-To\" address to the original sender of the "
+"message, if unset.  This is required when using Google Mail, which would "
+"otherwise overwrite the original sender."
+msgstr ""
+
+#: btranslator.profile:221
+msgid "Keep connection alive"
+msgstr ""
+
+#: btranslator.profile:223
+msgid ""
+"Whether to reuse an existing connection during a request.  Improves "
+"performance when sending a lot of e-mails at once."
+msgstr ""
+
+#: btranslator.profile:227
+msgid "Debug level"
+msgstr ""
+
+#: btranslator.profile:229
+msgid "Disabled"
+msgstr ""
+
+#: btranslator.profile:229
+msgid "Errors only"
+msgstr ""
+
+#: btranslator.profile:229
+msgid "Server responses"
+msgstr ""
+
+#: btranslator.profile:229
+msgid "Full communication"
+msgstr ""
+
+#: btranslator.profile:230
+msgid ""
+"Debug the communication with the SMTP server.  You normally shouldn't enable "
+"this unless you're trying to debug e-mail sending problems."
+msgstr ""
+
+#: btranslator.profile:251
+msgid ""
+"A test e-mail has been sent to %email. <a href=\"@watchdog-url\">Check the "
+"logs</a> for any error messages."
+msgstr ""
+
+#: btranslator.profile:259
+msgid "Test configuration"
+msgstr ""
+
+#: btranslator.profile:265
+msgid "Recipient"
+msgstr ""
+
+#: btranslator.profile:267
+msgid "Type in an address to have a test e-mail sent there."
+msgstr ""
+
+#: btranslator.profile:281
+msgid "You must enter a valid SMTP port number."
+msgstr ""
+
+#: btranslator.profile:297
+msgid "PHPMailer will be used to deliver all site e-mails."
+msgstr ""
+
+#: btranslator.profile:316;317
+msgid "PHPMailer has been disabled."
+msgstr ""
+
+#: btranslator.profile:298;317;331
+msgid "phpmailer"
+msgstr ""
+
+#: btranslator.profile:298
+msgid "PHPMailer has been enabled."
+msgstr ""
+
+#: btranslator.profile:331
+msgid "SMTP configuration changed."
+msgstr ""
