@@ -97,35 +97,11 @@
 *** Start with simple tests (l10n_feedback.test)
 *** Improve the look of number of votes.
 
-*** DONE Install any module for sending email to all the users of l10n.org.al
-    Try:
-    - simplenews
-    - mass_contact
-*** DONE Invite all the existing users to customize their profile/settings.
-*** DONE Install any module for sending invitations to other users.
-
 *** TODO Try to use on l10n.org.al the theme sky or some other suitable theme.
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
 
-*** DONE Create user dashboards/stats/reports.
-    - http://drupal.org/project/homebox
-    - http://drupal.org/project/user_dashboard
-    - Create custom blocks.
-
-*** DONE Admin dashboards/stats/reports.
-    - http://drupal.org/documentation/modules/dashboard
-
-*** DONE Import PO files of Drupal.
-*** DONE Generate a POT file for B-Translator and import it.
-*** DONE Import Wordpress translations into B-Translator.
-
 *** TODO Try to improve the performance.
-
-**** DONE Try fastcgi:
-     + http://www.netmagazine.com/features/top-15-drupal-performance-tips?goback=%2Egde_35920_member_169858052
-     + http://www.failover.co/blog/quick-setup-apache-worker-fastcgi-php-fpm-and-apc
-     + http://www.failover.co/blog/drupal-7-memcache-pecl-memcache-memcached-and-sockets-ubuntu-12-04
 
 **** TODO Try NGINX:
      + http://arstechnica.com/business/2011/11/a-faster-web-server-ripping-out-apache-for-nginx/

@@ -286,6 +286,102 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   existing translations. Include in the subject part of the string
   that is to be translated.
 
+* DONE Install any module for sending email to all the users of l10n.org.al
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:48
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Try:
+  - simplenews
+  - mass_contact
+* DONE Invite all the existing users to customize their profile/settings.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:48
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Install any module for sending invitations to other users.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:48
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE Create user dashboards/stats/reports.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:49
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  - http://drupal.org/project/homebox
+  - http://drupal.org/project/user_dashboard
+  - Create custom blocks.
+
+* DONE Admin dashboards/stats/reports.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:49
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  - http://drupal.org/documentation/modules/dashboard
+
+* DONE Import PO files of Drupal.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:49
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Generate a POT file for B-Translator and import it.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:49
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Import Wordpress translations into B-Translator.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:49
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE Try fastcgi:
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-10-12 Fri 02:49
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc/Try to improve the performance.
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  + http://www.netmagazine.com/features/top-15-drupal-performance-tips?goback=%2Egde_35920_member_169858052
+  + http://www.failover.co/blog/quick-setup-apache-worker-fastcgi-php-fpm-and-apc
+  + http://www.failover.co/blog/drupal-7-memcache-pecl-memcache-memcached-and-sockets-ubuntu-12-04
+
+
+
+
+
+
+
+
+
+
 
 
 
