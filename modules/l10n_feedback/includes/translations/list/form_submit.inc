@@ -22,7 +22,9 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   }
 
   // Save the values selected on the form (votes or new suggestions).
-  _l10n_feedback_translate_form_save($form_values);
+  if (user_is_logged_in()) {
+    _l10n_feedback_translate_form_save($form_values);
+  }
 
   if ($op == t('Previous')) {
     if (isset($_SESSION['previous_url'])) {
