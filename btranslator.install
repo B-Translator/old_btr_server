@@ -10,6 +10,16 @@
  * Perform actions to set up the site for this profile.
  */
 function btranslator_install() {
+
+  // Get a connection to the l10n_feedback_db. All the queries
+  // of the l10n_feedback module will use this connection.
+  if (isset($GLOBALS['databases']['l10n_feedback_db']['default'])) {
+    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'l10n_feedback_db');
+  }
+  else {
+    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'default');
+  }
+
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
   standard_install();
 
@@ -22,6 +32,7 @@ function btranslator_install() {
   variable_set('user_email_verification', TRUE);
   variable_set('user_signatures', TRUE);
 
+  /*
   // l10n_client settings
   variable_set('l10n_client_server', 'http://localize.drupal.org');
   variable_set('l10n_client_use_server', TRUE);
@@ -31,6 +42,7 @@ function btranslator_install() {
     'submit translations to localization server' => TRUE,
   );
   user_role_change_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
+  */
 
   btranslator_install_mailsystem();
   btranslator_install_cache();

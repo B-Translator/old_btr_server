@@ -93,7 +93,7 @@ libraries[geshi][download][url] = "http://downloads.sourceforge.net/project/gesh
 libraries[tinymce][type] = "library"
 libraries[tinymce][directory_name] = "tinymce"
 libraries[tinymce][download][type] = "get"
-libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce/tinymce_3.5b3.zip"
+libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce/tinymce_3.5.7.zip"
 
 libraries[phpmailer][type] = "library"
 libraries[phpmailer][directory_name] = "phpmailer"

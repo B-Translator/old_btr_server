@@ -65,8 +65,8 @@ dependencies[] = homebox
 ;--------------------
 ; Drupal Localization
 ;--------------------
-dependencies[] = l10n_update
-dependencies[] = l10n_client
+;dependencies[] = l10n_update
+;dependencies[] = l10n_client
 
 ;--------------------
 ; Contrib Mail
@@ -133,4 +133,3 @@ dependencies[] = memcache
 ;--------------------
 files[] = btranslator.install
 files[] = btranslator.profile
-

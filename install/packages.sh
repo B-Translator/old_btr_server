@@ -3,7 +3,7 @@
 ### make sure that all needed packages are installed
 sudo apt-get install aptitude tasksel
 sudo tasksel install lamp-server
-sudo aptitude install phpmyadmin php5-curl php-apc
+sudo aptitude install phpmyadmin php5-curl php-apc php5-memcached
 sudo aptitude install drush php-pear gawk git mercurial subversion translate-toolkit
 
 ### make sure that we have drush-4 (drush-5 still has some problems with 'make')
