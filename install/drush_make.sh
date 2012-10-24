@@ -43,4 +43,4 @@ projects[btranslator][download][branch] = dev
 EOF
 
 ### retrieve all the projects/modules and build the application directory
-drush make --working-copy btranslator-distro.make $appdir
+drush make --working-copy --prepare-install --force-complete btranslator-distro.make $appdir
