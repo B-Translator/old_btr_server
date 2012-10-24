@@ -56,7 +56,7 @@ function l10n_feedback_user_autocomplete($string = '') {
               ORDER BY name";
     $args = array(
       ':str' => $string . '%',
-      ':ulng' => variable_get('l10n_feedback_translation_lng'),
+      ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
     );
     $result = $db->queryRange($query, 0, 10, $args);
     foreach ($result as $user) {

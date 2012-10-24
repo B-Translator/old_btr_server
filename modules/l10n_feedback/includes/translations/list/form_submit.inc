@@ -61,7 +61,7 @@ function _l10n_feedback_translate_form_save($form_values) {
   $lng = $form_values['langcode'];
 
   // check whether the submitted lng is valid for providing feedback on this site
-  $translation_lng = variable_get('l10n_feedback_translation_lng');
+  $translation_lng = variable_get('l10n_feedback_translation_lng', 'fr');
   if ($lng != $translation_lng) {
     drupal_set_message(t("You cannot give feedback for the language '@lng' on this site!", array('@lng' => $lng)), 'error');
     return;
@@ -193,7 +193,7 @@ function l10n_feedback_add_vote($tguid, $umail) {
     ->fields(array(
         'tguid' => $tguid,
         'umail' => $umail,
-        'ulng' => variable_get('l10n_feedback_translation_lng'),
+        'ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();

@@ -14,7 +14,7 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
 
   $args = array(
     ':umail' => $account->init,  //initial email that the user used for registration
-    ':ulng' => variable_get('l10n_feedback_translation_lng'),
+    ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
   );
   $select_user = "
     SELECT * FROM {l10n_feedback_users}
@@ -51,7 +51,7 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
 function l10n_feedback_user_update(&$edit, $account, $category) {
 
   $args = array(
-    ':ulng' => variable_get('l10n_feedback_translation_lng'),
+		':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
     ':uid' => $account->uid,
     ':name' => $account->name,
     ':status' => $account->status,
@@ -71,7 +71,7 @@ function l10n_feedback_user_update(&$edit, $account, $category) {
 function l10n_feedback_user_cancel(&$edit, $account, $category) {
 
   $args = array(
-    ':ulng' => variable_get('l10n_feedback_translation_lng'),
+    ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
     ':uid' => $account->uid,
   );
   $update_user = "
@@ -89,7 +89,7 @@ function l10n_feedback_user_cancel(&$edit, $account, $category) {
 function l10n_feedback_user_delete($account) {
 
   $args = array(
-    ':ulng' => variable_get('l10n_feedback_translation_lng'),
+    ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
     ':uid' => $account->uid,
   );
   $update_user = "

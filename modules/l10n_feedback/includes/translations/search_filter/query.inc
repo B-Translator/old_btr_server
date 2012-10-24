@@ -124,7 +124,7 @@ function _l10n_feedback_filter_by_project($query, $project, $origin) {
  */
 function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
 
-  $lng = variable_get('l10n_feedback_translation_lng');
+  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   if ($only_mine) {
     _l10n_feedback_join_table($query, 'votes');
 
