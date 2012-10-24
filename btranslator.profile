@@ -23,13 +23,13 @@ function btranslator_install_tasks($install_state) {
     'btranslator_config' => array(
       'display_name' => st('B-Translator Settings'),
       'type' => 'form',
-      'run' => INSTALL_TASK_RUN_IF_REACHED,
+      'run' => INSTALL_TASK_RUN_IF_NOT_COMPLETED,
       'function' => 'btranslator_config',
     ),
     'btranslator_mail_config' => array(
       'display_name' => st('Mail Settings'),
       'type' => 'form',
-      'run' => INSTALL_TASK_RUN_IF_REACHED,
+      'run' => INSTALL_TASK_RUN_IF_NOT_COMPLETED,
       'function' => 'btranslator_mail_config_form',
     ),
     /*
