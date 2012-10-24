@@ -4,7 +4,7 @@
 ### get the dump mode
 if [ "$1" = '' ]
 then
-    echo -e "Usage: $0 (schema|data|user)\n"
+    echo -e "Usage: $0 (schema|data|user|db)\n"
     exit 1
 fi
 dump_mode=$1
@@ -65,8 +65,15 @@ case "$dump_mode" in
 	gzip $dump_file
 	;;
 
+    db )
+	date=$(date +%Y%m%d)
+	dump_file=btranslator_db_$date.sql
+	mysqldump $connection --opt > $dump_file
+	gzip $dump_file
+	;;
+
     * )
-	echo -e "Usage: $0 (schema|data|user)\n"
+	echo -e "Usage: $0 (schema|data|user|db)\n"
 	exit 1	
 	;;
 

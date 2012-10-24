@@ -3,6 +3,26 @@
 /**
  * @file
  * Test cases for the module l10n_feedback.
+ *
+ * They can be run from commad line by calling the script:
+ *   profiles/btranslator/utils/run-tests.sh
+ * The output of the tests is left of the directory
+ * 'tests/' under the root of the drupal directory.
+ *
+ * The script makes a full backup (dump) of the DB
+ * before running the tests, and restores it after
+ * the tests. The functions setUp() and tearDown()
+ * are not used. This is done mostly for performance
+ * reasons.
+ */
+
+/*
+   Some referencies for simpletest:
+     + http://drupal.org/simpletest-tutorial-drupal7
+     + http://drupal.org/simpletest
+     + http://drupal.org/node/278126
+     + http://drupal.org/node/265762
+     + http://drupal.org/node/265828
  */
 
 /**
@@ -10,16 +30,39 @@
  */
 class L10nFeedbackTestCase extends DrupalWebTestCase {
 
+  protected $profile = 'btranslator';
+
   public static function getInfo() {
     return array(
       'name' => 'l10n_feedback',
       'description' => 'Test the functionality of module l10n_feedback.',
-      'group' => 'l10n',
+      'group' => 'B-Translator',
     );
   }
 
   public function setUp() {
-    parent::setUp('l10n_feedback');
+    //parent::setUp('l10n_feedback');
+    $this->setupUsers();
+  }
+
+  public function tearDown() {
+  }
+
+  /**
+   * Create a test user for each role.
+   */
+  protected function setupUsers() {
+
+    $role_names = array('contributor', 'translator', 'moderator', 'administrator');
+    foreach ($role_names as $role_name) {
+      // Create a user of role $role_name
+      $role = user_role_load_by_name($role_name);
+      $rid = $role->rid;
+      $account = $this->drupalCreateUser();
+      $this->drupalPost('user/' . $account->uid . '/edit', array("roles[$rid]" => $rid), t('Save'));
+      $this->assertText(t('The changes have been saved.'));
+      $this->$role_name = $account;
+    }
   }
 
   // Test Case1
