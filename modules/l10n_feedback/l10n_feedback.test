@@ -11,9 +11,7 @@
  *
  * The script makes a full backup (dump) of the DB
  * before running the tests, and restores it after
- * the tests. The functions setUp() and tearDown()
- * are not used. This is done mostly for performance
- * reasons.
+ * the tests.
  */
 
 /*
@@ -41,11 +39,7 @@ class L10nFeedbackTestCase extends DrupalWebTestCase {
   }
 
   public function setUp() {
-    //parent::setUp('l10n_feedback');
-    $this->setupUsers();
-  }
-
-  public function tearDown() {
+    parent::setUp('l10n_feedback');
   }
 
   /**
@@ -55,19 +49,19 @@ class L10nFeedbackTestCase extends DrupalWebTestCase {
 
     $role_names = array('contributor', 'translator', 'moderator', 'administrator');
     foreach ($role_names as $role_name) {
-      // Create a user of role $role_name
-      $role = user_role_load_by_name($role_name);
-      $rid = $role->rid;
+      // Create a user and assign role $role_name
       $account = $this->drupalCreateUser();
-      $this->drupalPost('user/' . $account->uid . '/edit', array("roles[$rid]" => $rid), t('Save'));
-      $this->assertText(t('The changes have been saved.'));
-      $this->$role_name = $account;
+      $role = user_role_load_by_name($role_name);
+      $edit['roles'] = array($role->rid => $role->rid);
+      $this->$role_name = user_save($account, $edit);
+      $this->pass(var_dump($this->$role_name));
     }
   }
 
   // Test Case1
   public function testL10nFeedbackCase1() {
     // nothing yet
+    $this->setupUsers();
   }
 
   // Test Case2
@@ -90,8 +84,8 @@ class L10nFeedbackUnitTestCase extends DrupalUnitTestCase {
   }
 
   function setUp() {
-    drupal_load('module', 'l10n_feedback');
-    parent::setUp();
+    //drupal_load('module', 'l10n_feedback');
+    //parent::setUp();
   }
 
   public function testL10nFeedbackUnitTestCase1() {
