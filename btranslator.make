@@ -43,6 +43,7 @@ projects[examples][version] = "1.x-dev"
 projects[entity][version] = "1.0-rc3"
 projects[rules][version] = "2.2"
 projects[homebox][version] = "2.0-beta6"
+projects[simpletest_clone][version] = "1.0-beta3"
 
 ;--------------------
 ; Performance

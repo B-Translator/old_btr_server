@@ -51,3 +51,4 @@ modules/mass_contact/
 modules/invite/
 modules/homebox/
 modules/memcache/
+modules/simpletest_clone/
