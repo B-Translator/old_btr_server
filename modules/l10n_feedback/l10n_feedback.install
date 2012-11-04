@@ -40,6 +40,18 @@ function l10n_feedback_install() {
 function l10n_feedback_uninstall() {
   // delete the custom fields of user preferencies
   l10n_feedback_delete_userprofile_fields();
+
+  // delete variables that were used for this module
+  $variables = array(
+    'l10n_feedback_voting_mode',
+    'l10n_feedback_translation_lng',
+    'l10n_feedback_preferred_projects',
+    'l10n_feedback_topcontrib_size',
+    'l10n_feedback_topcontrib_period',
+  );
+  foreach ($variables as $var) {
+    variable_del($var);
+  }
 }
 
 /**
