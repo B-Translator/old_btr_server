@@ -54,7 +54,7 @@ function l10n_feedback_build_query($filter) {
     $query->condition('t.lng', $filter['lng']);
   }
 
-  //dpq($query);  //debug
+  dpq($query);  //debug
   return $query;
 }
 
@@ -223,12 +223,15 @@ function _l10n_feedback_filter_by_date($query, $date_filter, $from_date, $to_dat
   //if none of the dates are given, no condition is added
   if ($from_date_str != $today_str and $to_date_str != $today_str) {
     $query->condition($field, array($from_date_str, $to_date_str), 'BETWEEN');
+    $query->orderBy($field, 'DESC');
   }
   elseif ($from_date_str == $today_str and $to_date_str != $today_str) {
     $query->condition($field, $to_date_str, '<=');
+    $query->orderBy($field, 'DESC');
   }
   elseif ($from_date_str != $today_str and $to_date_str == $today_str) {
     $query->condition($field, $from_date_str, '>=');
+    $query->orderBy($field, 'DESC');
   }
   else {
     //do nothing

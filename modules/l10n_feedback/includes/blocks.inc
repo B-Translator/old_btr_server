@@ -230,6 +230,56 @@ function _l10n_feedback_block_topcontrib() {
  * Generate and return the content of the block statistics.
  */
 function _l10n_feedback_block_statistics() {
+  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $db = $GLOBALS['l10n_feedback_db'];
+
+  $sql_count_translations = "SELECT count(*) as cnt FROM {l10n_feedback_translations}
+                             WHERE ulng = '$lng' AND time >= :from_date AND umail != 'admin@example.com'";
+  $sql_count_votes = "SELECT count(*) as cnt FROM {l10n_feedback_votes}
+                      WHERE ulng = '$lng' AND time >= :from_date";
+
+  $output =  array(
+    'ulist' => array(
+      '#items' => array(),
+      '#theme' => 'item_list',
+    ),
+  );
+
+  foreach (array('week', 'month', 'year') as $period) {
+    $from_date = strftime('%Y-%m-%d', strtotime("-1 $period"));
+    $args = array(':from_date' => $from_date);
+    $nr_votes = $db->query($sql_count_votes, $args)->fetchField();
+    $nr_translations = $db->query($sql_count_translations, $args)->fetchField();
+
+    $args = array(
+      '!nr_votes' => $nr_votes,
+      '!nr_translations' => $nr_translations,
+      '@url_votes' => url('translations/search', array(
+                      'query' => array(
+                        'lng' => $lng,
+                        'limit' => '10',
+                        'date_filter' => 'votes',
+                        'from_date' => $from_date,
+                      ))),
+      '@url_translations' => url('translations/search', array(
+                             'query' => array(
+                               'lng' => $lng,
+                               'limit' => '10',
+                               'date_filter' => 'translations',
+                               'from_date' => $from_date,
+                             ))),
+    );
+    $output['ulist']['#items'][] = t("Last $period:") . '<br/>'
+      . t("<a href='@url_votes'>!nr_votes votes</a> + <a href='@url_translations'>!nr_translations translations</a>",
+        $args);
+  }
+  /*
+  t('Last week:');
+  t('Last month:');
+  t('Last year:');
+  */
+
+  return $output;
 }
 
 
