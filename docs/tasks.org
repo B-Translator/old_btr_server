@@ -107,23 +107,9 @@
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
 
-*** DONE Try to improve the performance.
-
-**** DONE Try NGINX:
-     + http://arstechnica.com/business/2011/11/a-faster-web-server-ripping-out-apache-for-nginx/
-     + http://blog.celogeek.com/201209/202/how-to-configure-nginx-php-fpm-drupal-7-0/
-     + http://insready.com/blog/build-nginx-php-fpm-apc-memcache-drupal-7-bare-bone-ubuntu-1004-or-debian-5-server
-     + http://groups.drupal.org/node/238983
-     + http://groups.drupal.org/nginx
-
 *** TODO Send out HTML notification emails.
     Replace one-time-login with one-time-submittion on the
     notification emails
-
-*** DONE Create custom blocks
-    - Most active users and their stats.
-    - Latest vote/suggestion activity (like a stream).
-    - Personal latest activity.
 
 *** Improve the website (homepage) of the project on GitHub.
 *** Create a page on Google+ for l10n-sq and btranslator.
@@ -138,9 +124,10 @@
           for the time being, so this can be postponed.
 
 *** Enable export again.
-
-*** CANCELED Apply mod_security on l10n.org.al
-    Apache2 is replaced by NGINX.
+*** Improve export, so that different export algorithms can be used.
+    For example one export algorithm can be: my vote takes precedence.
+    This means that wherever the translator has voted, his choice will
+    prevail, otherwise the most voted translation will be exported.
 
 *** Generate code documentation by phpDocu and doxygen.
 *** Use modules: views, pannels, views_slideshow, invite, etc.

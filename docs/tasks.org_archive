@@ -373,6 +373,46 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   + http://www.failover.co/blog/quick-setup-apache-worker-fastcgi-php-fpm-and-apc
   + http://www.failover.co/blog/drupal-7-memcache-pecl-memcache-memcached-and-sockets-ubuntu-12-04
 
+* DONE Try to improve the performance.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-11-10 Sat 21:01
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+** DONE Try NGINX:
+   + http://arstechnica.com/business/2011/11/a-faster-web-server-ripping-out-apache-for-nginx/
+   + http://blog.celogeek.com/201209/202/how-to-configure-nginx-php-fpm-drupal-7-0/
+   + http://insready.com/blog/build-nginx-php-fpm-apc-memcache-drupal-7-bare-bone-ubuntu-1004-or-debian-5-server
+   + http://groups.drupal.org/node/238983
+   + http://groups.drupal.org/nginx
+
+* DONE Create custom blocks
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-11-10 Sat 21:01
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  - Most active users and their stats.
+  - Latest vote/suggestion activity (like a stream).
+  - Personal latest activity.
+
+* CANCELED Apply mod_security on l10n.org.al
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-11-10 Sat 21:02
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :END:
+  Apache2 is replaced by NGINX.
+
+
+
+
 
 
 
