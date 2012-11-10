@@ -146,7 +146,7 @@ function _l10n_feedback_block_topcontrib() {
 
   $size = variable_get('l10n_feedback_topcontrib_size', 5);
   $period = variable_get('l10n_feedback_topcontrib_period', 'week');
-  $from_date = strftime('%Y-%m-%d', strtotime("-1 $period"));
+  $from_date = date('Y-m-d', strtotime("-1 $period"));
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
 
   // Give weight 5 to a translation and weight 1 to a vote,
@@ -246,7 +246,7 @@ function _l10n_feedback_block_statistics() {
   );
 
   foreach (array('week', 'month', 'year') as $period) {
-    $from_date = strftime('%Y-%m-%d', strtotime("-1 $period"));
+    $from_date = date('Y-m-d', strtotime("-1 $period"));
     $args = array(':from_date' => $from_date);
     $nr_votes = $db->query($sql_count_votes, $args)->fetchField();
     $nr_translations = $db->query($sql_count_translations, $args)->fetchField();

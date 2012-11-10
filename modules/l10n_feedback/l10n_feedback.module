@@ -176,6 +176,16 @@ function l10n_feedback_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a RSS feed.
+  $items['translations/rss-feed'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Latest Translation Feedback',
+    'page callback'   => 'l10n_feedback_rss_feed',
+    'file'            => 'includes/rss_feed.inc',
+    //'access arguments' => array('access content'),
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 

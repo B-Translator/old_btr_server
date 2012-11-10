@@ -167,3 +167,16 @@ function l10n_feedback_projects_to_where_condition($arr_projects) {
 
   return array($where_condition, $arguments);
 }
+
+/**
+ * From the given (possibly long) string, returns a short string
+ * of the given length (that can be suitable for title, subject, etc.)
+ */
+function l10n_feedback_shorten($string, $length) {
+  $str = strip_tags(str_replace("\n", ' ', $string));
+  if (strlen($str) > $length) {
+    $str = substr($str, 0, strrpos(substr($str, 0, $length - 3), ' '));
+    $str .= '...';
+  }
+  return $str;
+}

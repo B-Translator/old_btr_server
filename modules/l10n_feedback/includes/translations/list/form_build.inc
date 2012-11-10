@@ -85,20 +85,13 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     if ($disqus == 'comments') {
 
       // set the page title (no longer than 20 chars)
-      $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
-      if (strlen($title) > 20) {
-        $title = substr($title, 0, strrpos(substr($title, 0, 17), ' '));
-        $title .= '...';
-      }
+      $title = l10n_feedback_shorten($string->string[0], 20);
       drupal_set_title(t('String: !string', array('!string' => $title),
           array('context' => 'set the page title')));
 
       // get the comment title (no longer than 50 chars)
-      $title = strip_tags(str_replace("\n", ' ', $string->string[0]));
-      if (strlen($title) > 50) {
-        $title = substr($title, 0, strrpos(substr($title, 0, 47), ' '));
-        $title .= '...';
-      }
+      $title = l10n_feedback_shorten($string->string[0], 50);
+
       // define the disqus form element
       $form['disqus'] = array(
         '#type' => 'disqus',

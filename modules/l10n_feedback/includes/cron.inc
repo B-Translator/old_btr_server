@@ -78,11 +78,7 @@ function send_string_by_email($account) {
   }
 
   // build the subject of the message
-  $subject = strip_tags(str_replace("\n", ' ', $string));
-  if (strlen($subject) > 60) {
-    $subject = substr($subject, 0, strrpos(substr($subject, 0, 57), ' '));
-    $subject .= '...';
-  }
+  $subject = l10n_feedback_shorten($string, 60);
   $subject = "[l10n-$lng] $subject";
 
   // build the body of the message
