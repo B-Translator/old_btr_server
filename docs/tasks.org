@@ -95,15 +95,21 @@
 ** Misc
 
 *** Start with simple tests (l10n_feedback.test)
+    Status: Already started, but it needs some work to define
+            more tests, and actually it is not so useful,
+            or important, or urgent. Probably it can become
+            more important when there will be more than one
+            developers.
+
 *** Improve the look of number of votes.
 
 *** TODO Try to use on l10n.org.al the theme sky or some other suitable theme.
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
 
-*** TODO Try to improve the performance.
+*** DONE Try to improve the performance.
 
-**** TODO Try NGINX:
+**** DONE Try NGINX:
      + http://arstechnica.com/business/2011/11/a-faster-web-server-ripping-out-apache-for-nginx/
      + http://blog.celogeek.com/201209/202/how-to-configure-nginx-php-fpm-drupal-7-0/
      + http://insready.com/blog/build-nginx-php-fpm-apc-memcache-drupal-7-bare-bone-ubuntu-1004-or-debian-5-server
@@ -114,7 +120,7 @@
     Replace one-time-login with one-time-submittion on the
     notification emails
 
-*** TODO Create custom blocks
+*** DONE Create custom blocks
     - Most active users and their stats.
     - Latest vote/suggestion activity (like a stream).
     - Personal latest activity.
@@ -128,9 +134,14 @@
 *** Upgrade the server on rackspace
     From 512MB RAM and 20GB HDD, to 1024MB RAM and 40GB HDD.
     Need to find some funds or sponsors, to support this.
+    Note: Installation of NGINX has improved the performance
+          for the time being, so this can be postponed.
 
 *** Enable export again.
-*** Apply mod_security on l10n.org.al
+
+*** CANCELED Apply mod_security on l10n.org.al
+    Apache2 is replaced by NGINX.
+
 *** Generate code documentation by phpDocu and doxygen.
 *** Use modules: views, pannels, views_slideshow, invite, etc.
 
