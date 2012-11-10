@@ -59,6 +59,9 @@ function l10n_feedback_uninstall() {
  */
 function l10n_feedback_schema() {
 
+  // create a cache table for this module
+  $schema['cache_l10n_feedback'] = drupal_get_schema_unprocessed('system', 'cache');
+
   // PO files that are imported and can be exported from the DB.
   $schema['l10n_feedback_files'] = array(
     'description' => 'A PO file that is imported and can be exported from the DB.',

@@ -10,9 +10,6 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   $from_date = date('Y-m-d', strtotime("-1 day"));
   $to_date = date('Y-m-d');  // last midnight
 
-  $rss_feed = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
-  $rss_feed .= '<rss version="2.0">';
-
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
   $domain = '';
   if ( ! empty($origin) ) {
@@ -21,9 +18,20 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
       $domain .= '/' . $project;
     }
   }
-  $link = url('translations/rss_feed', array('absolute' => TRUE));
-  $link .= '/' . $domain;
 
+  // Get the feed data from cache, if possible.
+  $cid = "l10n_feedback_rss_feed:$lng:$domain";
+  $cache = cache_get($cid, 'cache_l10n_feedback');
+  if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
+    drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
+    print $cache->data;
+    return
+  }
+
+  $rss_feed = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
+  $rss_feed .= '<rss version="2.0">';
+
+  $link = url('translations/rss_feed', array('absolute' => TRUE)) . '/' . $domain;
   $title = variable_get('site_name', 'B-Translator');
   if (empty($domain)) {
     $description = t('Translation suggestions on B-Translator from @from_date to @to_date',
@@ -86,6 +94,10 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
 
   $rss_feed .= "</channel>\n";
   $rss_feed .= "</rss>\n";
+
+  // Cache until the next midnight.
+  $next_midnight = strtotime(date('Y-m-d', strtotime('+1 day')));
+  cache_set($cid, $rss_feed, 'cache_l10n_feedback', $next_midnight);
 
   drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
   print $rss_feed;

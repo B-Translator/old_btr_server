@@ -22,19 +22,19 @@ function l10n_feedback_block_info() {
   // Displays top 5 (or 10) contributors, over the last week (or month).
   $blocks['topcontrib'] = array(
     'info' => t('B-Translator: Top contributors during the last period'),  // The name of the block.
-    'cache' => DRUPAL_CACHE_GLOBAL,
+    'cache' => DRUPAL_CACHE_CUSTOM,
   );
 
   // Suggestion and voting statistics for the last week, month and year.
   $blocks['statistics'] = array(
     'info' => t('B-Translator: Contribution statistics (for the last week, month and year)'),
-    'cache' => DRUPAL_CACHE_GLOBAL,
+    'cache' => DRUPAL_CACHE_CUSTOM,
   );
 
   // Suggestions and votes submited lately.
   $blocks['latest'] = array(
     'info' => t('B-Translator: Latest contributions'),
-    'cache' => DRUPAL_CACHE_GLOBAL,
+    'cache' => DRUPAL_CACHE_CUSTOM,
   );
 
   return $blocks;
@@ -144,6 +144,12 @@ function l10n_feedback_block_view($delta = '') {
  */
 function _l10n_feedback_block_topcontrib() {
 
+  $cache = cache_get('l10n_feedback_block_topcontrib', 'cache_l10n_feedback');
+  // Return cache if possible.
+  if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
+    return $cache->data;
+  }
+
   $size = variable_get('l10n_feedback_topcontrib_size', 5);
   $period = variable_get('l10n_feedback_topcontrib_period', 'week');
   $from_date = date('Y-m-d', strtotime("-1 $period"));
@@ -222,6 +228,9 @@ function _l10n_feedback_block_topcontrib() {
                                          $args);
   }
 
+  // Cache for 12 hours.
+  cache_set('l10n_feedback_block_topcontrib', $output, 'cache_l10n_feedback', time() + 12*60*60);
+
   return $output;
 }
 
@@ -230,6 +239,13 @@ function _l10n_feedback_block_topcontrib() {
  * Generate and return the content of the block statistics.
  */
 function _l10n_feedback_block_statistics() {
+
+  $cache = cache_get('l10n_feedback_block_statistics', 'cache_l10n_feedback');
+  // Return cache if possible.
+  if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
+    return $cache->data;
+  }
+
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   $db = $GLOBALS['l10n_feedback_db'];
 
@@ -279,6 +295,9 @@ function _l10n_feedback_block_statistics() {
   t('Last year:');
   */
 
+  // Cache for 12 hours.
+  cache_set('l10n_feedback_block_statistics', $output, 'cache_l10n_feedback', time() + 12*60*60);
+
   return $output;
 }
 
@@ -287,4 +306,19 @@ function _l10n_feedback_block_statistics() {
  * Generate and return the content of the block latest.
  */
 function _l10n_feedback_block_latest() {
+
+  $cache = cache_get('l10n_feedback_block_latest', 'cache_l10n_feedback');
+  // Return cache if possible.
+  if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
+    return $cache->data;
+  }
+
+  // generate the output of the block
+  $output = '';
+
+
+  // Cache for 12 hours.
+  cache_set('l10n_feedback_block_latest', $output, 'cache_l10n_feedback', time() + 12*60*60);
+
+  return $output;
 }
