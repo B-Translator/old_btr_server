@@ -25,13 +25,16 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
     print $cache->data;
-    return
+    return;
   }
 
   $rss_feed = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
   $rss_feed .= '<rss version="2.0">';
 
-  $link = url('translations/rss_feed', array('absolute' => TRUE)) . '/' . $domain;
+  $link = url('translations/rss-feed', array('absolute' => TRUE));
+  if (!empty($domain)) {
+    $link .= '/' . $domain;
+  }
   $title = variable_get('site_name', 'B-Translator');
   if (empty($domain)) {
     $description = t('Translation suggestions on B-Translator from @from_date to @to_date',
@@ -65,18 +68,15 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   foreach ($translations as $tran) {
     $title = l10n_feedback_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
-    $description = t("Translation Suggestion.
-
-        Original string:
-        !string
-
-        Suggested translation:
-        !translation
-        ",
-                   array(
-                     '!string' => strip_tags($tran->string),
-                     '!translation' => strip_tags($tran->translation)
-                   ));
+    $str_original_string = t("Original string:");
+    $str_suggested_translation = t("Suggested translation:");
+    $description = "
+	    <strong>$str_original_string</strong><br/>
+	    <xmp>$tran->string</xmp>
+	    <br/><br/>
+	    <strong>$str_suggested_translation</strong><br/>
+	    <xmp>$tran->translation</xmp><br/>
+        ";
     $pubDate = date('r', strtotime($tran->time));
     $rss_feed .= "
       <item>

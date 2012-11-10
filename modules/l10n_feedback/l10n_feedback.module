@@ -298,8 +298,7 @@ function l10n_feedback_mail($key, &$message, $params) {
  * Returns an array of cache table names.
  */
 function l10n_feedback_flush_caches() {
-  //return array('cache_l10n_feedback');
-  return array();
+  return array('cache_l10n_feedback');
 }
 
 /**
