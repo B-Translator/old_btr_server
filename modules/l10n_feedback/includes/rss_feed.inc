@@ -14,6 +14,7 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   $rss_feed .= '<rss version="2.0">';
 
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
+  $domain = '';
   if ( ! empty($origin) ) {
     $domain = $origin;
     if ( ! empty($project) ) {
@@ -34,7 +35,10 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   }
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   $ttl = 1440;  // 1 day = 24*60 min
-  $webMaster = variable_get('site_mail');
+  $site_mail = variable_get('site_mail');
+  $site_name = variable_get('site_name');
+  $webMaster = "$site_mail ($site_name)";
+
   $lastBuildDate = date('r');
   $rss_feed .= "
     <channel>
@@ -65,16 +69,17 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
                      '!string' => strip_tags($tran->string),
                      '!translation' => strip_tags($tran->translation)
                    ));
+    $pubDate = date('r', strtotime($tran->time));
     $rss_feed .= "
       <item>
         <title>$title</title>
         <link>$link</link>
         <description><![CDATA[$description]]></description>
-        <author>$tran->umail</author>
+        <author>$tran->umail ($tran->name)</author>
         <category>$tran->origin</category>
         <category>$tran->project</category>
-        <guid>$tran->tguid</guid>
-        <pubDate>$tran->time</pubDate>
+        <guid isPermaLink='false'>$tran->tguid</guid>
+        <pubDate>$pubDate</pubDate>
       </item>
     ";
   }
