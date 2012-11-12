@@ -7,8 +7,6 @@
 function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
 
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
-  $from_date = date('Y-m-d', strtotime("-1 day"));
-  $to_date = date('Y-m-d');  // last midnight
 
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
   $domain = '';
@@ -37,15 +35,12 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   }
   $title = variable_get('site_name', 'B-Translator');
   if (empty($domain)) {
-    $description = t('Translation suggestions on B-Translator from @from_date to @to_date',
-                   array('@from_date' => $from_date, '@to_date' => $to_date));
+    $description = t('Latest translation suggestions on B-Translator');
   }
   else {
-    $description = t('Latest translation suggestions on B-Translator from @from_date to @to_date, for @domain',
-                   array('@from_date' => $from_date, '@to_date' => $to_date, '@domain' => $domain));
+    $description = t('Latest translation suggestions on B-Translator, for @domain', array('@domain' => $domain));
   }
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
-  $ttl = 1440;  // 1 day = 24*60 min
+  $ttl = 180;  // 3 hours = 3*60 min
   $site_mail = variable_get('site_mail');
   $site_name = variable_get('site_name');
   $webMaster = "$site_mail ($site_name)";
@@ -64,7 +59,7 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
     ";
 
   $base_url = url('translations', array('absolute' => TRUE));
-  $translations = _l10n_feedback_get_latest_translations($lng, $from_date, $to_date, $origin, $project);
+  $translations = _l10n_feedback_get_latest_translations($origin, $project);
   foreach ($translations as $tran) {
     $title = l10n_feedback_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
@@ -95,9 +90,8 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
   $rss_feed .= "</channel>\n";
   $rss_feed .= "</rss>\n";
 
-  // Cache until the next midnight.
-  $next_midnight = strtotime(date('Y-m-d', strtotime('+1 day')));
-  cache_set($cid, $rss_feed, 'cache_l10n_feedback', $next_midnight);
+  // Cache for 2 hours.
+  cache_set($cid, $rss_feed, 'cache_l10n_feedback', strtotime('+2 hours'));
 
   drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
   print $rss_feed;
@@ -112,7 +106,7 @@ function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
  * The fields that are returned are:
  *   origin, project, sguid, string, lng, translation, tguid, time, name, umail
  */
-function _l10n_feedback_get_latest_translations($lng, $from_date, $to_date, $origin =NULL, $project =NULL) {
+function _l10n_feedback_get_latest_translations($origin =NULL, $project =NULL) {
 
   $get_latest_translations = "
     SELECT p.origin, p.project,
@@ -125,14 +119,12 @@ function _l10n_feedback_get_latest_translations($lng, $from_date, $to_date, $ori
     LEFT JOIN l10n_feedback_locations l ON (l.sguid = s.sguid)
     LEFT JOIN l10n_feedback_templates tpl ON (tpl.potid = l.potid)
     LEFT JOIN l10n_feedback_projects p ON (p.pguid = tpl.pguid)
-    WHERE t.lng = :lng
-      AND t.time BETWEEN :from_date AND :to_date
+    WHERE t.lng = :lng AND t.time > :from_date
     ";
 
   $args = array(
-    ':lng' => $lng,
-    ':from_date' => $from_date,
-    ':to_date' => $to_date,
+    ':lng' => variable_get('l10n_feedback_translation_lng', 'fr'),
+    ':from_date' => date('Y-m-d', strtotime("-1 day")),
   );
 
   if ( ! empty($origin) ) {
