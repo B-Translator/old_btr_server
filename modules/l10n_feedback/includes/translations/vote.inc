@@ -207,7 +207,7 @@ function l10n_feedback_get_sequential_sguid($uid) {
   if ($sequential == NULL) {
     drupal_set_message(t(
         "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
-        array('@edit-profile' => '/user/$uid/edit-profile')),
+        array('@edit-profile' => "/user/$uid/edit-profile")),
       'warning');
     return l10n_feedback_get_random_sguid($uid);
   }

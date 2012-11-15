@@ -113,13 +113,13 @@ function _l10n_feedback_get_latest_translations($origin =NULL, $project =NULL) {
            s.sguid, s.string,
            t.lng, t.translation, t.tguid, t.time,
            u.name, u.umail
-    FROM l10n_feedback_translations t
-    LEFT JOIN l10n_feedback_strings s ON (s.sguid = t.sguid)
-    LEFT JOIN l10n_feedback_users u ON (u.umail = t.umail AND u.ulng = t.ulng)
-    LEFT JOIN l10n_feedback_locations l ON (l.sguid = s.sguid)
-    LEFT JOIN l10n_feedback_templates tpl ON (tpl.potid = l.potid)
-    LEFT JOIN l10n_feedback_projects p ON (p.pguid = tpl.pguid)
-    WHERE t.lng = :lng AND t.time > :from_date
+    FROM {l10n_feedback_translations} t
+    LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = t.sguid)
+    LEFT JOIN {l10n_feedback_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+    LEFT JOIN {l10n_feedback_locations} l ON (l.sguid = s.sguid)
+    LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.potid = l.potid)
+    LEFT JOIN {l10n_feedback_projects} p ON (p.pguid = tpl.pguid)
+    WHERE t.umail != 'admin@example.com' AND t.lng = :lng AND t.time > :from_date
     ";
 
   $args = array(

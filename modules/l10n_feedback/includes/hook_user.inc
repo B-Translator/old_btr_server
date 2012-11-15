@@ -164,5 +164,5 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
   }
 
   // save the object $sequential on the field 'field_data_sequential'
-  $edit['field_data_sequential'] = serialize($sequential);
+  $edit['field_data_sequential'][$lang][0]['value'] = serialize($sequential);
 }
