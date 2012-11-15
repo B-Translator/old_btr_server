@@ -9,6 +9,15 @@
  */
 function l10n_feedback_cron() {
 
+  // make sure that l10n_feedback_cron runs only once per day
+  // no matter how often cron is called
+  $crontime = variable_get('l10n_feedback_crontime', '0');
+  if (time() < $crontime)  return;
+  // set this cron to run only after the next midnight (after 03:00 AM)
+  $crontime = strtotime(date('Y-m-d 02:55', strtotime('+1 day')));
+  variable_set('l10n_feedback_crontime', $crontime);
+
+
   $queue = DrupalQueue::get('send_string_emails');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
 

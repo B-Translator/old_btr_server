@@ -186,7 +186,8 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
   }
 
   $form = array(
-    '#prefix' => '<div class="l10n-feedback-filter clear-block">',
+    //'#prefix' => '<div class="l10n-feedback-filter clear-block">',
+    '#prefix' => '<div class="clear-block">',
     '#suffix' => '</div>',
   );
 
