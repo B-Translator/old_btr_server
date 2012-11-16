@@ -69,11 +69,19 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     '#access' => $enable_submit,
   );
 
-  // don't show the Next button on the search interface
+  // don't show the Next buttons on the search interface
   if (current_path() != 'translations/search') {
     $form['buttons']['next'] = array(
       '#type' => 'submit',
       '#value' => t('Next'),
+    );
+    $form['buttons']['translated'] = array(
+      '#type' => 'submit',
+      '#value' => t('Translated'),
+    );
+    $form['buttons']['untranslated'] = array(
+      '#type' => 'submit',
+      '#value' => t('Untranslated'),
     );
   }
 

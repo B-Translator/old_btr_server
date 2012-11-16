@@ -22,13 +22,20 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     return;
   }
 
-  // If no $sguid is given as parameter, get the sguid of a string
-  // and the lng, according to the preferencies of the current user.
-  if ($sguid == NULL) {
-    if ($lng == NULL) {
-      $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  if ($lng == NULL) {
+    $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  }
+
+  if ($sguid == NULL or $sguid == 'untranslated' or $sguid == 'translated') {
+    if ($sguid == 'untranslated') {
+      $sguid = l10n_feedback_get_untranslated_sguid();
     }
-    $sguid = l10n_feedback_get_sguid();
+    elseif ($sguid == 'translated') {
+      $sguid = l10n_feedback_get_translated_sguid();
+    }
+    else {
+      $sguid = l10n_feedback_get_sguid();
+    }
     drupal_goto("translations/$lng/$sguid");
     return;
   }
@@ -153,6 +160,8 @@ function l10n_feedback_get_sguid($uid =NULL) {
  */
 function l10n_feedback_get_random_sguid($uid) {
 
+  $db = $GLOBALS['l10n_feedback_db'];
+
   // get the preferred projects (as an array)
   $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
 
@@ -168,7 +177,7 @@ function l10n_feedback_get_random_sguid($uid) {
     LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
     LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
   ";
-  $nr_strings = $GLOBALS['l10n_feedback_db']->query($sql_count, $args)->fetchField();
+  $nr_strings = $db->query($sql_count, $args)->fetchField();
 
   // Get a random row number.
   $row_number = rand(0, $nr_strings - 1);
@@ -183,7 +192,121 @@ function l10n_feedback_get_random_sguid($uid) {
     LIMIT $row_number, 1
   ";
   //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
-  $random_sguid = $GLOBALS['l10n_feedback_db']->query($sql_get_sguid, $args)->fetchField();
+  $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
+
+  // Save it in the session.
+  $_SESSION['random_sguid'] = $random_sguid;
+
+  return $random_sguid;
+}
+
+/**
+ * Return a random untranslated sguid from the preferred projects of the user.
+ * If the user has not defined any preferred projects in his profile,
+ * then the preferred projects selected by admin are used.
+ */
+function l10n_feedback_get_untranslated_sguid() {
+
+  $uid = $GLOBALS['user']->uid;
+  $db = $GLOBALS['l10n_feedback_db'];
+
+  // get the preferred projects (as an array)
+  $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
+
+  // build the WHERE condition for selecting projects
+  list($where, $args) = l10n_feedback_projects_to_where_condition($arr_preferred_projects);
+  $args[':lng'] = variable_get('l10n_feedback_translation_lng', 'fr');
+  if ($where == '')  $where = '(1=1)';
+
+  // Get the total number of strings from which we can choose.
+  $sql_count = "
+    SELECT COUNT(*) AS number_of_strings
+    FROM (SELECT pguid FROM {l10n_feedback_projects} WHERE $where) p
+    LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
+    LEFT JOIN {l10n_feedback_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+    WHERE t.sguid IS NULL
+  ";
+  $nr_strings = $db->query($sql_count, $args)->fetchField();
+
+  // Get the sguid of a random untranslated. 'count' keeps in how many projects
+  // a string appears. Ordering by 'count' and getting a random string
+  // from the top, we try to get an untranslated string that appears
+  // in other projects as well.
+  $row_number = rand(0, ceil($nr_strings/3));
+  $sql_get_sguid = "
+    SELECT s.sguid
+    FROM (SELECT pguid FROM {l10n_feedback_projects} WHERE $where) p
+    LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
+    LEFT JOIN {l10n_feedback_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+    WHERE t.sguid IS NULL
+    ORDER BY s.count DESC
+    LIMIT $row_number, 1
+  ";
+  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
+  $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
+
+  // Save it in the session.
+  $_SESSION['random_sguid'] = $random_sguid;
+
+  return $random_sguid;
+}
+
+/**
+ * Return a random translated sguid from the preferred projects of the user.
+ * If the user has not defined any preferred projects in his profile,
+ * then the preferred projects selected by admin are used.
+ */
+function l10n_feedback_get_translated_sguid() {
+
+  $uid = $GLOBALS['user']->uid;
+  $db = $GLOBALS['l10n_feedback_db'];
+
+  // get the preferred projects (as an array)
+  $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
+
+  // build the WHERE condition for selecting projects
+  list($where, $args) = l10n_feedback_projects_to_where_condition($arr_preferred_projects);
+  $args[':lng'] = variable_get('l10n_feedback_translation_lng', 'fr');
+  if ($where == '')  $where = '(1=1)';
+
+  // Get the total number of strings from which we can choose.
+  $sql_count = "
+    SELECT COUNT(*) AS number_of_strings
+    FROM ( SELECT DISTINCT s.sguid
+	   FROM (SELECT pguid FROM {l10n_feedback_projects} WHERE $where) p
+	   LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.pguid = p.pguid)
+	   LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
+	   LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
+	   LEFT JOIN {l10n_feedback_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+	   WHERE t.sguid IS NOT NULL
+         )  AS st
+  ";
+  $nr_strings = $db->query($sql_count, $args)->fetchField();
+
+  // Get the sguid of a random translated string. We sort strings
+  // by the number of translations they have, and try to select one
+  // that has many translations and/or many votes.
+  $row_number = rand(0, ceil($nr_strings/5));
+  $sql_get_sguid = "
+    SELECT sguid
+    FROM ( SELECT s.sguid
+	   FROM (SELECT pguid FROM {l10n_feedback_projects} WHERE $where) p
+	   LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.pguid = p.pguid)
+	   LEFT JOIN {l10n_feedback_locations} l ON (l.potid = tpl.potid)
+	   LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = l.sguid)
+	   LEFT JOIN {l10n_feedback_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+	   WHERE t.sguid IS NOT NULL
+           GROUP BY s.sguid
+           ORDER BY (count(*) + sum(t.count)) DESC
+         )  AS st
+    LIMIT $row_number, 1
+  ";
+  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
+  $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
 
   // Save it in the session.
   $_SESSION['random_sguid'] = $random_sguid;

@@ -17,12 +17,13 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
 
   // Check that the button  clicked was either Save or Next or Previous.
   $op = $form_values['op'];
-  if ( $op != t('Save') && $op != t('Next') && $op != t('Previous') ) {
+  if ( $op!=t('Previous') && $op!=t('Save') && $op!=t('Next')
+       && $op!=t('Translated') && $op!=t('Untranslated') ) {
     return;
   }
 
   // Save the values selected on the form (votes or new suggestions).
-  if (user_is_logged_in()) {
+  if ( user_access('btranslator-vote') || user_access('btranslator-suggest') ) {
     _l10n_feedback_translate_form_save($form_values);
   }
 
@@ -33,16 +34,24 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
       drupal_goto($previous_url);
     }
   }
-  elseif ($op == t('Next')) {
-    $_SESSION['previous_url'] = htmlentities(request_uri());
-    $lng = $form_values['langcode'];
-    drupal_goto("translations/$lng/");
-  }
   elseif ($op == t('Save')) {
     // Keep existing filters and other query arguments on form submission.
     $redirect_args = $form_values['target'];
     unset($redirect_args['q']);
     $form_state['redirect'] = array($form_values['target']['q'], array('query' => $redirect_args));
+  }
+  else {
+    $_SESSION['previous_url'] = htmlentities(request_uri());
+    $lng = $form_values['langcode'];
+    if ($op == t('Next')) {
+      drupal_goto("translations/$lng/");
+    }
+    elseif ($op == t('Translated')) {
+      drupal_goto("translations/$lng/translated");
+    }
+    elseif ($op == t('Untranslated')) {
+      drupal_goto("translations/$lng/untranslated");
+    }
   }
 }
 
