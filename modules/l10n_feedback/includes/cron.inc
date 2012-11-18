@@ -18,7 +18,7 @@ function l10n_feedback_cron() {
   variable_set('l10n_feedback_crontime', $crontime);
 
 
-  $queue = DrupalQueue::get('send_string_emails');
+  $queue = DrupalQueue::get('send-string-emails');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
 
   $accounts = entity_load('user');
@@ -44,14 +44,18 @@ function l10n_feedback_cron() {
  * Implements hook_cron_queue_info().
  */
 function l10n_feedback_cron_queue_info() {
-  $queues['send_string_emails'] = array(
-    'worker callback' => 'send_string_by_email',
+  $queues['send-string-emails'] = array(
+    'worker callback' => 'l10n_feedback_send_string_by_email',
+    'time' => 120,
+  );
+  $queues['notify-voter-on-translation-change'] = array(
+    'worker callback' => 'l10n_feedback_notify_voter_on_translation_change',
     'time' => 120,
   );
   return $queues;
 }
 
-function send_string_by_email($account) {
+function l10n_feedback_send_string_by_email($account) {
 
   $lng = $account->lng;
   $uid = $account->uid;
@@ -106,7 +110,7 @@ function send_string_by_email($account) {
 
   // set the drupal_mail() parameters
   $module = 'l10n_feedback';
-  $key = 'send_string_by_email';
+  $key = 'send-string-by-email';
   $smtp_from = variable_get('smtp_from');
   $smtp_fromname = variable_get('smtp_fromname');
   $from = "$smtp_fromname <$smtp_from>";
@@ -119,6 +123,70 @@ function send_string_by_email($account) {
   // send the mail
   drupal_mail($module, $key, $to, $language, $params, $from, $send);
 }
+
+
+/**
+ * Send an email notification to a user, when a translation that he
+ * has voted for is modified.
+ * Parameter $data is an object with this attributes:
+ *     uid, recipient, sender,
+ *     sguid, string, old_translation, new_translation
+ */
+function l10n_feedback_notify_voter_on_translation_change($data) {
+
+  $account = user_load($data->uid);
+  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+
+  // get the url of the string
+  $timestamp = REQUEST_TIME;
+  $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
+  $url = url("translations/$lng/$data->sguid/$timestamp.$data->uid.$rehash", array('absolute' => TRUE));
+
+  // get a short url
+  $short_url = get_short_url($url);
+  if ($short_url == 'wait') {
+    sleep(60);
+    $short_url = get_short_url($url);
+  }
+  if ($short_url != NULL and $short_url != 'wait') {
+    $url = $short_url;
+  }
+
+  // build the subject of the message
+  $subject = t("[!prefix] Translation modified for: !string",
+             array(
+               '!prefix' => "l10n-$lng",
+               '!string' => l10n_feedback_shorten($data->string, 30)
+             ));
+
+  // build the body of the message
+  $body = array(
+    t('Greetings !username,', array('!username' => $account->name)),
+    t("The following translation has been modified by its author. You are being notified because you have voted for the old translation and your vote now counts for the new version of the translation. If the new version of the translation is OK for you, then there is nothing you should do. Otherwise, you can change your vote at this link: !url",
+      array('!url' => $url)),
+    t('Thanks'),
+    t('----- Original (English) String:'),
+    $data->string,
+    t('----- Old Translation:'),
+    $data->old_translation,
+    t('----- New Translation:'),
+    $data->new_translation
+  );
+
+  // set the drupal_mail() parameters
+  $module = 'l10n_feedback';
+  $key = 'notify-voter-on-translation-change';
+  $from = $data->sender;
+  $to = $data->recipient;
+  $language = $account->language;
+  $send = TRUE;
+  $params['subject'] = $subject;
+  $params['body'] = $body;
+
+  // send the mail
+  drupal_mail($module, $key, $to, $language, $params, $from, $send);
+}
+
 
 /**
  * Get a short URL, using http://is.gd/ .

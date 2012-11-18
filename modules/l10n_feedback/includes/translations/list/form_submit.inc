@@ -360,6 +360,12 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
       ))
     ->execute();
 
+  // If there is another translation for the same string, by the same user,
+  // the new translation should replace the old one. This is useful when
+  // the user wants to correct the translation, but it limits the user to
+  // only one suggested translation per string.
+  l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $translation);
+
   // Add also a vote for the new suggestion.
   $vid = l10n_feedback_add_vote($tguid, $umail);
 
@@ -373,6 +379,94 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
 
   return $tguid;
 }
+
+/**
+ * If there is another translation for the same string, by the same user,
+ * the new translation should replace the old one. This is useful when
+ * the user wants to correct the translation, but it limits the user to
+ * only one suggested translation per string.
+ */
+function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $translation) {
+
+  $db = $GLOBALS['l10n_feedback_db'];
+
+  // Get the old translation (if any).
+  $query = 'SELECT tguid, translation
+            FROM {l10n_feedback_translations}
+            WHERE sguid = :sguid AND lng = :lng
+              AND umail = :umail AND ulng = :ulng
+              AND tguid != :tguid';
+  $args = array(
+    ':sguid' => $sguid,
+    ':lng' => $lng,
+    ':umail' => $umail,
+    ':ulng' => $lng,
+    ':tguid' => $tguid);
+  $old_trans = $db->query($query, $args)->fetchObject();
+  if (!$old_trans)  return;  // if there is no old translation, we are done
+
+  // Remove the old translation.
+  $db->delete('l10n_feedback_translations')
+    ->condition('tguid', $old_trans->tguid)
+    ->execute();
+
+  // Get the votes of the old translation.
+  $query = "SELECT v.tguid, v.time, u.umail, u.ulng, u.uid,
+                   u.name AS user_name, u.status AS user_status
+            FROM {l10n_feedback_votes} v
+            LEFT JOIN {l10n_feedback_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+            WHERE v.tguid = :tguid AND v.umail != :umail";
+  $args = array(':tguid' => $old_trans->tguid, ':umail' => $umail);
+  $votes = $db->query($query, $args)->fetchAll();
+
+  // Delete the votes belonging to the old translation.
+  $db->delete('l10n_feedback_votes')->condition('tguid', $old_trans->tguid)->execute();
+
+  // Associate these votes to the new translation.
+  $notifications = array();
+  foreach ($votes as $vote) {
+    // Associate the vote to the new translation.
+    $db->insert('l10n_feedback_votes')
+      ->fields(array(
+          'tguid' => $tguid,
+          'umail' => $vote->umail,
+          'ulng' => $vote->ulng,
+          'time' => $vote->time,
+        ))
+      ->execute();
+
+    if ($vote->user_status != 1)  continue;   // skip non-active voters
+    // Create a notification.
+    $notifications[] = array(
+      'uid' => $vote->uid,
+      'recipient' => $vote->user_name . ' <' . $vote->umail . '>',
+    );
+  }
+
+  if (empty($notifications))  return;
+
+  // get the original string
+  $query = "SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid";
+  $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
+
+  // get the sender of the notifications
+  $smtp_from = variable_get('smtp_from');
+  $smtp_fromname = variable_get('smtp_fromname');
+  $sender = "$smtp_fromname <$smtp_from>";
+
+  // Notify the corresponding voters about the change
+  $queue = DrupalQueue::get('notify-voter-on-translation-change');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  foreach ($notifications as $data) {
+    $data['sender'] = $sender;
+    $data['sguid'] = $sguid;
+    $data['string'] = $string;
+    $data['old_translation'] = $old_trans->translation;
+    $data['new_translation'] = $translation;
+    $queue->createItem((object)$data);
+  }
+}
+
 
 /**
  * Make spacing and newlines the same in translation as in the source.
