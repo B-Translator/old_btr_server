@@ -112,17 +112,25 @@ function _l10n_feedback_translate_form_save($form_values) {
   l10n_feedback_display_notification_messages();
 }
 
+/**
+ * Return true if a new translation has been submitted.
+ */
+function is_not_empty_translation($translation) {
+  $translation = l10n_feedback_pack_string($translation);
+  $translation = str_replace(t('<New translation>'), '', $translation);
+  $translation = trim($translation);
+  return !empty($translation);
+}
+
 function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
 
-  $tguid = $string['approved'];
-
-  if ($tguid == 'new' or $tguid == '') {
+  if ( is_not_empty_translation($string['new']['value']) ) {
     //add a new suggestion
-    $values = $string['new']['value'];
-    l10n_feedback_add_suggestion($sguid, $lng, $values);
+    l10n_feedback_add_suggestion($sguid, $lng, $string['new']['value']);
     return;
   }
 
+  $tguid = $string['approved'];
   if (strlen($tguid) == 40) {
     // If this is not an existing vote,
     // then add a new vote for this translation.
@@ -140,10 +148,8 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
   global $user;
 
   $approved = $translation['approved'];
-  if ($tguid == 'new') {
-    //add a new suggestion
-    $values = isset($translation['value']) ? $translation['value'] : array();
-    l10n_feedback_add_suggestion($sguid, $lng, $values);
+  if ($tguid == 'new' and is_not_empty_translation($translation['value'])) {
+    l10n_feedback_add_suggestion($sguid, $lng, $translation['value']);
   }
   elseif ($approved != '') {
     // Add a new vote for this translation
