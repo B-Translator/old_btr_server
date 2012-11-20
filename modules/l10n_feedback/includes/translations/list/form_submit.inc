@@ -375,9 +375,9 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   // Add also a vote for the new suggestion.
   $vid = l10n_feedback_add_vote($tguid, $umail);
 
-  //TODO: Notify previous voters of this string that a new suggestion
-  //      has been submitted. Maybe they would like to review it and
-  //      change their vote.
+  // Notify previous voters of this string that a new suggestion has been
+  // submitted. Maybe they would like to review it and change their vote.
+  l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation);
 
   // Increment the number of the saved suggestions.
   global $_l10n_feedback_save_status;
@@ -473,6 +473,49 @@ function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $tran
   }
 }
 
+/**
+ * Notify the previous voters of a string that a new translation has been
+ * submitted. Maybe they would like to review it and change their vote.
+ */
+function l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation) {
+
+  $db = $GLOBALS['l10n_feedback_db'];
+
+  $query = "SELECT u.umail, u.ulng, u.uid, u.name, u.status, t.translation
+            FROM {l10n_feedback_translations} t
+            LEFT JOIN {l10n_feedback_votes} v ON (v.tguid = t.tguid)
+            LEFT JOIN {l10n_feedback_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+            WHERE t.sguid = :sguid AND t.lng = :lng AND t.tguid != :tguid";
+  $args = array(':sguid' => $sguid, ':lng' => $lng, ':tguid' => $tguid);
+  $voters = $db->query($query, $args)->fetchAll();
+
+  if (empty($voters))  return;
+
+  // get the original string
+  $query = "SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid";
+  $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
+
+  // get the sender of the notifications
+  $smtp_from = variable_get('smtp_from');
+  $smtp_fromname = variable_get('smtp_fromname');
+  $sender = "$smtp_fromname <$smtp_from>";
+
+  // Notify the previous voters about the new translation
+  $queue = DrupalQueue::get('notify-voter-on-new-translation');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  foreach ($voters as $voter) {
+    $data = (object) array(
+      'uid' => $voter->uid,
+      'recipient' => $voter->name . ' <' . $voter->umail . '>',
+      'sender' => $sender,
+      'sguid' => $sguid,
+      'string' => $string,
+      'voted_translation' => $voter->translation,
+      'new_translation' => $translation,
+    );
+    $queue->createItem($data);
+  }
+}
 
 /**
  * Make spacing and newlines the same in translation as in the source.

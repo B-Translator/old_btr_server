@@ -284,10 +284,9 @@ function l10n_feedback_mail($key, &$message, $params) {
   switch ($key) {
     // Send a string for review.
     case 'send-string-by-email':
-      $message['subject'] = $params['subject'];
-      $message['body'] = $params['body'];
-      break;
     case 'notify-voter-on-translation-change':
+    case 'notify-voter-on-new-translation':
+    default:
       $message['subject'] = $params['subject'];
       $message['body'] = $params['body'];
       break;

@@ -52,6 +52,10 @@ function l10n_feedback_cron_queue_info() {
     'worker callback' => 'l10n_feedback_notify_voter_on_translation_change',
     'time' => 120,
   );
+  $queues['notify-voter-on-new-translation'] = array(
+    'worker callback' => 'l10n_feedback_notify_voter_on_new_translation',
+    'time' => 120,
+  );
   return $queues;
 }
 
@@ -176,6 +180,65 @@ function l10n_feedback_notify_voter_on_translation_change($data) {
   // set the drupal_mail() parameters
   $module = 'l10n_feedback';
   $key = 'notify-voter-on-translation-change';
+  $from = $data->sender;
+  $to = $data->recipient;
+  $language = $account->language;
+  $send = TRUE;
+  $params['subject'] = $subject;
+  $params['body'] = $body;
+
+  // send the mail
+  drupal_mail($module, $key, $to, $language, $params, $from, $send);
+}
+
+/**
+ * Notify the previous voters of a string that a new translation has been
+ * submitted. Maybe they would like to review it and change their vote.
+ */
+function l10n_feedback_notify_voter_on_new_translation($data) {
+
+  $account = user_load($data->uid);
+  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+
+  // get the url of the string
+  $timestamp = REQUEST_TIME;
+  $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
+  $url = url("translations/$lng/$data->sguid/$timestamp.$data->uid.$rehash", array('absolute' => TRUE));
+
+  // get a short url
+  $short_url = get_short_url($url);
+  if ($short_url == 'wait') {
+    sleep(60);
+    $short_url = get_short_url($url);
+  }
+  if ($short_url != NULL and $short_url != 'wait') {
+    $url = $short_url;
+  }
+
+  // build the subject of the message
+  $subject = t("[!prefix] New translation for: !string",
+             array(
+               '!prefix' => "l10n-$lng",
+               '!string' => l10n_feedback_shorten($data->string, 30)
+             ));
+
+  // build the body of the message
+  $body = array(
+    t('Greetings !username,', array('!username' => $account->name)),
+    t("A new translation has been suggested for a tring that you have voted for. If you think that the new translation is more suitable than the one that you have voted for, then you can change your vote at this link: !url",
+      array('!url' => $url)),
+    t('Thanks'),
+    t('----- Original (English) String:'),
+    $data->string,
+    t('----- Voted Translation:'),
+    $data->voted_translation,
+    t('----- New Translation:'),
+    $data->new_translation
+  );
+
+  // set the drupal_mail() parameters
+  $module = 'l10n_feedback';
+  $key = 'notify-voter-on-new-translation';
   $from = $data->sender;
   $to = $data->recipient;
   $language = $account->language;
