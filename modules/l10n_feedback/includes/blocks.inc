@@ -250,7 +250,8 @@ function _l10n_feedback_block_statistics() {
   $db = $GLOBALS['l10n_feedback_db'];
 
   $sql_count_translations = "SELECT count(*) as cnt FROM {l10n_feedback_translations}
-                             WHERE ulng = '$lng' AND time >= :from_date AND umail != 'admin@example.com'";
+                             WHERE ulng = '$lng' AND time >= :from_date
+                               AND umail NOT IN ('admin@example.com', 'admin@btranslator.org', '')";
   $sql_count_votes = "SELECT count(*) as cnt FROM {l10n_feedback_votes}
                       WHERE ulng = '$lng' AND time >= :from_date";
 
