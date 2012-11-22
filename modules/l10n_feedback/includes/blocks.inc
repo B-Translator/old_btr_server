@@ -286,7 +286,7 @@ function _l10n_feedback_block_statistics() {
                              ))),
     );
     $output['ulist']['#items'][] = t("Last $period:") . '<br/>'
-      . t("<a href='@url_votes'>!nr_votes votes</a> + <a href='@url_translations'>!nr_translations translations</a>",
+      . t(" + <a href='@url_votes'>!nr_votes votes</a> <br/> + <a href='@url_translations'>!nr_translations translations</a>",
         $args);
   }
   /*
