@@ -6,6 +6,7 @@
 
 require_once(dirname(__FILE__) . '/includes/common.inc');
 require_once(dirname(__FILE__) . '/includes/cron.inc');
+require_once(dirname(__FILE__) . '/includes/mail_notifications.inc');
 require_once(dirname(__FILE__) . '/includes/hook_user.inc');
 require_once(dirname(__FILE__) . '/includes/blocks.inc');
 
@@ -282,10 +283,7 @@ function l10n_feedback_theme($existing, $type, $theme, $path) {
  */
 function l10n_feedback_mail($key, &$message, $params) {
   switch ($key) {
-    // Send a string for review.
-    case 'send-string-by-email':
-    case 'notify-voter-on-translation-change':
-    case 'notify-voter-on-new-translation':
+    case 'notifications':
     default:
       $message['subject'] = $params['subject'];
       $message['body'] = $params['body'];

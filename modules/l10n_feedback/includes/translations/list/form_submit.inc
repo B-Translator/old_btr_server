@@ -103,7 +103,8 @@ function _l10n_feedback_translate_form_save($form_values) {
         _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
       }
       if ((strlen($tguid) == 40) && !empty($translation['declined'])) {
-        //do something for declined translations
+	// delete translation
+	_l10n_feedback_delete_translation($translation);
       }
     }
   }
@@ -443,8 +444,9 @@ function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $tran
 
     if ($vote->user_status != 1)  continue;   // skip non-active voters
     // Create a notification.
-    $notifications[] = array(
+    $notifications[] = (object) array(
       'uid' => $vote->uid,
+      'username' => $vote->user_name,
       'recipient' => $vote->user_name . ' <' . $vote->umail . '>',
     );
   }
@@ -455,21 +457,21 @@ function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $tran
   $query = "SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid";
   $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
 
-  // get the sender of the notifications
-  $smtp_from = variable_get('smtp_from');
-  $smtp_fromname = variable_get('smtp_fromname');
-  $sender = "$smtp_fromname <$smtp_from>";
-
   // Notify the corresponding voters about the change
-  $queue = DrupalQueue::get('notify-voter-on-translation-change');
+  $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($notifications as $data) {
-    $data['sender'] = $sender;
-    $data['sguid'] = $sguid;
-    $data['string'] = $string;
-    $data['old_translation'] = $old_trans->translation;
-    $data['new_translation'] = $translation;
-    $queue->createItem((object)$data);
+  foreach ($notifications as $notify) {
+    $notification_params = array(
+      'type' => 'notify-voter-on-translation-change',
+      'uid' => $notify->uid,
+      'username' => $notify->username,
+      'recipient' => $notify->recipient,
+      'sguid' => $sguid,
+      'string' => $string,
+      'old_translation' => $old_trans->translation,
+      'new_translation' => $translation,
+    );
+    $queue->createItem((object)$notification_params);
   }
 }
 
@@ -495,27 +497,82 @@ function l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation
   $query = "SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid";
   $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
 
-  // get the sender of the notifications
-  $smtp_from = variable_get('smtp_from');
-  $smtp_fromname = variable_get('smtp_fromname');
-  $sender = "$smtp_fromname <$smtp_from>";
-
   // Notify the previous voters about the new translation
-  $queue = DrupalQueue::get('notify-voter-on-new-translation');
+  $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
   foreach ($voters as $voter) {
-    $data = (object) array(
+    $notification_params = array(
+      'type' => 'notify-voter-on-new-translation',
       'uid' => $voter->uid,
+      'username' => $voter->name,
       'recipient' => $voter->name . ' <' . $voter->umail . '>',
-      'sender' => $sender,
       'sguid' => $sguid,
       'string' => $string,
       'voted_translation' => $voter->translation,
       'new_translation' => $translation,
     );
-    $queue->createItem($data);
+    $queue->createItem((object)$notification_params);
   }
 }
+
+/**
+ * Delete the translation and any related votes.
+ * Notify the author and the voters about the deletion.
+ *
+ * $translation is an array/object structure with all the
+ * information about the translation, votes, etc.
+ */
+function _l10n_feedback_delete_translation($translation) {
+
+  //dpm($translation);  //debug
+
+  // Check that the current user has the right to delete translations.
+  if (!user_access('btranslator-resolve')) {
+    drupal_set_message(t('You have no rights for deleting translations!'), 'error');
+    return;
+  }
+
+  $trans = $translation['original'];
+
+  // Delete the translation and any votes related to it.
+  $db = $GLOBALS['l10n_feedback_db'];
+  $db->delete('l10n_feedback_translations')->condition('tguid', $trans->tguid)->execute();
+  $db->delete('l10n_feedback_votes')->condition('tguid', $trans->tguid)->execute();
+
+  // get the original string
+  $query = "SELECT string FROM {l10n_feedback_strings} WHERE sguid = :sguid";
+  $string = $db->query($query, array(':sguid' => $trans->sguid))->fetchField();
+
+  // Notify the author of the translation about the deletion.
+  $queue = DrupalQueue::get('notifications');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  $notification_params = array(
+    'type' => 'notify-author-on-translation-deletion',
+    'uid' => $trans->uid,
+    'username' => $trans->author,
+    'recipient' => $trans->author . ' <' . $trans->umail . '>',
+    'sguid' => $trans->sguid,
+    'string' => $string,
+    'translation' => $trans->translation[0],
+  );
+  $queue->createItem((object)$notification_params);
+
+  // Notify any voters of the translation as well.
+  foreach ($trans->votes as $username => $vote) {
+    if ($username == $trans->author)  continue;  // don't send a second message to the author
+    $notification_params = array(
+      'type' => 'notify-voter-on-translation-deletion',
+      'uid' => $vote->uid,
+      'username' => $vote->name,
+      'recipient' => $vote->name . ' <' . $vote->umail . '>',
+      'sguid' => $trans->sguid,
+      'string' => $string,
+      'translation' => $trans->translation[0],
+    );
+    $queue->createItem((object)$notification_params);
+  }
+}
+
 
 /**
  * Make spacing and newlines the same in translation as in the source.
