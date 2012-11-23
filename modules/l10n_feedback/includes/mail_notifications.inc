@@ -185,7 +185,7 @@ function l10n_feedback_build_notification_email($params) {
 
     // Send by email a string to be reviewed.
     case 'string-to-be-reviewed':
-      list($string, $translations) = l10n_feedback_get_a_string($params->uid);
+      list($string, $translations) = l10n_feedback_get_string_and_translations($params->sguid);
       $subject = "[$subject_prefix] " . l10n_feedback_shorten($string, 60);
       $body = array(
         t("Greetings !username,
@@ -201,7 +201,7 @@ function l10n_feedback_build_notification_email($params) {
       ",
           array(
             '!username' => $params->username,
-            '!url' => get_string_url($params->uid, $sguid),
+            '!url' => $url,
             '!string' => $string,
           )),
       );
@@ -222,18 +222,16 @@ function l10n_feedback_build_notification_email($params) {
  * Return a string (and its translations) for the given user:
  * return array($string, $translations)
  */
-function l10n_feedback_get_a_string($uid) {
-  // get a sguid according to the user preferencies
-  require_once(dirname(__FILE__) . '/translations/vote.inc');
-  $sguid = l10n_feedback_get_sguid($uid);
+function l10n_feedback_get_string_and_translations($sguid) {
 
-  // get the string and translations of the selected sguid
+  require_once(dirname(__FILE__) . '/translations/utils.inc');
   $db = $GLOBALS['l10n_feedback_db'];
   $query = $db->select('l10n_feedback_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   $strings = l10n_feedback_get_strings($query, $lng);
+
   $string = $strings[$sguid]->string;
   $translations = array();
   foreach ($strings[$sguid]->translations as $tguid => $obj_translation) {

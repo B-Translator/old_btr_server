@@ -46,9 +46,14 @@ function l10n_feedback_send_strings_for_review() {
       continue; // skip admin, disabled accounts, and users that have never loggen in
     }
 
+    // get a sguid according to the user preferencies
+    require_once(dirname(__FILE__) . '/translations/vote.inc');
+    $sguid = l10n_feedback_get_sguid($account->uid);
+
     $message_params = array(
       'type' => 'string-to-be-reviewed',
       'uid' => $account->uid,
+      'sguid' => $sguid,
       'username' => $account->name,
       'recipient' => $account->name .' <' . $account->mail . '>',
     );
