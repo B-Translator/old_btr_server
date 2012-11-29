@@ -75,7 +75,7 @@ function l10n_feedback_menu() {
     'description'     => 'Export the most voted translations of a project into a PO file.',
     'page callback'   => 'l10n_feedback_export',
     'file'            => 'includes/translations/export.inc',
-    'access callback' => TRUE,
+    'access callback' => 'user_is_logged_in',
     'weight'          => 3,
   );
 
@@ -85,7 +85,8 @@ function l10n_feedback_menu() {
     'description'     => 'Import strings and translations from POT/PO files of projects.',
     'page callback'   => 'l10n_feedback_import',
     'file'            => 'includes/translations/import.inc',
-    'access callback' => TRUE,
+    //'access callback' => 'user_access',  //default
+    'access arguments' => array('btranslator-import'),
     'weight'          => 4,
   );
 

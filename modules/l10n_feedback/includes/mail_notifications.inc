@@ -41,7 +41,9 @@ function l10n_feedback_send_notification_by_email($params) {
  */
 function l10n_feedback_build_notification_email($params) {
 
-  $url = get_string_url($params->uid, $params->sguid);
+  if (isset($params->sguid)) {
+    $url = get_string_url($params->uid, $params->sguid);
+  }
   $subject_prefix = 'l10n-' . variable_get('l10n_feedback_translation_lng', 'fr');
 
   switch ($params->type) {
@@ -179,6 +181,27 @@ function l10n_feedback_build_notification_email($params) {
             '!url' => $url,
             '!string' => $params->string,
             '!translation' => $params->translation,
+          )),
+      );
+      break;
+
+      // Notify the user that the export is ready for download.
+    case 'notify-that-export-is-done':
+      $subject = t("[!prefix] Export: !project",
+                 array(
+                   '!prefix' => $subject_prefix,
+                   '!project' => $params->project,
+                 ));
+      $body = array(
+        t("Greetings !username,
+
+           The export of '!project', that you have requested, is done.
+           You can download it from this link: !export_url
+           ",
+          array(
+            '!username' => $params->username,
+            '!project' => $params->project,
+            '!export_url' => $params->export_url,
           )),
       );
       break;

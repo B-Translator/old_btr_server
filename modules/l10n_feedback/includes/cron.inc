@@ -4,10 +4,16 @@
  * Functions called by cron.
  */
 
+
 /*
  * Implements hook_cron_queue_info().
  */
 function l10n_feedback_cron_queue_info() {
+
+  $queues['export_project'] = array(
+    'worker callback' => 'l10n_feedback_export_project',
+    'time' => 120,
+  );
   $queues['notifications'] = array(
     'worker callback' => 'l10n_feedback_send_notification_by_email',
     'time' => 120,
@@ -43,7 +49,7 @@ function l10n_feedback_send_strings_for_review() {
   $accounts = entity_load('user');
   foreach ($accounts as $account) {
     if ($account->uid < 2 or $account->status != 1 or $account->login == 0) {
-      continue; // skip admin, disabled accounts, and users that have never loggen in
+      continue; // skip admin, disabled accounts, and users that have never logged in
     }
 
     // get a sguid according to the user preferencies
@@ -59,4 +65,38 @@ function l10n_feedback_send_strings_for_review() {
     );
     $queue->createItem((object)$message_params);
   }
+}
+
+/**
+ * The callback function called from cron_queue.
+ */
+function l10n_feedback_export_project($export_data) {
+  $account = user_load($export_data->uid);
+  $origin = $export_data->origin;
+  $project = $export_data->project;
+  $algorithm = $export_data->algorithm;
+
+  set_time_limit(0);
+
+  // Export files in a tgz archive.
+  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $path = drupal_get_path('module', 'l10n_feedback') . '/data/export';
+  $output_dir = '/var/www/downloads/';
+  $tgz_file = exec("nice $path/export_tgz.sh $origin $project $lng $output_dir");
+  $filename = basename($tgz_file);
+  global $base_url;
+  $export_url = $base_url . '/downloads/' . $filename;
+
+  // Notify the user that the export is ready for download.
+  $queue = DrupalQueue::get('notifications');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  $notification_params = array(
+    'type' => 'notify-that-export-is-done',
+    'uid' => $account->uid,
+    'project' => $origin . '/' . $project,
+    'username' => $account->name,
+    'recipient' => $account->name .' <' . $account->mail . '>',
+    'export_url' => $export_url,
+  );
+  $queue->createItem((object)$notification_params);
 }
