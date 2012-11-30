@@ -98,7 +98,7 @@ function l10n_feedback_export_project($export_data) {
   $path = drupal_get_path('module', 'l10n_feedback') . '/data/export';
   $tgz_file = exec("nice $path/export_tgz.sh $origin $project $lng");
   $export_dir = variable_get('l10n_feedback_export_path', '/var/www/exports');
-  $username = strtr(' ', '_', strtolower($account->name));
+  $username = strtr(strtolower($account->name), ' ', '_');
   $filename = "$username.$origin-$project-$lng.tgz";
   $export_file = $export_dir . '/' . $filename;
   exec("rm $export_file");
