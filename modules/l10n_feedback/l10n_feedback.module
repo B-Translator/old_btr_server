@@ -79,6 +79,17 @@ function l10n_feedback_menu() {
     'weight'          => 3,
   );
 
+  // The link that is sent to the user for downloading an exported file.
+  // The URL is of the form 'translations/exports/filename.tgz'
+  // and the filename is passed as a parameter to the function.
+  $items['translations/exports'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Download Exported File',
+    'page callback'   => 'l10n_feedback_get_exported_file',
+    'file'            => 'includes/translations/export.inc',
+    'access callback' => TRUE,
+  );
+
   $items['translations/import'] = array(
     'type'            => MENU_LOCAL_TASK,
     'title'           => 'Import',

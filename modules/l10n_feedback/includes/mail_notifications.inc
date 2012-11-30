@@ -196,7 +196,8 @@ function l10n_feedback_build_notification_email($params) {
         t("Greetings !username,
 
            The export of '!project', that you have requested, is done.
-           You can download it from this link: !export_url
+           You can download it from this link:
+           !export_url
            ",
           array(
             '!username' => $params->username,

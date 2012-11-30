@@ -41,11 +41,16 @@ function l10n_feedback_export_form() {
   $form['export']['project'] = array(
     '#type' => 'textfield',
     '#title' => t('Project'),
-    '#required' => TRUE,
     '#description' => t('The name of the project.'),
     '#autocomplete_path' => 'translations/autocomplete/project',
+    // Those that have the export access right (usually translators)
+    // can also export all the projects from the same origin.
+    // Contributors can export only a single project at a time.
+    '#required' => !user_access('btranslator-export'),
   );
 
+  // Those that have the export access right (usually translators)
+  // can also choose an export algorithm different from the default one.
   if (user_access('btranslator-export')) {
     $form['export']['algorithm'] = array(
       '#type' => 'select',
@@ -81,7 +86,10 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
   //dpm($values);  //debug
   $origin = $values['origin'];
   $project = $values['project'];
-  $algorithm = $values['algorithm'];
+  if (empty($project)) {
+    $project = 'all';
+  }
+  $algorithm = isset($values['algorithm']) ? $values['algorithm'] : '';
 
   $origin = check_plain($origin);
   $project = check_plain($project);
@@ -108,3 +116,31 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
       array('!project' => "$origin/$project")));
 }
 
+/**
+ * The callback function for the menu 'translations/exports'.
+ * The URL is of the form 'translations/exports/filename.tgz'
+ * where the filename is passed as a parameter to the function.
+ */
+function l10n_feedback_get_exported_file($filename) {
+
+  $filename = check_plain($filename);
+
+  set_time_limit(0);
+
+  // Get the full path of the export file.
+  $export_path = variable_get('l10n_feedback_export_path', '/var/www/downloads');
+  $export_file = $export_path . '/' . $filename;
+
+  // Send the headers.
+  header('Content-Type: application/octet-stream');
+  header('Content-Disposition: attachment; filename="' . $filename . '"');
+  header('Content-Transfer-Encoding: binary');
+  header("Content-Length: " . filesize($export_file));
+
+  // Open the file in a binary mode and dump it to the browser.
+  $fp = fopen($export_file, 'rb');
+  fpassthru($fp);
+
+  // Stop execution.
+  exit(0);
+}

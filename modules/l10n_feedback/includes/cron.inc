@@ -25,24 +25,39 @@ function l10n_feedback_cron_queue_info() {
  * Implements hook_cron().
  */
 function l10n_feedback_cron() {
+  l10n_feedback_cron_nightly();
+}
+
+/**
+ * Make sure that cron functions runs only once per night,
+ * no matter how often cron is called.
+ */
+function l10n_feedback_cron_nightly() {
+  // check whether the crontime has been reached yet
+  $crontime = variable_get('l10n_feedback_crontime', '0');
+  if (time() < $crontime)  return;
+
+  // set the crontime after the next midnight (after 03:00 AM)
+  $crontime = strtotime(date('Y-m-d 02:55')) + 24*60*60;
+  variable_set('l10n_feedback_crontime', $crontime);
+
+  // Call cron functions.
+  l10n_feedback_delete_old_export_files();
   l10n_feedback_send_strings_for_review();
 }
 
 /**
+ * Delete export files that are older than 2 days
+ */
+function l10n_feedback_delete_old_export_files() {
+  $export_path = variable_get('l10n_feedback_export_path');
+  exec("find $export_path/* -mtime +2 -delete");
+}
+
+/**
  * Send by email a string for review to all the active users.
- * Make sure that strings for review are sent
- * only once per day, no matter how often cron is called
  */
 function l10n_feedback_send_strings_for_review() {
-
-  // check whether the send_review_time has been reached yet
-  $send_review_time = variable_get('l10n_feedback_cron_send_review_time', '0');
-  if (time() < $send_review_time)  return;
-
-  // set the send_review_time after the next midnight (after 03:00 AM)
-  $send_review_time = strtotime(date('Y-m-d 02:55')) + 24*60*60;
-  variable_set('l10n_feedback_cron_send_review_time', $send_review_time);
-
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
 
@@ -68,7 +83,7 @@ function l10n_feedback_send_strings_for_review() {
 }
 
 /**
- * The callback function called from cron_queue.
+ * The callback function called from cron_queue export_project.
  */
 function l10n_feedback_export_project($export_data) {
   $account = user_load($export_data->uid);
@@ -81,11 +96,14 @@ function l10n_feedback_export_project($export_data) {
   // Export files in a tgz archive.
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   $path = drupal_get_path('module', 'l10n_feedback') . '/data/export';
-  $output_dir = '/var/www/downloads/';
-  $tgz_file = exec("nice $path/export_tgz.sh $origin $project $lng $output_dir");
-  $filename = basename($tgz_file);
-  global $base_url;
-  $export_url = $base_url . '/downloads/' . $filename;
+  $tgz_file = exec("nice $path/export_tgz.sh $origin $project $lng");
+  $export_dir = variable_get('l10n_feedback_export_path', '/var/www/exports');
+  $username = strtr(' ', '_', strtolower($account->name));
+  $filename = "$username.$origin-$project-$lng.tgz";
+  $export_file = $export_dir . '/' . $filename;
+  exec("rm $export_file");
+  exec("mv $tgz_file $export_file");
+  $export_url = url('translations/exports', array('absolute' => TRUE)) . '/' . $filename;
 
   // Notify the user that the export is ready for download.
   $queue = DrupalQueue::get('notifications');

@@ -61,5 +61,17 @@ function l10n_feedback_config() {
     '#default_value' => variable_get('l10n_feedback_preferred_projects', ''),
   );
 
+  $form['export'] = array(
+    '#type'  => 'fieldset',
+    '#title' => t('B-Translator export configuration'),
+  );
+
+  $form['export']['l10n_feedback_export_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Export path'),
+    '#default_value' => variable_get('l10n_feedback_export_path', '/var/www/exports'),
+    '#description' => t('The directory where the exported projects will be placed. Must be accessable by the web server (www-data).'),
+  );
+
   return system_settings_form($form);
 }  //  End of l10n_feedback_config().
