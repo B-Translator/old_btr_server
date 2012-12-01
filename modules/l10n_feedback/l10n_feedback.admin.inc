@@ -72,6 +72,13 @@ function l10n_feedback_config() {
     '#default_value' => variable_get('l10n_feedback_export_path', '/var/www/exports'),
     '#description' => t('The directory where the exported projects will be placed. Must be accessable by the web server (www-data).'),
   );
+  $form['export']['l10n_feedback_export_notify_admin'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Notify admin'),
+    '#description' => t('Send a notification email to admin on each export request.'),
+    '#default_value' => variable_get('l10n_feedback_export_notify_admin', TRUE),
+  );
+
 
   return system_settings_form($form);
 }  //  End of l10n_feedback_config().

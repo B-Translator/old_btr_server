@@ -7,7 +7,7 @@
 ### get the parameters
 if [ $# -lt 3 ]
 then
-    echo "Usage: $0 origin project lng [output_dir]"
+    echo "Usage: $0 origin project lng [output_dir [filename]] "
     echo ""
     exit 1
 fi
@@ -15,7 +15,8 @@ origin=$1
 project=$2
 lng=$3
 output_dir=${4:-/tmp}
-#echo $origin $project $lng $output_dir;  exit;  # debug
+filename=${5:-"$origin-$project-$lng.tgz"}
+#echo $origin $project $lng $output_dir $filename;  exit;  # debug
 
 ### go to the script directory
 cd $(dirname $0)
@@ -42,7 +43,7 @@ do
 done
 
 ### create the tgz archive on the output dir
-tgz_file=$output_dir/$origin-$project-$lng.tgz
+tgz_file=$output_dir/$filename
 tar -C $export_dir --create --gzip --file=$tgz_file $origin
 
 ### clean up

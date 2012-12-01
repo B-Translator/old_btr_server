@@ -185,7 +185,25 @@ function l10n_feedback_build_notification_email($params) {
       );
       break;
 
-      // Notify the user that the export is ready for download.
+    // Notify the user that the export is ready for download.
+    case 'notify-admin-on-export-request':
+      $subject = t("[!prefix] Export request: !origin/!project",
+                 array(
+                   '!prefix' => $subject_prefix,
+                   '!project' => $params->project,
+                   '!origin' => $params->origin,
+                 ));
+      $body = array(
+        t("Export request by user !uid for '!origin/!project'.",
+          array(
+            '!uid' => $params->uid,
+            '!project' => $params->project,
+            '!origin' => $params->origin,
+          )),
+      );
+      break;
+
+    // Notify the user that the export is ready for download.
     case 'notify-that-export-is-done':
       $subject = t("[!prefix] Export: !project",
                  array(

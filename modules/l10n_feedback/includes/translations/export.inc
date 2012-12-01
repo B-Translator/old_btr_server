@@ -102,18 +102,25 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
 
   $queue = DrupalQueue::get('export_project');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
-
   global $user;
-  $export_data = (object) array(
+  $params = array(
     'uid' => $user->uid,
     'origin' => $origin,
     'project' => $project,
     'algorithm' => $algorithm,
   );
-  $queue->createItem($export_data);
+  $queue->createItem((object)$params);
 
   drupal_set_message(t("Export of '!project' is scheduled. You will be notified by email when it is done.",
       array('!project' => "$origin/$project")));
+
+  $notify_admin = variable_get('l10n_feedback_export_notify_admin', TRUE);
+  if ($notify_admin) {
+    $queue = DrupalQueue::get('notifications');
+    $params['type'] = 'notify-admin-on-export-request';
+    $params['recipient'] = user_load(1)->mail;
+    $queue->createItem((object)$params);
+  }
 }
 
 /**
