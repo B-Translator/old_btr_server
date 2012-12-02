@@ -132,10 +132,8 @@ function l10n_feedback_get_exported_file($filename) {
 
   $filename = check_plain($filename);
 
-  set_time_limit(0);
-
   // Get the full path of the export file.
-  $export_path = variable_get('l10n_feedback_export_path', '/var/www/downloads');
+  $export_path = variable_get('l10n_feedback_export_path', '/var/www/exports');
   $export_file = $export_path . '/' . $filename;
 
   // Send the headers.
