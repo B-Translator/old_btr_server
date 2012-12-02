@@ -25,7 +25,7 @@ function l10n_feedback_export_form() {
   $form['export'] = array(
     '#type' => 'fieldset',
     '#title' => t('Export a Project'),
-    '#description' => t('Submit a request for exporting a project. When the request is completed you will be notified by email. Only single projects can be exported. If you need to export many projects (for example all the projects from a certain origin), contact the site administrator.'),
+    '#description' => t('Submit a request for exporting a project. When the request is completed you will be notified by email.'),
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );
@@ -124,13 +124,44 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
 }
 
 /**
+ * Data validation for export form.
+ */
+function l10n_feedback_export_form_validate($form, &$form_state) {
+  $origin = $form_state['values']['origin'];
+  $project = $form_state['values']['project'];
+  $origin = check_plain($origin);
+  $project = check_plain($project);
+
+  if (empty($project)) {
+    $query = "SELECT DISTINCT origin FROM {l10n_feedback_projects} WHERE origin = :origin";
+    $params = array(':origin' => $origin);
+  }
+  else {
+    $query = "SELECT project FROM {l10n_feedback_projects} WHERE origin = :origin AND project = :project";
+    $params = array(':origin' => $origin, ':project' => $project);
+  }
+
+  $db = $GLOBALS['l10n_feedback_db'];
+  $result = $db->query($query, $params)->fetchField();
+  if (!$result) {
+    form_set_error('', t("The project '!project' does not exist.", array('!project' => "$origin/$project")));
+  }
+}
+
+/**
  * The callback function for the menu 'translations/exports'.
  * The URL is of the form 'translations/exports/filename.tgz'
  * where the filename is passed as a parameter to the function.
  */
-function l10n_feedback_get_exported_file($filename) {
+function l10n_feedback_get_exported_file($filename =NULL) {
 
   $filename = check_plain($filename);
+  if (empty($filename) || !file_exists($filename)) {
+    drupal_set_message(t("Export file '!filename' does not exist!",
+			 array('!filename' => $filename)), 'error');
+    drupal_goto("translations");
+    return;
+  }
 
   // Get the full path of the export file.
   $export_path = variable_get('l10n_feedback_export_path', '/var/www/exports');

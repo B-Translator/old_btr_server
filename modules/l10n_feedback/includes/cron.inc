@@ -10,17 +10,13 @@
  */
 function l10n_feedback_cron_queue_info() {
 
-  $queues['export_project'] = array(
-    'worker callback' => 'l10n_feedback_export_project',
-    'time' => 120,
-  );
-  $queues['check_exported_file'] = array(
-    'worker callback' => 'l10n_feedback_check_exported_file',
-    'time' => 120,
-  );
   $queues['notifications'] = array(
     'worker callback' => 'l10n_feedback_send_notification_by_email',
-    'time' => 120,
+    'time' => 240,
+  );
+  $queues['export_project'] = array(
+    'worker callback' => 'l10n_feedback_export_project',
+    'time' => 2000,
   );
   return $queues;
 }
@@ -89,54 +85,36 @@ function l10n_feedback_send_strings_for_review() {
 /**
  * The callback function called from cron_queue export_project.
  */
-function l10n_feedback_export_project($export_data) {
+function l10n_feedback_export_project($export_params) {
 
-  $origin = $export_data->origin;
-  $project = $export_data->project;
-  $algorithm = $export_data->algorithm;
-  $account = user_load($export_data->uid);
+  // Allow the export script to run until completion.
+  set_time_limit(0);
+
+  $origin = $export_params->origin;
+  $project = $export_params->project;
+  $algorithm = $export_params->algorithm;
+  $account = user_load($export_params->uid);
 
   // Get the full path of the export file.
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   $export_dir = variable_get('l10n_feedback_export_path', '/var/www/exports');
   $username = strtr(strtolower($account->name), ' ', '_');
   $filename = "$username.$origin-$project-$lng.tgz";
-  $export_file = $export_dir . '/' . $filename;
   $export_url = url('translations/exports', array('absolute' => TRUE)) . '/' . $filename;
-  exec("rm -f $export_file");
+  exec("rm -f $export_dir/$filename");
 
-  // Start the export script.
-  $module_path = drupal_get_path('module', 'l10n_feedback');
-  $export_tgz_sh = $module_path . '/data/export/export_tgz.sh';
-  exec("nice $export_tgz_sh $origin $project $lng $export_dir $filename > /dev/null 2>&1 &");
+  // Run the export script (with lowered priority).
+  $export_tgz_sh = drupal_get_path('module', 'l10n_feedback') . '/data/export/export_tgz.sh';
+  exec("nice $export_tgz_sh $origin $project $lng $export_dir $filename");
 
-  // Schedule a check for exported file.
-  $queue = DrupalQueue::get('check_exported_file');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  // Notify the user that the export is done.
   $params = array(
+    'type' => 'notify-that-export-is-done',
     'uid' => $account->uid,
     'project' => $origin . '/' . $project,
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
-    'export_file' => $export_file,
     'export_url' => $export_url,
   );
-  $queue->createItem((object)$params);
-}
-
-/**
- * Check whether the export is done (tgz export file has been created).
- * If yes, send a notification to the user; otherwise schedule another check.
- */
-function l10n_feedback_check_exported_file($params) {
-  if (file_exists($params->export_file)) {
-    $queue = DrupalQueue::get('notifications');
-    $params->type = 'notify-that-export-is-done';
-    $queue->createItem($params);
-  }
-  else {
-    $queue = DrupalQueue::get('check_exported_file');
-    $queue->createItem($params);
-    sleep(5);
-  }
+  l10n_feedback_send_notification_by_email((object)$params);
 }
