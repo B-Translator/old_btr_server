@@ -156,7 +156,7 @@ function l10n_feedback_export_form_validate($form, &$form_state) {
 function l10n_feedback_get_exported_file($filename =NULL) {
 
   $filename = check_plain($filename);
-  if (empty($filename) || !file_exists($filename)) {
+  if (empty($filename)) {
     drupal_set_message(t("Export file '!filename' does not exist!",
 			 array('!filename' => $filename)), 'error');
     drupal_goto("translations");
@@ -166,6 +166,12 @@ function l10n_feedback_get_exported_file($filename =NULL) {
   // Get the full path of the export file.
   $export_path = variable_get('l10n_feedback_export_path', '/var/www/exports');
   $export_file = $export_path . '/' . $filename;
+  if (!file_exists($export_file)) {
+    drupal_set_message(t("Export file '!filename' does not exist!",
+			 array('!filename' => $filename)), 'error');
+    drupal_goto("translations");
+    return;
+  }
 
   // Send the headers.
   header('Content-Type: application/octet-stream');
