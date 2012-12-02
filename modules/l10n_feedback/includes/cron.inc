@@ -108,6 +108,8 @@ function l10n_feedback_export_project($export_params) {
   exec("nice $export_tgz_sh $origin $project $lng $export_dir $filename");
 
   // Notify the user that the export is done.
+  $queue = DrupalQueue::get('notifications');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
   $params = array(
     'type' => 'notify-that-export-is-done',
     'uid' => $account->uid,
@@ -116,5 +118,5 @@ function l10n_feedback_export_project($export_params) {
     'recipient' => $account->name .' <' . $account->mail . '>',
     'export_url' => $export_url,
   );
-  l10n_feedback_send_notification_by_email((object)$params);
+  $queue->createItem((object)$params);
 }
