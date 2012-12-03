@@ -87,6 +87,15 @@ function l10n_feedback_send_strings_for_review() {
  */
 function l10n_feedback_export_project($export_params) {
 
+  // Make sure that exports do not run in parallel,
+  // so that the server is not loaded.
+  if (!lock_acquire('export_project', 3000)) {
+    // If we cannot get the lock, just stop the execution, do not return,
+    // because after the callback function returns, the cron_queue will
+    // remove the item from the queue, no matter whether it is processed or not.
+    exit();
+  }
+
   // Allow the export script to run until completion.
   set_time_limit(0);
 
@@ -119,4 +128,7 @@ function l10n_feedback_export_project($export_params) {
     'export_url' => $export_url,
   );
   $queue->createItem((object)$params);
+
+  // This export is done, allow any other exports to run.
+  lock_release('export_project');
 }
