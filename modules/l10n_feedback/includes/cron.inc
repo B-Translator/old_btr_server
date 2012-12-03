@@ -101,7 +101,8 @@ function l10n_feedback_export_project($export_params) {
 
   $origin = $export_params->origin;
   $project = $export_params->project;
-  $algorithm = $export_params->algorithm;
+  $export_mode = $export_params->export_mode;
+  $voters = $export_params->voters;
   $account = user_load($export_params->uid);
 
   // Get the full path of the export file.
@@ -114,7 +115,11 @@ function l10n_feedback_export_project($export_params) {
 
   // Run the export script (with lowered priority).
   $export_tgz_sh = drupal_get_path('module', 'l10n_feedback') . '/data/export/export_tgz.sh';
-  exec("nice $export_tgz_sh $origin $project $lng $export_dir $filename");
+  $export_cmd = "nice $export_tgz_sh $origin $project $lng $export_dir $filename";
+  if ($export_mode == 'preferred_by_me' or $export_mode == 'preferred_by_my_friends') {
+    $export_cmd = "export PO_EXPORT_MODE='preferred' ; export PO_EXPORT_VOTERS='$voters' ; $export_cmd";
+  }
+  exec($export_cmd);
 
   // Notify the user that the export is done.
   $queue = DrupalQueue::get('notifications');

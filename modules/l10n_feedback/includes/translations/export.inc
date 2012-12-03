@@ -50,17 +50,29 @@ function l10n_feedback_export_form() {
   );
 
   // Those that have the export access right (usually translators)
-  // can also choose an export algorithm different from the default one.
+  // can also choose an export mode different from the default one.
   if (user_access('btranslator-export')) {
-    $form['export']['algorithm'] = array(
+    $form['export']['export_mode'] = array(
       '#type' => 'select',
-      '#title' => t('Algorithm'),
-      '#description' => t('The algorithm that should be used for export.'),
+      '#title' => t('Export Mode'),
+      '#description' => t('The export mode that should be used.'),
       '#options' => array(
-        'most_voted' => t('Most voted'),
-        'my_preferred' => t('My vote takes precedence')
+        'most_voted' => t('Export the most voted translations'),
+        'preferred_by_me' => t('Prefer translations voted by me'),
+        'preferred_by_my_friends' => t('Prefer translations voted by my friends'),
       ),
       '#default_value' => 'most_voted',
+    );
+
+    $form['export']['friends'] = array(
+      '#type' => 'textarea',
+      '#title' => t('List of Friends'),
+      '#description' => t('Enter usernames of your friends, separated by comma.'),
+      '#states' => array(
+        'visible' => array(
+          ':input[name="export_mode"]' => array('value' => 'preferred_by_my_friends'),
+        ),
+      ),
     );
   }
 
@@ -86,28 +98,33 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
   //dpm($values);  //debug
   $origin = $values['origin'];
   $project = $values['project'];
+  $origin = check_plain($origin);
+  $project = check_plain($project);
   if (empty($project)) {
     $project = 'all';
   }
-  $algorithm = isset($values['algorithm']) ? $values['algorithm'] : '';
 
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-  $algorithm = check_plain($algorithm);
+  $account = user_load($GLOBALS['user']->uid);
+  $arr_voters[] = $account->init;
 
-  if ($algorithm == 'my_preferred') {
-    drupal_set_message(t("Export algorithm '!algorithm' has not been implemented yet!",
-        array('!algorithm' => t('My vote takes precedence'))), 'warning');
+  $export_mode = isset($values['export_mode']) ? $values['export_mode'] : '';
+  if ($export_mode == 'preferred_by_my_friends') {
+    $friends = isset($values['friends']) ? $values['friends'] : '';
+    $arr_friends = preg_split('/\s*,\s*/', trim($friends));
+    foreach ($arr_friends as $username) {
+      $account = user_load_by_name($username);
+      $arr_voters[] = $account->init;
+    }
   }
 
   $queue = DrupalQueue::get('export_project');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
-  global $user;
   $params = array(
-    'uid' => $user->uid,
+    'uid' => $GLOBALS['user']->uid,
     'origin' => $origin,
     'project' => $project,
-    'algorithm' => $algorithm,
+    'export_mode' => $export_mode,
+    'voters' => implode(',', $arr_voters),
   );
   $queue->createItem((object)$params);
 
@@ -127,8 +144,9 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
  * Data validation for export form.
  */
 function l10n_feedback_export_form_validate($form, &$form_state) {
-  $origin = $form_state['values']['origin'];
-  $project = $form_state['values']['project'];
+  $values = $form_state['values'];
+  $origin = $values['origin'];
+  $project = $values['project'];
   $origin = check_plain($origin);
   $project = check_plain($project);
 
@@ -145,6 +163,18 @@ function l10n_feedback_export_form_validate($form, &$form_state) {
   $result = $db->query($query, $params)->fetchField();
   if (!$result) {
     form_set_error('', t("The project '!project' does not exist.", array('!project' => "$origin/$project")));
+  }
+
+  $export_mode = isset($values['export_mode']) ? $values['export_mode'] : '';
+  if ($export_mode == 'preferred_by_my_friends') {
+    $friends = isset($values['friends']) ? $values['friends'] : '';
+    $arr_friends = preg_split('/\s*,\s*/', trim($friends));
+    foreach ($arr_friends as $username) {
+      if (!user_load_by_name($username)) {
+        form_set_error('', t("The user '!username' does not exist.", array('!username' => $username)));
+      }
+    }
+    $form_state['values']['friends'] = implode(',', $arr_friends);
   }
 }
 

@@ -39,11 +39,22 @@ class POWriter
       $this->write_entry($entry);
     }
 
+    // "normalize" the PO format of the output
+    // by running it through `msgcat`
+    $tmpfname1 = tempnam("/tmp", "POWritter");
+    file_put_contents($tmpfname1, implode("\n", $this->_output));
+    $tmpfname2 = $tmpfname1 . '_msgcat';
+    exec("msgcat --output-file=$tmpfname2 $tmpfname1");
+
     if ($filename === NULL) {
-      return $this->_output;
+      $output = file($tmpfname2);
+      exec("rm -f $tmpfname1");
+      exec("rm -f $tmpfname2");
+      return $output;
     }
     else {
-      file_put_contents($filename, implode("\n", $this->_output));
+      exec("mv $tmpfname2 $filename");
+      exec("rm -f $tmpfname1");
     }
   }
 
