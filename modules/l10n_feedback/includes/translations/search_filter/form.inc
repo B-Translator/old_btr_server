@@ -191,6 +191,55 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#suffix' => '</div>',
   );
 
+  // Add form fields: lng, mode, words, limit
+  _l10n_feedback_filter_form_basic_search($form, $form_state);
+
+  // Add form fieldset advanced_search/projects, with the fields: project and origin.
+  _l10n_feedback_filter_form_advanced_search($form, $form_state);
+
+  // Search by author and serach by date
+  // are available only to logged in users.
+  if (user_is_logged_in()) {
+    // Add fieldset advanced_search/author,
+    // with fields: only_mine, translated_by, voted_by
+    _l10n_feedback_filter_form_author($form, $form_state);
+
+    // Add fieldset advanced_search/date,
+    // with fields: date_filter, from_date, to_date
+    _l10n_feedback_filter_form_date($form, $form_state);
+  }
+
+  $form['buttons'] = array(
+    //'#prefix' => '<div class="filter-submit">',
+    //'#suffix' => '</div>',
+  );
+  $form['buttons']['submit'] = array(
+    '#value' => t('Filter'),
+    '#type' => 'submit',
+  );
+  $form['buttons']['reset'] = array(
+    '#type' => 'submit',
+    '#value' => t('Reset'),
+  );
+
+  // enclose the whole form in another fieldset/container
+  $form1['search_container'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Change Filter Parameters'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    $form,
+  );
+  $form = $form1;
+
+  return $form;
+}
+
+/**
+ * Add form fields: lng, mode, words, limit
+ */
+function _l10n_feedback_filter_form_basic_search(&$form, &$form_state) {
+
   $languages = l10n_feedback_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   $form['lng'] = array(
@@ -200,8 +249,6 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#options' => $lang_options,
     '#default_value' => $form_state['values']['lng'],
   );
-
-  // -------- basic search ----------
 
   $form['basic_search'] = array(
     '#type' => 'fieldset',
@@ -239,8 +286,12 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#options' => $limit_options,
     '#default_value' => $form_state['values']['limit'],
   );
+}
 
-  // -------- advanced search ----------
+/**
+ * Add form fieldset advanced_search/projects, with the fields: project and origin.
+ */
+function _l10n_feedback_filter_form_advanced_search(&$form, &$form_state) {
 
   $form['advanced_search'] = array(
     '#type' => 'fieldset',
@@ -273,9 +324,13 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#default_value' => $form_state['values']['origin'],
     '#autocomplete_path' => 'translations/autocomplete/origin',
   );
+}
 
-  //TODO: Some of the advanced filtering options should be available
-  //      only if the user has propper access rights.
+/**
+ * Add fieldset advanced_search/author, with fields:
+ * only_mine, translated_by, voted_by
+ */
+function _l10n_feedback_filter_form_author(&$form, &$form_state) {
 
   $form['advanced_search']['author'] = array(
     '#type' => 'fieldset',
@@ -317,7 +372,13 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
       ),
     ),
   );
+}
 
+/**
+ * Add fieldset advanced_search/date,
+ * with fields: date_filter, from_date, to_date
+ */
+function _l10n_feedback_filter_form_date(&$form, &$form_state) {
   $form['advanced_search']['date'] = array(
     '#type' => 'fieldset',
     '#title' => t('Date'),
@@ -346,34 +407,8 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
     '#title' => t('To Date'),
     '#default_value' => $form_state['values']['to_date'],
   );
-
-  // --------------------------------------------
-
-  $form['buttons'] = array(
-    //'#prefix' => '<div class="filter-submit">',
-    //'#suffix' => '</div>',
-  );
-  $form['buttons']['submit'] = array(
-    '#value' => t('Filter'),
-    '#type' => 'submit',
-  );
-  $form['buttons']['reset'] = array(
-    '#type' => 'submit',
-    '#value' => t('Reset'),
-  );
-
-  $form1['search_container'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Change Filter Parameters'),
-    //'#description' => t('Limit the search scope according to the author.'),
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-    $form,
-  );
-  $form = $form1;
-
-  return $form;
 }
+
 
 // ----------------------- utility functions ----------------------------
 

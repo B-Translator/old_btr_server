@@ -26,6 +26,9 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   if ( user_access('btranslator-vote') || user_access('btranslator-suggest') ) {
     _l10n_feedback_translate_form_save($form_values);
   }
+  elseif (!user_is_logged_in()) {
+    drupal_set_message(t("You need to be logged in, in order to be able to submit votes and suggestions."));
+  }
 
   if ($op == t('Previous')) {
     if (isset($_SESSION['previous_url'])) {
