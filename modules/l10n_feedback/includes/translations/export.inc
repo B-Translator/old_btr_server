@@ -151,11 +151,11 @@ function l10n_feedback_export_form_validate($form, &$form_state) {
   $project = check_plain($project);
 
   if (empty($project)) {
-    $query = "SELECT DISTINCT origin FROM {l10n_feedback_projects} WHERE origin = :origin";
+    $query = "SELECT DISTINCT origin FROM {l10n_feedback_projects} WHERE BINARY origin = :origin";
     $params = array(':origin' => $origin);
   }
   else {
-    $query = "SELECT project FROM {l10n_feedback_projects} WHERE origin = :origin AND project = :project";
+    $query = "SELECT project FROM {l10n_feedback_projects} WHERE BINARY origin = :origin AND BINARY project = :project";
     $params = array(':origin' => $origin, ':project' => $project);
   }
 
