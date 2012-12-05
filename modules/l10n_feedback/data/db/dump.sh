@@ -19,14 +19,16 @@ connection="$(cat sql-connect.txt | sed -e 's/^mysql //' | sed -e 's/--database=
 ### list of all the tables
 all_tables="
     l10n_feedback_diffs
-    l10n_feedback_snapshots 
+    l10n_feedback_snapshots
     l10n_feedback_files
     l10n_feedback_projects
     l10n_feedback_templates
     l10n_feedback_locations
     l10n_feedback_strings
     l10n_feedback_translations
+    l10n_feedback_translations_trash
     l10n_feedback_votes
+    l10n_feedback_votes_trash
     l10n_feedback_users
 "
 
@@ -74,7 +76,7 @@ case "$dump_mode" in
 
     * )
 	echo -e "Usage: $0 (schema|data|user|db)\n"
-	exit 1	
+	exit 1
 	;;
 
 esac

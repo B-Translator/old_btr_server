@@ -46,8 +46,13 @@ function l10n_feedback_uninstall() {
     'l10n_feedback_voting_mode',
     'l10n_feedback_translation_lng',
     'l10n_feedback_preferred_projects',
+    'l10n_feedback_export_path',
+    'l10n_feedback_export_notify_admin',
+
     'l10n_feedback_topcontrib_size',
     'l10n_feedback_topcontrib_period',
+
+    'l10n_feedback_crontime',
   );
   foreach ($variables as $var) {
     variable_del($var);
@@ -405,6 +410,36 @@ function l10n_feedback_schema() {
     ),
   );
 
+
+  // Translations that are deleted are saved on the trash table.
+  $schema['l10n_feedback_translations_trash'] = $schema['l10n_feedback_translations'];
+  $schema['l10n_feedback_translations_trash']['description'] =
+    'Translations that are deleted are saved on the trash table.';
+  $schema['l10n_feedback_translations_trash']['fields']['d_umail'] =
+    array(
+        'description' => 'The email of the user that deleted this translation.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => TRUE,
+    );
+  $schema['l10n_feedback_translations_trash']['fields']['d_ulng'] =
+    array(
+      'description' => 'The language of the user that deleted this translation.',
+      'type' => 'varchar',
+      'length' => '5',
+      'not null' => TRUE,
+    );
+  $schema['l10n_feedback_translations_trash']['fields']['d_time'] =
+    array(
+      'description' => 'Timestamp of the deletion time.',
+      'type' => 'datetime',
+      'mysql_type' => 'DATETIME',
+      'not null' => FALSE,
+    );
+  $schema['l10n_feedback_translations_trash']['indexes']['d_time'] = array('d_time');
+  $schema['l10n_feedback_translations_trash']['indexes']['d_umail'] = array(array('d_umail', 10));
+
+
   // Votes for each translation/suggestion.
   $schema['l10n_feedback_votes'] = array(
     'description' => 'Votes for each translation/suggestion.',
@@ -448,11 +483,27 @@ function l10n_feedback_schema() {
     ),
     'primary key' => array('vid'),
     'indexes' => array(
-      'tguid_umail_ulng' => array('tguid', array('umail', 20), 'ulng'),
+      'umail_ulng_tguid' => array(array('umail', 20), 'ulng', 'tguid'),
       'tguid' => array('tguid'),
       'time' => array('time'),
     ),
   );
+
+
+  // Votes that are deleted are saved on the trash table.
+  $schema['l10n_feedback_votes_trash'] = $schema['l10n_feedback_votes'];
+  $schema['l10n_feedback_votes_trash']['description'] =
+    'Votes that are deleted are saved on the trash table.';
+  $schema['l10n_feedback_votes_trash']['fields']['vid']['type'] = 'int';
+  $schema['l10n_feedback_votes_trash']['fields']['d_time'] =
+    array(
+      'description' => 'Timestamp of the deletion time.',
+      'type' => 'datetime',
+      'mysql_type' => 'DATETIME',
+      'not null' => FALSE,
+    );
+  $schema['l10n_feedback_votes_trash']['indexes']['d_time'] = array('d_time');
+
 
   // Users that contribute translations/suggestions/votes.
   $schema['l10n_feedback_users'] = array(

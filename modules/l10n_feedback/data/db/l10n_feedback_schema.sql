@@ -128,6 +128,31 @@ CREATE TABLE `l10n_feedback_translations` (
   FULLTEXT KEY `translation_text` (`translation`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_feedback_translations_trash`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `l10n_feedback_translations_trash` (
+  `sguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the id of the l10n string that is translated.',
+  `lng` varchar(5) COLLATE utf8_bin NOT NULL COMMENT 'Language code (en, fr, sq_AL, etc.)',
+  `translation` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The (suggested) translation of the phrase.',
+  `tguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Globally Unique ID of the translation, defined as hash: SHA1(CONCAT(translation,lng,sguid))',
+  `count` tinyint(4) DEFAULT '1' COMMENT 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
+  `umail` varchar(250) CHARACTER SET utf8 NOT NULL COMMENT 'The email of the user that submitted this suggestion.',
+  `ulng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'The translation language of the user that submitted this suggestion.',
+  `time` datetime DEFAULT NULL COMMENT 'Time when the translation was entered into the database.',
+  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
+  `d_umail` varchar(250) CHARACTER SET utf8 NOT NULL COMMENT 'The email of the user that deleted this translation.',
+  `d_ulng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'The language of the user that deleted this translation.',
+  `d_time` datetime NOT NULL COMMENT 'Timestamp of the deletion time.',
+  PRIMARY KEY (`tguid`),
+  KEY `time` (`time`),
+  KEY `sguid` (`sguid`),
+  KEY `umail` (`umail`(10)),
+  KEY `d_time` (`d_time`),
+  KEY `d_umail` (`d_umail`(10)),
+  FULLTEXT KEY `translation_text` (`translation`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations that are deleted are saved on the trash table.';
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_feedback_votes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -139,10 +164,28 @@ CREATE TABLE `l10n_feedback_votes` (
   `time` datetime DEFAULT NULL COMMENT 'Timestamp of the voting time.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
   PRIMARY KEY (`vid`),
-  UNIQUE KEY `tguid_email_lng` (`tguid`,`umail`(20),`ulng`),
+  UNIQUE KEY `umail_ulng_tguid` (`umail`(20),`ulng`,`tguid`),
   KEY `time` (`time`),
   KEY `tguid` (`tguid`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `l10n_feedback_votes_trash`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `l10n_feedback_votes_trash` (
+  `vid` int(11) NOT NULL COMMENT 'Internal numeric identifier for a vote.',
+  `tguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the id of the translation which is voted.',
+  `umail` varchar(250) NOT NULL COMMENT 'Email of the user that submitted the vote.',
+  `ulng` varchar(5) NOT NULL COMMENT 'Translation language of the user that submitted the vote.',
+  `time` datetime DEFAULT NULL COMMENT 'Timestamp of the voting time.',
+  `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
+  `d_time` datetime NOT NULL COMMENT 'Timestamp of the deletion time.',
+  PRIMARY KEY (`vid`),
+  KEY `time` (`time`),
+  KEY `tguid` (`tguid`),
+  KEY `d_time` (`d_time`),
+  KEY `umail_ulng_tguid` (`umail`(20),`ulng`,`tguid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Votes that are deleted are saved on the trash table.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_feedback_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

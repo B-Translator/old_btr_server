@@ -106,7 +106,7 @@ function _l10n_feedback_translate_form_save($form_values) {
         _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
       }
       if ((strlen($tguid) == 40) && !empty($translation['declined'])) {
-	// delete translation
+	// Delete translation.
 	_l10n_feedback_delete_translation($translation);
       }
     }
@@ -129,7 +129,7 @@ function is_not_empty_translation($translation) {
 function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
 
   if ( is_not_empty_translation($string['new']['value']) ) {
-    //add a new suggestion
+    // Add a new suggestion.
     l10n_feedback_add_suggestion($sguid, $lng, $string['new']['value']);
     return;
   }
@@ -141,7 +141,7 @@ function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
     $previous_votes = $string[$tguid]['original']->votes;
     global $user;
     if (!in_array($user->name, array_keys($previous_votes))) {
-      $umail = $user->init;  //initial mail of the user
+      $umail = $user->init;  // initial mail of the user
       l10n_feedback_add_vote($tguid, $umail);
     }
   }
@@ -267,10 +267,6 @@ function _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng) {
     return 0;
   }
 
-  //TODO: Instead of deleting previous votes, save them in
-  //      an archive table, so that the history of changing
-  //      votes can be preserved.
-
   // Get the voting mode.
   $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');
 
@@ -291,6 +287,15 @@ function _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng) {
   }
 
   if (empty($arr_tguid))  return 0;
+
+  // Insert to the trash table the votes that will be removed.
+  $query = $db->select('l10n_feedback_votes', 'v')
+    ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
+    ->condition('umail', $umail)
+    ->condition('ulng', $lng)
+    ->condition('tguid', $arr_tguid, 'IN');
+  $query->addExpression('NOW()', 'd_time');
+  $db->insert('l10n_feedback_votes_trash')->from($query)->execute();
 
   // Remove any votes by the user for each translation in $arr_tguid.
   $num_deleted = $db->delete('l10n_feedback_votes')
@@ -415,6 +420,15 @@ function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $tran
   $old_trans = $db->query($query, $args)->fetchObject();
   if (!$old_trans)  return;  // if there is no old translation, we are done
 
+  // Copy to the trash table the old translation.
+  $query = $db->select('l10n_feedback_translations', 't')
+    ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
+    ->condition('tguid', $old_trans->tguid);
+  $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $umail));
+  $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => $lng));
+  $query->addExpression('NOW()', 'd_time');
+  $db->insert('l10n_feedback_translations_trash')->from($query)->execute();
+
   // Remove the old translation.
   $db->delete('l10n_feedback_translations')
     ->condition('tguid', $old_trans->tguid)
@@ -428,6 +442,13 @@ function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $tran
             WHERE v.tguid = :tguid AND v.umail != :umail";
   $args = array(':tguid' => $old_trans->tguid, ':umail' => $umail);
   $votes = $db->query($query, $args)->fetchAll();
+
+  // Insert to the trash table the votes that will be deleted.
+  $query = $db->select('l10n_feedback_votes', 'v')
+    ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
+    ->condition('tguid', $old_trans->tguid);
+  $query->addExpression('NOW()', 'd_time');
+  $db->insert('l10n_feedback_votes_trash')->from($query)->execute();
 
   // Delete the votes belonging to the old translation.
   $db->delete('l10n_feedback_votes')->condition('tguid', $old_trans->tguid)->execute();
@@ -536,9 +557,26 @@ function _l10n_feedback_delete_translation($translation) {
   }
 
   $trans = $translation['original'];
+  $db = $GLOBALS['l10n_feedback_db'];
+
+  // Copy to the trash table the translations that will be deleted.
+  $query = $db->select('l10n_feedback_translations', 't')
+    ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
+    ->condition('tguid', $trans->tguid);
+  $account = user_load($GLOBALS['user']->uid);
+  $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $account->init));
+  $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => variable_get('l10n_feedback_translation_lng')));
+  $query->addExpression('NOW()', 'd_time');
+  $db->insert('l10n_feedback_translations_trash')->from($query)->execute();
+
+  // Copy to the trash table the votes that will be deleted.
+  $query = $db->select('l10n_feedback_votes', 'v')
+    ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
+    ->condition('tguid', $trans->tguid);
+  $query->addExpression('NOW()', 'd_time');
+  $db->insert('l10n_feedback_votes_trash')->from($query)->execute();
 
   // Delete the translation and any votes related to it.
-  $db = $GLOBALS['l10n_feedback_db'];
   $db->delete('l10n_feedback_translations')->condition('tguid', $trans->tguid)->execute();
   $db->delete('l10n_feedback_votes')->condition('tguid', $trans->tguid)->execute();
 
