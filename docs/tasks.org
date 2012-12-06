@@ -12,7 +12,7 @@
   1. [X] Make *voting* work (without permissions, user setting, admin
      config, etc.)
   2. [X] Install a test/demo site.
-  3. [ ] Add *admin config*, *user settings*, *permissions*,
+  3. [X] Add *admin config*, *user settings*, *permissions*,
      permission checking, etc.
   4. [ ] Improve the *integration with facebook* (for voting).
   5. [X] Put it online.
@@ -28,14 +28,6 @@
 ** UI
 
 *** List of *string-->translations*
-    + [X] Define and implement suitable access rights.
-    + [X] Some of the advanced filtering options should be available
-      only if the user has propper access rights.
-    + [X] Some editing options should be available only if the user has
-      propper access rights.
-    + [X] For each suggestion, the admin (or moderators) should be able to apply
-      additional actions (for example remove the suggestion).
-
     + For each l10n string, display also the corresponding translations
       (best suggestions) in auxiliary (helper) languages. For example,
       besides the original l10n string (in English), the French and German
@@ -45,9 +37,6 @@
     + For each suggestion, add a Like (or +1) button. When it is clicked,
       the vote is submitted through an AJAX call. The voted (or liked,
       or +1'd) suggestion should be visibly distinguished from the rest.
-    + [X] For each suggestion, display details like: suggested by, suggested
-      when, number of votes, some of the latest voters (and all the voters
-      when clicked).
     + For each suggestion add a Flag (or -1) button. A suggestion is flagged
       when it is totally irrelevant to the string, or is spam, or is abusive, etc.
       In general, when a suggestion is flagged, it is something that should be
@@ -63,20 +52,8 @@
       approve more than one translation for the same string).
     + For the 'multiple' mode, an Unlike button should be available as well (in order
       to change the voting at any time).
-    + [X] When the votes are changed, the old (removed) votes should be stored on
-      an archive table, in order to keep the history of changing votes as well.
 
 ** Workflow
-
-*** DONE When a new suggestion is added, notify previous voters to review their votes.
-
-*** DONE The author of a suggestion can modify it.
-    The votes of the old version are moved to the new version of the translation,
-    but the voters are notified about the change, so that they can review it,
-    if needed.
-
-*** DONE Moderators can delete unacceptable translations
-
 
 ** API
 
@@ -126,11 +103,11 @@
     Note: Installation of NGINX has improved the performance
           for the time being, so this can be postponed.
 
-*** DONE Enable export again.
-*** DONE Improve export, so that different export algorithms can be used.
-    For example one export algorithm can be: my vote takes precedence.
-    This means that wherever the translator has voted, his choice will
-    prevail, otherwise the most voted translation will be exported.
+*** TODO Enable exporting of diffs
+*** TODO Make nightly exports of the active projects
+    These are ready for download by everyone, without making
+    an export request first. But they export only the most_voted
+    translations.
 
 *** Generate code documentation by phpDocu and doxygen.
 *** Use modules: views, pannels, views_slideshow, invite, etc.

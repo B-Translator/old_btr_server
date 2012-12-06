@@ -410,6 +410,61 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   :END:
   Apache2 is replaced by NGINX.
 
+* DONE When a new suggestion is added, notify previous voters to review their votes.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-06 Thu 13:36
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Workflow
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE The author of a suggestion can modify it.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-06 Thu 13:36
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Workflow
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  The votes of the old version are moved to the new version of the translation,
+  but the voters are notified about the change, so that they can review it,
+  if needed.
+
+* DONE Moderators can delete unacceptable translations
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-06 Thu 13:36
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Workflow
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE Enable export again.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-06 Thu 13:38
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Improve export, so that different export algorithms can be used.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-06 Thu 13:38
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  For example one export algorithm can be: my vote takes precedence.
+  This means that wherever the translator has voted, his choice will
+  prevail, otherwise the most voted translation will be exported.
+
+
+
+
+
+
 
 
 
