@@ -28,12 +28,12 @@
 ** UI
 
 *** List of *string-->translations*
-    + Define and implement suitable access rights.
-    + Some of the advanced filtering options should be available
+    + [X] Define and implement suitable access rights.
+    + [X] Some of the advanced filtering options should be available
       only if the user has propper access rights.
-    + Some editing options should be available only if the user has
+    + [X] Some editing options should be available only if the user has
       propper access rights.
-    + For each suggestion, the admin (or moderators) should be able to apply
+    + [X] For each suggestion, the admin (or moderators) should be able to apply
       additional actions (for example remove the suggestion).
 
     + For each l10n string, display also the corresponding translations
@@ -45,7 +45,7 @@
     + For each suggestion, add a Like (or +1) button. When it is clicked,
       the vote is submitted through an AJAX call. The voted (or liked,
       or +1'd) suggestion should be visibly distinguished from the rest.
-    + For each suggestion, display details like: suggested by, suggested
+    + [X] For each suggestion, display details like: suggested by, suggested
       when, number of votes, some of the latest voters (and all the voters
       when clicked).
     + For each suggestion add a Flag (or -1) button. A suggestion is flagged
@@ -63,16 +63,19 @@
       approve more than one translation for the same string).
     + For the 'multiple' mode, an Unlike button should be available as well (in order
       to change the voting at any time).
-    + When the votes are changed, the old (removed) votes should be stored on
+    + [X] When the votes are changed, the old (removed) votes should be stored on
       an archive table, in order to keep the history of changing votes as well.
 
 ** Workflow
 
-*** When a new suggestion is added, notify previous voters to review their votes.
+*** DONE When a new suggestion is added, notify previous voters to review their votes.
 
-*** The author of a suggestion can withdraw it or change it.
-    In both cases the votes are lost (deleted or archived) and the
-    voters are notified about the change.
+*** DONE The author of a suggestion can modify it.
+    The votes of the old version are moved to the new version of the translation,
+    but the voters are notified about the change, so that they can review it,
+    if needed.
+
+*** DONE Moderators can delete unacceptable translations
 
 
 ** API
@@ -103,11 +106,11 @@
 
 *** Improve the look of number of votes.
 
-*** TODO Try to use on l10n.org.al the theme sky or some other suitable theme.
+*** Try to use on l10n.org.al the theme sky or some other suitable theme.
     Try to configure a responsive layout (which changes automatically
     for different screen sizes).
 
-*** TODO Send out HTML notification emails.
+*** Send out HTML notification emails.
     Replace one-time-login with one-time-submittion on the
     notification emails
 
@@ -123,8 +126,8 @@
     Note: Installation of NGINX has improved the performance
           for the time being, so this can be postponed.
 
-*** Enable export again.
-*** Improve export, so that different export algorithms can be used.
+*** DONE Enable export again.
+*** DONE Improve export, so that different export algorithms can be used.
     For example one export algorithm can be: my vote takes precedence.
     This means that wherever the translator has voted, his choice will
     prevail, otherwise the most voted translation will be exported.
@@ -138,11 +141,16 @@
     rules defined and agreed by the administrators.
 
 *** Context information about the strings
+    - Internal link to translations into other auxiliary languages.
     - External link to google.com, which tries to get more details
       about the context in which a string is used.
     - External link to open-trans.eu
     - Other external links (related to the projects to which the
-      string appears).
+      string appears)
+      + transvision.mozfr.org
 
 *** Publish Disqus comments to twitter account @l10n_sq
 
+*** TODO Create a dictionary/thesaurus with the most interesting terms and translations
+    - Translators should be able to add new terms and translations to it.
+    - It should be possible to use it as help for translating strings.
