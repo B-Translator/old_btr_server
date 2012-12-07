@@ -59,7 +59,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
 
   //dpm($form_state['values']);  //debug
   $string = check_plain(trim($form_state['values']['newterm']));
-  $context = '';
+  $context = 'vocabulary';
   $sguid = sha1($string . $context);
 
   $db = $GLOBALS['l10n_feedback_db'];

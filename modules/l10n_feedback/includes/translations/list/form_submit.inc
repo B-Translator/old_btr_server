@@ -90,6 +90,7 @@ function _l10n_feedback_translate_form_save($form_values) {
     'cannot_suggest' => 0,
     'nr_votes' => 0,
     'nr_suggestions' => 0,
+    'nr_deletions' => 0,
   );
 
   // Iterate outer structure built in l10n_feedback_translate_form().
@@ -403,6 +404,9 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
  */
 function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $translation) {
 
+  // Allow translators to add more than one suggestions for the same string.
+  if (user_access('btranslator-import'))  return;
+
   $db = $GLOBALS['l10n_feedback_db'];
 
   // Get the old translation (if any).
@@ -549,14 +553,15 @@ function l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation
 function _l10n_feedback_delete_translation($translation) {
 
   //dpm($translation);  //debug
+  $trans = $translation['original'];
 
   // Check that the current user has the right to delete translations.
-  if (!user_access('btranslator-resolve')) {
-    drupal_set_message(t('You have no rights for deleting translations!'), 'error');
+  $is_own = ($GLOBALS['user']->name == $trans->author);
+  if (!$is_own and !user_access('btranslator-resolve')) {
+    drupal_set_message(t('You are not allowed to delete this translation!'), 'error');
     return;
   }
 
-  $trans = $translation['original'];
   $db = $GLOBALS['l10n_feedback_db'];
 
   // Copy to the trash table the translations that will be deleted.
@@ -612,6 +617,9 @@ function _l10n_feedback_delete_translation($translation) {
     );
     $queue->createItem((object)$notification_params);
   }
+
+  global $_l10n_feedback_save_status;
+  $_l10n_feedback_save_status['nr_deletions']++;
 }
 
 
@@ -650,5 +658,9 @@ function l10n_feedback_display_notification_messages() {
 
   if ($nr_votes > 0) {
     drupal_set_message(format_plural($nr_votes, '1 vote saved', '@count votes saved'));
+  }
+
+  if ($nr_deletions > 0) {
+    drupal_set_message(format_plural($nr_deletions, '1 translation deleted', '@count translations deleted'));
   }
 }
