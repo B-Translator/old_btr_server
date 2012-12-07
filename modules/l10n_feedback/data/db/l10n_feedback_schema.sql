@@ -144,12 +144,12 @@ CREATE TABLE `l10n_feedback_translations_trash` (
   `d_umail` varchar(250) CHARACTER SET utf8 NOT NULL COMMENT 'The email of the user that deleted this translation.',
   `d_ulng` varchar(5) CHARACTER SET utf8 NOT NULL COMMENT 'The language of the user that deleted this translation.',
   `d_time` datetime NOT NULL COMMENT 'Timestamp of the deletion time.',
-  PRIMARY KEY (`tguid`),
   KEY `time` (`time`),
   KEY `sguid` (`sguid`),
   KEY `umail` (`umail`(10)),
   KEY `d_time` (`d_time`),
   KEY `d_umail` (`d_umail`(10)),
+  KEY `tguid` (`tguid`),
   FULLTEXT KEY `translation_text` (`translation`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations that are deleted are saved on the trash table.';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -180,11 +180,11 @@ CREATE TABLE `l10n_feedback_votes_trash` (
   `time` datetime DEFAULT NULL COMMENT 'Timestamp of the voting time.',
   `active` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'The active/deleted status of the record.',
   `d_time` datetime NOT NULL COMMENT 'Timestamp of the deletion time.',
-  PRIMARY KEY (`vid`),
   KEY `time` (`time`),
   KEY `tguid` (`tguid`),
   KEY `d_time` (`d_time`),
-  KEY `umail_ulng_tguid` (`umail`(20),`ulng`,`tguid`)
+  KEY `umail_ulng_tguid` (`umail`(20),`ulng`,`tguid`),
+  KEY `vid` (`vid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Votes that are deleted are saved on the trash table.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_feedback_users`;

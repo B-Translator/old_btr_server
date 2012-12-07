@@ -436,6 +436,8 @@ function l10n_feedback_schema() {
       'mysql_type' => 'DATETIME',
       'not null' => FALSE,
     );
+  $schema['l10n_feedback_translations_trash']['primary key'] = array();
+  $schema['l10n_feedback_translations_trash']['indexes']['tguid'] = array('tguid');
   $schema['l10n_feedback_translations_trash']['indexes']['d_time'] = array('d_time');
   $schema['l10n_feedback_translations_trash']['indexes']['d_umail'] = array(array('d_umail', 10));
 
@@ -502,6 +504,8 @@ function l10n_feedback_schema() {
       'mysql_type' => 'DATETIME',
       'not null' => FALSE,
     );
+  $schema['l10n_feedback_votes_trash']['primary key'] = array();
+  $schema['l10n_feedback_votes_trash']['indexes']['vid'] = array('vid');
   $schema['l10n_feedback_votes_trash']['indexes']['d_time'] = array('d_time');
 
 
