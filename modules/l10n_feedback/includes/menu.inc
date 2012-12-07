@@ -70,6 +70,17 @@ function l10n_feedback_menu() {
     'weight'          => 4,
   );
 
+  $items['translations/addterm'] = array(
+    'type'            => MENU_LOCAL_TASK,
+    'title'           => 'Add Term',
+    'description'     => 'Add a new term on the vocabulary.',
+    'page callback'   => 'l10n_feedback_addterm',
+    'file'            => 'includes/translations/import.inc',
+    //'access callback' => 'user_access',  //default
+    'access arguments' => array('btranslator-import'),
+    'weight'          => 5,
+  );
+
   $items['translations/get'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Get l10n Translation',

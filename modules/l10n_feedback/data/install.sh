@@ -12,6 +12,9 @@ mysql=$(cat db/sql-connect.txt)
 #echo $mysql;  exit;  ## debug
 $mysql < db/l10n_feedback_schema.sql
 
+### create the project 'misc/vocabulary'
+import/vocabulary.sh
+
 ### import some PO files, just for testing/development
 test/update.sh
 
