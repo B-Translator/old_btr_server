@@ -214,13 +214,17 @@ function l10n_feedback_build_notification_email($params) {
         t("Greetings !username,
 
            The export of '!project', that you have requested, is done.
-           You can download it from this link:
-           !export_url
+           You can download it from these links:
+           * !export_url_tgz
+           * !export_url_diff
+           * !export_url_ediff
            ",
           array(
             '!username' => $params->username,
             '!project' => $params->project,
-            '!export_url' => $params->export_url,
+            '!export_url_tgz' => $params->export_url_tgz,
+            '!export_url_diff' => $params->export_url_diff,
+            '!export_url_ediff' => $params->export_url_ediff,
           )),
       );
       break;

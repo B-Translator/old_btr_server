@@ -23,12 +23,14 @@ diff_comment=$4
 cd $(dirname $0)
 
 ### make the diff with the last snapshot
-./make_diff.sh $origin $project $lng
+output_dir=/tmp
+filename="$origin-$project-$lng"
+./make_diff.sh $origin $project $lng $output_dir $filename
 
 ### files that are created by make_diff.sh
-snapshot_file="$origin-$project-$lng.tgz"
-file_diff="$origin-$project-$lng.diff"
-file_ediff="$origin-$project-$lng.ediff"
+snapshot_file=$output_dir/$filename.tgz
+file_diff=$output_dir/$filename.diff
+file_ediff=$output_dir/$filename.ediff
 
 ### if $file_diff or $file_ediff is not empty
 ### store them in the DB and save the snapshot as well

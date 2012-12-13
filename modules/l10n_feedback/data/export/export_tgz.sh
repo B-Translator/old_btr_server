@@ -15,8 +15,8 @@ origin=$1
 project=$2
 lng=$3
 output_dir=${4:-/tmp}
-filename=${5:-"$origin-$project-$lng.tgz"}
-#echo $origin $project $lng $output_dir $filename;  exit;  # debug
+filename=${5:-"$origin-$project-$lng"}
+#echo $0 $origin $project $lng $output_dir $filename;  exit;  # debug
 
 ### go to the script directory
 cd $(dirname $0)
@@ -36,14 +36,14 @@ fi
 
 ### export the PO files of all the projects in project_list
 pid=$$
-export_dir=$output_dir/$pid
+export_dir=$output_dir/${pid}_export
 for proj in $project_list
 do
     ./export.sh $origin $proj $lng $export_dir
 done
 
 ### create the tgz archive on the output dir
-tgz_file=$output_dir/$filename
+tgz_file=$output_dir/$filename.tgz
 tar -C $export_dir --create --gzip --file=$tgz_file $origin
 
 ### clean up

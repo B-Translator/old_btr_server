@@ -109,13 +109,17 @@ function l10n_feedback_export_project($export_params) {
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   $export_dir = variable_get('l10n_feedback_export_path', '/var/www/exports');
   $username = strtr(strtolower($account->name), ' ', '_');
-  $filename = "$username.$origin-$project-$lng.tgz";
-  $export_url = url('translations/exports', array('absolute' => TRUE)) . '/' . $filename;
-  exec("rm -f $export_dir/$filename");
+  $filename = "$username.$origin-$project-$lng";
+  $exports_url = url('translations/exports', array('absolute' => TRUE));
+  $export_url_tgz = $exports_url . '/' . $filename . '.tgz';
+  $export_url_diff = $exports_url . '/' . $filename . '.diff';
+  $export_url_ediff = $exports_url . '/' . $filename . '.ediff';
+  exec("rm -f $export_dir/$filename.tgz $export_dir/$filename.diff $export_dir/$filename.ediff");
 
   // Run the export script (with lowered priority).
-  $export_tgz_sh = drupal_get_path('module', 'l10n_feedback') . '/data/export/export_tgz.sh';
-  $export_cmd = "nice $export_tgz_sh $origin $project $lng $export_dir $filename";
+  $make_diff_sh = drupal_get_path('module', 'l10n_feedback') . '/data/export/make_diff.sh';
+  $export_cmd = "nice $make_diff_sh $origin $project $lng $export_dir $filename";
+  $export_cmd = "export QUIET=true; $export_cmd";
   if ($export_mode == 'preferred_by_me' or $export_mode == 'preferred_by_my_friends') {
     $export_cmd = "export PO_EXPORT_MODE='preferred' ; export PO_EXPORT_VOTERS='$voters' ; $export_cmd";
   }
@@ -130,7 +134,9 @@ function l10n_feedback_export_project($export_params) {
     'project' => $origin . '/' . $project,
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
-    'export_url' => $export_url,
+    'export_url_tgz' => $export_url_tgz,
+    'export_url_diff' => $export_url_diff,
+    'export_url_ediff' => $export_url_ediff,
   );
   $queue->createItem((object)$params);
 
