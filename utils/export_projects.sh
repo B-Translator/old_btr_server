@@ -26,7 +26,7 @@ do
     lng=$(echo $line | cut -d'/' -f3)
     #echo ./export_tgz.sh $origin $project $lng ; continue  ## debug
     if [ "$project" = '' ]; then continue; fi
-    ./export_tgz.sh $origin $project $lng
+    ../modules/l10n_feedback/data/export/export_tgz.sh $origin $project $lng
     filename=$origin-$project-$lng
     mv -f /tmp/$filename.tgz $output_dir/$filename.tgz
 done < $project_list
