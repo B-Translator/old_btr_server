@@ -1,6 +1,12 @@
 #!/bin/bash
 ### Export all the projects that are listed in a file.
-### Usually called by cron.
+### Usually called by cron. It can be called by cron like this:
+### 
+###     0 2 * * * nice \
+###         /var/www/dev.btranslator.org/profiles/btranslator/utils/export_projects.sh \
+###         /var/www/downloads/exports/ \
+###         /var/www/downloads/exports/projects.txt
+
 
 ### get the parameters
 if [ $# -lt 2 ]
@@ -14,6 +20,9 @@ project_list.txt contains lines of the form origin/project/lng
 fi
 output_dir=$1
 project_list=$2
+
+### suppress verbose output during exports
+export QUIET=true
 
 ### go to the script directory
 cd $(dirname $0)
