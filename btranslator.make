@@ -56,6 +56,7 @@ projects[memcache][version] = "1.0"
 ;--------------------
 projects[drupalchat][version] = "1.0-beta6"
 projects[disqus][version] = "1.9"
+projects[sharethis][version] = "2.5"
 projects[rpx][version] = "2.2"
 projects[fb][version] = "3.x-dev"
 projects[invite][version] = "2.1-beta2"

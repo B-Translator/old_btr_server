@@ -85,38 +85,12 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     );
   }
 
-  $disqus = sizeof($strings)==1 ? 'comments' : 'link';
-
   // Fill in string values for the editor.
   foreach ($strings as $sguid => $string) {
     $form['strings'][$sguid] = _l10n_feedback_translate_form_item($form_state, $string, $lng);
-    if ($disqus == 'comments') {
-
-      // set the page title (no longer than 20 chars)
-      $title = l10n_feedback_shorten($string->string[0], 20);
-      drupal_set_title(t('String: !string', array('!string' => $title),
-          array('context' => 'set the page title')));
-
-      // get the comment title (no longer than 50 chars)
-      $title = l10n_feedback_shorten($string->string[0], 50);
-
-      // define the disqus form element
-      $form['disqus'] = array(
-        '#type' => 'disqus',
-        '#disqus' => array(
-          'domain' => variable_get('disqus_domain', 'dev-btranslator'),
-          'status' => TRUE,
-          'url' => url("translations/$lng/$sguid", array('absolute' => TRUE)),
-          'title' => $title,
-          'identifier' => "translations/$lng/$sguid",
-          'developer' => variable_get('disqus_developer', '1'),
-        ),
-        '#weight' => variable_get('disqus_weight', 50),
-      );
-    }
     /*
-      else {
-      $form['strings'][$sguid]['disqus'] = array(
+    // TODO: Display the number of comments for each string.
+    $form['strings'][$sguid]['disqus'] = array(
       '#theme' => 'links',
       '#links' => array('disqus_comments_num' => array(
       'title' => t('Comments'),
@@ -136,10 +110,43 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       $form['strings'][$sguid]['#attached']['js'][] = array(
       'data' => array('disqusComments' => "l10n-$lng"),
       'type' => 'setting',
-      );
-
-      }
+    );
     */
+  }
+
+  if (sizeof($strings)==1) {
+
+    // set the page title (no longer than 20 chars)
+    $title = l10n_feedback_shorten($string->string[0], 20);
+    drupal_set_title(t('String: !string', array('!string' => $title),
+        array('context' => 'set the page title')));
+
+    $short_string = l10n_feedback_shorten($string->string[0], 50);
+    $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
+
+    // define the sharethis form element
+    $data_options = sharethis_get_options_array();
+    $form['sharethis'] = array(
+      '#tag' => 'div', // Wrap it in a div.
+      '#type' => 'html_tag',
+      '#attributes' => array('class' => 'sharethis-buttons'),
+      '#value' => sharethis_get_button_HTML($data_options, $path=$url, "String: $short_string"),
+      '#weight' => intval(variable_get('sharethis_weight', 10)),
+    );
+
+    // define the disqus form element
+    $form['disqus'] = array(
+      '#type' => 'disqus',
+      '#disqus' => array(
+        'domain' => variable_get('disqus_domain', 'dev-btranslator'),
+        'status' => TRUE,
+        'url' => $url,
+        'title' => $short_string,
+        'identifier' => "translations/$lng/$sguid",
+        'developer' => variable_get('disqus_developer', '1'),
+      ),
+      '#weight' => variable_get('disqus_weight', 50),
+    );
   }
 
   //dpm($form, '$form');  //debug
