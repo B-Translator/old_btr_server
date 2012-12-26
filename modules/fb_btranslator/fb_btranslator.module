@@ -9,85 +9,6 @@
  * these examples into their own module, and customizing as needed.
  */
 
-/**
- * Implements hook_node_view().
- *
- * Add an XFBML like button to all node pages.  The button will appear next to
- * other node links, such as "add new comment".
- */
-function fb_btranslator_node_view($node, $view_mode, $langcode) {
-  if ($view_mode == 'full') {
-    $links = array();
-    if (variable_get('fb_btranslator_link_add_like', TRUE)) { // Switch to control this behavior.
-      $url = fb_scrub_urls(url('node/' . $node->nid, array('absolute' => TRUE)));
-      $links['dff_like'] = array(
-        'title' => "<fb:like send=\"true\" ref=\"node/$node->nid\" href={$url}></fb:like>",
-        'html' => TRUE,
-      );
-    }
-    $node->content['links'][$node->type] = array(
-      '#theme' => 'links__node__' . $node->type,
-      '#links' => $links,
-      '#attributes' => array('class' => array('links', 'inline')),
-    );
-  }
-}
-
-
-/**
- * Implements hook_fb_friend_invite_page_wrap_alter().
- *
- * @see modules/fb/contrib/fb_friend.module
- *
- * Here we customize the block which invites facebook friends to visit
- * the current page.
- *
- * By default the invite form is wrapped in serverfbml and embedded
- * within a page.  Here we alter the data before it is rendered.  We
- * change the wrapper type to fb_connect_fbml_popup.  The result is a
- * link which pops up the invite form.
- */
-function fb_btranslator_fb_friend_invite_page_wrap_alter(&$elem) {
-  // Replace serverfbml with popup
-  if ($elem['#type'] == 'fb_form_serverfbml') {
-    $elem['#type'] = 'fb_fbml_popup';
-    $elem['#title'] = t('Invite Friends to View This Page');
-    $elem['#link_text'] = t('Invite friends to view this page');
-    $elem['#attributes'] = array('width' => 760);
-  }
-}
-
-/**
- * Implements hook_fb_friend_invite_page_alter().
- *
- * Customizes aspects of the invitation form.
- */
-function fb_faktor_fb_friend_invite_page_alter(&$fbml) {
-  $fbml['selector']['#attributes']['cols'] = 4;
-  $fbml['selector']['#attributes']['email_invite'] = TRUE;
-  $fbml['selector']['#attributes']['import_external_friends'] = FALSE;
-}
-
-/**
- * Implements hook_fb_friend_invite_app_alter().
- *
- * Customizes aspects of the invitation form.
- */
-function fb_btranslator_fb_friend_invite_app_alter(&$fbml) {
-  $fbml['selector']['#attributes']['cols'] = 4;
-  $fbml['selector']['#attributes']['email_invite'] = TRUE;
-  $fbml['selector']['#attributes']['import_external_friends'] = FALSE;
-}
-
-function fb_btranslator_fb_friend_invite_app_wrap_alter(&$elem) {
-  // Replace serverfbml with popup
-  if ($elem['#type'] == 'fb_form_serverfbml') {
-    $elem['#type'] = 'fb_fbml_popup';
-    $elem['#title'] = t('Invite Friends to install this application');
-    $elem['#link_text'] = t('Invite friends to install this application');
-    $elem['#attributes'] = array('width' => 760);
-  }
-}
 
 /**
  * Implements hook_form_alter().
@@ -100,6 +21,7 @@ function fb_btranslator_form_alter(&$form, $form_state, $form_id) {
   // Add stream publish option.
   if (isset($GLOBALS['_fb']) && fb_facebook_user()) {
     if ($form['#id'] == 'node-form') {
+      //if ($form['#node_edit_form'] == TRUE) {
       // Add checkbox to control feed publish.
       $form['fb_btranslator']['stream_publish'] = array(
         '#type' => 'checkbox',
@@ -157,7 +79,7 @@ function fb_btranslator_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
 
 
       $user_message = t('Check out my latest post on !site...',
-                        array('!site' => variable_get('site_name', t('my Drupal for Facebook powered site'))));
+                        array('!site' => variable_get('site_name', 'B-Translator')));
       $actions = array();
       $actions[] = array(
         'text' => t('Read More'),
@@ -212,7 +134,7 @@ function fb_btranslator_comment(&$a1, $op) {
       }
 
       $user_message = t('Check out my latest comment on !site...',
-                        array('!site' => variable_get('site_name', t('my Drupal for Facebook powered site'))));
+                        array('!site' => variable_get('site_name', 'B-Translator')));
       $actions = array();
       $actions[] = array('text' => t('Read More'),
                          'href' => url('node/' . $a1['nid'], array('absolute' => TRUE)),
@@ -288,7 +210,7 @@ function fb_btranslator_fb($op, $data, &$return) {
       // from adding a comment.  In practice, you could put some other javascript here.
       $return[] = "FB_JS.reload();";
     }
-    if ($data['event_type'] == 'session_change' && variable_get('fb_btranslator_session_change_redirect', FALSE)) {
+    if ($data['event_type'] == 'session_change' && variable_get('fb_btranslator_session_change_redirect', TRUE)) {
       if (!isset($GLOBALS['fb_btranslator_new_user'])) {
         // The user has clicked the connect button, or logged into/out-of
         // facebook in another browser window, then refreshed.
@@ -296,7 +218,7 @@ function fb_btranslator_fb($op, $data, &$return) {
           // The user has connected (as opposed to logged out).  Let's redirect
           // them to our 'welcome' page.  Replace 'welcome' with the path you
           // really want.
-          $url = url('welcome',
+          $url = url('dashboard',
                      array('absolute' => TRUE, 'fb_canvas' => fb_is_canvas()));
           // We return javascript to be evaluated by fb.js.
           $return[] = "FB_JS.reload('$url');";
@@ -317,6 +239,7 @@ function fb_btranslator_fb($op, $data, &$return) {
     }
   }
 }
+
 
 /**
  * Implements hook_fb_user().
@@ -380,6 +303,7 @@ function fb_btranslator_fb_user($op, $data, &$return) {
  * Note this function is only relavent when the checkboxes on admin >> site
  * building >> facebook apps >> canvas pages are disabled.
  */
+/*
 function fb_btranslator_preprocess_page(&$variables) {
   if (module_exists('fb_canvas') && fb_is_canvas()) {
     include_once drupal_get_path('module', 'fb') . '/fb.process.inc';
@@ -396,6 +320,8 @@ function fb_btranslator_preprocess_page(&$variables) {
     }
   }
 }
+*/
+
 
 /**
  * Implements hook_init().

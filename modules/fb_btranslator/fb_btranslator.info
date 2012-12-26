@@ -5,5 +5,4 @@ core = 7.x
 dependencies[] = fb
 dependencies[] = fb_form
 dependencies[] = fb_app
-dependencies[] = fb_friend
 
