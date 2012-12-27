@@ -104,10 +104,43 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
       ))
     ->execute();
 
+  // notify translators about the new term
+  l10n_feedback_new_term_notification($string, $sguid);
+
   // redirect to translating the term
   $lng = variable_get('l10n_feedback_translation_lng', 'fr');
   drupal_goto("translations/$lng/$sguid");
 }
+
+/**
+ * Notify translators about the new term.
+ */
+function l10n_feedback_new_term_notification($string, $sguid) {
+
+  // Get all the users with role 'translator'.
+  $query = "SELECT ur.uid FROM users_roles ur
+            RIGHT JOIN role r ON (ur.rid = r.rid)
+            WHERE r.name = 'translator' ";
+  $uids = db_query($query)->fetchCol();
+  $translators = user_load_multiple($uids);
+
+  // Notify the translators about the new term.
+  $queue = DrupalQueue::get('notifications');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  foreach ($translators as $translator) {
+    $notification_params = array(
+      'type' => 'notify-translator-on-new-term',
+      'uid' => $translator->uid,
+      'username' => $translator->name,
+      'recipient' => $translator->name . ' <' . $translator->mail . '>',
+      'sguid' => $sguid,
+      'string' => $string,
+      'author' => $GLOBALS['user']->name,
+    );
+    $queue->createItem((object)$notification_params);
+  }
+}
+
 
 /**
  * Form: delterm

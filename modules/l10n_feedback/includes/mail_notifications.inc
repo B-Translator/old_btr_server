@@ -44,7 +44,8 @@ function l10n_feedback_build_notification_email($params) {
   if (isset($params->sguid)) {
     $url = get_string_url($params->uid, $params->sguid);
   }
-  $subject_prefix = 'l10n-' . variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $subject_prefix = "l10n-$lng";
 
   switch ($params->type) {
 
@@ -121,6 +122,47 @@ function l10n_feedback_build_notification_email($params) {
             '!string' => $params->string,
             '!voted_translation' => $params->voted_translation,
             '!new_translation' => $params->new_translation,
+          )),
+      );
+      break;
+
+    // Notify translators that a new term has been added to the vocabulary.
+    case 'notify-translator-on-new-term':
+      $subject = t("[!prefix] New term: !string",
+                 array(
+                   '!prefix' => $subject_prefix,
+                   '!string' => $params->string,
+                 ));
+      $body = array(
+        t("Greetings !username,
+
+           A new term has been added to the vocabulary
+           by !author: !string
+
+           You can review its translation at this link:
+           !url
+
+           Thanks
+
+           ----------
+
+           - You can add a new term at:
+             !url_add_term
+
+           - You can see all the vocabulary terms at:
+             !url_vocabulary
+
+          ",
+          array(
+            '!username' => $params->username,
+            '!author' => $params->author,
+            '!string' => $params->string,
+            '!url' => $url,
+            '!url_add_term' => url('translations/addterm', array('absolute' => TRUE)),
+            '!url_vocabulary' => url('search', array(
+                                 'absolute' => TRUE,
+                                 'query' => array('project' => 'vocabulary', 'lng' => $lng)
+                               )),
           )),
       );
       break;
