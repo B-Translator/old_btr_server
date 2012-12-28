@@ -59,6 +59,12 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     );
   }
 
+  $form['buttons']['login'] = array(
+    '#type' => 'submit',
+    '#value' => t('Login'),
+    '#access' => !user_is_logged_in(),
+  );
+
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
   $translation_lng = variable_get('l10n_feedback_translation_lng', 'fr');

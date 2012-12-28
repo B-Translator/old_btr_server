@@ -15,11 +15,15 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
 
-  // Check that the button  clicked was either Save or Next or Previous.
+  // Check that the button  clicked was either Save, or Next, or Previous, etc.
   $op = $form_values['op'];
-  if ( $op!=t('Previous') && $op!=t('Save') && $op!=t('Next')
+  if ( $op!=t('Login') && $op!=t('Previous') && $op!=t('Save') && $op!=t('Next')
        && $op!=t('Translated') && $op!=t('Untranslated') ) {
     return;
+  }
+
+  if ($op==t('Login')) {
+    drupal_goto('user', array('query' => drupal_get_destination()));
   }
 
   // Save the values selected on the form (votes or new suggestions).
