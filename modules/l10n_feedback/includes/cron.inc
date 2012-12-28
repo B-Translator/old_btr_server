@@ -18,8 +18,8 @@ function l10n_feedback_cron_queue_info() {
     'worker callback' => 'l10n_feedback_export_project',
     'time' => 2000,
   );
-  $queues['l10n_feedback_delete_users'] = array(
-    'worker callback' => 'l10n_feedback_user_delete',
+  $queues['l10n_feedback_delete_fake_users'] = array(
+    'worker callback' => 'l10n_feedback_delete_fake_user',
     'time' => 30,
   );
   return $queues;
@@ -169,7 +169,7 @@ function l10n_feedback_cleanup_fake_users() {
   $result = $query->execute();
 
   if (isset($result['user'])) {
-    $queue = DrupalQueue::get('l10n_feedback_delete_users');
+    $queue = DrupalQueue::get('l10n_feedback_delete_fake_users');
     foreach (array_keys($result['user']) as $uid) {
       $queue->createItem($uid);
     }
@@ -180,7 +180,7 @@ function l10n_feedback_cleanup_fake_users() {
  * This function is a callback from the cron-queue,
  * which is used to delete the user with the given $uid.
  */
-function l10n_feedback_user_delete($uid) {
+function l10n_feedback_delete_fake_user($uid) {
   // Delete from the drupal table 'users'
   user_delete($uid);
 
