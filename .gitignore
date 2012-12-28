@@ -53,3 +53,6 @@ modules/invite/
 modules/homebox/
 modules/memcache/
 modules/simpletest_clone/
+modules/captcha/
+modules/recaptcha/
+modules/honeypot/

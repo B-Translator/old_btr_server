@@ -20,8 +20,7 @@
 function fb_btranslator_form_alter(&$form, $form_state, $form_id) {
   // Add stream publish option.
   if (isset($GLOBALS['_fb']) && fb_facebook_user()) {
-    if ($form['#id'] == 'node-form') {
-      //if ($form['#node_edit_form'] == TRUE) {
+    if (substr($form['#id'], -9) == 'node-form') {
       // Add checkbox to control feed publish.
       $form['fb_btranslator']['stream_publish'] = array(
         '#type' => 'checkbox',

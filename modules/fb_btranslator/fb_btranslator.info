@@ -3,6 +3,5 @@ description = (fb_btranslator.module) This module will make your site behave mor
 package = B-Translator
 core = 7.x
 dependencies[] = fb
-dependencies[] = fb_form
 dependencies[] = fb_app
 

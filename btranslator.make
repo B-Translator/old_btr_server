@@ -44,6 +44,9 @@ projects[entity][version] = "1.0-rc3"
 projects[rules][version] = "2.2"
 projects[homebox][version] = "2.0-beta6"
 projects[simpletest_clone][version] = "1.0-beta3"
+projects[captcha][version] = "1.0-beta2"
+projects[recaptcha][version] = "1.8"
+projects[honeypot][version] = "1.13"
 
 ;--------------------
 ; Performance
@@ -58,7 +61,7 @@ projects[drupalchat][version] = "1.0-beta6"
 projects[disqus][version] = "1.9"
 projects[sharethis][version] = "2.5"
 projects[rpx][version] = "2.2"
-projects[fb][version] = "3.x-dev"
+projects[fb][version] = "3.3-beta5"
 projects[invite][version] = "2.1-beta2"
 
 ;--------------------

@@ -62,6 +62,10 @@ dependencies[] = drupalchat
 ;dependencies[] = rpx
 dependencies[] = invite
 dependencies[] = homebox
+dependencies[] = captcha
+dependencies[] = recaptcha
+dependencies[] = honeypot
+
 
 ;--------------------
 ; Drupal Localization
