@@ -159,7 +159,7 @@ function l10n_feedback_build_notification_email($params) {
             '!string' => $params->string,
             '!url' => $url,
             '!url_add_term' => url('translations/addterm', array('absolute' => TRUE)),
-            '!url_vocabulary' => url('search', array(
+            '!url_vocabulary' => url('translations/search', array(
                                  'absolute' => TRUE,
                                  'query' => array('project' => 'vocabulary', 'lng' => $lng)
                                )),
