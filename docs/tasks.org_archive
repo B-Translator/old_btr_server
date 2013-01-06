@@ -460,6 +460,40 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   This means that wherever the translator has voted, his choice will
   prevail, otherwise the most voted translation will be exported.
 
+* DONE Create a dictionary/thesaurus with the most interesting terms and translations
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-29 Sat 21:46
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  - Translators should be able to add new terms and translations to it.
+  - It should be possible to use it as help for translating strings.
+* DONE Make nightly exports of the active projects
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-29 Sat 21:46
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  These are ready for download by everyone, without making
+  an export request first. But they export only the most_voted
+  translations.
+
+* DONE Enable exporting of diffs
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2012-12-29 Sat 21:46
+  :ARCHIVE_FILE: /var/www-ssl/dev.btranslator.org/profiles/btranslator/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+
+
+
 
 
 
