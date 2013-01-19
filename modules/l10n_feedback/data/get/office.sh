@@ -6,7 +6,9 @@ echo "===== GETTING LibreOffice ====="
 change_dir LibreOffice
 
 ### download all translations
-translations_url="http://download.documentfoundation.org/libreoffice/src/3.6.2/libreoffice-translations-3.6.2.1.tar.xz"
+### find the propper url on this page:
+### http://download.documentfoundation.org/libreoffice/src/
+translations_url="http://download.documentfoundation.org/libreoffice/src/4.0.0/libreoffice-translations-4.0.0.0.beta2.tar.xz"
 wget $translations_url
 
 ### the code of the language to be extracted, like: fr\|de\|en_GB\|sq
@@ -19,7 +21,7 @@ tar -tvJf $translations | grep -e "/\($langs\)/" | gawk '{print $6}' > extract-f
 ### extract these files from the translations archive
 rm -rf $languages
 tar --extract --xz --files-from=extract-files.txt --overwrite --file=$translations
-mv libreoffice-translations-*/translations/source/* .
+mv libreoffice-*/translations/source/* .
 rm -rf libreoffice-translations-*/
 
 ### cleanup

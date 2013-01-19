@@ -22,14 +22,17 @@ echo "===== GETTING UBUNTU ====="
 change_dir ubuntu
 
 ### Get the base pack and the latest update:
-wget https://translations.launchpad.net/ubuntu/precise/+latest-full-language-pack
-mv +latest-full-language-pack ubuntu-precise-translations.tar.gz
-wget http://launchpadlibrarian.net/116413828/ubuntu-precise-translations-update.tar.gz
+release="quantal"
+wget https://translations.launchpad.net/ubuntu/$release/+latest-full-language-pack
+mv +latest-full-language-pack ubuntu-$release-translations.tar.gz
+## Note: Find the URL of the latest update on this page:
+##       https://translations.launchpad.net/ubuntu/$release/+language-packs
+wget http://launchpadlibrarian.net/127900941/ubuntu-$release-translations-update.tar.gz
 
 
 ### downloaded language packs
-translations="./ubuntu-precise-translations.tar.gz"
-translations_update="./ubuntu-precise-translations-update.tar.gz"
+translations="./ubuntu-$release-translations.tar.gz"
+translations_update="./ubuntu-$release-translations-update.tar.gz"
 
 ### the code of the language to be extracted, like: fr\|de\|en_GB\|sq
 langs=$(echo $languages | sed -e 's/ /\\|/g')
@@ -42,10 +45,10 @@ tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$transl
 tar --extract --gunzip --files-from=extract-files.txt --overwrite --file=$translations_update 2>/dev/null
 
 ### after the extraction, there will be directories like:
-### rosetta-precise/$lng/LC_MESSAGES
+### rosetta-$release/$lng/LC_MESSAGES
 rm -rf $languages
-mv rosetta-precise/* .
-rmdir rosetta-precise/
+mv rosetta-$release/* .
+rmdir rosetta-$release/
 
 ### cleanup
 rm extract-files.txt

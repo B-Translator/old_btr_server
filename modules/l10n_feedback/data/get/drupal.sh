@@ -6,10 +6,11 @@ echo "===== GETTING Drupal ====="
 change_dir Drupal
 
 ### get the directory of the downloaded PO files
-drupal_dir=$(drush drupal-directory)
-l10n_store=$(drush variable-get l10n_update_download_store | cut -d' ' -f2)
-l10n_store=${l10n_store//\"/}
-po_dir=$drupal_dir/$l10n_store
+#drupal_dir=$(drush drupal-directory)
+#l10n_store=$(drush variable-get l10n_update_download_store | cut -d' ' -f2)
+#l10n_store=${l10n_store//\"/}
+#po_dir=$drupal_dir/$l10n_store
+po_dir=/var/www/btranslator.org/sites/all/translations
 
 ### copy PO files
 echo "Getting PO files from $po_dir ..."

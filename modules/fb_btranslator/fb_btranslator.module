@@ -220,7 +220,7 @@ function fb_btranslator_fb($op, $data, &$return) {
           $url = url('dashboard',
                      array('absolute' => TRUE, 'fb_canvas' => fb_is_canvas()));
           // We return javascript to be evaluated by fb.js.
-          $return[] = "FB_JS.reload('$url');";
+          //$return[] = "FB_JS.reload('$url');";
         }
       }
       elseif ($GLOBALS['fb_btranslator_new_user']) {
