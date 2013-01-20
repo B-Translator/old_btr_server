@@ -1,0 +1,61 @@
+﻿
+#content
+{
+  text-align: center;
+}
+
+#content h1, #content h2
+{
+  color: #FFF;
+  font-weight: bold;
+}
+
+#search_results_div dd
+{
+  margin: 0px;
+  padding: 6px 0px 10px 24px;
+}
+
+.region-help
+{
+  background:#9EACAB;
+  text-align:center;
+  font: 14px Arial, Helvetica, sans-serif;
+  color:#FFF;
+  padding: 20px;
+}
+
+.form-item-word
+{
+  text-align:center;
+  padding: 30px;
+  padding-top: 0px;
+}
+
+#edit-word
+{
+  font: 12px Arial, Helvetica, sans-serif;
+  padding: 4px;
+  margin-bottom: 5px;
+  color:#333;
+}
+
+#search_results_div
+{
+  width:500px;
+  margin:0px auto;
+  text-align:left;
+  padding:15px;
+  font: 12px Arial, Helvetica, sans-serif;
+  color:#333;
+}
+
+#copyright
+{
+  margin: 60px 0;
+  padding: 5px 20px;
+  background: #f0f0f0;
+  text-align:center;
+  font: 10px Arial, Helvetica, sans-serif;
+  color:#333;
+}

@@ -1,0 +1,4 @@
+name = Fjalori
+description = Fjalori shpjegues i shqipes me 40000 fjale.
+package = B-Translator
+core = 7.x

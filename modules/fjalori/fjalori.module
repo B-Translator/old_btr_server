@@ -1,0 +1,98 @@
+<?php
+/**
+ * @file
+ * Module file for fjalori.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function fjalori_menu() {
+
+  $items['fjalori'] = array(
+    'type'             => MENU_NORMAL_ITEM,
+    //'title'            => 'Fjalori',
+    'description'      => 'Fjalori shpjegues i fjalëve.',
+    'page callback'    => 'fjalori_search',
+    'access callback'  => TRUE,
+    'weight'           => 100,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_help().
+ */
+function fjalori_help($path, $arg) {
+  switch ($path) {
+    case 'fjalori':
+      $help = '<h1>FJALOR I GJUHËS SË SOTME SHQIPE</h1>'
+        . '<h2>(me rreth 40.000 fjalë)</h2>';
+      break;
+  }
+  if (!empty($help)) {
+    return '<p>' . $help . '</p>';
+  }
+}
+
+function fjalori_search() {
+  drupal_add_css(drupal_get_path('module', 'fjalori') . '/fjalori.css');
+  return drupal_get_form('fjalori_search_form');
+}
+
+function fjalori_search_form($form, &$form_state) {
+  $form = array();
+
+  $form['word'] = array(
+    '#type' => 'textfield',
+    '#description' => t('Type a word and press ENTER.'),
+    '#size' => 30,
+    '#ajax' => array(
+      'callback' => 'fjalori_get_search_results',
+      'wrapper' => 'search_results_div',
+      'keypress' => TRUE,
+      'prevent' => 'click',
+      'progress' => array('type' => 'none'),
+    ),
+  );
+
+  // This entire form element will be replaced whenever 'changethis' is updated.
+  $form['search_results'] = array(
+    '#type' => 'markup',
+    '#markup' => '',
+    // The prefix/suffix provide the div that we're replacing, named by
+    // #ajax['wrapper'] above.
+    '#prefix' => '<div id="search_results_div">',
+    '#suffix' => '</div>',
+  );
+
+  $form['copyright'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="copyright">&copy; 2012 Shkenca.org . Të gjitha të drejtat e rezervuara.</div>'
+  );
+
+  // An AJAX request calls the form builder function for every change.
+  // We can change how we build the form based on $form_state.
+  if (!empty($form_state['values']['word'])) {
+    $word = $form_state['values']['word'];
+    $form['search_results']['#markup'] = _fjalori_get_word_description($word);
+  }
+
+  return $form;
+}
+
+function _fjalori_get_word_description($word) {
+  $ch = curl_init('http://www.fjalori.shkenca.org/text.php');
+  curl_setopt($ch, CURLOPT_POSTFIELDS, 'eingabe='.urlencode($word));
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_POST, true);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  $description = curl_exec($ch);
+  curl_close($ch);
+  return check_markup($description, 'filtered_html');
+}
+
+function fjalori_get_search_results($form, &$form_state) {
+  return $form['search_results'];
+}

@@ -83,8 +83,6 @@ This is a Drupal installation profile for B-Translator.
 
   - https://l10n.org.al/translations -- It is actually a production site for
     translations into Albanian.
-  - https://btranslator.org/slovenian/translations -- Demo about Slovenian
-    translations.
 
   Would you like to setup a demo installation for your language? Contact me
   to discuss about the requirements (you need to find at least one Drupal

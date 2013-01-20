@@ -5622,3 +5622,7 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+
+#content {
+  margin: 20px;
+}

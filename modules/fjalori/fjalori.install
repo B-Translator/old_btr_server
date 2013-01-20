@@ -1,0 +1,5 @@
+<?php
+/**
+ * @file fjalori.install
+ * Install and update functions for the module fjalori.
+ */
