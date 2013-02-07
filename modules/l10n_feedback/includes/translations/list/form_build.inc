@@ -89,6 +89,11 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       '#type' => 'submit',
       '#value' => t('Untranslated'),
     );
+    $form['buttons']['same_project'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Same Project'),
+      '#value' => $_SESSION['same_project'],
+    );
   }
 
   // Fill in string values for the editor.

@@ -88,9 +88,43 @@ function l10n_feedback_get_preferred_projects($account) {
     }
   }
 
+  if (isset($_SESSION['last_project']) && $_SESSION['last_project']) {
+    $last_project = l10n_feedback_get_last_project();
+    if (!empty($last_project)) {
+      $arr_preferred_projects = array_intersect($arr_preferred_projects, $last_project);
+      if (empty($arr_preferred_projects)) {
+	$arr_preferred_projects = $last_project;
+      }
+    }
+  }
+
   return $arr_preferred_projects;
 }
 
+/**
+ * Return the project(s) of the last sguid
+ * as an array.
+ */
+function l10n_feedback_get_last_project() {
+  if ( !isset($_SESSION['sguid']))  return array();
+
+  $args = array(':last_sguid' => $_SESSION['sguid']);
+  $get_projects = "
+      SELECT p.origin, p.project
+      FROM {l10n_feedback_locations} l
+      LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.potid = l.potid)
+      LEFT JOIN {l10n_feedback_projects} p ON (p.pguid = tpl.pguid)
+      WHERE l.sguid = :last_sguid
+  ";
+  $db = $GLOBALS['l10n_feedback_db'];
+  $result = $db->query($get_projects, $args)->fetchAll();
+  $last_projects = array();
+  foreach ($result as $proj) {
+    $last_projects[] = $proj->origin . '/' . $proj->project;
+  }
+
+  return $last_projects;
+}
 
 /**
  * Return the value of the field 'field_auxiliary_languages' as an array.

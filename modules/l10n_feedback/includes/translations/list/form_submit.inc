@@ -34,6 +34,7 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
     drupal_set_message(t("You need to be logged in, in order to be able to submit votes and suggestions."));
   }
 
+  $_SESSION['same_project'] = isset($form_state['input']['same_project']) ? TRUE : FALSE;
   if ($op == t('Previous')) {
     if (isset($_SESSION['previous_url'])) {
       $previous_url = $_SESSION['previous_url'];

@@ -36,6 +36,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     else {
       $sguid = l10n_feedback_get_sguid();
     }
+    $_SESSION['sguid'] = $sguid;
     drupal_goto("translations/$lng/$sguid");
     return;
   }
