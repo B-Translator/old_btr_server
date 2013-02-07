@@ -53,8 +53,6 @@
     + For the 'multiple' mode, an Unlike button should be available as well (in order
       to change the voting at any time).
 
-** Workflow
-
 ** API
 
    Build an API/web-service that totally separates the database from
@@ -83,7 +81,7 @@
 
 *** Improve the website (homepage) of the project on GitHub.
 *** Create a page on Google+ for l10n-sq and btranslator.
-*** Generate code documentation by phpDocu and doxygen.
+*** DONE Generate code documentation by phpDocu and doxygen.
 *** Publish Disqus comments to twitter account @l10n_sq
 *** Publish new translations to twitter, facebook, linkedin, google+, etc.
 
