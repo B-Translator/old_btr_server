@@ -36,6 +36,11 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     else {
       $sguid = l10n_feedback_get_sguid();
     }
+    if ($sguid=='') {
+      drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
+      drupal_goto("/");
+      return;
+    }
     $_SESSION['sguid'] = $sguid;
     drupal_goto("translations/$lng/$sguid");
     return;
@@ -195,9 +200,6 @@ function l10n_feedback_get_random_sguid($uid) {
   //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
   $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
 
-  // Save it in the session.
-  $_SESSION['random_sguid'] = $random_sguid;
-
   return $random_sguid;
 }
 
@@ -249,9 +251,6 @@ function l10n_feedback_get_untranslated_sguid() {
   ";
   //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
   $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
-
-  // Save it in the session.
-  $_SESSION['random_sguid'] = $random_sguid;
 
   return $random_sguid;
 }
@@ -308,9 +307,6 @@ function l10n_feedback_get_translated_sguid() {
   ";
   //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
   $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
-
-  // Save it in the session.
-  $_SESSION['random_sguid'] = $random_sguid;
 
   return $random_sguid;
 }

@@ -92,7 +92,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     $form['buttons']['same_project'] = array(
       '#type' => 'checkbox',
       '#title' => t('Same Project'),
-      '#value' => $_SESSION['same_project'],
+      '#value' => isset($_SESSION['same_project']) ? $_SESSION['same_project'] : FALSE,
     );
   }
 

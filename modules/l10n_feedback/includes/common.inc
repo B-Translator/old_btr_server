@@ -88,7 +88,7 @@ function l10n_feedback_get_preferred_projects($account) {
     }
   }
 
-  if (isset($_SESSION['last_project']) && $_SESSION['last_project']) {
+  if (isset($_SESSION['same_project']) && $_SESSION['same_project']) {
     $last_project = l10n_feedback_get_last_project();
     if (!empty($last_project)) {
       $arr_preferred_projects = array_intersect($arr_preferred_projects, $last_project);
