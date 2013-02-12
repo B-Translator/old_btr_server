@@ -6,7 +6,7 @@ scripts=$(dirname $0)
 ### get a copy of config.sh on the current directory
 if [ ! -f btranslator-config.sh ]
 then
-    cp $scripts/config.sh btranslator-config.sh
+    cp $scripts/config.sh config-btranslator.sh
 fi
 
 ### install the required packages and tools

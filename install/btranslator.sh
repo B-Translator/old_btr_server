@@ -5,7 +5,7 @@
 scripts=$(dirname $0)
 
 ### get the site cofiguration settings
-. btranslator-config.sh
+. config-btranslator.sh
 
 ### confirm/modify the settings
 echo "Give site-name, site-email, account-name, account-pass and account-mail."
@@ -33,13 +33,13 @@ cd $app_dir
 set -x  ### switch on debugging
 
 ### start site installation
-drush site-install btranslator  \
+drush site-install --verbose btranslator  \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
 ### set propper directory permissions
 mkdir -p sites/default/files/
-sudo chown -R www-data: sites/default/files/
+chown -R www-data: sites/default/files/
 mkdir -p cache/
-sudo chown -R www-data: cache/
+chown -R www-data: cache/

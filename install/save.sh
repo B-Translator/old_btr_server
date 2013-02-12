@@ -4,7 +4,7 @@
 ### etc. are already defined and have the correct values
 ### that are to be saved.
 
-cat <<EOF > btranslator-config.sh
+cat <<EOF > config-btranslator.sh
 ### directory where application is installed
 app_dir=$app_dir
 

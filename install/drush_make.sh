@@ -5,7 +5,7 @@
 scripts=$(dirname $0)
 
 ### get the app_dir from the config file
-. btranslator-config.sh
+. config-btranslator.sh
 
 ### get the application directory
 while true
@@ -29,12 +29,11 @@ cd $gitpath
 git checkout -b dev
 git checkout dev
 
-### create a customized distro.make, which gets the project from the local repository
+### create a customized build-btranslator.make, which gets the project from the local repository
 cd $current_dir
-cat <<EOF > btranslator-distro.make
-; Include Build Kit distro makefile via URL
-includes[] = http://drupalcode.org/project/buildkit.git/blob_plain/refs/heads/7.x-2.x:/distro.make
-projects[buildkit] = FALSE
+cat <<EOF > build-btranslator.make
+; Include Drupal core and any core patches from Build Kit
+includes[] = http://drupalcode.org/project/buildkit.git/blob_plain/refs/heads/7.x-2.x:/drupal-org-core.make
 
 projects[btranslator][type] = profile
 projects[btranslator][download][type] = git
@@ -43,4 +42,4 @@ projects[btranslator][download][branch] = dev
 EOF
 
 ### retrieve all the projects/modules and build the application directory
-drush make --working-copy --prepare-install --force-complete btranslator-distro.make $appdir
+drush make --working-copy --prepare-install --force-complete --contrib-destination=profiles/btranslator build-btranslator.make $appdir

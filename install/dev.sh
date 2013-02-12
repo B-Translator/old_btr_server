@@ -8,7 +8,7 @@ scripts=$(pwd)
 cd $current_dir
 
 ### get app_dir from the cofiguration settings
-. btranslator-config.sh
+. config-btranslator.sh
 
 ### go to the application directory
 cd $app_dir

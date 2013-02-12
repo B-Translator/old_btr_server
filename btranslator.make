@@ -1,22 +1,5 @@
-api = 2
-core = 7.x
-
-; Build Kit 7.x-2.x HEAD
+; Include Build Kit install profile makefile via URL
 includes[] = http://drupalcode.org/project/buildkit.git/blob_plain/refs/heads/7.x-2.x:/drupal-org.make
-
-;---------------------------
-; Override BuildKit settings
-;---------------------------
-
-projects[admin][subdir] = FALSE
-projects[context][subdir] = FALSE
-projects[ctools][subdir] = FALSE
-projects[devel][subdir] = FALSE
-projects[diff][subdir] = FALSE
-projects[features][subdir] = FALSE
-projects[openidadmin][subdir] = FALSE
-projects[strongarm][subdir] = FALSE
-projects[views][subdir] = FALSE
 
 ;--------------------
 ; Additional Themes
