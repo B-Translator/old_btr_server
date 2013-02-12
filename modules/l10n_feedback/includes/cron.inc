@@ -55,7 +55,7 @@ function l10n_feedback_cron_nightly() {
  * Delete export files that are older than 2 days
  */
 function l10n_feedback_delete_old_export_files() {
-  $export_path = variable_get('l10n_feedback_export_path');
+  $export_path = variable_get('l10n_feedback_export_path', '/var/www/exports');
   exec("find $export_path/* -mtime +2 -delete");
 }
 
