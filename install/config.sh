@@ -1,11 +1,11 @@
 
 ### directory where application is installed
-app_dir=l10n_tst
+app_dir=dev.btranslator.org
 
 ### DB parameters
-db_name=l10n_tst
-db_user=l10n_tst
-db_pass=l10n_tst
+db_name=l10n_dev
+db_user=l10n_dev
+db_pass=l10n_dev
 
 ### application settings
 site_name="B-Translator"

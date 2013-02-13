@@ -4,7 +4,7 @@
 scripts=$(dirname $0)
 
 ### get a copy of config.sh on the current directory
-if [ ! -f btranslator-config.sh ]
+if [ ! -f config-btranslator.sh ]
 then
     cp $scripts/config.sh config-btranslator.sh
 fi
