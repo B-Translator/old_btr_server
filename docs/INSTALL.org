@@ -2,6 +2,97 @@
 Instructions for installing a development/testing copy of
 B-Translator.
 
+* Set up a chroot environment
+
+  It is always better to test new things in a chroot environment.
+  Chroot’s provide isolation from the rest of the operating system, so
+  even in the event of a application compromise, damage can be
+  mitigated.
+
+  + Install the packages =debootstrap= and =dchroot=:
+    #+BEGIN_EXAMPLE
+    sudo apt-get install debootstrap dchroot
+    #+END_EXAMPLE
+
+  + Add these line to ~/etc/schroot/schroot.conf~:
+    #+BEGIN_EXAMPLE
+    [precise]
+    description=Ubuntu Precise LTS
+    location=/var/chroot/btranslator
+    priority=3
+    users=ubuntu
+    groups=sbuild
+    root-groups=root
+    #+END_EXAMPLE
+
+  + Bootstrap the chroot with a minimal Ubuntu installation:
+    #+BEGIN_EXAMPLE
+    debootstrap --variant=minbase --arch=amd64 precise \
+        /var/chroot/btranslator http://mirror.rackspace.com/ubuntu/
+    cp /etc/resolv.conf /var/chroot/btranslator/etc/resolv.conf
+    cp /etc/apt/sources.list /var/chroot/btranslator/etc/apt/
+    mount -o bind /proc /var/chroot/btranslator/proc
+    chroot /var/chroot/btranslator/
+
+    apt-get install ubuntu-minimal
+    apt-get update
+    apt-get upgrade
+    apt-get install language-pack-en-base
+    apt-get install vim aptitude
+    #+END_EXAMPLE
+
+  + Install LAMP:
+    #+BEGIN_EXAMPLE
+    apt-get install aptitude tasksel
+    tasksel install lamp-server
+    #+END_EXAMPLE
+
+  + Make a startup script =/etc/init.d/chroot-btranslator= with a
+    content like this:
+    #+BEGIN_EXAMPLE
+
+    CHROOT=/var/chroot/btranslator
+
+    case "$1" in
+      start)
+        service apache2 stop
+        service mysql stop
+
+	mount -o bind /proc $CHROOT/proc
+	mount -o bind /dev $CHROOT/dev
+	mount -o bind /sys $CHROOT/sys
+	mount -o bind /dev/pts $CHROOT/dev/pts
+
+        chroot $CHROOT/  service mysql start
+        chroot $CHROOT/  service apache2 start
+	;;
+
+      stop)
+        chroot $CHROOT/  service apache2 stop
+        chroot $CHROOT/  service mysql stop
+
+	umount $CHROOT/dev/pts
+	umount $CHROOT/sys
+	umount $CHROOT/dev
+	umount $CHROOT/proc
+
+        service mysql start
+        service apache2 start
+	;;
+    esac
+    #+END_EXAMPLE
+
+  + Make it executable and start it at boot:
+    #+BEGIN_EXAMPLE
+    chmod +x /etc/init.d/chroot-btranslator
+    update-rc.d chroot-btranslator defaults
+    service chroot-btranslator start
+    #+END_EXAMPLE
+
+  Referencies:
+   - http://joshrendek.com/2013/01/securing-ubuntu/#chroot
+
+
 * Install packages
 
   + Install *LAMP* and related packages:
@@ -34,7 +125,7 @@ B-Translator.
 
   For those like me that use Emacs for development, checkout this:
   http://drupal.org/project/emacs
-
+  
 
 * Install the profile btranslator
 
