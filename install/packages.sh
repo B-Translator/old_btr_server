@@ -4,7 +4,7 @@
 apt-get install aptitude tasksel
 tasksel install lamp-server
 aptitude install phpmyadmin php5-curl php-apc php5-memcached
-aptitude install gawk git mercurial subversion translate-toolkit
+aptitude install wget gawk git mercurial subversion translate-toolkit
 
 ### make sure that we have drush-4 (drush-5 still has some problems with 'make')
 aptitude install php-pear
