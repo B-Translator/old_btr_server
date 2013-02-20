@@ -1,0 +1,17 @@
+#!/bin/bash -ex
+# executed before apply-debs
+
+source $(dirname $0)/functions
+
+# install security updates
+# better to do them here once than force every user later
+install_updates
+
+# remove old kernel images after update
+cleanup_images
+
+### install aptitude and other needed packages
+apt-get -y purge php5-xcache drush
+install php-pear php5-curl php-apc php5-memcached memcached \
+        gawk git mercurial subversion translate-toolkit msmtp
+

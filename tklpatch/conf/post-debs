@@ -1,0 +1,27 @@
+#!/bin/bash -ex
+# executed after apply-debs
+
+### make sure that we have drush-4 (drush-5 still has some problems with 'make')
+apt-get -y purge drush
+apt-get -y install php-pear
+pear channel-discover pear.drush.org
+pear install pear.drush.org/drush-4.6.0
+
+# by default use the B-Translator root directory for Drush
+mkdir -p /etc/drush
+cat > /etc/drush/drushrc.php << EOF
+<?php
+// by default use the B-Translator root directory
+\$options['r'] = '/usr/local/share/btranslator';
+EOF
+
+### install drush_make
+rm -rf /usr/share/php/drush/commands/drush_make
+cd /usr/share/php/drush/commands
+wget http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz
+tar xfz drush_make-6.x-2.3.tar.gz
+cd /
+
+### get pology (used for making embedded diffs)
+rm -rf /usr/local/lib/pology
+svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology

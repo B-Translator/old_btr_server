@@ -1,0 +1,128 @@
+#!/bin/bash -ex
+# executed after apply-overlay
+
+## TO BE FIXED
+
+
+#######################################################
+#/etc/fstab:
+#-tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
+#-tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
+#######################################################
+
+
+### create a link to sites-enabled for the nginx config of btranslator
+ln -s /etc/nginx/sites-{available,enabled}/btranslator
+
+mkdir -p /var/www/downloads
+mkdir -p /var/run/memcached/
+
+#######################################################
+
+
+source $(dirname $0)/functions
+
+# protect drupal7.conf from prying eyes
+chmod 600 /etc/dbconfig-common/drupal7.conf
+
+# generate dbconfig for drupal7
+# drush does not use dbconfig.php, but edits settings.php directly
+# Leaving this here now for compatibility ???
+dbconfig-generate-include -f php -O root:www-data -m 640 /etc/dbconfig-common/drupal7.conf /etc/drupal7/sites/default/dbconfig.php
+
+# install uploadprogress bar (from PECL) (requested by Drupal 7)
+pecl install uploadprogress
+echo "extension = uploadprogress.so" > /etc/php5/apache2/conf.d/uploadprogress.ini
+
+# configure apache
+ln -s /etc/drupal7/apache2.conf /etc/apache2/sites-available/drupal7
+a2dissite default
+a2ensite drupal7
+a2enmod rewrite substitute
+
+# increase php's 'memory_limit' from 32MB to 96MB/128MB
+CONF=/etc/php5/apache2/php.ini
+sed -i "s/^memory_limit.*/memory_limit = 96M/" $CONF
+
+CONF=/etc/php5/cli/php.ini
+sed -i "s/^memory_limit.*/memory_limit = 128M/" $CONF
+
+# install drupal site using 'standard' profile
+. /etc/dbconfig-common/drupal7.conf
+
+# drush site installation
+drush site-install standard -y --account-name=Admin --site-name=Drupal7 --db-su=root --db-su-pw='' --db-url=$dbc_dbtype://$dbc_dbuser:$dbc_dbpass@localhost/$dbc_dbname
+
+# Protect Drupal settings from prying eyes
+SETTINGS=/etc/drupal7/sites/default/settings.php
+chown root:www-data $SETTINGS
+chmod 640 $SETTINGS
+
+# Disable Poor Man's Cron
+cat >> $SETTINGS << EOF
+
+/**
+ * Disable Poor Man's Cron:
+ *
+ * Drupal 7 enables the built-in Poor Man's Cron by default.
+ * Poor Man's Cron relies on site activity to trigger Drupal's cron,
+ * and is not well suited for low activity websites.
+ *
+ * We will use the Linux system cron and override Poor Man's Cron
+ * by setting the cron_safe_threshold to 0.
+ *
+ * To re-enable Poor Man's Cron:
+ *    Comment out (add a leading hash sign) the line below,
+ *    and the system cron in /etc/cron.d/drupal7.
+ */
+\$conf['cron_safe_threshold'] = 0;
+EOF
+
+# install additional modules
+xargs -a $(dirname $0)/add_modules drush pm-download
+
+# set private file path
+drush variable-set --always-set file_private_path "/var/lib/drupal7/private"
+
+# disable powered-by Drupal block on all themes
+mysql -e "USE drupal7; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
+
+# install ckeditor backend
+drush -y pm-enable ckeditor
+drush ckeditor-download
+
+# setup getid3 module
+# patch getid3 to change 'error' to 'warning', else install aborts.
+MOD_DIR=/etc/drupal7/sites/all/modules
+sed -i "/drupal_set_message/ s/error/warning/" $MOD_DIR/getid3/getid3.module
+
+drush -y pm-enable getid3
+drush getid3-download
+
+# enable backup&migrate module
+drush -y pm-enable backup_migrate
+
+# chown all modules/libraries (they come with their own permissions)
+chown -R root:root /etc/drupal7/sites/all
+
+# add some useful aliases
+sed -i -e '/alias egrep/a\
+    alias ll="ls -alh --color=auto"\
+    alias la="ls -A --color=auto"\
+    alias l="ls -C --color=auto"
+' ~/.bashrc
+
+cat >> /etc/aliases << EOF
+webmaster:     root
+abuse:         root
+#root:         <admin e-mail address>
+EOF
+
+# change turnkey version
+sed -i -e 's/lamp/drupal7/' /etc/turnkey_version
+
+# stop mysql server
+stop mysql
+
+# tell the world what we've done!
+echo 'TurnKey Drupal7 Appliance + Drush' >> /etc/issue

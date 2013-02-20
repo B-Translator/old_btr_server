@@ -1,0 +1,5 @@
+TKLpatch to install B-Translator on the Turnkey Linux 12.x NGINX appliance
+
+See:
+ + http://www.turnkeylinux.org/docs/tklpatch
+ + http://www.turnkeylinux.org/nginx-php-fastcgi
