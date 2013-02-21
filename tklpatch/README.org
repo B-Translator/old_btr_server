@@ -1,5 +1,54 @@
-TKLpatch to install B-Translator on the Turnkey Linux 12.x NGINX appliance
 
-See:
- + http://www.turnkeylinux.org/docs/tklpatch
- + http://www.turnkeylinux.org/nginx-php-fastcgi
+TKLpatch to install B-Translator on the Turnkey Linux 12.x NGINX appliance
+(For more details see: http://www.turnkeylinux.org/docs/tklpatch)
+
+
+* How to install a B-Translator server using this TKL patch
+
+  There are two ways to install a B-Translator server using this patch.
+
+  + The recommended one:
+    1. Download the ISO of NGINX appliance from:
+       http://www.turnkeylinux.org/nginx-php-fastcgi
+    2. Get the code of B-Translator from github:
+       #+BEGIN_EXAMPLE
+       git clone https://github.com/dashohoxha/B-Translator.git
+       #+END_EXAMPLE
+    3. Apply the patch to the ISO:
+       #+BEGIN_EXAMPLE
+       tklpatch nginx.iso B-Translator/tklpatch/
+       mv nginx.iso btranslator.iso
+       #+END_EXAMPLE
+    4. Use the new ISO to install a B-Translator server.
+
+  + Another way:
+    1. Download the ISO of NGINX appliance from:
+       http://www.turnkeylinux.org/nginx-php-fastcgi
+    2. Install it to a server.
+    3. From within the installed server, get the code of B-Translator:
+       #+BEGIN_EXAMPLE
+       git clone https://github.com/dashohoxha/B-Translator.git
+       #+END_EXAMPLE
+    4. Apply the patch to the root of the installed sytem (from inside it):
+       #+BEGIN_EXAMPLE
+       tklpatch-apply / B-Translator/tklpatch/
+       #+END_EXAMPLE
+
+
+* How the patch is applied
+
+  1. The script =conf/pre-debs= is executed.
+  2. Any custom  packages on ~debs/~ are installed.
+  3. The script =conf/post-debs= is executed.
+  4. The script =conf/pre-overlay= is executed.
+  5. The files on ~overlay/~ are copied over to the target system.
+  6. The script =conf/post-overlay= is executed.
+
+  Also, when the system is booted for the first time, the
+  configuration/customization scripts that are placed on
+  ~/usr/lib/inithooks~ will be executed. (See:
+  http://www.turnkeylinux.org/docs/inithooks)
+
+
+* How to test the patch on a chroot environment
+
