@@ -1,6 +1,6 @@
 
-This is a TKLpatch for installing B-Translator on the Turnkey Linux
-12.x NGINX appliance. (For more details see:
+This is a TKLpatch for installing B-Translator on the Turnkey Linux 12.x
+NGINX appliance. (For more details see:
 http://www.turnkeylinux.org/docs/tklpatch)
 
 
@@ -8,11 +8,10 @@ http://www.turnkeylinux.org/docs/tklpatch)
 
   There are two ways to install a B-Translator server using this patch.
 
-  + The recommended one:
+** The recommended one:
 
     1. Download the ISO of NGINX appliance from:
        http://www.turnkeylinux.org/nginx-php-fastcgi
-
     2. Install /tklpatch/:
        #+BEGIN_EXAMPLE
        cat <<EOF > /etc/apt/sources.list.d/tkl.list
@@ -22,38 +21,31 @@ http://www.turnkeylinux.org/docs/tklpatch)
        apt-get update
        apt-get install tklpatch
        #+END_EXAMPLE
-
     3. Get the code of B-Translator from github:
        #+BEGIN_EXAMPLE
        git clone https://github.com/dashohoxha/B-Translator.git
        #+END_EXAMPLE
-
     4. Apply the patch to the ISO:
        #+BEGIN_EXAMPLE
        tklpatch nginx.iso B-Translator/tklpatch/
        mv nginx.iso btranslator.iso
        #+END_EXAMPLE
-
     5. Use the new ISO to install a B-Translator server.
 
-  + Another way:
+** Another way:
 
     1. Download the ISO of NGINX appliance from:
        http://www.turnkeylinux.org/nginx-php-fastcgi
-
     2. Install it to a server.
-
     3. Install /tklpatch/ in the server:
        #+BEGIN_EXAMPLE
        apt-get update
        apt-get install tklpatch     
        #+END_EXAMPLE
-
     4. From within the installed server, get the code of B-Translator:
        #+BEGIN_EXAMPLE
        git clone https://github.com/dashohoxha/B-Translator.git
        #+END_EXAMPLE
-
     5. Apply the patch to the root of the installed sytem (from inside it):
        #+BEGIN_EXAMPLE
        tklpatch-apply / B-Translator/tklpatch/
