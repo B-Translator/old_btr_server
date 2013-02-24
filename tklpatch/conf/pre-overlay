@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -x
 # executed before apply-overlay
 
 source $(dirname $0)/functions
@@ -11,13 +11,11 @@ EOF
 wget http://www.dotdeb.org/dotdeb.gpg -O- | apt-key add -
 install php5-fpm
 
-exit 1
-
 ### retrieve all the projects/modules and build the application directory
 makefile="https://raw.github.com/dashohoxha/B-Translator/master/build-btranslator.make"
 appdir="/usr/local/share/btranslator"
 rm -rf $appdir
-drush make --prepare-install \
+drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
            $makefile $appdir
 
@@ -44,7 +42,6 @@ echo "$mysql_commands" | mysql -u root
 ### start site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
 cd $appdir
-#set -x  # debugging
 drush site-install --verbose --yes btranslator \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \

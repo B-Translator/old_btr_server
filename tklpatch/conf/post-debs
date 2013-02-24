@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -x
 # executed after apply-debs
 
 ### make sure that we have drush-4 (drush-5 still has some problems with 'make')

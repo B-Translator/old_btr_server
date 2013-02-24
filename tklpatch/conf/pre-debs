@@ -11,7 +11,7 @@ install_updates
 cleanup_images
 
 ### install aptitude and other needed packages
-apt-get -y purge php5-xcache drush
+apt-get -y purge php5-xcache
 install php-pear php5-curl php-apc php5-memcached memcached \
         gawk git mercurial subversion translate-toolkit msmtp
 
