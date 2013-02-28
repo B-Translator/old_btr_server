@@ -1,18 +1,16 @@
 #!/bin/bash -x
 # executed after apply-debs
 
-### make sure that we have drush-4 (drush-5 still has some problems with 'make')
-apt-get -y purge drush
-apt-get -y install php-pear
+### install drush-4.6.0 (drush-5 still has some problems with 'make')
 pear channel-discover pear.drush.org
 pear install pear.drush.org/drush-4.6.0
 
-# by default use the B-Translator root directory for Drush
+### by default use the B-Translator root directory for Drush
 mkdir -p /etc/drush
 cat > /etc/drush/drushrc.php << EOF
 <?php
 // by default use the B-Translator root directory
-\$options['r'] = '/usr/local/share/btranslator';
+\$options['r'] = '/var/www/btranslator';
 EOF
 
 ### install drush_make

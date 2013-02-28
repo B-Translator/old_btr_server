@@ -3,17 +3,9 @@
 
 source $(dirname $0)/functions
 
-### install php5-fpm
-cat <<EOF > /etc/apt/sources.list.d/dotdeb.list
-deb http://packages.dotdeb.org stable all
-deb-src http://packages.dotdeb.org stable all
-EOF
-wget http://www.dotdeb.org/dotdeb.gpg -O- | apt-key add -
-install php5-fpm
-
 ### retrieve all the projects/modules and build the application directory
 makefile="https://raw.github.com/dashohoxha/B-Translator/master/build-btranslator.make"
-appdir="/usr/local/share/btranslator"
+appdir="/var/www/btranslator"
 rm -rf $appdir
 drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
@@ -37,8 +29,6 @@ mysql_commands="
 "
 echo "$mysql_commands" | mysql -u root
 
-### go to the application directory
-
 ### start site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
 cd $appdir
@@ -46,6 +36,9 @@ drush site-install --verbose --yes btranslator \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
+
+### update to the latest version of core and modules
+drush --yes pm-update
 
 ### set propper directory permissions
 mkdir -p sites/default/files/

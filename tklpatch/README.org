@@ -1,7 +1,6 @@
 
-This is a TKLpatch for installing B-Translator on the Turnkey Linux 12.x
-NGINX appliance. (For more details see:
-http://www.turnkeylinux.org/docs/tklpatch)
+This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
+(for more details see: http://www.turnkeylinux.org/docs/tklpatch)
 
 
 * How to install a B-Translator server using this TKL patch
@@ -10,8 +9,9 @@ http://www.turnkeylinux.org/docs/tklpatch)
 
 ** The recommended one:
 
-    1. Download the ISO of NGINX appliance from:
-       http://www.turnkeylinux.org/nginx-php-fastcgi
+    1. Download the ISO of TurnKey Core from:
+       http://www.turnkeylinux.org/core
+
     2. Install /tklpatch/:
        #+BEGIN_EXAMPLE
        cat <<EOF > /etc/apt/sources.list.d/tkl.list
@@ -21,31 +21,39 @@ http://www.turnkeylinux.org/docs/tklpatch)
        apt-get update
        apt-get install tklpatch
        #+END_EXAMPLE
+
     3. Get the code of B-Translator from github:
        #+BEGIN_EXAMPLE
        git clone https://github.com/dashohoxha/B-Translator.git
        #+END_EXAMPLE
+
     4. Apply the patch to the ISO:
        #+BEGIN_EXAMPLE
-       tklpatch nginx.iso B-Translator/tklpatch/
-       mv nginx.iso btranslator.iso
+       tklpatch turnkey-core-12.0-squeeze-x86.iso B-Translator/tklpatch/
+       mv turnkey-core-12.0-squeeze-x86.iso turnkey-btranslator-12.0-squeeze-x86.iso
        #+END_EXAMPLE
+
     5. Use the new ISO to install a B-Translator server.
+
 
 ** Another way:
 
-    1. Download the ISO of NGINX appliance from:
-       http://www.turnkeylinux.org/nginx-php-fastcgi
+    1. Download the ISO of TurnKey Core from:
+       http://www.turnkeylinux.org/core
+
     2. Install it to a server.
+
     3. Install /tklpatch/ in the server:
        #+BEGIN_EXAMPLE
        apt-get update
        apt-get install tklpatch     
        #+END_EXAMPLE
+
     4. From within the installed server, get the code of B-Translator:
        #+BEGIN_EXAMPLE
        git clone https://github.com/dashohoxha/B-Translator.git
        #+END_EXAMPLE
+
     5. Apply the patch to the root of the installed sytem (from inside it):
        #+BEGIN_EXAMPLE
        tklpatch-apply / B-Translator/tklpatch/
@@ -73,15 +81,15 @@ http://www.turnkeylinux.org/docs/tklpatch)
   able to test the changes. This can be done by applying the patch on
   a /chroot/ environment, as described here.
 
-  + Download the ISO of NGINX appliance from:
-    http://www.turnkeylinux.org/nginx-php-fastcgi
+  + Download the ISO of TurnKey Core from:
+    http://www.turnkeylinux.org/core
 
   + Extract the appliance's filesystem and cdroot from the ISO:
     #+BEGIN_EXAMPLE
     mkdir test/
     cd test/
-    tklpatch-extract-iso ../turnkey-nginx-php-fastcgi-12.0-squeeze-x86.iso
-    ln -s turnkey-nginx-php-fastcgi-12.0-squeeze-x86.rootfs/ rootfs
+    tklpatch-extract-iso ../turnkey-core-12.0-squeeze-x86.iso
+    ln -s turnkey-core-12.0-squeeze-x86.rootfs/ rootfs
     #+END_EXAMPLE
 
   + Mount the patch inside the /rootfs/:
@@ -108,7 +116,7 @@ http://www.turnkeylinux.org/docs/tklpatch)
   + Install /tklpatch/ inside the chroot environment:
     #+BEGIN_EXAMPLE
     apt-get update
-    apt-get install tklpatch     
+    apt-get -y install tklpatch     
     #+END_EXAMPLE
 
   + Apply the patch inside the chroot:
@@ -127,10 +135,13 @@ http://www.turnkeylinux.org/docs/tklpatch)
 
   + Start the web services from inside the chroot environment:
     #+BEGIN_EXAMPLE
+    mount -a
     service php5-fpm start
     service memcached start
     service mysql start
     service nginx start
+    service webmin start
+    service shellinabox start
     #+END_EXAMPLE
 
   + Test, fix the patch, apply it again, restart services, etc.

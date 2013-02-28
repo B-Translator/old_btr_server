@@ -10,8 +10,21 @@ install_updates
 # remove old kernel images after update
 cleanup_images
 
-### install aptitude and other needed packages
-apt-get -y purge php5-xcache
-install php-pear php5-curl php-apc php5-memcached memcached \
-        gawk git mercurial subversion translate-toolkit msmtp
+### install other needed packages
+install nginx nginx-common nginx-full mysql-server msmtp memcached php5-memcached \
+        php5-mysql php5-gd php-db php5-dev make php-pear php5-curl php-apc \
+        ssl-cert gawk webmin-mysql webmin-phpini phpmyadmin \
+        git mercurial subversion translate-toolkit
+
+### install php5-fpm
+cat <<EOF > /etc/apt/sources.list.d/dotdeb.list
+deb http://packages.dotdeb.org stable all
+deb-src http://packages.dotdeb.org stable all
+EOF
+wget http://www.dotdeb.org/dotdeb.gpg -O- | apt-key add -
+install php5-fpm
+
+# install uploadprogress bar (from PECL) (requested by Drupal 7)
+pecl install uploadprogress
+echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 

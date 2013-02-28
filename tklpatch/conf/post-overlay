@@ -5,26 +5,27 @@
 sed -e '/^tmpfs/d' -i /etc/fstab
 cat <<EOF >> /etc/fstab
 tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
-tmpfs		/usr/local/share/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
+tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
 EOF
 
-### create a link to sites-enabled for the nginx config of btranslator
+### enable the btranslator site
 ln -sf /etc/nginx/sites-{available,enabled}/btranslator
 
-### create some dirs that are needed
+### create some other dirs that are needed
 mkdir -p /var/www/downloads/
+chown www-data /var/www/downloads/
 mkdir -p /var/run/memcached/
+chown nobody /var/run/memcached/
 
-# install uploadprogress bar (from PECL) (requested by Drupal 7)
-pecl install uploadprogress
-echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
+touch /var/run/php5-fpm.sock
+chown www-data /var/run/php5-fpm.sock
 
 # Protect Drupal settings from prying eyes
-SETTINGS=/usr/local/share/btranslator/sites/default/settings.php
+SETTINGS=/var/www/btranslator/sites/default/settings.php
 chown root:www-data $SETTINGS
 chmod 640 $SETTINGS
 
-# Disable Poor Man's Cron
+# Modify Drupal settings
 cat >> $SETTINGS << EOF
 
 /**
@@ -42,13 +43,43 @@ cat >> $SETTINGS << EOF
  *    and the system cron in /etc/cron.d/drupal7.
  */
 \$conf['cron_safe_threshold'] = 0;
+
+\$base_url = "https://l10n.org.xx";
+
+/*
+\$conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
+include "profiles/btranslator/modules/fb/fb_url_rewrite.inc";
+include "profiles/btranslator/modules/fb/fb_settings.inc";
+if (!headers_sent()) {
+  header('P3P: CP="We do not have a P3P policy."');
+}
+*/
+
+# Adds memcache as a cache backend
+\$conf['cache_backends'][] = 'profiles/btranslator/modules/memcache/memcache.inc';
+# Makes it so that memcache is the default caching backend
+\$conf['cache_default_class'] = 'MemCacheDrupal';
+# Keep forms in persistent storage, as per discussed at the beginning
+\$conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
+# I don't see any point in keeping the module update information in Memcached
+\$conf['cache_class_cache_update'] = 'DrupalDatabaseCache';
+
+# Specify the memcache servers you wish to use and assign them to a cluster
+# Cluster = group of memcache servers, in our case, it's probably just one server per cluster.
+\$conf['memcache_servers'] = array('unix:///var/run/memcached/memcached.sock' => 'default');
+# This assigns all cache bins to the 'default' cluster from above
+\$conf['memcache_bins'] = array('cache' => 'default');
+
+# If you wanted multiple Drupal installations to share one Memcache instance use the prefix like so:
+\$conf['memcache_key_prefix'] = 'btranslator';
+
 EOF
 
 # disable powered-by Drupal block on all themes
 mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
 
 # change turnkey version
-echo 'turnkey-btranslator-drupal7-nginx-12.0-squeeze-x86' > /etc/turnkey_version
+echo 'turnkey-btranslator-12.0-squeeze-x86' > /etc/turnkey_version
 
 # tell the world what we've done!
-echo 'TurnKey B-Translator (Drupal7+NGINX) Appliance' >> /etc/issue
+echo 'TurnKey B-Translator Appliance' >> /etc/issue
