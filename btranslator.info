@@ -9,7 +9,6 @@ core = 7.x
 dependencies[] = book
 dependencies[] = contact
 dependencies[] = blog
-dependencies[] = dblog
 dependencies[] = field
 dependencies[] = field_sql_storage
 dependencies[] = field_ui
@@ -21,7 +20,6 @@ dependencies[] = block
 dependencies[] = aggregator
 dependencies[] = comment
 dependencies[] = dashboard
-dependencies[] = openid
 dependencies[] = filter
 dependencies[] = image
 dependencies[] = locale
@@ -42,13 +40,9 @@ dependencies[] = text
 ;--------------------
 ; Contrib
 ;--------------------
-dependencies[] = admin
-;dependencies[] = openidadmin
 dependencies[] = context
 dependencies[] = context_ui
 dependencies[] = ctools
-;dependencies[] = diff
-;dependencies[] = features
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
@@ -57,21 +51,29 @@ dependencies[] = disqus
 dependencies[] = sharethis
 dependencies[] = edit_profile
 dependencies[] = drupalchat
-;dependencies[] = google_analytics
-;dependencies[] = token
-;dependencies[] = rpx
+dependencies[] = googleanalytics
+dependencies[] = token
+dependencies[] = rpx_core
+dependencies[] = rpx_ui
+dependencies[] = rpx_widgets
 dependencies[] = invite
+dependencies[] = invite_stats
 dependencies[] = homebox
 dependencies[] = captcha
 dependencies[] = recaptcha
+dependencies[] = recaptcha_mailhide
 dependencies[] = honeypot
-
+dependencies[] = color
+dependencies[] = simpletest_clone
+dependencies[] = fusion_accelerator
+dependencies[] = rules_scheduler
+dependencies[] = rules_admin
 
 ;--------------------
 ; Drupal Localization
 ;--------------------
-;dependencies[] = l10n_update
-;dependencies[] = l10n_client
+dependencies[] = l10n_update
+dependencies[] = l10n_client
 
 ;--------------------
 ; Contrib Mail
@@ -79,7 +81,10 @@ dependencies[] = honeypot
 dependencies[] = mailsystem
 dependencies[] = phpmailer
 dependencies[] = mimemail
+dependencies[] = mimemail_action
+dependencies[] = mimemail_compress
 dependencies[] = simplenews
+dependencies[] = simplenews_rules
 dependencies[] = mass_contact
 
 
@@ -90,12 +95,18 @@ dependencies[] = mass_contact
 ;dependencies[] = fb_app
 ;dependencies[] = fb_canvas
 ;dependencies[] = fb_connect
-;dependencies[] = fb_devel
 ;dependencies[] = fb_form
 ;dependencies[] = fb_stream
+;dependencies[] = fb_tab
 ;dependencies[] = fb_user
-;; Drupal for Facebook - contrib
-;dependencies[] = fb_friend
+;dependencies[] = fb_views
+;dependencies[] = fb_graph
+;dependencies[] = fb_permission
+;dependencies[] = fb_registration
+;dependencies[] = fb_test
+;dependencies[] = fb_permission
+;dependencies[] = fb_user_app
+
 
 ;--------------------
 ; Filters
@@ -107,7 +118,7 @@ dependencies[] = geshifilter
 ; B-Translator
 ;--------------------
 dependencies[] = l10n_feedback
-;;;dependencies[] = fb_btranslator
+;dependencies[] = fb_btranslator
 
 ;--------------------
 ; Other

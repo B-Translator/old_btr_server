@@ -23,9 +23,13 @@ function btranslator_install() {
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
   standard_install();
 
-  // set the default theme
+  // enable themes and set the default theme
   theme_enable(array('bartik'));
-  variable_set('theme_default', 'bartik');
+  theme_enable(array('bartik1'));
+  theme_enable(array('bartik_fb'));
+  theme_enable(array('abessive'));
+  theme_enable(array('rubik'));
+  variable_set('theme_default', 'bartik1');
 
   // user settings
   variable_set('user_register', USER_REGISTER_VISITORS);
