@@ -1,9 +1,8 @@
 ; Include Build Kit install profile makefile via URL
 includes[] = http://drupalcode.org/project/buildkit.git/blob_plain/refs/heads/7.x-2.x:/drupal-org.make
 
-; Specify common subdir of "contrib"
+; Specify defaults
 defaults[projects][subdir] = "contrib"
-defaults[libraries][subdir] = "contrib"
 defaults[libraries][type] = "library"
 
 ;--------------------
