@@ -1,8 +1,6 @@
 #!/bin/bash -x
 # executed before apply-overlay
 
-source $(dirname $0)/functions
-
 ### retrieve all the projects/modules and build the application directory
 makefile="https://raw.github.com/dashohoxha/B-Translator/master/build-btranslator.make"
 appdir="/var/www/btranslator"

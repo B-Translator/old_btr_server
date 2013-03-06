@@ -1,9 +1,9 @@
 #!/bin/bash -x
 # executed after apply-debs
 
-### install drush-4.6.0 (drush-5 still has some problems with 'make')
+### install drush
 pear channel-discover pear.drush.org
-pear install pear.drush.org/drush-4.6.0
+pear install pear.drush.org/drush-5.8.0
 
 ### by default use the B-Translator root directory for Drush
 mkdir -p /etc/drush

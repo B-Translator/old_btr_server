@@ -72,8 +72,8 @@ dependencies[] = rules_admin
 ;--------------------
 ; Drupal Localization
 ;--------------------
-dependencies[] = l10n_update
-dependencies[] = l10n_client
+;dependencies[] = l10n_update
+;dependencies[] = l10n_client
 
 ;--------------------
 ; Contrib Mail
