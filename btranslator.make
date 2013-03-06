@@ -18,22 +18,22 @@ projects[fusion_accelerator][version] = "2.0-beta1"
 ; Additional Contrib
 ;--------------------
 
-projects[geshifilter][version] = "1.0"
+projects[geshifilter][version] = "1.1"
 projects[libraries][version] = "2.0"
 projects[module_filter][version] = "1.7"
-projects[profiler_builder][version] = "1.0-alpha2"
-projects[wysiwyg][version] = "2.1"
-projects[google_analytics][version] = "1.2"
-projects[token][version] = "1.2"
+projects[profiler_builder][version] = "1.0-rc3"
+projects[wysiwyg][version] = "2.2"
+projects[google_analytics][version] = "1.3"
+projects[token][version] = "1.5"
 projects[edit_profile][version] = "1.0-beta2"
 projects[examples][version] = "1.x-dev"
-projects[entity][version] = "1.0-rc3"
+projects[entity][version] = "1.0"
 projects[rules][version] = "2.2"
 projects[homebox][version] = "2.0-beta6"
 projects[simpletest_clone][version] = "1.0-beta3"
 projects[captcha][version] = "1.0-beta2"
-projects[recaptcha][version] = "1.8"
-projects[honeypot][version] = "1.13"
+projects[recaptcha][version] = "1.9"
+projects[honeypot][version] = "1.14"
 
 ;--------------------
 ; Performance
@@ -44,7 +44,7 @@ projects[memcache][version] = "1.0"
 ;--------------------
 ; Community and Social
 ;--------------------
-projects[drupalchat][version] = "1.0-beta6"
+projects[drupalchat][version] = "1.0-beta12"
 projects[disqus][version] = "1.9"
 projects[sharethis][version] = "2.5"
 projects[rpx][version] = "2.2"
@@ -65,7 +65,7 @@ projects[phpmailer][version] = "3.x-dev"
 projects[mimemail][version] = "1.0-alpha2"
 projects[reroute_email][version] = "1.1"
 projects[simplenews][version] = "1.0"
-projects[mass_contact][version] = "1.0-alpha6"
+projects[mass_contact][version] = "1.0-beta1"
 
 
 ;--------------------
