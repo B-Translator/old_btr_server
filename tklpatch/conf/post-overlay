@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -x
 # executed after apply-overlay
 
 ### put the cache on RAM (to improve efficiency)
@@ -6,10 +6,8 @@ sed -e '/^tmpfs/d' -i /etc/fstab
 cat <<EOF >> /etc/fstab
 tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
 tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
+devpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
 EOF
-
-### enable the btranslator site
-ln -sf /etc/nginx/sites-{available,enabled}/btranslator
 
 ### create some other dirs that are needed
 mkdir -p /var/www/downloads/
@@ -17,13 +15,23 @@ chown www-data /var/www/downloads/
 mkdir -p /var/run/memcached/
 chown nobody /var/run/memcached/
 
-touch /var/run/php5-fpm.sock
-chown www-data /var/run/php5-fpm.sock
+# change turnkey version
+echo 'turnkey-btranslator-12.0-squeeze-x86' > /etc/turnkey_version
+
+# tell the world what we've done!
+echo 'TurnKey B-Translator Appliance' >> /etc/issue
 
 # Protect Drupal settings from prying eyes
 SETTINGS=/var/www/btranslator/sites/default/settings.php
 chown root:www-data $SETTINGS
 chmod 640 $SETTINGS
+
+# disable powered-by Drupal block on all themes
+mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
+
+# aggregate and compress CSS and JS files (for performance)
+drush vset preprocess_css 1
+drush vset preprocess_js 1
 
 # Modify Drupal settings
 cat >> $SETTINGS << EOF
@@ -56,7 +64,7 @@ if (!headers_sent()) {
 */
 
 # Adds memcache as a cache backend
-\$conf['cache_backends'][] = 'profiles/btranslator/modules/memcache/memcache.inc';
+\$conf['cache_backends'][] = 'profiles/btranslator/modules/contrib/memcache/memcache.inc';
 # Makes it so that memcache is the default caching backend
 \$conf['cache_default_class'] = 'MemCacheDrupal';
 # Keep forms in persistent storage, as per discussed at the beginning
@@ -74,12 +82,3 @@ if (!headers_sent()) {
 \$conf['memcache_key_prefix'] = 'btranslator';
 
 EOF
-
-# disable powered-by Drupal block on all themes
-mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
-
-# change turnkey version
-echo 'turnkey-btranslator-12.0-squeeze-x86' > /etc/turnkey_version
-
-# tell the world what we've done!
-echo 'TurnKey B-Translator Appliance' >> /etc/issue

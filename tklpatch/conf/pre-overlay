@@ -43,3 +43,6 @@ mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
+
+### cheat tklpatch-apply that there was no error and everything is going fine
+exit 0

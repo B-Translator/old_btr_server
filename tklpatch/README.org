@@ -46,7 +46,7 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
     3. Install /tklpatch/ in the server:
        #+BEGIN_EXAMPLE
        apt-get update
-       apt-get install tklpatch     
+       apt-get install tklpatch
        #+END_EXAMPLE
 
     4. From within the installed server, get the code of B-Translator:
@@ -110,13 +110,14 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
 
   + Switch to the chroot environment:
     #+BEGIN_EXAMPLE
+    mount -o bind /dev rootfs/dev
     tklpatch-chroot rootfs/
     #+END_EXAMPLE
 
   + Install /tklpatch/ inside the chroot environment:
     #+BEGIN_EXAMPLE
     apt-get update
-    apt-get -y install tklpatch     
+    apt-get -y install tklpatch
     #+END_EXAMPLE
 
   + Apply the patch inside the chroot:

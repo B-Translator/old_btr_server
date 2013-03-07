@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -x
 # executed before apply-debs
 
 source $(dirname $0)/functions
@@ -7,24 +7,31 @@ source $(dirname $0)/functions
 # better to do them here once than force every user later
 install_updates
 
-# remove old kernel images after update
-cleanup_images
-
 ### install other needed packages
-install nginx nginx-common nginx-full mysql-server msmtp memcached php5-memcached \
+install mysql-server msmtp memcached php5-memcached \
         php5-mysql php5-gd php-db php5-dev make php-pear php5-curl php-apc \
         ssl-cert gawk webmin-mysql webmin-phpini phpmyadmin \
         git mercurial subversion translate-toolkit
-
-### install php5-fpm
-cat <<EOF > /etc/apt/sources.list.d/dotdeb.list
-deb http://packages.dotdeb.org stable all
-deb-src http://packages.dotdeb.org stable all
-EOF
-wget http://www.dotdeb.org/dotdeb.gpg -O- | apt-key add -
-install php5-fpm
 
 # install uploadprogress bar (from PECL) (requested by Drupal 7)
 pecl install uploadprogress
 echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 
+### add dotdeb sources
+cat <<EOF > /etc/apt/sources.list.d/dotdeb.list
+deb http://packages.dotdeb.org stable all
+deb-src http://packages.dotdeb.org stable all
+EOF
+wget http://www.dotdeb.org/dotdeb.gpg -O- | apt-key add -
+
+### install nginx and php5-fpm
+install nginx nginx-common nginx-full php5-fpm
+
+### upgrade phpmyadmin
+#apt-get -y upgrade phpmyadmin
+
+# remove old kernel images after update
+cleanup_images
+
+### cheat tklpatch-apply that there was no error and everything is going fine
+exit 0

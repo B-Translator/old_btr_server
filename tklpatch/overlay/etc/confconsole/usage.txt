@@ -1,18 +1,19 @@
 You may access this $hostname appliance over the
 network using the following methods:
 
-Web:        http://$ipaddr
-            https://$ipaddr
-Web shell:  https://$ipaddr:12320
-Webmin:     https://$ipaddr:12321
-PHPMyAdmin  https://$ipaddr:12322
-SSH/SFTP:   root@$ipaddr (port 22)
+B-Translator: http://$ipaddr
+              https://$ipaddr
+
+Admin Panel:  https://$ipaddr/panel
+PHPMyAdmin:   https://$ipaddr/phpmyadmin
+Web shell:    https://$ipaddr:12320
+Webmin:       https://$ipaddr:12321
+
+SSH/SFTP:     root@$ipaddr (port 22)
 
 
 
 
-
-
-
-For more information visit the TurnKey Linux Website
-             http://www.turnkeylinux.org
+For more information visit:
+  - https://github.com/dashohoxha/B-Translator
+  - http://www.turnkeylinux.org
