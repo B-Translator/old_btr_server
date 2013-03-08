@@ -13,6 +13,11 @@ install mysql-server msmtp memcached php5-memcached \
         ssl-cert gawk webmin-mysql webmin-phpini phpmyadmin \
         git mercurial subversion translate-toolkit
 
+### phpmyadmin will also install apache2 and start it
+### so we should stop and disable it
+service apache2 stop
+update-rc.d apache2 disable
+
 # install uploadprogress bar (from PECL) (requested by Drupal 7)
 pecl install uploadprogress
 echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini

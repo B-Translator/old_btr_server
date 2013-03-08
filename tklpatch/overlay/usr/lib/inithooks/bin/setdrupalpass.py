@@ -19,6 +19,8 @@ import lsb_release
 
 from dialog_wrapper import Dialog
 
+from mysqlconf import MySQL
+
 def fatal(s):
     print >> sys.stderr, "Error:", s
     sys.exit(1)
@@ -53,7 +55,8 @@ def main():
             "%s Password" % username.capitalize(),
             "Please enter new password for the Drupal %s account." % username)
 
-    command = '/usr/local/bin/drush user-password %s --password="%s"' % (username, password)
+    m = MySQL()  # start mysqld
+    command = '/usr/bin/drush user-password %s --password="%s"' % (username, password)
 
     p = subprocess.Popen(command, shell=True)
     err = p.wait()

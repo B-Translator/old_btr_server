@@ -4,5 +4,5 @@
 . /etc/default/inithooks
 
 [ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
-$INITHOOKS_PATH/bin/setdrupalpass.py Admin --pass=""
+$INITHOOKS_PATH/bin/setdrupalpass.py admin --pass=""
 
