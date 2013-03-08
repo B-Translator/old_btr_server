@@ -44,5 +44,17 @@ chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
 
+### copy the tables of l10n_feedback to another database
+echo "DROP DATABASE IF EXISTS btranslator_data" | mysql -u root
+echo "CREATE DATABASE btranslator_data" | mysql -u root
+echo "GRANT ALL ON btranslator_data.* TO btranslator_data@localhost
+            IDENTIFIED BY 'btranslator_data'" | mysql -u root
+tables=$(echo "SHOW TABLES" | mysql -p -D btranslator | grep 'l10n_feedback_' )
+for table in $tables
+do
+    echo "Copy: $table"
+    echo "CREATE TABLE btranslator_data.$table SELECT * FROM btranslator.$table" | mysql -u root
+done
+
 ### cheat tklpatch-apply that there was no error and everything is going fine
 exit 0

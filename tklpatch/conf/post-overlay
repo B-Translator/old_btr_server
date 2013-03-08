@@ -37,6 +37,24 @@ drush vset preprocess_js 1
 cat >> $SETTINGS << EOF
 
 /**
+ * Use a separate database for the translation data.
+ * This provides more flexibility. For example the
+ * drupal site and the translation data can be backuped
+ * and restored separately. Or a test drupal site
+ * (testing new drupal features) can connect to the
+ * same translation database.
+ */
+$databases['l10n_feedback_db']['default'] = array (
+    'database' => 'btranslator_data',
+    'username' => 'btranslator_data',
+    'password' => 'btranslator_data',
+    'host' => 'localhost',
+    'port' => '',
+    'driver' => 'mysql',
+    'prefix' => '',
+);
+
+/**
  * Disable Poor Man's Cron:
  *
  * Drupal 7 enables the built-in Poor Man's Cron by default.
@@ -63,22 +81,22 @@ if (!headers_sent()) {
 }
 */
 
-# Adds memcache as a cache backend
+// Adds memcache as a cache backend
 \$conf['cache_backends'][] = 'profiles/btranslator/modules/contrib/memcache/memcache.inc';
-# Makes it so that memcache is the default caching backend
+// Makes it so that memcache is the default caching backend
 \$conf['cache_default_class'] = 'MemCacheDrupal';
-# Keep forms in persistent storage, as per discussed at the beginning
+// Keep forms in persistent storage, as per discussed at the beginning
 \$conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
-# I don't see any point in keeping the module update information in Memcached
+// I don't see any point in keeping the module update information in Memcached
 \$conf['cache_class_cache_update'] = 'DrupalDatabaseCache';
 
-# Specify the memcache servers you wish to use and assign them to a cluster
-# Cluster = group of memcache servers, in our case, it's probably just one server per cluster.
+// Specify the memcache servers you wish to use and assign them to a cluster
+// Cluster = group of memcache servers, in our case, it's probably just one server per cluster.
 \$conf['memcache_servers'] = array('unix:///var/run/memcached/memcached.sock' => 'default');
-# This assigns all cache bins to the 'default' cluster from above
+// This assigns all cache bins to the 'default' cluster from above
 \$conf['memcache_bins'] = array('cache' => 'default');
 
-# If you wanted multiple Drupal installations to share one Memcache instance use the prefix like so:
+// If you wanted multiple Drupal installations to share one Memcache instance use the prefix like so:
 \$conf['memcache_key_prefix'] = 'btranslator';
 
 EOF
