@@ -100,3 +100,8 @@ if (!headers_sent()) {
 \$conf['memcache_key_prefix'] = 'btranslator';
 
 EOF
+
+### shutdown
+services="php5-fpm memcached mysql nginx shellinabox webmin"
+for service in $services; do service $service stop; done
+umount -a
