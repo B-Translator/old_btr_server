@@ -101,11 +101,8 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
 
   + Stop the web services on the main system:
     #+BEGIN_EXAMPLE
-    service php5-fpm stop
-    service memcached stop
-    service mysql stop
-    service nginx stop
-    service apache2 stop
+    SERVICES="php5-fpm memcached mysql nginx apache2"
+    for SRV in $SERVICES ; do service $SRV stop ; done
     #+END_EXAMPLE
 
   + Switch to the chroot environment:
@@ -123,9 +120,9 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
   + Apply the patch inside the chroot:
     #+BEGIN_EXAMPLE
     TKLPATCH_DEBUG=y tklpatch-apply / /btranslator
-
-    or
-
+    #+END_EXAMPLE
+    Alternatively, test the apply steps one by one:
+    #+BEGIN_EXAMPLE
     /btranslator/conf/pre-debs
     tklpatch-apply-debs / /btranslator/debs/
     /btranslator/conf/post-debs
@@ -133,16 +130,41 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
     tklpatch-apply-overlay / /btranslator/overlay/
     /btranslator/conf/post-overlay
     #+END_EXAMPLE
+    It is also possible to apply the patch from outside chroot, like
+    this:
+    #+BEGIN_EXAMPLE
+    TKLPATCH_DEBUG=y tklpatch-apply rootfs B-Translator/tklpatch/
+
+    Or, step-by-step:
+
+    tklpatch-apply-conf rootfs B-Translator/tklpatch/conf/pre-debs
+    tklpatch-apply-debs rootfs B-Translator/tklpatch/debs/
+    tklpatch-apply-conf rootfs B-Translator/tklpatch/conf/post-debs
+    tklpatch-apply-conf rootfs B-Translator/tklpatch/conf/pre-overlay
+    tklpatch-apply-overlay rootfs B-Translator/tklpatch/overlay/
+    tklpatch-apply-conf rootfs B-Translator/tklpatch/conf/post-overlay
+    #+END_EXAMPLE
 
   + Start the web services from inside the chroot environment:
     #+BEGIN_EXAMPLE
     mount -a
-    service php5-fpm start
-    service memcached start
-    service mysql start
-    service nginx start
-    service webmin start
-    service shellinabox start
+    SERVICES="php5-fpm memcached mysql nginx webmin shellinabox"
+    for SRV in $SERVICES ; do service $SRV start ; done
+    #+END_EXAMPLE
+
+  + Test the inithooks (configuration scripts that run on the first
+    boot):
+    #+BEGIN_EXAMPLE
+    sed -e '/^RUN_FIRSTBOOT/ c RUN_FIRSTBOOT=true' -i /etc/default/inithooks
+    /usr/lib/inithooks/run
+    #+END_EXAMPLE
+    Alternatively, test the inithooks one by one:
+    #+BEGIN_EXAMPLE
+    /usr/lib/inithooks/firstboot.d/10setdomain
+    /usr/lib/inithooks/firstboot.d/35mysqlpas
+    /usr/lib/inithooks/firstboot.d/36mysqlpass-btranslator
+    /usr/lib/inithooks/firstboot.d/39gmailsmtp
+    /usr/lib/inithooks/firstboot.d/41setlanguages
     #+END_EXAMPLE
 
   + Test, fix the patch, apply it again, restart services, etc.
