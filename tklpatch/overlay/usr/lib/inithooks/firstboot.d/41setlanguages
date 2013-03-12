@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# set the languages of B-Translator
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+$INITHOOKS_PATH/bin/setlanguages.py --main-lang="$MAIN_LANG" --other-langs="$OTHER_LANGS"
+
