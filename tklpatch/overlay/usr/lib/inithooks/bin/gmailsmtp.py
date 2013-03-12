@@ -79,26 +79,7 @@ def main():
 
         # modify drupal variables that are used for sending email
         m = MySQL()   # start mysqld
-        vset = "/usr/bin/drush --yes --exact vset %s %s"
-        getoutput(vset % ('site_mail', email))
-        getoutput(vset % ('smtp_username', email))
-        getoutput(vset % ('smtp_password', passw))
-
-        getoutput(vset % ('smtp_host', 'smtp.googlemail.com'))
-        getoutput(vset % ('smtp_port', '465'))
-        getoutput(vset % ('smtp_protocol', 'ssl'))
-        getoutput(vset % ('smtp_on', '1'))
-
-        getoutput(vset % ('smtp_allowhtml', '1'))
-        getoutput(vset % ('smtp_keepalive', '1'))
-        getoutput(vset % ('smtp_always_replyto', '1'))
-
-        getoutput(vset % ('smtp_from', email))
-        getoutput(vset % ('mimemail_mail', email))
-        getoutput(vset % ('simplenews_from_address', email))
-        getoutput(vset % ('simplenews_test_address', email))
-        getoutput(vset % ('mass_contact_default_sender_email', email))
-        getoutput(vset % ('reroute_email_address', email))
+        getoutput("/usr/lib/inithooks/bin/gmailsmtp.php '%s' '%s'" % (email, passw))
 
     except ExecError, e:
         d.msgbox('Failure', e.output)
