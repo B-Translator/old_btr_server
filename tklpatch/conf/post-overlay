@@ -1,6 +1,8 @@
 #!/bin/bash -x
 # executed after apply-overlay
 
+$(dirname $0)/separate_translation_data.sh
+
 ### put the cache on RAM (to improve efficiency)
 sed -e '/^tmpfs/d' -i /etc/fstab
 cat <<EOF >> /etc/fstab
@@ -9,9 +11,7 @@ tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid
 devpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
 EOF
 
-### create some other dirs that are needed
-mkdir -p /var/www/downloads/
-chown www-data /var/www/downloads/
+### create other dirs that are needed
 mkdir -p /var/run/memcached/
 chown nobody /var/run/memcached/
 
@@ -33,27 +33,12 @@ mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'syste
 drush vset preprocess_css 1
 drush vset preprocess_js 1
 
+# set some other drupal vars
+drush vset l10n_feedback_export_path '/var/www/exports'
+drush vset l10n_feedback_preferred_projects 'test'
+
 # Modify Drupal settings
 cat >> $SETTINGS << EOF
-
-/**
- * Use a separate database for the translation data.
- * This provides more flexibility. For example the
- * drupal site and the translation data can be backuped
- * and restored separately. Or a test drupal site
- * (testing new drupal features) can connect to the
- * same translation database.
- */
-$databases['l10n_feedback_db']['default'] = array (
-    'database' => 'btranslator_data',
-    'username' => 'btranslator_data',
-    'password' => 'btranslator_data',
-    'host' => 'localhost',
-    'port' => '',
-    'driver' => 'mysql',
-    'prefix' => '',
-);
-
 /**
  * Disable Poor Man's Cron:
  *

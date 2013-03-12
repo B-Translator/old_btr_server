@@ -4,5 +4,5 @@
 . /etc/default/inithooks
 
 [ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
-$INITHOOKS_PATH/bin/gmailsmtp.py --email="" --passw=""
+$INITHOOKS_PATH/bin/gmailsmtp.py --email="$GMAIL" --passw="$GPASSW"
 

@@ -44,17 +44,18 @@ chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
 
-### copy the tables of l10n_feedback to another database
-echo "DROP DATABASE IF EXISTS btranslator_data" | mysql -u root
-echo "CREATE DATABASE btranslator_data" | mysql -u root
-echo "GRANT ALL ON btranslator_data.* TO btranslator_data@localhost
-            IDENTIFIED BY 'btranslator_data'" | mysql -u root
-tables=$(echo "SHOW TABLES" | mysql -p -D btranslator | grep 'l10n_feedback_' )
-for table in $tables
-do
-    echo "Copy: $table"
-    echo "CREATE TABLE btranslator_data.$table SELECT * FROM btranslator.$table" | mysql -u root
-done
+### create the downloads and exports dirs
+mkdir -p /var/www/downloads/
+chown www-data /var/www/downloads/
+mkdir -p /var/www/exports/
+chown www-data /var/www/exports/
 
-### cheat tklpatch-apply that there was no error and everything is going fine
-exit 0
+### move the directory of the PO files to /var/www/ and put a link to it
+PO_files=/var/www/PO_files
+l10n_feedback=/var/www/btranslator/profiles/btranslator/modules/l10n_feedback
+rm -rf $PO_files
+mv $l10n_feedback/data/PO_files $PO_files
+rm -rf $l10n_feedback/data/get/PO_files
+rm -rf $l10n_feedback/data/import/PO_files
+ln -s $PO_files $l10n_feedback/data/get/PO_files
+ln -s $PO_files $l10n_feedback/data/import/PO_files
