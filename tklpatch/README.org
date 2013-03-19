@@ -30,7 +30,7 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
     4. Apply the patch to the ISO:
        #+BEGIN_EXAMPLE
        tklpatch turnkey-core-12.0-squeeze-x86.iso B-Translator/tklpatch/
-       mv turnkey-core-12.0-squeeze-x86.iso turnkey-btranslator-12.0-squeeze-x86.iso
+       mv turnkey-core-12.0-squeeze-x86-patched.iso turnkey-btranslator-12.0-squeeze-x86.iso
        #+END_EXAMPLE
 
     5. Use the new ISO to install a B-Translator server.

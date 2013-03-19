@@ -16,7 +16,7 @@ mysql_commands="
 echo "$mysql_commands" | mysql -u root
 
 ### copy the tables of l10n_feedback to the new database
-tables=$(echo "SHOW TABLES" | mysql -p -D btranslator | grep 'l10n_feedback_' )
+tables=$(echo "SHOW TABLES" | mysql -D btranslator | grep 'l10n_feedback_' )
 for table in $tables
 do
     echo "Copy: $table"
@@ -51,7 +51,7 @@ cat << EOF >> /var/www/btranslator/sites/default/settings.php
  * (testing new drupal features) can connect to the
  * same translation database.
  */
-$databases['l10n_feedback_db']['default'] = array (
+\$databases['l10n_feedback_db']['default'] = array (
     'database' => '$db_name',
     'username' => '$db_user',
     'password' => '$db_pass',
