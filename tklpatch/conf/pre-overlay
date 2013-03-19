@@ -38,6 +38,9 @@ drush site-install --verbose --yes btranslator \
 ### update to the latest version of core and modules
 drush --yes pm-update
 
+### install also multi-language support
+drush --yes pm-enable l10n_client l10n_update
+
 ### set propper directory permissions
 mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
