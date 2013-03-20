@@ -80,10 +80,10 @@ def main():
     # modify also the connection settings on btranslator_data
     try:
         config_file = '/var/www/btranslator_data/db/settings.php'
-        expr = "/^\\$dbpass/ s/= .*/= '%s'" % data_pass
+        expr = "/^\\$dbpass/ s/= .*/= '%s'/" % data_pass
         getoutput('sed -e \"%s\" -i %s' % (expr, config_file))
         config_file = '/var/www/btranslator_data/db/sql-connect.txt'
-        getoutput('sed -e "s/--password=[^ ]*/--password=%s" -i %s' % (data_pass, config_file))
+        getoutput('sed -e "s/--password=[^ ]*/--password=%s/" -i %s' % (data_pass, config_file))
     except ExecError, e:
         d.msgbox('Failure', e.output)
 

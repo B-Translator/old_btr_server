@@ -4,7 +4,7 @@
 . /etc/default/inithooks
 
 PASSWORD=$(mcookie)
-CONF=/etc/phpmyadmin/config.inc.php
+CONF=/etc/phpmyadmin/config-db.php
 
-sed -i "s|\['controlpass'\]\(.*\)|\['controlpass'\] = '$PASSWORD';|" $CONF
-$INITHOOKS_PATH/bin/mysqlconf.py --user=pma --pass="$PASSWORD"
+sed -i "/^\$dbpass/ c \$dbpass='$PASSWORD';" $CONF
+$INITHOOKS_PATH/bin/mysqlconf.py --user=phpmyadmin --pass="$PASSWORD"
