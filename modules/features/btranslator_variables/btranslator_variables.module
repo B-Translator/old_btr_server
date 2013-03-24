@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btranslator_variables feature.
+ */
+
+include_once 'btranslator_variables.features.inc';

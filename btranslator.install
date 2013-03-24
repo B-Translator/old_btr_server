@@ -34,29 +34,19 @@ function btranslator_install() {
   // user settings
   variable_set('user_register', USER_REGISTER_VISITORS);
   variable_set('user_email_verification', TRUE);
-  variable_set('user_signatures', TRUE);
 
-  /*
-  // l10n_client settings
-  variable_set('l10n_client_server', 'http://localize.drupal.org');
-  variable_set('l10n_client_use_server', TRUE);
-  // assign translation permissions to the authenticated users
-  $permissions = array(
-    'use on-page translation' => TRUE,
-    'submit translations to localization server' => TRUE,
-  );
-  user_role_change_permissions(DRUPAL_AUTHENTICATED_RID, $permissions);
-  */
+  btranslator_install_variables();
 
   btranslator_install_mailsystem();
-  btranslator_install_cache();
-  btranslator_install_blocks();
-  btranslator_install_roles();
-  btranslator_install_menus();
+  //btranslator_install_blocks();
+  //btranslator_install_roles();
+  //btranslator_install_menus();
   btranslator_install_actions();
-  btranslator_install_nodes();
-  btranslator_install_sharethis();
-  btranslator_install_fb();
+}
+
+function btranslator_install_variables()
+{
+  include drupal_get_path('profile', 'btranslator') . '/modules/features/set-variables.php';
 }
 
 function btranslator_install_mailsystem()
@@ -70,16 +60,7 @@ function btranslator_install_mailsystem()
   variable_set('mail_system', $mail_system);
 }
 
-function btranslator_install_cache()
-{
-  variable_set('cache', '1');
-  variable_set('block_cache', '1');
-  variable_set('cache_lifetime', '0');
-
-  variable_set('boost_cacheability_option', 0);
-  variable_set('boost_cacheability_pages', 'translations');
-}
-
+/*
 function btranslator_install_blocks()
 {
   $blocks = array(
@@ -110,7 +91,7 @@ function btranslator_install_blocks()
     ),
   );
 
-  $default_theme = variable_get('theme_default', 'bartik');
+  $default_theme = variable_get('theme_default', 'bartik1');
 
   foreach ($blocks as $block) {
     extract($block);
@@ -136,7 +117,8 @@ function btranslator_install_roles()
     user_role_revoke_permissions($rid, array('access comments', 'post comments'));
   }
 
-  // create new roles for contributora, translators and moderators (role administrator already exists)
+  // create new roles for contributors, translators and moderators
+  // (role administrator already exists)
   $new_role_names = array('contributor', 'translator', 'moderator');
   foreach ($new_role_names as $role_name) {
     $role = new stdClass();
@@ -190,6 +172,7 @@ function btranslator_install_menus()
   // update the menu router information
   menu_rebuild();
 }
+*/
 
 function btranslator_install_actions()
 {
@@ -225,101 +208,3 @@ function btranslator_install_actions()
     ->execute();
 }
 
-// Set configuration variables for sharethis.
-function btranslator_install_sharethis() {
-  variable_set('sharethis_button_option', 'stbc_');
-  variable_set('sharethis_comments', FALSE);
-  variable_set('sharethis_late_load', TRUE);
-  variable_set('sharethis_location', 'content');
-  variable_set('sharethis_node_option', 'blog,article,book,page,simplenews,0');
-  $sharethis_option_extras = array(
-    'Google Plus One:plusone' => 'Google Plus One:plusone',
-    'Facebook Like:fblike' => 'Facebook Like:fblike',
-  );
-  variable_set('sharethis_option_extras', $sharethis_option_extras);
-  variable_set('sharethis_service_option', '"Google +:googleplus","Facebook:facebook","Tweet:twitter","LinkedIn:linkedin","Email:email","ShareThis:sharethis"');
-  variable_set('sharethis_teaser_option', TRUE);
-  //variable_set('sharethis_twitter_handle', 'https://twitter.com/l10n_sq');
-  //variable_set('sharethis_twitter_suffix', 'l10n_sq');
-  variable_set('sharethis_twitter_handle', 'https://twitter.com/B_Translator');
-  variable_set('sharethis_twitter_suffix', 'B_Translator');
-  variable_set('sharethis_weight', 50);
-  variable_set('sharethis_widget_option', 'st_multi');
-}
-
-// Set configuration variables for FB modules.
-function btranslator_install_fb() {
-  $fb_settings = array(
-    'fb_button_text_login' => "Use Facebook Login",
-    'fb_button_text_login_block' => "Use Facebook Login",
-    'fb_button_text_register' => "Use Facebook Account",
-    'fb_canvas_process_absolute_links' => 0,
-    'fb_canvas_process_iframe' => 1,
-    //'fb_connect_primary_label' => "l10nsq",
-    'fb_connect_theme_username_1' => 1,
-    'fb_connect_theme_username_2' => 1,
-    'fb_connect_theme_userpic_1' => 1,
-    'fb_connect_theme_userpic_2' => 1,
-    'fb_format_username' => "when_not_theming",
-    'fb_js_get_login_status' => 0,
-    'fb_js_oauth' => "TRUE",
-    'fb_js_session_token' => 0,
-    'fb_js_test_login_status' => "FALSE",
-    'fb_language_en' => "en_US",
-    'fb_language_override' => "override",
-    'fb_language_sq' => "sq_AL",
-    'fb_secure_urls' => "1",
-    'fb_tab_process_absolute_links' => 1,
-    'fb_tab_process_iframe' => 1,
-    'fb_tab_process_to_canvas' => 1,
-    'fb_user_alter_contact' => 1,
-    'fb_user_alter_login' => 1,
-    'fb_user_alter_login_block' => 1,
-    'fb_user_alter_register' => 1,
-    'fb_user_app_track_every_page' => 0,
-    'fb_user_app_track_pages' => 1,
-    'fb_user_app_track_users' => 1,
-    'fb_user_app_users_that_grant_offline' => 0,
-    'fb_user_check_session' => 0,
-    'fb_user_username_style' => "1",
-    'fb_use_cookie' => 1,
-    'fb_use_session' => 0,
-  );
-  foreach ($fb_settings as $var_name => $var_value) {
-    variable_set($var_name, $var_value);
-  }
-}
-
-function btranslator_install_nodes()
-{
-  $node = new stdClass();
-  $node->type = 'page';
-  node_object_prepare($node);
-  $node->title = 'Terms of Service';
-  $node->path = array('alias' => 'terms');
-  $node->language = LANGUAGE_NONE;
-  $node->body[LANGUAGE_NONE][0]['format']  = 'filtered_html';
-  $node->body[LANGUAGE_NONE][0]['value']   = '
-      The services of this application will be used in good faith. Any
-      disputes will be solved with agreement and mutual understanding.
-  ';
-  $node = node_submit($node);
-  node_save($node);
-
-  /* ------------------- */
-
-  $node = new stdClass();
-  $node->type = 'page';
-  node_object_prepare($node);
-  $node->title = 'Privacy Policy';
-  $node->path = array('alias' => 'privacy');
-  $node->language = LANGUAGE_NONE;
-  $node->body[LANGUAGE_NONE][0]['format']  = 'filtered_html';
-  $node->body[LANGUAGE_NONE][0]['value']   = '
-      The user data provided to this application (for example email address)
-      will be kept confident and will be used only for the purposes of the
-      application.
-  ';
-  $node = node_submit($node);
-  node_save($node);
-}

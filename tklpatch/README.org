@@ -168,5 +168,3 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
     #+END_EXAMPLE
 
   + Test, fix the patch, apply it again, restart services, etc.
-
-  + Test also the scripts in ~/usr/lib/inithooks~.

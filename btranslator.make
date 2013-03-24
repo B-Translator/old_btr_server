@@ -34,6 +34,10 @@ projects[simpletest_clone][version] = "1.0-beta3"
 projects[captcha][version] = "1.0-beta2"
 projects[recaptcha][version] = "1.9"
 projects[honeypot][version] = "1.14"
+projects[features_extra][version] = "1.0-alpha2"
+projects[uuid][version] = "1.0-alpha3"
+projects[node_export][version] = "3.0"
+projects[configuration][version] = "2.0-alpha2"
 
 ;--------------------
 ; Performance

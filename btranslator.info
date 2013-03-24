@@ -68,6 +68,11 @@ dependencies[] = simpletest_clone
 dependencies[] = fusion_accelerator
 dependencies[] = rules_scheduler
 dependencies[] = rules_admin
+dependencies[] = features
+dependencies[] = fe_block
+dependencies[] = uuid
+dependencies[] = node_export
+dependencies[] = node_export_features
 
 ;--------------------
 ; Drupal Localization
@@ -87,26 +92,24 @@ dependencies[] = simplenews
 dependencies[] = simplenews_rules
 dependencies[] = mass_contact
 
-
 ;;--------------------
 ;; Drupal for Facebook
 ;;--------------------
-;dependencies[] = fb
-;dependencies[] = fb_app
-;dependencies[] = fb_canvas
-;dependencies[] = fb_connect
-;dependencies[] = fb_form
-;dependencies[] = fb_stream
-;dependencies[] = fb_tab
-;dependencies[] = fb_user
-;dependencies[] = fb_views
-;dependencies[] = fb_graph
-;dependencies[] = fb_permission
-;dependencies[] = fb_registration
-;dependencies[] = fb_test
-;dependencies[] = fb_permission
-;dependencies[] = fb_user_app
-
+dependencies[] = fb
+dependencies[] = fb_app
+dependencies[] = fb_canvas
+dependencies[] = fb_connect
+dependencies[] = fb_form
+dependencies[] = fb_stream
+dependencies[] = fb_tab
+dependencies[] = fb_user
+dependencies[] = fb_views
+dependencies[] = fb_graph
+dependencies[] = fb_permission
+dependencies[] = fb_registration
+dependencies[] = fb_test
+dependencies[] = fb_permission
+dependencies[] = fb_user_app
 
 ;--------------------
 ; Filters
@@ -118,7 +121,7 @@ dependencies[] = geshifilter
 ; B-Translator
 ;--------------------
 dependencies[] = l10n_feedback
-;dependencies[] = fb_btranslator
+dependencies[] = fb_btranslator
 
 ;--------------------
 ; Other
@@ -143,6 +146,16 @@ dependencies[] = wysiwyg
 ;--------------------
 dependencies[] = boost
 dependencies[] = memcache
+
+;--------------------
+; Features
+;--------------------
+
+dependencies[] = btranslator_block_settings
+dependencies[] = btranslator_content
+dependencies[] = btranslator_misc_config
+dependencies[] = btranslator_permissions
+;dependencies[] = btranslator_variables
 
 ;--------------------
 ; Files

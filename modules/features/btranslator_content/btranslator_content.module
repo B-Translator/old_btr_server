@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btranslator_content feature.
+ */
+
+include_once 'btranslator_content.features.inc';
