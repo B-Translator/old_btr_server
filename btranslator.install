@@ -40,7 +40,7 @@ function btranslator_install() {
   btranslator_install_mailsystem();
   //btranslator_install_blocks();
   //btranslator_install_roles();
-  //btranslator_install_menus();
+  btranslator_install_menus();
   btranslator_install_actions();
 }
 
@@ -149,6 +149,7 @@ function btranslator_install_roles()
   $administrator_permissions['btranslator-admin'] = TRUE;
   user_role_change_permissions($administrator->rid, $administrator_permissions);
 }
+*/
 
 function btranslator_install_menus()
 {
@@ -169,10 +170,17 @@ function btranslator_install_menus()
   );
   menu_link_save($menu_item);
 
+  $menu_item = array(
+    'link_title' => st('My account'),
+    'link_path' => 'user',
+    'menu_name' => 'user-menu',
+    'weight' => -10,
+  );
+  menu_link_save($menu_item);
+
   // update the menu router information
   menu_rebuild();
 }
-*/
 
 function btranslator_install_actions()
 {

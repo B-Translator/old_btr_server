@@ -15,7 +15,7 @@ $variables = array (
 
   'autoloader_mode' => 'apc',
   'block_cache' => 1,
-  'book_allowed_types' => 
+  'book_allowed_types' =>
   array (
     0 => 'book',
   ),
@@ -63,27 +63,27 @@ $variables = array (
   'captcha_description_sq' => 'This question is for testing whether you are a human visitor and to prevent automated spam submissions.',
   'captcha_log_wrong_responses' => 0,
   'captcha_persistence' => '0',
-  'captcha_placement_map_cache' => 
+  'captcha_placement_map_cache' =>
   array (
-    'contact_site_form' => 
+    'contact_site_form' =>
     array (
-      'path' => 
+      'path' =>
       array (
       ),
       'key' => 'actions',
       'weight' => 99,
     ),
-    'user_register_form' => 
+    'user_register_form' =>
     array (
-      'path' => 
+      'path' =>
       array (
       ),
       'key' => 'actions',
       'weight' => 99,
     ),
-    'user_pass' => 
+    'user_pass' =>
     array (
-      'path' => 
+      'path' =>
       array (
       ),
       'key' => 'actions',
@@ -93,7 +93,7 @@ $variables = array (
 
   'clean_url' => true,
 
-  'color_bartik1_palette' => 
+  'color_bartik1_palette' =>
   array (
     'top' => '#2268a1',
     'bottom' => '#48a9e4',
@@ -105,7 +105,7 @@ $variables = array (
     'text' => '#3b3b3b',
     'link' => '#0071B3',
   ),
-  'color_bartik_fb_palette' => 
+  'color_bartik_fb_palette' =>
   array (
     'bg' => '#ffffff',
     'link' => '#0071B3',
@@ -117,7 +117,7 @@ $variables = array (
     'footer' => '#2268a1',
     'titleslogan' => '#fffeff',
   ),
-  'color_bartik_palette' => 
+  'color_bartik_palette' =>
   array (
     'top' => '#2268a1',
     'bottom' => '#48a9e4',
@@ -176,7 +176,7 @@ $variables = array (
   'disqus_inherit_login' => 1,
   'disqus_localization' => 1,
   'disqus_location' => 'content_area',
-  'disqus_nodetypes' => 
+  'disqus_nodetypes' =>
   array (
     'blog' => 'blog',
     'article' => 'article',
@@ -270,7 +270,7 @@ node/add*
 node/*/*
 user/*/*',
   'googleanalytics_privacy_donottrack' => 1,
-  'googleanalytics_roles' => 
+  'googleanalytics_roles' =>
   array (
     1 => 0,
     2 => 0,
@@ -285,7 +285,7 @@ user/*/*',
   'googleanalytics_tracker_anonymizeip' => 0,
   'googleanalytics_trackfiles' => 1,
   'googleanalytics_trackmailto' => 1,
-  'googleanalytics_trackmessages' => 
+  'googleanalytics_trackmessages' =>
   array (
     'status' => 'status',
     'warning' => 'warning',
@@ -388,7 +388,7 @@ user/*/*',
   'rpx_attach_share_link_to_teasers_simplenews' => 0,
   'rpx_bypass_email_verification' => 0,
   'rpx_comment_popup_social_at_once_simplenews' => 0,
-  'rpx_enabled_providers' => 
+  'rpx_enabled_providers' =>
   array (
     0 => 'google',
     1 => 'facebook',
@@ -416,7 +416,7 @@ user/*/*',
   'sharethis_late_load' => 1,
   'sharethis_location' => 'content',
   'sharethis_node_option' => 'blog,article,book,page,simplenews,0',
-  'sharethis_option_extras' => 
+  'sharethis_option_extras' =>
   array (
     'Google Plus One:plusone' => 'Google Plus One:plusone',
     'Facebook Like:fblike' => 'Facebook Like:fblike',
@@ -453,7 +453,7 @@ user/*/*',
   'smtp_port' => '465',
   'smtp_protocol' => 'ssl',
 
-  'theme_bartik1_settings' => 
+  'theme_bartik1_settings' =>
   array (
     'toggle_logo' => 0,
     'toggle_name' => 1,
@@ -471,7 +471,7 @@ user/*/*',
     'favicon_path' => '',
     'favicon_upload' => '',
     'scheme' => '',
-    'palette' => 
+    'palette' =>
     array (
       'top' => '#2268a1',
       'bottom' => '#48a9e4',
@@ -484,9 +484,9 @@ user/*/*',
       'link' => '#0071B3',
     ),
     'theme' => 'bartik1',
-    'info' => 
+    'info' =>
     array (
-      'fields' => 
+      'fields' =>
       array (
         'top' => 'Header top',
         'bottom' => 'Header bottom',
@@ -498,12 +498,12 @@ user/*/*',
         'text' => 'Text color',
         'link' => 'Link color',
       ),
-      'schemes' => 
+      'schemes' =>
       array (
-        'default' => 
+        'default' =>
         array (
           'title' => 'Blue Lagoon (default)',
-          'colors' => 
+          'colors' =>
           array (
             'top' => '#0779bf',
             'bottom' => '#48a9e4',
@@ -516,10 +516,10 @@ user/*/*',
             'link' => '#0071B3',
           ),
         ),
-        'firehouse' => 
+        'firehouse' =>
         array (
           'title' => 'Firehouse',
-          'colors' => 
+          'colors' =>
           array (
             'top' => '#cd2d2d',
             'bottom' => '#cf3535',
@@ -532,10 +532,10 @@ user/*/*',
             'link' => '#d6121f',
           ),
         ),
-        'ice' => 
+        'ice' =>
         array (
           'title' => 'Ice',
-          'colors' => 
+          'colors' =>
           array (
             'top' => '#d0d0d0',
             'bottom' => '#c2c4c5',
@@ -548,10 +548,10 @@ user/*/*',
             'link' => '#019dbf',
           ),
         ),
-        'plum' => 
+        'plum' =>
         array (
           'title' => 'Plum',
-          'colors' => 
+          'colors' =>
           array (
             'top' => '#4c1c58',
             'bottom' => '#593662',
@@ -564,10 +564,10 @@ user/*/*',
             'link' => '#9d408d',
           ),
         ),
-        'slate' => 
+        'slate' =>
         array (
           'title' => 'Slate',
-          'colors' => 
+          'colors' =>
           array (
             'top' => '#4a4a4a',
             'bottom' => '#4e4e4e',
@@ -580,27 +580,27 @@ user/*/*',
             'link' => '#0073b6',
           ),
         ),
-        '' => 
+        '' =>
         array (
           'title' => 'Custom',
-          'colors' => 
+          'colors' =>
           array (
           ),
         ),
       ),
-      'css' => 
+      'css' =>
       array (
         0 => 'css/colors.css',
       ),
-      'copy' => 
+      'copy' =>
       array (
         0 => 'logo.png',
       ),
-      'gradients' => 
+      'gradients' =>
       array (
-        0 => 
+        0 =>
         array (
-          'dimension' => 
+          'dimension' =>
           array (
             0 => 0,
             1 => 0,
@@ -608,17 +608,17 @@ user/*/*',
             3 => 0,
           ),
           'direction' => 'vertical',
-          'colors' => 
+          'colors' =>
           array (
             0 => 'top',
             1 => 'bottom',
           ),
         ),
       ),
-      'fill' => 
+      'fill' =>
       array (
       ),
-      'slices' => 
+      'slices' =>
       array (
       ),
       'blend_target' => '#ffffff',
@@ -628,7 +628,7 @@ user/*/*',
       'base_image' => 'color/base.png',
     ),
   ),
-  'theme_bartik_fb_settings' => 
+  'theme_bartik_fb_settings' =>
   array (
     'toggle_logo' => 0,
     'toggle_name' => 1,
@@ -646,7 +646,7 @@ user/*/*',
     'favicon_path' => '',
     'favicon_upload' => '',
     'scheme' => '',
-    'palette' => 
+    'palette' =>
     array (
       'bg' => '#ffffff',
       'link' => '#0071B3',
@@ -659,9 +659,9 @@ user/*/*',
       'titleslogan' => '#fffeff',
     ),
     'theme' => 'bartik_fb',
-    'info' => 
+    'info' =>
     array (
-      'fields' => 
+      'fields' =>
       array (
         'bg' => 'Main background',
         'link' => 'Link color',
@@ -673,12 +673,12 @@ user/*/*',
         'footer' => 'Footer background',
         'titleslogan' => 'Title and slogan',
       ),
-      'schemes' => 
+      'schemes' =>
       array (
-        'default' => 
+        'default' =>
         array (
           'title' => 'Blue Lagoon (default)',
-          'colors' => 
+          'colors' =>
           array (
             'bg' => '#ffffff',
             'link' => '#0071B3',
@@ -691,10 +691,10 @@ user/*/*',
             'titleslogan' => '#fffeff',
           ),
         ),
-        'facebook' => 
+        'facebook' =>
         array (
           'title' => 'Facebook',
-          'colors' => 
+          'colors' =>
           array (
             'bg' => '#ffffff',
             'link' => '#3b5998',
@@ -707,10 +707,10 @@ user/*/*',
             'titleslogan' => '#fffeff',
           ),
         ),
-        'firehouse' => 
+        'firehouse' =>
         array (
           'title' => 'Firehouse',
-          'colors' => 
+          'colors' =>
           array (
             'bg' => '#ffffff',
             'link' => '#d6121f',
@@ -723,10 +723,10 @@ user/*/*',
             'titleslogan' => '#fffeff',
           ),
         ),
-        'ice' => 
+        'ice' =>
         array (
           'title' => 'Ice',
-          'colors' => 
+          'colors' =>
           array (
             'bg' => '#ffffff',
             'link' => '#019dbf',
@@ -739,10 +739,10 @@ user/*/*',
             'titleslogan' => '#000000',
           ),
         ),
-        'plum' => 
+        'plum' =>
         array (
           'title' => 'Plum',
-          'colors' => 
+          'colors' =>
           array (
             'bg' => '#fffdf7',
             'link' => '#9d408d',
@@ -755,10 +755,10 @@ user/*/*',
             'titleslogan' => '#ffffff',
           ),
         ),
-        'slate' => 
+        'slate' =>
         array (
           'title' => 'Slate',
-          'colors' => 
+          'colors' =>
           array (
             'bg' => '#ffffff',
             'link' => '#0073b6',
@@ -771,27 +771,27 @@ user/*/*',
             'titleslogan' => '#ffffff',
           ),
         ),
-        '' => 
+        '' =>
         array (
           'title' => 'Custom',
-          'colors' => 
+          'colors' =>
           array (
           ),
         ),
       ),
-      'css' => 
+      'css' =>
       array (
         0 => 'css/colors.css',
       ),
-      'copy' => 
+      'copy' =>
       array (
         0 => 'logo.png',
       ),
-      'gradients' => 
+      'gradients' =>
       array (
-        0 => 
+        0 =>
         array (
-          'dimension' => 
+          'dimension' =>
           array (
             0 => 0,
             1 => 0,
@@ -799,17 +799,17 @@ user/*/*',
             3 => 0,
           ),
           'direction' => 'vertical',
-          'colors' => 
+          'colors' =>
           array (
             0 => 'top',
             1 => 'bottom',
           ),
         ),
       ),
-      'fill' => 
+      'fill' =>
       array (
       ),
-      'slices' => 
+      'slices' =>
       array (
       ),
       'blend_target' => '#ffffff',
@@ -829,7 +829,7 @@ user/*/*',
 
   'user_admin_role' => '3',
   'user_cancel_method' => 'user_cancel_block',
-  'user_dashboard_available_blocks' => 
+  'user_dashboard_available_blocks' =>
   array (
     'node_recent' => 'node_recent',
     'search_form' => 'search_form',
@@ -867,71 +867,71 @@ user/*/*',
     'system_powered-by' => 0,
     'devel_switch_user' => 0,
   ),
-  'user_dashboard_default_blocks' => 
+  'user_dashboard_default_blocks' =>
   array (
-    0 => 
-    stdClass::__set_state(array(
+    0 =>
+    array(
        'module' => 'user',
        'delta' => 'new',
        'region' => 'user_dashboard_main',
        'weight' => 0,
        'status' => 1,
        'theme' => 'bartik',
-    )),
-    1 => 
-    stdClass::__set_state(array(
+    ),
+    1 =>
+    array(
        'module' => 'user',
        'delta' => 'online',
        'region' => 'user_dashboard_sidebar',
        'weight' => 0,
        'status' => 1,
        'theme' => 'bartik',
-    )),
-    2 => 
-    stdClass::__set_state(array(
+    ),
+    2 =>
+    array(
        'module' => 'disqus',
        'delta' => NULL,
        'region' => 'user_dashboard_sidebar',
        'weight' => 1,
        'status' => 1,
        'theme' => 'bartik',
-    )),
-    3 => 
-    stdClass::__set_state(array(
+    ),
+    3 =>
+    array(
        'module' => 'node',
        'delta' => 'recent',
        'region' => 'user_dashboard_column1',
        'weight' => 0,
        'status' => 1,
        'theme' => 'bartik',
-    )),
-    4 => 
-    stdClass::__set_state(array(
+    ),
+    4 =>
+    array(
        'module' => 'system',
        'delta' => 'user-menu',
        'region' => 'user_dashboard_column2',
        'weight' => 0,
        'status' => 1,
        'theme' => 'bartik',
-    )),
-    5 => 
-    stdClass::__set_state(array(
+    ),
+    5 =>
+    array(
        'module' => 'invite',
        'delta' => 'invite',
        'region' => 'user_dashboard_column3',
        'weight' => 0,
        'status' => 1,
        'theme' => 'bartik',
-    )),
-    6 => 
-    stdClass::__set_state(array(
+    ),
+    6 =>
+    array(
        'module' => 'node',
        'delta' => 'syndicate',
        'region' => 'user_dashboard_footer',
        'weight' => 0,
        'status' => 1,
        'theme' => 'bartik',
-    )),
+    ),
   ),
   'user_default_timezone' => '0',
   'user_email_verification' => 1,

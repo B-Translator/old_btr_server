@@ -38,6 +38,7 @@ projects[features_extra][version] = "1.0-alpha2"
 projects[uuid][version] = "1.0-alpha3"
 projects[node_export][version] = "3.0"
 projects[configuration][version] = "2.0-alpha2"
+projects[xautoload][version] = "2.7"
 
 ;--------------------
 ; Performance

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 # set the languages of B-Translator
 
 . /etc/default/inithooks
