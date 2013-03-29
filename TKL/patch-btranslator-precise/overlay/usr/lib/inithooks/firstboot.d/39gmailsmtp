@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# send emails through the smtp of a gmail account
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+$INITHOOKS_PATH/bin/gmailsmtp.py --email="$GMAIL" --passw="$GPASSW"
+

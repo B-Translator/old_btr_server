@@ -1,0 +1,10 @@
+#!/bin/bash
+# regenerate phpmyadmin pmadb password
+
+PASSWORD=$(mcookie)
+
+CONF=/etc/phpmyadmin/config.inc.php
+sed -i "s|\['controlpass'\]\(.*\)|\['controlpass'\] = '$PASSWORD';|" $CONF
+
+/usr/lib/di-live.d/??mysql-conf -u pma -p $PASSWORD --chroot=/
+

@@ -1,0 +1,21 @@
+#!/bin/bash -x
+# executed after apply-debs
+
+### install drush
+pear channel-discover pear.drush.org
+pear install pear.drush.org/drush-5.8.0
+
+### by default use the B-Translator root directory for Drush
+mkdir -p /etc/drush
+cat > /etc/drush/drushrc.php << EOF
+<?php
+// by default use the B-Translator root directory
+\$options['r'] = '/var/www/btranslator';
+EOF
+
+### get pology (used for making embedded diffs)
+rm -rf /usr/local/lib/pology
+svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
+
+### cheat tklpatch-apply that there was no error and everything is going fine
+exit 0

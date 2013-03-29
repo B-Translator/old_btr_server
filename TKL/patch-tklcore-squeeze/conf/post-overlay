@@ -1,0 +1,5 @@
+#!/bin/bash -ex
+# executed after apply-overlay
+
+# tell the world what we've done!
+echo 'Hello world - I just patched TurnKey!' >> /etc/issue
