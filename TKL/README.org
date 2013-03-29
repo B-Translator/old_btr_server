@@ -1,0 +1,4 @@
+
+Installing B-Translator on Turnkey Linux, using TKLPatch
+(see: http://www.turnkeylinux.org/docs/tklpatch)
+
