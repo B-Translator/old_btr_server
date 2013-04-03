@@ -1,5 +1,9 @@
 #!/bin/bash -ex
 # executed after apply-overlay
 
-# tell the world what we've done!
-echo 'Hello world - I just patched TurnKey!' >> /etc/issue
+echo 'core' > /etc/hostname
+echo 'turnkey-core-precise' > /etc/turnkey_version
+
+### generate locales
+locale-gen en_US.UTF-8
+LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 update-locale

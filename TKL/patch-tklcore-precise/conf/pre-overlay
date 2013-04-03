@@ -4,6 +4,3 @@
 # source our custom functions
 cwd=$(dirname $0)
 source $cwd/functions
-
-# installs hello - a highly useful package
-install hello

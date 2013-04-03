@@ -1,4 +1,6 @@
 #!/bin/bash -ex
+
+# install apt packages
 install()
 {
     apt-get update
@@ -7,3 +9,22 @@ install()
         -o DPkg::Options::=--force-confold \
         install $@
 }
+
+# install all security updates
+install_updates() {
+    apt-get update
+    for actionfile in /etc/cron-apt/action.d/*; do
+        while read aptcmd; do
+            aptcmd=$(echo $aptcmd | sed "s|-q||")
+            aptcmd=$(echo $aptcmd | sed "s|-o quiet=.*||")
+            DEBIAN_FRONTEND=noninteractive apt-get $aptcmd
+        done < $actionfile
+    done
+}
+
+# remove all but most recent kernel images after update
+# this can be done safely because we're running chroot
+cleanup_images() {
+    dpkg -l 'linux-image-[2-9]*' | sed '/^ii/!d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | head -n -1 | xargs apt-get -y purge
+}
+

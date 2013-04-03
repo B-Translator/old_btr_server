@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if grep -q boot=casper /proc/cmdline; then
+    echo "  Warning: Non-persistent mode"
+    echo
+    echo "    The system is running in live non-persistent mode. Changes will"
+    echo "    be lost on shutdown/reboot."
+    echo
+fi
