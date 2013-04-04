@@ -11,7 +11,7 @@ where 'suite' can be: precise (default), squeeze, etc."
 suite=${1:-precise}
 arch=i386
 
-case $suite:
+case $suite in
     precise )
         apt_mirror=http://archive.ubuntu.com/ubuntu
         ;;
@@ -32,7 +32,7 @@ mount -o bind /proc $target_dir/proc
 chroot $target_dir apt-get update
 if [ $suite = 'precise' ]
 then
-    chroot $target_dir apt-get install ubuntu-minimal
+    chroot $target_dir DEBIAN_FRONTEND=noninteractive apt-get -y install ubuntu-minimal
 fi
 
 ### install tklpatch
@@ -45,6 +45,8 @@ fi
 ######## tklpatch can also be installed manually on the host system
 
 ### apply the core patch
-tklpatch_dir=patch_tklcore_$suite
+cwd=$(dirname $0)
+tklpatch_dir="$cwd/patch-tklcore-$suite"
+cp -TdR $tklpatch_dir/overlay/etc/apt/ $target_dir/etc/apt/
 tklpatch-apply $target_dir $tklpatch_dir
 

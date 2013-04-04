@@ -3,7 +3,11 @@
 
 conf_dir=$(dirname $0)
 
+export DEBIAN_FRONTEND=noninteractive
+
 ### install and upgrade packages
 apt-get update
-cat $conf_dir/packages.txt | xargs apt-get -y install
+cat $conf_dir/packages.txt | xargs apt-get -y \
+    -o DPkg::Options::=--force-confdef \
+    -o DPkg::Options::=--force-confold install
 apt-get -y upgrade 
