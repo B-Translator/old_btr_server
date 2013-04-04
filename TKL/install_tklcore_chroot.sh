@@ -23,7 +23,7 @@ case $suite in
         ;;
 esac
 
-target_dir=/var/chroot/$suite
+target_dir=$suite
 
 ### install a minimal system
 debootstrap --variant=minbase --arch=$arch $suite $target_dir $apt_mirror
