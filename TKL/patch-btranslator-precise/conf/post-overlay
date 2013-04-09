@@ -16,7 +16,7 @@ mkdir -p /var/run/memcached/
 chown nobody /var/run/memcached/
 
 # change turnkey version
-echo 'turnkey-btranslator-12.0-squeeze-x86' > /etc/turnkey_version
+echo 'turnkey-btranslator-precise-x86' > /etc/turnkey_version
 
 # tell the world what we've done!
 echo 'TurnKey B-Translator Appliance' >> /etc/issue

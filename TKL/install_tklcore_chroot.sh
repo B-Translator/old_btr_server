@@ -26,13 +26,14 @@ esac
 target_dir=$suite
 
 ### install a minimal system
+export DEBIAN_FRONTEND=noninteractive
 debootstrap --variant=minbase --arch=$arch $suite $target_dir $apt_mirror
 cp /etc/resolv.conf $target_dir/etc/resolv.conf
 mount -o bind /proc $target_dir/proc
 chroot $target_dir apt-get update
 if [ $suite = 'precise' ]
 then
-    chroot $target_dir DEBIAN_FRONTEND=noninteractive apt-get -y install ubuntu-minimal
+    chroot $target_dir apt-get -y install ubuntu-minimal
 fi
 
 ### install tklpatch
