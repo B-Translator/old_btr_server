@@ -1,0 +1,8 @@
+#!/bin/bash -e
+# set hostaname etc to the given domain
+
+. /etc/default/inithooks
+
+[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
+$INITHOOKS_PATH/bin/setdomain.py --fqdn="$FQDN"
+
