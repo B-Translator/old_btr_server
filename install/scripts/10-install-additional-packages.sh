@@ -19,9 +19,8 @@ apt-get -y upgrade
 #apt-get install language-pack-en
 #dpkg-reconfigure locales
 
-
 ### install other needed packages
-install aptitude vim psmisc language-pack-en
+install aptitude vim nano psmisc language-pack-en
 install mysql-server ssmtp memcached php5-memcached \
         php5-mysql php5-gd php-db php5-dev make php-pear php5-curl php-apc \
         ssl-cert gawk unzip wget diff phpmyadmin \

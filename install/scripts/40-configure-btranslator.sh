@@ -1,44 +1,12 @@
 #!/bin/bash -x
-# executed after apply-overlay
-
-$(dirname $0)/separate_translation_data.sh
-
-### put the cache on RAM (to improve efficiency)
-sed -e '/^tmpfs/d' -i /etc/fstab
-cat <<EOF >> /etc/fstab
-tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
-tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
-devpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
-EOF
-
-### create other dirs that are needed
-mkdir -p /var/run/memcached/
-chown nobody /var/run/memcached/
-
-# change turnkey version
-echo 'turnkey-btranslator-precise-x86' > /etc/turnkey_version
-
-# tell the world what we've done!
-echo 'TurnKey B-Translator Appliance' >> /etc/issue
 
 # Protect Drupal settings from prying eyes
-SETTINGS=/var/www/btranslator/sites/default/settings.php
-chown root:www-data $SETTINGS
-chmod 640 $SETTINGS
-
-# disable powered-by Drupal block on all themes
-mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
-
-# aggregate and compress CSS and JS files (for performance)
-drush vset preprocess_css 1
-drush vset preprocess_js 1
-
-# set some other drupal vars
-drush vset l10n_feedback_export_path '/var/www/exports'
-drush vset l10n_feedback_preferred_projects 'test'
+drupal_settings=/var/www/btranslator/sites/default/settings.php
+chown root:www-data $drupal_settings
+chmod 640 $drupal_settings
 
 # Modify Drupal settings
-cat >> $SETTINGS << EOF
+cat >> $drupal_settings << EOF
 /**
  * Disable Poor Man's Cron:
  *
@@ -86,8 +54,14 @@ if (!headers_sent()) {
 
 EOF
 
-### shutdown
-services="php5-fpm memcached mysql nginx shellinabox webmin"
-for service in $services; do service $service stop; done
+# disable powered-by Drupal block on all themes
+mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
 
-exit 0
+# aggregate and compress CSS and JS files (for performance)
+drush vset preprocess_css 1
+drush vset preprocess_js 1
+
+# set some other drupal vars
+drush vset l10n_feedback_export_path '/var/www/exports'
+drush vset l10n_feedback_preferred_projects 'test'
+

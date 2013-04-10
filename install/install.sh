@@ -25,7 +25,8 @@ chroot $target_dir apt-get -y install ubuntu-minimal
 
 ### apply to chroot the scripts and the overlay
 cwd=$(dirname $0)
-chroot $target_dir mkdir -p /tmp/server-patch
-cp -a $cwd/* $target_dir/tmp/server-patch/
-chroot $target_dir /tmp/server-patch/scripts/00-config.sh
-chroot $target_dir rm -rf /tmp/server-patch
+chroot $target_dir mkdir -p /tmp/install
+cp -a $cwd/* $target_dir/tmp/install/
+chroot $target_dir /tmp/install/scripts/00-config.sh
+chroot $target_dir /tmp/install/config.sh
+chroot $target_dir rm -rf /tmp/install

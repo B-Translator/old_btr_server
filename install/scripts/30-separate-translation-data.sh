@@ -41,7 +41,10 @@ mysql --host=localhost --database=$db_name --user=$db_user --password=$db_pass
 EOF
 
 # modify Drupal settings
-cat << EOF >> /var/www/btranslator/sites/default/settings.php
+drupal_settings=/var/www/btranslator/sites/default/settings.php
+sed -e '/===== APPENDED BY INSTALLATION SCRIPTS =====/,$ d' -i $drupal_settings
+cat << EOF >> $drupal_settings
+//===== APPENDED BY INSTALLATION SCRIPTS =====
 
 /**
  * Use a separate database for the translation data.
