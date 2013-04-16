@@ -16,7 +16,3 @@ $cwd/40-configure-btranslator.sh
 cp -TdR $(dirname $cwd)/overlay/ /
 
 $cwd/50-misc-config.sh
-
-### shutdown services
-services="php5-fpm memcached mysql nginx"
-for service in $services; do service $service stop; done
