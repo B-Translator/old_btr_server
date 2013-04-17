@@ -48,7 +48,7 @@ umount $target_dir/proc
 cd $target_dir
 chroot_dir=$(pwd)
 cd $cwd
-init_script="/etc/init.d/chroot-$(basename $target_dir)"
+init_script="/etc/init.d/chroot-$(basename $chroot_dir)"
 sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $cwd/init.sh > $init_script
 chmod +x $init_script
 update-rc.d $(basename $init_script) defaults

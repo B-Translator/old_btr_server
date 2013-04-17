@@ -101,17 +101,11 @@ B-Translator.
     aptitude install phpmyadmin php5-curl php-apc
     #+END_EXAMPLE
 
-  + Install *drush-4* and *drush_make* (drush-5 still has some
-    problems with 'make'):
+  + Install *drush-5.8.0*:
     #+BEGIN_EXAMPLE
     aptitude install drush php-pear
     pear channel-discover pear.drush.org
-    pear upgrade drush/drush-4.6.0
-
-    mkdir -p ~/.drush
-    cd ~/.drush/
-    wget http://ftp.drupal.org/files/projects/drush_make-6.x-2.3.tar.gz
-    tar xfz drush_make-6.x-2.3.tar.gz
+    pear install pear.drush.org/drush-5.8.0
     #+END_EXAMPLE
 
   + Install some tools needed by the scripts:
@@ -132,7 +126,7 @@ B-Translator.
   #+BEGIN_EXAMPLE
   cd /var/www/
   sudo git clone https://github.com/dashohoxha/B-Translator.git
-  sudo B-Translator/install/all.sh
+  sudo B-Translator/install/dev/all.sh
   #+END_EXAMPLE
 
 
@@ -166,7 +160,7 @@ B-Translator.
 
    + Then restart apache: ~service apache2 restart~
 
-** Enable additonal apache modules
+** Enable additional apache modules
 
     #+BEGIN_EXAMPLE
     a2enmod headers

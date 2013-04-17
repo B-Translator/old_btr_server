@@ -30,6 +30,7 @@ case "$1" in
 	do
 	    mount -o bind /$DIR $CHROOT/$DIR
 	done
+	chroot $CHROOT/ mount -a   # php5-fpm will not start without this
 
 	# start the services inside the CHROOT
 	for SRV in $CHROOT_SERVICES
@@ -44,6 +45,8 @@ case "$1" in
 	do
 	    chroot $CHROOT/ service $SRV stop
 	done
+
+	chroot $CHROOT/ umount -a
 
 	# umount /proc etc. from the CHROOT
 	for DIR in $(reverse "$MOUNT_POINTS")
