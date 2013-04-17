@@ -3,12 +3,43 @@ This is a Drupal installation profile for B-Translator.
 
 * Installation
 
-  A full distro including Drupal core (with patches) and the
-  /btranslation/ installation profile can be built like this:
+  The recommended way of installation for a production server is to
+  install it inside a chroot, in precise (ubuntu 12.04). Assuming that
+  we have already installed a minimal ubuntu server 12.04 (precise),
+  btranslator can be installed in it like this:
+  #+BEGIN_EXAMPLE
+  sudo mkdir /var/chroot
+  cd /var/chroot/
+  sudo git clone https://github.com/dashohoxha/B-Translator.git
+  sudo B-Translator/install/install.sh btr
+  #+END_EXAMPLE
+
+  This will install in ~/var/chroot/btr~ a minimal ubuntu system,
+  B-Translator, and everything that is needed for the normal work of
+  the system. It will also make the neccessary common configurations
+  of the system and prompt for customizing it (for example the domain,
+  email address, etc.)
+  
+  The installation script will also create the init script
+  ~/etc/init.d/chroot-btr~, which can be used to start and stop the services
+  inside the chroot:
+  #+BEGIN_EXAMPLE
+  service chroot-btr start
+  service chroot-btr stop
+  #+END_EXAMPLE
+
+  *Note:* For the time being, the script
+  ~B-Translator/install/install.sh~ assumes: =arch=i386= and
+  =apt_mirror=http://archive.ubuntu.com/ubuntu= . So, if you want to
+  use something different, you have to edit and modify the script
+  manually.
+
+  For development purposes, probably it is better to install B-Translator
+  like this (inside a chroot):
   #+BEGIN_EXAMPLE
   cd /var/www/
   sudo git clone https://github.com/dashohoxha/B-Translator.git
-  sudo B-Translator/install/all.sh
+  sudo B-Translator/install/dev/all.sh
   #+END_EXAMPLE
 
   For more detailed information about installation see *docs/INSTALL.org*.
