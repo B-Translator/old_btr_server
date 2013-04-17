@@ -28,11 +28,10 @@ This is a Drupal installation profile for B-Translator.
   service chroot-btr stop
   #+END_EXAMPLE
 
-  *Note:* For the time being, the script
-  ~B-Translator/install/install.sh~ assumes: =arch=i386= and
-  =apt_mirror=http://archive.ubuntu.com/ubuntu= . So, if you want to
-  use something different, you have to edit and modify the script
-  manually.
+  *Note:* The default options of the script are: =--arch=i386=,
+   =--suite=precise= and =--mirror=http://archive.ubuntu.com/ubuntu=
+   . If you want to use something different, you have to give the
+   option explicitly on the command line.
 
   For development purposes, probably it is better to install B-Translator
   like this (inside a chroot):
