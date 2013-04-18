@@ -8,10 +8,15 @@ This is a Drupal installation profile for B-Translator.
   we have already installed a minimal ubuntu server 12.04 (precise),
   btranslator can be installed in it like this:
   #+BEGIN_EXAMPLE
-  sudo mkdir /var/chroot
+  mkdir /var/chroot
   cd /var/chroot/
-  sudo git clone https://github.com/dashohoxha/B-Translator.git
-  sudo B-Translator/install/install.sh btr
+  git clone https://github.com/dashohoxha/B-Translator.git
+  nohup nice B-Translator/install/install.sh btr &
+  tail -f nohup.out
+  chroot btr/ /tmp/install/config.sh
+  chroot btr/ rm -rf /tmp/install
+  service chroot-btr stop
+  service chroot-btr start
   #+END_EXAMPLE
 
   This will install in ~/var/chroot/btr~ a minimal ubuntu system,
