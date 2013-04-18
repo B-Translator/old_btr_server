@@ -91,4 +91,4 @@ libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce
 
 libraries[phpmailer][directory_name] = "phpmailer"
 libraries[phpmailer][download][type] = "get"
-libraries[phpmailer][download][url] = "http://downloads.sourceforge.net/project/phpmailer/phpmailer%20for%20php5_6/PHPMailer%20v5.1/PHPMailer_v5.1.tar.gz"
+libraries[phpmailer][download][url] = "http://downloads.sourceforge.net/project/phpmailer/phpmailer%20for%20php5_6/Previous%20Versions/PHPMailer%20v5.1/PHPMailer_v5.1.tar.gz"
