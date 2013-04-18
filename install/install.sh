@@ -55,17 +55,18 @@ chroot $target_dir apt-get update
 chroot $target_dir apt-get -y install ubuntu-minimal
 
 ### apply to chroot the scripts and the overlay
-cwd=$(dirname $0)
+install_dir=$(dirname $0)
 chroot $target_dir mkdir -p /tmp/install
-cp -a $cwd/* $target_dir/tmp/install/
+cp -a $install_dir/* $target_dir/tmp/install/
 chroot $target_dir /tmp/install/install-scripts/00-config.sh
 
 ### create an init script and make it start at boot
+current_dir=$(pwd)
 cd $target_dir
 chroot_dir=$(pwd)
-cd $cwd
+cd $current_dir
 init_script="/etc/init.d/chroot-$(basename $chroot_dir)"
-sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $cwd/init.sh > $init_script
+sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $install_dir/init.sh > $init_script
 chmod +x $init_script
 update-rc.d $(basename $init_script) defaults
 
