@@ -1,3 +1,4 @@
+#!/usr/bin/drush php-script
 <?php
 // add DEV before site_name and site_slogan
 $site_name = variable_get('site_name');

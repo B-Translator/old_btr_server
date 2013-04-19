@@ -4,13 +4,7 @@ TAGS
 *.sql.gz
 modules/l10n_feedback/data/db/settings.php
 modules/l10n_feedback/data/db/sql-connect.txt
-libraries/facebook-php-sdk/
-libraries/tinymce/
-libraries/geshi/
-libraries/phpmailer/
+libraries/
 modules/contrib/
-themes/tao/
-themes/rubik/
-themes/fusion/
-themes/abessive/
-themes/acquia_marina/
+modules/libraries/
+themes/contrib/
