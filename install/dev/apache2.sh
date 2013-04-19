@@ -6,14 +6,24 @@ case $1 in
     start)
 	service nginx stop
 	service php5-fpm stop
+
 	drush -y dis memcache
 	service memcached stop
+	sed -i /var/www/btranslator/sites/default/settings.php \
+	    -e "/Adds memcache as a cache backend/a /* comment memcache config" \
+	    -e "/'memcache_key_prefix'/a comment memcache config */"
+
 	service apache2 start
 	;;
+
     stop)
 	service apache2 stop
+
+	sed -i /var/www/btranslator/sites/default/settings.php \
+	    -e "/comment memcache config/ d"
 	service memcached start
 	drush -y en memcache
+
 	service php5-fpm start
 	service nginx start
 	;;

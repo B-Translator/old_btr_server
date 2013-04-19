@@ -17,6 +17,13 @@ chown nobody /var/run/memcached/
 a2enmod ssl
 a2ensite default-ssl
 a2enmod headers rewrite
+
 sed -i /etc/php5/apache2/php.ini \
     -e "/^\[PHP\]/ a apc.rfc1867 = 1" \
     -e "/^display_errors/ c display_errors = On"
+
+sed -i /etc/apache2/apache2.conf \
+    -e "/^<IfModule mpm_prefork_module>/,+5 s/StartServers.*/StartServers 2/" \
+    -e "/^<IfModule mpm_prefork_module>/,+5 s/MinSpareServers.*/MinSpareServers 2/" \
+    -e "/^<IfModule mpm_prefork_module>/,+5 s/MaxSpareServers.*/MaxSpareServers 4/" \
+    -e "/^<IfModule mpm_prefork_module>/,+5 s/MaxClients.*/MaxClients 50/"
