@@ -50,6 +50,8 @@ drush --yes pm-enable btranslator_variables
 ### set propper directory permissions
 mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
+mkdir -p sites/all/translations
+chown -R www-data: sites/all/translations
 mkdir -p cache/
 chown -R www-data: cache/
 
