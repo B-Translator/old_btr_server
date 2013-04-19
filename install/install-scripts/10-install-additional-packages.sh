@@ -12,13 +12,6 @@ function install
 apt-get update
 apt-get -y upgrade 
 
-### generate locales
-#locale-gen en_US.UTF-8
-#LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 update-locale
-#dpkg-reconfigure localepurge
-#apt-get install language-pack-en
-#dpkg-reconfigure locales
-
 ### install other needed packages
 install aptitude tasksel vim nano psmisc language-pack-en
 install mysql-server ssmtp memcached php5-memcached \

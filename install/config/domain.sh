@@ -17,11 +17,17 @@ read -p "Enter the domain [$FQDN]: " input
 FQDN=${input:-$FQDN}
 
 echo $FQDN > /etc/hostname
-sed -e "/^127.0.1.1/c 127.0.1.1 $FQDN btranslator" -i /etc/hosts
+sed -i /etc/hosts \
+    -e "/^127.0.1.1/c 127.0.1.1 $FQDN btranslator" -i /etc/hosts
 
-config_file=/etc/nginx/sites-available/default
-sed -e "s/server_name .*\$/server_name $FQDN;/" -i $config_file
+sed -i /etc/nginx/sites-available/default \
+    -e "s/server_name .*\$/server_name $FQDN;/" -i $config_file
 
-config_file=/var/www/btranslator/sites/default/settings.php
-sed -e "/^\\\$base_url/c \$base_url = \"https://$FQDN\";" -i $config_file
+sed -i /var/www/btranslator/sites/default/settings.php \
+    -e "/^\\\$base_url/c \$base_url = \"https://$FQDN\";"
 
+sed -i /etc/apache2/sites-available/default \
+    -e "s/ServerName .*\$/ServerName $FQDN/"
+
+sed -i /etc/apache2/sites-available/default-ssl \
+    -e "s/ServerName .*\$/ServerName $FQDN/"

@@ -29,6 +29,11 @@ sed -i /etc/ssmtp/revaliases \
     -e "/^root:/ c root:$GMAIL:smtp.gmail.com:587" \
     -e "/^admin:/ c admin:$GMAIL:smtp.gmail.com:587"
 
+sed -i /etc/apache2/sites-available/default \
+    -e "s/ServerAdmin .*\$/ServerAdmin $GMAIL/"
+sed -i /etc/apache2/sites-available/default-ssl \
+    -e "s/ServerAdmin .*\$/ServerAdmin $GMAIL/"
+
 ### modify drupal variables that are used for sending email
 service mysql start
 echo "Modifying drupal variables that are used for sending email..."

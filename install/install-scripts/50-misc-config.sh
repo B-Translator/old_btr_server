@@ -12,3 +12,11 @@ EOF
 ### create other dirs that are needed
 mkdir -p /var/run/memcached/
 chown nobody /var/run/memcached/
+
+### configure apache2
+a2enmod ssl
+a2ensite default-ssl
+a2enmod headers rewrite
+sed -i /etc/php5/apache2/php.ini \
+    -e "/^\[PHP\]/ a apc.rfc1867 = 1" \
+    -e "/^display_errors/ c display_errors = On"
