@@ -45,7 +45,7 @@ drush --yes pm-enable btranslator_misc_config
 drush --yes pm-enable btranslator_content
 drush --yes pm-enable btranslator_block_settings
 drush --yes pm-enable btranslator_variables
-#drush --yes pm-enable btranslator_permissions
+drush --yes pm-enable btranslator_permissions
 
 ### set propper directory permissions
 mkdir -p sites/default/files/

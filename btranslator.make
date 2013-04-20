@@ -51,6 +51,7 @@ projects[memcache][version] = "1.0"
 ;--------------------
 projects[drupalchat][version] = "1.0-beta12"
 projects[disqus][version] = "1.9"
+projects[disqus][patch][] = "http://drupal.org/files/disqus-https.patch"
 projects[sharethis][version] = "2.5"
 projects[rpx][version] = "2.2"
 projects[fb][version] = "3.3-beta5"
