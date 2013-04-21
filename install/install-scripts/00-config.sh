@@ -12,6 +12,8 @@ $cwd/25-git-clone-btranslator.sh
 
 $cwd/30-separate-translation-data.sh
 
+$cwd/35-separate-po-files.sh
+
 $cwd/40-configure-btranslator.sh
 
 ### copy overlay files over to the system

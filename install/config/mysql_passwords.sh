@@ -11,15 +11,15 @@ service mysql start
 
 ### regenerate the password of debian-sys-maint
 PASSWD=$(mcookie | head -c 16)
-DEBIAN_CNF=/etc/mysql/debian.cnf
-sed -e "/^password/c password = $PASSWD" -i $DEBIAN_CNF
-query="SET PASSWORD FOR 'debian-sys-maint'@'localhost' = PASSWORD('$PASSWD');"
-echo $query | mysql
+mysql --defaults-file=/etc/mysql/debian.cnf -B \
+    -e "SET PASSWORD FOR 'debian-sys-maint'@'localhost' = PASSWORD('$PASSWD');"
+sed -i /etc/mysql/debian.cnf \
+    -e "/^password/c password = $PASSWD"
 
 # regenerate phpmyadmin pmadb password
 PASSWD=$(mcookie)
-CONF=/etc/phpmyadmin/config-db.php
-sed -i "/^\$dbpass/ c \$dbpass='$PASSWD';" $CONF
+sed -i /etc/phpmyadmin/config-db.php \
+    -e "/^\$dbpass/ c \$dbpass='$PASSWD';"
 set_mysql_passwd phpmyadmin $PASSWD
 
 ### set a new password for the root user of mysql

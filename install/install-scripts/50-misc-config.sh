@@ -7,6 +7,8 @@ cat <<EOF >> /etc/fstab
 tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
 tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
 devpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
+# mount /tmp on RAM for better performance
+#tmpfs /tmp tmpfs defaults,noatime,mode=1777,nosuid 0 0
 EOF
 
 ### create other dirs that are needed
@@ -17,7 +19,8 @@ chown nobody /var/run/memcached/
 a2enmod ssl
 a2ensite default-ssl
 a2enmod headers rewrite
-
+ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf.d/phpmyadmin
+ 
 sed -i /etc/php5/apache2/php.ini \
     -e "/^\[PHP\]/ a apc.rfc1867 = 1" \
     -e "/^display_errors/ c display_errors = On"
