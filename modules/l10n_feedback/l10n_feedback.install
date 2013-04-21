@@ -415,7 +415,7 @@ function l10n_feedback_schema() {
       'sguid' => array('sguid'),
       'time' => array('time'),
       'translation_text' => array('translation'),
-      'umail' => array(array('umail', 10)),
+      'umail' => array(array('umail', 20)),
     ),
   );
 
@@ -497,6 +497,7 @@ function l10n_feedback_schema() {
       'umail_ulng_tguid' => array(array('umail', 20), 'ulng', 'tguid'),
       'tguid' => array('tguid'),
       'time' => array('time'),
+      'umail' => array(array('umail', 20)),
     ),
   );
 

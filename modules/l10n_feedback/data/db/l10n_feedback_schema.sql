@@ -124,7 +124,7 @@ CREATE TABLE `l10n_feedback_translations` (
   PRIMARY KEY (`tguid`),
   KEY `time` (`time`),
   KEY `sguid` (`sguid`),
-  KEY `umail` (`umail`(10)),
+  KEY `umail` (`umail`(20)),
   FULLTEXT KEY `translation_text` (`translation`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Translations/suggestions of the l10n strings. For...';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -166,7 +166,8 @@ CREATE TABLE `l10n_feedback_votes` (
   PRIMARY KEY (`vid`),
   UNIQUE KEY `umail_ulng_tguid` (`umail`(20),`ulng`,`tguid`),
   KEY `time` (`time`),
-  KEY `tguid` (`tguid`)
+  KEY `tguid` (`tguid`),
+  KEY `umail` (`umail`(20))
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8 COMMENT='Votes for each translation/suggestion.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `l10n_feedback_votes_trash`;
@@ -197,7 +198,7 @@ CREATE TABLE `l10n_feedback_users` (
   `name` varchar(60) NOT NULL COMMENT 'Username',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Disabled (0) or active (1).',
   `points` int(11) DEFAULT '0' COMMENT 'Number of points rewarded for his activity.',
-  `config` varchar(20000) DEFAULT NULL COMMENT 'Serialized configuration variables.',
+  `config` varchar(250) DEFAULT NULL COMMENT 'Serialized configuration variables.',
   PRIMARY KEY (`umail`,`ulng`,`uid`),
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users that contribute translations/suggestions/votes.';
