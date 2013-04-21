@@ -27,9 +27,8 @@ cp -a btranslator-bak/modules/contrib/ btranslator/modules/
 cp -a btranslator-bak/modules/libraries/ btranslator/modules/
 cp -a btranslator-bak/themes/contrib/ btranslator/themes/
 
-### copy db connection files
+### copy db connection file
 cp {btranslator-bak,btranslator}/modules/l10n_feedback/data/db/settings.php
-cp {btranslator-bak,btranslator}/modules/l10n_feedback/data/db/sql-connect.txt
 
 ### fix the links to PO_files
 PO_files=/var/www/PO_files

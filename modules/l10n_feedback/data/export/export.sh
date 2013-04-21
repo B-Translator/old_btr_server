@@ -21,17 +21,17 @@ test "$QUIET" = '' && echo $0 $origin $project $lng $output_dir
 ### go to the script directory
 cd $(dirname $0)
 
-### get the DB connection parameters
-mysql="$(cat ../db/sql-connect.txt)"
-#echo $mysql;  exit;  # debug
+### mysql command
+dbname=${BTRANSLATOR_DATA:-btranslator_data}
+mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --database=$dbname --skip-column-names"
 
 ### get from the DB the names of the templates and the filenames
 sql="SELECT t.tplname, f.filename FROM l10n_feedback_files f
      LEFT JOIN l10n_feedback_templates t ON (f.potid = t.potid)
      LEFT JOIN l10n_feedback_projects p ON (t.pguid = p.pguid)
      WHERE p.origin = '$origin' AND p.project = '$project' AND f.lng = '$lng'"
-#echo $sql | $mysql --skip-column-names | sed -e 's/\t/,/g' ;  exit;  # debug
-result_rows=$(echo $sql | $mysql --skip-column-names | sed -e 's/\t/,/g')
+#$mysql -e "$sql" | sed -e 's/\t/,/g' ;  exit;  # debug
+result_rows=$($mysql -e "$sql" | sed -e 's/\t/,/g')
 
 ### export all the PO files of the project
 for row in $result_rows

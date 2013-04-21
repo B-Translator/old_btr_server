@@ -1,20 +1,17 @@
 #!/bin/bash
 ### dump the tables of the module l10n_feedback
 
-### get the dump mode
-if [ "$1" = '' ]
-then
-    echo -e "Usage: $0 (schema|data|user|db)\n"
+function usage {
+    echo -e " Usage: $0 (schema|data|user|db) \n"
     exit 1
-fi
+}
+
+### get the arguments
+if [ "$1" = '' ]; then usage; fi
 dump_mode=$1
 
 ### go to the script directory
 cd $(dirname $0)
-
-### get the DB connection parameters
-connection="$(cat sql-connect.txt | sed -e 's/^mysql //' | sed -e 's/--database=/--database /')"
-#echo $connection;  exit 0;  ## debug
 
 ### list of all the tables
 all_tables="
@@ -32,13 +29,16 @@ all_tables="
     l10n_feedback_users
 "
 
+### mysqldump default options
+dbname=${BTRANSLATOR_DATA:-btranslator_data}
+mysqldump="mysqldump --defaults-file=/etc/mysql/debian.cnf --database=$dbname"
+
 ### make the required dump
 case "$dump_mode" in
 
     schema )
         ### dump only the schema of the database
-	mysqldump $connection \
-            --no-data --compact --add-drop-table \
+	$mysqldump --no-data --compact --add-drop-table \
             --tables $all_tables > l10n_feedback_schema.sql
 
         ### fix a little bit the file
@@ -50,7 +50,7 @@ case "$dump_mode" in
 	dump_file=l10n_feedback_dump_$date.sql
 
         ### make a full dump of the database
-	mysqldump $connection --opt --tables $all_tables > $dump_file
+	$mysqldump --opt --tables $all_tables > $dump_file
 
 	gzip $dump_file
 	;;
@@ -59,24 +59,22 @@ case "$dump_mode" in
 	date=$(date +%Y%m%d)
 	dump_file=l10n_feedback_user_$date.sql
 
-	mysqldump $connection --no-create-info \
-            --tables l10n_feedback_translations --where="uid>1" > $dump_file
-	mysqldump $connection --opt --tables l10n_feedback_users >> $dump_file
-	mysqldump $connection --opt --tables l10n_feedback_votes >> $dump_file
+	$mysqldump --no-create-info --tables l10n_feedback_translations \
+            --where="uid>1" > $dump_file
+	$mysqldump --opt --tables l10n_feedback_users >> $dump_file
+	$mysqldump --opt --tables l10n_feedback_votes >> $dump_file
 
 	gzip $dump_file
 	;;
 
     db )
 	date=$(date +%Y%m%d)
-	dump_file=btranslator_db_$date.sql
-	mysqldump $connection --opt > $dump_file
+	dump_file=$dbname-$date.sql
+	$mysqldump --opt > $dump_file
 	gzip $dump_file
 	;;
 
     * )
-	echo -e "Usage: $0 (schema|data|user|db)\n"
-	exit 1
+        usage
 	;;
-
 esac

@@ -3,13 +3,11 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### store database settings on db/settings.php and db/sql-connect.txt
+### store database settings on db/settings.php
 drush php-script db/get-db-settings.php > db/settings.php
-drush sql-connect | sed "s/'//g" > db/sql-connect.txt
 
 ### create the DB tables
-mysql=$(cat db/sql-connect.txt)
-#echo $mysql;  exit;  ## debug
+mysql=$(drush sql-connect)
 $mysql < db/l10n_feedback_schema.sql
 
 ### create the project 'misc/vocabulary'

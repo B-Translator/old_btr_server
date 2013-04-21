@@ -42,9 +42,6 @@ cat <<EOF > /var/www/btranslator_data/db/settings.php
 \$dbpass   = '$db_pass';
 ?>
 EOF
-cat <<EOF > /var/www/btranslator_data/db/sql-connect.txt
-mysql --host=localhost --database=$db_name --user=$db_user --password=$db_pass
-EOF
 
 # modify Drupal settings
 drupal_settings=/var/www/btranslator/sites/default/settings.php

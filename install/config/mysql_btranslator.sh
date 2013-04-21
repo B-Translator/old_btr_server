@@ -1,6 +1,6 @@
 #!/bin/bash
 ### set passwords for the mysql users
-### btranslator and btranslator_data  
+### btranslator and btranslator_data
 
 cwd=$(dirname $0)
 . $cwd/set_mysql_passwd.sh
@@ -39,5 +39,3 @@ sed -i /var/www/btranslator/sites/default/settings.php \
 ### modify also the connection settings on btranslator_data
 sed -i /var/www/btranslator_data/db/settings.php \
     -e "/^\\\$dbpass/ s/= .*/= '$data_passwd'/"
-sed -i /var/www/btranslator_data/db/sql-connect.txt \
-    -e "s/--password=[^ ]*/--password=$data_passwd/"

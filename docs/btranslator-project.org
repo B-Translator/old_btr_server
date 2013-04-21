@@ -248,7 +248,7 @@
     The latest changes should be exported in a format that is easy to
     review, modify and apply (diff or ediff).
 
-    
+
 
 * Analyzing the functionality in more details
 
@@ -275,7 +275,7 @@
 
    The actors and use-cases that can be identified for B-Translator
    are these:
-   
+
    + *guest* (anonymous user)
      - *get* translation suggestions for a string
      - *search* strings and translations
@@ -405,7 +405,7 @@
     The admin should be able to customize the overall behavior of the
     module, to check activity, to get reports and statistics, to
     maintain the data (backup, restore, update) etc.
-    
+
 
 * Designing the software
 
@@ -685,7 +685,7 @@
   The majority of tasks usually are related to programing and
   implementation, however anything else can be a task (for example,
   collecting requirements, performing the functional analysis, etc.).
-  
+
   There are some steps or phases that are common for all software
   engineering projects, like:
   - collecting/updating the requirements
@@ -695,7 +695,7 @@
   - implementing or improving features
   - testing, debugging and making sure that they work correctly
   - etc.
-  
+
   How these phases are combined together depends on the software that
   is to be build. If you have enough experience with building such
   kind of software, and you have a clear idea from the beginning about
@@ -958,7 +958,7 @@
     =$data_root=, which is defined in ~config.sh~. Besides =$data_root=,
     ~config.sh~ defines also the variable =$languages=, which is a list
     of the codes of the languages that are supported by the system.
-    
+
     Projects on the =$data_root= are also grouped (categorized) by
     origin.  For example all the GNOME projects are placed on the same
     directory, all the KDE projects on another directory, and so on.
@@ -985,7 +985,7 @@
     Importing is done in two steps: the first step is to import the
     template (POT) files of the project, and the second step is to
     import the translation (PO) files for each language.  A POT file
-    usually has a corresponding PO file for each language. 
+    usually has a corresponding PO file for each language.
 
     The template (POT) files contain the translatable strings of the
     project, with empty translations (this is why they are called
@@ -1018,7 +1018,7 @@
      existing project is used.  However, if the given template already
      exists (for this project), then it is deleted first (along with the
      locations and files related to it), and then recreated.
-      
+
      Along with the template, locations that are contained in this
      template are created as well. The string corresponding to each
      location is created only if it does not already exist. Otherwise
@@ -1048,11 +1048,11 @@
      that the POT file of the project has already been imported,
      otherwise it will quit without doing anything.  If the file has
      been already imported, then it is skipped.
-       
+
      For each file, all the information that is needed for exporting it
      is stored, like the file name and path, the headers of the file,
      the content of the file, etc.
-       
+
      Along with the file, it also inserts the translations for the
      corresponding strings, when such translations do not exist.
 
@@ -1184,7 +1184,7 @@
      Their path under the ~output_dir~ is the same as the path of the
      imported files. This is useful for making diffs with the original
      files of the project.
-    
+
 **** Exporting projects in tgz format (export_tgz.sh)
 
      This script is usually called from the web (through the REST API)
@@ -1290,7 +1290,7 @@
 
      This script compares the current translation files of an ~{origin,
      project, lng}~ with the last snapshot.
-   
+
        #+BEGIN_EXAMPLE
        $ ./make_diff.sh
 
@@ -1362,7 +1362,7 @@
      differences that come as a result of formatting changes between the
      original format and the exported format. It also contains the
      entries that are skipped during the import.
-     
+
      Whenever a translator checks the latest diff, he should also make a
      snapshot, which will also generate the diff with the previous
      snapshot (and store it on the DB). As a result, the translations
@@ -1378,7 +1378,7 @@
      diff_comment="Contains the latest suggestions before import."
      ../export/make_snapshot.sh $origin $project $lng "$diff_comment"
      #+END_EXAMPLE
-   
+
      Then an initial snapshot is made again with the original files,
      using ~db_snapshot.php init ...~ (which will not generate any
      diff).  After it, a snapshot using the ~original~ mode of export is
@@ -1420,7 +1420,7 @@
 	   If 'nr' is missing, then the list of diffs will be retrieved instead.
 	   If 'nr' is '-', then the latest diffs (since the last snapshot)
 	   will be computed and returned (it will take longer to execute, since
-	   the diffs are calculated on the fly). 
+	   the diffs are calculated on the fly).
 
        Examples:
 	   ./wget-diffs.sh KDE kdelibs sq
@@ -1440,8 +1440,7 @@
      application. All of them extend ~db/class.DB.php~, which creates a
      connection to the database. The parameters of the DB connection are
      included from ~db/settings.php~, which is generated automatically
-     during installation.  The shell scripts use ~db/sql-connect.txt~
-     instead, for getting the connection parameters.
+     during installation.
 
 **** Working with PO files
 

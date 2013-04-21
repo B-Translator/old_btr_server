@@ -21,17 +21,15 @@ filename=${5:-"$origin-$project-$lng"}
 ### go to the script directory
 cd $(dirname $0)
 
-### get the DB connection parameters
-mysql="$(cat ../db/sql-connect.txt)"
-#echo $mysql;  exit;  # debug
-
 ### get the list of the projects to be exported
 if [ "$project" != 'all' ]
 then
     project_list=$project
 else
+    dbname=${BTRANSLATOR_DATA:-btranslator_data}
+    mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --skip-column-names"
     sql="SELECT project FROM l10n_feedback_projects WHERE origin = '$origin'"
-    project_list=$(echo $sql | $mysql --skip-column-names)
+    project_list=$($mysql -D $dbname -e "$sql")
 fi
 
 ### export the PO files of all the projects in project_list

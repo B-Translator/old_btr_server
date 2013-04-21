@@ -32,8 +32,9 @@ output_file="tests/output_$timestamp.txt"
 mkdir -p tests/
 
 ### make a backup of the database
-connection="$(drush sql-connect | sed -e s/\'//g -e 's/^mysql //' -e 's/--database=/--database /')"
-mysqldump $connection --opt > $dump_file
+dbname=${BTRANSLATOR_DATA:-btranslator_data}
+mysqldump="mysqldump --defaults-file=/etc/mysql/debian.cnf --database=$dbname"
+$mysqldump --opt > $dump_file
 
 ### clean-up any remainings from the previous tests
 php scripts/run-tests.sh --clean
@@ -51,5 +52,5 @@ else
 fi
 
 ### restore the database
-mysql=$(drush sql-connect | sed -e s/\'//g )
+mysql=$(drush sql-connect)
 $mysql < $dump_file
