@@ -60,13 +60,3 @@ mkdir -p /var/www/downloads/
 chown www-data /var/www/downloads/
 mkdir -p /var/www/exports/
 chown www-data /var/www/exports/
-
-### move the directory of the PO files to /var/www/ and put a link to it
-PO_files=/var/www/PO_files
-l10n_feedback=/var/www/btranslator/profiles/btranslator/modules/l10n_feedback
-rm -rf $PO_files
-mv $l10n_feedback/data/PO_files $PO_files
-rm -rf $l10n_feedback/data/get/PO_files
-rm -rf $l10n_feedback/data/import/PO_files
-ln -s $PO_files $l10n_feedback/data/get/PO_files
-ln -s $PO_files $l10n_feedback/data/import/PO_files
