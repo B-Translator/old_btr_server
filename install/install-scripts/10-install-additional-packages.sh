@@ -10,7 +10,7 @@ function install
 
 ### install and upgrade packages
 apt-get update
-apt-get -y upgrade 
+apt-get -y upgrade
 
 ### install other needed packages
 install aptitude tasksel vim nano psmisc language-pack-en
@@ -43,6 +43,10 @@ cat > /etc/drush/drushrc.php << EOF
 \$options['r'] = '/var/www/btranslator';
 EOF
 
+### svn needs a hostname to work correctly (?!)
+sed -i /etc/hosts \
+    -e "/^127.0.0.1/c 127.0.1.1 localhost btranslator"
+hostname btranslator
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
 svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology

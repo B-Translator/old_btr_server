@@ -18,10 +18,10 @@ FQDN=${input:-$FQDN}
 
 echo $FQDN > /etc/hostname
 sed -i /etc/hosts \
-    -e "/^127.0.1.1/c 127.0.1.1 $FQDN btranslator" -i /etc/hosts
+    -e "/^127.0.1.1/c 127.0.1.1 $FQDN btranslator"
 
 sed -i /etc/nginx/sites-available/default \
-    -e "s/server_name .*\$/server_name $FQDN;/" -i $config_file
+    -e "s/server_name .*\$/server_name $FQDN;/"
 
 sed -i /var/www/btranslator/sites/default/settings.php \
     -e "/^\\\$base_url/c \$base_url = \"https://$FQDN\";"
