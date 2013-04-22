@@ -10,7 +10,7 @@ change_dir Drupal
 #l10n_store=$(drush variable-get l10n_update_download_store | cut -d' ' -f2)
 #l10n_store=${l10n_store//\"/}
 #po_dir=$drupal_dir/$l10n_store
-po_dir=/var/www/btranslator.org/sites/all/translations
+po_dir=/var/www/btranslator/sites/all/translations
 
 ### copy PO files
 echo "Getting PO files from $po_dir ..."

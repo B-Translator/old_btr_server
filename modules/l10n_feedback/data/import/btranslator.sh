@@ -8,7 +8,7 @@ project=btranslator
 lng=sq
 
 #drupal_dir=$(drush dd)
-drupal_dir=/var/www/btranslator.org
+drupal_dir=/var/www/btranslator
 btranslator_pot=$drupal_dir/profiles/btranslator/l10n/btranslator.pot
 btranslator_po=$drupal_dir/profiles/btranslator/l10n/btranslator.$lng.po
 

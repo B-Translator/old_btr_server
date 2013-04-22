@@ -2,28 +2,25 @@
 ### Create another database for the translation data
 ### and copy to it the relevant tables (of module l10n_feedback).
 
-function mysql_exec {
-    mysql --defaults-file=/etc/mysql/debian.cnf -B -e "$1"
-}
-
 ### database and user settings
 db_name=btranslator_data
 db_user=btranslator_data
 db_pass=btranslator_data
 
 ### create the database and user
-mysql_exec "
+mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B"
+$mysql -e "
     DROP DATABASE IF EXISTS $db_name;
     CREATE DATABASE $db_name;
     GRANT ALL ON $db_name.* TO $db_user@localhost IDENTIFIED BY '$db_pass';
 "
 
 ### copy the tables of l10n_feedback to the new database
-tables=$(mysql_exec "USE btranslator; SHOW TABLES" | grep 'l10n_feedback_' )
+tables=$($mysql -D btranslator -e "SHOW TABLES" | grep 'l10n_feedback_' )
 for table in $tables
 do
     echo "Copy: $table"
-    mysql_exec "
+    $mysql -e "
         CREATE TABLE $db_name.$table LIKE btranslator.$table;
         INSERT INTO $db_name.$table SELECT * FROM btranslator.$table;
     "
