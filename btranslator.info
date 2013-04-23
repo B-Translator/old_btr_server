@@ -50,7 +50,7 @@ dependencies[] = fusion_accelerator
 dependencies[] = disqus
 dependencies[] = sharethis
 dependencies[] = edit_profile
-dependencies[] = drupalchat
+;dependencies[] = drupalchat
 dependencies[] = googleanalytics
 dependencies[] = token
 dependencies[] = rpx_core
@@ -65,7 +65,6 @@ dependencies[] = recaptcha_mailhide
 dependencies[] = honeypot
 dependencies[] = color
 dependencies[] = simpletest_clone
-dependencies[] = fusion_accelerator
 dependencies[] = rules_scheduler
 dependencies[] = rules_admin
 dependencies[] = features
@@ -77,6 +76,7 @@ dependencies[] = node_export_features
 dependencies[] = configuration
 dependencies[] = configuration_ui
 dependencies[] = xautoload
+dependencies[] = jquery_update
 
 ;--------------------
 ; Drupal Localization

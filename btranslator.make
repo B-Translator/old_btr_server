@@ -9,10 +9,8 @@ defaults[libraries][type] = "library"
 ; Additional Themes
 ;--------------------
 
-projects[abessive][version] = "1.3"
-projects[acquia_marina][version] = "1.0-rc3"
-projects[fusion][version] = "2.0-beta2"
-projects[fusion_accelerator][version] = "2.0-beta1"
+projects[bootstrap][version] = "2.0-beta3"
+projects[bartik_fb][version] = "1.x-dev"
 
 ;--------------------
 ; Additional Contrib
@@ -39,6 +37,7 @@ projects[uuid][version] = "1.0-alpha3"
 projects[node_export][version] = "3.0"
 projects[configuration][version] = "2.0-alpha2"
 projects[xautoload][version] = "2.7"
+projects[jquery_update][version] = "2.3"
 
 ;--------------------
 ; Performance
@@ -78,6 +77,14 @@ projects[mass_contact][version] = "1.0-beta1"
 ; Libraries
 ;--------------------
 
+libraries[phpmailer][directory_name] = "phpmailer"
+libraries[phpmailer][download][type] = "get"
+libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/archive/v5.2.6.zip"
+
+libraries[bootstrap][directory_name] = "bootstrap"
+libraries[bootstrap][download][type] = "get"
+libraries[bootstrap][download][url] = "http://twitter.github.io/bootstrap/assets/bootstrap.zip"
+
 libraries[facebook-php-sdk][directory_name] = "facebook-php-sdk"
 libraries[facebook-php-sdk][download][type] = "git"
 libraries[facebook-php-sdk][download][url] = "https://github.com/facebook/facebook-php-sdk.git"
@@ -89,7 +96,3 @@ libraries[geshi][download][url] = "http://downloads.sourceforge.net/project/gesh
 libraries[tinymce][directory_name] = "tinymce"
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce/tinymce_3.5.7.zip"
-
-libraries[phpmailer][directory_name] = "phpmailer"
-libraries[phpmailer][download][type] = "get"
-libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/archive/v5.2.6.zip"

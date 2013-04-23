@@ -24,12 +24,15 @@ function btranslator_install() {
   standard_install();
 
   // enable themes and set the default theme
-  theme_enable(array('bartik'));
-  theme_enable(array('bartik1'));
+  //theme_enable(array('bartik'));
+  //theme_enable(array('bartik1'));
   theme_enable(array('bartik_fb'));
-  theme_enable(array('abessive'));
-  theme_enable(array('rubik'));
-  variable_set('theme_default', 'bartik1');
+
+  theme_enable(array('bootstrap'));
+  variable_set('theme_default', 'bootstrap');
+  variable_set('jquery_update_compression_type', 'min');
+  variable_set('jquery_update_jquery_cdn', 'google');
+  variable_set('jquery_update_jquery_version', '1.8');
 
   // user settings
   variable_set('user_register', USER_REGISTER_VISITORS);
@@ -38,8 +41,6 @@ function btranslator_install() {
   btranslator_install_variables();
 
   btranslator_install_mailsystem();
-  //btranslator_install_blocks();
-  //btranslator_install_roles();
   btranslator_install_menus();
   btranslator_install_actions();
 }
@@ -55,101 +56,10 @@ function btranslator_install_mailsystem()
 
   $mail_system = variable_get('mail_system');
   $mail_system['default-system'] = 'MimeMailSystem';
-  $mail_system['l10n_feedback'] = 'MimeMailSystem';
+  //$mail_system['l10n_feedback'] = 'MimeMailSystem';
 
   variable_set('mail_system', $mail_system);
 }
-
-/*
-function btranslator_install_blocks()
-{
-  $blocks = array(
-    // show Disqus blocks on the first sidebar
-    array(
-      'module' => 'disqus',
-      'delta'  => 'disqus_recent_comments',
-      'region' => 'sidebar_first',
-      'status' => 1,
-      'weight' => 10,
-      'cache'  => DRUPAL_CACHE_GLOBAL,
-    ),
-    array(
-      'module' => 'disqus',
-      'delta'  => 'disqus_popular_threads',
-      'region' => 'sidebar_first',
-      'status' => 1,
-      'weight' => 11,
-      'cache'  => DRUPAL_CACHE_GLOBAL,
-    ),
-    array(
-      'module' => 'disqus',
-      'delta'  => 'disqus_top_commenters',
-      'region' => 'sidebar_first',
-      'status' => 1,
-      'weight' => 12,
-      'cache'  => DRUPAL_CACHE_GLOBAL,
-    ),
-  );
-
-  $default_theme = variable_get('theme_default', 'bartik1');
-
-  foreach ($blocks as $block) {
-    extract($block);
-    db_update('block')
-      ->fields(array(
-          'status' => $status,
-          'region' => $region,
-          'weight' => $weight,
-          'cache'  => $cache,
-        ))
-      ->condition('module', $module)
-      ->condition('delta', $delta)
-      ->condition('theme', $default_theme)
-      ->execute();
-  }
-}
-
-function btranslator_install_roles()
-{
-  // revoke access to comments, since commenting is done through disqus
-  $roles = user_roles(FALSE, 'access comments');
-  foreach ($roles as $rid=>$permission) {
-    user_role_revoke_permissions($rid, array('access comments', 'post comments'));
-  }
-
-  // create new roles for contributors, translators and moderators
-  // (role administrator already exists)
-  $new_role_names = array('contributor', 'translator', 'moderator');
-  foreach ($new_role_names as $role_name) {
-    $role = new stdClass();
-    $role->name = $role_name;
-    user_role_save($role);
-  }
-
-  // assign permissions to the roles
-  $contributor = user_role_load_by_name('contributor');
-  $contributor_permissions['btranslator-vote'] = TRUE;
-  $contributor_permissions['btranslator-suggest'] = TRUE;
-  $contributor_permissions['btranslator-flag'] = TRUE;
-  user_role_change_permissions($contributor->rid, $contributor_permissions);
-
-  $translator = user_role_load_by_name('translator');
-  $translator_permissions = $contributor_permissions;
-  $translator_permissions['btranslator-import'] = TRUE;
-  $translator_permissions['btranslator-export'] = TRUE;
-  user_role_change_permissions($translator->rid, $translator_permissions);
-
-  $moderator = user_role_load_by_name('moderator');
-  $moderator_permissions = $contributor_permissions;
-  $moderator_permissions['btranslator-stats'] = TRUE;
-  $moderator_permissions['btranslator-resolve'] = TRUE;
-  user_role_change_permissions($moderator->rid, $moderator_permissions);
-
-  $administrator = user_role_load_by_name('administrator');
-  $administrator_permissions['btranslator-admin'] = TRUE;
-  user_role_change_permissions($administrator->rid, $administrator_permissions);
-}
-*/
 
 function btranslator_install_menus()
 {
