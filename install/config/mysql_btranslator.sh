@@ -38,4 +38,4 @@ sed -i /var/www/btranslator/sites/default/settings.php \
 
 ### modify also the connection settings on btranslator_data
 sed -i /var/www/btranslator_data/db/settings.php \
-    -e "/^\\\$dbpass/ s/= .*/= '$data_passwd'/"
+    -e "/^\\\$dbpass/ s/= .*/= '$data_passwd';/"
