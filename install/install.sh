@@ -70,6 +70,9 @@ sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $install_dir/init.sh > $init_script
 chmod +x $init_script
 update-rc.d $(basename $init_script) defaults
 
+### display the name of the chroot on the prompt
+echo $(basename $chroot_dir) > /etc/debian_chroot
+
 ### customize the configuration of the chroot system
 #chroot $target_dir /tmp/install/config.sh
 #chroot $target_dir rm -rf /tmp/install

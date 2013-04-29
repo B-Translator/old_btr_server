@@ -1,7 +1,8 @@
 #!/bin/bash -x
 
 ### put the cache on RAM (to improve efficiency)
-sed -e '/appended by installation scripts/,$ d' -i /etc/fstab
+sed -i /etc/fstab \
+    -e '/appended by installation scripts/,$ d' 
 cat <<EOF >> /etc/fstab
 ##### appended by installation scripts
 tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
@@ -14,6 +15,11 @@ EOF
 ### create other dirs that are needed
 mkdir -p /var/run/memcached/
 chown nobody /var/run/memcached/
+
+### make the prompt colored and display the chroot name
+sed -i /root/.bashrc \
+    -e '/^#force_color_prompt=/c force_color_prompt=yes'
+echo 'btranslator' > /etc/debian_chroot
 
 ### configure apache2
 a2enmod ssl
