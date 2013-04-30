@@ -29,6 +29,7 @@ class POWriter
 
   protected function w_quoted($prefix, $value)
   {
+    $value = str_replace('"', '\\"', $value);
     $this->w_line($prefix . '"' . $value . '\n"');
   }
 
@@ -135,10 +136,11 @@ class POWriter
 
   protected function write_msgx($prefix, $type, $content)
   {
-    $lines = explode('\n', $content);
+    $lines = preg_split('~(*BSR_ANYCRLF)\R|\\\\n~', $content);
     if (count($lines) == 1)
       {
-	$this->w_line($prefix . $type . ' "' . $lines[0] . '"');
+	$str = str_replace('"', '\\"', $lines[0]);
+	$this->w_line($prefix . $type . ' "' . $str . '"');
       }
     else
       {
@@ -148,7 +150,8 @@ class POWriter
 	  $this->w_quoted($prefix, $lines[$i]);
 	}
 	if (!empty($lines[$last])) {
-	  $this->w_line($prefix . '"' . $lines[$last] . '"');
+	  $str = str_replace('"', '\\"', $lines[$last]);
+	  $this->w_line($prefix . '"' . $str . '"');
 	}
       }
   }
