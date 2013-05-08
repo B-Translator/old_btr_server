@@ -18,7 +18,6 @@ function l10n_feedback_delete_userprofile_fields() {
     'field_translations_per_day',
     'field_feedback_channels',
     'field_data_sequential',
-    'field_sequential_state',
   );
 
   foreach ($field_names as $field_name) {
