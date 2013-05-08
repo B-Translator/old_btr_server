@@ -50,18 +50,19 @@ $mysql -e "
 
 ### delete translations and votes that have been removed
 $mysql -e "
-    DELETE T2 
-    FROM data_import.l10n_feedback_translations_trash T1
-    INNER JOIN $DATA.l10n_feedback_translations T2
-        ON (T1.tguid = T2.tguid AND T1.time = T2.time);
+    DELETE $DATA.l10n_feedback_translations
+    FROM data_import.l10n_feedback_translations_trash
+    INNER JOIN $DATA.l10n_feedback_translations
+        ON (data_import.l10n_feedback_translations_trash.tguid = $DATA.l10n_feedback_translations.tguid 
+            AND data_import.l10n_feedback_translations_trash.time = $DATA.l10n_feedback_translations.time);
 
-    DELETE T2 
-    FROM data_import.l10n_feedback_votes_trash T1
-    INNER JOIN $DATA.l10n_feedback_votes T2
-        ON ( T1.tguid = T2.tguid 
-             AND T1.umail = T2.umail 
-             AND T1.ulng = T2.ulng
-             AND T1.time = T2.time );
+    DELETE $DATA.l10n_feedback_votes
+    FROM data_import.l10n_feedback_votes_trash
+    INNER JOIN $DATA.l10n_feedback_votes
+        ON ( data_import.l10n_feedback_votes_trash.tguid = $DATA.l10n_feedback_votes.tguid 
+             AND data_import.l10n_feedback_votes_trash.umail = $DATA.l10n_feedback_votes.umail 
+             AND data_import.l10n_feedback_votes_trash.ulng = $DATA.l10n_feedback_votes.ulng
+             AND data_import.l10n_feedback_votes_trash.time = $DATA.l10n_feedback_votes.time );
 "
 
 ### insert any new translations and votes that are not already there
