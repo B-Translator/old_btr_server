@@ -14,7 +14,7 @@ function btranslator_variables_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'additional_settings__active_tab';
-  $strongarm->value = 'edit-context';
+  $strongarm->value = 'edit-advanced';
   $export['additional_settings__active_tab'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -121,11 +121,7 @@ function btranslator_variables_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'boost_cacheability_pages';
-  $strongarm->value = 'translations/sq/*
-translations/fr/*
-translations/de/*
-translations/it/*
-translations/sl/*';
+  $strongarm->value = 'translations/*/*';
   $export['boost_cacheability_pages'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -393,29 +389,6 @@ translations/sl/*';
   $strongarm->name = 'captcha_persistence';
   $strongarm->value = '0';
   $export['captcha_persistence'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'captcha_placement_map_cache';
-  $strongarm->value = array(
-    'contact_site_form' => array(
-      'path' => array(),
-      'key' => 'actions',
-      'weight' => 99,
-    ),
-    'user_register_form' => array(
-      'path' => array(),
-      'key' => 'actions',
-      'weight' => 99,
-    ),
-    'user_pass' => array(
-      'path' => array(),
-      'key' => 'actions',
-      'weight' => 99,
-    ),
-  );
-  $export['captcha_placement_map_cache'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -745,7 +718,7 @@ translations/sl/*';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'cron_safe_threshold';
-  $strongarm->value = '0';
+  $strongarm->value = 0;
   $export['cron_safe_threshold'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -789,11 +762,12 @@ translations/sl/*';
   $strongarm->name = 'disqus_nodetypes';
   $strongarm->value = array(
     'blog' => 'blog',
-    'article' => 'article',
     'book' => 'book',
     'mass_contact' => 'mass_contact',
     'page' => 'page',
     'simplenews' => 'simplenews',
+    'article' => 'article',
+    'projects' => 'projects',
   );
   $export['disqus_nodetypes'] = $strongarm;
 
@@ -1291,7 +1265,7 @@ translations/sl/*';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'googleanalytics_domain_mode';
-  $strongarm->value = '0';
+  $strongarm->value = '1';
   $export['googleanalytics_domain_mode'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -1328,9 +1302,9 @@ user/*/*';
     1 => 0,
     2 => 0,
     3 => 0,
+    6 => 0,
     4 => 0,
     5 => 0,
-    7 => 0,
   );
   $export['googleanalytics_roles'] = $strongarm;
 
@@ -2076,7 +2050,7 @@ user/*/*';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'settings__active_tab';
-  $strongarm->value = 'edit-visibility';
+  $strongarm->value = 'edit-advanced';
   $export['settings__active_tab'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -2111,7 +2085,7 @@ user/*/*';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'sharethis_node_option';
-  $strongarm->value = 'blog,article,book,page,simplenews,0';
+  $strongarm->value = 'blog,book,page,simplenews,article,projects,0';
   $export['sharethis_node_option'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -2254,7 +2228,7 @@ user/*/*';
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'smtp_allowhtml';
-  $strongarm->value = 1;
+  $strongarm->value = '1';
   $export['smtp_allowhtml'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -2650,8 +2624,34 @@ user/*/*';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'theme_bootstrap_settings';
+  $strongarm->value = array(
+    'toggle_logo' => 0,
+    'toggle_name' => 1,
+    'toggle_slogan' => 0,
+    'toggle_node_user_picture' => 1,
+    'toggle_comment_user_picture' => 1,
+    'toggle_comment_user_verification' => 1,
+    'toggle_favicon' => 1,
+    'toggle_main_menu' => 1,
+    'toggle_secondary_menu' => 1,
+    'default_logo' => 1,
+    'logo_path' => '',
+    'logo_upload' => '',
+    'default_favicon' => 1,
+    'favicon_path' => '',
+    'favicon_upload' => '',
+    'bootstrap_rebuild_registry' => 0,
+    'cdn_bootstrap' => 1,
+    'cdn_jquery' => 0,
+  );
+  $export['theme_bootstrap_settings'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'theme_default';
-  $strongarm->value = 'bartik1';
+  $strongarm->value = 'bootstrap';
   $export['theme_default'] = $strongarm;
 
   $strongarm = new stdClass();
