@@ -8,7 +8,8 @@ project='vocabulary'
 potname='vocabulary'
 
 po_dir='../vocabulary'
-file_pot="$po_dir/vocabulary.pot"
+#file_pot="$po_dir/vocabulary.pot"
+file_pot="$po_dir/vocabulary-sq.po"
 file_sq_po="$po_dir/vocabulary-sq.po"
 
 ./pot_import.php $origin $project $potname $file_pot
