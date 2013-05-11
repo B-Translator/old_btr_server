@@ -46,7 +46,6 @@ dependencies[] = ctools
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
-dependencies[] = fusion_accelerator
 dependencies[] = disqus
 dependencies[] = sharethis
 dependencies[] = edit_profile

@@ -54,6 +54,14 @@ mount -o bind /proc $target_dir/proc
 chroot $target_dir apt-get update
 chroot $target_dir apt-get -y install ubuntu-minimal
 
+### stop any services that may get into the way
+### of installing services inside the chroot
+for port in 80 443 3306
+do
+    proc_nr=$(netstat -lpn | grep :$port | gawk '{print $7}' | cut -d/ -f1)
+    test -n "$proc_nr" && kill -9 $proc_nr
+done
+
 ### apply to chroot the scripts and the overlay
 install_dir=$(dirname $0)
 chroot $target_dir mkdir -p /tmp/install

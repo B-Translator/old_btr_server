@@ -3,7 +3,7 @@
 CHROOT=/var/chroot/btranslator
 
 HOST_SERVICES="mysql apache2"
-CHROOT_SERVICES="php5-fpm memcached mysql nginx"
+CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
 MOUNT_POINTS="proc dev sys dev/pts"
 
 ### reverse a list of words given as parameter
