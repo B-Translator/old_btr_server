@@ -56,11 +56,8 @@ chroot $target_dir apt-get -y install ubuntu-minimal
 
 ### stop any services that may get into the way
 ### of installing services inside the chroot
-for port in 80 443 3306
-do
-    proc_nr=$(netstat -lpn | grep :$port | gawk '{print $7}' | cut -d/ -f1)
-    test -n "$proc_nr" && kill -9 $proc_nr
-done
+for SRV in apache2 nginx mysql
+do service $SRV stop; done
 
 ### apply to chroot the scripts and the overlay
 install_dir=$(dirname $0)
@@ -79,7 +76,7 @@ chmod +x $init_script
 update-rc.d $(basename $init_script) defaults
 
 ### display the name of the chroot on the prompt
-echo $(basename $chroot_dir) > /etc/debian_chroot
+echo $(basename $chroot_dir) > $target_dir/etc/debian_chroot
 
 ### customize the configuration of the chroot system
 #chroot $target_dir /tmp/install/config.sh
