@@ -12,6 +12,7 @@ drush make --prepare-install --force-complete \
 if test -z "$(ps ax | grep [m]ysqld)"
 then
     nohup mysqld --user mysql >/dev/null 2>/dev/null &
+    sleep 5  # give time mysqld to start
 fi
 
 ### settings for the database and the drupal site
