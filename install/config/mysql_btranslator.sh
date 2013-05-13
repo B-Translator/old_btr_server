@@ -12,20 +12,24 @@ echo "
 
 Please enter new password for the MySQL 'btranslator' account.
 "
+random_passwd=$(mcookie | head -c 16)
 stty -echo
-read -p "Enter password: " drupal_passwd
+read -p "Enter password [$random_passwd]: " passwd
 stty echo
 echo
+drupal_passwd=${passwd:-$random_passwd}
 
 echo "
 ===> MySQL Password of the Translations Database
 
 Please enter new password for the MySQL 'btranslator_data' account.
 "
+random_passwd=$(mcookie | head -c 16)
 stty -echo
-read -p "Enter password: " data_passwd
+read -p "Enter password [$random_passwd]: " passwd
 stty echo
 echo
+data_passwd=${passwd:-$random_passwd}
 
 ### set passwords
 set_mysql_passwd btranslator $drupal_passwd

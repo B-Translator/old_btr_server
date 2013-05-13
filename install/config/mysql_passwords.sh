@@ -26,9 +26,11 @@ set_mysql_passwd phpmyadmin $PASSWD
 echo "
 ===> Set a new password for the 'root' user of MySQL
 "
+random_passwd=$(mcookie | head -c 10)
 stty -echo
-read -p "Enter root password: " passwd
+read -p "Enter root password [$random_passwd]: " passwd
 stty echo
 echo
-set_mysql_passwd root $passwd
+root_passwd=${passwd:-$random_passwd}
+set_mysql_passwd root $root_passwd
 
