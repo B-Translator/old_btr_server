@@ -15,8 +15,7 @@ This is a Drupal installation profile for B-Translator.
   tail -f nohup.out
   chroot btr/ /tmp/install/config.sh
   chroot btr/ rm -rf /tmp/install
-  service chroot-btr stop
-  service chroot-btr start
+  reboot  ## it is advisable to reboot the host after this installation
   #+END_EXAMPLE
 
   This will install in ~/var/chroot/btr~ a minimal ubuntu system,
@@ -34,9 +33,16 @@ This is a Drupal installation profile for B-Translator.
   #+END_EXAMPLE
 
   *Note:* The default options of the script are: =--arch=i386=,
-   =--suite=precise= and =--mirror=http://archive.ubuntu.com/ubuntu=
-   . If you want to use something different, you have to give the
-   option explicitly on the command line.
+  =--suite=precise= and =--mirror=http://archive.ubuntu.com/ubuntu=
+  . If you want to use something different, you have to give the
+  option explicitly on the command line. For example, on a /rackspace/
+  server it can be like this:
+  #+BEGIN_EXAMPLE
+  nohup nice B-Translator/install/install.sh btr \
+        --mirror=http://mirror.rackspace.com/ubuntu/ --arch=amd64 &
+  #+END_EXAMPLE
+  On /amazon/ it can be like this:
+  =--mirror=http://us-east-1.ec2.archive.ubuntu.com/ubuntu/=
 
   For development purposes, the scripts in ~B-Translator/install/dev/~
   can be used to make a development environment.

@@ -79,8 +79,8 @@
     This web-server API will also make possible the development
     of an android app, etc
 
-*** Improve the website (homepage) of the project on GitHub.
-*** Create a page on Google+ for l10n-sq and btranslator.
+*** TODO Improve the website (homepage) of the project on GitHub.
+*** TODO Create a page on Google+ for l10n-sq and btranslator.
 *** DONE Generate code documentation by phpDocu and doxygen.
 *** Publish Disqus comments to twitter account @l10n_sq
 *** Publish new translations to twitter, facebook, linkedin, google+, etc.
@@ -92,7 +92,7 @@
     Try also: Organic Groups (for project pages), Display Suite,
     Entity View Attach, Entity Cache, Features, etc.
 
-*** Publish/export incremental dumps of the database
+*** TODO Publish/export incremental dumps of the database
     Maybe it should be a synch API which allows different instances of
     B-Translator to synchronize with each-other, according to the
     rules defined and agreed by the administrators.
@@ -109,9 +109,12 @@
 
 *** Improve the look of number of votes.
 
-*** Try to use on l10n.org.al the theme sky or some other suitable theme.
-    Try to configure a responsive layout (which changes automatically
-    for different screen sizes).
+*** TODO Try to use a responsive layout theme (bootstrap).
+    Create a bootstrap subtheme in order to customize it.
+
+*** TODO Reorganize features
+
+*** Try to replace Disqus with something better (maybe LiveFyre).
 
 *** Send out HTML notification emails.
     Replace one-time-login with one-time-submittion on the
