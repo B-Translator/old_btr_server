@@ -5,7 +5,7 @@
 cwd=$(dirname $0)
 . $cwd/set_mysql_passwd.sh
 
-service mysql start
+$cwd/mysqld.sh start
 
 echo "
 ===> MySQL Password of Drupal Database

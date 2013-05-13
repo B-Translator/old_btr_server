@@ -28,7 +28,7 @@ sed -i /var/www/btranslator_data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
 
 ### set drupal variable l10n_feedback_translation_lng
-service mysql start
+$(dirname $0)/mysqld.sh start
 drush --yes --exact vset l10n_feedback_translation_lng $main_lang
 
 ### modify the list of languages

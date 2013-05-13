@@ -4,7 +4,7 @@
 cwd=$(dirname $0)
 . $cwd/set_mysql_passwd.sh
 
-service mysql start
+$cwd/mysqld.sh start
 
 ### to remove the current password do: 
 ### mysqladmin -u root -pcurrent_password password

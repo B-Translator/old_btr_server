@@ -35,6 +35,6 @@ sed -i /etc/apache2/sites-available/default-ssl \
     -e "s/ServerAdmin .*\$/ServerAdmin $GMAIL/"
 
 ### modify drupal variables that are used for sending email
-service mysql start
 echo "Modifying drupal variables that are used for sending email..."
+$(dirname $0)/mysqld.sh start
 $(dirname $0)/gmailsmtp.php "$GMAIL" "$PASSWD"

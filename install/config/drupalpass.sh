@@ -9,5 +9,5 @@ read -p "Enter the password: " passwd
 stty echo
 echo
 
-service mysql start
+$(dirname $0)/mysqld.sh start
 drush user-password admin --password="$passwd"

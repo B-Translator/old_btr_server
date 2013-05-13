@@ -11,4 +11,4 @@ $cwd/config/languages.sh
 
 rm -rf /var/www/btranslator/sites/default/files/css/
 
-service mysql stop
+$cwd/config/mysqld.sh stop

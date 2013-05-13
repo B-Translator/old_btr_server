@@ -8,6 +8,12 @@ drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
            $makefile $appdir
 
+### start mysqld manually, if it is not running
+if test -z "$(ps ax | grep [m]ysqld)"
+then
+    nohup mysqld --user mysql >/dev/null 2>/dev/null &
+fi
+
 ### settings for the database and the drupal site
 db_name=btranslator
 db_user=btranslator
@@ -19,12 +25,11 @@ account_pass=admin
 account_mail="admin@example.com"
 
 ### create the database and user
-mysql_commands="
+mysql -u root -e "
     DROP DATABASE IF EXISTS $db_name;
     CREATE DATABASE $db_name;
     GRANT ALL ON $db_name.* TO $db_user@localhost IDENTIFIED BY '$db_pass';
 "
-echo "$mysql_commands" | mysql -u root
 
 ### start site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
