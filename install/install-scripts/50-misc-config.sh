@@ -36,3 +36,6 @@ sed -i /etc/apache2/apache2.conf \
     -e "/^<IfModule mpm_prefork_module>/,+5 s/MinSpareServers.*/MinSpareServers 2/" \
     -e "/^<IfModule mpm_prefork_module>/,+5 s/MaxSpareServers.*/MaxSpareServers 4/" \
     -e "/^<IfModule mpm_prefork_module>/,+5 s/MaxClients.*/MaxClients 50/"
+
+### generates the file /etc/defaults/locale
+update-locale
