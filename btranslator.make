@@ -81,7 +81,7 @@ libraries[phpmailer][directory_name] = "phpmailer"
 libraries[phpmailer][download][type] = "get"
 libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/archive/v5.2.6.zip"
 
-libraries[bootstrap][directory_name] = "themes/contrib/bootstrap/"
+libraries[bootstrap][directory_name] = "bootstrap"
 libraries[bootstrap][download][type] = "get"
 libraries[bootstrap][download][url] = "http://twitter.github.io/bootstrap/assets/bootstrap.zip"
 

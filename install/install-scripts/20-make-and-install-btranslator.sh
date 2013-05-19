@@ -7,6 +7,7 @@ rm -rf $appdir
 drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
            $makefile $appdir
+cp -a $appdir/profiles/btranslator/{libraries/bootstrap,themes/contrib/bootstrap/}
 
 ### start mysqld manually, if it is not running
 if test -z "$(ps ax | grep [m]ysqld)"
