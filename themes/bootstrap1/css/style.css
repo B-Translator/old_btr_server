@@ -2,3 +2,17 @@
  * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
  * remove this comment and start adding your styles to this file.
  */
+
+h2 {
+    font-size: large;
+    font-family: 'comic sans ms', sans-serif;
+}
+
+#pagetitle_block {
+    color: #ff0000;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: 'comic sans ms', sans-serif;
+    margin-bottom: 25px;
+}
