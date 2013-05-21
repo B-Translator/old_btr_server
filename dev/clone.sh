@@ -66,6 +66,18 @@ sed -i /etc/nginx/sites-available/$var \
     -e "s/btranslator/btranslator_$var/g"
 ln -s /etc/nginx/sites-{available,enabled}/$var
 
+### copy and modify the configuration of apache2
+rm -f /etc/apache2/sites-{available,enabled}/$var{,-ssl}
+cp /etc/apache2/sites-available/{default,$var}
+cp /etc/apache2/sites-available/{default-ssl,$var-ssl}
+sed -i /etc/apache2/sites-available/$var \
+    -e "s/ServerName \(.*\)/ServerName $var.\\1/" \
+    -e "s/btranslator/btranslator_$var/g"
+sed -i /etc/apache2/sites-available/$var-ssl \
+    -e "s/ServerName \(.*\)/ServerName $var.\\1/" \
+    -e "s/btranslator/btranslator_$var/g"
+a2ensite $var $var-ssl
+
 ### restart services
 for SRV in php5-fpm memcached mysql nginx
 do
