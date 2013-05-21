@@ -9,7 +9,7 @@ defaults[libraries][type] = "library"
 ; Additional Themes
 ;--------------------
 
-projects[bootstrap][version] = "2.0-beta3"
+projects[bootstrap][version] = "2.0"
 projects[bartik_fb][version] = "1.x-dev"
 
 ;--------------------
