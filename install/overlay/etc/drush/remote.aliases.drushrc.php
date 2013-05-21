@@ -11,7 +11,7 @@ $aliases['live'] = array (
   'ssh-options' => '-p 2201 -i /root/.ssh/id_rsa',
 
   'path-aliases' => array (
-    '%profile' => 'profile/btranslator',
+    '%profile' => 'profiles/btranslator',
     '%data' => '/var/www/btranslator_data',
     '%pofiles' => '/var/www/PO_files',
     '%exports' => '/var/www/exports',
