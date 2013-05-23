@@ -20,14 +20,17 @@ echo $FQDN > /etc/hostname
 sed -i /etc/hosts \
     -e "/^127.0.1.1/c 127.0.1.1 $FQDN btranslator"
 
-sed -i /etc/nginx/sites-available/default \
-    -e "s/server_name .*\$/server_name $FQDN;/"
+for file in $(ls /etc/nginx/sites-available/*)
+do
+    sed -i $file -e "s/server_name .*\$/server_name $FQDN;/"
+done
 
-sed -i /var/www/btranslator/sites/default/settings.php \
-    -e "/^\\\$base_url/c \$base_url = \"https://$FQDN\";"
+for file in $(ls /var/www/btranslator*/sites/default/settings.php)
+do
+    sed -i $file -e "/^\\\$base_url/c \$base_url = \"https://$FQDN\";"
+done
 
-sed -i /etc/apache2/sites-available/default \
-    -e "s/ServerName .*\$/ServerName $FQDN/"
-
-sed -i /etc/apache2/sites-available/default-ssl \
-    -e "s/ServerName .*\$/ServerName $FQDN/"
+for file in $(ls /etc/apache2/sites-available/*)
+do
+    sed -i $file -e "s/ServerName .*\$/ServerName $FQDN/"
+done
