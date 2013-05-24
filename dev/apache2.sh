@@ -9,9 +9,12 @@ case $1 in
 
 	drush -y dis memcache
 	service memcached stop
-	sed -i /var/www/btranslator/sites/default/settings.php \
-	    -e "/Adds memcache as a cache backend/a /* comment memcache config" \
-	    -e "/'memcache_key_prefix'/a comment memcache config */"
+	for file in $(ls /var/www/btranslator*/sites/default/settings.php)
+	do
+	    sed -i $file \
+		-e "/Adds memcache as a cache backend/a /* comment memcache config" \
+		-e "/'memcache_key_prefix'/a comment memcache config */"
+	done
 
 	service apache2 start
 	;;
@@ -19,8 +22,10 @@ case $1 in
     stop)
 	service apache2 stop
 
-	sed -i /var/www/btranslator/sites/default/settings.php \
-	    -e "/comment memcache config/ d"
+	for file in $(ls /var/www/btranslator*/sites/default/settings.php)
+	do
+	    sed -i $file -e "/comment memcache config/ d"
+	done
 	service memcached start
 	drush -y en memcache
 

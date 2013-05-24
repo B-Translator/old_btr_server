@@ -27,7 +27,8 @@ account_pass=admin
 account_mail="admin@example.com"
 
 ### create the database and user
-mysql -u root -e "
+mysql='mysql --defaults-file=/etc/mysql/debian.cnf'
+$mysql -e "
     DROP DATABASE IF EXISTS $db_name;
     CREATE DATABASE $db_name;
     GRANT ALL ON $db_name.* TO $db_user@localhost IDENTIFIED BY '$db_pass';
