@@ -27,6 +27,7 @@ do
 done
 
 ### put a link to the data directory on /var/www/btranslator_data
+rm -f /var/www/btranslator_data
 ln -s /var/www/btranslator/profiles/btranslator/modules/l10n_feedback/data /var/www/btranslator_data
 
 ### modify also the DB settings on /var/www/data/db/

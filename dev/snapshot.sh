@@ -55,7 +55,7 @@ case $action in
 
         # create an archive
         tar cfz $snapshot.tgz $snapshot
-        rm -rI $snapshot/
+        rm -rf $snapshot/
         ;;
 
     restore)
@@ -91,9 +91,9 @@ case $action in
         done
 
         # clean up
-        rm -rI $snapshot
-        rm -rI $drupal_dir-del
-        rm -rI $profile_dir-old
+        rm -rf $snapshot
+        rm -rf $drupal_dir-del
+        rm -rf $profile_dir-old
         ;;
 
     *)
