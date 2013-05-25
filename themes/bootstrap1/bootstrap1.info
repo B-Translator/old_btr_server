@@ -45,8 +45,8 @@ stylesheets[all][] = css/style.css
 ; METHOD 2: Bootstrap CDN
 ;*************************
 ; 
-; Settings inherited by base theme, uncomment to override.
-settings[toggle_name] = 0
-settings[toggle_search] = 1
-settings[cdn_bootstrap] = 1
-settings[cdn_bootstrap_version] = 2.3.1
+; ; Settings inherited by base theme, uncomment to override.
+; ;settings[toggle_name] = 0
+; ;settings[toggle_search] = 1
+; ;settings[cdn_bootstrap] = 1
+; ;settings[cdn_bootstrap_version] = 2.3.1
