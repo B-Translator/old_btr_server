@@ -113,3 +113,21 @@ h2.block-title {
     margin-bottom: 5px;
     border-top: 1px solid rgb(229, 229, 229);
 }
+
+/**
+ * Fix the styles of the search filter.
+ */
+#edit-search-container legend {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0px;
+}
+#edit-search-container legend a:hover {
+    text-decoration: none;
+}
+#edit-search-container .fieldset-wrapper {
+    border: 1px solid rgb(229, 229, 229);
+    border-top: none;
+    padding: 10px;
+    margin-bottom: 10px;
+}
