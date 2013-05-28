@@ -142,7 +142,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
       '#type' => 'html_tag',
       '#attributes' => array('class' => 'sharethis-buttons'),
       '#value' => sharethis_get_button_HTML($data_options, $path=$url, "String: $short_string"),
-      '#weight' => intval(variable_get('sharethis_weight', 10)),
+      '#weight' => 100,
     );
 
     // define the disqus form element
@@ -156,7 +156,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
         'identifier' => "translations/$lng/$sguid",
         'developer' => variable_get('disqus_developer', '1'),
       ),
-      '#weight' => variable_get('disqus_weight', 50),
+      '#weight' => 101,
     );
   }
 
