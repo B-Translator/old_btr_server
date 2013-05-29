@@ -1,0 +1,11 @@
+ variable:theme_bootstrap1_settings
+ variable:theme_default
+ box:headerbox
+ context:admin
+ context:content
+ context:frontpage
+ context:page
+ context:sitewide
+ context:translations
+ views_view:front_page
+ variable:site_frontpage
