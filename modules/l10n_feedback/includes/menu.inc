@@ -4,9 +4,9 @@
  */
 function l10n_feedback_menu() {
 
-  $menu = array();
+  $items = array();
 
-  $menu['admin/config/btranslator'] = array(
+  $items['admin/config/btranslator'] = array(
     'title' => 'B-Translator',
     'description' => 'B-Translator Configuration',
     'weight' => -100,
