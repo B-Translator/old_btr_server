@@ -46,14 +46,11 @@ drush site-install --verbose --yes btranslator \
 drush --yes pm-update
 
 ### install also multi-language support
-drush --yes pm-enable l10n_client l10n_update
+#drush --yes pm-enable l10n_client l10n_update
 
 ### install features modules
-drush --yes pm-enable btranslator_misc_config
+drush --yes pm-enable btranslator_layout
 drush --yes pm-enable btranslator_content
-drush --yes pm-enable btranslator_blocks
-drush --yes pm-enable btranslator_variables
-drush --yes pm-enable btranslator_permissions
 
 ### set propper directory permissions
 mkdir -p sites/default/files/

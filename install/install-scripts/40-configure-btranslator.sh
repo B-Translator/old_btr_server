@@ -27,8 +27,8 @@ cat >> $drupal_settings << EOF
 
 /*
 \$conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
-include "profiles/btranslator/modules/fb/fb_url_rewrite.inc";
-include "profiles/btranslator/modules/fb/fb_settings.inc";
+include "profiles/btranslator/modules/contrib/fb/fb_url_rewrite.inc";
+include "profiles/btranslator/modules/contrib/fb/fb_settings.inc";
 if (!headers_sent()) {
   header('P3P: CP="We do not have a P3P policy."');
 }

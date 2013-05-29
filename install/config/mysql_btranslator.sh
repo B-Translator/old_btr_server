@@ -36,9 +36,12 @@ set_mysql_passwd btranslator $drupal_passwd
 set_mysql_passwd btranslator_data $data_passwd
 
 ### modify the configuration file of Drupal (settings.php)
-sed -i /var/www/btranslator/sites/default/settings.php \
-    -e "/^\\\$databases = array/,+10  s/'password' => .*/'password' => '$drupal_passwd',/" \
-    -e "/^\\\$databases\\['l10n_feedback_db/,+5  s/'password' => .*/'password' => '$data_passwd',/"
+for file in $(ls /var/www/btranslator*/sites/default/settings.php)
+do
+    sed -i $file \
+	-e "/^\\\$databases = array/,+10  s/'password' => .*/'password' => '$drupal_passwd',/" \
+	-e "/^\\\$databases\\['l10n_feedback_db/,+5  s/'password' => .*/'password' => '$data_passwd',/"
+done
 
 ### modify also the connection settings on btranslator_data
 sed -i /var/www/btranslator_data/db/settings.php \
