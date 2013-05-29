@@ -1,0 +1,11 @@
+name = btranslator_sq
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[variable][] = disqus_domain
+features[variable][] = disqus_publickey
+features[variable][] = disqus_secretkey
+features[variable][] = disqus_userapikey
