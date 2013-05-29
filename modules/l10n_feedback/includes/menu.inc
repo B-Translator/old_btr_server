@@ -4,12 +4,25 @@
  */
 function l10n_feedback_menu() {
 
-  $items['admin/config/system/btranslator'] = array(
+  $menu = array();
+
+  $menu['admin/config/btranslator'] = array(
+    'title' => 'B-Translator',
+    'description' => 'B-Translator Configuration',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('l10n_feedback_config'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    //'position' => 'right',
+  );
+
+  $items['admin/config/btranslator/general'] = array(
     'title'            => 'B-Translator',
+    'description'      => 'B-Translator configuration settings.',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('l10n_feedback_config'),
     'access arguments' => array('btranslator-admin'),
-    'description'      => 'B-Translator configuration settings.',
     'file'             => 'l10n_feedback.admin.inc',
   );
 
