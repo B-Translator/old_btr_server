@@ -4,5 +4,5 @@
  * Code for the btranslator_disqus feature.
  */
 
+include_once 'btranslator_disqus.admin.inc';
 include_once 'btranslator_disqus.features.inc';
-//include_once 'btranslator_disqus.admin.inc';
