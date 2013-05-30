@@ -1,4 +1,0 @@
- variable:disqus_domain
- variable:disqus_userapikey
- variable:disqus_publickey
- variable:disqus_secretkey
