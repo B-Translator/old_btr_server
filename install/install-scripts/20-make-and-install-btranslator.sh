@@ -51,6 +51,8 @@ drush --yes pm-update
 ### install features modules
 drush --yes pm-enable btranslator_layout
 drush --yes pm-enable btranslator_content
+drush --yes pm-enable btranslator_disqus
+drush --yes pm-enable btranslator_sharethis
 
 ### set propper directory permissions
 mkdir -p sites/default/files/

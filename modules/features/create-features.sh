@@ -1,5 +1,10 @@
 #!/bin/bash
 
-drush --yes @dev fe --destination=profiles/btranslator/modules/features btranslator_layout $(cat layout.txt)
-drush --yes @dev fe --destination=profiles/btranslator/modules/features btranslator_conte
-nt node_export_features
+drush="drush --yes @dev"
+destination=--destination=profiles/btranslator/modules/features
+
+$drush fe $destination btranslator_layout $(cat layout.txt)
+$drush fe $destination btranslator_content node_export_features
+
+$drush fe $destination btranslator_disqus $(cat disqus.txt)
+$drush fe $destination btranslator_sharethis $(cat sharethis.txt)
