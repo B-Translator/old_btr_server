@@ -7,7 +7,7 @@
 /**
  * Implements hook_menu().
  */
-function btranslator_disqus_menu() {
+function btranslator_sharethis_menu() {
   $items = array();
   $items['admin/config/btranslator/sharethis'] = array(
     'title'            => 'Sharethis',
