@@ -4,4 +4,5 @@
  * Code for the btranslator_sharethis feature.
  */
 
+include_once 'btranslator_sharethis.admin.inc';
 include_once 'btranslator_sharethis.features.inc';
