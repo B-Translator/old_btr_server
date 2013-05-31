@@ -8,3 +8,5 @@ sharethis_twitter_suffix
 rpx_apikey
 simplenews_from_address
 simplenews_test_address
+mass_contact_default_sender_email
+mass_contact_default_sender_name
