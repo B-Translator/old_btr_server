@@ -82,23 +82,5 @@ function btranslator_mass_contact_user_default_permissions() {
     'module' => 'mass_contact',
   );
 
-  // Exported permission: mass contact send to users in the All Users category.
-  $permissions['mass contact send to users in the All Users category'] = array(
-    'name' => 'mass contact send to users in the All Users category',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'moderator',
-      2 => 'translator',
-    ),
-    'module' => 'mass_contact',
-  );
-
-  // Exported permission: mass contact send to users in the Translators category.
-  $permissions['mass contact send to users in the Translators category'] = array(
-    'name' => 'mass contact send to users in the Translators category',
-    'roles' => array(),
-    'module' => 'mass_contact',
-  );
-
   return $permissions;
 }

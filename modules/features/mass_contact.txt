@@ -18,5 +18,3 @@
  user_permission:mass\ contact\ override\ bcc
  user_permission:mass\ contact\ override\ text\ format
  user_permission:mass\ contact\ send\ messages
- user_permission:mass\ contact\ send\ to\ users\ in\ the\ All\ Users\ category
- user_permission:mass\ contact\ send\ to\ users\ in\ the\ Translators\ category
