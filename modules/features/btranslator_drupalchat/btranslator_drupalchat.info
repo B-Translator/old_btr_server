@@ -2,6 +2,7 @@ name = btranslator_drupalchat
 core = 7.x
 package = Features
 dependencies[] = ctools
+dependencies[] = drupalchat
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
