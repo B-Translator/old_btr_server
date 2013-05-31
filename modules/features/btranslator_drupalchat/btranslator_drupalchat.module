@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btranslator_drupalchat feature.
+ */
+
+include_once 'btranslator_drupalchat.features.inc';

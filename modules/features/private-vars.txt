@@ -5,3 +5,4 @@ disqus_secretkey
 sharethis_publisherID
 sharethis_twitter_handle
 sharethis_twitter_suffix
+rpx_apikey
