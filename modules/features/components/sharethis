@@ -1,0 +1,11 @@
+variable:sharethis_button_option
+variable:sharethis_comments
+variable:sharethis_late_load
+variable:sharethis_location
+variable:sharethis_node_option
+variable:sharethis_option_extras
+variable:sharethis_service_option
+variable:sharethis_teaser_option
+variable:sharethis_weight
+variable:sharethis_widget_option
+user_permission:administer sharethis

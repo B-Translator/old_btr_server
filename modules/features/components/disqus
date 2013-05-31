@@ -1,0 +1,15 @@
+variable:disqus_developer
+variable:disqus_inherit_login
+variable:disqus_localization
+variable:disqus_location
+variable:disqus_nodetypes
+variable:disqus_sso
+variable:disqus_weight
+variable:disqus_domain
+variable:disqus_userapikey
+variable:disqus_publickey
+variable:disqus_secretkey
+user_permission:administer disqus
+user_permission:view disqus comments
+user_permission:display disqus comments on profile
+user_permission:toggle disqus comments

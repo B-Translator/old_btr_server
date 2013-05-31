@@ -1,16 +1,31 @@
 #!/bin/bash
+### Create all the features.
+### However some features need manual customization
+### after being created (for example btranslator_layout).
 
 drush="drush --yes @dev"
-destination="--destination=profiles/btranslator/modules/features"
-features_export="$drush features-export $destination"
+destination="profiles/btranslator/modules/features"
 
-$features_export btranslator_layout $(cat layout.txt)
-$features_export btranslator_content node_export_features
+function create_feature
+{
+    components=$1
+    feature_name="btranslator_$(basename $components)"
 
-$features_export btranslator_disqus $(cat disqus.txt)
-$features_export btranslator_sharethis $(cat sharethis.txt)
-$features_export btranslator_janrain $(cat janrain.txt)
-$features_export btranslator_drupalchat $(cat drupalchat.txt)
-$features_export btranslator_simplenews $(cat simplenews.txt)
-$features_export btranslator_mass_contact $(cat mass_contact.txt)
-$features_export btranslator_invite $(cat invite.txt)
+
+    xargs --delimiter=$'\n' --arg-file=$components \
+        $drush features-export --destination=$destination $feature_name
+}
+
+### go to the directory of the script
+cd $(dirname $0)
+
+### clear cache etc.
+$drush cc all
+rm -f components/*~
+
+### create a feature for each file in 'components/'
+for components in $(ls components/*)
+do
+    echo "===> $components"
+    create_feature $components
+done
