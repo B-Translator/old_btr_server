@@ -24,8 +24,6 @@ function btranslator_install() {
   standard_install();
 
   // enable themes and set the default theme
-  //theme_enable(array('bartik'));
-  //theme_enable(array('bartik1'));
   theme_enable(array('bartik_fb'));
 
   theme_enable(array('bootstrap'));
@@ -38,16 +36,8 @@ function btranslator_install() {
   variable_set('user_register', USER_REGISTER_VISITORS);
   variable_set('user_email_verification', TRUE);
 
-  btranslator_install_variables();
-
   btranslator_install_mailsystem();
-  btranslator_install_menus();
   btranslator_install_actions();
-}
-
-function btranslator_install_variables()
-{
-  include drupal_get_path('profile', 'btranslator') . '/modules/features/set-variables.php';
 }
 
 function btranslator_install_mailsystem()
@@ -59,37 +49,6 @@ function btranslator_install_mailsystem()
   //$mail_system['l10n_feedback'] = 'MimeMailSystem';
 
   variable_set('mail_system', $mail_system);
-}
-
-function btranslator_install_menus()
-{
-  // add some menu items
-  $menu_item = array(
-    'link_title' => st('Translations'),
-    'link_path' => 'translations',
-    'menu_name' => 'main-menu',
-    'weight' => 10,
-  );
-  menu_link_save($menu_item);
-
-  $menu_item = array(
-    'link_title' => st('Contact'),
-    'link_path' => 'contact',
-    'menu_name' => 'main-menu',
-    'weight' => 11,
-  );
-  menu_link_save($menu_item);
-
-  $menu_item = array(
-    'link_title' => st('My account'),
-    'link_path' => 'user',
-    'menu_name' => 'user-menu',
-    'weight' => -10,
-  );
-  menu_link_save($menu_item);
-
-  // update the menu router information
-  menu_rebuild();
 }
 
 function btranslator_install_actions()
