@@ -46,7 +46,7 @@ function btranslator_layout_context_default_contexts() {
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
   $context->name = 'content';
-  $context->description = 'The pages where the translation/feedback activity is happening (module l10n_feedback).';
+  $context->description = 'Pages, blogs, books, etc.';
   $context->tag = '';
   $context->conditions = array(
     'node' => array(
@@ -110,7 +110,7 @@ function btranslator_layout_context_default_contexts() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('The pages where the translation/feedback activity is happening (module l10n_feedback).');
+  t('Pages, blogs, books, etc.');
   $export['content'] = $context;
 
   $context = new stdClass();
@@ -147,9 +147,9 @@ function btranslator_layout_context_default_contexts() {
           'region' => 'content',
           'weight' => '-9',
         ),
-        'menu-menu-left-menu' => array(
+        'menu-navig-menu' => array(
           'module' => 'menu',
-          'delta' => 'menu-left-menu',
+          'delta' => 'navig-menu',
           'region' => 'sidebar_first',
           'weight' => '-10',
         ),
