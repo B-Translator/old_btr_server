@@ -30,14 +30,23 @@ Here I describe the development setup and process that I use.
   /var/www/btranslator/profiles/btranslator/dev/apache2.sh stop
   #+END_EXAMPLE
 
-  When /apache2/ is started, the services /nginx/, /memcached/ and
-  /php5-fpm/ are stopped.
+  *Important:* When /apache2/ is started, the services /nginx/,
+  /memcached/ and /php5-fpm/ are stopped. Don't forget to modify the
+  init script ~/etc/init.d/chroot-btr~ like this:
+  #+BEGIN_EXAMPLE
+  #CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
+  CHROOT_SERVICES="cron mysql apache2"
+  #+END_EXAMPLE
+  The script =apache2.sh= cannot make this modification automatically
+  because it runs inside the chroot, and the init script is outside
+  the chroot (on the host system). So it has to be done manually.
 
   I also add something like this on */etc/hosts*, so that I can access
   it on the browser with a domain name:
   #+BEGIN_EXAMPLE
   127.0.1.1  l10n.org.xx dev.l10n.org.xx
   #+END_EXAMPLE
+  This modification has to be done manually as well.
 
 
 * Re-installing the application
