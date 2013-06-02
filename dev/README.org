@@ -1,0 +1,204 @@
+
+Here I describe the development setup and process that I use.
+
+* Installation
+
+  Installation for development is the same as the installation for a
+  production server, inside a chroot. The steps are like this:
+  #+BEGIN_EXAMPLE
+  mkdir /var/chroot
+  cd /var/chroot/
+  git clone https://github.com/dashohoxha/B-Translator.git
+  nohup nice B-Translator/install/install.sh btr &
+  tail -f nohup.out
+  chroot btr/ /tmp/install/config.sh
+  chroot btr/ rm -rf /tmp/install
+  reboot  ## it is advisable to reboot the host after this installation
+  #+END_EXAMPLE
+
+
+* Changing the webserver
+
+  The webserver that is used for production is NGINX because it is
+  more responsive in high load, has build in cache, etc. The
+  configuration of NGINX is also tweaked for production (has DoS
+  protection, short timeout, etc.) For development Apache2 can be more
+  suitable. It can be started and stopped like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  /var/www/btranslator/profiles/btranslator/dev/apache2.sh start
+  /var/www/btranslator/profiles/btranslator/dev/apache2.sh stop
+  #+END_EXAMPLE
+
+  When /apache2/ is started, the services /nginx/, /memcached/ and
+  /php5-fpm/ are stopped.
+
+  I also add something like this on */etc/hosts*, so that I can access
+  it on the browser with a domain name:
+  #+BEGIN_EXAMPLE
+  127.0.1.1  l10n.org.xx dev.l10n.org.xx
+  #+END_EXAMPLE
+
+
+* Re-installing the application
+
+  It can be done with the script =dev/install.sh=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  /var/www/btranslator/profiles/btranslator/dev/reinstall.sh
+  #+END_EXAMPLE
+  It will rebuild the Drupal directory with *drush make* and install
+  the btranslator profile with *drush site-install*, and then do all
+  the rest of configurations just like they are done during
+  installation.
+
+  Normally there is no need to reinstall the application, unless we
+  want to test the installation profile and the installation scripts.
+
+
+* Making a clone for development
+
+  Inside the chroot I make a clone for development like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /var/www/btranslator/profiles/btranslator/
+  dev/clone.sh dev
+  #+END_EXAMPLE
+
+  It creates a new application with root */var/www/btranslator_dev/*
+  and with DB named *btranslator_dev*. It also creates the drush alias
+  *@dev*, and modifies the configuration of the webserver so that the
+  cloned application can be accessed at *dev.l10n.org.xx*.
+
+  *Caution:* The root directory and the DB of the clone will be
+  erased, if they exist.
+
+  Other clones like this can be created for testing etc. To cleanup
+  (remove/erase) a clone, we can use *clone_rm.sh* like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /var/www/btranslator/profiles/btranslator/
+  dev/clone_rm.sh dev
+  #+END_EXAMPLE
+
+
+* Making a backup of the application
+
+  Sometimes, when testing things on Drupal (installing/uninstalling
+  modules etc.) things get messy and it is not possible anymore to
+  revert to the state that you were before starting the test. In this
+  case the only way to get safely to a previous stable state is by
+  restoring a backup (or installing from the scratch and repeating all
+  the configurations).
+
+  A snapshot of the application is just like a full backup with a time
+  stamp. It saves the state of the application at a certain time, both
+  the code (the whole Drupal directory) and the database. It can be
+  done like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /var/www/
+  ln -s btranslator_dev/profiles/btranslator/ B-Translator
+
+  B-Translator/dev/snapshot.sh make
+  B-Translator/dev/snapshot.sh make @dev
+  #+END_EXAMPLE
+  These will create the files ~snapshot-btranslator-20130602.tgz~
+  and ~snapshot-btranslator_dev-20130602.tgz~. They can be restored
+  like this:
+  #+BEGIN_EXAMPLE
+  B-Translator/dev/snapshot.sh restore --file=snapshot-btranslator-20130602.tgz
+  B-Translator/dev/snapshot.sh restore --file=snapshot-btranslator_dev-20130602.tgz
+  B-Translator/dev/snapshot.sh restore @dev --file=snapshot-btranslator-20130602.tgz
+  B-Translator/dev/snapshot.sh restore @dev --file=snapshot-btranslator_dev-20130602.tgz
+  #+END_EXAMPLE
+  As you may notice, a snapshot of @dev can also be restored on the
+  main application, and the other way around.
+
+  However, in many cases a backup/restore of the database is all that
+  is needed, and it is more efficient. It can be done with *drush
+  sql-dump* and *drush sql-query* like this:
+  #+BEGIN_EXAMPLE
+  drush sql-dump > btranslator.sql
+  drush sql-dump @dev > btranslator_dev.sql
+
+  drush sql-query --file=$(pwd)/btranslator.sql
+  drush sql-query --file=$(pwd)/btranslator_dev.sql
+
+  drush @dev sql-query --file=$(pwd)/btranslator.sql
+  drush @dev sql-query --file=$(pwd)/btranslator_dev.sql
+  #+END_EXAMPLE
+
+
+* Accessing the code of the application from outside chroot
+
+  In order to access easily the code of the application from outside
+  chroot, I create a symbolic link like this:
+  #+BEGIN_EXAMPLE
+  cd /var/chroot/
+  ln -s btr/var/www/btranslator_dev/profiles/btranslator/ \
+        dev
+  #+END_EXAMPLE
+
+  Now I can go to */var/chroot/dev/* and start /emacs/ or any other
+  tools. This way I don't have to install /emacs/ or any other
+  development tools inside the /chroot/ and can use the best of
+  development tools that my host environment can offer me.
+
+
+* Pushing commits to github
+
+  The copy of the application on
+  =/var/www/btranslator_dev/profiles/btranslator/= (as well as the one
+  on =/var/www/btranslator/profiles/btranslator/=) are actually clones
+  of the git repository at https://github.com/dashohoxha/B-Translator
+  so we can *pull* from it and *push* to it. Pulling (to get
+  up-to-date) can be done by everybody, however pushing requires a
+  username and password (the ones that are used to access the account
+  at GitHub).
+
+
+* The commit workflow
+
+  For small or straight-forward changes I can also work directly on
+  the *master* branch, then *commit*, and then *push* to github.
+
+  However I usually use a bit more complicated workflow. First I
+  create and checkout a *dev* branch. When the work is done I merge
+  this branch to *master* and then delete it. Finally *push* the
+  commit(s) to github.
+  #+BEGIN_EXAMPLE
+  git checkout -d dev     ### create a branch and switch to it
+  [work-commit-work-comit]
+  git checkout master     ### switch back to master
+  git pull                ### get any latest commits from github
+  git merge dev [--squash]
+  git push                ### send commits to github
+  git branch -D dev       ### erase the branch
+  #+END_EXAMPLE
+
+  Usually there are no commits comming from github, since I am
+  the only developper (unless I have worked and commited from some
+  other location). So, when I merge without *--squash* this usually
+  results in *fast-forward* merge, which means that all the
+  commits that I have done on the branch *dev* are automatically
+  transferred to the branch *master*.
+
+  However sometimes there may be /dirty commits/ on the *dev* branch,
+  which means that there may be incomplete commits, or commits that
+  reverse what was done on the previous commits etc. When I wish to
+  reorganize commits and make them cleaner, I use the *--squash*
+  option, which collects all the changes on the *dev* branch and
+  leaves them on the *master* sandbox as local modifications
+  (uncommitted). Then I can redo the commits on a cleaner or more
+  logical way. Afterwards the *dev* branch will be deleted and the old
+  commits will be lost.
+
+
+* Making a local git clone of the dev application
+
+
+
+* Working with a dev-test-live workflow
+
+

@@ -1,23 +1,18 @@
-#!/bin/bash -ex
-###
-### Clones the dev branch from B-Translator.
-###
-### Assumes that B-Translator has already been
-### cloned from github into /var/www/B-Translator
-### Assumes also that the branch 'dev' is already
-### created on /var/www/B-Translator
-###
-### These assumptions can be satisfied by running
-### these commands (manually):
-###
-###    cd /var/www/
-###    git clone git@github.com:dashohoxha/B-Translator.git
-###    cd B-Translator/
-###    git branch -f dev master
-###
+#!/bin/bash
+### Clone the dev branch from
+### /var/www/btranslator_dev/profiles/btranslator/
+
+### create a symlink /var/www/B-Translator to the git repo
+cd /var/www/
+test -h Btranslator || ln -s btranslator_dev/profiles/btranslator/ B-Translator
+
+### on the repo create a 'dev' branch
+cd B-Translator/
+git branch dev master
 
 ### clone the dev branch
 cd /var/www/btranslator/profiles/
+rm -rf btranslator-bak
 mv btranslator btranslator-bak
 git clone -b dev /var/www/B-Translator btranslator
 
