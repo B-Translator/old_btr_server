@@ -4,7 +4,7 @@
 
 ### create a symlink /var/www/B-Translator to the git repo
 cd /var/www/
-test -h Btranslator || ln -s btranslator_dev/profiles/btranslator/ B-Translator
+test -h B-Translator || ln -s btranslator_dev/profiles/btranslator/ B-Translator
 
 ### on the repo create a 'dev' branch
 cd B-Translator/
