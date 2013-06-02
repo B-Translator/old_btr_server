@@ -12,3 +12,4 @@ mass_contact_default_sender_email
 mass_contact_default_sender_name
 recaptcha_private_key
 recaptcha_public_key
+googleanalytics_account
