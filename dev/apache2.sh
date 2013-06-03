@@ -11,6 +11,7 @@ case $1 in
 	service memcached stop
 	for file in $(ls /var/www/btranslator*/sites/default/settings.php)
 	do
+	    sed -i $file -e "/comment memcache config/ d"
 	    sed -i $file \
 		-e "/Adds memcache as a cache backend/a /* comment memcache config" \
 		-e "/'memcache_key_prefix'/a comment memcache config */"
