@@ -206,8 +206,147 @@ Here I describe the development setup and process that I use.
 
 * Making a local git clone of the dev application
 
+  Sometimes it is not easy or suitable to test modifications on the
+  *@dev* application (~/var/www/btranslator_dev~). For example this is
+  the case when I have to test install/uninstall, enable/disable
+  modules, features, etc. In this case I test them on the main
+  application instance (~/var/www/btranslator~). Since both
+  applications are clones of the [[https://github.com/dashohoxha/B-Translator][GitHub repository]], it is easy to push
+  commits from /btranslator_dev/ to /github/ and to pull them from
+  /github/ to /btranslator/.
+
+  However, sometimes it is better to test modifications and make sure
+  that they work, before pushing them to /github/. This can be done if
+  the code on /btranslator/ is a git clone of the code on
+  /btranslator_dev/ (instead of being a clone from /github/).
+
+  The script =dev/git-clone-dev.sh= makes just this. It replaces the
+  code of /btranslator/ with a git clone of the *dev branch* from
+  /btranslator_dev/. Then the workflow is like this:
+  1. Work and commit on the branch *dev* of *btranslator_dev*
+  2. Pull on *btranslator* and test.
+  3. Repeat steps *1* and *2* until the modification that we are
+     making is OK.
+  4. Push changes upwards to github, like this:
+     #+BEGIN_EXAMPLE
+     cd /var/www/btranslator_dev/profiles/btranslator
+     git checkout master
+     git merge dev [--squash]
+     git push
+     git branch -D dev
+     git checkout -b dev
+     #+END_EXAMPLE
+     So, after merging to *master* and pushing to /github/, we delete
+     the branch *dev* and create a new one.
+  5. Make a git pull on *btranslator* and sync it with *btranslator_dev*
+     #+BEGIN_EXAMPLE
+     cd /var/www/btranslator/profiles/btranslator
+     git pull
+     #+END_EXAMPLE
 
 
 * Working with a dev-test-live workflow
 
+  All the work that is described on the sections above is about
+  development and local testing that is done on a working copy
+  (sandbox) of a /chroot/ installation. This is usually installed on
+  my personal machine (that I use for development).
 
+  At some point, all the modifications have to be transferred to a
+  public server, where the application is in "production", performing
+  "live". On that public server there is the same /chroot/ environment
+  as in the development server. The synchronization of the application
+  can be done via git push and pull.
+
+  However *drush rsync* and *drush sql-sync* offer another option for
+  synchronization. For more details see:
+  #+BEGIN_EXAMPLE
+  drush help rsync
+  drush  help sql-sync
+  drush topic docs-aliases
+  #+END_EXAMPLE
+
+  These commands use drush *aliases*, which allow also remote
+  execution of drush commands. On my development environment I have
+  created the file ~/etc/drush/remote.aliases.drushrc.php~, which has
+  a content like this:
+  #+BEGIN_EXAMPLE
+  <?php
+
+  $aliases['live'] = array (
+    'root' => '/var/www/btranslator',
+    'uri' => 'http://l10n.org.al',
+
+    'remote-host' => 'l10n.org.al',
+    'remote-user' => 'root',
+    'ssh-options' => '-p 2201 -i /root/.ssh/id_rsa',
+
+    'path-aliases' => array (
+      '%profile' => 'profiles/btranslator',
+      '%data' => '/var/www/btranslator_data',
+      '%pofiles' => '/var/www/PO_files',
+      '%exports' => '/var/www/exports',
+      '%downloads' => '/var/www/downloads',
+    ),
+
+    'command-specific' => array (
+      'sql-sync' => array (
+	'simulate' => '1',
+      ),
+      'rsync' => array (
+	'simulate' => '1',
+      ),
+    ),
+  );
+
+  $aliases['test'] = array (
+    'parent' => '@live',
+    'root' => '/var/www/btranslator',
+    'uri' => 'http://www2.l10n.org.al',
+    'remote-host' => 'www2.l10n.org.al',
+
+    'command-specific' => array (
+      'sql-sync' => array (
+	'simulate' => '0',
+      ),
+      'rsync' => array (
+	'simulate' => '0',
+      ),
+    ),
+  );
+  #+END_EXAMPLE
+
+  It defines the aliases *live* and *test*. The test/stage application
+  is almost identical to the live/production one, however it is not
+  for public use. The idea is to test there first any updates/upgrades
+  of the application, in order to make sure that they don't break any
+  things, before applying them to the real live application. In my case
+  it is placed on a different server, however it can also be placed on
+  the same server as the live application (just make a clone of the main
+  application with =dev/clone.sh test=).
+
+  When everything is set up correctly, the synchronization can be done
+  as simply as this:
+  #+BEGIN_EXAMPLE
+  drush rsync @live @test
+  drush sql-sync @live @test
+  drush rsync @live @dev
+  drush sql-sync @live @dev
+  #+END_EXAMPLE
+
+  *Note:* Synchronizing this way from *@test* to *@live* or from
+  *@dev* to *@live*, usually is a HUGE mistake, but the /simulate/
+  option on the config file will make sure that it fails.
+
+  For drush commands to work remotely, *ssh* daemon has to be running
+  on the remote server, inside the chroot environment. By default it
+  is not installed, but it can be installed with the script
+  *dev/install-sshd.sh*. This script will also take care to change the
+  ssh port to *2201*, in order to avoid any conflicts with any
+  existing daemon on the host environment, and also for increased
+  security.
+
+  For remote access to work correctly, the public/private key ssh
+  access should be set up and configured as well. For more detailed
+  instructions on how to do it see:
+  http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html
