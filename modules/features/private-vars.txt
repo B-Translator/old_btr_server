@@ -13,3 +13,5 @@ mass_contact_default_sender_name
 recaptcha_private_key
 recaptcha_public_key
 googleanalytics_account
+fb_connect_primary_label
+fb_stream_token
