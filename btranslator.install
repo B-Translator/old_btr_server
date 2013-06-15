@@ -26,8 +26,8 @@ function btranslator_install() {
   // enable themes and set the default theme
   theme_enable(array('bartik_fb'));
 
-  theme_enable(array('bootstrap'));
-  variable_set('theme_default', 'bootstrap');
+  theme_enable(array('bootstrap1'));
+  variable_set('theme_default', 'bootstrap1');
   variable_set('jquery_update_compression_type', 'min');
   variable_set('jquery_update_jquery_cdn', 'google');
   variable_set('jquery_update_jquery_version', '1.8');

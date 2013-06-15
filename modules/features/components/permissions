@@ -1,0 +1,117 @@
+user_permission:administer news feeds
+user_permission:access news feeds
+user_permission:administer blocks
+user_permission:administer book outlines
+user_permission:create new books
+user_permission:add content to books
+user_permission:access printer-friendly version
+user_permission:boost flush pages
+user_permission:edit boxes
+user_permission:administer boxes
+user_permission:administer comments
+user_permission:access comments
+user_permission:post comments
+user_permission:skip comment approval
+user_permission:edit own comments
+user_permission:administer contact forms
+user_permission:access site-wide contact form
+user_permission:access user contact forms
+user_permission:administer contexts
+user_permission:access devel information
+user_permission:execute php code
+user_permission:switch users
+user_permission:administer features
+user_permission:manage features
+user_permission:administer filters
+user_permission:use text format filtered_html
+user_permission:use text format full_html
+user_permission:administer homebox
+user_permission:administer image styles
+user_permission:administer languages
+user_permission:translate interface
+user_permission:use on-page translation
+user_permission:submit translations to localization server
+user_permission:administer mailsystem
+user_permission:administer menu
+user_permission:edit mimemail user settings
+user_permission:administer module filter
+user_permission:bypass node access
+user_permission:administer content types
+user_permission:administer nodes
+user_permission:access content overview
+user_permission:access content
+user_permission:view own unpublished content
+user_permission:view revisions
+user_permission:revert revisions
+user_permission:delete revisions
+user_permission:create blog content
+user_permission:edit own blog content
+user_permission:edit any blog content
+user_permission:delete own blog content
+user_permission:delete any blog content
+user_permission:create article content
+user_permission:edit own article content
+user_permission:edit any article content
+user_permission:delete own article content
+user_permission:delete any article content
+user_permission:create book content
+user_permission:edit own book content
+user_permission:edit any book content
+user_permission:delete own book content
+user_permission:delete any book content
+user_permission:create mass_contact content
+user_permission:edit own mass_contact content
+user_permission:edit any mass_contact content
+user_permission:delete own mass_contact content
+user_permission:delete any mass_contact content
+user_permission:create page content
+user_permission:edit own page content
+user_permission:edit any page content
+user_permission:delete own page content
+user_permission:delete any page content
+user_permission:create projects content
+user_permission:edit own projects content
+user_permission:edit any projects content
+user_permission:delete own projects content
+user_permission:delete any projects content
+user_permission:export nodes
+user_permission:export own nodes
+user_permission:use PHP to import nodes
+user_permission:administer phpmailer settings
+user_permission:administer url aliases
+user_permission:create url aliases
+user_permission:administer profiler builder
+user_permission:administer reroute email
+user_permission:administer search
+user_permission:search content
+user_permission:use advanced search
+user_permission:administer modules
+user_permission:administer site configuration
+user_permission:administer themes
+user_permission:administer software updates
+user_permission:administer actions
+user_permission:access administration pages
+user_permission:access site in maintenance mode
+user_permission:view the administration theme
+user_permission:access site reports
+user_permission:block IP addresses
+user_permission:administer taxonomy
+user_permission:edit terms in newsletter
+user_permission:delete terms in newsletter
+user_permission:edit terms in tags
+user_permission:delete terms in tags
+user_permission:administer unit tests
+user_permission:access toolbar
+user_permission:administer uuid
+user_permission:administer permissions
+user_permission:administer users
+user_permission:access user profiles
+user_permission:change own username
+user_permission:cancel account
+user_permission:select account cancellation method
+user_permission:administer views
+user_permission:access all views
+user_permission:access dashboard
+user_permission:administer rules
+user_permission:bypass rules access
+user_permission:access rules debug

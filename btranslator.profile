@@ -32,14 +32,6 @@ function btranslator_install_tasks($install_state) {
       'run' => INSTALL_TASK_RUN_IF_NOT_COMPLETED,
       'function' => 'btranslator_mail_config_form',
     ),
-    /*
-    'btranslator_disqus' => array(
-      'display_name' => st('Disqus Settings'),
-      'type' => 'form',
-      'run' => INSTALL_TASK_RUN_IF_REACHED,
-      'function' => 'disqus_admin_settings',
-    ),
-    */
   );
 
   return $tasks;

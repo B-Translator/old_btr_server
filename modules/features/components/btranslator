@@ -1,0 +1,15 @@
+user_role:administrator
+user_role:translator
+user_role:contributor
+user_role:moderator
+variable:user_admin_role
+user_permission:btranslator-vote
+user_permission:btranslator-suggest
+user_permission:btranslator-flag
+user_permission:btranslator-import
+user_permission:btranslator-export
+user_permission:btranslator-stats
+user_permission:btranslator-resolve
+user_permission:btranslator-admin
+rules_config:rules_assign_contributor_role
+variable:rules_empty_sets
