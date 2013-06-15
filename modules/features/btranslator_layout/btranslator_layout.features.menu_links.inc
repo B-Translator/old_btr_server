@@ -196,7 +196,6 @@ function btranslator_layout_menu_default_menu_links() {
   t('Contact');
   t('Fjalori');
   t('Home');
-  t('Log in');
   t('Përkthimet');
   t('Udhëzuesi');
   t('Udhëzuesi i Përkthyesit');

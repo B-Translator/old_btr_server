@@ -20,3 +20,6 @@ menu_links:navig-menu:node/9
 menu_links:navig-menu:translations/search
 menu_links:navig-menu:node/1
 menu_links:navig-menu:contact
+variable:jquery_update_compression_type
+variable:jquery_update_jquery_cdn
+variable:jquery_update_jquery_version
