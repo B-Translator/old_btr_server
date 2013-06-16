@@ -23,6 +23,7 @@ dependencies[] = taxonomy
 dependencies[] = text
 dependencies[] = views
 dependencies[] = jquery_update
+dependencies[] = btranslator_content
 features[box][] = headerbox
 features[context][] = admin
 features[context][] = content
