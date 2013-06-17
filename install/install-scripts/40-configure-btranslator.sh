@@ -54,14 +54,29 @@ if (!headers_sent()) {
 
 EOF
 
-# disable powered-by Drupal block on all themes
-mysql -e "USE btranslator; UPDATE block SET status = '0' WHERE ( module = 'system' AND delta = 'powered-by' );"
+### update to the latest version of core and modules
+drush --yes pm-update
 
-# aggregate and compress CSS and JS files (for performance)
-drush vset preprocess_css 1
-drush vset preprocess_js 1
+# ### install features modules
+# drush --yes pm-enable btranslator_l10n_feedback
+# drush --yes pm-enable btranslator_btranslator
+# drush --yes pm-enable btranslator_misc
+# drush --yes pm-enable btranslator_layout
+# drush --yes pm-enable btranslator_content
+# drush --yes pm-enable btranslator_disqus
+# drush --yes pm-enable btranslator_sharethis
+# drush --yes pm-enable btranslator_captcha
+# drush --yes pm-enable btranslator_invite
+# drush --yes pm-enable btranslator_permissions
+# #drush --yes pm-enable btranslator_simplenews
+# #drush --yes pm-enable btranslator_mass_contact
+# #drush --yes pm-enable btranslator_googleanalytics
+# #drush --yes pm-enable btranslator_drupalchat
+# #drush --yes pm-enable btranslator_fb
+# #drush --yes pm-enable btranslator_janrain
 
-# set some other drupal vars
-drush vset l10n_feedback_export_path '/var/www/exports'
-drush vset l10n_feedback_preferred_projects 'test'
+### install also multi-language support
+#drush --yes pm-enable l10n_client l10n_update
+#mkdir -p sites/all/translations
+#chown -R www-data: sites/all/translations
 

@@ -42,28 +42,14 @@ drush site-install --verbose --yes btranslator \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
-### update to the latest version of core and modules
-drush --yes pm-update
-
-### install also multi-language support
-#drush --yes pm-enable l10n_client l10n_update
-
-### install features modules
-drush --yes pm-enable btranslator_layout
-drush --yes pm-enable btranslator_content
-drush --yes pm-enable btranslator_disqus
-drush --yes pm-enable btranslator_sharethis
-
-### set propper directory permissions
-mkdir -p sites/default/files/
-chown -R www-data: sites/default/files/
-mkdir -p sites/all/translations
-chown -R www-data: sites/all/translations
-mkdir -p cache/
-chown -R www-data: cache/
-
 ### create the downloads and exports dirs
 mkdir -p /var/www/downloads/
 chown www-data /var/www/downloads/
 mkdir -p /var/www/exports/
 chown www-data /var/www/exports/
+
+### set propper directory permissions
+mkdir -p sites/default/files/
+chown -R www-data: sites/default/files/
+mkdir -p cache/
+chown -R www-data: cache/
