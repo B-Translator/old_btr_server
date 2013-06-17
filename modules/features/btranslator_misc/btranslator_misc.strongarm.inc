@@ -557,66 +557,6 @@ function btranslator_misc_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'features_codecache';
-  $strongarm->value = array(
-    'btranslator_misc_config' => array(
-      'menu_custom' => 'ccd6d1b729f6be0b339ffbc71cf641c8',
-      'dependencies' => '96497fe80c1dfdcd4c82ca9b4833563b',
-      'filter' => '0caf705003bd0b4b8b974bacdbc2f926',
-      'menu_links' => '89efbf27d23397ee1a2c52ab889dcf32',
-      'user_role' => 'd9bf9164ef951d7489b34811df8aaff6',
-      'wysiwyg' => '74b808527699da2ced4787c6f7235b7e',
-      'rules_config' => 'd65c36f1886d68058ca47fe0f6aa9ced',
-    ),
-    'btranslator_content' => array(
-      'field' => '793649eb1721c92637350530a7d7d12e',
-      'taxonomy' => 'e16716e5226449a0d111c716ea9d0723',
-      'dependencies' => '76f4b9450aa1cef439f7faaf70431f09',
-      'variable' => 'db83b46c17642d78e4501097fdbbba63',
-      'node_export_features' => 'cd2ec092ec994b54381bc8c7df7a2ce1',
-      'node' => '094c4cc0a8358f91ce472522cb83878f',
-    ),
-    'btranslator_block_settings' => array(
-      'fe_block_settings' => '4b1306484c7b8c1c865b300feff59c6c',
-      'dependencies' => 'a8739c0f5b2857984e5861195e0a57de',
-    ),
-    'btranslator_variables' => array(
-      'dependencies' => 'e410ca96d90029817c7bb9c7cb1f7ea4',
-      'variable' => '0e56f81b017f1a2edb84835807376690',
-    ),
-    'btranslator_permissions' => array(
-      'dependencies' => 'fe65ece25bf83371ed80061f6de4b48c',
-      'user_permission' => 'cc2448b39f1ecb49dea876b2d0cb9b28',
-    ),
-    'btranslator_blocks' => array(
-      'fe_block_boxes' => 'd6d45c1288cbf92cfe5242d8a2011c82',
-      'fe_block_settings' => '7f56f26360a495e0d37717948a721a52',
-      'dependencies' => 'a8739c0f5b2857984e5861195e0a57de',
-    ),
-    'btranslator_sq' => array(
-      'dependencies' => 'e410ca96d90029817c7bb9c7cb1f7ea4',
-      'variable' => '30e8f142aec04db0239bdc82d0560aee',
-    ),
-  );
-  $export['features_codecache'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'features_ignored_orphans';
-  $strongarm->value = array();
-  $export['features_ignored_orphans'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'features_semaphore';
-  $strongarm->value = array();
-  $export['features_semaphore'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'file_temporary_path';
   $strongarm->value = '/tmp';
   $export['file_temporary_path'] = $strongarm;
@@ -1009,9 +949,7 @@ function btranslator_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'path_alias_whitelist';
-  $strongarm->value = array(
-    'node' => TRUE,
-  );
+  $strongarm->value = array();
   $export['path_alias_whitelist'] = $strongarm;
 
   $strongarm = new stdClass();
