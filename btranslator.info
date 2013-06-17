@@ -4,6 +4,12 @@ version = 1.x
 core = 7.x
 
 ;--------------------
+; Files
+;--------------------
+files[] = btranslator.install
+files[] = btranslator.profile
+
+;--------------------
 ; Core
 ;--------------------
 dependencies[] = book
@@ -46,22 +52,8 @@ dependencies[] = ctools
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
-dependencies[] = disqus
-dependencies[] = sharethis
 dependencies[] = edit_profile
-;dependencies[] = drupalchat
-;dependencies[] = googleanalytics
 dependencies[] = token
-;dependencies[] = rpx_core
-;dependencies[] = rpx_ui
-;dependencies[] = rpx_widgets
-dependencies[] = invite
-dependencies[] = invite_stats
-dependencies[] = homebox
-dependencies[] = captcha
-dependencies[] = recaptcha
-dependencies[] = recaptcha_mailhide
-dependencies[] = honeypot
 dependencies[] = color
 dependencies[] = simpletest_clone
 dependencies[] = rules_scheduler
@@ -73,8 +65,6 @@ dependencies[] = boxes
 dependencies[] = uuid
 dependencies[] = node_export
 dependencies[] = node_export_features
-;dependencies[] = configuration
-;dependencies[] = configuration_ui
 dependencies[] = xautoload
 dependencies[] = jquery_update
 
@@ -92,40 +82,11 @@ dependencies[] = phpmailer
 dependencies[] = mimemail
 dependencies[] = mimemail_action
 dependencies[] = mimemail_compress
-dependencies[] = simplenews
-dependencies[] = simplenews_rules
-dependencies[] = mass_contact
-
-; ;;--------------------
-; ;; Drupal for Facebook
-; ;;--------------------
-; dependencies[] = fb
-; dependencies[] = fb_app
-; dependencies[] = fb_canvas
-; dependencies[] = fb_connect
-; dependencies[] = fb_stream
-; dependencies[] = fb_tab
-; dependencies[] = fb_user
-; dependencies[] = fb_views
-; dependencies[] = fb_graph
-; dependencies[] = fb_permission
-; dependencies[] = fb_registration
-; dependencies[] = fb_rules
-; dependencies[] = fb_test
-; dependencies[] = fb_permission
-; dependencies[] = fb_user_app
-
-;--------------------
-; Filters
-;--------------------
-dependencies[] = geshifield
-dependencies[] = geshifilter
 
 ;--------------------
 ; B-Translator
 ;--------------------
 dependencies[] = l10n_feedback
-; dependencies[] = fb_btranslator
 
 ;--------------------
 ; Other
@@ -136,14 +97,9 @@ dependencies[] = module_filter
 ;--------------------
 ; Development
 ;--------------------
-dependencies[] = profiler_builder
+;dependencies[] = profiler_builder
 dependencies[] = reroute_email
 dependencies[] = devel
-
-;--------------------
-; User interface
-;--------------------
-dependencies[] = wysiwyg
 
 ;--------------------
 ; Performance and scalability
@@ -155,14 +111,9 @@ dependencies[] = memcache
 ; Features
 ;--------------------
 
-;dependencies[] = btranslator_block_settings
-;dependencies[] = btranslator_content
-;dependencies[] = btranslator_misc_config
+;dependencies[] = btranslator_l10n_feedback
+;dependencies[] = btranslator_misc
+;dependencies[] = btranslator_btranslator
 ;dependencies[] = btranslator_permissions
-;dependencies[] = btranslator_variables
-
-;--------------------
-; Files
-;--------------------
-files[] = btranslator.install
-files[] = btranslator.profile
+;dependencies[] = btranslator_content
+;dependencies[] = btranslator_layout

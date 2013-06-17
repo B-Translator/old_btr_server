@@ -6,6 +6,7 @@ dependencies[] = ctools
 dependencies[] = features
 dependencies[] = honeypot
 dependencies[] = recaptcha
+dependencies[] = recaptcha_mailhide
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
