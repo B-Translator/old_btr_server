@@ -57,23 +57,23 @@ EOF
 ### update to the latest version of core and modules
 drush --yes pm-update
 
-# ### install features modules
-# drush --yes pm-enable btranslator_l10n_feedback
-# drush --yes pm-enable btranslator_btranslator
-# drush --yes pm-enable btranslator_misc
-# drush --yes pm-enable btranslator_layout
-# drush --yes pm-enable btranslator_content
-# drush --yes pm-enable btranslator_disqus
-# drush --yes pm-enable btranslator_sharethis
-# drush --yes pm-enable btranslator_captcha
-# drush --yes pm-enable btranslator_invite
-# drush --yes pm-enable btranslator_permissions
-# #drush --yes pm-enable btranslator_simplenews
-# #drush --yes pm-enable btranslator_mass_contact
-# #drush --yes pm-enable btranslator_googleanalytics
-# #drush --yes pm-enable btranslator_drupalchat
-# #drush --yes pm-enable btranslator_fb
-# #drush --yes pm-enable btranslator_janrain
+### install features modules
+drush --yes pm-enable btranslator_l10n_feedback
+drush --yes pm-enable btranslator_btranslator
+drush --yes pm-enable btranslator_misc
+drush --yes pm-enable btranslator_layout
+drush --yes pm-enable btranslator_content
+drush --yes pm-enable btranslator_disqus
+drush --yes pm-enable btranslator_sharethis
+drush --yes pm-enable btranslator_captcha
+drush --yes pm-enable btranslator_invite
+drush --yes pm-enable btranslator_permissions
+#drush --yes pm-enable btranslator_simplenews
+#drush --yes pm-enable btranslator_mass_contact
+#drush --yes pm-enable btranslator_googleanalytics
+#drush --yes pm-enable btranslator_drupalchat
+#drush --yes pm-enable btranslator_fb
+#drush --yes pm-enable btranslator_janrain
 
 ### install also multi-language support
 #drush --yes pm-enable l10n_client l10n_update
