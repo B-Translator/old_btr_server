@@ -220,19 +220,5 @@ function btranslator_captcha_strongarm() {
   $strongarm->value = 'red';
   $export['recaptcha_theme'] = $strongarm;
 
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'recaptcha_private_key';
-  $strongarm->value = '6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0';
-  $export['recaptcha_private_key'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'recaptcha_public_key';
-  $strongarm->value = '6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG';
-  $export['recaptcha_public_key'] = $strongarm;
-
   return $export;
 }

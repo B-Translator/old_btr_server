@@ -1,6 +1,7 @@
 name = btranslator_l10n_feedback
 core = 7.x
 package = Features
+php = 5.2.4
 dependencies[] = ctools
 dependencies[] = fe_block
 dependencies[] = features

@@ -21,6 +21,12 @@ function btranslator_l10n_feedback_default_fe_block_settings() {
     'pages' => '',
     'roles' => array(),
     'themes' => array(
+      'bartik' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'bartik',
+        'weight' => '0',
+      ),
       'bartik_fb' => array(
         'region' => '',
         'status' => 0,
@@ -31,6 +37,12 @@ function btranslator_l10n_feedback_default_fe_block_settings() {
         'region' => '',
         'status' => 0,
         'theme' => 'bootstrap1',
+        'weight' => '0',
+      ),
+      'seven' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'seven',
         'weight' => '0',
       ),
     ),
@@ -47,6 +59,12 @@ function btranslator_l10n_feedback_default_fe_block_settings() {
     'pages' => '',
     'roles' => array(),
     'themes' => array(
+      'bartik' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'bartik',
+        'weight' => '0',
+      ),
       'bartik_fb' => array(
         'region' => '',
         'status' => 0,
@@ -58,6 +76,12 @@ function btranslator_l10n_feedback_default_fe_block_settings() {
         'status' => 0,
         'theme' => 'bootstrap1',
         'weight' => '-19',
+      ),
+      'seven' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'seven',
+        'weight' => '0',
       ),
     ),
     'title' => '',
@@ -73,6 +97,12 @@ function btranslator_l10n_feedback_default_fe_block_settings() {
     'pages' => '',
     'roles' => array(),
     'themes' => array(
+      'bartik' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'bartik',
+        'weight' => '0',
+      ),
       'bartik_fb' => array(
         'region' => '',
         'status' => 0,
@@ -84,6 +114,12 @@ function btranslator_l10n_feedback_default_fe_block_settings() {
         'status' => 0,
         'theme' => 'bootstrap1',
         'weight' => '-18',
+      ),
+      'seven' => array(
+        'region' => '',
+        'status' => 0,
+        'theme' => 'seven',
+        'weight' => '0',
       ),
     ),
     'title' => '',
