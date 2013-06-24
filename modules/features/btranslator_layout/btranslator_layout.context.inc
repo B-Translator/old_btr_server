@@ -54,10 +54,8 @@ function btranslator_layout_context_default_contexts() {
         'article' => 'article',
         'blog' => 'blog',
         'book' => 'book',
-        'mass_contact' => 'mass_contact',
         'page' => 'page',
         'projects' => 'projects',
-        'simplenews' => 'simplenews',
       ),
       'options' => array(
         'node_form' => '0',

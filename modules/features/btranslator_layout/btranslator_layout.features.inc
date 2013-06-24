@@ -50,14 +50,6 @@ function btranslator_layout_node_info() {
       'title_label' => t('Title'),
       'help' => '',
     ),
-    'mass_contact' => array(
-      'name' => t('Mass Contact message'),
-      'base' => 'node_content',
-      'description' => t('Archived copies of mass email messages sent from this site.'),
-      'has_title' => '1',
-      'title_label' => t('Subject'),
-      'help' => '',
-    ),
     'page' => array(
       'name' => t('Basic page'),
       'base' => 'node_content',
@@ -72,14 +64,6 @@ function btranslator_layout_node_info() {
       'description' => t('Translating a software project.'),
       'has_title' => '1',
       'title_label' => t('Project Title'),
-      'help' => '',
-    ),
-    'simplenews' => array(
-      'name' => t('Simplenews newsletter'),
-      'base' => 'node_content',
-      'description' => t('A newsletter issue to be sent to subscribed email addresses.'),
-      'has_title' => '1',
-      'title_label' => t('Title'),
       'help' => '',
     ),
   );
