@@ -5,7 +5,9 @@ drupal_settings=/var/www/btranslator/sites/default/settings.php
 chown root:www-data $drupal_settings
 chmod 640 $drupal_settings
 
-# Modify Drupal settings
+### Modify Drupal settings
+
+# diable poor man's cron
 cat >> $drupal_settings << EOF
 /**
  * Disable Poor Man's Cron:
@@ -22,18 +24,15 @@ cat >> $drupal_settings << EOF
  *    and the system cron in /etc/cron.d/drupal7.
  */
 \$conf['cron_safe_threshold'] = 0;
+EOF
 
+# set base_url
+cat >> $drupal_settings << EOF
 \$base_url = "https://l10n.org.xx";
+EOF
 
-/*
-\$conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
-include "profiles/btranslator/modules/contrib/fb/fb_url_rewrite.inc";
-include "profiles/btranslator/modules/contrib/fb/fb_settings.inc";
-if (!headers_sent()) {
-  header('P3P: CP="We do not have a P3P policy."');
-}
-*/
-
+# set the memcache configuration
+cat >> $drupal_settings << EOF
 // Adds memcache as a cache backend
 \$conf['cache_backends'][] = 'profiles/btranslator/modules/contrib/memcache/memcache.inc';
 // Makes it so that memcache is the default caching backend
@@ -72,8 +71,26 @@ drush --yes pm-enable btranslator_permissions
 #drush --yes pm-enable btranslator_mass_contact
 #drush --yes pm-enable btranslator_googleanalytics
 #drush --yes pm-enable btranslator_drupalchat
-#drush --yes pm-enable btranslator_fb
 #drush --yes pm-enable btranslator_janrain
+
+### install FB integration
+#drush --yes pm-enable btranslator_fb
+#drush --yes pm-enable fb_btranslator
+
+# enable FB config
+cat >> $drupal_settings << EOF
+/* fb config
+\$conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
+include "profiles/btranslator/modules/contrib/fb/fb_url_rewrite.inc";
+include "profiles/btranslator/modules/contrib/fb/fb_settings.inc";
+if (!headers_sent()) {
+  header('P3P: CP="We do not have a P3P policy."');
+}
+fb config */
+EOF
+#sed -i $drupal_settings \
+#    -e '#^/*fb config# c // /* fb config' \
+#    -e '#^fb config */# c // fb config */'
 
 ### install also multi-language support
 #drush --yes pm-enable l10n_client l10n_update

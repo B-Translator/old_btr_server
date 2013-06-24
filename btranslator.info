@@ -97,7 +97,6 @@ dependencies[] = module_filter
 ;--------------------
 ; Development
 ;--------------------
-;dependencies[] = profiler_builder
 dependencies[] = reroute_email
 dependencies[] = devel
 
@@ -106,25 +105,3 @@ dependencies[] = devel
 ;--------------------
 dependencies[] = boost
 dependencies[] = memcache
-
-; ;--------------------
-; ; Features
-; ;--------------------
-;
-; dependencies[] = btranslator_l10n_feedback
-; dependencies[] = btranslator_btranslator
-; dependencies[] = btranslator_misc
-; dependencies[] = btranslator_layout
-; dependencies[] = btranslator_content
-; dependencies[] = btranslator_disqus
-; dependencies[] = btranslator_sharethis
-; dependencies[] = btranslator_captcha
-; dependencies[] = btranslator_invite
-; dependencies[] = btranslator_permissions
-; ;dependencies[] = btranslator_simplenews
-; ;dependencies[] = btranslator_mass_contact
-; ;dependencies[] = btranslator_googleanalytics
-; ;dependencies[] = btranslator_drupalchat
-; ;dependencies[] = btranslator_fb
-; ;dependencies[] = btranslator_janrain
-;
