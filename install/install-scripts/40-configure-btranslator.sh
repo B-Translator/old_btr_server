@@ -60,15 +60,29 @@ drush --yes pm-update
 
 ### install features modules
 drush --yes pm-enable btranslator_l10n_feedback
+drush --yes features-revert btranslator_l10n_feedback
+
 drush --yes pm-enable btranslator_btranslator
+drush --yes features-revert btranslator_btranslator
+
 drush --yes pm-enable btranslator_misc
+drush --yes features-revert btranslator_misc
+
 drush --yes pm-enable btranslator_layout
-drush --yes pm-enable btranslator_content
+drush --yes features-revert btranslator_layout
+
 drush --yes pm-enable btranslator_disqus
+drush --yes pm-enable btranslator_content
 drush --yes pm-enable btranslator_sharethis
+
 drush --yes pm-enable btranslator_captcha
+drush --yes features-revert btranslatorcaptcha
+drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
+drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
+
 drush --yes pm-enable btranslator_invite
 drush --yes pm-enable btranslator_permissions
+
 #drush --yes pm-enable btranslator_simplenews
 #drush --yes pm-enable btranslator_mass_contact
 #drush --yes pm-enable btranslator_googleanalytics
@@ -77,7 +91,6 @@ drush --yes pm-enable btranslator_permissions
 
 ### install FB integration
 #drush --yes pm-enable btranslator_fb
-#drush --yes pm-enable fb_btranslator
 
 # enable FB config
 cat >> $drupal_settings << EOF
