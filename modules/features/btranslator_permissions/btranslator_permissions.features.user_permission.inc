@@ -362,15 +362,6 @@ function btranslator_permissions_user_default_permissions() {
     'module' => 'phpmailer',
   );
 
-  // Exported permission: administer profiler builder.
-  $permissions['administer profiler builder'] = array(
-    'name' => 'administer profiler builder',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'profiler_builder',
-  );
-
   // Exported permission: administer reroute email.
   $permissions['administer reroute email'] = array(
     'name' => 'administer reroute email',
@@ -567,16 +558,6 @@ function btranslator_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: create mass_contact content.
-  $permissions['create mass_contact content'] = array(
-    'name' => 'create mass_contact content',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'translator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: create new books.
   $permissions['create new books'] = array(
     'name' => 'create new books',
@@ -642,15 +623,6 @@ function btranslator_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: delete any mass_contact content.
-  $permissions['delete any mass_contact content'] = array(
-    'name' => 'delete any mass_contact content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: delete any page content.
   $permissions['delete any page content'] = array(
     'name' => 'delete any page content',
@@ -699,16 +671,6 @@ function btranslator_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: delete own mass_contact content.
-  $permissions['delete own mass_contact content'] = array(
-    'name' => 'delete own mass_contact content',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'translator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: delete own page content.
   $permissions['delete own page content'] = array(
     'name' => 'delete own page content',
@@ -735,15 +697,6 @@ function btranslator_permissions_user_default_permissions() {
       0 => 'administrator',
     ),
     'module' => 'node',
-  );
-
-  // Exported permission: delete terms in newsletter.
-  $permissions['delete terms in newsletter'] = array(
-    'name' => 'delete terms in newsletter',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'taxonomy',
   );
 
   // Exported permission: delete terms in tags.
@@ -776,15 +729,6 @@ function btranslator_permissions_user_default_permissions() {
   // Exported permission: edit any book content.
   $permissions['edit any book content'] = array(
     'name' => 'edit any book content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit any mass_contact content.
-  $permissions['edit any mass_contact content'] = array(
-    'name' => 'edit any mass_contact content',
     'roles' => array(
       0 => 'administrator',
     ),
@@ -867,16 +811,6 @@ function btranslator_permissions_user_default_permissions() {
     'module' => 'comment',
   );
 
-  // Exported permission: edit own mass_contact content.
-  $permissions['edit own mass_contact content'] = array(
-    'name' => 'edit own mass_contact content',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'translator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: edit own page content.
   $permissions['edit own page content'] = array(
     'name' => 'edit own page content',
@@ -894,15 +828,6 @@ function btranslator_permissions_user_default_permissions() {
       0 => 'administrator',
     ),
     'module' => 'node',
-  );
-
-  // Exported permission: edit terms in newsletter.
-  $permissions['edit terms in newsletter'] = array(
-    'name' => 'edit terms in newsletter',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'taxonomy',
   );
 
   // Exported permission: edit terms in tags.

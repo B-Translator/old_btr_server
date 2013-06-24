@@ -24,11 +24,13 @@ cat >> $drupal_settings << EOF
  *    and the system cron in /etc/cron.d/drupal7.
  */
 \$conf['cron_safe_threshold'] = 0;
+
 EOF
 
 # set base_url
 cat >> $drupal_settings << EOF
 \$base_url = "https://l10n.org.xx";
+
 EOF
 
 # set the memcache configuration
@@ -87,6 +89,7 @@ if (!headers_sent()) {
   header('P3P: CP="We do not have a P3P policy."');
 }
 fb config */
+
 EOF
 #sed -i $drupal_settings \
 #    -e '#^/*fb config# c // /* fb config' \

@@ -22,3 +22,5 @@ user_permission:administer simplenews subscriptions
 user_permission:administer simplenews settings
 user_permission:send newsletter
 user_permission:subscribe to newsletters
+user_permission:edit terms in newsletter
+user_permission:delete terms in newsletter
