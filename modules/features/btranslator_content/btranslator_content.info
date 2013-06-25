@@ -1,17 +1,9 @@
 name = btranslator_content
 core = 7.x
 package = Features
-php = 5.2.4
 dependencies[] = blog
 dependencies[] = btranslator_layout
-dependencies[] = ctools
-dependencies[] = features
-dependencies[] = field_sql_storage
-dependencies[] = node
 dependencies[] = node_export_features
-dependencies[] = strongarm
-dependencies[] = text
-features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
 features[node_export_features][] = 04ff4698-bddc-4974-8d02-56a84f83a4e9
 features[node_export_features][] = 1b574c84-6611-4bde-b5d2-e24cd59ec9a6

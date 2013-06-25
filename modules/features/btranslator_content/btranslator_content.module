@@ -1,7 +1,5 @@
 <?php
 /**
  * @file
- * Code for the btranslator_content feature.
+ * Drupal needs this blank file.
  */
-
-include_once 'btranslator_content.features.inc';
