@@ -1,12 +1,15 @@
 name = btranslator_btranslator
 core = 7.x
 package = Features
+php = 5.2.4
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = l10n_feedback
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
+features[rules_config][] = rules_assign_contributor_role
+features[rules_config][] = rules_redirect_user_to_the_dashboard_on_login
 features[user_permission][] = btranslator-admin
 features[user_permission][] = btranslator-export
 features[user_permission][] = btranslator-flag

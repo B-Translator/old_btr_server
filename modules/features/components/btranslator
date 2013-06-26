@@ -12,4 +12,3 @@ user_permission:btranslator-stats
 user_permission:btranslator-resolve
 user_permission:btranslator-admin
 rules_config:rules_assign_contributor_role
-variable:rules_empty_sets
