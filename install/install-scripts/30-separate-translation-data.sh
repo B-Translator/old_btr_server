@@ -30,7 +30,7 @@ done
 rm -f /var/www/btranslator_data
 ln -s /var/www/btranslator/profiles/btranslator/modules/l10n_feedback/data /var/www/btranslator_data
 
-### modify also the DB settings on /var/www/data/db/
+### modify also the DB settings on /var/www/btranslator_data/db/
 cat <<EOF > /var/www/btranslator_data/db/settings.php
 <?php
 \$dbdriver = 'mysql';

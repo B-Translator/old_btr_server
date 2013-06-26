@@ -10,6 +10,9 @@ drush php-script db/get-db-settings.php > db/settings.php
 mysql=$(drush sql-connect)
 $mysql < db/l10n_feedback_schema.sql
 
+### for the time being, data are on the same database with Drupal
+export BTRANSLATOR_DATA=btranslator
+
 ### create the project 'misc/vocabulary'
 import/vocabulary.sh
 

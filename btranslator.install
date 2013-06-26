@@ -46,7 +46,6 @@ function btranslator_install_mailsystem()
 
   $mail_system = variable_get('mail_system');
   $mail_system['default-system'] = 'MimeMailSystem';
-  //$mail_system['l10n_feedback'] = 'MimeMailSystem';
 
   variable_set('mail_system', $mail_system);
 }

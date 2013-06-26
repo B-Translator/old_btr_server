@@ -76,7 +76,7 @@ drush --yes pm-enable btranslator_content
 drush --yes pm-enable btranslator_sharethis
 
 drush --yes pm-enable btranslator_captcha
-drush --yes features-revert btranslatorcaptcha
+drush --yes features-revert btranslator_captcha
 drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
 drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
 
