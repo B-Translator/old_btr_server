@@ -111,7 +111,6 @@ features[variable][] = locale_language_providers_weight_language
 features[variable][] = mail_system
 features[variable][] = mailsystem_theme
 features[variable][] = maintenance_mode
-features[variable][] = memcache_wildcard_flushes
 features[variable][] = menu_expanded
 features[variable][] = menu_masks
 features[variable][] = mimemail_engine

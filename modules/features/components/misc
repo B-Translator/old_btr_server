@@ -96,7 +96,6 @@ variable:locale_language_providers_weight_language
 variable:mail_system
 variable:mailsystem_theme
 variable:maintenance_mode
-variable:memcache_wildcard_flushes
 variable:menu_expanded
 variable:menu_masks
 variable:mimemail_engine
