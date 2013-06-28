@@ -109,10 +109,10 @@
 
 *** Improve the look of number of votes.
 
-*** TODO Try to use a responsive layout theme (bootstrap).
+*** DONE Try to use a responsive layout theme (bootstrap).
     Create a bootstrap subtheme in order to customize it.
 
-*** TODO Reorganize features
+*** DONE Reorganize features
 
 *** Try to replace Disqus with something better (maybe LiveFyre).
 

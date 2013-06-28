@@ -262,7 +262,7 @@ Here I describe the development setup and process that I use.
   synchronization. For more details see:
   #+BEGIN_EXAMPLE
   drush help rsync
-  drush  help sql-sync
+  drush help sql-sync
   drush topic docs-aliases
   #+END_EXAMPLE
 
