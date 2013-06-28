@@ -311,7 +311,7 @@
   (from the file ~googleanalytics.abmin.inc~).
 
 
-* Saving and restoring private variable
+* Saving and restoring private variables
 
   If we cannot and should not keep private settings/attributes in
   features, then there should be some other easy way for the site
@@ -384,3 +384,6 @@
   $drush php-script restore-private-vars.php
   "
   #+END_EXAMPLE
+
+  It can be useful as well to keep different sets of private variables
+  for the /live/, /test/ and /dev/ sites.

@@ -64,6 +64,20 @@ Here I describe the development setup and process that I use.
   Normally there is no need to reinstall the application, unless we
   want to test the installation profile and the installation scripts.
 
+  Another kind of re-installation, which touches only the database of
+  Drupal (btranslator) and nothing else, can be done with the script
+  =dev/install.sh=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  /var/www/btranslator/profiles/btranslator/dev/reinstall-db.sh
+  #+END_EXAMPLE
+
+  It is useful for testing the features. Usually, when features are
+  un-installed, things are not undone properly. In order to leave out
+  a feature, it should not be installed since the beginning. So, it is
+  important to test different combinations of them to see which one
+  works better for us.
+
 
 * Making a clone for development
 
@@ -90,6 +104,20 @@ Here I describe the development setup and process that I use.
   dev/clone_rm.sh dev
   #+END_EXAMPLE
 
+  By the way, we can also modify a little bit the configuration of a
+  development copy of the application (in order to help us not confuse
+  a development copy with a live or testing one), with the script =dev/config.php=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /var/www/
+  drush php-script btranslator/profiles/btranslator/config.php
+  drush @dev php-script btranslator/profiles/btranslator/config.php
+  #+END_EXAMPLE
+
+  It will make site_name 'B-Translator (dev)', will make site email
+  something like 'user+dev@gmail.com', will enable email re-routing,
+  display the /devel/ menu of the footer region, etc. It is not
+  required, but sometimes may be useful.
 
 * Making a backup of the application
 

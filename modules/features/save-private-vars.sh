@@ -1,5 +1,7 @@
 #!/bin/bash
 ### Save sensitive/private variables that should not be made public.
+### Saved variables can be restored with a command like this:
+###     drush [@alias] php-script restore-private-vars.php
 
 echo "Usage: $0 [@drush_alias]"
 
