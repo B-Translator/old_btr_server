@@ -1,5 +1,6 @@
 #!/bin/bash
-### reinstall btranslator from scratch
+### Reinstall btranslator from scratch.
+### Useful for testing installation scripts.
 
 mv /var/www/btranslator /var/www/btranslator-bak
 
