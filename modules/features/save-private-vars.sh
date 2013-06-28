@@ -19,6 +19,7 @@ EOF
 
 while read var_name
 do
+    echo $var_name
     $drush vget "$var_name" --exact --pipe >> restore-private-vars.php
 done < $(dirname $0)/private-vars.txt
 
@@ -32,5 +33,5 @@ EOF
 
 echo "
 Restore variables with the command:
-$drush php-script restore-private-vars.php
+    $drush php-script restore-private-vars.php
 "
