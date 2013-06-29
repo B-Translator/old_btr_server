@@ -173,7 +173,10 @@ function l10n_feedback_create_userprofile_fields() {
         'weight' => '6',
         'type' => 'options_buttons',
       ),
-      'default_value' => array(array('value' => 'website')),
+      'default_value' => array(
+        array('value' => 'website'),
+        array('value' => 'email'),
+      ),
     ));
 
   // create a field and instance for 'field_data_sequential'

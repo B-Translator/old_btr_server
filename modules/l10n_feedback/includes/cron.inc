@@ -63,14 +63,36 @@ function l10n_feedback_delete_old_export_files() {
  * Send by email a string for review to all the active users.
  */
 function l10n_feedback_send_strings_for_review() {
+
+  // return true if we should NOT send a string by email to the given account
+  function _l10n_feedback_dont_send_email($account) {
+    // skip admin, disabled accounts, and users that have never logged in
+    if ($account->uid < 2 or $account->status != 1 or $account->login == 0) {
+      return TRUE;
+    }
+
+    // skip users that have unchecked email on feedback_channels
+    $field_arr = $account->field_feedback_channels['und'];
+    $feedback_channels = array();
+    if (is_array($field_arr)) {
+      foreach ($field_arr as $item) {
+        $feedback_channels[] = $item['value'];
+      }
+    }
+    if ( ! in_array('email', $feedback_channels) )  {
+      return TRUE;
+    }
+
+    // otherwise send email
+    return FALSE;
+  }
+
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
 
   $accounts = entity_load('user');
   foreach ($accounts as $account) {
-    if ($account->uid < 2 or $account->status != 1 or $account->login == 0) {
-      continue; // skip admin, disabled accounts, and users that have never logged in
-    }
+    if (_l10n_feedback_dont_send_email($account))  continue;
 
     // get a sguid according to the user preferencies
     require_once(dirname(__FILE__) . '/translations/vote.inc');
