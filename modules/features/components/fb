@@ -32,3 +32,7 @@ variable:fb_user_check_session
 variable:fb_user_username_style
 variable:theme_bartik_fb_settings
 variable:color_bartik_fb_palette
+user_permission:post to site-wide facebook stream
+user_permission:override facebook stream details
+user_permission:delete own fb_user authmap
+user_permission:administer fb apps

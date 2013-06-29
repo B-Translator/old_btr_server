@@ -12,6 +12,20 @@ variable:simplenews_throttle
 variable:simplenews_use_combined
 variable:simplenews_use_cron
 variable:simplenews_vid
+variable:comment_anonymous_simplenews
+variable:comment_default_mode_simplenews
+variable:comment_default_per_page_simplenews
+variable:comment_form_location_simplenews
+variable:comment_preview_simplenews
+variable:comment_simplenews
+variable:comment_subject_field_simplenews
+variable:language_content_type_simplenews
+variable:menu_options_simplenews
+variable:menu_parent_simplenews
+variable:node_options_simplenews
+variable:node_preview_simplenews
+variable:node_submitted_simplenews
+variable:simplenews_content_type_simplenews
 user_permission:create simplenews content
 user_permission:edit own simplenews content
 user_permission:edit any simplenews content
