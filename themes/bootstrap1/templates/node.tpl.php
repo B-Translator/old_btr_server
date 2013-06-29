@@ -8,12 +8,14 @@
     <?php endif; ?>
     <?php print render($title_suffix); ?>
 
+<!--
     <?php if ($display_submitted): ?>
       <span class="submitted">
         <?php print $user_picture; ?>
         <?php print $submitted; ?>
       </span>
     <?php endif; ?>
+-->
   </header>
 
   <?php
