@@ -110,13 +110,13 @@ Here I describe the development setup and process that I use.
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
   cd /var/www/
-  drush php-script btranslator/profiles/btranslator/config.php
-  drush @dev php-script btranslator/profiles/btranslator/config.php
+  drush php-script btranslator/profiles/btranslator/config.php dev1
+  drush @dev php-script btranslator/profiles/btranslator/config.php dev2
   #+END_EXAMPLE
 
-  It will make site_name 'B-Translator (dev)', will make site email
-  something like 'user+dev@gmail.com', will enable email re-routing,
-  display the /devel/ menu of the footer region, etc. It is not
+  It will set site_name to 'B-Translator (dev1)', will make site email
+  something like 'user+dev1@gmail.com', will enable email re-routing,
+  display the /devel/ menu on the footer region, etc. It is not
   required, but sometimes may be useful.
 
 * Making a backup of the application

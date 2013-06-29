@@ -5,17 +5,20 @@
     * but sometimes can be useful.
     *
     * Call it like this:
-    *     drush [@alias] php-script config.php
+    *     drush [@alias] php-script config.php [tag]
     */
 
+$tag = drush_shift();
+if ($tag == '')  $tag = 'dev';
+
 // append (dev) to site_name
-variable_set('site_name', "B-Translator (dev)");
+variable_set('site_name', "B-Translator ($tag)");
 
 $site_mail = variable_get('site_mail');
 if (preg_match('/@gmail.com/', $site_mail)) {
 
   // make site email something like 'user+dev@gmail.com'
-  $email = preg_replace('/@gmail.com/', '+dev@gmail.com', $site_mail);
+  $email = preg_replace('/@gmail.com/', "+$tag@gmail.com", $site_mail);
   variable_set('site_mail', $email);
   variable_set('smtp_from', $email);
   variable_set('mimemail_mail', $email);
@@ -29,23 +32,25 @@ if (preg_match('/@gmail.com/', $site_mail)) {
   variable_set('reroute_email_enable', 1);
   variable_set('reroute_email_enable_message', 1);
 
-  // add a few test users
-  $new_user = array(
-    'name' => 'user1',
-    'mail' => preg_replace('/@gmail.com/', '+user1@gmail.com', $site_mail),
-    'pass' => 'user1',
-    'status' => 1,
-    'init' => 'email address',
-    'roles' => array(
-      DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-    ),
-  );
-  user_save(null, $new_user);
+  if ($tag == 'dev') {
+    // add a few test users
+    $new_user = array(
+      'name' => 'user1',
+      'mail' => preg_replace('/@gmail.com/', '+user1@gmail.com', $site_mail),
+      'pass' => 'user1',
+      'status' => 1,
+      'init' => 'email address',
+      'roles' => array(
+        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+      ),
+    );
+    user_save(null, $new_user);
 
-  $new_user['name'] = 'user2';
-  $new_user['pass'] = 'user2';
-  $new_user['mail'] = preg_replace('/@gmail.com/', '+user2@gmail.com', $site_mail);
-  user_save(null, $new_user);
+    $new_user['name'] = 'user2';
+    $new_user['pass'] = 'user2';
+    $new_user['mail'] = preg_replace('/@gmail.com/', '+user2@gmail.com', $site_mail);
+    user_save(null, $new_user);
+  }
 }
 
 // blocks
