@@ -54,14 +54,36 @@ if (preg_match('/@gmail.com/', $site_mail)) {
 }
 
 // blocks
-$blocks = array(
-  // show the devel menu on the footer
-  array(
-    'module' => 'menu',
-    'delta'  => 'devel',
-    'region' => 'footer',
-    'status' => 1,
-    'weight' => -15,
-    'cache'  => DRUPAL_NO_CACHE,
-  ),
-);
+if ($tag == 'dev') {
+  $blocks = array(
+    // show the devel menu on the footer
+    array(
+      'module' => 'menu',
+      'delta'  => 'devel',
+      'region' => 'footer',
+      'status' => 1,
+      'weight' => -15,
+      'cache'  => DRUPAL_NO_CACHE,
+    ),
+  );
+  $default_theme = variable_get('theme_default', 'bartik');
+  foreach ($blocks as $block) {
+    extract($block);
+    db_update('block')
+      ->fields(array(
+          'status' => $status,
+          'region' => $region,
+          'weight' => $weight,
+          'cache'  => $cache,
+        ))
+      ->condition('module', $module)
+      ->condition('delta', $delta)
+      ->condition('theme', $default_theme)
+      ->execute();
+  }
+}
+
+// disable sending review emails
+if ($tag == 'test') {
+  include dirname(__FILE__).'/disable_email_option.php';
+}
