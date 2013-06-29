@@ -7,27 +7,31 @@
  *     drush [@alias] php-script disable-email-option.php
  */
 
+// disable sending notification on user update
+$action_id = db_query("SELECT aid FROM {trigger_assignments} WHERE hook='user_update'")->fetchField();
+db_query("DELETE FROM {trigger_assignments} WHERE hook='user_update'");
+
+// process each account
 $accounts = entity_load('user');
 foreach ($accounts as $account) {
   if ($account->uid < 2)  continue;
   //if ($account->status != 1)  continue;
 
   $field_arr = $account->field_feedback_channels['und'];
-  $feedback_channels = array();
+  $new_field_arr = array();
   if (is_array($field_arr)) {
     foreach ($field_arr as $item) {
-      $feedback_channels[] = $item['value'];
+      if ($item['value'] != 'email') {
+        $new_field_arr[] = $item;
+      }
     }
   }
 
-  $new_field_arr = array();
-  foreach ($field_arr as $item) {
-    if ($item == 'email')  continue;
-    $new_field_arr[] = array('value' => $item);
-  }
   $edit = array(
-    'field_feedback_channels' => array('und' => $new_field_array()),
+    'field_feedback_channels' => array('und' => $new_field_arr),
   );
-
   user_save($account, $edit);
 }
+
+// re-enable sending notification on user update
+db_query("INSERT INTO {trigger_assignments} (hook, aid) VALUES ('user_update', $action_id)");
