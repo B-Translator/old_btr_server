@@ -9,4 +9,10 @@ cd $(dirname $0)
 ./ubuntu.sh
 ./office.sh
 ./kde.sh
+./btranslator.sh
+./drupal.sh
+./firefox-os.sh
+./kturtle_doc.sh
+./wordpress.sh
 #./pingus.sh
+#./vocabulary.sh

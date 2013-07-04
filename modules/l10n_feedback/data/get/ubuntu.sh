@@ -22,12 +22,12 @@ echo "===== GETTING UBUNTU ====="
 change_dir ubuntu
 
 ### Get the base pack and the latest update:
-release="quantal"
+release="raring"
 wget https://translations.launchpad.net/ubuntu/$release/+latest-full-language-pack
 mv +latest-full-language-pack ubuntu-$release-translations.tar.gz
 ## Note: Find the URL of the latest update on this page:
 ##       https://translations.launchpad.net/ubuntu/$release/+language-packs
-wget http://launchpadlibrarian.net/136847626/ubuntu-$release-translations-update.tar.gz
+wget http://launchpadlibrarian.net/143992485/ubuntu-$release-translations-update.tar.gz
 
 
 ### downloaded language packs

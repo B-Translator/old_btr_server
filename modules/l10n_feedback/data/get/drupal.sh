@@ -12,6 +12,9 @@ change_dir Drupal
 #po_dir=$drupal_dir/$l10n_store
 po_dir=/var/www/btranslator/sites/all/translations
 
+### get the latest translations
+drush --yes l10n-update
+
 ### copy PO files
 echo "Getting PO files from $po_dir ..."
 cp $po_dir/*.po .
