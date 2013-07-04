@@ -192,3 +192,15 @@ msgstr "rrjet"
 msgctxt "vocabulary"
 msgid "resolution (of screen)"
 msgstr "imtësia (e ekranit)"
+
+msgctxt "vocabulary"
+msgid "heading (of section)"
+msgstr "kryesimi (i ndarjes)"
+
+msgctxt "vocabulary"
+msgid "editor"
+msgstr "ndryshues"
+
+msgctxt "vocabulary"
+msgid "ignore"
+msgstr "shpërfill"
