@@ -13,7 +13,7 @@ date=$(date +%Y%m%d)
 dump_file=users-$date.sql
 
 ### dump all the users of 'btranslator_data'
-$mysqldump -D $DATA --tables l10n_feedback_users > $dump_file
+$mysqldump --databases $DATA --tables l10n_feedback_users > $dump_file
 
 ### dump all the drupal users of 'btranslator' 
 table_list="
@@ -32,7 +32,7 @@ table_list="
     field_revision_field_preferred_projects
     field_revision_field_translations_per_day
 "
-$mysqldump -D $BTR --tables $table_list >> $dump_file
+$mysqldump --databases $BTR --tables $table_list >> $dump_file
 
 ### compress the export file
 gzip $dump_file
