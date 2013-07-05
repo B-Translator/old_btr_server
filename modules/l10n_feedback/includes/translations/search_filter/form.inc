@@ -123,35 +123,37 @@ function l10n_feedback_get_query_values($form_values) {
   if (trim($form_values['origin']) != '' )
     $query['origin'] = $form_values['origin'];
 
-  //only_mine
-  if ($form_values['only_mine'] == 1) {
-    $query['only_mine'] = '1';
-  }
-  else {
-    //translated_by, voted_by
-    if (trim($form_values['translated_by']) != '' )
-      $query['translated_by'] = $form_values['translated_by'];
-    if (trim($form_values['voted_by']) != '' )
-      $query['voted_by'] = $form_values['voted_by'];
-  }
+  if (user_is_logged_in()) {
+    //only_mine
+    if ($form_values['only_mine'] == 1) {
+      $query['only_mine'] = '1';
+    }
+    else {
+      //translated_by, voted_by
+      if (trim($form_values['translated_by']) != '' )
+        $query['translated_by'] = $form_values['translated_by'];
+      if (trim($form_values['voted_by']) != '' )
+        $query['voted_by'] = $form_values['voted_by'];
+    }
 
-  //date_filter
-  list($date_filter_options, $default_date_filter) = _l10n_feedback_get_filter_options('date_filter');
-  if ( in_array($form_values['date_filter'], $date_filter_options) && $form_values['date_filter'] != $default_date_filter ) {
-    $query['date_filter'] = $form_values['date_filter'];
+    //date_filter
+    list($date_filter_options, $default_date_filter) = _l10n_feedback_get_filter_options('date_filter');
+    if ( in_array($form_values['date_filter'], $date_filter_options) && $form_values['date_filter'] != $default_date_filter ) {
+      $query['date_filter'] = $form_values['date_filter'];
+    }
+
+    //from_date
+    $arr_date = $form_values['from_date'];
+    $str_date = date('Y-m-d', mktime(1, 0, 0, $arr_date['month'], $arr_date['day'], $arr_date['year']));
+    if ($str_date != date('Y-m-d'))
+      $query['from_date'] = $str_date;
+
+    //to_date
+    $arr_date = $form_values['to_date'];
+    $str_date = date('Y-m-d', mktime(1, 0, 0, $arr_date['month'], $arr_date['day'], $arr_date['year']));
+    if ($str_date != date('Y-m-d'))
+      $query['to_date'] = $str_date;
   }
-
-  //from_date
-  $arr_date = $form_values['from_date'];
-  $str_date = date('Y-m-d', mktime(1, 0, 0, $arr_date['month'], $arr_date['day'], $arr_date['year']));
-  if ($str_date != date('Y-m-d'))
-    $query['from_date'] = $str_date;
-
-  //to_date
-  $arr_date = $form_values['to_date'];
-  $str_date = date('Y-m-d', mktime(1, 0, 0, $arr_date['month'], $arr_date['day'], $arr_date['year']));
-  if ($str_date != date('Y-m-d'))
-    $query['to_date'] = $str_date;
 
   //limit
   list($limit_options, $default_limit) = _l10n_feedback_get_filter_options('limit');
