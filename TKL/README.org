@@ -1,4 +1,11 @@
 
+Note: TKL installation is now deprecated, but since
+90% of the job is already done, I am not removing it,
+in case that somebody in the future would be interested
+to fix and make it work.
+
+----------
+
 Installing B-Translator on Turnkey Linux, using TKLPatch
 (see: http://www.turnkeylinux.org/docs/tklpatch)
 
