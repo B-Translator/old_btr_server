@@ -39,3 +39,12 @@ sed -i /etc/apache2/apache2.conf \
 
 ### generates the file /etc/defaults/locale
 update-locale
+
+### prevent robots from crawling translations
+sed -i /var/www/btranslator/robots.txt \
+    -e '/# B-Translator/,$ d'
+cat <<EOF >> /var/www/btranslator/robots.txt
+# B-Translator
+Disallow: /translations/
+Disallow: /?q=translations/
+EOF
