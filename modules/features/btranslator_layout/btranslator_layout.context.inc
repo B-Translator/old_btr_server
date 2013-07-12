@@ -139,12 +139,6 @@ function btranslator_layout_context_default_contexts() {
           'region' => 'content',
           'weight' => '-10',
         ),
-        'sharethis-sharethis_block' => array(
-          'module' => 'sharethis',
-          'delta' => 'sharethis_block',
-          'region' => 'content',
-          'weight' => '-9',
-        ),
         'menu-navig-menu' => array(
           'module' => 'menu',
           'delta' => 'navig-menu',
