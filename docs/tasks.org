@@ -79,7 +79,7 @@
     This web-server API will also make possible the development
     of an android app, etc
 
-*** TODO Improve the website (homepage) of the project on GitHub.
+*** DONE Improve the website (homepage) of the project on GitHub.
 *** TODO Create a page on Google+ for l10n-sq and btranslator.
 *** DONE Generate code documentation by phpDocu and doxygen.
 *** Publish Disqus comments to twitter account @l10n_sq
