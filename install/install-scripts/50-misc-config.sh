@@ -47,4 +47,9 @@ cat <<EOF >> /var/www/btranslator/robots.txt
 # B-Translator
 Disallow: /translations/
 Disallow: /?q=translations/
+Disallow: /rpx/
+Disallow: /?q=rpx/
+Disallow: /fb_cb/
+Disallow: /?q=fb_cb/
+Disallow: /downloads/
 EOF
