@@ -491,6 +491,55 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   :ARCHIVE_TODO: DONE
   :END:
 
+* DONE Improve the website (homepage) of the project on GitHub.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2013-07-13 Sat 23:50
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Create a page on Google+ for l10n-sq and btranslator.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2013-07-13 Sat 23:50
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Generate code documentation by phpDocu and doxygen.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2013-07-13 Sat 23:50
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE Try to use a responsive layout theme (bootstrap).
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2013-07-13 Sat 23:50
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Create a bootstrap subtheme in order to customize it.
+
+* DONE Reorganize features
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2013-07-13 Sat 23:50
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+
+
+
+
+
 
 
 
