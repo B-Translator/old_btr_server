@@ -39,6 +39,7 @@ projects[configuration][version] = "2.0-alpha2"
 projects[xautoload][version] = "2.7"
 projects[jquery_update][version] = "2.3"
 projects[boxes][version] = "1.1"
+projects[delete_all][version] = "1.1"
 
 ;--------------------
 ; Performance

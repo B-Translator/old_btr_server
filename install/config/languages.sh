@@ -18,7 +18,7 @@ echo "
 These are the codes of helping (auxiliary) languages,
 separated by space (like 'fr de it').
 "
-other_langs='fr de it'
+other_langs='fr'
 read -p "Enter the language codes [$other_langs]: " input
 other_langs=${input:-$other_langs}
 
