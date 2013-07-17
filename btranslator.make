@@ -40,6 +40,7 @@ projects[xautoload][version] = "2.7"
 projects[jquery_update][version] = "2.3"
 projects[boxes][version] = "1.1"
 projects[delete_all][version] = "1.1"
+projects[drush_language][version] = "1.2"
 
 ;--------------------
 ; Performance

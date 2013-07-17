@@ -110,10 +110,6 @@ EOF
 
 ### install also multi-language support
 drush --yes pm-enable l10n_client l10n_update
-drush dl drush_language
-lng=$(drush vget --format=json l10n_feedback_translation_lng)
-lng=${lng:1:-1}
-drush language-add $lng
 mkdir -p /var/www/btranslator/sites/all/translations
 chown -R www-data: /var/www/btranslator/sites/all/translations
 drush --yes l10n-update
