@@ -8,7 +8,7 @@ change_dir LibreOffice
 ### download all translations
 ### find the propper url on this page:
 ### http://download.documentfoundation.org/libreoffice/src/
-translations_url="http://download.documentfoundation.org/libreoffice/src/4.1.0/libreoffice-translations-4.1.0.1.tar.xz"
+translations_url="http://download.documentfoundation.org/libreoffice/src/4.1.0/libreoffice-translations-4.1.0.2.tar.xz"
 wget $translations_url
 
 ### the code of the language to be extracted, like: fr\|de\|en_GB\|sq
