@@ -31,10 +31,6 @@ sed -i /var/www/btranslator_data/config.sh \
 $(dirname $0)/mysqld.sh start
 drush --yes --exact vset l10n_feedback_translation_lng $main_lang
 
-### add the $main_lang as a drupal language
-drush language-add $main_lang
-drush --yes l10n-update
-
 ### modify the list of languages
 file_inc='/var/www/btranslator/profiles/btranslator/modules/l10n_feedback/includes/common.inc'
 echo "
@@ -42,3 +38,7 @@ echo "
 "
 read -p "Press Enter to continue..." input
 nano --syntax=php +20,5 $file_inc
+
+### add the $main_lang as a drupal language
+drush language-add $main_lang
+drush --yes l10n-update
