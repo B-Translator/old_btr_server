@@ -1,5 +1,16 @@
 
-Here I describe the development setup and process that I use.
+#+OPTIONS:  num:nil toc:t ^:nil f:nil TeX:nil LaTeX:nil
+#+STYLE: <link href="css/org.css" rel="stylesheet" type="text/css"/>
+
+Development Setup of B-Translator
+
+[[http://info.btranslator.org][B-Translator]] helps to get feedback about /l10n/ (translations of the
+programs). It tries to collect very small translation contributions
+from a wide crowd of people and to dilute them into something useful.
+It is developed as a Drupal7 profile and the [[https://github.com/dashohoxha/B-Translator][code]] is hosted on GitHub.
+Here I describe the development setup and process that I use for this
+project. Most of the the tips are project specific, however some of
+them can be used on any Drupal project.
 
 * Installation
 

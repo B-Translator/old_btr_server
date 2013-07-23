@@ -31,7 +31,7 @@ server.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone https://github.com/dashohoxha/B-Translator.git
+  git clone --branch v1.0 https://github.com/dashohoxha/B-Translator.git
   nohup nice B-Translator/install/install.sh btr-1 &
   tail -f nohup.out
   #+END_EXAMPLE
@@ -54,6 +54,7 @@ server.
   much useful to include other languages on that list, and I leave
   just *fr*.
 
+
 * Setting the domain name
 
   If I can assign a domain name to this copy of B-Translator (for
@@ -73,6 +74,7 @@ server.
   #+END_EXAMPLE
   This way I can access it by typing =https://l10n.org.xy= on the
   browser location (not =https://127.0.0.1= or =https://localhost=).
+
 
 * Replacing NGINX with Apache2
 
@@ -147,6 +149,7 @@ server.
    If you forget to do it, you will notice performance degrade with
    the site.
 
+
 * Start ssh
 
   If this copy of B-Translator is remote, then I install *ssh* as
@@ -166,6 +169,7 @@ server.
   detailed instructions on how to do it see:
   http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html
 
+
 * Reset the password of drupal admin
 
   I almost always forget the password of *admin* (the primary user of
@@ -183,6 +187,7 @@ server.
   #+END_EXAMPLE
   This means that the root directory of =drush= is always
   ~/var/www/btranslator~, no matter where we call it from.
+
 
 * Transfer content
 
@@ -206,6 +211,7 @@ server.
   drush delete-all all  ## delete all existing nodes
   drush --yes pm-enable btranslator_content_1
   #+END_EXAMPLE
+
 
 * Fix path aliases and menus
 
@@ -250,6 +256,68 @@ server.
   $variables['reroute_email_enable'] = 1;
   $variables['reroute_email_enable_message'] = 1;
   #+END_EXAMPLE
+
+
+* Sync users and contributions
+
+  Now the cloned site is almost identical with the primary site in
+  terms of Drupal settings and configuration and in terms of
+  translation data (projects that are imported, strings and their
+  translations, etc.). What is still missing is the list of users that
+  are registered on the primary site, as well as their contributions
+  (votes and suggested translations).
+
+  We can transfer them like this:
+
+  + Export them on the primary site:
+    #+BEGIN_EXAMPLE
+    cd /var/www/btranslator_data
+    db/export-users.sh
+    db/export-contributions.sh
+    #+END_EXAMPLE
+
+  + Transfer ~*.sql.gz~ files to the clone site and import them:
+    #+BEGIN_EXAMPLE
+    cd /var/www/btranslator_data
+    db/import-users.sh  users-20130717.sql.gz
+    db/import-contributions.sh contributions-00000000-20130717.sql.gz
+    #+END_EXAMPLE
+
+  *Note:* Once you have transferred all the users, the clone site will
+  send them daily a string for review, in addition to the one that is
+  sent by the primary site. We can prevent this by disabling the
+  cron. Edit the file ~/etc/cron.d/drupal7~ and comment the line that
+  starts the cron.
+
+
+* Sync vocabulary data
+
+  Vocabulary is a pseudo-project, its PO file does not really belong
+  to the translation of any program. I use it to collect interesting
+  terms and translations that I encounter while translating the other
+  projects. It can help as a reminder (in case that I forget the
+  translation of a term). It is also useful for discussing
+  translations of difficult terms with other people, and indirectly it
+  helps to ensure consistency among the translations. Terms are added
+  to vocabulary by the translators. In order to transfer them from one
+  instance of B-Translator to another, it can be exported as a PO file
+  on one system and imported to the other.
+
+  + Export ~vocabulary-sq.po~:
+    #+BEGIN_EXAMPLE
+    cd /var/www/btranslator_data
+    export/export.sh misc vocabulary sq $(pwd)/tmp
+    mv tmp/vocabulary/vocabulary-sq.po .
+    rm -rf tmp
+    #+END_EXAMPLE
+
+  + Transfer ~vocabulary-sq.po~ to the other system and them import
+    it:
+    #+BEGIN_EXAMPLE
+    cd /var/www/btranslator_data
+    mv vocabulary-sq.po vocabulary/
+    import/vocabulary.sh
+    #+END_EXAMPLE
 
 
 * Get and import PO files
@@ -299,67 +367,6 @@ server.
    nohup nice import/all.sh &
    tail -f nohup.out
    #+END_EXAMPLE
-
-* Sync vocabulary data
-
-  Vocabulary is a pseudo-project, its PO file does not really belong
-  to the translation of any program. I use it to collect interesting
-  terms and translations that I encounter while translating the other
-  projects. It can help as a reminder (in case that I forget the
-  translation of a term). It is also useful for discussing
-  translations of difficult terms with other people, and indirectly it
-  helps to ensure consistency among the translations. Terms are added
-  to vocabulary by the translators. In order to transfer them from one
-  instance of B-Translator to another, it can be exported as a PO file
-  on one system and imported to the other.
-
-  + Export ~vocabulary-sq.po~:
-    #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
-    export/export.sh misc vocabulary sq $(pwd)/tmp
-    mv tmp/vocabulary/vocabulary-sq.po .
-    rm -rf tmp
-    #+END_EXAMPLE
-
-  + Transfer ~vocabulary-sq.po~ to the other system and them import
-    it:
-    #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
-    mv vocabulary-sq.po vocabulary/
-    import/vocabulary.sh
-    #+END_EXAMPLE
-
-
-* Sync users and contributions
-
-  Now the cloned site is almost identical with the primary site in
-  terms of Drupal settings and configuration and in terms of
-  translation data (projects that are imported, strings and their
-  translations, etc.). What is still missing is the list of users that
-  are registered on the primary site, as well as their contributions
-  (votes and suggested translations).
-
-  We can transfer them like this:
-
-  + Export them on the primary site:
-    #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
-    db/export-users.sh
-    db/export-contributions.sh
-    #+END_EXAMPLE
-
-  + Transfer ~*.sql.gz~ files to the clone site and import them:
-    #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
-    db/import-users.sh  users-20130717.sql.gz
-    db/import-contributions.sh contributions-00000000-20130717.sql.gz
-    #+END_EXAMPLE
-
-  *Note:* Once you have transferred all the users, the clone site will
-  send them daily a string for review, in addition to the one that is
-  sent by the primary site. We can prevent this by disabling the
-  cron. Edit the file ~/etc/cron.d/drupal7~ and comment the line that
-  starts the cron.
 
 
 * Switching to the new server

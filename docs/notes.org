@@ -11,10 +11,10 @@
 * Notes
 
 ** How to create TAGS for Emacs
-
+   #+BEGIN_EXAMPLE
    find . -type f | etags -
    find . -type f \( -name "*.module" -o -name "*.install" -o -name "*.inc" \) | etags -a --language=php -
-
+   #+END_EXAMPLE
    See: http://drupal.org/node/59868
 
 ** Fine-Tuning MySQL Full-Text Search
@@ -25,7 +25,7 @@
    We want to index even short words and to disable stopword filtering.
 
    1. Edit /etc/mysql/my.cnf and set:
-
+      #+BEGIN_EXAMPLE
       [mysqld]
       ft_min_word_len = 1
       ft_stopword_file = ''
@@ -33,6 +33,7 @@
       [isamchk]
       ft_min_word_len = 1
       ft_stopword_file = ''
+      #+END_EXAMPLE
 
    2. Restart the server: service mysql restart
    3. Drop and recreate fulltext indexes.
@@ -40,6 +41,7 @@
 ** How to use simple REST API for exporting projects
 
 *** List:
+    #+BEGIN_EXAMPLE
     wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list
     cat list.txt
     wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/GNOME
@@ -48,63 +50,82 @@
     wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/kturtle/json
     wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/-
     wget --no-check-certificate -O list.txt https://l10n-sq.org/translations/project/list/*/*turtle*/text
+    #+END_EXAMPLE
 
 *** Export:
+    #+BEGIN_EXAMPLE
     wget --no-check-certificate -O test1.po https://l10n-sq.org/translations/project/export/KDE/kturtle/sq
     vim test1.po
+    #+END_EXAMPLE
 
 *** LibreOffice:
     + List:
+      #+BEGIN_EXAMPLE
       wget --no-check-certificate -O list.txt \
              https://l10n-sq.org/translations/project/list/LibreOffice
       cat list.txt
+      #+END_EXAMPLE
 
     + Export:
+      #+BEGIN_EXAMPLE
       wget --no-check-certificate -O LibreOffice-sw-fr.tgz \
              https://l10n-sq.org/translations/project/export_tgz/LibreOffice/sw/fr
       tar tvfz LibreOffice-sw-fr.tgz
       tar xfz LibreOffice-sw-fr.tgz
+      #+END_EXAMPLE
 
     + Export all the projects:
+      #+BEGIN_EXAMPLE
       wget --no-check-certificate -O LibreOffice-all-fr.tgz \
              https://l10n-sq.org/translations/project/export_tgz/LibreOffice/all/fr
       tar tvfz LibreOffice-all-fr.tgz
       tar xfz LibreOffice-all-fr.tgz
+      #+END_EXAMPLE
 
 *** Mozilla:
     + List:
+      #+BEGIN_EXAMPLE
       wget --no-check-certificate -O list.txt \
              https://l10n-sq.org/translations/project/list/Mozilla
       cat list.txt
+      #+END_EXAMPLE
 
     + Export:
+      #+BEGIN_EXAMPLE
       wget --no-check-certificate -O Mozilla-browser-fr.tgz \
              https://l10n-sq.org/translations/project/export_tgz/Mozilla/browser/fr
       tar tvfz Mozilla-browser-fr.tgz
       tar xfz Mozilla-browser-fr.tgz
+      #+END_EXAMPLE
 
     + Export all the projects:
+      #+BEGIN_EXAMPLE
       wget --no-check-certificate -O Mozilla-all-fr.tgz \
              https://l10n-sq.org/translations/project/export_tgz/Mozilla/all/fr
       tar tvfz Mozilla-all-fr.tgz
       tar xfz Mozilla-all-fr.tgz
+      #+END_EXAMPLE
 
 
 ** How to use simple REST API to get diffs
 
 *** Get a list of diffs:
+    #+BEGIN_EXAMPLE
     wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq ; cat list.txt
     wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq ; cat list.txt
     wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq ; cat list.txt
     wget -q --no-check-certificate -O list.txt https://test.l10n-sq.org/translations/project/diff/ubuntu/pingus/sq ; cat list.txt
+    #+END_EXAMPLE
 
 *** Get a specific diff:
+    #+BEGIN_EXAMPLE
     wget -q --no-check-certificate -O Mozilla-browser-sq.2.diff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/2
     wget -q --no-check-certificate -O Mozilla-browser-sq.2.ediff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/2/ediff
     wget -q --no-check-certificate -O LibreOffice-sw-sq.2.diff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/2
     wget -q --no-check-certificate -O LibreOffice-sw-sq.2.ediff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/2/ediff
     wget -q --no-check-certificate -O KDE-kdelibs-sq.2.diff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/2
     wget -q --no-check-certificate -O KDE-kdelibs-sq.2.ediff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/2/ediff
+    #+END_EXAMPLE
 
 
 *** Get the current diff:
@@ -112,12 +133,14 @@
     It is not stored yet in the DB (it will be stored if we get
     another snapshot).
 
+    #+BEGIN_EXAMPLE
     wget -q --no-check-certificate -O Mozilla-browser-sq.current.diff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/-
     wget -q --no-check-certificate -O Mozilla-browser-sq.current.ediff https://test.l10n-sq.org/translations/project/diff/Mozilla/browser/sq/-/ediff
     wget -q --no-check-certificate -O LibreOffice-sw-sq.current.diff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/-
     wget -q --no-check-certificate -O LibreOffice-sw-sq.current.ediff https://test.l10n-sq.org/translations/project/diff/LibreOffice/sw/sq/-/ediff
     wget -q --no-check-certificate -O KDE-kdelibs-sq.current.diff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/-
     wget -q --no-check-certificate -O KDE-kdelibs-sq.current.ediff https://test.l10n-sq.org/translations/project/diff/KDE/kdelibs/sq/-/ediff
+    #+END_EXAMPLE
 
 ** Misc
 
@@ -126,4 +149,6 @@
      index (primary key) on queries. The same for the field tguid.
 
    + Crontab entry:
+     #+BEGIN_EXAMPLE
      0 4 * * *  wget -O - -q -t 1 --no-check-certificate https://test.l10n-sq.org/cron.php?cron_key=YVVQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+     #+END_EXAMPLE
