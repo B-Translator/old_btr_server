@@ -131,11 +131,9 @@ function l10n_feedback_schema() {
       ),
     ),
     'primary key' => array('fid'),
-    'unique keys' => array(
-      'hash' => array('hash')
-    ),
     'indexes' => array(
       'potid' => array('potid'),
+      'hash' => array('hash'),
     ),
   );
 

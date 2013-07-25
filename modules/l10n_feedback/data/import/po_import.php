@@ -133,8 +133,7 @@ function add_file($filename, $relative_filename, $potid, $lng, $headers, $commen
         $project1 = $row1['project'];
         $tplname1 = $row1['tplname'];
         $lng1 = $row['lng'];
-	print "Error: File has already been imported for '$origin1 $project1 $tplname1 $lng1'.\n";
-	exit(2);
+        print "Warning: File '$filename' has already been imported for '$origin1 $project1 $tplname1 $lng1'.\n";
       }
     }
 

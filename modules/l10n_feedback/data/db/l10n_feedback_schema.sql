@@ -40,7 +40,7 @@ CREATE TABLE `l10n_feedback_files` (
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that imported the file.',
   `time` datetime DEFAULT NULL COMMENT 'The date and time that the record was registered.',
   PRIMARY KEY (`fid`),
-  UNIQUE KEY `hash` (`hash`),
+  KEY `hash` (`hash`),
   KEY `potid` (`potid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17933 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='A PO file that is imported and can be exported from the DB.';
 /*!40101 SET character_set_client = @saved_cs_client */;
