@@ -9,20 +9,19 @@ msgstr ""
 "Project-Id-Version: pingus\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-13 03:15+0100\n"
-"PO-Revision-Date: 2013-04-30 23:12+0200\n"
-"Last-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\n"
-"Language-Team: Albanian <sq@li.org>\n"
+"PO-Revision-Date: 2013-07-25 06:33+0000\n"
+"Last-Translator: Dashamir Hoxha <Unknown>\n"
+"Language-Team: Albanian <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-30 04:28+0000\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Launchpad-Export-Date: 2013-07-25 15:32+0000\n"
+"X-Generator: Launchpad (build 16700)\n"
 "Language: sq\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: src/editor/object_properties.cpp:87 src/editor/object_properties.cpp:515
 msgid "Object:"
-msgstr "Objekti:"
+msgstr "Sendi:"
 
 #: src/editor/object_properties.cpp:88 src/editor/object_properties.cpp:516
 msgid "Nothing selected"
@@ -66,7 +65,7 @@ msgstr "Majtas"
 
 #: src/editor/object_properties.cpp:111
 msgid "Misc"
-msgstr "Të Ndryshme"
+msgstr "Ndrysh"
 
 #: src/editor/object_properties.cpp:112
 msgid "Right"
@@ -74,7 +73,7 @@ msgstr "Djathtas"
 
 #: src/editor/object_properties.cpp:117
 msgid "ReleaseRate:"
-msgstr "Shpejtësia e Lëshimit:"
+msgstr "ShpejtësiLëshimi:"
 
 #: src/editor/object_properties.cpp:140
 msgid "Para-X:"
@@ -94,11 +93,11 @@ msgstr "Lëviz-Y:"
 
 #: src/editor/object_properties.cpp:158
 msgid "Owner Id:"
-msgstr "ID e Pronarit:"
+msgstr "ID e Zotëruesit:"
 
 #: src/editor/object_properties.cpp:162
 msgid "Z-Pos:"
-msgstr ""
+msgstr "Z-Pos:"
 
 #: src/editor/object_properties.cpp:169
 msgid "Color:"
@@ -190,7 +189,7 @@ msgstr "Dyfisho sendet e zgjedhura"
 
 #: src/editor/panel.cpp:196
 msgid "Delete the selected objects"
-msgstr "Fshi sendet e caktuara"
+msgstr "Fshi sendet e zgjedhura"
 
 #: src/editor/panel.cpp:199
 msgid "Raise object to top"
@@ -214,7 +213,7 @@ msgstr "Ktheje sendin horizontalisht"
 
 #: src/editor/panel.cpp:213
 msgid "Flip object vertically"
-msgstr "Ktheje sendin vertikalisht"
+msgstr "Ktheje sendin kokëposhtë"
 
 #: src/editor/panel.cpp:216
 msgid "Rotate object -90 degree"
@@ -226,7 +225,7 @@ msgstr "Rrotulloje sendin 90 gradë"
 
 #: src/editor/panel.cpp:227
 msgid "Display help"
-msgstr "Shfaq ndihmë"
+msgstr "Shfaq ndihmën"
 
 #: src/editor/panel.cpp:229 src/editor/object_selector.cpp:174
 #: src/pingus/screens/pingus_menu.cpp:74
@@ -271,39 +270,39 @@ msgstr "Ruaj nivelin"
 
 #: src/editor/level_properties.cpp:52
 msgid "Author:"
-msgstr ""
+msgstr "Autori:"
 
 #: src/editor/level_properties.cpp:55
 msgid "Levelname:"
-msgstr ""
+msgstr "Emërniveli:"
 
 #: src/editor/level_properties.cpp:58
 msgid "Description:"
-msgstr ""
+msgstr "Përshkrimi:"
 
 #: src/editor/level_properties.cpp:62
 msgid "Pingus Count:"
-msgstr ""
+msgstr "Numri i Pingusave:"
 
 #: src/editor/level_properties.cpp:65
 msgid "Pingus to Save:"
-msgstr ""
+msgstr "Pingusat për tu Shpëtuar:"
 
 #: src/editor/level_properties.cpp:68
 msgid "Time:"
-msgstr ""
+msgstr "Koha:"
 
 #: src/editor/level_properties.cpp:71
 msgid "Width:"
-msgstr ""
+msgstr "Gjerësia:"
 
 #: src/editor/level_properties.cpp:77
 msgid "Music:"
-msgstr ""
+msgstr "Muzika:"
 
 #: src/editor/editor_screen.cpp:230
 msgid "== Editor Help =="
-msgstr "== Ndihmë për Shkruesin =="
+msgstr "== Ndihmë për Ndryshuesin =="
 
 #: src/editor/editor_screen.cpp:248
 msgid ""
@@ -318,16 +317,16 @@ msgid ""
 "Group selected objects\n"
 "Ungroup selected objects\n"
 msgstr ""
-"Caktoi të gjitha\n"
-"Pastroje Caktimin\n"
-"Ngriji sendet\n"
-"Uli sendet\n"
-"Ngriji sendet në krye\n"
-"Uli sendet në fund\n"
+"Zgjidhi të gjitha\n"
+"Pastroje Zgjedhjen\n"
+"Ngriji objektet\n"
+"Uli objektet\n"
+"Ngriji objektet në krye\n"
+"Uli objektet në fund\n"
 "Rrotulloje 90 gradë\n"
 "Rrotulloje 270 gradë\n"
-"Bashkoi sendet e caktuara\n"
-"Veçoi sendet e caktuara\n"
+"Bashkoi objektet e zgjedhura\n"
+"Veçoi objektet e zgjedhura\n"
 
 #: src/editor/editor_screen.cpp:271
 msgid ""
@@ -372,17 +371,18 @@ msgstr ""
 "\n"
 "     <emërniveli><numër>-<krijues>.pingus\n"
 "\n"
-"Pra nëse e krijoni nivelin tuaj të dytë me temë guri, emëroje: gur2-emriyt."
-"pingus\n"
+"Pra nëse e krijoni nivelin tuaj të dytë me temë guri, emëroje: gur2-"
+"emriyt.pingus\n"
 "\n"
-"Nëse keni krijuar një nivel dhe doni që të përfshihet në lojë, dërgojeni te:\n"
+"Nëse keni krijuar një nivel dhe doni që të përfshihet në lojë, dërgojeni "
+"te:\n"
 "\n"
 "     pingus-devel@nongnu.org\n"
 "\n"
-"Vetëm nivelet e publikuara me GPL lejohet të përfshihen në lojë. Redaktuesi e "
-"shton automatikisht një adresim \n"
-"tek GPL. Nëse doni ta keni nivelin me ndonjë liçensë tjetër, "
-"duhet ta ndryshoni këtë adresim.\n"
+"Vetëm nivelet e publikuara me GPL lejohet të përfshihen në lojë. Redaktuesi "
+"e shton automatikisht një adresim \n"
+"tek GPL. Nëse doni ta keni nivelin me ndonjë liçensë tjetër, duhet ta "
+"ndryshoni këtë adresim.\n"
 
 #: src/editor/message_box.cpp:37
 msgid "Replace"
@@ -438,7 +438,7 @@ msgstr "Send i Veçantë"
 
 #: src/editor/object_selector.cpp:179
 msgid "Prefab Object"
-msgstr "Gjë e Paraprodhuar"
+msgstr "Send i Paraprodhuar"
 
 #: src/pingus/components/pingus_counter.cpp:43
 #, boost-format, c-format
@@ -459,16 +459,16 @@ msgstr "Bllokues"
 
 #: src/pingus/action_name.cpp:30
 msgid "Boarder"
-msgstr ""
+msgstr "Shtruesi"
 
 #: src/pingus/action_name.cpp:31
 msgid "Bomber"
-msgstr "Bomber"
+msgstr "Bombardues"
 
 #: src/pingus/action_name.cpp:32 src/pingus/actions/bridger.cpp:38
 #: src/pingus/actions/bridger.cpp:196
 msgid "Bridger"
-msgstr ""
+msgstr "Urëndërtues"
 
 #: src/pingus/action_name.cpp:33
 msgid "Climber"
@@ -492,7 +492,7 @@ msgstr "Rënës"
 
 #: src/pingus/action_name.cpp:38
 msgid "Floater"
-msgstr "Notues"
+msgstr "Flluskues"
 
 #: src/pingus/action_name.cpp:39
 msgid "Jumper"
@@ -504,7 +504,7 @@ msgstr "Vrasje me lazër"
 
 #: src/pingus/action_name.cpp:41
 msgid "Miner"
-msgstr "Minator"
+msgstr "Gërmues"
 
 #: src/pingus/action_name.cpp:42
 msgid "Slider"
@@ -520,11 +520,11 @@ msgstr "Përplasur"
 
 #: src/pingus/action_name.cpp:45
 msgid "Superman"
-msgstr "Superman"
+msgstr "Mbinjeri"
 
 #: src/pingus/action_name.cpp:46
 msgid "Teleported"
-msgstr "I larg-zhvendosur"
+msgstr "I transferuar"
 
 #: src/pingus/action_name.cpp:47
 msgid "Waiter"
@@ -578,7 +578,7 @@ msgstr "Kapje Miushi"
 
 #: src/pingus/screens/option_menu.cpp:211
 msgid "Software Cursor"
-msgstr ""
+msgstr "Software Cursor"
 
 #: src/pingus/screens/option_menu.cpp:212
 msgid "Autoscrolling"
@@ -594,11 +594,11 @@ msgstr "Shtyp FPS"
 
 #: src/pingus/screens/option_menu.cpp:219
 msgid "Resolution:"
-msgstr "Rezolucioni:"
+msgstr "Imtësia:"
 
 #: src/pingus/screens/option_menu.cpp:220
 msgid "Renderer:"
-msgstr ""
+msgstr "Vizatues:"
 
 #: src/pingus/screens/option_menu.cpp:222
 msgid "Language:"
@@ -618,7 +618,7 @@ msgstr "Vëllimi i Muzikës:"
 
 #: src/pingus/screens/option_menu.cpp:334
 msgid "Option Menu"
-msgstr "Menu opsioni"
+msgstr "Menuja e Zgjedhjeve"
 
 #: src/pingus/screens/option_menu.cpp:340
 msgid "Some options require a restart of the game to take effect."
@@ -634,7 +634,7 @@ msgstr "..:: Fillo lojën ::.."
 
 #: src/pingus/screens/pingus_menu.cpp:59
 msgid "Editor"
-msgstr "Editori"
+msgstr "Ndryshues"
 
 #: src/pingus/screens/pingus_menu.cpp:60
 msgid "..:: Create your own levels ::.."
@@ -654,7 +654,7 @@ msgstr "Nivele vështirësie"
 
 #: src/pingus/screens/pingus_menu.cpp:70
 msgid "..:: Play User Built levels ::.."
-msgstr "..:: Luaj nivele të ndërtuara nga përdoruesit ::.."
+msgstr "..:: Luaj Nivelet e Ndërtuara nga Përdoruesit ::.."
 
 #: src/pingus/screens/pingus_menu.cpp:75
 msgid "..:: Bye, bye ::.."
@@ -665,8 +665,8 @@ msgid ""
 "..:: Ctrl-g: mouse grab   ::   F10: fps counter   ::   F11: fullscreen   ::  "
 " F12: screenshot ::.."
 msgstr ""
-"..:: Ctrl-g: kap miushin   ::   F10: numërues fps   ::   F11: "
-"gjithekrani   ::   F12: pamje-ekrani ::.."
+"..:: Ctrl-g: kap miushin   ::   F10: numërues fps   ::   F11: gjithekrani   "
+"::   F12: pamje-ekrani ::.."
 
 #: src/pingus/screens/result_screen.cpp:91
 msgid "Give up"
@@ -714,7 +714,7 @@ msgstr "Tu vranë të gjithë, jo mirë."
 
 #: src/pingus/screens/result_screen.cpp:216
 msgid "No-one got saved - I know you can do better."
-msgstr "Asnjë nuk shpëtoi - e di që mund të luash më mirë."
+msgstr "Asnjë nuk u shpëtua - unë e di që mund të luash më mirë."
 
 #: src/pingus/screens/result_screen.cpp:218
 msgid ""
@@ -730,7 +730,7 @@ msgstr "E ke humbur vetëm për një - provo sërish!"
 
 #: src/pingus/screens/result_screen.cpp:223
 msgid "Only a handful more and you would have made it - try again!"
-msgstr "Edhe pak të tjerë dhe do t'ia kishe dalë - provo sërish!"
+msgstr "Edhe disa të tjerë dhe do t'ia kishe dalë - provoje përsëri!"
 
 #: src/pingus/screens/result_screen.cpp:225
 msgid "Better luck next time!"
@@ -742,7 +742,7 @@ msgstr "Shpëtuar: "
 
 #: src/pingus/screens/result_screen.cpp:237
 msgid "Died: "
-msgstr ""
+msgstr "Vdiqën: "
 
 #: src/pingus/screens/result_screen.cpp:240
 msgid "Time left: "
@@ -754,7 +754,7 @@ msgstr "Në Krijim"
 
 #: src/pingus/screens/level_menu.cpp:156
 msgid "Untested, unpolished and broken levels"
-msgstr "Nivelet e patestuara, të palëmuara dhe të prishura"
+msgstr "Nivelet e patestuara, të palëmuara dhe të parregulluara"
 
 #: src/pingus/screens/level_menu.cpp:192
 msgid "Solved:"
@@ -766,7 +766,7 @@ msgstr "Nivelet"
 
 #: src/pingus/worldmap/level_dot.cpp:134
 msgid "???"
-msgstr ""
+msgstr "???"
 
 #: src/pingus/worldmap/worldmap_screen.cpp:84
 msgid "Show Ending?"
@@ -785,8 +785,8 @@ msgid ""
 "Pingus is a puzzle game where you need to guide a bunch of little penguins "
 "around the world."
 msgstr ""
-"Pingus është një lojë gjëagjëzë ku ju duhet të udhëzoni një grup "
-"pinguinësh të vegjël në një udhëtim rreth botës."
+"Pingus është një lojë gjëagjëzë ku ju duhet të udhëzoni një grup pinguinësh "
+"të vegjël në një udhëtim rreth botës."
 
 #: src/pingus/pingus_main.cpp:178
 msgid "General Options:"
@@ -822,7 +822,7 @@ msgstr "Fillo në Mënyrën me Dritare"
 
 #: src/pingus/pingus_main.cpp:194
 msgid "Start in Fullscreen"
-msgstr "Fillo në Mënyrën Gjithekran"
+msgstr "Fillo në Pamje të plotë"
 
 #: src/pingus/pingus_main.cpp:196
 msgid "Use the given renderer (default: sdl)"
@@ -835,12 +835,11 @@ msgstr "Vendos imtësinë e ekranit për pingus (zakonisht: 800x600)"
 #: src/pingus/pingus_main.cpp:200
 msgid "Set the resolution used in fullscreen mode (default: 800x600)"
 msgstr ""
-"Vendos imtësinë që përdoret në mënyrën gjithekran (e paracaktuar: "
-"800X600)"
+"Vendos imtësinë që përdoret në mënyrën gjithekran (e paracaktuar: 800X600)"
 
 #: src/pingus/pingus_main.cpp:202
 msgid "Enable software cursor"
-msgstr ""
+msgstr "Mundëso kursorin programor"
 
 #: src/pingus/pingus_main.cpp:204
 msgid "Game Options:"
@@ -880,7 +879,7 @@ msgstr "Ngarkon ndërtuesin e niveleve"
 
 #: src/pingus/pingus_main.cpp:226
 msgid "Directory Options:"
-msgstr ""
+msgstr "Mundësitë e Direktorisë"
 
 #: src/pingus/pingus_main.cpp:227 src/pingus/pingus_main.cpp:229
 #: src/pingus/pingus_main.cpp:231
@@ -905,11 +904,11 @@ msgstr "Mos e lexo ~/.pingus/config"
 
 #: src/pingus/pingus_main.cpp:235
 msgid "FILE"
-msgstr "SKEDARI"
+msgstr "FILE"
 
 #: src/pingus/pingus_main.cpp:236
 msgid "Read config options from FILE"
-msgstr ""
+msgstr "Lexo konfigurimin nga FILE"
 
 #: src/pingus/pingus_main.cpp:238
 msgid "Uses the controller given in FILE"
@@ -917,11 +916,11 @@ msgstr "Përdor kontrolluesin e dhënë në SKEDAR"
 
 #: src/pingus/pingus_main.cpp:240
 msgid "Debug Options:"
-msgstr ""
+msgstr "Mundësitë e Hetimit:"
 
 #: src/pingus/pingus_main.cpp:242
 msgid "Enables some special features for developers"
-msgstr ""
+msgstr "Mundëson disa veçori të posaçme për ndërtuesit."
 
 #: src/pingus/pingus_main.cpp:244
 msgid "Set the game speed (0=fastest, >0=slower)"
@@ -1008,10 +1007,9 @@ msgid ""
 "can reach the exit. This can be accomplished simply by clicking on a Pingu. "
 msgstr ""
 "Ky është misioni yt i parë. Si gjithmonë, është mjaft i thjeshtë. Ajo që "
-"duhet "
-"të bësh është ti japësh një Pingu komandën për të gërrmuar një gropë në tokë "
-"në mënyrë që të arrijnë daljen. Kjo mund të bëhet thjeshtë duke klikuar mbi "
-"një Pingu. "
+"duhet të bësh është ti japësh një Pingu komandën për të gërrmuar një gropë "
+"në tokë në mënyrë që të arrijnë daljen. Kjo mund të bëhet thjeshtë duke "
+"klikuar mbi një Pingu. "
 
 #: data/levels/tutorial/floater-tutorial-grumbel.pingus:5
 msgid "Float or Die"
@@ -1027,8 +1025,8 @@ msgstr ""
 "Punë e mirë në misionin e parë! Tani le të fillojmë tjetrin. Këtë herë ju "
 "duhet t'i pajisni Pingusat me një helikë të vogël, në mënyre që të mund të "
 "rrinë pezull dhe të bien në tokë butësisht. Nëse Pingusat bien nga një "
-"lartësi "
-"e madhe, nuk mund t'i mbijetojnë rënies, kështu që i bëni sytë katër! "
+"lartësi e madhe, nuk mund t'i mbijetojnë rënies, kështu që i bëni sytë "
+"katër! "
 
 #: data/levels/tutorial/jumper-tutorial-grumbel.pingus:5
 msgid "Jump for joy"
@@ -1040,10 +1038,10 @@ msgid ""
 "reachable by walking. That's when the Jumper comes in handy - it allows the "
 "Pingu to make a small jump and so enables him to reach the platform. "
 msgstr ""
-"Ndonjëherë një Pingusi i nevojitet të arrijë një platformë që është larg, por "
-"që nuk mund të arrihet duke ecur. Në këtë rast na hyn në punë  Kërcyesi, "
-"i cili i jep mundësi Pingut të bëjë një kërcim të vogël që të mund të "
-"arrijë platformën. "
+"Ndonjëherë një Pingusi i nevojitet të arrijë një platformë që është larg, "
+"por që nuk mund të arrihet duke ecur. Në këtë rast na hyn në punë  Kërcyesi, "
+"i cili i jep mundësi Pingut të bëjë një kërcim të vogël që të mund të arrijë "
+"platformën. "
 
 #: data/levels/tutorial/miner-tutorial2-grumbel.pingus:5
 msgid "Miner's heaven"
@@ -1061,7 +1059,7 @@ msgstr ""
 
 #: data/levels/tutorial/snow10-grumbel.pingus:5
 msgid "Panic Island (float/bash)"
-msgstr ""
+msgstr "Ishulli i Panikut (plusko/godit)"
 
 #: data/levels/tutorial/snow10-grumbel.pingus:6
 msgid ""
@@ -1069,8 +1067,8 @@ msgid ""
 "one gets a bit trickier. The Pingus are coming out of two entrances in "
 "parallel and it is your job to coordinate the two groups wisely. "
 msgstr ""
-"Nëse nivelet e mëparshme nuk kanë kërkuar dhe aq veprim të shpejtë, ky "
-"bëhet pak më i ndërlikuar. Pingusat vijnë nga dy dalje njëkohësisht dhe është "
+"Nëse nivelet e mëparshme nuk kanë kërkuar dhe aq veprim të shpejtë, ky bëhet "
+"pak më i ndërlikuar. Pingusat vijnë nga dy dalje njëkohësisht dhe është "
 "detyra juaj që ti bashkërendoni të dyja grupet me mençuri. "
 
 #: data/levels/tutorial/snow11-grumbel.pingus:5
@@ -1100,6 +1098,9 @@ msgid ""
 "level gives you enough time to think your actions through. No more tips this "
 "time, but good luck! "
 msgstr ""
+"Këtë herë duhet të bashkërendoni dy grupe. Mos u shqetësoni, sepse ky nivel "
+"ju jep kohë të mjaftueshme që ti mendoni mirë veprimet tuaja. Nuk ka "
+"udhëzime këtë herë, por suksese! "
 
 #: data/levels/tutorial/snow14-grumbel.pingus:5
 msgid "Block'a Rock"
@@ -1113,7 +1114,7 @@ msgid ""
 msgstr ""
 "Edhe një herë është koha për të ndërthurur gjërat që keni mësuar në nivelet "
 "e mëparshëm. Çlirojeni rrugën me shpërthime dhe bëni kujdes që ti mbani edhe "
-"Pingusat e tjerë në kontroll. Veprimi Bllokues do t'ju ndihmojë."
+"pinguinët e tjerë në kontroll. Veprimi Bllokues do t'ju ndihmojë."
 
 #: data/levels/tutorial/snow15-grumbel.pingus:5
 msgid "Climb, Climber,... Boom!"
@@ -1155,6 +1156,9 @@ msgid ""
 "reach the exit, so just send a few and let them prepare the path for the "
 "rest. "
 msgstr ""
+"Këtë herë mund të dilet vetëm duke punuar në grup. Nuk keni Flluskues të "
+"mjaftueshëm për të arritur daljen, kështu që dërgoni disa që të përgatisin "
+"rrugën për të tjerët. "
 
 #: data/levels/tutorial/snow19-grumbel.pingus:5
 msgid "Learn to use the bridge"
@@ -1201,7 +1205,7 @@ msgstr ""
 
 #: data/levels/tutorial/snow22-grumbel.pingus:5
 msgid "Entrance high, Exit low"
-msgstr ""
+msgstr "Hyrja lartë, Dalja poshtë"
 
 #: data/levels/tutorial/snow22-grumbel.pingus:6
 msgid ""
@@ -1210,8 +1214,7 @@ msgid ""
 "the stuff you need for this level in previous levels, so this shouldn't be "
 "too much of a problem for you. "
 msgstr ""
-"Nëse flluskuesat nuk mjaftojnë për t'i zbritur të gjithë Pingusat te dalja, "
-"duhet "
+"Nëse flluskuesat nuk dalin për ti zbritur të gjithë Pingusat te dalja, duhet "
 "të gjeni mënyra të tjera për ti çuar poshtë. Gjithë çka ju duhet për këtë "
 "nivel duhet ta keni mësuar tashmë në nivelet e mëparshme, kështu që nuk do "
 "ta keni shumë problem këtë. "
@@ -1228,12 +1231,11 @@ msgid ""
 msgstr ""
 "Ndonjëherë ka situata kur nuk ju ndodhet Bllokues për t'i orientuar "
 "Pingusat. Do t'ju duhet të gjeni mënyra të tjera për ti mbajtur ata në "
-"kontroll "
-"ndërkohë që njëri përgatit shtegun për të tjerët. "
+"kontroll ndërkohë që njëri përgatit shtegun për të tjerët. "
 
 #: data/levels/tutorial/snow8-grumbel.pingus:5
 msgid "Dig and float, just don't fall and smash"
-msgstr "Gërmo dhe fllusko, vetëm mos u rrëzo dhe mos u dërrmo"
+msgstr "Gërmo dhe fluturo, vetëm mos u rrëzo dhe mos u dërrmo"
 
 #: data/levels/tutorial/snow8-grumbel.pingus:6
 msgid ""
@@ -1294,6 +1296,10 @@ msgid ""
 "front of them it's your job to save them. Can you save them from a terrible "
 "fate?"
 msgstr ""
+"Pingusat paskan humbur rrugën. Ç'është ky vend i mistershëm? Kunguj "
+"buzëqeshës, qirimbajtëse gjigande dhe një supë që vlon aty poshtë... çfarë "
+"magjie është kjo? Tani, me një greminë vdekjeprurëse mu përballë tyre, është "
+"detyra juaj që t'i shpëtoni. A mund t'i shpëtoni nga një fat i tmerrshëm?"
 
 #: data/levels/halloween/halloween2-grumbel.pingus:5
 msgid "One Thousand and One Jumps"
@@ -1340,10 +1346,10 @@ msgid ""
 "but is there enough time? You have to hurry and can't allow yourself any "
 "mistakes. The Pingus are counting on you!"
 msgstr ""
-"Dalja është aq afër, por ende e pa arritur. Një hap në drejtim të gabuar dhe "
-"Pingus do të bien në një  vdekje të tmerrshme. Ju duhet të bëni diçka për "
-"t'i ndihmuar ata, por a ka kohë të mjaftueshme? Ju duhet të nxitoni dhe nuk "
-"mund ti lejoni vetes gabime. Pingus Llogarisin në ju!"
+"Dalja është kaq afër, e megjithatë e pa arritshme. Një hap në drejtim të "
+"gabuar dhe Pingusat do të bien në një  vdekje të tmerrshme. Duhet të bëni "
+"diçka për t'i ndihmuar ata, por a ka kohë të mjaftueshme? Duhet të nxitoni "
+"dhe nuk mund ti lejoni vetes gabime. Pingusat kanë besim te ju!"
 
 #: data/levels/halloween/halloween5-grumbel.pingus:5
 msgid "Bridgers Nightmare"
@@ -1361,6 +1367,15 @@ msgid ""
 "Pingus' success, so don't let yourself get confused and misguided from the "
 "true path."
 msgstr ""
+"Kush e ka vendosur këtë mur të stërmadh këtu? Ky bllokues i tmerrshëm i ndan "
+"Pingusat nga dalja. Shkatërrimi i tij duket gjë e pamundur, por a mund të na "
+"vijë në ndihmë ndërtuesi i urave? A mund t'i ndërtojnë urat në lartësinë e "
+"duhur për ta çuar edhe një herë grupin të sigurtë te dalja? Apo mos po ju "
+"punon kush ndonjë rreng të poshtër?\n"
+"\n"
+"E megjithatë zgjidhjen e vendosni ju... mendja juaj është çelësi për "
+"suksesin e Pingusave, kështu që mos e lejoni veten të hutohet dhe të "
+"largohet nga rruga e vërtetë."
 
 #: data/levels/halloween/halloween6-grumbel.pingus:5
 msgid "Locked up by the witch"
@@ -1406,7 +1421,7 @@ msgstr ""
 
 #: data/levels/halloween/halloween8-plouj.pingus:5
 msgid "Staircase Maintenance"
-msgstr "mirembajtja e shkalles"
+msgstr "Mirëmbajtja e Shkallës"
 
 #: data/levels/halloween/halloween8-plouj.pingus:6
 msgid ""
@@ -1420,10 +1435,19 @@ msgid ""
 "whatever evildoer that placed them in this nightmare... at least for this "
 "year."
 msgstr ""
+"Duket se përsëri ndodhemi përballë një muri të fuqishëm, që na pengon "
+"daljen! Por prit pak, disa zemërmirë kanë ndërtuar një shkallare rreth tij. "
+"Megjithatë, duket se përpjekjet e të shkretëve nuk kanë zgjatur shumë, sepse "
+"shkallarja është e shkatërruar dhe plot me boshllëqe. A mund ta riparoni dhe "
+"të kaloni murin? Por natyrisht që ju e dini se zgjidhja e duhur ndoshta nuk "
+"është ajo që duket qartë. E megjithatë, Pingusat tuaj janë pothuajse të lirë "
+"dhe kanë besim në aftësinë tuaj për ti udhëhequr edhe njëherë drejt "
+"sigurisë. Arrijeni këtë dhe do ti keni çliruar njëherë e përgjithmonë nga "
+"cilido keqbërës që i ka futur në këtë ankth... të paktën për këtë vit."
 
 #: data/levels/halloween2011/halloween10-grumbel.pingus:5
 msgid "Down Into The Cave"
-msgstr "Poshtë në shpellë"
+msgstr "Poshtë Në Shpellë"
 
 #: data/levels/halloween2011/halloween10-grumbel.pingus:6
 msgid ""
@@ -1432,10 +1456,14 @@ msgid ""
 "be the primary tool to get down there. But be careful, the last few steps "
 "require some extra cleverness."
 msgstr ""
+"Dalja eshte poshte fare dhe pingusat ndodhen goxha larg prej saj. Rruga "
+"poshte eshte shoshe me carje te vogla, keshtu qe kercimi dhe ndertimi i "
+"urave do te jene veglat kryesore per te zbritur atje. Por kini kujdes, ne "
+"hapat e fundit do tju duhet pak me teper mencuri."
 
 #: data/levels/halloween2011/halloween11-grumbel.pingus:5
 msgid "Round and Round"
-msgstr "rreth e rrotull"
+msgstr "Rreth e Rrotull"
 
 #: data/levels/halloween2011/halloween11-grumbel.pingus:6
 msgid ""
@@ -1470,7 +1498,7 @@ msgstr ""
 
 #: data/levels/halloween2011/halloween13-grumbel.pingus:5
 msgid "Group Coordination"
-msgstr "Koordinimi i grupit"
+msgstr "Bashkërendim Grupi"
 
 #: data/levels/halloween2011/halloween13-grumbel.pingus:6
 msgid ""
@@ -1478,6 +1506,10 @@ msgid ""
 "it, but locked into a box. None of them can make it alone, coordinate them "
 "wisely and everybody should be able to make it safely to the exit. "
 msgstr ""
+"Tre grupe janë rrugës për në dalje, njëri prej tyre i kapur sipër saj, i "
+"mbyllur në një kuti. Asnjë prej tyre nuk mund tia dalë i vetëm, "
+"bashkërendoji me zgjuarsi dhe të gjithë do të mund të shkojnë të sigurtë te "
+"dalja. "
 
 #: data/levels/halloween2011/halloween14-grumbel.pingus:5
 msgid "Traps, Dangers and other Problems"
@@ -1489,10 +1521,14 @@ msgid ""
 "is too high, deadly for sure. Can one pingu alone make it's way through the "
 "dangerous traps and secure the path to the exit?"
 msgstr ""
+"Rruga për te dalja shtrihet poshtë, duke u shfaqur përmes dërrasave. Por "
+"rënia është shumë e lartë, me siguri vdekjeprurëse. A mundet një pingu i "
+"vetëm të kalojë përmes kurtheve të rrezikshme dhe të sigurojë rrugën për te "
+"dalja?"
 
 #: data/levels/halloween2011/halloween15-grumbel.pingus:5
 msgid "Reach that Switch"
-msgstr "Mbërrije atë Ndërrues"
+msgstr "Mbërrije atë Çelës"
 
 #: data/levels/halloween2011/halloween15-grumbel.pingus:6
 msgid ""
@@ -1509,7 +1545,7 @@ msgstr ""
 
 #: data/levels/halloween2011/halloween16-grumbel.pingus:5
 msgid "The Collapsed Column"
-msgstr ""
+msgstr "Shtylla e Shembur"
 
 #: data/levels/halloween2011/halloween16-grumbel.pingus:6
 msgid ""
@@ -1534,10 +1570,15 @@ msgid ""
 "and some height has be crossed with the exit hidden below. With some "
 "cleverness it should be possible to join those two groups back together."
 msgstr ""
+"Pingusat lëshohen pranë e pranë, por ndahen nga një kolonë e fortë metalike "
+"dhe duket se nuk mund të bashkohen më përsëri.Udhëtimi do të jetë i "
+"rrezikshëm dhe duhet të kapërcehen disa lartësi, me daljen të fshehur "
+"poshtë. Me pak zgjuarsi duhet të jetë e mundur të bëhen bashkë të dyja "
+"grupet prapë."
 
 #: data/levels/halloween2011/halloween18-grumbel.pingus:5
 msgid "Tower of Death"
-msgstr "Kështjella e Vdekjes"
+msgstr "Kulla e Vdekjes"
 
 #: data/levels/halloween2011/halloween18-grumbel.pingus:6
 msgid ""
@@ -1565,6 +1606,10 @@ msgid ""
 "pingus have to work together to make it down the columns to the exit far "
 "below."
 msgstr ""
+"Kjo është faza e fundit që pingusat duhet të kalojnë gjatë kësaj Dite të "
+"Shënjtorëve (Halloween). Dy kolona çuditërisht të njohura janë në mes të "
+"rrugës. Çfarë kuptimi kanë? Dy grupet e pingusve duhet të punojnë "
+"bashkarisht që të kalojnë kolonat dhe të shkojnë poshtë në dalje."
 
 #: data/levels/desert/desert1-janne.pingus:5
 msgid "Down the valley and up again"
@@ -1602,14 +1647,13 @@ msgid ""
 "large window. The only problem they have is that the entrance to the room is "
 "much too high to survive the landing. Can you help them?"
 msgstr ""
-"Pasi Pinguinët të kenë hyrë në piramidë, ata arrijnë tek një dhomë me "
-"dritare të gjera. Problemi i vetëm që ata kanë është se hyrja për tek dhoma "
-"është pak më shumë e lartë për t'i mbijetuar aterimit/vendosjes. A mund t'i "
-"ndihmoni ju ata?"
+"Pasi Pingusat kanë hyrë në piramidë, ata arrijnë tek një dhomë e madhe me "
+"dritare të gjera. Problemi i vetëm që kanë është se hyrja për tek dhoma "
+"është pak si shumë e lartë për t'u hedhur pa u vrarë. A mund t'i ndihmoni?"
 
 #: data/levels/desert/desert3-jings.pingus:5
 msgid "Grand Hall"
-msgstr ""
+msgstr "Salla e Madhe"
 
 #: data/levels/desert/desert3-jings.pingus:6
 msgid ""
@@ -1645,6 +1689,9 @@ msgid ""
 "Some excavations, however, is best done with two competitors. Who comes "
 "first?"
 msgstr ""
+"Gërmimet kanë filluar për të arritur piramidën për përmbajtjen e saj "
+"shpërblyese. Disa gërmime, megjithatë, bëhen më mirë me dy konkurentë. Kush "
+"do të dalë i pari?"
 
 #: data/levels/desert/desert5.pingus:5
 msgid "Catch them at the half way point"
@@ -1669,8 +1716,8 @@ msgid ""
 "Hidden deep below the pyramid the pingus come across a small underground "
 "room, but unfortunatley a large tree root blocks their path..."
 msgstr ""
-"Të fshehur thellë nën piramidë pinguinët vijnë përmes një tuneli "
-"nëntokësores, por fatkeqësisht një rrënje e madhe peme ka bllokuar shtegun e "
+"Të fshehur thellë nën piramidë pinguinët hasin një dhomë të vogël "
+"nëntokësore, por fatkeqësisht një rrënje e madhe peme ka bllokuar shtegun e "
 "tyre..."
 
 #: data/levels/desert/desert6-grumbel.pingus:5
@@ -1679,7 +1726,7 @@ msgstr "Sa majtas djathtas"
 
 #: data/levels/desert/desert6-grumbel.pingus:6
 msgid "Only the most audacious Pingus will be allowed to continue."
-msgstr ""
+msgstr "Vetëm më guximtarët do lejohen të kalojnë."
 
 #: data/levels/desert/desert7-grumbel.pingus:5
 msgid "25 Pingus free and 25 in the box"
@@ -1731,6 +1778,9 @@ msgid ""
 "demolished! But be careful if you aren't precise enough, you might lead the "
 "Pingus straight to certain death."
 msgstr ""
+"Ndonjëherë çatitë nuk janë të mira për strehim, ndonjëherë duhen shembur! "
+"Por bëni kujdes, nëse nuk jeni të saktë sa duhet, mund t'i çoni Pingusat "
+"drejt e në vdekje të sigurtë."
 
 #: data/levels/desert/indiana-yingwan.pingus:5
 msgid "Pingus Jones and the Last Exit"
@@ -1771,24 +1821,24 @@ msgid ""
 "The penguins escaped the mad scientist, but now they were trapped deep "
 "underground. They had no food or water, so they had to move fast."
 msgstr ""
-"Pinguinët ikën nga shkencëtari i çmendur, por ata tani janë bllokuar thellë "
-"nëntoke.Ata nuk kanë ushqim ose ujë, kështu qe ata duhet të lëvizin shpejt."
+"Pinguinët shpëtuan nga shkencëtari i çmendur, por tani janë bllokuar thellë "
+"nëntoke. Nuk kanë ushqime apo ujë, kështu që duhet të lëvizin shpejt."
 
 #: data/levels/mysteryisland/emperiment-lac.pingus:5
 msgid "Experimentation"
-msgstr ""
+msgstr "Eksperimentim"
 
 #: data/levels/mysteryisland/emperiment-lac.pingus:6
 msgid ""
 "A mad scientist has captured the penguins and is experimenting on them. How "
 "can the penguins escape the guillotine?"
 msgstr ""
-"Një shkencëtar i luajtur ka kapur pinguinët dhe po bën eksperimente me ta. "
-"Si mund të shpëtojnë pinguinët nga tranxha?"
+"Një shkencëtar i shkarë ka kapur pinguinët dhe po bën eksperimente me ta. Si "
+"mund të shpëtojnë pinguinët nga tortura?"
 
 #: data/levels/mysteryisland/hall-of-illusion-lac.pingus:5
 msgid "Hall of Illusion"
-msgstr "Salla e Iluzionit"
+msgstr "Salla e Vegimeve"
 
 #: data/levels/mysteryisland/hall-of-illusion-lac.pingus:6
 msgid ""
@@ -1819,7 +1869,7 @@ msgstr ""
 
 #: data/levels/mysteryisland/madscientist1-lac.pingus:7
 msgid "At least the experiments are over..."
-msgstr "Më në fund eksperimentet janë mbaruar"
+msgstr "Të paktën eksperimentet mbaruan..."
 
 #: data/levels/mysteryisland/madscientist1-lac.pingus:8
 msgid ""
@@ -1827,6 +1877,10 @@ msgid ""
 "bad news was that now he was dumping them down a pit. A single floatation "
 "device was all the penguins had. Save as many as possible."
 msgstr ""
+"Lajmi i mirë ishte që shkencëtari i marrë ishte lodhur me eksperimentet e "
+"tij. Lajmi i keq ishte që tani po i hidhte në një gropë. Një pajisje "
+"lundrimi e vetme ishte gjthëçka që pinguinët kishin. Shpëto sa më shumë që "
+"të jetë e mundur."
 
 #: data/levels/mysteryisland/multi1-lac.pingus:7
 msgid "Ghosting"
@@ -1838,9 +1892,9 @@ msgid ""
 "climber or two were needed.  Hint: slider can be used to stop the miner "
 "ability."
 msgstr ""
-"Pinguinët erdhën tek një kalim i gjatë.Acid gurgullues poshtë dhe duket se "
-"nevojitën një ose dy ngjitës. Ndihmë: rrëshqitësi mund të përdoret për të "
-"ndalur aftësinë e minatorëve."
+"Pinguinët erdhën tek një kalim i gjatë. Acid gurgullues poshtë dhe duket se "
+"nevojiten njady ngjitës. Ndihmë: rrëshqitësi mund të përdoret për të ndalur "
+"aftësinë e minatorëve."
 
 #: data/levels/mysteryisland/rainy1-lac.pingus:7
 msgid "The Final (and suprisingly easy) Challenge"
@@ -1851,8 +1905,9 @@ msgid ""
 "The penguins had reached the end of the island. In the water was a long "
 "tree, perfect for the penguin's needs. Their journey was almost over."
 msgstr ""
-"Pinguinët kanë arritur tek fundi i ishullit. Në ujë ishte një pemë e gjatë, "
-"e përkryer për nevojat e pinguinëve. Udhëtimi i tyre pothuajse ka përfunduar"
+"Pinguinët kishin arritur tek fundi i ishullit. Në ujë ishte një pemë e "
+"gjatë, e përkryer për nevojat e pinguinëve. Udhëtimi i tyre pothuajse kishte "
+"përfunduar."
 
 #: data/levels/mysteryisland/revenge1-lac.pingus:7
 #: data/levels/mysteryisland/revenge2-lac.pingus:7
@@ -1892,6 +1947,9 @@ msgid ""
 "reached a snowed in exit. That would be relatively easy to tunnel through "
 "but how would it be possible to tunnel through solid metal?"
 msgstr ""
+"Pasi kaluan gropën me llavë, pinguinët ecën e ecën deri sa arritën një dalje "
+"të mbuluar nga bora. Do kishte qenë e lehtë të hapej një tunel por si mund "
+"të hapësh një tunel përmes metalit të fortë?"
 
 #: data/levels/mysteryisland/theend-lac.pingus:7
 msgid "The Journey Goes On"
@@ -1921,10 +1979,12 @@ msgid ""
 "This would be simple but for one thing, there are no blockers. All the "
 "penguins must survive."
 msgstr ""
+"Ky nivel do të ishte i thjeshtë veçse për një gjë: nuk ka ndaluesa. Të "
+"gjithë pinguinët duhet të shpëtojnë."
 
 #: data/levels/mysteryisland/volcano1-grumbel.pingus:5
 msgid "Shipwrecked"
-msgstr "Përmbytje e anijes"
+msgstr "Anijembytur"
 
 #: data/levels/mysteryisland/volcano1-grumbel.pingus:6
 msgid ""
@@ -1967,7 +2027,7 @@ msgstr "Strofulla e alienëve"
 #: data/levels/alien/aliens4-phil.pingus:6
 msgid "Pingus invade the nest. Take care of jaws. What's the matrix above?"
 msgstr ""
-"Pingus pushtojnë folenë. Kujdesuni për grykë. Çfarë është matrica lartë"
+"Pingusat pushtojnë folenë. Kini kujdes nofullat. Ç'është matrica sipër?"
 
 #: data/levels/alien/aliens5-phil.pingus:5
 msgid "Matrix of the death"
@@ -1983,7 +2043,7 @@ msgstr ""
 
 #: data/levels/alien/aliens6-phil.pingus:7
 msgid "Spy's pingus in the matrix of the death"
-msgstr ""
+msgstr "Pingusi i spiunit në matricën e vdekjes."
 
 #: data/levels/alien/aliens6-phil.pingus:8
 msgid ""
@@ -1991,20 +2051,20 @@ msgid ""
 "Many died to gain that information :..( Perhaps this help. Perhaps..."
 msgstr ""
 "Pinguinë zbulues kanë shënuar vendodhjen e nofullave në matricën e vdekjes. "
-"Shumë prej tyre kanë vdekur për të mbledhur këto informata :( ... Ndoshta "
-"kjo ju ndihmon. Ndoshta..."
+"Shumë prej tyre kanë vdekur për të mbledhur këto informata :..( Ndoshta kjo "
+"ju ndihmon. Ndoshta..."
 
 #: data/levels/alien/aliens7-phil.pingus:7
 msgid "Fourth dimension"
-msgstr "Dimensioni i katërt"
+msgstr "Përmasa e katërt"
 
 #: data/levels/alien/aliens7-phil.pingus:8
 msgid ""
 "The defenses of the aliens get stronger. Now you have to jump in the fourth "
 "dimension to win!"
 msgstr ""
-"Mbrojtja e alieneve eshte bëre më e fortë. Tani ju duhet të kërceni në "
-"dimensionin e katër qe të fitoni!"
+"Mbrojtja e të huajve është bërë më e fortë. Tani ju duhet të kërceni në "
+"dimensionin e katërt që të fitoni!"
 
 #: data/levels/alien/space-11-rz+eriksoe.pingus:5
 msgid "Set your watches"
@@ -2012,7 +2072,7 @@ msgstr "Vendosni orët"
 
 #: data/levels/alien/space-11-rz+eriksoe.pingus:6
 msgid "Cooperation in space."
-msgstr "bashkepunim ne hapesire"
+msgstr "Bashkëpunim në hapësirë."
 
 #: data/levels/alien/space2.pingus:5
 msgid "Lost in Space"
@@ -2032,16 +2092,15 @@ msgstr "A mund ti ndihmoni pinguinët të shpëtojnë, pa i lagur këmbët?"
 
 #: data/levels/alien/space-loop-timpany.pingus:5
 msgid "Endless Loop"
-msgstr "Lak pambarim"
+msgstr "Rrotullim Pambarim"
 
 #: data/levels/alien/space-loop-timpany.pingus:6
 msgid ""
 "To the right and to the left the Pingus will face certain death and you have "
 "to save 50. Can you help them get out of this mess?"
 msgstr ""
-"Në të djathtë dhe në të majtë bPingus do të përballet me vdekje të "
-"pashmangshme dhe ju duhet të kurseni 50. A mundeni ju që t''i ndihmoni ata "
-"që të dalin nga kjo rrëmujë?"
+"Në të djathtë dhe në të majtë Pingusat do të përballen me vdekje të sigurtë "
+"dhe ju duhet të shpëtoni 50. A mund t'i ndihmoni të dalin nga ky telash?"
 
 #: data/levels/alien/space-tom1.pingus:7
 msgid "Up up in the space"
@@ -2078,12 +2137,13 @@ msgstr ""
 
 #: data/levels/factorycampaign/factory_campaign12.pingus:5
 msgid "Going back home"
-msgstr ""
+msgstr "Kthimi në shtëpi"
 
 #: data/levels/factorycampaign/factory_campaign12.pingus:6
 msgid "Your mission is over. Pingus can go back home, but be careful!"
 msgstr ""
-"Misioni juaj ka përfunduar. Pingus mund të kthehen në shtëpi, por kujdes!"
+"Misioni juaj ka përfunduar. Pingusat mund të kthehen në shtëpi, por bëni "
+"kujdes!"
 
 #: data/levels/factorycampaign/factory_campaign13.pingus:5
 msgid "Bonus track"
@@ -2094,10 +2154,12 @@ msgid ""
 "Pingus are at home, but after the climate change living on the South Pole "
 "became more dangerous. There is one more mission for you."
 msgstr ""
+"Pingusat janë në shtëpi, por pas ndryshimit të klimës jetesa në Polin e "
+"Jugut u bë më me rrezik. Keni edhe një detyrë tjetër."
 
 #: data/levels/factorycampaign/factory_campaign1.pingus:5
 msgid "Falling down"
-msgstr "Bije poshtë"
+msgstr "Duke rënë"
 
 #: data/levels/factorycampaign/factory_campaign1.pingus:6
 msgid ""
@@ -2108,12 +2170,12 @@ msgid ""
 "is melting, at first you have to build some bridges and watch out for the "
 "cliff."
 msgstr ""
-"Inteligjenca pinguistike raportoi se arsyeja per ndryshimet klimatike mund "
-"te ishte nje fabrike shume e madhe qe ndodhej ne zonen nen-tropikale. Ata "
-"vendosen te shkonin atje dhe t'i mbyllnin fabrikat. Kjo do te jete nje "
-"ekspedite e gjate dhe e rrezikshme. Ti dhe pingusat do te kaloni shume "
-"veshtiresi gjate rruges. Nderkohe qe akulli shkrin, ne fillim do ju duhet te "
-"ndertoni disa ura dhe gjithashtu te shihni se mos del ndonje shkemb."
+"Inteligjenca pinguistike raportoi se arsyeja për ndryshimet klimatike mund "
+"të ishte një fabrikë shumë e madhe që ndodhej në zonën nën-tropikale. Ata "
+"vendosen të shkonin atje dhe t'i mbyllnin fabrikat. Kjo do të jetë një "
+"ekspeditë e gjatë dhe e rrezikshme. Ti dhe pingusat do të kaloni shumë "
+"vështirësi gjatë rrugës. Ndërkohë që akulli shkrin, në fillim do ju duhet të "
+"ndërtoni disa ura dhe gjithashtu të shihni se mos del ndonjë shkëmb."
 
 #: data/levels/factorycampaign/factory_campaign2.pingus:5
 msgid "Destination North"
@@ -2129,7 +2191,7 @@ msgstr ""
 
 #: data/levels/factorycampaign/factory_campaign3.pingus:5
 msgid "The Cave"
-msgstr ""
+msgstr "Shpella"
 
 #: data/levels/factorycampaign/factory_campaign3.pingus:6
 msgid ""
@@ -2143,7 +2205,7 @@ msgstr ""
 
 #: data/levels/factorycampaign/factory_campaign4.pingus:5
 msgid "Difficulties on the way"
-msgstr ""
+msgstr "Vështirësi në rrugë"
 
 #: data/levels/factorycampaign/factory_campaign4.pingus:6
 msgid ""
@@ -2157,7 +2219,7 @@ msgstr ""
 
 #: data/levels/factorycampaign/factory_campaign5.pingus:5
 msgid "Four ways out"
-msgstr ""
+msgstr "Katër mënyra për të dalë"
 
 #: data/levels/factorycampaign/factory_campaign5.pingus:6
 msgid ""
@@ -2170,10 +2232,11 @@ msgstr ""
 
 #: data/levels/factorycampaign/factory_campaign6.pingus:5
 msgid "Egypt - So easy"
-msgstr "Egjipti - Sa e lehtë"
+msgstr "Egjipti - Sa lehtë"
 
 #: data/levels/factorycampaign/factory_campaign6.pingus:6
-msgid "Pingus reached Egypt. Looks easy, but is it really so easy? Try it out."
+msgid ""
+"Pingus reached Egypt. Looks easy, but is it really so easy? Try it out."
 msgstr ""
 "Pinguinët arritën Egjiptin. Duket e lehtë, por a është vërtetë kaq e lehtë? "
 "Provoje."
@@ -2187,8 +2250,8 @@ msgid ""
 "Last time it was easy. Now it will be a little bit harder. Pingus are "
 "entering oasis. Watch out for the water."
 msgstr ""
-"Herën e fundit ishte lehtë. Tani do të jetë pak më e vështirë. Pingusat janë "
-"duke hyrë në oazë. Keni kujdes nga uji."
+"Herën e fundit ishte lehtë. Tani do të jetë pak më vështirë. Pingusat po "
+"hyjnë në vendburim. Kujdes nga uji."
 
 #: data/levels/factorycampaign/factory_campaign8.pingus:5
 msgid "Egypt - The Maze"
@@ -2231,16 +2294,16 @@ msgstr ""
 
 #: data/levels/xmas2011/xmas02-grumbel.pingus:5
 msgid "Up, Up and Away"
-msgstr "Lart, Lart dhe Menjëherë"
+msgstr "Lart, Lart dhe Larg"
 
 #: data/levels/xmas2011/xmas02-grumbel.pingus:6
 msgid ""
 "The exit is in a weird spot here, straight above. A bridge won't get you "
 "there, but your toolset allows an alternative way. Can you figure it out?"
 msgstr ""
-"Dalja këtu është në një pikë të çuditshme, drejt e sipër. Me urë nuk arrini "
-"dot atje, por mjetet e punës ju lejojnë një mënyrë tjetër. E gjeni dot se "
-"cila është?"
+"Dalja këtu është në një pikë të çuditshme, drejt e sipër. Me urë nuk e "
+"arrini dot, por mjetet e punës ju lejojnë një mënyrë tjetër. E gjeni dot se "
+"si?"
 
 #: data/levels/xmas2011/xmas03-grumbel.pingus:5
 msgid "If only penguins could fly"
@@ -2290,17 +2353,19 @@ msgstr ""
 
 #: data/levels/xmas2011/xmas06-grumbel.pingus:5
 msgid "The Big Jump"
-msgstr "Kërcimi i madh"
+msgstr "Kërcimi i Madh"
 
 #: data/levels/xmas2011/xmas06-grumbel.pingus:6
 msgid ""
 "Going in and out of the abyss with all Pingus isn't an option here, but a "
 "small group preparing the path for the others should get you across."
 msgstr ""
+"Të hysh në greminë dhe të dalësh prej saj me të gjithë Pingusat nuk është "
+"punë që bëhet, por një grup i vogël mund të përgatisë rrugën për të tjerët."
 
 #: data/levels/xmas2011/xmas07-grumbel.pingus:5
 msgid "No Way to Stop"
-msgstr "Nuk bën të Ndalosh"
+msgstr "S'ka Mënyrë për të Ndaluar"
 
 #: data/levels/xmas2011/xmas07-grumbel.pingus:6
 msgid ""
@@ -2308,9 +2373,9 @@ msgid ""
 "straight, but you don't have the time to prepare it. Can you find a way to "
 "leap ahead?"
 msgstr ""
-"këtu nuk keni mjaftë kohë për të humbur. Shtegu deri të dalja është i qartë "
-"dhe i drejt, por ju nuk keni kohë për të përgatitur atë. A mund ta gjeni "
-"mënyrën për të kaluar përpara?"
+"Këtu nuk keni mjaft kohë për të humbur. Shtegu për në dalje është i qartë "
+"dhe i drejtë, por ju nuk keni kohë për ta përgatitur. A mund të gjeni ndonjë "
+"mënyrën për tu hedhur përpara?"
 
 #: data/levels/xmas2011/xmas08-grumbel.pingus:5
 msgid "Ice Block Blockage"
@@ -2336,10 +2401,13 @@ msgid ""
 "seems impossible, but wise coordination of the two groups and a brave leap "
 "should let you make it to the exit."
 msgstr ""
+"Dy grupe Pingusash të ndara nga një greminë e thellë. Bashkimi i tyre me anë "
+"të një ure duket i pamundur. Por me një bashkërendim të zgjuar të të dy "
+"grupeve dhe me një kërcim i guximshëm  ju mund ta arrini daljen."
 
 #: data/levels/xmas2011/xmas10-grumbel.pingus:5
 msgid "Spiraling Away"
-msgstr ""
+msgstr "Largim Rrotullues"
 
 #: data/levels/xmas2011/xmas10-grumbel.pingus:6
 msgid ""
@@ -2347,9 +2415,9 @@ msgid ""
 "way through. But the Pingus have a versatile toolset at hand, can you use it "
 "to find a way around and make it to the exit?"
 msgstr ""
-"Dalja është drejt përpara, por shtegu është i bllokuar me hekur te ngurtë pa "
-"mundësi depërtimi. Por Pingus kanë kompletin me vegla te llojllojshme në "
-"duar, a mund ti përdorni ato për te gjetur një rrugë për ti dërguar tek "
+"Dalja është drejt e poshtë, por shtegu është i bllokuar me çelik të fortë pa "
+"mundësi depërtimi. Por Pingusat kanë një komplet me vegla të larmishme në "
+"duar, a mund ti përdorni ato për të gjetur një rrugë dhe për ti dërguar tek "
 "dalja?"
 
 #: data/worldmaps/tutorial.worldmap:4
@@ -2362,15 +2430,15 @@ msgstr "Mëso gjërat themelore"
 
 #: data/worldmaps/tutorial.worldmap:124
 msgid "Watch Ending"
-msgstr "Shikoje Përfundimin"
+msgstr "Shiko Përfundimin"
 
 #: data/worldmaps/tutorial.worldmap:131
 msgid "Watch Intro"
-msgstr "Shiko Prezantimin"
+msgstr "Shiko Hyrjen"
 
 #: data/stories/tutorial_intro.story:2
 msgid "The Journey Begins"
-msgstr "Udhëtimi Filloj"
+msgstr "Udhëtimi Fillon"
 
 #: data/stories/tutorial_intro.story:9
 msgid ""
@@ -2379,6 +2447,10 @@ msgid ""
 "like nothing could disrupt their peace.  The Pingus were happy and it seemed "
 "like this could never end."
 msgstr ""
+"Për një kohë të gjatë, Pingusat kishin jetuar lumturisht në paqe në Polin e "
+"Jugut bashkë me gjthë kafshët e tjera. Çdo gjë ishte në drejtpeshim dhe "
+"dukej se asgjë nuk mund ta prishte paqen e tyre. Pingusat ishin të lumtur "
+"dhe dukej se kjo do të vazhdonte përgjithmonë."
 
 #: data/stories/tutorial_intro.story:17
 msgid ""
@@ -2411,6 +2483,9 @@ msgid ""
 "this warming. The expedition consisted of hundreds of the bravest Pingus on "
 "the South Pole."
 msgstr ""
+"E kështu pleqësia u mblodh të vendoste se çfarë duhej bërë. Ata vendosën të "
+"dërgojnë në botë një grup zbuluesish për të gjetur shkaqet e kësaj ngrohje. "
+"Grupi përbëj nga qindra pingus guximtarë nga Poli i Jugut."
 
 #: data/stories/tutorial_intro.story:41
 msgid ""
@@ -2420,6 +2495,11 @@ msgid ""
 "island has always been the first stop of Pingus that were sent out into the "
 "world."
 msgstr ""
+"Dhe ata zgjodhën ju që ti udhëhiqni në udhëtimin rreth botës. Meqë udhëtimi "
+"do të jetë i rrezikshëm dhe i vështirë, synimi juaj i parë është Ishulli "
+"Mogorok, i njohur gjithashtu edhe si Ishulli Praktikues. Sipas pleqve, ky "
+"ishull ka qenë gjithmonë ndalesa e parë e Pingusve që dërgoheshin jashtë "
+"nëpër botë."
 
 #: data/stories/tutorial_intro.story:50
 msgid ""
@@ -2439,10 +2519,10 @@ msgid ""
 "and learn to master them, since you will need all of them on your journey "
 "around the world."
 msgstr ""
-"Përderisa jeni këtu, mund të praktikoni aftësitë tua në komandimin dhe "
-"udhëheqjen  e Pingus. Ju gjithashtu mund të familjarizoheni me të gjitha "
-"aftësitë që Pingus i ofron dhe të mësoni ti zotëroni ato, pasi qe të gjitha "
-"ato do të ju duhen në udhëtimin tuaj përreth botës."
+"Aty ju mund të praktikoni aftësitë tuaja në komandimin dhe udhëheqjen e "
+"Pingusave. Ju gjithashtu mund të njiheni me të gjitha aftësitë që Pingus "
+"ofron dhe të mësoni ti zotëroni ato, pasi të gjitha do t'ju duhen në "
+"udhëtimin përreth botës."
 
 #: data/stories/tutorial_intro.story:65
 msgid ""
@@ -2451,6 +2531,10 @@ msgid ""
 "\n"
 "Good Luck!"
 msgstr ""
+"Tani që ju dhe Pingusat keni arritur te Ishulli i Praktikës është koha që të "
+"merrni drejtimin dhe të filloni detyrën.\n"
+"\n"
+"Suksese!"
 
 #: data/stories/tutorial_outro.story:2
 msgid "The Journey Continues"
@@ -2464,12 +2548,12 @@ msgid ""
 "the whole way into the warmer climates the Pingus have to find something "
 "else to guide them on their journey."
 msgstr ""
-"Tani qe ti dhe pingusat keni mesuar gjerat themelore dhe jeni praktikuar "
-"pak, eshte koha qe te vazhdoni perpara dhe te filloni udhetimin tuaj neper "
-"bote. Meqenese udha e akullt nepermjet se ciles pingusat udhetuan deri tek "
-"ishulli prove nuk do te qendroje e akullt gjate gjithe udhetimit per ne "
-"klimat me te ngrohta, pingusat duhet te gjejne dicka tjeter qe t'i udheheqe "
-"gjate udhetimit te tyre."
+"Tani që ti dhe pingusat keni mësuar gjërat themelore dhe jeni praktikuar "
+"pak, është koha që të vazhdoni përpara dhe të filloni udhëtimin tuaj nëpër "
+"botë. Meqenëse udha e akullt nëpërmjet së cilës pingusat udhëtuan deri tek "
+"ishulli prove nuk do të qëndrojë e akullt gjatë gjithë udhëtimit për në "
+"klimat më të ngrohta, pingusat duhet të gjejnë diçka tjetër që t'i udhëheqë "
+"gjatë udhëtimit të tyre."
 
 #: data/stories/tutorial_outro.story:18
 msgid ""
@@ -2519,11 +2603,11 @@ msgstr "Shpëto nga alieni"
 
 #: data/levelsets/crystal.levelset:3
 msgid "Crystal"
-msgstr ""
+msgstr "Kristal"
 
 #: data/levelsets/crystal.levelset:4
 msgid "Crystaline sparkling full of danger"
-msgstr ""
+msgstr "Shkëlqim kristalor plot rrezik"
 
 #: data/levelsets/desert.levelset:3
 msgid "Desert"
@@ -2531,11 +2615,11 @@ msgstr "Shkretëtirë"
 
 #: data/levelsets/desert.levelset:4
 msgid "Getting hot outside..."
-msgstr ""
+msgstr "Jashtë po bëhet vapë..."
 
 #: data/levelsets/eyeland.levelset:2
 msgid "Eye Land"
-msgstr ""
+msgstr "Vendi Sy"
 
 #: data/levelsets/factory.levelset:3
 msgid "Factory Campaign"
@@ -2547,7 +2631,7 @@ msgstr "Ekspedita Pingus"
 
 #: data/levelsets/halloween2011.levelset:2
 msgid "Halloween 2011"
-msgstr ""
+msgstr "Festat 2011"
 
 #: data/levelsets/halloween2011.levelset:3
 msgid "Going Underground"
@@ -2579,7 +2663,7 @@ msgstr "Ishulli i Fshehtësive"
 
 #: data/levelsets/mysteryisland.levelset:4
 msgid "Marooned on an Uncharted Isle [by Lachlan McCubbin]"
-msgstr ""
+msgstr "Braktisur në një Ujdhesë të Panjohur [by Lachlan McCubbin]"
 
 #: data/levelsets/pacman.levelset:3
 msgid "Pac-Man"
@@ -2595,7 +2679,7 @@ msgstr "Krishtlindjet 2011"
 
 #: data/levelsets/xmas2011.levelset:4
 msgid "Merry Christmas and a Happy New Year"
-msgstr "Me Fat Krishtlindjet dhe Gëzuar Vitin e Ri"
+msgstr "Gëzuar Krishtlindjet dhe Vitin e Ri"
 
 #~ msgid "Abort"
 #~ msgstr "Anullo"

@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Pingus 0.7.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-13 03:15+0100\n"
-"PO-Revision-Date: 2013-03-23 11:46+0000\n"
-"Last-Translator: Martin Bodin <Unknown>\n"
+"PO-Revision-Date: 2013-07-14 04:30+0000\n"
+"Last-Translator: Hélion du Mas des Bourboux <helion331990@gmail.com>\n"
 "Language-Team: Launchpad French Translators <lp-l10n-fr@lists.launchpad.net> "
 "Language:\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-30 12:56+0000\n"
-"X-Generator: Launchpad (build 16580)\n"
+"X-Launchpad-Export-Date: 2013-07-25 15:52+0000\n"
+"X-Generator: Launchpad (build 16700)\n"
 "Language: \n"
 
 #: src/editor/object_properties.cpp:87 src/editor/object_properties.cpp:515
@@ -271,35 +271,35 @@ msgstr "Enregistrer votre niveau"
 
 #: src/editor/level_properties.cpp:52
 msgid "Author:"
-msgstr "Auteur :"
+msgstr "Auteur :"
 
 #: src/editor/level_properties.cpp:55
 msgid "Levelname:"
-msgstr "Nom du niveau :"
+msgstr "Nom du niveau :"
 
 #: src/editor/level_properties.cpp:58
 msgid "Description:"
-msgstr "Description :"
+msgstr "Description :"
 
 #: src/editor/level_properties.cpp:62
 msgid "Pingus Count:"
-msgstr "Nombre de pingouins :"
+msgstr "Nombre de pingouins :"
 
 #: src/editor/level_properties.cpp:65
 msgid "Pingus to Save:"
-msgstr "Pingouins à sauver :"
+msgstr "Pingouins à sauver :"
 
 #: src/editor/level_properties.cpp:68
 msgid "Time:"
-msgstr "Temps :"
+msgstr "Temps :"
 
 #: src/editor/level_properties.cpp:71
 msgid "Width:"
-msgstr "Largeur :"
+msgstr "Largeur :"
 
 #: src/editor/level_properties.cpp:77
 msgid "Music:"
-msgstr "Musique :"
+msgstr "Musique :"
 
 #: src/editor/editor_screen.cpp:230
 msgid "== Editor Help =="
@@ -368,12 +368,12 @@ msgid ""
 "have to change that reference.\n"
 msgstr ""
 "Vous devriez nommer les fichiers de vos niveaux de façon systématique, par "
-"exemple en fonction de leur nom, leur numéro et de votre pseudo :\n"
+"exemple en fonction de leur nom, leur numéro et de votre pseudo :\n"
 "\n"
 "     <nomduniveau><numéro>-<créateur>.pingus\n"
 "\n"
-"Ainsi, si vous créez un second niveau sur le thème de la pierre, appelez le "
-": pierre2-votrenom.pingus\n"
+"Ainsi, si vous créez un second niveau sur le thème de la pierre, appelez "
+"le : pierre2-votrenom.pingus\n"
 "\n"
 "Si vous souhaitez que vos créations soient inclues dans le jeu,  envoyez les "
 "par mail à :\n"
@@ -688,7 +688,7 @@ msgstr "Échec !"
 
 #: src/pingus/screens/result_screen.cpp:200
 msgid "Perfect! You saved everyone possible - great!"
-msgstr "Parfait ! Vous avez sauvé tout le monde, super!"
+msgstr "Parfait ! Vous avez sauvé tout le monde, super !"
 
 #: src/pingus/screens/result_screen.cpp:202
 msgid "No-one got killed, pretty good work."
@@ -936,19 +936,20 @@ msgstr "Modifier la fréquence d'affichage du jeu (images par seconde)"
 
 #: src/pingus/pingus_main.cpp:248
 msgid "Set the size of the map tiles (default: 32)"
-msgstr "Détermine la taille des section (tiles) de la carte (par défaut: 32)"
+msgstr ""
+"Détermine la taille des section (tiles) de la carte (par défaut : 32)"
 
 #: src/pingus/pingus_main.cpp:688
 msgid "Pingus: Out of memory!"
-msgstr "Pingus: mémoire insuffisante"
+msgstr "Pingus : mémoire insuffisante !"
 
 #: src/pingus/pingus_main.cpp:692
 msgid "Pingus: Standard exception caught!:\n"
-msgstr "Pingus: Exception standard interceptée!:\n"
+msgstr "Pingus : Exception standard interceptée ! :\n"
 
 #: src/pingus/pingus_main.cpp:696
 msgid "Pingus: Unknown throw caught!"
-msgstr "Pingus: Sortie (throw) inconnue interceptée!"
+msgstr "Pingus : Sortie (throw) inconnue interceptée !"
 
 #: src/pingus/game_time.cpp:29
 msgid "unlimited"
@@ -2220,8 +2221,8 @@ msgid ""
 msgstr ""
 "Sur leur chemin, les Pingus découvrirent une immense grotte. Vous devez les "
 "aider à la traverser. Souvenez-vous qu'il y a parfois plus d'une solution. "
-"Conseil : Pour « débloquer » les bloqueurs, vous pouvez utiliser les "
-"défonçeurs ou les sauteurs."
+"Conseil : Pour « débloquer » les bloqueurs, vous pouvez utiliser les "
+"défonceurs ou les sauteurs."
 
 #: data/levels/factorycampaign/factory_campaign4.pingus:5
 msgid "Difficulties on the way"
@@ -2647,7 +2648,7 @@ msgstr "La température monte dehors..."
 
 #: data/levelsets/eyeland.levelset:2
 msgid "Eye Land"
-msgstr ""
+msgstr "Le pays où les murs ont des yeux"
 
 #: data/levelsets/factory.levelset:3
 msgid "Factory Campaign"
