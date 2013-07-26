@@ -1,0 +1,113 @@
+
+The script for importing contributions (translations and votes) is a
+bit complex, so it can be useful to try and explain some things about
+it.
+
+The aim of this script is to apply the latest changes from one
+B-Translator site to another. If applied multiple times the result
+should still be the same. If changes from site *A* are applied to site
+*B* and then changes from site *B* are applied to site *A*, then both
+sites *A* and *B* at the end should have the same content (they should
+be synchronized).
+
+*Note:* Maybe replication features of MySQL can be used as well, to
+keep synchronized the tables of translations and votes. Maybe they are
+easier than this script. But I haven't tried them yet.
+
+* The lifecycle of translations and votes
+
+Translations and votes can be added, but can also be deleted. When
+they are deleted, instead of being erased, they are moved to the
+tables =translations_trash= and =votes_trash=, appending to them the
+time of deletion as well. This is useful for auditing, but also helps
+to keep track and sychronize deleted items as well.
+
+These are some of the usecases in the lifecycle of translations and
+votes:
+ + When the user votes another alternative translation for a string
+   (changes his vote), the old vote is moved to trash. Deletion time
+   is appended to it as well.
+ + When a translation is deleted, it is moved to trash, and its votes
+   are moved to trash as well.
+ + When a translation is changed (replaced by another translation),
+   this is the same as deleting the old translation, so the old
+   translation and its votes are moved to trash. But also a copy of
+   the old votes is created and assigned to the new translation (and
+   the voters are notified about the translation change).
+
+For sync purposes, a translation is identified by its ID (tguid) and
+the timestamp of creation. A vote is identified by
+(tguid,umail,ulng,time), where (umail,ulng) identifies the user that
+submitted it.
+
+
+* Some issues with such a synchronization
+
+Suppose that we are applying the changes from site *A* to site *B*. We
+want to move to the trash tables of *B* the items that are deleted on
+site *A*, and then to insert the new items from *A* on the tables of
+/translations/ and /votes/ on *B*.
+
+However there are some special cases that we should keep in mind in
+order to do this properly.
+
+ a. A vote that is deleted on *A* is also deleted on *B*. To take care
+    of this, we should insert to the trash tables of *B* only those
+    deleted votes from *A* that are not already there (are not on
+    =votes_trash= of *B*).
+
+ b. A translation that is deleted on *A* is also deleted on *B*. Same
+    as for votes, we insert to =translations_trash= of *B* only those
+    that are not already there.
+
+ c. A vote is added to a translation on *B*, but this translation is
+    deleted on *A*. We should find such votes (if they exist) and move
+    them to trash.
+
+ d. The same user, for the same string, has voted a translation on *A*
+    and a different one on *B*. This will create a conflict because
+    the user can vote only one translation per string. So we can keep
+    the latest vote, and move to trash the earlier votes.
+
+ e. The same user, for the same string, has suggested a translation on
+    *A* and a different one on *B*. We can keep both of these
+    translations and the user may decide later wich one to delete.
+
+ f. The vote count that is stored on translation records related to
+    the votes that are changed, will become outdated after we apply
+    the changes. So it has to be updated.
+
+
+* The algorithm
+
+Suppose that we have the latest contributions (and deletions) from *A*
+in the tables: A_translations, A_translations_trash, A_votes,
+A_votes_trash. We want to apply (sync/merge) them on *B* to the
+tables: B_translations, B_translations_trash, B_votes, B_votes_trash.
+
+We can follow these steps:
+
+ 1. Find multiple votes on both A_votes and B_votes (see issue 'd'
+    above), and append to A_votes_trash all of them except for the
+    latest vote.
+
+ 2. Find any votes on B_votes that belong to translations that are
+    deleted on *A* (A_translations_trash). This is related to issue
+    'c' above. Append these votes to A_votes_trash.
+
+ 3. Append the records of A_translations_trash to B_translations_trash
+    and A_votes_trash to B_votes_trash. Take care to copy only the
+    records that are not already there (according to the issues 'a'
+    and 'b' above).
+
+ 4. Append the records of A_translations to B_translations and records
+    of A_votes to B_votes.
+
+ 5. Remove from B_translations the records that are on
+    A_translations_trash and from B_votes the records that are on
+    B_votes_trash.
+
+ 6. For each translation related to votes on A_votes and A_votes_trash
+    recount and update the number of votes (issue 'f').
+
+
