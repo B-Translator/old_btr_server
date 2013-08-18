@@ -86,7 +86,7 @@ libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/ar
 
 libraries[bootstrap][directory_name] = "bootstrap"
 libraries[bootstrap][download][type] = "get"
-libraries[bootstrap][download][url] = "http://twitter.github.io/bootstrap/assets/bootstrap.zip"
+libraries[bootstrap][download][url] = "https://github.com/twbs/bootstrap/archive/3.0.0-wip.zip"
 
 libraries[facebook-php-sdk][directory_name] = "facebook-php-sdk"
 libraries[facebook-php-sdk][download][type] = "git"
