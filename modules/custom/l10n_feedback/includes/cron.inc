@@ -38,12 +38,12 @@ function l10n_feedback_cron() {
  */
 function l10n_feedback_cron_nightly() {
   // check whether the crontime has been reached yet
-  $crontime = variable_get('l10n_feedback_crontime', '0');
+  $crontime = variable_get('btr_crontime', '0');
   if (time() < $crontime)  return;
 
   // set the crontime after the next midnight (after 03:00 AM)
   $crontime = strtotime(date('Y-m-d 02:55')) + 24*60*60;
-  variable_set('l10n_feedback_crontime', $crontime);
+  variable_set('btr_crontime', $crontime);
 
   // Call cron functions.
   l10n_feedback_delete_old_export_files();
@@ -55,7 +55,7 @@ function l10n_feedback_cron_nightly() {
  * Delete export files that are older than 2 days
  */
 function l10n_feedback_delete_old_export_files() {
-  $export_path = variable_get('l10n_feedback_export_path', '/var/www/exports');
+  $export_path = variable_get('btr_export_path', '/var/www/exports');
   exec("find $export_path/* -mtime +2 -delete");
 }
 
@@ -133,8 +133,8 @@ function l10n_feedback_export_project($export_params) {
   $account = user_load($export_params->uid);
 
   // Get the full path of the export file.
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
-  $export_dir = variable_get('l10n_feedback_export_path', '/var/www/exports');
+  $lng = variable_get('btr_translation_lng', 'fr');
+  $export_dir = variable_get('btr_export_path', '/var/www/exports');
   $username = strtr(strtolower($account->name), ' ', '_');
   $filename = "$username.$origin-$project-$lng";
   $exports_url = url('translations/exports', array('absolute' => TRUE));
@@ -206,10 +206,10 @@ function l10n_feedback_delete_fake_user($uid) {
   // Delete from the drupal table 'users'
   user_delete($uid);
 
-  // Delete from the table 'l10n_feedback_users'
-  $db = $GLOBALS['l10n_feedback_db'];
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
-  $db->delete('l10n_feedback_users')
+  // Delete from the table 'btr_users'
+  $db = $GLOBALS['btr_db'];
+  $lng = variable_get('btr_translation_lng', 'fr');
+  $db->delete('btr_users')
     ->condition('uid', $uid)
     ->condition('ulng', $lng)
     ->execute();

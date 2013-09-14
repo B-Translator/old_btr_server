@@ -67,7 +67,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
 
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
-  $translation_lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $translation_lng = variable_get('btr_translation_lng', 'fr');
   $enable_submit = ($lng==$translation_lng) && (user_access('btranslator-vote') || user_access('btranslator-suggest'));
   $form['buttons']['submit'] = array(
     '#type' => 'submit',
@@ -275,7 +275,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
   );
 
   // The 'approved' radio/checkbox is used to pick the approved (voted/liked) translation(s).
-  $voting_mode = variable_get('l10n_feedback_voting_mode', 'single');
+  $voting_mode = variable_get('btr_voting_mode', 'single');
   $type = ($voting_mode == 'single') ? 'radio' : 'checkbox';
   $form['approved'] = array(
     '#type' => $type,

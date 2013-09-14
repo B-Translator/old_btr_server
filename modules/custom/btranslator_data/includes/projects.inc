@@ -20,7 +20,7 @@ function btranslator_data_project_list($origin =NULL, $project =NULL, $format =N
 
   //print "$origin/$project/$format\n";  //debug
 
-  $query = $GLOBALS['btranslator_data_db']->select('btranslator_data_projects', 'p')
+  $query = $GLOBALS['btr_db']->select('btr_projects', 'p')
     ->fields('p', array('origin'))->orderBy('origin');
 
   if ($project == '-') {

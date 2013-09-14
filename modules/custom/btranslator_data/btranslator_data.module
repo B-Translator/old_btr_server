@@ -150,7 +150,7 @@ function btranslator_data_init() {
   /*
   // Set the parameters of the btranslator_data database.
   global $databases;
-  $databases['btranslator_data_db']['default'] = array (
+  $databases['btr_db']['default'] = array (
       'database' => 'l10n_tst',
       'username' => 'l10n_tst',
       'password' => 'l10n_tst',
@@ -166,13 +166,13 @@ function btranslator_data_init() {
 
   */
 
-  // Get a connection to the btranslator_data_db. All the queries
+  // Get a connection to the btr_db. All the queries
   // of the btranslator_data module will use this connection.
-  if (isset($GLOBALS['databases']['btranslator_data_db']['default'])) {
-    $GLOBALS['btranslator_data_db'] = Database::getConnection('default', 'btranslator_data_db');
+  if (isset($GLOBALS['databases']['btr_db']['default'])) {
+    $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
   }
   else {
-    $GLOBALS['btranslator_data_db'] = Database::getConnection('default', 'default');
+    $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
   }
 
   if (arg(0) == 'translations') {

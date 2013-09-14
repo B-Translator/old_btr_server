@@ -78,14 +78,14 @@ function _btranslator_data_translate_form_save($form_values) {
   $lng = $form_values['langcode'];
 
   // check whether the submitted lng is valid for providing feedback on this site
-  $translation_lng = variable_get('btranslator_data_translation_lng', 'fr');
+  $translation_lng = variable_get('btr_translation_lng', 'fr');
   if ($lng != $translation_lng) {
     drupal_set_message(t("You cannot give feedback for the language '@lng' on this site!", array('@lng' => $lng)), 'error');
     return;
   }
 
   // Get the voting mode.
-  $voting_mode = variable_get('btranslator_data_voting_mode', 'single');
+  $voting_mode = variable_get('btr_voting_mode', 'single');
 
   // keep track of the status, so that propper notification
   // can be displayed to the user
@@ -202,8 +202,8 @@ function btranslator_data_add_vote($tguid, $umail) {
   }
 
   // Fetch the translation details from the DB.
-  $db = $GLOBALS['btranslator_data_db'];
-  $sql = 'SELECT * FROM {btranslator_data_translations} WHERE tguid = :tguid';
+  $db = $GLOBALS['btr_db'];
+  $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
   $args = array(':tguid' => $tguid);
   $trans = $db->query($sql, $args)->fetchObject();
 
@@ -214,19 +214,19 @@ function btranslator_data_add_vote($tguid, $umail) {
   $nr = _btranslator_data_clean_previous_votes($tguid, $umail, $trans->sguid, $trans->lng);
 
   // Add the vote.
-  $vid = $db->insert('btranslator_data_votes')
+  $vid = $db->insert('btr_votes')
     ->fields(array(
         'tguid' => $tguid,
         'umail' => $umail,
-        'ulng' => variable_get('btranslator_data_translation_lng', 'fr'),
+        'ulng' => variable_get('btr_translation_lng', 'fr'),
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
 
   // Update vote count of the translation.
-  $sql = 'SELECT COUNT(*) FROM {btranslator_data_votes} WHERE tguid = :tguid';
+  $sql = 'SELECT COUNT(*) FROM {btr_votes} WHERE tguid = :tguid';
   $count = $db->query($sql, $args)->fetchField();
-  $db->update('btranslator_data_translations')
+  $db->update('btr_translations')
     ->fields(array('count' => $count))
     ->condition('tguid', $tguid)
     ->execute();
@@ -264,7 +264,7 @@ function btranslator_data_add_vote($tguid, $umail) {
  */
 function _btranslator_data_clean_previous_votes($tguid, $umail, $sguid, $lng) {
 
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
@@ -274,7 +274,7 @@ function _btranslator_data_clean_previous_votes($tguid, $umail, $sguid, $lng) {
   }
 
   // Get the voting mode.
-  $voting_mode = variable_get('btranslator_data_voting_mode', 'single');
+  $voting_mode = variable_get('btr_voting_mode', 'single');
 
   $arr_tguid = array();
   if ($voting_mode == 'multiple') {
@@ -284,8 +284,8 @@ function _btranslator_data_clean_previous_votes($tguid, $umail, $sguid, $lng) {
     // Get the other sibling translations (translations of the same
     // string and the same language) which the user has voted.
     $sql = '
-      SELECT DISTINCT t.tguid FROM {btranslator_data_translations} t
-      LEFT JOIN {btranslator_data_votes} v ON (v.tguid = t.tguid)
+      SELECT DISTINCT t.tguid FROM {btr_translations} t
+      LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
       WHERE t.sguid = :sguid AND t.lng = :lng AND v.umail = :umail AND v.ulng = :ulng
     ';
     $params = array(':sguid' => $sguid, ':lng' => $lng, ':umail' => $umail, ':ulng' => $lng);
@@ -295,23 +295,23 @@ function _btranslator_data_clean_previous_votes($tguid, $umail, $sguid, $lng) {
   if (empty($arr_tguid))  return 0;
 
   // Insert to the trash table the votes that will be removed.
-  $query = $db->select('btranslator_data_votes', 'v')
+  $query = $db->select('btr_votes', 'v')
     ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
     ->condition('umail', $umail)
     ->condition('ulng', $lng)
     ->condition('tguid', $arr_tguid, 'IN');
   $query->addExpression('NOW()', 'd_time');
-  $db->insert('btranslator_data_votes_trash')->from($query)->execute();
+  $db->insert('btr_votes_trash')->from($query)->execute();
 
   // Remove any votes by the user for each translation in $arr_tguid.
-  $num_deleted = $db->delete('btranslator_data_votes')
+  $num_deleted = $db->delete('btr_votes')
     ->condition('umail', $umail)
     ->condition('ulng', $lng)
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
 
   // Decrement the vote count for each translation in $arr_tguid.
-  $num_updated = $db->update('btranslator_data_translations')
+  $num_updated = $db->update('btr_translations')
     ->expression('count', 'count - 1')
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
@@ -354,21 +354,21 @@ function btranslator_data_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   }
 
   // Load the string and adjust translation whitespace based on source.
-  $db = $GLOBALS['btranslator_data_db'];
-  $query = 'SELECT string FROM {btranslator_data_strings} WHERE sguid = :sguid';
+  $db = $GLOBALS['btr_db'];
+  $query = 'SELECT string FROM {btr_strings} WHERE sguid = :sguid';
   $source_string = $db->query($query, array(':sguid' => $sguid))->fetchField();
   $translation = btranslator_data_trim($translation, $source_string);
 
   // Look for an existing translation, if any.
   $tguid = sha1($translation . $lng . $sguid);
-  $query = 'SELECT translation FROM {btranslator_data_translations} WHERE tguid = :tguid';
+  $query = 'SELECT translation FROM {btr_translations} WHERE tguid = :tguid';
   $existing = $db->query($query, array(':tguid' => $tguid))->fetchField();
 
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  return FALSE;
 
   // Insert the new suggestion.
-  $db->insert('btranslator_data_translations')
+  $db->insert('btr_translations')
     ->fields(array(
         'sguid' => $sguid,
         'lng' => $lng,
@@ -412,11 +412,11 @@ function btranslator_data_remove_old_suggestion($sguid, $lng, $umail, $tguid, $t
   // Allow translators to add more than one suggestions for the same string.
   if (user_access('btranslator-import'))  return;
 
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   // Get the old translation (if any).
   $query = 'SELECT tguid, translation
-            FROM {btranslator_data_translations}
+            FROM {btr_translations}
             WHERE sguid = :sguid AND lng = :lng
               AND umail = :umail AND ulng = :ulng
               AND tguid != :tguid';
@@ -430,43 +430,43 @@ function btranslator_data_remove_old_suggestion($sguid, $lng, $umail, $tguid, $t
   if (!$old_trans)  return;  // if there is no old translation, we are done
 
   // Copy to the trash table the old translation.
-  $query = $db->select('btranslator_data_translations', 't')
+  $query = $db->select('btr_translations', 't')
     ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $old_trans->tguid);
   $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $umail));
   $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => $lng));
   $query->addExpression('NOW()', 'd_time');
-  $db->insert('btranslator_data_translations_trash')->from($query)->execute();
+  $db->insert('btr_translations_trash')->from($query)->execute();
 
   // Remove the old translation.
-  $db->delete('btranslator_data_translations')
+  $db->delete('btr_translations')
     ->condition('tguid', $old_trans->tguid)
     ->execute();
 
   // Get the votes of the old translation.
   $query = "SELECT v.tguid, v.time, u.umail, u.ulng, u.uid,
                    u.name AS user_name, u.status AS user_status
-            FROM {btranslator_data_votes} v
-            LEFT JOIN {btranslator_data_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+            FROM {btr_votes} v
+            LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
             WHERE v.tguid = :tguid AND v.umail != :umail";
   $args = array(':tguid' => $old_trans->tguid, ':umail' => $umail);
   $votes = $db->query($query, $args)->fetchAll();
 
   // Insert to the trash table the votes that will be deleted.
-  $query = $db->select('btranslator_data_votes', 'v')
+  $query = $db->select('btr_votes', 'v')
     ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $old_trans->tguid);
   $query->addExpression('NOW()', 'd_time');
-  $db->insert('btranslator_data_votes_trash')->from($query)->execute();
+  $db->insert('btr_votes_trash')->from($query)->execute();
 
   // Delete the votes belonging to the old translation.
-  $db->delete('btranslator_data_votes')->condition('tguid', $old_trans->tguid)->execute();
+  $db->delete('btr_votes')->condition('tguid', $old_trans->tguid)->execute();
 
   // Associate these votes to the new translation.
   $notifications = array();
   foreach ($votes as $vote) {
     // Associate the vote to the new translation.
-    $db->insert('btranslator_data_votes')
+    $db->insert('btr_votes')
       ->fields(array(
           'tguid' => $tguid,
           'umail' => $vote->umail,
@@ -487,7 +487,7 @@ function btranslator_data_remove_old_suggestion($sguid, $lng, $umail, $tguid, $t
   if (empty($notifications))  return;
 
   // get the original string
-  $query = "SELECT string FROM {btranslator_data_strings} WHERE sguid = :sguid";
+  $query = "SELECT string FROM {btr_strings} WHERE sguid = :sguid";
   $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
 
   // Notify the corresponding voters about the change
@@ -514,12 +514,12 @@ function btranslator_data_remove_old_suggestion($sguid, $lng, $umail, $tguid, $t
  */
 function btranslator_data_notify_previous_voters($sguid, $lng, $tguid, $translation) {
 
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   $query = "SELECT u.umail, u.ulng, u.uid, u.name, u.status, t.translation
-            FROM {btranslator_data_translations} t
-            LEFT JOIN {btranslator_data_votes} v ON (v.tguid = t.tguid)
-            LEFT JOIN {btranslator_data_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+            FROM {btr_translations} t
+            LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
+            LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
             WHERE t.sguid = :sguid AND t.lng = :lng AND t.tguid != :tguid";
   $args = array(':sguid' => $sguid, ':lng' => $lng, ':tguid' => $tguid);
   $voters = $db->query($query, $args)->fetchAll();
@@ -527,7 +527,7 @@ function btranslator_data_notify_previous_voters($sguid, $lng, $tguid, $translat
   if (empty($voters))  return;
 
   // get the original string
-  $query = "SELECT string FROM {btranslator_data_strings} WHERE sguid = :sguid";
+  $query = "SELECT string FROM {btr_strings} WHERE sguid = :sguid";
   $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
 
   // Notify the previous voters about the new translation
@@ -567,31 +567,31 @@ function _btranslator_data_delete_translation($translation) {
     return;
   }
 
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   // Copy to the trash table the translations that will be deleted.
-  $query = $db->select('btranslator_data_translations', 't')
+  $query = $db->select('btr_translations', 't')
     ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $trans->tguid);
   $account = user_load($GLOBALS['user']->uid);
   $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $account->init));
-  $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => variable_get('btranslator_data_translation_lng')));
+  $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => variable_get('btr_translation_lng')));
   $query->addExpression('NOW()', 'd_time');
-  $db->insert('btranslator_data_translations_trash')->from($query)->execute();
+  $db->insert('btr_translations_trash')->from($query)->execute();
 
   // Copy to the trash table the votes that will be deleted.
-  $query = $db->select('btranslator_data_votes', 'v')
+  $query = $db->select('btr_votes', 'v')
     ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $trans->tguid);
   $query->addExpression('NOW()', 'd_time');
-  $db->insert('btranslator_data_votes_trash')->from($query)->execute();
+  $db->insert('btr_votes_trash')->from($query)->execute();
 
   // Delete the translation and any votes related to it.
-  $db->delete('btranslator_data_translations')->condition('tguid', $trans->tguid)->execute();
-  $db->delete('btranslator_data_votes')->condition('tguid', $trans->tguid)->execute();
+  $db->delete('btr_translations')->condition('tguid', $trans->tguid)->execute();
+  $db->delete('btr_votes')->condition('tguid', $trans->tguid)->execute();
 
   // get the original string
-  $query = "SELECT string FROM {btranslator_data_strings} WHERE sguid = :sguid";
+  $query = "SELECT string FROM {btr_strings} WHERE sguid = :sguid";
   $string = $db->query($query, array(':sguid' => $trans->sguid))->fetchField();
 
   // Notify the author of the translation about the deletion.

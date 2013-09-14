@@ -10,14 +10,14 @@
  */
 function l10n_feedback_user_insert(&$edit, $account, $category) {
 
-  $db = $GLOBALS['l10n_feedback_db'];
+  $db = $GLOBALS['btr_db'];
 
   $args = array(
     ':umail' => $account->init,  //initial email that the user used for registration
-    ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
+    ':ulng' => variable_get('btr_translation_lng', 'fr'),
   );
   $select_user = "
-    SELECT * FROM {l10n_feedback_users}
+    SELECT * FROM {btr_users}
     WHERE umail = :umail AND ulng = :ulng
   ";
   $result = $db->query($select_user, $args);
@@ -28,7 +28,7 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
   if ($result->rowCount() > 0) {
     l10n_feedback_user_update($edit, $account, $category);
     $update_user = "
-      UPDATE {l10n_feedback_users}
+      UPDATE {btr_users}
       SET uid = :uid, name = :name, status = 1
       WHERE umail = :umail AND ulng = :ulng
     ";
@@ -36,7 +36,7 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
   }
   else {
     $insert_user = "
-      INSERT INTO {l10n_feedback_users} (umail, ulng, uid, name, status)
+      INSERT INTO {btr_users} (umail, ulng, uid, name, status)
       VALUES (:umail, :ulng, :uid, :name, 1)
     ";
     $db->query($insert_user, $args);
@@ -51,17 +51,17 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
 function l10n_feedback_user_update(&$edit, $account, $category) {
 
   $args = array(
-		':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
+		':ulng' => variable_get('btr_translation_lng', 'fr'),
     ':uid' => $account->uid,
     ':name' => $account->name,
     ':status' => $account->status,
   );
   $update_user = "
-    UPDATE {l10n_feedback_users}
+    UPDATE {btr_users}
     SET name = :name, status = :status
     WHERE uid = :uid AND :ulng = ulng
   ";
-  $GLOBALS['l10n_feedback_db']->query($update_user, $args);
+  $GLOBALS['btr_db']->query($update_user, $args);
 }
 
 
@@ -71,15 +71,15 @@ function l10n_feedback_user_update(&$edit, $account, $category) {
 function l10n_feedback_user_cancel(&$edit, $account, $category) {
 
   $args = array(
-    ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
+    ':ulng' => variable_get('btr_translation_lng', 'fr'),
     ':uid' => $account->uid,
   );
   $update_user = "
-    UPDATE {l10n_feedback_users}
+    UPDATE {btr_users}
     SET status = 0
     WHERE uid = :uid AND :ulng = ulng
   ";
-  $GLOBALS['l10n_feedback_db']->query($update_user, $args);
+  $GLOBALS['btr_db']->query($update_user, $args);
 }
 
 
@@ -89,15 +89,15 @@ function l10n_feedback_user_cancel(&$edit, $account, $category) {
 function l10n_feedback_user_delete($account) {
 
   $args = array(
-    ':ulng' => variable_get('l10n_feedback_translation_lng', 'fr'),
+    ':ulng' => variable_get('btr_translation_lng', 'fr'),
     ':uid' => $account->uid,
   );
   $update_user = "
-    UPDATE {l10n_feedback_users}
+    UPDATE {btr_users}
     SET status = 0
     WHERE uid = :uid AND :ulng = ulng
   ";
-  $GLOBALS['l10n_feedback_db']->query($update_user, $args);
+  $GLOBALS['btr_db']->query($update_user, $args);
 }
 
 
@@ -151,13 +151,13 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
   else {
     $get_all_min_and_max_locations = "
       SELECT min(l.lid) AS lmin, max(l.lid) AS lmax
-      FROM {l10n_feedback_locations} l
-      RIGHT JOIN {l10n_feedback_templates} t ON (l.potid = t.potid)
-      RIGHT JOIN {l10n_feedback_projects} p ON (t.pguid = p.pguid)
+      FROM {btr_locations} l
+      RIGHT JOIN {btr_templates} t ON (l.potid = t.potid)
+      RIGHT JOIN {btr_projects} p ON (t.pguid = p.pguid)
       WHERE $where_condition
       GROUP BY p.project
     ";
-    $result = $GLOBALS['l10n_feedback_db']->query($get_all_min_and_max_locations, $args);
+    $result = $GLOBALS['btr_db']->query($get_all_min_and_max_locations, $args);
     $sequential->projects = $result->fetchAll();
     $sequential->idx = 0;
     $sequential->lid = $sequential->projects[0]->lmin;

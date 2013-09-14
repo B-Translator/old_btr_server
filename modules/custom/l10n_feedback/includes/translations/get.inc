@@ -71,7 +71,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
   drupal_set_title(t('Get Translations'));
 
   // Get the matching string and its translations.
-  $query = $GLOBALS['l10n_feedback_db']->select('l10n_feedback_strings', 's')
+  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = l10n_feedback_get_strings($query, $lng);

@@ -23,7 +23,7 @@ function btranslator_data_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) 
   }
 
   if ($lng == NULL) {
-    $lng = variable_get('btranslator_data_translation_lng', 'fr');
+    $lng = variable_get('btr_translation_lng', 'fr');
   }
 
   if ($sguid == NULL or $sguid == 'untranslated' or $sguid == 'translated') {
@@ -74,7 +74,7 @@ function btranslator_data_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) 
   drupal_set_title(t('Vote Translations'));
 
   // Get the matching string and its translations.
-  $query = $GLOBALS['btranslator_data_db']->select('btranslator_data_strings', 's')
+  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = btranslator_data_get_strings($query, $lng);
@@ -166,7 +166,7 @@ function btranslator_data_get_sguid($uid =NULL) {
  */
 function btranslator_data_get_random_sguid($uid) {
 
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   // get the preferred projects (as an array)
   $arr_preferred_projects = btranslator_data_get_preferred_projects(user_load($uid));
@@ -178,10 +178,10 @@ function btranslator_data_get_random_sguid($uid) {
   // Get the total number of strings from which we can choose.
   $sql_count = "
     SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pguid FROM {btranslator_data_projects} WHERE $where) p
-    LEFT JOIN {btranslator_data_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btranslator_data_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btranslator_data_strings} s ON (s.sguid = l.sguid)
+    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
+    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
   ";
   $nr_strings = $db->query($sql_count, $args)->fetchField();
 
@@ -191,10 +191,10 @@ function btranslator_data_get_random_sguid($uid) {
   // Get the sguid of the random row.
   $sql_get_sguid = "
     SELECT s.sguid
-    FROM (SELECT pguid FROM {btranslator_data_projects} WHERE $where) p
-    LEFT JOIN {btranslator_data_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btranslator_data_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btranslator_data_strings} s ON (s.sguid = l.sguid)
+    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
+    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
     LIMIT $row_number, 1
   ";
   //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
@@ -211,24 +211,24 @@ function btranslator_data_get_random_sguid($uid) {
 function btranslator_data_get_untranslated_sguid() {
 
   $uid = $GLOBALS['user']->uid;
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   // get the preferred projects (as an array)
   $arr_preferred_projects = btranslator_data_get_preferred_projects(user_load($uid));
 
   // build the WHERE condition for selecting projects
   list($where, $args) = btranslator_data_projects_to_where_condition($arr_preferred_projects);
-  $args[':lng'] = variable_get('btranslator_data_translation_lng', 'fr');
+  $args[':lng'] = variable_get('btr_translation_lng', 'fr');
   if ($where == '')  $where = '(1=1)';
 
   // Get the total number of strings from which we can choose.
   $sql_count = "
     SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pguid FROM {btranslator_data_projects} WHERE $where) p
-    LEFT JOIN {btranslator_data_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btranslator_data_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btranslator_data_strings} s ON (s.sguid = l.sguid)
-    LEFT JOIN {btranslator_data_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
+    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
+    LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
     WHERE t.sguid IS NULL
   ";
   $nr_strings = $db->query($sql_count, $args)->fetchField();
@@ -240,11 +240,11 @@ function btranslator_data_get_untranslated_sguid() {
   $row_number = rand(0, ceil($nr_strings/3));
   $sql_get_sguid = "
     SELECT s.sguid
-    FROM (SELECT pguid FROM {btranslator_data_projects} WHERE $where) p
-    LEFT JOIN {btranslator_data_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btranslator_data_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btranslator_data_strings} s ON (s.sguid = l.sguid)
-    LEFT JOIN {btranslator_data_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
+    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
+    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
+    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
+    LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
     WHERE t.sguid IS NULL
     ORDER BY s.count DESC
     LIMIT $row_number, 1
@@ -263,25 +263,25 @@ function btranslator_data_get_untranslated_sguid() {
 function btranslator_data_get_translated_sguid() {
 
   $uid = $GLOBALS['user']->uid;
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   // get the preferred projects (as an array)
   $arr_preferred_projects = btranslator_data_get_preferred_projects(user_load($uid));
 
   // build the WHERE condition for selecting projects
   list($where, $args) = btranslator_data_projects_to_where_condition($arr_preferred_projects);
-  $args[':lng'] = variable_get('btranslator_data_translation_lng', 'fr');
+  $args[':lng'] = variable_get('btr_translation_lng', 'fr');
   if ($where == '')  $where = '(1=1)';
 
   // Get the total number of strings from which we can choose.
   $sql_count = "
     SELECT COUNT(*) AS number_of_strings
     FROM ( SELECT DISTINCT s.sguid
-	   FROM (SELECT pguid FROM {btranslator_data_projects} WHERE $where) p
-	   LEFT JOIN {btranslator_data_templates} tpl ON (tpl.pguid = p.pguid)
-	   LEFT JOIN {btranslator_data_locations} l ON (l.potid = tpl.potid)
-	   LEFT JOIN {btranslator_data_strings} s ON (s.sguid = l.sguid)
-	   LEFT JOIN {btranslator_data_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+	   FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
+	   LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
+	   LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
+	   LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
+	   LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
 	   WHERE t.sguid IS NOT NULL
          )  AS st
   ";
@@ -294,11 +294,11 @@ function btranslator_data_get_translated_sguid() {
   $sql_get_sguid = "
     SELECT sguid
     FROM ( SELECT s.sguid
-	   FROM (SELECT pguid FROM {btranslator_data_projects} WHERE $where) p
-	   LEFT JOIN {btranslator_data_templates} tpl ON (tpl.pguid = p.pguid)
-	   LEFT JOIN {btranslator_data_locations} l ON (l.potid = tpl.potid)
-	   LEFT JOIN {btranslator_data_strings} s ON (s.sguid = l.sguid)
-	   LEFT JOIN {btranslator_data_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
+	   FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
+	   LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
+	   LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
+	   LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
+	   LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
 	   WHERE t.sguid IS NOT NULL
            GROUP BY s.sguid
            ORDER BY (count(*) + sum(t.count)) DESC
@@ -360,8 +360,8 @@ function btranslator_data_get_sequential_sguid($uid) {
   user_save($account, $edit);
 
   // get and return the $sguid
-  $query = 'SELECT sguid FROM {btranslator_data_locations} WHERE lid=:lid';
-  $sguid = $GLOBALS['btranslator_data_db']->query($query, array(':lid' => $lid))->fetchField();
+  $query = 'SELECT sguid FROM {btr_locations} WHERE lid=:lid';
+  $sguid = $GLOBALS['btr_db']->query($query, array(':lid' => $lid))->fetchField();
 
   return $sguid;
 }

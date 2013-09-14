@@ -10,9 +10,9 @@
 function btranslator_data_project_autocomplete($string = '') {
   $matches = array();
   if ($string) {
-    $db = $GLOBALS['btranslator_data_db'];
+    $db = $GLOBALS['btr_db'];
     $query = "SELECT DISTINCT project
-              FROM {btranslator_data_projects}
+              FROM {btr_projects}
               WHERE project LIKE :str ORDER BY project";
     $args = array(':str' => $string . '%');
     $result = $db->queryRange($query, 0, 10, $args);
@@ -30,9 +30,9 @@ function btranslator_data_project_autocomplete($string = '') {
 function btranslator_data_origin_autocomplete($string = '') {
   $matches = array();
   if ($string) {
-    $db = $GLOBALS['btranslator_data_db'];
+    $db = $GLOBALS['btr_db'];
     $query = "SELECT DISTINCT origin
-              FROM {btranslator_data_projects}
+              FROM {btr_projects}
               WHERE origin LIKE :str ORDER BY origin";
     $args = array(':str' => $string . '%');
     $result = $db->queryRange($query, 0, 10, $args);
@@ -50,13 +50,13 @@ function btranslator_data_origin_autocomplete($string = '') {
 function btranslator_data_user_autocomplete($string = '') {
   $matches = array();
   if ($string) {
-    $db = $GLOBALS['btranslator_data_db'];
-    $query = "SELECT name FROM {btranslator_data_users}
+    $db = $GLOBALS['btr_db'];
+    $query = "SELECT name FROM {btr_users}
               WHERE name LIKE :str AND ulng = :ulng
               ORDER BY name";
     $args = array(
       ':str' => $string . '%',
-      ':ulng' => variable_get('btranslator_data_translation_lng', 'fr'),
+      ':ulng' => variable_get('btr_translation_lng', 'fr'),
     );
     $result = $db->queryRange($query, 0, 10, $args);
     foreach ($result as $user) {
@@ -80,8 +80,8 @@ function btranslator_data_string_details($sguid) {
   $output = '';
 
   // Get the context of this string.
-  $db = $GLOBALS['btranslator_data_db'];
-  $query = "SELECT context FROM {btranslator_data_strings} WHERE sguid = :sguid";
+  $db = $GLOBALS['btr_db'];
+  $query = "SELECT context FROM {btr_strings} WHERE sguid = :sguid";
   $args = array(':sguid' => $sguid);
   $context = $db->query($query, $args)->fetchField();
   if (!empty($context)) {
@@ -92,10 +92,10 @@ function btranslator_data_string_details($sguid) {
   $output .= '<h3>' . t('Used on these projects:') . '</h3>';
   $sql = "
     SELECT CONCAT(p.origin, ' / ', p.project) AS proj
-    FROM {btranslator_data_strings} s
-    RIGHT JOIN {btranslator_data_locations} l ON (l.sguid = s.sguid)
-    RIGHT JOIN {btranslator_data_templates} t ON (t.potid = l.potid)
-    RIGHT JOIN {btranslator_data_projects} p ON (p.pguid = t.pguid)
+    FROM {btr_strings} s
+    RIGHT JOIN {btr_locations} l ON (l.sguid = s.sguid)
+    RIGHT JOIN {btr_templates} t ON (t.potid = l.potid)
+    RIGHT JOIN {btr_projects} p ON (p.pguid = t.pguid)
     WHERE s.sguid = :sguid
     ORDER BY p.origin, p.project
   ";
@@ -122,7 +122,7 @@ function btranslator_data_string_details($sguid) {
 function btranslator_data_translation_details($tid = 0, $ajax = 0) {
 
   // Get data about this translation.
-  $string = $GLOBALS['btranslator_data_db']->query(
+  $string = $GLOBALS['btr_db']->query(
     'SELECT * FROM {l10n_server_translation} WHERE tid = :tid',
     array(':tid' => $tid)
   )->fetchObject();
@@ -138,7 +138,7 @@ function btranslator_data_translation_details($tid = 0, $ajax = 0) {
   }
 
   // List of project releases, where this string is used.
-  $result = $GLOBALS['btranslator_data_db']->query('SELECT h.*, u.name FROM {l10n_server_translation_history} h INNER JOIN {users} u ON h.uid_action = u.uid WHERE tid = :tid ORDER BY time_action DESC, type_action DESC', array(':tid' => $tid));
+  $result = $GLOBALS['btr_db']->query('SELECT h.*, u.name FROM {l10n_server_translation_history} h INNER JOIN {users} u ON h.uid_action = u.uid WHERE tid = :tid ORDER BY time_action DESC, type_action DESC', array(':tid' => $tid));
 
   $uid_submitted = 0;
   $history_list = array();

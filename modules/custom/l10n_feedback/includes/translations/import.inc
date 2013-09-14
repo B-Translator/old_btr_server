@@ -62,10 +62,10 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
   $context = 'vocabulary';
   $sguid = sha1($string . $context);
 
-  $db = $GLOBALS['l10n_feedback_db'];
+  $db = $GLOBALS['btr_db'];
 
   // check whether this string already exists or not
-  $query = "SELECT sguid FROM l10n_feedback_strings WHERE sguid = :sguid";
+  $query = "SELECT sguid FROM {btr_strings} WHERE sguid = :sguid";
   $args = array(':sguid' => $sguid);
   $field = $db->query($query, $args)->fetchField();
   if (!empty($field)) {
@@ -74,7 +74,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
   }
 
   // insert the new string
-  $db->insert('l10n_feedback_strings')
+  $db->insert('btr_strings')
     ->fields(array(
         'string' => $string,
         'context' => $context,
@@ -89,7 +89,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
   $origin = 'misc';
   $project = 'vocabulary';
   $potname = 'vocabulary';
-  $potid = $db->select('l10n_feedback_templates', 't')
+  $potid = $db->select('btr_templates', 't')
     ->fields('t', array('potid'))
     ->condition('pguid', sha1($origin . $project))
     ->condition('tplname', $potname)
@@ -97,7 +97,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
     ->fetchField();
 
   // insert a new location
-  $db->insert('l10n_feedback_locations')
+  $db->insert('btr_locations')
     ->fields(array(
         'sguid' => $sguid,
         'potid' => $potid,
@@ -108,7 +108,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
   l10n_feedback_new_term_notification($string, $sguid);
 
   // redirect to translating the term
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
   drupal_goto("translations/$lng/$sguid");
 }
 
@@ -185,13 +185,13 @@ function l10n_feedback_delterm_form_submit($form, &$form_state) {
 
   $sguid = check_plain(trim($form_state['values']['sguid']));
 
-  $db = $GLOBALS['l10n_feedback_db'];
-  $db->delete('l10n_feedback_strings')->condition('sguid', $sguid)->execute();
-  $db->delete('l10n_feedback_locations')->condition('sguid', $sguid)->execute();
-  $db->delete('l10n_feedback_translations')->condition('sguid', $sguid)->execute();
+  $db = $GLOBALS['btr_db'];
+  $db->delete('btr_strings')->condition('sguid', $sguid)->execute();
+  $db->delete('btr_locations')->condition('sguid', $sguid)->execute();
+  $db->delete('btr_translations')->condition('sguid', $sguid)->execute();
 
   // redirect to the list of terms
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
   drupal_goto("translations/search",
     array('query' => array(
         'lng' => $lng,

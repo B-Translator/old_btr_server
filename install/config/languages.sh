@@ -27,9 +27,9 @@ languages="$main_lang $other_langs"
 sed -i /var/www/btranslator_data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
 
-### set drupal variable l10n_feedback_translation_lng
+### set drupal variable btr_translation_lng
 $(dirname $0)/mysqld.sh start
-drush --yes --exact vset l10n_feedback_translation_lng $main_lang
+drush --yes --exact vset btr_translation_lng $main_lang
 
 ### modify the list of languages
 file_inc='/var/www/btranslator/profiles/btranslator/modules/l10n_feedback/includes/common.inc'

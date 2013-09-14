@@ -20,7 +20,7 @@
  */
 function btranslator_data_get_strings($filter_query, $lng) {
 
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
 
   //get the IDs of the strings that are returned by the filter query
   $assoc_arr_sguid = $filter_query->execute()->fetchAllAssoc('sguid');
@@ -30,7 +30,7 @@ function btranslator_data_get_strings($filter_query, $lng) {
   //get string details
   $get_strings = "
       SELECT sguid, string
-      FROM {btranslator_data_strings}
+      FROM {btr_strings}
       WHERE sguid IN (:arr_sguid)
   ";
   $args = array(':arr_sguid' => $arr_sguid);
@@ -41,9 +41,9 @@ function btranslator_data_get_strings($filter_query, $lng) {
   $get_translations = "
       SELECT s.sguid, t.tguid, t.lng, t.translation,
              t.time, u.name AS author, u.umail, u.ulng, u.uid, t.count
-      FROM {btranslator_data_strings} s
-      LEFT OUTER JOIN {btranslator_data_translations} t ON (s.sguid = t.sguid)
-      LEFT OUTER JOIN {btranslator_data_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+      FROM {btr_strings} s
+      LEFT OUTER JOIN {btr_translations} t ON (s.sguid = t.sguid)
+      LEFT OUTER JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
       WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
       ORDER BY t.count DESC
   ";
@@ -59,9 +59,9 @@ function btranslator_data_get_strings($filter_query, $lng) {
   else {
     $get_votes = "
         SELECT t.tguid, v.vid, u.name, u.umail, u.ulng, u.uid, v.time
-        FROM {btranslator_data_translations} t
-        LEFT OUTER JOIN {btranslator_data_votes} v ON (v.tguid = t.tguid)
-        LEFT OUTER JOIN {btranslator_data_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+        FROM {btr_translations} t
+        LEFT OUTER JOIN {btr_votes} v ON (v.tguid = t.tguid)
+        LEFT OUTER JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
         WHERE t.tguid IN (:arr_tguid)
         ORDER BY v.time DESC
     ";
@@ -81,11 +81,11 @@ function btranslator_data_get_strings($filter_query, $lng) {
     $get_alternatives = "
         SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
         FROM (SELECT sguid, lng, MAX(count) AS max_count
-	      FROM btranslator_data_translations
+	      FROM {btr_translations}
 	      WHERE lng IN (:arr_lng) AND sguid IN (:arr_sguid)
 	      GROUP BY sguid, lng
 	      ) AS m
-        INNER JOIN btranslator_data_translations AS t
+        INNER JOIN {btr_translations} AS t
 	      ON m.sguid = t.sguid AND m.lng = t.lng AND m.max_count = t.count
         GROUP BY t.sguid, t.lng, t.count
     ";

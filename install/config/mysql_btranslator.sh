@@ -40,7 +40,7 @@ for file in $(ls /var/www/btranslator*/sites/default/settings.php)
 do
     sed -i $file \
 	-e "/^\\\$databases = array/,+10  s/'password' => .*/'password' => '$drupal_passwd',/" \
-	-e "/^\\\$databases\\['l10n_feedback_db/,+5  s/'password' => .*/'password' => '$data_passwd',/"
+	-e "/^\\\$databases\\['btr_db/,+5  s/'password' => .*/'password' => '$data_passwd',/"
 done
 
 ### modify also the connection settings on btranslator_data

@@ -44,7 +44,7 @@ function l10n_feedback_build_notification_email($params) {
   if (isset($params->sguid)) {
     $url = get_string_url($params->uid, $params->sguid);
   }
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
   $subject_prefix = "l10n-$lng";
 
   switch ($params->type) {
@@ -313,11 +313,11 @@ function l10n_feedback_build_notification_email($params) {
 function l10n_feedback_get_string_and_translations($sguid) {
 
   require_once(dirname(__FILE__) . '/translations/utils.inc');
-  $db = $GLOBALS['l10n_feedback_db'];
-  $query = $db->select('l10n_feedback_strings', 's')
+  $db = $GLOBALS['btr_db'];
+  $query = $db->select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
   $strings = l10n_feedback_get_strings($query, $lng);
 
   $string = $strings[$sguid]->string;
@@ -340,7 +340,7 @@ function l10n_feedback_get_string_and_translations($sguid) {
 function get_string_url($uid, $sguid) {
 
   $account = user_load($uid);
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
   $timestamp = REQUEST_TIME;
 
   // get the url of the string

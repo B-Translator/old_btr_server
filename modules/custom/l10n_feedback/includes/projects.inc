@@ -20,7 +20,7 @@ function l10n_feedback_project_list($origin =NULL, $project =NULL, $format =NULL
 
   //print "$origin/$project/$format\n";  //debug
 
-  $query = $GLOBALS['l10n_feedback_db']->select('l10n_feedback_projects', 'p')
+  $query = $GLOBALS['btr_db']->select('btr_projects', 'p')
     ->fields('p', array('origin'))->orderBy('origin');
 
   if ($project == '-') {

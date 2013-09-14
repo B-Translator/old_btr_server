@@ -47,16 +47,16 @@ function l10n_feedback_uninstall() {
 
   // delete variables that were used for this module
   $variables = array(
-    'l10n_feedback_voting_mode',
-    'l10n_feedback_translation_lng',
-    'l10n_feedback_preferred_projects',
-    'l10n_feedback_export_path',
-    'l10n_feedback_export_notify_admin',
+    'btr_voting_mode',
+    'btr_translation_lng',
+    'btr_preferred_projects',
+    'btr_export_path',
+    'btr_export_notify_admin',
 
-    'l10n_feedback_topcontrib_size',
-    'l10n_feedback_topcontrib_period',
+    'btr_topcontrib_size',
+    'btr_topcontrib_period',
 
-    'l10n_feedback_crontime',
+    'btr_crontime',
   );
   foreach ($variables as $var) {
     variable_del($var);

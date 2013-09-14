@@ -131,7 +131,7 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
   drupal_set_message(t("Export of '!project' is scheduled. You will be notified by email when it is done.",
       array('!project' => "$origin/$project")));
 
-  $notify_admin = variable_get('l10n_feedback_export_notify_admin', TRUE);
+  $notify_admin = variable_get('btr_export_notify_admin', TRUE);
   if ($notify_admin) {
     $queue = DrupalQueue::get('notifications');
     $params['type'] = 'notify-admin-on-export-request';
@@ -151,15 +151,15 @@ function l10n_feedback_export_form_validate($form, &$form_state) {
   $project = check_plain($project);
 
   if (empty($project)) {
-    $query = "SELECT DISTINCT origin FROM {l10n_feedback_projects} WHERE BINARY origin = :origin";
+    $query = "SELECT DISTINCT origin FROM {btr_projects} WHERE BINARY origin = :origin";
     $params = array(':origin' => $origin);
   }
   else {
-    $query = "SELECT project FROM {l10n_feedback_projects} WHERE BINARY origin = :origin AND BINARY project = :project";
+    $query = "SELECT project FROM {btr_projects} WHERE BINARY origin = :origin AND BINARY project = :project";
     $params = array(':origin' => $origin, ':project' => $project);
   }
 
-  $db = $GLOBALS['l10n_feedback_db'];
+  $db = $GLOBALS['btr_db'];
   $result = $db->query($query, $params)->fetchField();
   if (!$result) {
     form_set_error('', t("The project '!project' does not exist.", array('!project' => "$origin/$project")));
@@ -194,7 +194,7 @@ function l10n_feedback_get_exported_file($filename =NULL) {
   }
 
   // Get the full path of the export file.
-  $export_path = variable_get('l10n_feedback_export_path', '/var/www/exports');
+  $export_path = variable_get('btr_export_path', '/var/www/exports');
   $export_file = $export_path . '/' . $filename;
   if (!file_exists($export_file)) {
     drupal_set_message(t("Export file '!filename' does not exist!",

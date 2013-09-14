@@ -78,7 +78,7 @@ function btranslator_data_get_preferred_projects($account) {
   }
   else {
     // get the preferred projects from the site config
-    $preferred_projects_txt = variable_get('btranslator_data_preferred_projects', '');
+    $preferred_projects_txt = variable_get('btr_preferred_projects', '');
     $lines = preg_split('#\r\n|\r|\n#', $preferred_projects_txt);
     foreach ($lines as $line) {
       $line = trim($line);
@@ -111,12 +111,12 @@ function btranslator_data_get_last_project() {
   $args = array(':last_sguid' => $_SESSION['sguid']);
   $get_projects = "
       SELECT p.origin, p.project
-      FROM {btranslator_data_locations} l
-      LEFT JOIN {btranslator_data_templates} tpl ON (tpl.potid = l.potid)
-      LEFT JOIN {btranslator_data_projects} p ON (p.pguid = tpl.pguid)
+      FROM {btr_locations} l
+      LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
+      LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
       WHERE l.sguid = :last_sguid
   ";
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
   $result = $db->query($get_projects, $args)->fetchAll();
   $last_projects = array();
   foreach ($result as $proj) {

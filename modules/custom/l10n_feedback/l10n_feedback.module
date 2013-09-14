@@ -151,7 +151,7 @@ function l10n_feedback_init() {
   /*
   // Set the parameters of the l10n_feedback database.
   global $databases;
-  $databases['l10n_feedback_db']['default'] = array (
+  $databases['btr_db']['default'] = array (
       'database' => 'l10n_tst',
       'username' => 'l10n_tst',
       'password' => 'l10n_tst',
@@ -167,13 +167,13 @@ function l10n_feedback_init() {
 
   */
 
-  // Get a connection to the l10n_feedback_db. All the queries
+  // Get a connection to the btr_db. All the queries
   // of the l10n_feedback module will use this connection.
-  if (isset($GLOBALS['databases']['l10n_feedback_db']['default'])) {
-    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'l10n_feedback_db');
+  if (isset($GLOBALS['databases']['btr_db']['default'])) {
+    $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
   }
   else {
-    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'default');
+    $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
   }
 
   if (arg(0) == 'translations') {

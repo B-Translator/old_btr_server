@@ -6,7 +6,7 @@
 
 function l10n_feedback_rss_feed($origin =NULL, $project =NULL) {
 
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
 
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
   $domain = '';
@@ -113,17 +113,17 @@ function _l10n_feedback_get_latest_translations($origin =NULL, $project =NULL) {
            s.sguid, s.string,
            t.lng, t.translation, t.tguid, t.time,
            u.name, u.umail
-    FROM {l10n_feedback_translations} t
-    LEFT JOIN {l10n_feedback_strings} s ON (s.sguid = t.sguid)
-    LEFT JOIN {l10n_feedback_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
-    LEFT JOIN {l10n_feedback_locations} l ON (l.sguid = s.sguid)
-    LEFT JOIN {l10n_feedback_templates} tpl ON (tpl.potid = l.potid)
-    LEFT JOIN {l10n_feedback_projects} p ON (p.pguid = tpl.pguid)
+    FROM {btr_translations} t
+    LEFT JOIN {btr_strings} s ON (s.sguid = t.sguid)
+    LEFT JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+    LEFT JOIN {btr_locations} l ON (l.sguid = s.sguid)
+    LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
+    LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
     WHERE t.umail != 'admin@example.com' AND t.lng = :lng AND t.time > :from_date
     ";
 
   $args = array(
-    ':lng' => variable_get('l10n_feedback_translation_lng', 'fr'),
+    ':lng' => variable_get('btr_translation_lng', 'fr'),
     ':from_date' => date('Y-m-d', strtotime("-1 day")),
   );
 
@@ -143,7 +143,7 @@ function _l10n_feedback_get_latest_translations($origin =NULL, $project =NULL) {
   $get_latest_translations .= "\n    ORDER BY t.time DESC";
 
   // run the query and get the translations
-  $db = $GLOBALS['l10n_feedback_db'];
+  $db = $GLOBALS['btr_db'];
   $translations = $db->query($get_latest_translations, $args)->fetchAll();
 
   return $translations;

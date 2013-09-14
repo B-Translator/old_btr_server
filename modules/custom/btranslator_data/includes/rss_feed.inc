@@ -6,7 +6,7 @@
 
 function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
 
-  $lng = variable_get('btranslator_data_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
 
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
   $domain = '';
@@ -113,17 +113,17 @@ function _btranslator_data_get_latest_translations($origin =NULL, $project =NULL
            s.sguid, s.string,
            t.lng, t.translation, t.tguid, t.time,
            u.name, u.umail
-    FROM {btranslator_data_translations} t
-    LEFT JOIN {btranslator_data_strings} s ON (s.sguid = t.sguid)
-    LEFT JOIN {btranslator_data_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
-    LEFT JOIN {btranslator_data_locations} l ON (l.sguid = s.sguid)
-    LEFT JOIN {btranslator_data_templates} tpl ON (tpl.potid = l.potid)
-    LEFT JOIN {btranslator_data_projects} p ON (p.pguid = tpl.pguid)
+    FROM {btr_translations} t
+    LEFT JOIN {btr_strings} s ON (s.sguid = t.sguid)
+    LEFT JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+    LEFT JOIN {btr_locations} l ON (l.sguid = s.sguid)
+    LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
+    LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
     WHERE t.umail != 'admin@example.com' AND t.lng = :lng AND t.time > :from_date
     ";
 
   $args = array(
-    ':lng' => variable_get('btranslator_data_translation_lng', 'fr'),
+    ':lng' => variable_get('btr_translation_lng', 'fr'),
     ':from_date' => date('Y-m-d', strtotime("-1 day")),
   );
 
@@ -143,7 +143,7 @@ function _btranslator_data_get_latest_translations($origin =NULL, $project =NULL
   $get_latest_translations .= "\n    ORDER BY t.time DESC";
 
   // run the query and get the translations
-  $db = $GLOBALS['btranslator_data_db'];
+  $db = $GLOBALS['btr_db'];
   $translations = $db->query($get_latest_translations, $args)->fetchAll();
 
   return $translations;

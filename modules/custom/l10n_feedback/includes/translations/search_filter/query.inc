@@ -14,8 +14,8 @@
  *
  *    SELECT s.sguid,
  *           MAX(MATCH (t.translation) AGAINST (:words)) AS score
- *    FROM {l10n_feedback_strings} s
- *    LEFT JOIN {l10n_feedback_translations} t ON (s.sguid = t.sguid)
+ *    FROM {btr_strings} s
+ *    LEFT JOIN {btr_translations} t ON (s.sguid = t.sguid)
  *    LEFT JOIN . . . . .
  *    . . . . . . . . . .
  *    WHERE (t.lng = :lng)
@@ -35,7 +35,7 @@
  */
 function l10n_feedback_build_query($filter) {
 
-  $query = $GLOBALS['l10n_feedback_db']->select('l10n_feedback_strings', 's')
+  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
   $query->addField('s', 'sguid');
   $query->groupBy('s.sguid');
@@ -124,7 +124,7 @@ function _l10n_feedback_filter_by_project($query, $project, $origin) {
  */
 function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
 
-  $lng = variable_get('l10n_feedback_translation_lng', 'fr');
+  $lng = variable_get('btr_translation_lng', 'fr');
   if ($only_mine) {
     _l10n_feedback_join_table($query, 'votes');
 
@@ -145,8 +145,8 @@ function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $vo
   }
 
   //get the umail for $translated_by and $voted_by
-  $db = $GLOBALS['l10n_feedback_db'];
-  $get_umail = 'SELECT umail FROM {l10n_feedback_users} WHERE name = :name AND ulng = :ulng';
+  $db = $GLOBALS['btr_db'];
+  $get_umail = 'SELECT umail FROM {btr_users} WHERE name = :name AND ulng = :ulng';
   $args = array();
   $args[':ulng'] = $lng;
   $args[':name'] = $translated_by;
@@ -251,22 +251,22 @@ function _l10n_feedback_join_table($query, $table) {
 
   switch ($table) {
     case 'translations':
-      $query->leftJoin("l10n_feedback_translations", 't', 's.sguid = t.sguid');
+      $query->leftJoin("btr_translations", 't', 's.sguid = t.sguid');
       break;
     case 'votes':
       _l10n_feedback_join_table($query, 'translations');
-      $query->leftJoin("l10n_feedback_votes", 'v', 'v.tguid = t.tguid');
+      $query->leftJoin("btr_votes", 'v', 'v.tguid = t.tguid');
       break;
     case 'locations':
-      $query->leftJoin("l10n_feedback_locations", 'l', 's.sguid = l.sguid');
+      $query->leftJoin("btr_locations", 'l', 's.sguid = l.sguid');
       break;
     case 'templates':
-      $query->leftJoin("l10n_feedback_templates", 'tpl', 'tpl.potid = l.potid');
+      $query->leftJoin("btr_templates", 'tpl', 'tpl.potid = l.potid');
       break;
     case 'projects':
       _l10n_feedback_join_table($query, 'locations');
       _l10n_feedback_join_table($query, 'templates');
-      $query->leftJoin("l10n_feedback_projects", 'p', 'p.pguid = tpl.pguid');
+      $query->leftJoin("btr_projects", 'p', 'p.pguid = tpl.pguid');
       break;
     default:
       debug("Error: _l10n_feedback_join_table(): table '$table' is unknown.");

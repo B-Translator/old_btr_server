@@ -11,13 +11,13 @@
  */
 function btranslator_install() {
 
-  // Get a connection to the l10n_feedback_db. All the queries
+  // Get a connection to the btr_db. All the queries
   // of the l10n_feedback module will use this connection.
-  if (isset($GLOBALS['databases']['l10n_feedback_db']['default'])) {
-    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'l10n_feedback_db');
+  if (isset($GLOBALS['databases']['btr_db']['default'])) {
+    $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
   }
   else {
-    $GLOBALS['l10n_feedback_db'] = Database::getConnection('default', 'default');
+    $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
   }
 
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
