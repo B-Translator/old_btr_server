@@ -147,35 +147,6 @@ function l10n_feedback_flush_caches() {
  * Implements hook_init().
  */
 function l10n_feedback_init() {
-
-  /*
-  // Set the parameters of the l10n_feedback database.
-  global $databases;
-  $databases['btr_db']['default'] = array (
-      'database' => 'l10n_tst',
-      'username' => 'l10n_tst',
-      'password' => 'l10n_tst',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-   );
-
-  // Somehow, declaring the database here does not work.
-  // Instead, this should be added to settings.php, and then
-  // it will work.
-
-  */
-
-  // Get a connection to the btr_db. All the queries
-  // of the l10n_feedback module will use this connection.
-  if (isset($GLOBALS['databases']['btr_db']['default'])) {
-    $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
-  }
-  else {
-    $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
-  }
-
   if (arg(0) == 'translations') {
     drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback.css');
     // For the translation overview pages. This is used to present admin page like panels.

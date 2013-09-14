@@ -5,10 +5,8 @@
  */
 
 require_once(dirname(__FILE__) . '/includes/common.inc');
-require_once(dirname(__FILE__) . '/includes/menu.inc');
+require_once(dirname(__FILE__) . '/btranslator_data.menu.inc');
 require_once(dirname(__FILE__) . '/includes/cron.inc');
-require_once(dirname(__FILE__) . '/includes/mail_notifications.inc');
-require_once(dirname(__FILE__) . '/includes/hook_user.inc');
 
 /**
  * Implements hook_help().
@@ -29,118 +27,6 @@ function btranslator_data_help($path, $args) {
   return $help;
 }
                                */
-
-/**
- * Implementation of hook_permission().
- */
-function btranslator_data_permission() {
-  return array(
-    'btranslator-vote' => array(
-      'title' => t('Vote translations.'),
-      'description' => t('Can submit votes (or likes) for translation suggestions.'),
-    ),
-    'btranslator-suggest' => array(
-      'title' => t('Suggest new translations.'),
-      'description' => t('Can submit new translation suggestions.'),
-    ),
-    'btranslator-flag' => array(
-      'title' => t('Flag translations.'),
-      'description' => t('Can flag translations as inaproppriate.'),
-    ),
-    'btranslator-import' => array(
-      'title' => t('Import translation (PO) files.'),
-      'description' => t('Can import to B-Translator new translation files (in the PO format).'),
-    ),
-    'btranslator-export' => array(
-      'title' => t('Export translation files.'),
-      'description' => t('Can export translations from B-Translator (either in PO format, or as diff/ediff).'),
-    ),
-    'btranslator-stats' => array(
-      'title' => t('Statistics.'),
-      'description' => t('Can access global statistics of B-Translator.'),
-    ),
-    'btranslator-resolve' => array(
-      'title' => t('Resolve issues.'),
-      'description' => t('Can resolve flag issues and other problems.'),
-    ),
-    'btranslator-admin' => array(
-      'title' => t('Administer B-Translator.'),
-      'description' => t('Can perform administration tasks for B-Translator.'),
-    ),
-  );
-}  //  End of btranslator_data_permission().
-
-/**
- * Implements hook_theme().
- */
-function btranslator_data_theme($existing, $type, $theme, $path) {
-  return array(
-    'btranslator_data_filter_form_element' => array(
-      'render element' => 'element',
-    ),
-    'btranslator_data_translate_translation' => array(
-      'render element' => 'element',
-    ),
-    'btranslator_data_translate_actions' => array(
-      'render element' => 'element',
-    ),
-    'btranslator_data_in_context' => array(
-      'variables' => array('source' => NULL),
-    ),
-    'btranslator_data_translate_radio' => array(
-      'render element' => 'element',
-    ),
-    'btranslator_data_translate_source' => array(
-      'render element' => 'element',
-    ),
-    'btranslator_data_translate_translation_list' => array(
-      'render element' => 'element',
-    ),
-    'btranslator_data_translate_table' => array(
-      'render element' => 'element',
-    ),
-  );
-}
-
-/**
- * Implement hook_mail().
- *
- * This hook defines a list of possible e-mail templates that this module can
- * send. Each e-mail is given a unique identifier, or 'key'.
- *
- * $message comes in with some standard properties already set: 'to' address,
- * 'from' address, and a set of default 'headers' from drupal_mail(). The goal
- * of hook_mail() is to set the message's 'subject' and 'body' properties, as
- * well as make any adjustments to the headers that are necessary.
- *
- * The $params argument is an array which can hold any additional data required
- * to build the mail subject and body; for example, user-entered form data, or
- * some context information as to where the mail request came from.
- *
- * Note that hook_mail() is not actually a hook. It is only called for a single
- * module, the module named in the first argument of drupal_mail(). So it's
- * a callback of a type, but not a hook.
- */
-function btranslator_data_mail($key, &$message, $params) {
-  switch ($key) {
-    case 'notifications':
-    default:
-      $message['subject'] = $params['subject'];
-      $message['body'] = $params['body'];
-      break;
-  }
-}
-
-/**
- * Implements hook_flush_caches().
- * Add cache table names to the list of cache tables
- * that will be cleared by the Clear button on the Performance page
- * or whenever drupal_flush_all_caches is invoked.
- * Returns an array of cache table names.
- */
-function btranslator_data_flush_caches() {
-  return array('cache_btranslator_data');
-}
 
 /**
  * Implements hook_init().
@@ -174,33 +60,4 @@ function btranslator_data_init() {
   else {
     $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
   }
-
-  if (arg(0) == 'translations') {
-    drupal_add_css(drupal_get_path('module', 'btranslator_data') . '/btranslator_data.css');
-    // For the translation overview pages. This is used to present admin page like panels.
-    drupal_add_css(drupal_get_path('module', 'system') . '/admin.css');
-  }
-
-  // Check if language is RTL
-  $languages = btranslator_data_get_languages();
-  $lng = arg(1);
-  if (array_key_exists($lng, $languages)) {
-    // Add RTL style if the current language's direction is RTL
-    if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-      drupal_add_css(drupal_get_path('module', 'btranslator_data') . '/btranslator_data-rtl.css');
-    }
-  }
-
-  // Disable breadcrumb.
-  drupal_set_breadcrumb(array());
-}
-
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function btranslator_data_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
-  // remove the field 'field_data_sequential' from the form
-  // it is for internal usage only
-  $form['field_data_sequential']['#access'] = FALSE;
 }
