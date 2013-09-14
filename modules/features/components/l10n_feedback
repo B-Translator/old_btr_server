@@ -1,10 +1,10 @@
-variable:l10n_feedback_export_notify_admin
-variable:l10n_feedback_export_path
-variable:l10n_feedback_preferred_projects
-variable:l10n_feedback_topcontrib_period
-variable:l10n_feedback_topcontrib_size
-variable:l10n_feedback_translation_lng
-variable:l10n_feedback_voting_mode
+variable:btr_export_notify_admin
+variable:btr_export_path
+variable:btr_preferred_projects
+variable:btr_topcontrib_period
+variable:btr_topcontrib_size
+variable:btr_translation_lng
+variable:btr_voting_mode
 field:user-user-field_preferred_projects
 field:user-user-field_order_of_strings
 field:user-user-field_auxiliary_languages

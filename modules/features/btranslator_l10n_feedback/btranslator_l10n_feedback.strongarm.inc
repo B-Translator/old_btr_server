@@ -13,51 +13,51 @@ function btranslator_l10n_feedback_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_export_notify_admin';
+  $strongarm->name = 'btr_export_notify_admin';
   $strongarm->value = 1;
-  $export['l10n_feedback_export_notify_admin'] = $strongarm;
+  $export['btr_export_notify_admin'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_export_path';
+  $strongarm->name = 'btr_export_path';
   $strongarm->value = '/var/www/exports';
-  $export['l10n_feedback_export_path'] = $strongarm;
+  $export['btr_export_path'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_preferred_projects';
+  $strongarm->name = 'btr_preferred_projects';
   $strongarm->value = 'test';
-  $export['l10n_feedback_preferred_projects'] = $strongarm;
+  $export['btr_preferred_projects'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_topcontrib_period';
+  $strongarm->name = 'btr_topcontrib_period';
   $strongarm->value = 'week';
-  $export['l10n_feedback_topcontrib_period'] = $strongarm;
+  $export['btr_topcontrib_period'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_topcontrib_size';
+  $strongarm->name = 'btr_topcontrib_size';
   $strongarm->value = '5';
-  $export['l10n_feedback_topcontrib_size'] = $strongarm;
+  $export['btr_topcontrib_size'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_translation_lng';
+  $strongarm->name = 'btr_translation_lng';
   $strongarm->value = 'sq';
-  $export['l10n_feedback_translation_lng'] = $strongarm;
+  $export['btr_translation_lng'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_feedback_voting_mode';
+  $strongarm->name = 'btr_voting_mode';
   $strongarm->value = 'single';
-  $export['l10n_feedback_voting_mode'] = $strongarm;
+  $export['btr_voting_mode'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

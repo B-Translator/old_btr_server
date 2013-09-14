@@ -1,6 +1,6 @@
-l10n_feedback_translation_lng
-l10n_feedback_preferred_projects
-l10n_feedback_export_notify_admin
+btr_translation_lng
+btr_preferred_projects
+btr_export_notify_admin
 disqus_domain
 disqus_userapikey
 disqus_publickey
