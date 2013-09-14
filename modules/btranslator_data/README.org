@@ -1,0 +1,130 @@
+
+* Interfaces (forms)
+
+** Suggestion interface
+
+   This is the form where the (authenticated) user is presented with
+   an English string and several translation suggestions for it, and
+   he votes the one that he thinks is the best, or provides another
+   suggestion which he thinks is better.
+
+   The string to be translated is selected randomly, unless the user
+   has selected 'sequential' on his settings. The selection of the
+   string is also done so that it complies with the restrictions
+   imposed by the user on his settings (for example only from a
+   certain project).
+
+   The selection of the string should be also influenced by certain
+   algoriths and heuristics, which should try to give more exposure
+   to the strings that need more votes. For example if a string
+   already got 10 votes and another one got just 2 votes, the second
+   one should be more likely to be selected.
+
+   This interface should be able to integrate somehow with facebook,
+   email, google+, etc.
+
+
+** Query interface
+
+   On this form anybody (registered user or anonymous) can supply a
+   string in English, and the system will return the translation
+   suggestions related to it and the corresponding votes that each
+   suggestion has.
+
+   If the English string does not have an exact match on the DB, a
+   list of similar strings will be returned and the user will choose
+   to check one of them.
+
+   This functionality of querying suggestions will be offered also by
+   a web service so that it can be used by any external programs.
+
+
+** User configuration interface
+
+   Here the user customizes his settings, as described in the
+   functional requirements.  Some of the things that he can customize
+   are:
+    - how many translation reviews per day (default one)
+    - which communication means he preferes (email, facebook, google+,
+      twitter, website, android app, iPhone app, etc.)
+    - which projects or packages he would like to focus on (for
+      example, if the user selects the package KDE, only strings that
+      belong to a project on this package will be sent to him for
+      review and feedback)
+    - which languages he would like to use as primary and secondary
+      source languages (for example a user that is not confident in
+      English, may choose to use French as a primary language and
+      Italian+Spanish as secondary/helper languages)
+    - sequential or random selection of strings (random is the
+      default, but if the user is interested in just one or a few
+      projects, he may prefer to review the strings sequentially)
+
+
+** Export and import interfaces
+
+   Usually everybody can export PO files, but only the users with
+   certain permissions can import.
+
+
+** Admin interfaces
+
+   The admin should be able to customize the overall behaviour of the
+   module, to check activity, to get reports and statistics, to
+   maintain the data (backup, restore, update) etc.
+
+
+* Drupal paths
+
+** translations[/<lng>/<sguid>]
+
+   This interface presents a string and its available translations to
+   the user. The user will vote one of them as the best translation,
+   or will provide a new translation that he thinks is better.
+
+   <sguid> is the hash of the string that is being translated. If not
+   given, then a random string will be selected.
+
+   The original string is usually presented in English, but
+   additional languages can be presented as well, if the user is not
+   confident with English. (He can select these options on the user
+   settings page as well.)
+
+
+** translations/search?lng=..&limit=..&mode=..&words=..
+
+   Displays a list of strings and the corresponding suggestions, which
+   match some filter conditions. Filter conditions can be modified on
+   the interface. Search can be done by the content of the strings and
+   suggestions, and can be limited in scope by the project, by the author
+   of suggestions, by the submition date, etc.
+
+   From the displayed list, it is also possible to view details (for
+   string or suggestion), to submit votes, etc.
+
+
+** translations/project
+   + translations/project/list ([/origin[/project[/format]]])
+   + translations/project/export (/origin/project/language)
+   + translations/project/export_tgz (/origin/project/language)
+   + translations/project/diff (/origin/project/lng[/nr[/ediff]])
+     Return the diff/ediff of the PO files for a given
+     origin/project/lng/nr.  If the parameter 'nr' is '-', it returns
+     the latest most-voted suggestions since the last snapshot.  If
+     the parameter 'nr' is missing, it returns a list of the saved
+     diffs instead.
+
+
+** translations/user_settings
+   The user can set:
+   - translation language
+   - the prefered source language(s)
+   - how many reviews per day is willing to make
+   - etc.
+
+
+** translations/admin
+   + translations/admin/config
+   + translations/admin/dashboard
+   + translations/admin/reports
+   + translations/admin/stats
+
