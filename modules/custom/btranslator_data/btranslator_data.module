@@ -61,3 +61,15 @@ function btranslator_data_init() {
     $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
   }
 }
+
+/**
+ * Implements hook_flush_caches().
+ * Add cache table names to the list of cache tables
+ * that will be cleared by the Clear button on the Performance page
+ * or whenever drupal_flush_all_caches is invoked.
+ * Returns an array of cache table names.
+ */
+function btranslator_data_flush_caches() {
+  return array('cache_btranslator_data');
+}
+

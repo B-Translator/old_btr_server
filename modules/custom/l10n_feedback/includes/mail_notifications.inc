@@ -311,22 +311,11 @@ function l10n_feedback_build_notification_email($params) {
  * return array($string, $translations)
  */
 function l10n_feedback_get_string_and_translations($sguid) {
-
-  require_once(dirname(__FILE__) . '/translations/utils.inc');
-  $db = $GLOBALS['btr_db'];
-  $query = $db->select('btr_strings', 's')
-    ->fields('s', array('sguid'))
-    ->where('s.sguid = :sguid', array(':sguid' => $sguid));
-  $lng = variable_get('btr_translation_lng', 'fr');
-  $strings = l10n_feedback_get_strings($query, $lng);
-
-  $string = $strings[$sguid]->string;
-  $translations = array();
-  foreach ($strings[$sguid]->translations as $tguid => $obj_translation) {
-    $translations[] = $obj_translation->translation;
-  }
-
-  return array($string, $translations);
+  //include_once(drupal_get_path('module', 'btranslator_data') . '/functions.inc');
+  return btr_get_string_and_translations(
+    $sguid,
+    $lng = variable_get('btr_translation_lng', 'fr')
+  );
 }
 
 

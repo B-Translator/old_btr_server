@@ -9,38 +9,13 @@
  * It is called when a new user account is created.
  */
 function l10n_feedback_user_insert(&$edit, $account, $category) {
-
-  $db = $GLOBALS['btr_db'];
-
-  $args = array(
-    ':umail' => $account->init,  //initial email that the user used for registration
-    ':ulng' => variable_get('btr_translation_lng', 'fr'),
+  btr_user_insert(
+    $umail = $account->init,  // initial email that the user used for registration
+    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $uid = $account->uid,
+    $name = $account->name,
+    $status = $account->status
   );
-  $select_user = "
-    SELECT * FROM {btr_users}
-    WHERE umail = :umail AND ulng = :ulng
-  ";
-  $result = $db->query($select_user, $args);
-
-  $args[':uid'] = $account->uid;
-  $args[':name'] = $account->name;
-
-  if ($result->rowCount() > 0) {
-    l10n_feedback_user_update($edit, $account, $category);
-    $update_user = "
-      UPDATE {btr_users}
-      SET uid = :uid, name = :name, status = 1
-      WHERE umail = :umail AND ulng = :ulng
-    ";
-    $db->query($update_user, $args);
-  }
-  else {
-    $insert_user = "
-      INSERT INTO {btr_users} (umail, ulng, uid, name, status)
-      VALUES (:umail, :ulng, :uid, :name, 1)
-    ";
-    $db->query($insert_user, $args);
-  }
 }
 
 
@@ -49,19 +24,12 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
  * It is called after a user account has been updated.
  */
 function l10n_feedback_user_update(&$edit, $account, $category) {
-
-  $args = array(
-		':ulng' => variable_get('btr_translation_lng', 'fr'),
-    ':uid' => $account->uid,
-    ':name' => $account->name,
-    ':status' => $account->status,
+  btr_user_update(
+    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $uid = $account->uid,
+    $name = $account->name,
+    $status = $account->status
   );
-  $update_user = "
-    UPDATE {btr_users}
-    SET name = :name, status = :status
-    WHERE uid = :uid AND :ulng = ulng
-  ";
-  $GLOBALS['btr_db']->query($update_user, $args);
 }
 
 
@@ -69,17 +37,10 @@ function l10n_feedback_user_update(&$edit, $account, $category) {
  * Implements hook_user_cancel().
  */
 function l10n_feedback_user_cancel(&$edit, $account, $category) {
-
-  $args = array(
-    ':ulng' => variable_get('btr_translation_lng', 'fr'),
-    ':uid' => $account->uid,
+  btr_user_delete(
+    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $uid = $account->uid
   );
-  $update_user = "
-    UPDATE {btr_users}
-    SET status = 0
-    WHERE uid = :uid AND :ulng = ulng
-  ";
-  $GLOBALS['btr_db']->query($update_user, $args);
 }
 
 
@@ -87,17 +48,10 @@ function l10n_feedback_user_cancel(&$edit, $account, $category) {
  * Implements hook_user_delete().
  */
 function l10n_feedback_user_delete($account) {
-
-  $args = array(
-    ':ulng' => variable_get('btr_translation_lng', 'fr'),
-    ':uid' => $account->uid,
+  btr_user_delete(
+    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $uid = $account->uid
   );
-  $update_user = "
-    UPDATE {btr_users}
-    SET status = 0
-    WHERE uid = :uid AND :ulng = ulng
-  ";
-  $GLOBALS['btr_db']->query($update_user, $args);
 }
 
 
@@ -107,8 +61,6 @@ function l10n_feedback_user_delete($account) {
  * Store the value for 'field_data_sequential'.
  */
 function l10n_feedback_user_presave(&$edit, $account, $category) {
-
-  //dpm($edit);  dpm($account);  //debug
 
   // if skip_presave is defined, then user data is being saved
   // from the code, not from the profile interface
@@ -144,24 +96,7 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
 
   // for each preferred project, get the min and max location ids
   // and store them on the object $sequential
-  list($where_condition, $args) = l10n_feedback_projects_to_where_condition($arr_projects);
-  if ($where_condition == '') {
-    $sequential = NULL;
-  }
-  else {
-    $get_all_min_and_max_locations = "
-      SELECT min(l.lid) AS lmin, max(l.lid) AS lmax
-      FROM {btr_locations} l
-      RIGHT JOIN {btr_templates} t ON (l.potid = t.potid)
-      RIGHT JOIN {btr_projects} p ON (t.pguid = p.pguid)
-      WHERE $where_condition
-      GROUP BY p.project
-    ";
-    $result = $GLOBALS['btr_db']->query($get_all_min_and_max_locations, $args);
-    $sequential->projects = $result->fetchAll();
-    $sequential->idx = 0;
-    $sequential->lid = $sequential->projects[0]->lmin;
-  }
+  $sequential = btr_get_sequential_data($arr_projects);
 
   // save the object $sequential on the field 'field_data_sequential'
   $edit['field_data_sequential'][$lang][0]['value'] = serialize($sequential);
