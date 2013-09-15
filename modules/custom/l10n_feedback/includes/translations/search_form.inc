@@ -22,7 +22,7 @@ function l10n_feedback_build_filter() {
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
   //by default search for strings similar to the one that is being voted
   if ($lng == '' && isset($_SESSION['sguid'])) {
-    $string = get_string_from_id($_SESSION['sguid']);
+    $string = btr_get_string_from_id($_SESSION['sguid']);
     if ($string) {
       $lng = variable_get('btr_translation_lng', 'fr');
       $request['words'] = $string;

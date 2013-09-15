@@ -160,161 +160,36 @@ function l10n_feedback_get_sguid($uid =NULL) {
 
 /**
  * Return a random sguid from the preferred projects of the user.
- * If the user has not defined any preferred projects in his profile,
- * then the preferred projects selected by admin are used.
  */
 function l10n_feedback_get_random_sguid($uid) {
-
-  $db = $GLOBALS['btr_db'];
-
   // get the preferred projects (as an array)
-  $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
-
-  // build the WHERE condition for selecting projects
-  list($where, $args) = l10n_feedback_projects_to_where_condition($arr_preferred_projects);
-  if ($where == '')  $where = '(1=1)';
-
-  // Get the total number of strings from which we can choose.
-  $sql_count = "
-    SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
-    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
-  ";
-  $nr_strings = $db->query($sql_count, $args)->fetchField();
-
-  // Get a random row number.
-  $row_number = rand(0, $nr_strings - 1);
-
-  // Get the sguid of the random row.
-  $sql_get_sguid = "
-    SELECT s.sguid
-    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
-    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
-    LIMIT $row_number, 1
-  ";
-  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
-  $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
-
-  return $random_sguid;
+  $preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
+  return btr_get_random_sguid($preferred_projects);
 }
 
 /**
  * Return a random untranslated sguid from the preferred projects of the user.
- * If the user has not defined any preferred projects in his profile,
- * then the preferred projects selected by admin are used.
  */
 function l10n_feedback_get_untranslated_sguid() {
-
-  $uid = $GLOBALS['user']->uid;
-  $db = $GLOBALS['btr_db'];
-
-  // get the preferred projects (as an array)
-  $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
-
-  // build the WHERE condition for selecting projects
-  list($where, $args) = l10n_feedback_projects_to_where_condition($arr_preferred_projects);
-  $args[':lng'] = variable_get('btr_translation_lng', 'fr');
-  if ($where == '')  $where = '(1=1)';
-
-  // Get the total number of strings from which we can choose.
-  $sql_count = "
-    SELECT COUNT(*) AS number_of_strings
-    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
-    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
-    LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
-    WHERE t.sguid IS NULL
-  ";
-  $nr_strings = $db->query($sql_count, $args)->fetchField();
-
-  // Get the sguid of a random untranslated. 'count' keeps in how many projects
-  // a string appears. Ordering by 'count' and getting a random string
-  // from the top, we try to get an untranslated string that appears
-  // in other projects as well.
-  $row_number = rand(0, ceil($nr_strings/3));
-  $sql_get_sguid = "
-    SELECT s.sguid
-    FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
-    LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
-    LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
-    LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
-    LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
-    WHERE t.sguid IS NULL
-    ORDER BY s.count DESC
-    LIMIT $row_number, 1
-  ";
-  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
-  $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
-
-  return $random_sguid;
+  $account = user_load($GLOBALS['user']->uid);
+  $preferred_projects = l10n_feedback_get_preferred_projects($account);
+  $lng = variable_get('btr_translation_lng', 'fr');
+  return btr_get_untranslated_sguid($preferred_projects, $lng);
 }
 
 /**
  * Return a random translated sguid from the preferred projects of the user.
- * If the user has not defined any preferred projects in his profile,
- * then the preferred projects selected by admin are used.
  */
 function l10n_feedback_get_translated_sguid() {
-
-  $uid = $GLOBALS['user']->uid;
-  $db = $GLOBALS['btr_db'];
-
-  // get the preferred projects (as an array)
-  $arr_preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
-
-  // build the WHERE condition for selecting projects
-  list($where, $args) = l10n_feedback_projects_to_where_condition($arr_preferred_projects);
-  $args[':lng'] = variable_get('btr_translation_lng', 'fr');
-  if ($where == '')  $where = '(1=1)';
-
-  // Get the total number of strings from which we can choose.
-  $sql_count = "
-    SELECT COUNT(*) AS number_of_strings
-    FROM ( SELECT DISTINCT s.sguid
-	   FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
-	   LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
-	   LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
-	   LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
-	   LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
-	   WHERE t.sguid IS NOT NULL
-         )  AS st
-  ";
-  $nr_strings = $db->query($sql_count, $args)->fetchField();
-
-  // Get the sguid of a random translated string. We sort strings
-  // by the number of translations they have, and try to select one
-  // that has many translations and/or many votes.
-  $row_number = rand(0, ceil($nr_strings/5));
-  $sql_get_sguid = "
-    SELECT sguid
-    FROM ( SELECT s.sguid
-	   FROM (SELECT pguid FROM {btr_projects} WHERE $where) p
-	   LEFT JOIN {btr_templates} tpl ON (tpl.pguid = p.pguid)
-	   LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
-	   LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
-	   LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
-	   WHERE t.sguid IS NOT NULL
-           GROUP BY s.sguid
-           ORDER BY (count(*) + sum(t.count)) DESC
-         )  AS st
-    LIMIT $row_number, 1
-  ";
-  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
-  $random_sguid = $db->query($sql_get_sguid, $args)->fetchField();
-
-  return $random_sguid;
+  $account = user_load($GLOBALS['user']->uid);
+  $preferred_projects = l10n_feedback_get_preferred_projects($account);
+  $lng = variable_get('btr_translation_lng', 'fr');
+  return btr_get_translated_sguid($preferred_projects, $lng);
 }
 
 
 /**
  * Return a sequential sguid from the preferred projects of the user.
- * If the user has not defined any preferred projects in his profile,
- * then the preferred projects selected by admin are used.
  */
 function l10n_feedback_get_sequential_sguid($uid) {
 
@@ -358,9 +233,6 @@ function l10n_feedback_get_sequential_sguid($uid) {
   $edit['skip_presave'] = TRUE;
   user_save($account, $edit);
 
-  // get and return the $sguid
-  $query = 'SELECT sguid FROM {btr_locations} WHERE lid=:lid';
-  $sguid = $GLOBALS['btr_db']->query($query, array(':lid' => $lid))->fetchField();
-
-  return $sguid;
+  // get and return the sguid
+  return btr_get_sguid_from_lid($lid);
 }

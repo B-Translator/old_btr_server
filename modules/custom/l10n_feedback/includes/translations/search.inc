@@ -52,7 +52,7 @@ function l10n_feedback_search() {
   );
 
   // Get the strings that match the filter and the corresponding translations.
-  $strings = get_search_results($filter, $lng);
+  $strings = btr_get_search_results($filter, $lng);
 
   // Output the strings.
   if (empty($strings)) {
