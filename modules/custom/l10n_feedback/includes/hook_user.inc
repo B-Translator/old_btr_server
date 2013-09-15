@@ -37,7 +37,7 @@ function l10n_feedback_user_update(&$edit, $account, $category) {
  * Implements hook_user_cancel().
  */
 function l10n_feedback_user_cancel(&$edit, $account, $category) {
-  btr_user_delete(
+  btr_user_disable(
     $ulng = variable_get('btr_translation_lng', 'fr'),
     $uid = $account->uid
   );
@@ -48,12 +48,11 @@ function l10n_feedback_user_cancel(&$edit, $account, $category) {
  * Implements hook_user_delete().
  */
 function l10n_feedback_user_delete($account) {
-  btr_user_delete(
+  btr_user_disable(
     $ulng = variable_get('btr_translation_lng', 'fr'),
     $uid = $account->uid
   );
 }
-
 
 /**
  * Implements hook_user_presave().

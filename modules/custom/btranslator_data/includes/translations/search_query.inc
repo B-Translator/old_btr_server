@@ -30,20 +30,23 @@
  *
  * @param $filter
  *   Filter conditions that should be matched.
+ *   It is an associated array with these keys:
+ *      lng, limit, mode, words, project, origin, only_mine,
+ *      translated_by, voted_by, date_filter, from_date, to_date
  * @return
  *   A query object that corresponds to the filter.
  */
-function l10n_feedback_build_query($filter) {
+function btr_build_search_query($filter) {
 
   $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
   $query->addField('s', 'sguid');
   $query->groupBy('s.sguid');
 
-  _l10n_feedback_filter_by_content($query, $filter['mode'], $filter['words']);
-  _l10n_feedback_filter_by_project($query, $filter['project'], $filter['origin']);
-  _l10n_feedback_filter_by_author($query, $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
-  _l10n_feedback_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
+  _btr_filter_by_content($query, $filter['mode'], $filter['words']);
+  _btr_filter_by_project($query, $filter['project'], $filter['origin']);
+  _btr_filter_by_author($query, $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
+  _btr_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
 
   //if nothing has been selected yet, then return FALSE
   //dpm($query->conditions(), 'query_conditions');  //debug
@@ -66,7 +69,7 @@ function l10n_feedback_build_query($filter) {
  * The first parameter, $query, is an object, so it is
  * passed by reference.
  */
-function _l10n_feedback_filter_by_content($query, $search_mode, $search_words) {
+function _btr_filter_by_content($query, $search_mode, $search_words) {
 
   //if there are no words to be searched for, no condition can be added
   if (trim($search_words) == '') {
@@ -86,7 +89,7 @@ function _l10n_feedback_filter_by_content($query, $search_mode, $search_words) {
     );
   }
   else {   // ($content=='translations')
-    _l10n_feedback_join_table($query, 'translations');
+    _btr_join_table($query, 'translations');
     $query->addExpression('MAX(MATCH (t.translation) AGAINST (:words))', 'score');
     $query->where(
       'MATCH (t.translation) AGAINST (:words' . $in_boolean_mode . ')',
@@ -103,11 +106,11 @@ function _l10n_feedback_filter_by_content($query, $search_mode, $search_words) {
  * The first parameter, $query, is an object, so it is passed
  * by reference.
  */
-function _l10n_feedback_filter_by_project($query, $project, $origin) {
+function _btr_filter_by_project($query, $project, $origin) {
 
   if ($project == '' and $origin == '')  return;
 
-  _l10n_feedback_join_table($query, 'projects');
+  _btr_join_table($query, 'projects');
 
   if ($project != '') {
     $query->condition('p.project', $project);
@@ -122,11 +125,11 @@ function _l10n_feedback_filter_by_project($query, $project, $origin) {
  * The first parameter, $query, is an object, so it is passed
  * by reference.
  */
-function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
+function _btr_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
 
   $lng = variable_get('btr_translation_lng', 'fr');
   if ($only_mine) {
-    _l10n_feedback_join_table($query, 'votes');
+    _btr_join_table($query, 'votes');
 
     global $user;
     $umail = $user->init;  // initial mail used for registration
@@ -157,7 +160,7 @@ function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $vo
   //if it is the same user, then search for strings
   //translated OR voted by this user
   if ($t_umail==$v_umail and $t_umail!='') {
-    _l10n_feedback_join_table($query, 'votes');
+    _btr_join_table($query, 'votes');
     $query ->condition(db_or()
       ->condition(db_and()
         ->condition('t.umail', $t_umail)
@@ -174,11 +177,11 @@ function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $vo
   //if the users are different, then search for strings
   //translated by $t_umail AND voted by $v_umail
   if ($t_umail != '') {
-    _l10n_feedback_join_table($query, 'translations');
+    _btr_join_table($query, 'translations');
     $query->condition('t.umail', $t_umail)->condition('t.ulng', $lng);
   }
   if ($v_umail != '') {
-    _l10n_feedback_join_table($query, 'votes');
+    _btr_join_table($query, 'votes');
     $query->condition('v.umail', $v_umail)->condition('v.ulng', $lng);
   }
 }
@@ -193,7 +196,7 @@ function _l10n_feedback_filter_by_author($query, $only_mine, $translated_by, $vo
  * $from_date and $to_date are associative arrays of the format
  * array('year' => int, 'month' => int, 'day' => int)
  */
-function _l10n_feedback_filter_by_date($query, $date_filter, $from_date, $to_date) {
+function _btr_filter_by_date($query, $date_filter, $from_date, $to_date) {
 
   //convert $from_date and $to_date to the string format YYYY-MM-DD
   $from_date_str = date('Y-m-d', mktime(1, 0, 0, $from_date['month'], $from_date['day'], $from_date['year']));
@@ -208,10 +211,10 @@ function _l10n_feedback_filter_by_date($query, $date_filter, $from_date, $to_dat
   //if the date of translations or votes has to be checked,
   //then the corresponding tables must be joined
   if ($date_filter == 'translations') {
-    _l10n_feedback_join_table($query, 'translations');
+    _btr_join_table($query, 'translations');
   }
   elseif ($date_filter == 'votes') {
-    _l10n_feedback_join_table($query, 'votes');
+    _btr_join_table($query, 'votes');
   }
 
   //get the alias (name) of the date field that has to be checked
@@ -244,7 +247,7 @@ function _l10n_feedback_filter_by_date($query, $date_filter, $from_date, $to_dat
  * Make sure that the join is added only once (by using tags).
  * $table can be one of: translations, votes, locations
  */
-function _l10n_feedback_join_table($query, $table) {
+function _btr_join_table($query, $table) {
   $tag = "join-$table";
   if ($query->hasTag($tag))  return;
   $query->addTag($tag);
@@ -254,7 +257,7 @@ function _l10n_feedback_join_table($query, $table) {
       $query->leftJoin("btr_translations", 't', 's.sguid = t.sguid');
       break;
     case 'votes':
-      _l10n_feedback_join_table($query, 'translations');
+      _btr_join_table($query, 'translations');
       $query->leftJoin("btr_votes", 'v', 'v.tguid = t.tguid');
       break;
     case 'locations':
@@ -264,12 +267,12 @@ function _l10n_feedback_join_table($query, $table) {
       $query->leftJoin("btr_templates", 'tpl', 'tpl.potid = l.potid');
       break;
     case 'projects':
-      _l10n_feedback_join_table($query, 'locations');
-      _l10n_feedback_join_table($query, 'templates');
+      _btr_join_table($query, 'locations');
+      _btr_join_table($query, 'templates');
       $query->leftJoin("btr_projects", 'p', 'p.pguid = tpl.pguid');
       break;
     default:
-      debug("Error: _l10n_feedback_join_table(): table '$table' is unknown.");
+      debug("Error: _btr_join_table(): table '$table' is unknown.");
       break;
   }
 }

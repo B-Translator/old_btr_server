@@ -61,7 +61,7 @@ function l10n_feedback_get_string_order($account) {
  * Return the value of the field 'field_preferred_projects'
  * as an array of strings. If the user has not defined any
  * preferred projects on his profile/settings, then get the
- * the preferred projects defined by admin on the config page.
+ * preferred projects defined by admin on the config page.
  */
 function l10n_feedback_get_preferred_projects($account) {
 
@@ -89,11 +89,11 @@ function l10n_feedback_get_preferred_projects($account) {
   }
 
   if (isset($_SESSION['same_project']) && $_SESSION['same_project']) {
-    $last_project = l10n_feedback_get_last_project();
-    if (!empty($last_project)) {
-      $arr_preferred_projects = array_intersect($arr_preferred_projects, $last_project);
+    $last_projects = btr_get_projects($_SESSION['sguid']);
+    if (!empty($last_projects)) {
+      $arr_preferred_projects = array_intersect($arr_preferred_projects, $last_projects);
       if (empty($arr_preferred_projects)) {
-	$arr_preferred_projects = $last_project;
+	$arr_preferred_projects = $last_projects;
       }
     }
   }
@@ -101,30 +101,6 @@ function l10n_feedback_get_preferred_projects($account) {
   return $arr_preferred_projects;
 }
 
-/**
- * Return the project(s) of the last sguid
- * as an array.
- */
-function l10n_feedback_get_last_project() {
-  if ( !isset($_SESSION['sguid']))  return array();
-
-  $args = array(':last_sguid' => $_SESSION['sguid']);
-  $get_projects = "
-      SELECT p.origin, p.project
-      FROM {btr_locations} l
-      LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
-      LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
-      WHERE l.sguid = :last_sguid
-  ";
-  $db = $GLOBALS['btr_db'];
-  $result = $db->query($get_projects, $args)->fetchAll();
-  $last_projects = array();
-  foreach ($result as $proj) {
-    $last_projects[] = $proj->origin . '/' . $proj->project;
-  }
-
-  return $last_projects;
-}
 
 /**
  * Return the value of the field 'field_auxiliary_languages' as an array.

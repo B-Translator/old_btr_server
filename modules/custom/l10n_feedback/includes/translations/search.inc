@@ -7,7 +7,7 @@
 /**
  * Include utility and theme functions.
  */
-require_once(dirname(__FILE__) . '/search_filter/search_filter.inc');
+require_once(dirname(__FILE__) . '/search_form.inc');
 require_once(dirname(__FILE__) . '/list/list.inc');
 require_once(dirname(__FILE__) . '/utils.inc');
 
@@ -51,16 +51,8 @@ function l10n_feedback_search() {
     drupal_get_form('l10n_feedback_filter_form', $filter)
   );
 
-  // Get a query for selecting strings that match the filter.
-  $query = l10n_feedback_build_query($filter);
-  if (!$query) {
-    drupal_set_message(t('Filter is empty. Put something on the filter options.'));
-    return $output;
-  }
-  //dpq($query);  //debug
-
-  // Get the strings selected by the filter and the corresponding translations.
-  $strings = l10n_feedback_get_strings($query, $lng);
+  // Get the strings that match the filter and the corresponding translations.
+  $strings = get_search_results($filter, $lng);
 
   // Output the strings.
   if (empty($strings)) {

@@ -70,11 +70,10 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
   // Set the title.
   drupal_set_title(t('Get Translations'));
 
-  // Get the matching string and its translations.
-  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
-    ->fields('s', array('sguid'))
-    ->where('s.sguid = :sguid', array(':sguid' => $sguid));
-  $strings = l10n_feedback_get_strings($query, $lng);
+  // Get the string and its translations.
+  global $user;
+  $other_langs = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
+  $strings = btr_get_strings_from_ids(array($sguid), $lng, $other_langs);
   //if ($strings) dpm($strings[0]);  //debug
 
   // If no strings were returned, display an empty message.

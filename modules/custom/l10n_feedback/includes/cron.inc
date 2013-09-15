@@ -207,10 +207,6 @@ function l10n_feedback_delete_fake_user($uid) {
   user_delete($uid);
 
   // Delete from the table 'btr_users'
-  $db = $GLOBALS['btr_db'];
   $lng = variable_get('btr_translation_lng', 'fr');
-  $db->delete('btr_users')
-    ->condition('uid', $uid)
-    ->condition('ulng', $lng)
-    ->execute();
+  btr_user_delete($lng, $uid);
 }

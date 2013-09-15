@@ -4,6 +4,34 @@
  * Functions called from the user interface.
  */
 
+function get_string_from_id($sguid) {
+  $sql = 'SELECT string FROM {btr_strings} WHERE sguid = :sguid';
+  $string = $GLOBALS['btr_db']->query($sql, array(':sguid' => $sguid))->fetchField();
+  return $string;
+}
+
+function get_search_results($filter, $lng) {
+  //get a query for selecting strings that match the filter
+  $query = btr_build_search_query($filter);
+  if (!$query) {
+    drupal_set_message(t('Filter is empty. Put something on the filter options.'));
+  }
+  //dpq($query);  //debug
+
+  //get the strings that match the filter and the corresponding translations
+  $strings = btr_get_strings($query, $lng);
+
+  return $strings;
+}
+
+function btr_get_strings_from_ids($arr_sguid, $lng, $alternative_langs = array()) {
+  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
+    ->fields('s', array('sguid'))
+    ->condition('s.sguid', $arr_sguid, 'IN');
+  return btr_get_strings($filter_query, $lng, $alternative_langs);
+}
+
+
 /**
  * Get the details of strings, translations and votes and return them
  * as an associative array, in a suitable format for being displayed.
@@ -219,7 +247,7 @@ function btr_user_update($ulng, $uid, $name, $status) {
 /**
  * It is called when a user is cancelled or deleted.
  */
-function btr_user_delete($ulng, $uid) {
+function btr_user_disable($ulng, $uid) {
   $args = array(':ulng' => $ulng, ':uid' => $uid);
   $update_user = "
     UPDATE {btr_users}
@@ -228,6 +256,19 @@ function btr_user_delete($ulng, $uid) {
   ";
   $GLOBALS['btr_db']->query($update_user, $args);
 }
+
+/**
+ * It is used while cleaning fake (spam) users.
+ */
+function btr_user_delete($ulng, $uid) {
+  $db = $GLOBALS['btr_db'];
+  $db->delete('btr_users')
+    ->condition('ulng', $ulng)
+    ->condition('uid', $uid)
+    ->execute();
+}
+
+/* ------------------------------------------------------- */
 
 
 /**
@@ -296,4 +337,30 @@ function _btr_projects_to_where_condition($arr_projects) {
   $where_condition = implode(' OR ', $arr_conditions);
 
   return array($where_condition, $arguments);
+}
+
+
+/**
+ * Return an array of the projects that contain the given string.
+ * Each item of the array is of the form 'origin/project'.
+ */
+function btr_get_projects($sguid) {
+  if (empty($sguid))  return array();
+
+  $args = array(':sguid' => $sguid);
+  $get_projects = "
+      SELECT p.origin, p.project
+      FROM {btr_locations} l
+      LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
+      LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
+      WHERE l.sguid = :sguid
+  ";
+  $db = $GLOBALS['btr_db'];
+  $result = $db->query($get_projects, $args)->fetchAll();
+  $projects = array();
+  foreach ($result as $proj) {
+    $projects[] = $proj->origin . '/' . $proj->project;
+  }
+
+  return $projects;
 }
