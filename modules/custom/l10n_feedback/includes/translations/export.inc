@@ -159,8 +159,7 @@ function l10n_feedback_export_form_validate($form, &$form_state) {
     $params = array(':origin' => $origin, ':project' => $project);
   }
 
-  $db = $GLOBALS['btr_db'];
-  $result = $db->query($query, $params)->fetchField();
+  $result = btr_query($query, $params)->fetchField();
   if (!$result) {
     form_set_error('', t("The project '!project' does not exist.", array('!project' => "$origin/$project")));
   }

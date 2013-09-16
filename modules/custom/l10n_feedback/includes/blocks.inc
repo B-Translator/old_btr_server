@@ -150,42 +150,12 @@ function _l10n_feedback_block_topcontrib() {
     return $cache->data;
   }
 
-  $size = variable_get('btr_topcontrib_size', 5);
+  $lng = variable_get('btr_translation_lng', 'fr');
   $period = variable_get('btr_topcontrib_period', 'week');
   $from_date = date('Y-m-d', strtotime("-1 $period"));
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $size = variable_get('btr_topcontrib_size', 5);
 
-  // Give weight 5 to a translation and weight 1 to a vote,
-  // get the sum of all the weights grouped by user (umail),
-  // order by this score, and get the top users.
-  $sql_get_topcontrib = "
-    SELECT u.uid, u.name, u.umail, sum(w.weight) AS score,
-           sum(w.translation) AS translations, sum(w.vote) AS votes
-    FROM (
-       (
-         SELECT t.umail, 5 AS weight,
-                1 AS translation, 0 AS vote
-         FROM {btr_translations} t
-         WHERE ulng = :lng AND time > :from_date
-           AND umail!='admin@example.com'
-       )
-       UNION ALL
-       (
-         SELECT v.umail, 1 AS weight,
-                0 AS translation, 1 AS vote
-         FROM {btr_votes} v
-         WHERE ulng = :lng AND time > :from_date
-           AND umail!='admin@example.com'
-       )
-    ) AS w
-    LEFT JOIN {btr_users} u
-           ON (u.ulng = :lng AND u.umail = w.umail)
-    GROUP BY w.umail
-    ORDER BY score DESC
-  ";
-  $args = array(':lng' => $lng, ':from_date' => $from_date);
-  $db = $GLOBALS['btr_db'];
-  $topusers = $db->queryRange($sql_get_topcontrib, 0, $size, $args)->fetchAll();
+  $topusers = btr_stat_topcontrib($lng, $from_date, $size);
 
   $output =  array(
     'first_para' => array(
@@ -247,43 +217,25 @@ function _l10n_feedback_block_statistics() {
   }
 
   $lng = variable_get('btr_translation_lng', 'fr');
-  $db = $GLOBALS['btr_db'];
+  $stats = btr_statistics($lng);
 
-  $sql_count_translations = "SELECT count(*) as cnt FROM {btr_translations}
-                             WHERE ulng = '$lng' AND time >= :from_date
-                               AND umail NOT IN ('admin@example.com', 'admin@btranslator.org', '')";
-  $sql_count_votes = "SELECT count(*) as cnt FROM {btr_votes}
-                      WHERE ulng = '$lng' AND time >= :from_date";
-
-  $output =  array(
-    'ulist' => array(
-      '#items' => array(),
-      '#theme' => 'item_list',
-    ),
-  );
-
-  foreach (array('week', 'month', 'year') as $period) {
-    $from_date = date('Y-m-d', strtotime("-1 $period"));
-    $args = array(':from_date' => $from_date);
-    $nr_votes = $db->query($sql_count_votes, $args)->fetchField();
-    $nr_translations = $db->query($sql_count_translations, $args)->fetchField();
-
+  foreach ($stats as $period => $stat) {
     $args = array(
-      '!nr_votes' => $nr_votes,
-      '!nr_translations' => $nr_translations,
+      '!nr_votes' => $stat['nr_votes'],
+      '!nr_translations' => $stat['nr_translations'],
       '@url_votes' => url('translations/search', array(
                       'query' => array(
                         'lng' => $lng,
                         'limit' => '10',
                         'date_filter' => 'votes',
-                        'from_date' => $from_date,
+                        'from_date' => $stat['from_date'],
                       ))),
       '@url_translations' => url('translations/search', array(
                              'query' => array(
                                'lng' => $lng,
                                'limit' => '10',
                                'date_filter' => 'translations',
-                               'from_date' => $from_date,
+                               'from_date' => $stat['from_date'],
                              ))),
     );
     $output['ulist']['#items'][] = t("Last $period:") . '<br/>'
