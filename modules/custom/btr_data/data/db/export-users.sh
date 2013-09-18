@@ -1,21 +1,21 @@
 #!/bin/bash
-### Export user tables of btranslator and btranslator_data.
+### Export user tables of btr and btr_data.
 
 ### mysqldump default options
 mysqldump="mysqldump --defaults-file=/etc/mysql/debian.cnf"
 
 ### get database names
-BTR=${BTRANSLATOR:-btranslator}
-DATA=${BTRANSLATOR_DATA:-btranslator_data}
+BTR=${BTR:-btr}
+DATA=${BTR_DATA:-btr_data}
 
 ### get the dump file name
 date=$(date +%Y%m%d)
 dump_file=users-$date.sql
 
-### dump all the users of 'btranslator_data'
+### dump all the users of 'btr_data'
 $mysqldump --databases $DATA --tables btr_users > $dump_file
 
-### dump all the drupal users of 'btranslator'
+### dump all the drupal users of 'btr'
 table_list="
     users
     users_roles

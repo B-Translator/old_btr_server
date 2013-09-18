@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Module file for btranslator_data.
+ * Module file for btr_data.
  */
 
-require_once(dirname(__FILE__) . '/btranslator_data.menu.inc');
+require_once(dirname(__FILE__) . '/btr_data.menu.inc');
 require_once(dirname(__FILE__) . '/includes/functions.inc');
 require_once(dirname(__FILE__) . '/includes/cron.inc');
 
@@ -12,7 +12,7 @@ require_once(dirname(__FILE__) . '/includes/cron.inc');
  * Implements hook_help().
  */
                                /*
-function btranslator_data_help($path, $args) {
+function btr_data_help($path, $args) {
   switch($path)
     {
       case 'translations/get':
@@ -47,7 +47,7 @@ function btranslator_data_help($path, $args) {
  * module, the module named in the first argument of drupal_mail(). So it's
  * a callback of a type, but not a hook.
  */
-function btranslator_data_mail($key, &$message, $params) {
+function btr_data_mail($key, &$message, $params) {
   switch ($key) {
     case 'notifications':
     default:
@@ -61,10 +61,10 @@ function btranslator_data_mail($key, &$message, $params) {
 /**
  * Implements hook_init().
  */
-function btranslator_data_init() {
+function btr_data_init() {
 
   /*
-  // Set the parameters of the btranslator_data database.
+  // Set the parameters of the btr_data database.
   global $databases;
   $databases['btr_db']['default'] = array (
       'database' => 'l10n_tst',
@@ -83,7 +83,7 @@ function btranslator_data_init() {
   */
 
   // Get a connection to the btr_db. All the queries
-  // of the btranslator_data module will use this connection.
+  // of the btr_data module will use this connection.
   if (isset($GLOBALS['databases']['btr_db']['default'])) {
     $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
   }
@@ -99,7 +99,7 @@ function btranslator_data_init() {
  * or whenever drupal_flush_all_caches is invoked.
  * Returns an array of cache table names.
  */
-function btranslator_data_flush_caches() {
-  return array('cache_btranslator_data');
+function btr_data_flush_caches() {
+  return array('cache_btr_data');
 }
 

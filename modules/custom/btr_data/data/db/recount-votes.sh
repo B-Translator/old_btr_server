@@ -6,7 +6,7 @@
 ### the field 'count' on table 'btr_translations'
 
 ### mysqldump options
-dbname=${BTRANSLATOR_DATA:-btranslator_data}
+dbname=${BTR_DATA:-btr_data}
 mysql="mysql --defaults-file=/etc/mysql/debian.cnf --database=$dbname"
 
 ### recount the number of votes and update translations

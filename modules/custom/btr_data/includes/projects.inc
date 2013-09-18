@@ -16,7 +16,7 @@
  *
  * The third variable can be JSON or TEXT (default).
  */
-function btranslator_data_project_list($origin =NULL, $project =NULL, $format =NULL) {
+function btr_data_project_list($origin =NULL, $project =NULL, $format =NULL) {
 
   //print "$origin/$project/$format\n";  //debug
 
@@ -70,7 +70,7 @@ function btranslator_data_project_list($origin =NULL, $project =NULL, $format =N
 /**
  * Return as plain-text the PO file for a given origin/project/lng.
  */
-function btranslator_data_project_export($origin =NULL, $project =NULL, $lng =NULL) {
+function btr_data_project_export($origin =NULL, $project =NULL, $lng =NULL) {
 
   print "For performance reasons, export is currently disabled.";
   exit(0);
@@ -81,7 +81,7 @@ function btranslator_data_project_export($origin =NULL, $project =NULL, $lng =NU
 
   set_time_limit(0);
 
-  $path = drupal_get_path('module', 'btranslator_data') . '/data/export';
+  $path = drupal_get_path('module', 'btr_data') . '/data/export';
   $tplname = $project;
   $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
 
@@ -98,7 +98,7 @@ function btranslator_data_project_export($origin =NULL, $project =NULL, $lng =NU
  * If project=='all', then all the projects of the given origin
  * will be exported (it usually takes a very long time).
  */
-function btranslator_data_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
+function btr_data_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
 
   print "For performance reasons, export_tgz is currently disabled.";
   exit(0);
@@ -110,7 +110,7 @@ function btranslator_data_project_export_tgz($origin ='LibreOffice', $project ='
   set_time_limit(0);
 
   // Export files in a tgz archive.
-  $path = drupal_get_path('module', 'btranslator_data') . '/data/export';
+  $path = drupal_get_path('module', 'btr_data') . '/data/export';
   $tgz_file = exec("$path/export_tgz.sh $origin $project $lng");
 
   // Send the headers.
@@ -134,7 +134,7 @@ function btranslator_data_project_export_tgz($origin ='LibreOffice', $project ='
  * since the last snapshot.
  * If the parameter 'nr' is missing, it returns a list of the saved diffs instead.
  */
-function btranslator_data_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
+function btr_data_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
   $origin = check_plain($origin);
   $project = check_plain($project);
   $lng = check_plain($lng);
@@ -145,7 +145,7 @@ function btranslator_data_project_diff($origin, $project, $lng, $nr =NULL, $form
 
   set_time_limit(0);
 
-  $path = drupal_get_path('module', 'btranslator_data') . '/data/export';
+  $path = drupal_get_path('module', 'btr_data') . '/data/export';
   if (empty($nr)) {
     $output = shell_exec("$path/db_diff.php list $origin $project $lng");
   }
@@ -169,7 +169,7 @@ function btranslator_data_project_diff($origin, $project, $lng, $nr =NULL, $form
  * The URL is of the form 'translations/exports/filename.tgz'
  * where the filename is passed as a parameter to the function.
  */
-function btranslator_data_get_exported_file($filename =NULL) {
+function btr_data_get_exported_file($filename =NULL) {
 
   $filename = check_plain($filename);
   if (empty($filename)) {

@@ -27,8 +27,8 @@ file_sql=${file_gz%.gz}
 $mysql -D user_import < $file_sql
 
 ### get the name of database
-BTR=${BTRANSLATOR:-btranslator}
-DATA=${BTRANSLATOR_DATA:-btranslator_data}
+BTR=${BTR:-btr}
+DATA=${BTR_DATA:-btr_data}
 
 ### copy all drupal tables
 table_list="
@@ -55,7 +55,7 @@ do
     "
 done
 
-### copy btranslator_data table
+### copy btr_data table
 $mysql -e "
     TRUNCATE TABLE $DATA.btr_users;
     INSERT INTO $DATA.btr_users

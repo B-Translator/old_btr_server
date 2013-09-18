@@ -1,5 +1,5 @@
 #!/bin/bash
-### save the schema of the module btranslator_data
+### save the schema of the module btr_data
 
 ### go to the script directory
 cd $(dirname $0)
@@ -21,7 +21,7 @@ all_tables="
 "
 
 ### mysqldump default options
-dbname=${BTRANSLATOR_DATA:-btranslator_data}
+dbname=${BTR_DATA:-btr_data}
 mysqldump="mysqldump --defaults-file=/etc/mysql/debian.cnf --databases $dbname"
 
 ### dump only the schema of the database

@@ -1,29 +1,29 @@
 <?php
 /**
- * @file l10n_suggestion.install
- * Install and update functions for the module btranslator_data.
+ * @file btr_data.install
+ * Install and update functions for the module btr_data.
  */
 
 /**
  * Implements hook_enable().
  */
-function btranslator_data_enable() {
-  mailsystem_set(array('btranslator_data' => 'MimeMailSystem'));
+function btr_data_enable() {
+  mailsystem_set(array('btr_data' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_disable().
  */
-function btranslator_data_disable() {
-  mailsystem_clear(array('btranslator_data' => 'MimeMailSystem'));
+function btr_data_disable() {
+  mailsystem_clear(array('btr_data' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_install().
  */
-function btranslator_data_install() {
+function btr_data_install() {
   // import some test PO files
-  $path = drupal_get_path('module', 'btranslator_data');
+  $path = drupal_get_path('module', 'btr_data');
   $output = shell_exec($path . '/data/install.sh');
   drupal_set_message("<xmp>$output</xmp>");
 }
@@ -31,7 +31,7 @@ function btranslator_data_install() {
 /**
  * Implements hook_uninstall().
  */
-function btranslator_data_uninstall() {
+function btr_data_uninstall() {
   // delete variables that were used for this module
   $variables = array(
     'btr_voting_mode',
@@ -47,10 +47,10 @@ function btranslator_data_uninstall() {
 /**
  * Implements hook_schema().
  */
-function btranslator_data_schema() {
+function btr_data_schema() {
 
   // create a cache table for this module
-  $schema['cache_btranslator_data'] = drupal_get_schema_unprocessed('system', 'cache');
+  $schema['cache_btr_data'] = drupal_get_schema_unprocessed('system', 'cache');
 
   // PO files that are imported and can be exported from the DB.
   $schema['btr_files'] = array(

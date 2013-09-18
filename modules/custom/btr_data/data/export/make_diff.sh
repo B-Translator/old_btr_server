@@ -33,7 +33,7 @@ if [ "$project" != 'all' ]
 then
     project_list=$project
 else
-    dbname=${BTRANSLATOR_DATA:-btranslator_data}
+    dbname=${BTR_DATA:-btr_data}
     mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --skip-column-names"
     sql="SELECT project FROM btr_projects WHERE origin = '$origin'"
     project_list=$($mysql -D $dbname -e "$sql")

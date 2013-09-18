@@ -9,14 +9,14 @@ include_once dirname(__FILE__) . '/mail_notifications.inc';
 /*
  * Implements hook_cron_queue_info().
  */
-function btranslator_data_cron_queue_info() {
+function btr_data_cron_queue_info() {
 
   $queues['notifications'] = array(
-    'worker callback' => 'btranslator_data_send_notification_by_email',
+    'worker callback' => 'btr_data_send_notification_by_email',
     'time' => 240,
   );
   $queues['export_project'] = array(
-    'worker callback' => 'btranslator_data_export_project',
+    'worker callback' => 'btr_data_export_project',
     'time' => 2000,
   );
   return $queues;
@@ -25,15 +25,15 @@ function btranslator_data_cron_queue_info() {
 /*
  * Implements hook_cron().
  */
-function btranslator_data_cron() {
-  btranslator_data_cron_nightly();
+function btr_data_cron() {
+  btr_data_cron_nightly();
 }
 
 /**
  * Make sure that cron functions runs only once per night,
  * no matter how often cron is called.
  */
-function btranslator_data_cron_nightly() {
+function btr_data_cron_nightly() {
   // check whether the crontime has been reached yet
   $crontime = variable_get('btr_data_crontime', '0');
   if (time() < $crontime)  return;
@@ -43,14 +43,14 @@ function btranslator_data_cron_nightly() {
   variable_set('btr_data_crontime', $crontime);
 
   // Call cron functions.
-  btranslator_data_delete_old_export_files();
-  btranslator_data_send_strings_for_review();
+  btr_data_delete_old_export_files();
+  btr_data_send_strings_for_review();
 }
 
 /**
  * Delete export files that are older than 2 days
  */
-function btranslator_data_delete_old_export_files() {
+function btr_data_delete_old_export_files() {
   $export_path = variable_get('btr_export_path', '/var/www/exports');
   exec("find $export_path/* -mtime +2 -delete");
 }
@@ -58,10 +58,10 @@ function btranslator_data_delete_old_export_files() {
 /**
  * Send by email a string for review to all the active users.
  */
-function btranslator_data_send_strings_for_review() {
+function btr_data_send_strings_for_review() {
 
   // return true if we should NOT send a string by email to the given account
-  function _btranslator_data_dont_send_email($account) {
+  function _btr_data_dont_send_email($account) {
     // skip admin, disabled accounts, and users that have never logged in
     if ($account->uid < 2 or $account->status != 1 or $account->login == 0) {
       return TRUE;
@@ -88,11 +88,11 @@ function btranslator_data_send_strings_for_review() {
 
   $accounts = entity_load('user');
   foreach ($accounts as $account) {
-    if (_btranslator_data_dont_send_email($account))  continue;
+    if (_btr_data_dont_send_email($account))  continue;
 
     // get a sguid according to the user preferencies
     require_once(dirname(__FILE__) . '/translations/vote.inc');
-    $sguid = btranslator_data_get_sguid($account->uid);
+    $sguid = btr_data_get_sguid($account->uid);
 
     $message_params = array(
       'type' => 'string-to-be-reviewed',
@@ -108,7 +108,7 @@ function btranslator_data_send_strings_for_review() {
 /**
  * The callback function called from cron_queue export_project.
  */
-function btranslator_data_export_project($export_params) {
+function btr_data_export_project($export_params) {
 
   // Make sure that exports do not run in parallel,
   // so that the server is not loaded.
@@ -140,7 +140,7 @@ function btranslator_data_export_project($export_params) {
   exec("rm -f $export_dir/$filename.tgz $export_dir/$filename.diff $export_dir/$filename.ediff");
 
   // Run the export script (with lowered priority).
-  $make_diff_sh = drupal_get_path('module', 'btranslator_data') . '/data/export/make_diff.sh';
+  $make_diff_sh = drupal_get_path('module', 'btr_data') . '/data/export/make_diff.sh';
   $export_cmd = "nice $make_diff_sh $origin $project $lng $export_dir $filename";
   $export_cmd = "export QUIET=true; $export_cmd";
   if ($export_mode == 'preferred_by_me' or $export_mode == 'preferred_by_my_friends') {

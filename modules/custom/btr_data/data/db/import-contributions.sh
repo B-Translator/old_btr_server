@@ -29,7 +29,7 @@ file_sql=${file_gz%.gz}
 $mysql -D $A < $file_sql
 
 ### get the name of database
-B=${BTRANSLATOR_DATA:-btranslator_data}
+B=${BTR_DATA:-btr_data}
 
 ### Find multiple votes on both A_votes and B_votes and append to
 ### A_votes_trash all of them except for the latest vote.

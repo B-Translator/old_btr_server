@@ -6,7 +6,7 @@
 from_date=${1:-'0000-00-00'}    # in format YYYY-MM-DD
 
 ### mysqldump default options
-dbname=${BTRANSLATOR_DATA:-btranslator_data}
+dbname=${BTR_DATA:-btr_data}
 mysqldump="mysqldump --defaults-file=/etc/mysql/debian.cnf --databases $dbname"
 
 ### get the dump filename

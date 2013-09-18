@@ -22,7 +22,7 @@ test "$QUIET" = '' && echo $0 $origin $project $lng $output_dir
 cd $(dirname $0)
 
 ### mysql command
-dbname=${BTRANSLATOR_DATA:-btranslator_data}
+dbname=${BTR_DATA:-btr_data}
 mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --database=$dbname --skip-column-names"
 
 ### get from the DB the names of the templates and the filenames

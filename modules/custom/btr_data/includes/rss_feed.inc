@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * RSS feed from btranslator_data.
+ * RSS feed from btr_data.
  */
 
-function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
+function btr_data_rss_feed($origin =NULL, $project =NULL) {
 
   $lng = variable_get('btr_translation_lng', 'fr');
 
@@ -18,8 +18,8 @@ function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
   }
 
   // Get the feed data from cache, if possible.
-  $cid = "btranslator_data_rss_feed:$lng:$domain";
-  $cache = cache_get($cid, 'cache_btranslator_data');
+  $cid = "btr_data_rss_feed:$lng:$domain";
+  $cache = cache_get($cid, 'cache_btr_data');
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
     print $cache->data;
@@ -59,7 +59,7 @@ function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
     ";
 
   $base_url = url('translations', array('absolute' => TRUE));
-  $translations = _btranslator_data_get_latest_translations($origin, $project);
+  $translations = _btr_data_get_latest_translations($origin, $project);
   foreach ($translations as $tran) {
     $title = btr_data_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
@@ -91,7 +91,7 @@ function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
   $rss_feed .= "</rss>\n";
 
   // Cache for 2 hours.
-  cache_set($cid, $rss_feed, 'cache_btranslator_data', strtotime('+2 hours'));
+  cache_set($cid, $rss_feed, 'cache_btr_data', strtotime('+2 hours'));
 
   drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
   print $rss_feed;
@@ -106,7 +106,7 @@ function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
  * The fields that are returned are:
  *   origin, project, sguid, string, lng, translation, tguid, time, name, umail
  */
-function _btranslator_data_get_latest_translations($origin =NULL, $project =NULL) {
+function _btr_data_get_latest_translations($origin =NULL, $project =NULL) {
 
   $get_latest_translations = "
     SELECT p.origin, p.project,

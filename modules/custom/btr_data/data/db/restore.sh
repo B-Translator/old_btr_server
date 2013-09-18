@@ -1,5 +1,5 @@
 #!/bin/bash
-### restore the tables of the module btranslator_data
+### restore the tables of the module btr_data
 
 ### check the parameters
 if [ $# -ne 2 ]

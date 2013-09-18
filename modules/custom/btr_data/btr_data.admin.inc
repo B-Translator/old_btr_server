@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Administrative pages for the btranslator_data module.
+ * Administrative pages for the btr_data module.
  */
 
 /**
- * General configuration settings for the module btranslator_data.
+ * General configuration settings for the module btr_data.
  *
  * @return
  *   An array containing form items to place on the module settings page.
  */
-function btranslator_data_config() {
+function btr_data_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',
@@ -50,4 +50,4 @@ function btranslator_data_config() {
   );
 
   return system_settings_form($form);
-}  //  End of btranslator_data_config().
+}  //  End of btr_data_config().
