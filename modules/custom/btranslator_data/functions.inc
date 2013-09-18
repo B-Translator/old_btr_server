@@ -1158,6 +1158,22 @@ function _btr_notify_voters_on_translation_del($tguid, $author, $voters) {
 }
 
 /**
+ * Queue actions for batch execution.
+ * @param $queue_name
+ *   Name of the queue.
+ * @param $items
+ *   Array of items to be queued. Each item is an associative array
+ *   that provides data for the batch process.
+ */
+function btr_queue($queue_name, $items) {
+  $queue = DrupalQueue::get($queue_name);
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  foreach ($items as $item) {
+    $queue->createItem((object)$item);
+  }
+}
+
+/**
  * Queue notifications for sending by email.
  *
  * @param $notifications

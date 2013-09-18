@@ -61,44 +61,6 @@ function btranslator_data_get_last_project() {
   return $last_projects;
 }
 
-
-/**
- * Return an array of a WHERE condition for SQL queries, and arguments
- * that are used in it. These can be used in a db_query() for selecting
- * all the projects specified in the given parameter.
- *
- * The parameter is an array of project specifications, where each items is
- * in the form of either 'origin/project', or in the form of 'origin' (which
- * includes all the projects from this origin).
- */
-function btranslator_data_projects_to_where_condition($arr_projects) {
-
-  $arr_conditions = array();
-  $arguments = array();
-  $arg_origin  = ':origin01';
-  $arg_project = ':project01';
-
-  foreach ($arr_projects as $proj) {
-    $parts = preg_split('#/#', $proj, 2);
-    if (sizeof($parts)==2) {
-      list($origin, $project) = $parts;
-      $arguments[$arg_origin] = $origin;
-      $arguments[$arg_project] = $project;
-      $arr_conditions[] = "(origin=$arg_origin AND project=$arg_project)";
-      $arg_origin++;  $arg_project++;
-    }
-    else {
-      $origin = $parts[0];
-      $arguments[$arg_origin] = $origin;
-      $arr_conditions[] = "(origin=$arg_origin)";
-      $arg_origin++;
-    }
-  }
-  $where_condition = implode(' OR ', $arr_conditions);
-
-  return array($where_condition, $arguments);
-}
-
 /**
  * From the given (possibly long) string, returns a short string
  * of the given length (that can be suitable for title, subject, etc.)
@@ -122,4 +84,39 @@ function btranslator_data_get_email_sender() {
   $smtp_from = variable_get('smtp_from');
   $smtp_fromname = variable_get('smtp_fromname');
   $sender = "$smtp_fromname <$smtp_from>";
+}
+
+/**
+ * Unpacks a string as retrieved from the database.
+ *
+ * Creates an array out of the string. If it was a single string, the array
+ * will have one item. If the string was a plural string, the array will have
+ * as many items as the language requires (two for source strings).
+ *
+ * @param $string
+ *   The string with optional separation markers (NULL bytes)
+ * @return
+ *   An array of strings with one element for each plural form in case of
+ *   a plural string, or one element in case of a regular string. This
+ *  is called a $textarray elsewhere.
+ */
+function btr_unpack_string($string) {
+  return explode("\0", $string);
+}
+
+/**
+ * Packs a string for storage in the database.
+ *
+ * @param $string
+ *   An array of strings.
+ * @return
+ *   A packed string with NULL bytes separating each string.
+ */
+function btr_pack_string($strings) {
+  if (is_array($strings)) {
+    return implode("\0", $strings);
+  }
+  else {
+    return $strings;
+  }
 }

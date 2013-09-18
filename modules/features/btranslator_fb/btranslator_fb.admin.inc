@@ -9,7 +9,7 @@
  */
 function btranslator_fb_menu() {
   $items = array();
-  $items['admin/config/btranslator/fb'] = array(
+  $items['admin/config/btr/fb'] = array(
     'title'            => 'FB',
     'description'      => 'Private FB settings.',
     'page callback'    => 'drupal_get_form',

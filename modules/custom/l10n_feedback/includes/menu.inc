@@ -6,18 +6,7 @@ function l10n_feedback_menu() {
 
   $items = array();
 
-  $items['admin/config/btranslator'] = array(
-    'title' => 'B-Translator',
-    'description' => 'B-Translator Configuration',
-    'weight' => -100,
-    'page callback' => 'system_admin_menu_block_page',
-    'access arguments' => array('l10n_feedback_config'),
-    'file' => 'system.admin.inc',
-    'file path' => drupal_get_path('module', 'system'),
-    //'position' => 'right',
-  );
-
-  $items['admin/config/btranslator/general'] = array(
+  $items['admin/config/btr/general'] = array(
     'title'            => 'B-Translator',
     'description'      => 'B-Translator configuration settings.',
     'page callback'    => 'drupal_get_form',
@@ -59,17 +48,6 @@ function l10n_feedback_menu() {
     'file'            => 'includes/translations/export.inc',
     'access callback' => 'user_is_logged_in',
     'weight'          => 3,
-  );
-
-  // The link that is sent to the user for downloading an exported file.
-  // The URL is of the form 'translations/exports/filename.tgz'
-  // and the filename is passed as a parameter to the function.
-  $items['translations/exports'] = array(
-    'type'            => MENU_CALLBACK,
-    'title'           => 'Download Exported File',
-    'page callback'   => 'l10n_feedback_get_exported_file',
-    'file'            => 'includes/translations/export.inc',
-    'access callback' => TRUE,
   );
 
   $items['translations/import'] = array(

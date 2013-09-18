@@ -14,7 +14,7 @@ function btranslator_data_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',
-    '#title' => t('B-Translator Data Configuration'),
+    '#title' => t('B-Translator Back-End Configuration'),
   );
 
   // get a list of available languages

@@ -117,8 +117,6 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
     }
   }
 
-  $queue = DrupalQueue::get('export_project');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
   $params = array(
     'uid' => $GLOBALS['user']->uid,
     'origin' => $origin,
@@ -126,17 +124,16 @@ function l10n_feedback_export_form_submit($form, &$form_state) {
     'export_mode' => $export_mode,
     'voters' => implode(',', $arr_voters),
   );
-  $queue->createItem((object)$params);
+  btr_queue('export_project', array($params));
 
   drupal_set_message(t("Export of '!project' is scheduled. You will be notified by email when it is done.",
       array('!project' => "$origin/$project")));
 
   $notify_admin = variable_get('btr_export_notify_admin', TRUE);
   if ($notify_admin) {
-    $queue = DrupalQueue::get('notifications');
     $params['type'] = 'notify-admin-on-export-request';
     $params['recipient'] = user_load(1)->mail;
-    $queue->createItem((object)$params);
+    btr_queue_notifications(array($params));
   }
 }
 
@@ -175,43 +172,4 @@ function l10n_feedback_export_form_validate($form, &$form_state) {
     }
     $form_state['values']['friends'] = implode(',', $arr_friends);
   }
-}
-
-/**
- * The callback function for the menu 'translations/exports'.
- * The URL is of the form 'translations/exports/filename.tgz'
- * where the filename is passed as a parameter to the function.
- */
-function l10n_feedback_get_exported_file($filename =NULL) {
-
-  $filename = check_plain($filename);
-  if (empty($filename)) {
-    drupal_set_message(t("Export file '!filename' does not exist!",
-			 array('!filename' => $filename)), 'error');
-    drupal_goto("translations");
-    return;
-  }
-
-  // Get the full path of the export file.
-  $export_path = variable_get('btr_export_path', '/var/www/exports');
-  $export_file = $export_path . '/' . $filename;
-  if (!file_exists($export_file)) {
-    drupal_set_message(t("Export file '!filename' does not exist!",
-			 array('!filename' => $filename)), 'error');
-    drupal_goto("translations");
-    return;
-  }
-
-  // Send the headers.
-  header('Content-Type: application/octet-stream');
-  header('Content-Disposition: attachment; filename="' . $filename . '"');
-  header('Content-Transfer-Encoding: binary');
-  header("Content-Length: " . filesize($export_file));
-
-  // Open the file in a binary mode and dump it to the browser.
-  $fp = fopen($export_file, 'rb');
-  fpassthru($fp);
-
-  // Stop execution.
-  exit(0);
 }

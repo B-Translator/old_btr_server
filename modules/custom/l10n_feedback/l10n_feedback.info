@@ -13,4 +13,4 @@ dependencies[] = entity
 dependencies[] = rules
 
 files[] = l10n_feedback.test
-configure = admin/config/btranslator
+configure = admin/config/btr

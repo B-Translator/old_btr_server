@@ -121,13 +121,3 @@ function l10n_feedback_shorten($string, $length) {
   $str = htmlentities($str);
   return $str;
 }
-
-/**
- * Return the sender of the email notifications
- * (which is always the same, as defined on smtp variables)
- */
-function l10n_feedback_get_email_sender() {
-  $smtp_from = variable_get('smtp_from');
-  $smtp_fromname = variable_get('smtp_fromname');
-  $sender = "$smtp_fromname <$smtp_from>";
-}

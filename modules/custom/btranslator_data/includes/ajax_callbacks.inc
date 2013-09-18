@@ -133,7 +133,7 @@ function btranslator_data_translation_details($tid = 0, $ajax = 0) {
     $GLOBALS['devel_shutdown'] = FALSE;
   }
   else {
-    $unpacked = btranslator_data_unpack_string($string->translation);
+    $unpacked = btr_unpack_string($string->translation);
     $output .= '<h3>' . t('Translation') . '</h3>' . theme('item_list', array('items' => $unpacked)) . '<h3>' . t('History') . '</h3>';
   }
 

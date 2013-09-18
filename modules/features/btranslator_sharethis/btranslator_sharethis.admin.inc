@@ -9,7 +9,7 @@
  */
 function btranslator_sharethis_menu() {
   $items = array();
-  $items['admin/config/btranslator/sharethis'] = array(
+  $items['admin/config/btr/sharethis'] = array(
     'title'            => 'Sharethis',
     'description'      => 'Custom Sharethis settings.',
     'page callback'    => 'drupal_get_form',

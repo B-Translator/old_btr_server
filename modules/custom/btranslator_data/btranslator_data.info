@@ -1,9 +1,9 @@
 name = B-Translator Data
-description = Data of PO files, strings, translations, votes, etc.
+description = B-Translator Back-End, including data of PO files, strings, translations, votes, etc.
 package = B-Translator
 core = 7.x
 
 dependencies[] = entity
 dependencies[] = rules
 
-configure = admin/config/btranslator
+configure = admin/config/btr

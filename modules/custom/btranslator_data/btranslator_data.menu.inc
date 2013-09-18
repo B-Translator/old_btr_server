@@ -6,6 +6,26 @@ function btranslator_data_menu() {
 
   $items = array();
 
+  $items['admin/config/btr'] = array(
+    'title' => 'B-Translator',
+    'description' => 'B-Translator Configuration',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('btranslator_data_config'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    //'position' => 'right',
+  );
+
+  $items['admin/config/btr/data'] = array(
+    'title'            => 'B-Translator Data',
+    'description'      => 'B-Translator Back-End configuration settings.',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('btranslator_data_config'),
+    'access arguments' => array('btranslator-admin'),
+    'file'             => 'btranslator_data.admin.inc',
+  );
+
   // Return a plain-text list of all the imported projects,
   // filtered by the given origin/project.
   $items['translations/project/list'] = array(
@@ -20,7 +40,7 @@ function btranslator_data_menu() {
   $items['translations/project/export'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'l10n_feedback_project_export',
+    'page callback'   => 'btranslator_data_project_export',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -30,7 +50,7 @@ function btranslator_data_menu() {
   $items['translations/project/export_tgz'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'l10n_feedback_project_export_tgz',
+    'page callback'   => 'btranslator_data_project_export_tgz',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -41,10 +61,22 @@ function btranslator_data_menu() {
   $items['translations/project/diff'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'l10n_feedback_project_diff',
+    'page callback'   => 'btranslator_data_project_diff',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
+
+  // The link that is sent to the user for downloading an exported file.
+  // The URL is of the form 'translations/exports/filename.tgz'
+  // and the filename is passed as a parameter to the function.
+  $items['translations/exports'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Download Exported File',
+    'page callback'   => 'btranslator_data_get_exported_file',
+    'file'            => 'includes/projects.inc',
+    'access callback' => TRUE,
+  );
+
 
   // Return a string context, related projects (where a string is found), etc.
   $items['translations/string_details'] = array(

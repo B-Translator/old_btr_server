@@ -9,7 +9,7 @@
  */
 function btranslator_captcha_menu() {
   $items = array();
-  $items['admin/config/btranslator/captcha'] = array(
+  $items['admin/config/btr/captcha'] = array(
     'title'            => 'reCaptcha',
     'description'      => 'Private reCaptca settings.',
     'page callback'    => 'drupal_get_form',

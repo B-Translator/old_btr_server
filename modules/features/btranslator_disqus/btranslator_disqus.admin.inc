@@ -9,7 +9,7 @@
  */
 function btranslator_disqus_menu() {
   $items = array();
-  $items['admin/config/btranslator/disqus'] = array(
+  $items['admin/config/btr/disqus'] = array(
     'title'            => 'Disqus',
     'description'      => 'Private Disqus settings.',
     'page callback'    => 'drupal_get_form',
