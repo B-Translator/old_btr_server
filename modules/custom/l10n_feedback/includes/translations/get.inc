@@ -23,7 +23,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
   drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
 
   //get languages and language codes
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   $lng_codes = array_keys($languages);
 
   //check the correct usage of parameters
@@ -73,7 +73,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
   // Get the string and its translations.
   global $user;
   $other_langs = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
-  $strings = btr_get_strings_from_ids(array($sguid), $lng, $other_langs);
+  $strings = btr_get_strings(array($sguid), $lng, $other_langs);
   //if ($strings) dpm($strings[0]);  //debug
 
   // If no strings were returned, display an empty message.

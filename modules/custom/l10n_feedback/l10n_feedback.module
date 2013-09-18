@@ -7,7 +7,6 @@
 require_once(dirname(__FILE__) . '/includes/common.inc');
 require_once(dirname(__FILE__) . '/includes/menu.inc');
 require_once(dirname(__FILE__) . '/includes/cron.inc');
-require_once(dirname(__FILE__) . '/includes/mail_notifications.inc');
 require_once(dirname(__FILE__) . '/includes/hook_user.inc');
 require_once(dirname(__FILE__) . '/includes/blocks.inc');
 
@@ -104,35 +103,6 @@ function l10n_feedback_theme($existing, $type, $theme, $path) {
 }
 
 /**
- * Implement hook_mail().
- *
- * This hook defines a list of possible e-mail templates that this module can
- * send. Each e-mail is given a unique identifier, or 'key'.
- *
- * $message comes in with some standard properties already set: 'to' address,
- * 'from' address, and a set of default 'headers' from drupal_mail(). The goal
- * of hook_mail() is to set the message's 'subject' and 'body' properties, as
- * well as make any adjustments to the headers that are necessary.
- *
- * The $params argument is an array which can hold any additional data required
- * to build the mail subject and body; for example, user-entered form data, or
- * some context information as to where the mail request came from.
- *
- * Note that hook_mail() is not actually a hook. It is only called for a single
- * module, the module named in the first argument of drupal_mail(). So it's
- * a callback of a type, but not a hook.
- */
-function l10n_feedback_mail($key, &$message, $params) {
-  switch ($key) {
-    case 'notifications':
-    default:
-      $message['subject'] = $params['subject'];
-      $message['body'] = $params['body'];
-      break;
-  }
-}
-
-/**
  * Implements hook_flush_caches().
  * Add cache table names to the list of cache tables
  * that will be cleared by the Clear button on the Performance page
@@ -154,7 +124,7 @@ function l10n_feedback_init() {
   }
 
   // Check if language is RTL
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   $lng = arg(1);
   if (array_key_exists($lng, $languages)) {
     // Add RTL style if the current language's direction is RTL

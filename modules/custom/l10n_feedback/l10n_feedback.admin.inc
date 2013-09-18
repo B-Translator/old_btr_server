@@ -14,11 +14,11 @@ function l10n_feedback_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',
-    '#title' => t('B-Translator configuration options'),
+    '#title' => t('B-Translator UI configuration options'),
   );
 
   // get a list of available languages
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   unset($lang_options['en']);
 
@@ -29,21 +29,6 @@ function l10n_feedback_config() {
     '#description' => t('The language of translations. This site is about collecting feedback for the translations of this language.'),
     '#options' => $lang_options,
     '#default_value' => variable_get('btr_translation_lng', 'fr'),
-  );
-
-  // btr_voting_mode
-  $voting_mode_options = array(
-    'single'   => t('Single'),
-    'multiple' => t('Multiple'),
-  );
-  $voting_mode_description = t('When voting mode is <em>Single</em>, only one translation can be voted as suitable for each string. When voting mode is <em>Multiple</em>, more than one translation can be selected as suitable for each string. <br/> <strong>Note:</strong> Switching back from <em>Multiple</em> to <em>Single</em> may have a bad impact on the existing votes.');
-
-  $form['config']['btr_voting_mode'] = array(
-    '#type'          => 'radios',
-    '#title'         => t('Select Voting Mode'),
-    '#default_value' => variable_get('btr_voting_mode', 'single'),
-    '#options'       => $voting_mode_options,
-    '#description'   => $voting_mode_description,
   );
 
   $form['defaults'] = array(
@@ -63,15 +48,9 @@ function l10n_feedback_config() {
 
   $form['export'] = array(
     '#type'  => 'fieldset',
-    '#title' => t('B-Translator export configuration'),
+    '#title' => t('B-Translator UI export configuration'),
   );
 
-  $form['export']['btr_export_path'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Export path'),
-    '#default_value' => variable_get('btr_export_path', '/var/www/exports'),
-    '#description' => t('The directory where the exported projects will be placed. Must be accessable by the web server (www-data).'),
-  );
   $form['export']['btr_export_notify_admin'] = array(
     '#type' => 'checkbox',
     '#title' => t('Notify admin'),

@@ -17,12 +17,12 @@ function l10n_feedback_build_filter() {
   $request = $_GET;
 
   //get language
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   $lng_codes = array_keys($languages);
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
   //by default search for strings similar to the one that is being voted
   if ($lng == '' && isset($_SESSION['sguid'])) {
-    $string = btr_get_string_from_id($_SESSION['sguid']);
+    $string = btr_get_string($_SESSION['sguid']);
     if ($string) {
       $lng = variable_get('btr_translation_lng', 'fr');
       $request['words'] = $string;
@@ -109,7 +109,7 @@ function l10n_feedback_get_query_values($form_values) {
   $query = array();
 
   //lng
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   $lng_codes = array_keys($languages);
   $lng = trim($form_values['lng']);
   if (in_array($lng, $lng_codes))
@@ -240,7 +240,7 @@ function l10n_feedback_filter_form($form, &$form_state, $filter) {
  */
 function _l10n_feedback_filter_form_basic_search(&$form, &$form_state) {
 
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   $form['lng'] = array(
     '#type' => 'select',

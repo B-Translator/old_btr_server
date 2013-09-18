@@ -52,7 +52,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
 
   // Get languages and language codes
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   $lng_codes = array_keys($languages);
 
   // Add RTL style if the current language's direction is RTL
@@ -76,7 +76,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   // Get the string and its translations.
   global $user;
   $other_langs = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
-  $strings = btr_get_strings_from_ids(array($sguid), $lng, $other_langs);
+  $strings = btr_get_strings(array($sguid), $lng, $other_langs);
   //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.

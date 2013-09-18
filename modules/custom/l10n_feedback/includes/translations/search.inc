@@ -28,7 +28,7 @@ function l10n_feedback_search() {
 
   // Add RTL style if the current language's direction is RTL
   $lng = $filter['lng'];
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
     drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor-rtl.css');
   }

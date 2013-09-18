@@ -235,7 +235,7 @@ function _l10n_feedback_translate_translation_textarea($string, $lng) {
 
   // Fill in with as many items as required. If the source was plural, we
   // need to fill in with a number adequate for this language.
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   $nplurals = $languages[$lng]['plurals'];
   $arr_translations = array_fill(0, count($string->string) > 1 ? $nplurals : 1, '');
   $translation = implode("\0", $arr_translations);

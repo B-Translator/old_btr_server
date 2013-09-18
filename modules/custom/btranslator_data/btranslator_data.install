@@ -5,6 +5,20 @@
  */
 
 /**
+ * Implements hook_enable().
+ */
+function btranslator_data_enable() {
+  mailsystem_set(array('btranslator_data' => 'MimeMailSystem'));
+}
+
+/**
+ * Implements hook_disable().
+ */
+function btranslator_data_disable() {
+  mailsystem_clear(array('btranslator_data' => 'MimeMailSystem'));
+}
+
+/**
  * Implements hook_install().
  */
 function btranslator_data_install() {
@@ -12,6 +26,22 @@ function btranslator_data_install() {
   $path = drupal_get_path('module', 'btranslator_data');
   $output = shell_exec($path . '/data/install.sh');
   drupal_set_message("<xmp>$output</xmp>");
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function btranslator_data_uninstall() {
+  // delete variables that were used for this module
+  $variables = array(
+    'btr_voting_mode',
+    'btr_export_path',
+
+    'btr_data_crontime',
+  );
+  foreach ($variables as $var) {
+    variable_del($var);
+  }
 }
 
 /**

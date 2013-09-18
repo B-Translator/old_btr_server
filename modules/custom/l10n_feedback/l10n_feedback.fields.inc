@@ -90,7 +90,7 @@ function l10n_feedback_create_userprofile_fields() {
 
   // create a field and instance for 'field_auxiliary_languages'
   $languages = array();
-  $arr_langs = l10n_feedback_get_languages();
+  $arr_langs = btr_get_languages();
   foreach ($arr_langs as $lng => $language) {
     $languages[$lng] = $language['name'];
   }
