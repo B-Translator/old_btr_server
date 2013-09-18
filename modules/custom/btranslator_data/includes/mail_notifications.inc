@@ -14,16 +14,16 @@
  *   $params->username, $params->sguid, $params->string,
  *   $params->translation, etc.
  */
-function l10n_feedback_send_notification_by_email($params) {
+function btranslator_data_send_notification_by_email($params) {
   // See: http://api.drupal.org/api/drupal/includes%21mail.inc/function/drupal_mail/7
   $account = user_load($params->uid);
   drupal_mail(
-    $module   = 'l10n_feedback',
+    $module   = 'btranslator_data',
     $key      = 'notifications',
     $to       = $params->recipient,
     $langcode = $account->language,
-    $params   = l10n_feedback_build_notification_email($params),
-    $from     = l10n_feedback_get_email_sender(),
+    $params   = btranslator_data_build_notification_email($params),
+    $from     = btranslator_data_get_email_sender(),
     $send     = TRUE
   );
 }
@@ -39,7 +39,7 @@ function l10n_feedback_send_notification_by_email($params) {
  * Some common attributes are: $params->uid, $params->sguid,
  * $params->username, $params->string, $params->translation, etc.
  */
-function l10n_feedback_build_notification_email($params) {
+function btranslator_data_build_notification_email($params) {
 
   if (isset($params->sguid)) {
     $url = get_string_url($params->uid, $params->sguid);
@@ -55,7 +55,7 @@ function l10n_feedback_build_notification_email($params) {
       $subject = t("[!prefix] Translation modified for: !string",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!string' => l10n_feedback_shorten($params->string, 30),
+                   '!string' => btranslator_data_shorten($params->string, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -95,7 +95,7 @@ function l10n_feedback_build_notification_email($params) {
       $subject = t("[!prefix] New translation for: !string",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!string' => l10n_feedback_shorten($params->string, 30),
+                   '!string' => btranslator_data_shorten($params->string, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -172,7 +172,7 @@ function l10n_feedback_build_notification_email($params) {
       $subject = t("[!prefix] Translation deleted: !translation",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!translation' => l10n_feedback_shorten($params->translation, 30),
+                   '!translation' => btranslator_data_shorten($params->translation, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -202,7 +202,7 @@ function l10n_feedback_build_notification_email($params) {
       $subject = t("[!prefix] Translation deleted: !translation",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!translation' => l10n_feedback_shorten($params->translation, 30),
+                   '!translation' => btranslator_data_shorten($params->translation, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -273,8 +273,8 @@ function l10n_feedback_build_notification_email($params) {
 
     // Send by email a string to be reviewed.
     case 'string-to-be-reviewed':
-      list($string, $translations) = l10n_feedback_get_string_and_translations($params->sguid);
-      $subject = "[$subject_prefix] " . l10n_feedback_shorten($string, 60);
+      list($string, $translations) = btranslator_data_get_string_and_translations($params->sguid);
+      $subject = "[$subject_prefix] " . btranslator_data_shorten($string, 60);
       $body = array(
         t("Greetings !username,
 
@@ -310,7 +310,7 @@ function l10n_feedback_build_notification_email($params) {
  * Return a string (and its translations) for the given user:
  * return array($string, $translations)
  */
-function l10n_feedback_get_string_and_translations($sguid) {
+function btranslator_data_get_string_and_translations($sguid) {
   //include_once(drupal_get_path('module', 'btranslator_data') . '/functions.inc');
   return btr_get_string_and_translations(
     $sguid,

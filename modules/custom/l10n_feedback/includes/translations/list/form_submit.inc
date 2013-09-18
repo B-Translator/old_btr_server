@@ -15,7 +15,7 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
 
-  // Check that the button  clicked was either Save, or Next, or Previous, etc.
+  // Check that the button clicked was either Save, or Next, or Previous, etc.
   $op = $form_values['op'];
   if ( $op!=t('Login') && $op!=t('Previous') && $op!=t('Save') && $op!=t('Next')
        && $op!=t('Translated') && $op!=t('Untranslated') ) {
@@ -84,9 +84,6 @@ function _l10n_feedback_translate_form_save($form_values) {
     return;
   }
 
-  // Get the voting mode.
-  $voting_mode = variable_get('btr_voting_mode', 'single');
-
   // keep track of the status, so that propper notification
   // can be displayed to the user
   global $_l10n_feedback_save_status;
@@ -97,6 +94,9 @@ function _l10n_feedback_translate_form_save($form_values) {
     'nr_suggestions' => 0,
     'nr_deletions' => 0,
   );
+
+  // Get the voting mode.
+  $voting_mode = variable_get('btr_voting_mode', 'single');
 
   // Iterate outer structure built in l10n_feedback_translate_form().
   foreach ($form_values['strings'] as $sguid => $string) {
@@ -174,8 +174,14 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']->votes;
     if (in_array($user->name, array_keys($previous_votes))) {
-      $umail = $user->init;  // initial mail of the user
-      _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng);
+      if (user_access('btranslator-vote')) {
+	$umail = $user->init;  // initial mail of the user
+	_l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng);
+      }
+      else {
+	global $_l10n_feedback_save_status;
+	$_l10n_feedback_save_status['cannot_vote']++;
+      }
     }
   }
 }
@@ -193,7 +199,6 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
  *   The ID of the new vote, or NULL.
  */
 function l10n_feedback_add_vote($tguid, $umail) {
-
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
     global $_l10n_feedback_save_status;
@@ -201,123 +206,18 @@ function l10n_feedback_add_vote($tguid, $umail) {
     return NULL;
   }
 
-  // Fetch the translation details from the DB.
-  $db = $GLOBALS['btr_db'];
-  $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
-  $args = array(':tguid' => $tguid);
-  $trans = $db->query($sql, $args)->fetchObject();
-
-  // If there is no such translation, return NULL.
-  if (empty($trans))  return NULL;
-
-  // Clean any previous vote.
-  $nr = _l10n_feedback_clean_previous_votes($tguid, $umail, $trans->sguid, $trans->lng);
-
-  // Add the vote.
-  $vid = $db->insert('btr_votes')
-    ->fields(array(
-        'tguid' => $tguid,
-        'umail' => $umail,
-        'ulng' => variable_get('btr_translation_lng', 'fr'),
-        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
-      ))
-    ->execute();
-
-  // Update vote count of the translation.
-  $sql = 'SELECT COUNT(*) FROM {btr_votes} WHERE tguid = :tguid';
-  $count = $db->query($sql, $args)->fetchField();
-  $db->update('btr_translations')
-    ->fields(array('count' => $count))
-    ->condition('tguid', $tguid)
-    ->execute();
+  // Add a vote.
+  $vid = btr_add_vote($tguid, $umail, $ulng);
 
   // Increment the number of the saved votes.
   global $_l10n_feedback_save_status;
-  $_l10n_feedback_save_status['nr_votes']++;
+  if ($vid) {
+    $_l10n_feedback_save_status['nr_votes']++;
+  }
 
   return $vid;
 }
 
-/**
- * Clean any previous vote by this user for this translation.
- *
- * This depends on the voting mode option (set by the admin).
- * If the voting mode is 'single', then the user can select
- * only one translation for a given string (at most one vote
- * per string).
- * If the voting mode is 'multiple', then the user can approve
- * several translations for a string (at most one vote per
- * translation).
- *
- * @param $tguid
- *   ID of the translation.
- * @param $umail
- *   The mail of the user.
- * @param $sguid
- *   ID of the source string.
- * @param $lng
- *   Language code of the translation.
- * @return
- *   Number of previous votes that were deleted.
- *   (Normally should be 0, but can also be 1. If it is >1,
- *   something must be wrong.)
- */
-function _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng) {
-
-  $db = $GLOBALS['btr_db'];
-
-  // Check access permissions.
-  if (!user_access('btranslator-vote')) {
-    global $_l10n_feedback_save_status;
-    $_l10n_feedback_save_status['cannot_vote']++;
-    return 0;
-  }
-
-  // Get the voting mode.
-  $voting_mode = variable_get('btr_voting_mode', 'single');
-
-  $arr_tguid = array();
-  if ($voting_mode == 'multiple') {
-    $arr_tguid = array($tguid);
-  }
-  else { // ($voting_mode == 'single')
-    // Get the other sibling translations (translations of the same
-    // string and the same language) which the user has voted.
-    $sql = '
-      SELECT DISTINCT t.tguid FROM {btr_translations} t
-      LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
-      WHERE t.sguid = :sguid AND t.lng = :lng AND v.umail = :umail AND v.ulng = :ulng
-    ';
-    $params = array(':sguid' => $sguid, ':lng' => $lng, ':umail' => $umail, ':ulng' => $lng);
-    $arr_tguid = $db->query($sql, $params)->fetchCol();
-  }
-
-  if (empty($arr_tguid))  return 0;
-
-  // Insert to the trash table the votes that will be removed.
-  $query = $db->select('btr_votes', 'v')
-    ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
-    ->condition('umail', $umail)
-    ->condition('ulng', $lng)
-    ->condition('tguid', $arr_tguid, 'IN');
-  $query->addExpression('NOW()', 'd_time');
-  $db->insert('btr_votes_trash')->from($query)->execute();
-
-  // Remove any votes by the user for each translation in $arr_tguid.
-  $num_deleted = $db->delete('btr_votes')
-    ->condition('umail', $umail)
-    ->condition('ulng', $lng)
-    ->condition('tguid', $arr_tguid, 'IN')
-    ->execute();
-
-  // Decrement the vote count for each translation in $arr_tguid.
-  $num_updated = $db->update('btr_translations')
-    ->expression('count', 'count - 1')
-    ->condition('tguid', $arr_tguid, 'IN')
-    ->execute();
-
-  return $num_deleted;
-}
 
 /**
  * Adds a new translation suggestion to a source string.
@@ -332,6 +232,9 @@ function _l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng) {
  * @param $umail
  *   The mail of the user that submitted the suggestion. If missing,
  *   the mail of the logged in user will be used.
+ * @return
+ *   The ID of the new translation ($tguid),
+ *   or FALSE if no translation was added.
  */
 function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
 
@@ -343,9 +246,6 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   $translation = l10n_feedback_pack_string($values);
   $translation = str_replace(t('<New translation>'), '', $translation);
 
-  // Don't add empty translations.
-  if (trim($translation) == '')  return FALSE;
-
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
     global $_l10n_feedback_save_status;
@@ -353,46 +253,13 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
     return FALSE;
   }
 
-  // Load the string and adjust translation whitespace based on source.
-  $db = $GLOBALS['btr_db'];
-  $query = 'SELECT string FROM {btr_strings} WHERE sguid = :sguid';
-  $source_string = $db->query($query, array(':sguid' => $sguid))->fetchField();
-  $translation = l10n_feedback_trim($translation, $source_string);
+  // Translators (with the 'btranslator-import' access right)
+  // can suggest more than one translation for the same string.
+  $single = (! user_access('btranslator-import'));
 
-  // Look for an existing translation, if any.
-  $tguid = sha1($translation . $lng . $sguid);
-  $query = 'SELECT translation FROM {btr_translations} WHERE tguid = :tguid';
-  $existing = $db->query($query, array(':tguid' => $tguid))->fetchField();
-
-  // If this translation already exists, there is nothing to be added.
-  if (!empty($existing))  return FALSE;
-
-  // Insert the new suggestion.
-  $db->insert('btr_translations')
-    ->fields(array(
-        'sguid' => $sguid,
-        'lng' => $lng,
-        'translation' => $translation,
-        'tguid' => $tguid,
-        'count' => 1,
-        'umail' => $umail,
-        'ulng' => $lng,
-        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
-      ))
-    ->execute();
-
-  // If there is another translation for the same string, by the same user,
-  // the new translation should replace the old one. This is useful when
-  // the user wants to correct the translation, but it limits the user to
-  // only one suggested translation per string.
-  l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $translation);
-
-  // Add also a vote for the new suggestion.
-  $vid = l10n_feedback_add_vote($tguid, $umail);
-
-  // Notify previous voters of this string that a new suggestion has been
-  // submitted. Maybe they would like to review it and change their vote.
-  l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation);
+  // Add the translation suggestion.
+  $tguid  = btr_add_translation($sguid, $lng, $translation, $umail, $single);
+  if (!$tguid)  return FALSE;  // no translation was added
 
   // Increment the number of the saved suggestions.
   global $_l10n_feedback_save_status;
@@ -401,152 +268,6 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   return $tguid;
 }
 
-/**
- * If there is another translation for the same string, by the same user,
- * the new translation should replace the old one. This is useful when
- * the user wants to correct the translation, but it limits the user to
- * only one suggested translation per string.
- */
-function l10n_feedback_remove_old_suggestion($sguid, $lng, $umail, $tguid, $translation) {
-
-  // Allow translators to add more than one suggestions for the same string.
-  if (user_access('btranslator-import'))  return;
-
-  $db = $GLOBALS['btr_db'];
-
-  // Get the old translation (if any).
-  $query = 'SELECT tguid, translation
-            FROM {btr_translations}
-            WHERE sguid = :sguid AND lng = :lng
-              AND umail = :umail AND ulng = :ulng
-              AND tguid != :tguid';
-  $args = array(
-    ':sguid' => $sguid,
-    ':lng' => $lng,
-    ':umail' => $umail,
-    ':ulng' => $lng,
-    ':tguid' => $tguid);
-  $old_trans = $db->query($query, $args)->fetchObject();
-  if (!$old_trans)  return;  // if there is no old translation, we are done
-
-  // Copy to the trash table the old translation.
-  $query = $db->select('btr_translations', 't')
-    ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
-    ->condition('tguid', $old_trans->tguid);
-  $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $umail));
-  $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => $lng));
-  $query->addExpression('NOW()', 'd_time');
-  $db->insert('btr_translations_trash')->from($query)->execute();
-
-  // Remove the old translation.
-  $db->delete('btr_translations')
-    ->condition('tguid', $old_trans->tguid)
-    ->execute();
-
-  // Get the votes of the old translation.
-  $query = "SELECT v.tguid, v.time, u.umail, u.ulng, u.uid,
-                   u.name AS user_name, u.status AS user_status
-            FROM {btr_votes} v
-            LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
-            WHERE v.tguid = :tguid AND v.umail != :umail";
-  $args = array(':tguid' => $old_trans->tguid, ':umail' => $umail);
-  $votes = $db->query($query, $args)->fetchAll();
-
-  // Insert to the trash table the votes that will be deleted.
-  $query = $db->select('btr_votes', 'v')
-    ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
-    ->condition('tguid', $old_trans->tguid);
-  $query->addExpression('NOW()', 'd_time');
-  $db->insert('btr_votes_trash')->from($query)->execute();
-
-  // Delete the votes belonging to the old translation.
-  $db->delete('btr_votes')->condition('tguid', $old_trans->tguid)->execute();
-
-  // Associate these votes to the new translation.
-  $notifications = array();
-  foreach ($votes as $vote) {
-    // Associate the vote to the new translation.
-    $db->insert('btr_votes')
-      ->fields(array(
-          'tguid' => $tguid,
-          'umail' => $vote->umail,
-          'ulng' => $vote->ulng,
-          'time' => $vote->time,
-        ))
-      ->execute();
-
-    if ($vote->user_status != 1)  continue;   // skip non-active voters
-    // Create a notification.
-    $notifications[] = (object) array(
-      'uid' => $vote->uid,
-      'username' => $vote->user_name,
-      'recipient' => $vote->user_name . ' <' . $vote->umail . '>',
-    );
-  }
-
-  if (empty($notifications))  return;
-
-  // get the original string
-  $query = "SELECT string FROM {btr_strings} WHERE sguid = :sguid";
-  $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
-
-  // Notify the corresponding voters about the change
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($notifications as $notify) {
-    $notification_params = array(
-      'type' => 'notify-voter-on-translation-change',
-      'uid' => $notify->uid,
-      'username' => $notify->username,
-      'recipient' => $notify->recipient,
-      'sguid' => $sguid,
-      'string' => $string,
-      'old_translation' => $old_trans->translation,
-      'new_translation' => $translation,
-    );
-    $queue->createItem((object)$notification_params);
-  }
-}
-
-/**
- * Notify the previous voters of a string that a new translation has been
- * submitted. Maybe they would like to review it and change their vote.
- */
-function l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation) {
-
-  $db = $GLOBALS['btr_db'];
-
-  $query = "SELECT u.umail, u.ulng, u.uid, u.name, u.status, t.translation
-            FROM {btr_translations} t
-            LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
-            LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
-            WHERE t.sguid = :sguid AND t.lng = :lng AND t.tguid != :tguid";
-  $args = array(':sguid' => $sguid, ':lng' => $lng, ':tguid' => $tguid);
-  $voters = $db->query($query, $args)->fetchAll();
-
-  if (empty($voters))  return;
-
-  // get the original string
-  $query = "SELECT string FROM {btr_strings} WHERE sguid = :sguid";
-  $string = $db->query($query, array(':sguid' => $sguid))->fetchField();
-
-  // Notify the previous voters about the new translation
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($voters as $voter) {
-    $notification_params = array(
-      'type' => 'notify-voter-on-new-translation',
-      'uid' => $voter->uid,
-      'username' => $voter->name,
-      'recipient' => $voter->name . ' <' . $voter->umail . '>',
-      'sguid' => $sguid,
-      'string' => $string,
-      'voted_translation' => $voter->translation,
-      'new_translation' => $translation,
-    );
-    $queue->createItem((object)$notification_params);
-  }
-}
 
 /**
  * Delete the translation and any related votes.
@@ -556,7 +277,6 @@ function l10n_feedback_notify_previous_voters($sguid, $lng, $tguid, $translation
  * information about the translation, votes, etc.
  */
 function _l10n_feedback_delete_translation($translation) {
-
   //dpm($translation);  //debug
   $trans = $translation['original'];
 
@@ -567,61 +287,13 @@ function _l10n_feedback_delete_translation($translation) {
     return;
   }
 
-  $db = $GLOBALS['btr_db'];
-
-  // Copy to the trash table the translations that will be deleted.
-  $query = $db->select('btr_translations', 't')
-    ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
-    ->condition('tguid', $trans->tguid);
+  // Delete the translation.
   $account = user_load($GLOBALS['user']->uid);
-  $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $account->init));
-  $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => variable_get('btr_translation_lng')));
-  $query->addExpression('NOW()', 'd_time');
-  $db->insert('btr_translations_trash')->from($query)->execute();
-
-  // Copy to the trash table the votes that will be deleted.
-  $query = $db->select('btr_votes', 'v')
-    ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
-    ->condition('tguid', $trans->tguid);
-  $query->addExpression('NOW()', 'd_time');
-  $db->insert('btr_votes_trash')->from($query)->execute();
-
-  // Delete the translation and any votes related to it.
-  $db->delete('btr_translations')->condition('tguid', $trans->tguid)->execute();
-  $db->delete('btr_votes')->condition('tguid', $trans->tguid)->execute();
-
-  // get the original string
-  $query = "SELECT string FROM {btr_strings} WHERE sguid = :sguid";
-  $string = $db->query($query, array(':sguid' => $trans->sguid))->fetchField();
-
-  // Notify the author of the translation about the deletion.
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-  $notification_params = array(
-    'type' => 'notify-author-on-translation-deletion',
-    'uid' => $trans->uid,
-    'username' => $trans->author,
-    'recipient' => $trans->author . ' <' . $trans->umail . '>',
-    'sguid' => $trans->sguid,
-    'string' => $string,
-    'translation' => $trans->translation[0],
+  btr_del_translation(
+    $tguid = $trans->tguid,   // id of the translation to be deleted
+    $umail = $account->init,  // email of the user that is deleting it
+    $ulng = variable_get('btr_translation_lng')
   );
-  $queue->createItem((object)$notification_params);
-
-  // Notify any voters of the translation as well.
-  foreach ($trans->votes as $username => $vote) {
-    if ($username == $trans->author)  continue;  // don't send a second message to the author
-    $notification_params = array(
-      'type' => 'notify-voter-on-translation-deletion',
-      'uid' => $vote->uid,
-      'username' => $vote->name,
-      'recipient' => $vote->name . ' <' . $vote->umail . '>',
-      'sguid' => $trans->sguid,
-      'string' => $string,
-      'translation' => $trans->translation[0],
-    );
-    $queue->createItem((object)$notification_params);
-  }
 
   global $_l10n_feedback_save_status;
   $_l10n_feedback_save_status['nr_deletions']++;
@@ -629,21 +301,9 @@ function _l10n_feedback_delete_translation($translation) {
 
 
 /**
- * Make spacing and newlines the same in translation as in the source.
- *
- * @param $translation
- *   Translation string.
- * @param $source
- *   Source string.
- * @return
- *   Translation string with the right beginning and ending chars.
+ * Display the number of the votes and translations that
+ * are added, deleted, etc.
  */
-function l10n_feedback_trim($translation, $source) {
-  $matches = array();
-  preg_match("/^(\s*).*\S(\s*)\$/s", $source, $matches);
-  return $matches[1] . trim($translation) . $matches[2];
-}
-
 function l10n_feedback_display_notification_messages() {
 
   global $_l10n_feedback_save_status;
