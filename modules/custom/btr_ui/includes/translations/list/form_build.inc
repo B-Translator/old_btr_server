@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * The function l10n_feedback_translate_form() builds a render array
+ * The function btr_ui_translate_form() builds a render array
  * for the strings and their corresponding translations/suggestions.
  * The edit and submit functionality will be available only when suitable.
  */
@@ -19,7 +19,7 @@
  * @return
  *   A render array of the page.
  */
-function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
+function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
   $pager = theme('pager', array('tags' => NULL, 'element' => 0));
   $form = array(
     'target' => array(
@@ -36,7 +36,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
     ),
     'strings' => array(
       '#tree' => TRUE,
-      '#theme' => 'l10n_feedback_translate_table',
+      '#theme' => 'btr_ui_translate_table',
       '#lng' => $lng,
     ),
 
@@ -98,7 +98,7 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
 
   // Fill in string values for the editor.
   foreach ($strings as $sguid => $string) {
-    $form['strings'][$sguid] = _l10n_feedback_translate_form_item($form_state, $string, $lng);
+    $form['strings'][$sguid] = _btr_ui_translate_form_item($form_state, $string, $lng);
     /*
     // TODO: Display the number of comments for each string.
     $form['strings'][$sguid]['disqus'] = array(
@@ -128,11 +128,11 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
   if (sizeof($strings)==1) {
 
     // set the page title (no longer than 20 chars)
-    $title = l10n_feedback_shorten($string->string[0], 20);
+    $title = btr_ui_shorten($string->string[0], 20);
     drupal_set_title(t('String: !string', array('!string' => $title),
         array('context' => 'set the page title')));
 
-    $short_string = l10n_feedback_shorten($string->string[0], 50);
+    $short_string = btr_ui_shorten($string->string[0], 50);
     $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
 
     // define the sharethis form element
@@ -167,16 +167,16 @@ function l10n_feedback_translate_form($form, &$form_state, $strings, $lng) {
 /**
  * Creates the form fragment for a source string and its translations.
  */
-function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
+function _btr_ui_translate_form_item(&$form_state, $string, $lng) {
 
   $string_unpacked = $string->string;
-  $string->string = l10n_feedback_unpack_string($string->string);
+  $string->string = btr_ui_unpack_string($string->string);
 
   $form = array(
     '#string' => $string,
     '#langcode' => $lng,
     'source' => array(
-      'string' => array('#markup' => _l10n_feedback_translate_render_textarray($string->string)),
+      'string' => array('#markup' => _btr_ui_translate_render_textarray($string->string)),
     ),
   );
 
@@ -193,8 +193,8 @@ function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
    * TODO: Improve alternatives in other languages.
    $arr_items = array();
    foreach ($string->alternatives as $langcode => $string) {
-   $string = l10n_feedback_unpack_string($string);
-   $rendered_string = _l10n_feedback_translate_render_textarray($string);
+   $string = btr_ui_unpack_string($string);
+   $rendered_string = _btr_ui_translate_render_textarray($string);
    $arr_items = array(
    '#markup' => "<strong>$langcode:</strong><label class='l10n-string'>$rendered_string</label>",
    );
@@ -215,13 +215,13 @@ function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
 
   foreach ($translations as $tguid => $translation) {
     // Add the translation to the list.
-    $form[$tguid] = _l10n_feedback_translate_translation($translation, $string->sguid, $lng);
+    $form[$tguid] = _btr_ui_translate_translation($translation, $string->sguid, $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('btranslator-suggest')) {
-    $textarea = _l10n_feedback_translate_translation_textarea($string, $lng);
-    $form[$textarea->tguid] = _l10n_feedback_translate_translation($textarea, $string->sguid, $lng);
+    $textarea = _btr_ui_translate_translation_textarea($string, $lng);
+    $form[$textarea->tguid] = _btr_ui_translate_translation($textarea, $string->sguid, $lng);
   }
 
   return $form;
@@ -230,7 +230,7 @@ function _l10n_feedback_translate_form_item(&$form_state, $string, $lng) {
 /**
  * Build mock object for new textarea.
  */
-function _l10n_feedback_translate_translation_textarea($string, $lng) {
+function _btr_ui_translate_translation_textarea($string, $lng) {
   global $user;
 
   // Fill in with as many items as required. If the source was plural, we
@@ -255,11 +255,11 @@ function _l10n_feedback_translate_translation_textarea($string, $lng) {
 /**
  * Creates the form fragment for a translated string.
  */
-function _l10n_feedback_translate_translation($translation, $string_sguid, $lng) {
+function _btr_ui_translate_translation($translation, $string_sguid, $lng) {
 
   global $user;
 
-  $translation->translation = l10n_feedback_unpack_string($translation->translation);
+  $translation->translation = btr_ui_unpack_string($translation->translation);
 
   $is_own = ($user->uid && ($user->name == $translation->author));
   $is_approved = ($user->uid && in_array($user->name, array_keys($translation->votes)));
@@ -267,7 +267,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
   $may_moderate = ($is_own or user_access('btranslator-resolve'));
 
   $form = array(
-    '#theme' => 'l10n_feedback_translate_translation',
+    '#theme' => 'btr_ui_translate_translation',
     'original' => array(
       '#type' => 'value',
       '#value' => $translation,
@@ -279,9 +279,9 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
   $type = ($voting_mode == 'single') ? 'radio' : 'checkbox';
   $form['approved'] = array(
     '#type' => $type,
-    '#theme' => 'l10n_feedback_translate_radio',
+    '#theme' => 'btr_ui_translate_radio',
     '#theme_wrappers' => array(),
-    '#title' => _l10n_feedback_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
+    '#title' => _btr_ui_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tguid,
     '#default_value' => $is_approved ? $translation->tguid : '',
     '#disabled' => !user_access('btranslator-vote'),
@@ -320,7 +320,7 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
       );
     }
     if ($translation->author != NULL) {
-      $title = l10n_feedback_translate_byline($translation->author, $translation->uid, $translation->time);
+      $title = btr_ui_translate_byline($translation->author, $translation->uid, $translation->time);
 
       $form['author'] = array(
         '#markup' => $title,
@@ -356,11 +356,11 @@ function _l10n_feedback_translate_translation($translation, $string_sguid, $lng)
  * Generate markup for an unpacked string.
  *
  * @param $textarray
- *   An array of strings as generated by l10n_feedback_unpack_string().
+ *   An array of strings as generated by btr_ui_unpack_string().
  * @param $empty
  *   Specific data to include as the data to use when empty.
  */
-function _l10n_feedback_translate_render_textarray($textarray, $empty = '') {
+function _btr_ui_translate_render_textarray($textarray, $empty = '') {
   // data-empty is a proprietary attribute used in editor.css to be displayed when
   // starting to submit a new suggestion.
   $empty = !empty($empty) ? ' data-empty="' . check_plain($empty) . '"' : '';
@@ -371,7 +371,7 @@ function _l10n_feedback_translate_render_textarray($textarray, $empty = '') {
 /**
  * Generates the byline containing meta information about a string.
  */
-function l10n_feedback_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =TRUE) {
+function btr_ui_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =TRUE) {
   $account = (object) array('name' => $name, 'uid' => $uid);
   $username = ($link_user ? theme('username', array('account' => $account)) : check_plain($name));
   //dpm($username);  //debug
@@ -384,44 +384,4 @@ function l10n_feedback_translate_byline($name, $uid, $time, $medium =-1, $type =
   );
 
   return t('by !author <span title="@ago">on @date</span>', $params);
-
-  /*
-    switch ($type) {
-    case L10N_SERVER_ACTION_ADD:
-    switch ($medium) {
-    case L10N_SERVER_MEDIUM_IMPORT:
-    return t('imported by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_MEDIUM_REMOTE:
-    return t('remotely submitted by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_MEDIUM_WEB:
-    return t('suggested on the web by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_MEDIUM_UNKNOWN:
-    return t('suggested by !author <span title="@ago">on @date</span> (source unknown)', $params);
-    }
-    return;
-    case L10N_SERVER_ACTION_READD:
-    switch ($medium) {
-    case L10N_SERVER_MEDIUM_IMPORT:
-    return t('re-imported by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_MEDIUM_REMOTE:
-    return t('remotely re-submitted by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_MEDIUM_WEB:
-    return t('re-suggested on the web by !author <span title="@ago">on @date</span>', $params);
-    // L10N_SERVER_MEDIUM_UNKNOWN does not apply, because we only have that
-    // for backwards compatibility and L10N_SERVER_ACTION_READD did not
-    // happen with data migrated (at least we did not know about it).
-    }
-    return;
-    case L10N_SERVER_ACTION_APPROVE:
-    return t('approved by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_ACTION_DECLINE:
-    return t('declined by !author <span title="@ago">on @date</span>', $params);
-    case L10N_SERVER_ACTION_DEMOTE:
-    return t('demoted by !author <span title="@ago">on @date</span>', $params);
-    default:
-    // Default byline that work as a click-target to get more information.
-    return t('by !author <span title="@ago">on @date</span>', $params);
-    }
-  */
-
 }

@@ -1,5 +1,5 @@
-name = l10n feedback
-description =  Getting feedback and suggestions from people about l10n translations.
+name = B-Translator UI
+description = B-Translator User Interface for Drupal.
 package = B-Translator
 core = 7.x
 
@@ -12,5 +12,5 @@ dependencies[] = edit_profile
 dependencies[] = entity
 dependencies[] = rules
 
-files[] = l10n_feedback.test
+files[] = btr_ui.test
 configure = admin/config/btr

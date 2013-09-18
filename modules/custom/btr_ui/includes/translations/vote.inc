@@ -14,10 +14,10 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/vote
  * Vote the best translation for a string, or suggest a better translation.
  */
-function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
+function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   if ($one_time_login != NULL) {
-    l10n_feedback_login_one_time($one_time_login);
+    btr_ui_login_one_time($one_time_login);
     drupal_goto("translations/$lng/$sguid");
     return;
   }
@@ -28,13 +28,13 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   if ($sguid == NULL or $sguid == 'untranslated' or $sguid == 'translated') {
     if ($sguid == 'untranslated') {
-      $sguid = l10n_feedback_get_untranslated_sguid();
+      $sguid = btr_ui_get_untranslated_sguid();
     }
     elseif ($sguid == 'translated') {
-      $sguid = l10n_feedback_get_translated_sguid();
+      $sguid = btr_ui_get_translated_sguid();
     }
     else {
-      $sguid = l10n_feedback_get_sguid();
+      $sguid = btr_ui_get_sguid();
     }
     if ($sguid=='') {
       drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
@@ -47,9 +47,9 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   // Add the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/editor.js');
 
   // Get languages and language codes
   $languages = btr_get_languages();
@@ -57,7 +57,7 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   // Add RTL style if the current language's direction is RTL
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor-rtl.css');
   }
 
   /*
@@ -75,17 +75,17 @@ function l10n_feedback_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   // Get the string and its translations.
   global $user;
-  $other_langs = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
+  $other_langs = btr_ui_get_auxiliary_languages(user_load($user->uid));
   $strings = btr_get_strings(array($sguid), $lng, $other_langs);
   //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.
-  $output = drupal_get_form('l10n_feedback_translate_form', $strings, $lng);
+  $output = drupal_get_form('btr_ui_translate_form', $strings, $lng);
 
   return $output;
 }
 
-function l10n_feedback_login_one_time($one_time_login =NULL) {
+function btr_ui_login_one_time($one_time_login =NULL) {
 
   if ($one_time_login == NULL)  return FALSE;
 
@@ -131,7 +131,7 @@ function l10n_feedback_login_one_time($one_time_login =NULL) {
  * of the given user. If no uid is given as parameter,
  * then the current user is assumed.
  */
-function l10n_feedback_get_sguid($uid =NULL) {
+function btr_ui_get_sguid($uid =NULL) {
 
   // if no parameter is given, get the uid of the current user
   if ($uid == NULL) {
@@ -140,17 +140,17 @@ function l10n_feedback_get_sguid($uid =NULL) {
   }
 
   // get the string-order preference for the user
-  $string_order = l10n_feedback_get_string_order(user_load($uid));
+  $string_order = btr_ui_get_string_order(user_load($uid));
 
   // select the string according to the string-order preference
   switch ($string_order) {
     default:
     case 'random':
-      $sguid = l10n_feedback_get_random_sguid($uid);
+      $sguid = btr_ui_get_random_sguid($uid);
       break;
 
     case 'sequential':
-      $sguid = l10n_feedback_get_sequential_sguid($uid);
+      $sguid = btr_ui_get_sequential_sguid($uid);
       break;
   }
 
@@ -161,18 +161,18 @@ function l10n_feedback_get_sguid($uid =NULL) {
 /**
  * Return a random sguid from the preferred projects of the user.
  */
-function l10n_feedback_get_random_sguid($uid) {
+function btr_ui_get_random_sguid($uid) {
   // get the preferred projects (as an array)
-  $preferred_projects = l10n_feedback_get_preferred_projects(user_load($uid));
+  $preferred_projects = btr_ui_get_preferred_projects(user_load($uid));
   return btr_get_random_sguid($preferred_projects);
 }
 
 /**
  * Return a random untranslated sguid from the preferred projects of the user.
  */
-function l10n_feedback_get_untranslated_sguid() {
+function btr_ui_get_untranslated_sguid() {
   $account = user_load($GLOBALS['user']->uid);
-  $preferred_projects = l10n_feedback_get_preferred_projects($account);
+  $preferred_projects = btr_ui_get_preferred_projects($account);
   $lng = variable_get('btr_translation_lng', 'fr');
   return btr_get_untranslated_sguid($preferred_projects, $lng);
 }
@@ -180,9 +180,9 @@ function l10n_feedback_get_untranslated_sguid() {
 /**
  * Return a random translated sguid from the preferred projects of the user.
  */
-function l10n_feedback_get_translated_sguid() {
+function btr_ui_get_translated_sguid() {
   $account = user_load($GLOBALS['user']->uid);
-  $preferred_projects = l10n_feedback_get_preferred_projects($account);
+  $preferred_projects = btr_ui_get_preferred_projects($account);
   $lng = variable_get('btr_translation_lng', 'fr');
   return btr_get_translated_sguid($preferred_projects, $lng);
 }
@@ -191,11 +191,11 @@ function l10n_feedback_get_translated_sguid() {
 /**
  * Return a sequential sguid from the preferred projects of the user.
  */
-function l10n_feedback_get_sequential_sguid($uid) {
+function btr_ui_get_sequential_sguid($uid) {
 
   // get the sequential data
   $account = user_load($uid);
-  $sequential = l10n_feedback_get_data_sequential($account);
+  $sequential = btr_ui_get_data_sequential($account);
 
   // if sequential data are not set, then just return a random sguid
   if ($sequential == NULL) {
@@ -203,7 +203,7 @@ function l10n_feedback_get_sequential_sguid($uid) {
         "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
         array('@edit-profile' => "/user/$uid/edit-profile")),
       'warning');
-    return l10n_feedback_get_random_sguid($uid);
+    return btr_ui_get_random_sguid($uid);
   }
 
   $lid = $sequential->lid;
@@ -219,7 +219,7 @@ function l10n_feedback_get_sequential_sguid($uid) {
           "You have reached the end of the preferred project. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
         array('@edit-profile' => '/user/$uid/edit-profile')),
       'status');
-      return l10n_feedback_get_random_sguid($uid);
+      return btr_ui_get_random_sguid($uid);
     }
     $proj = $sequential->projects[$idx];
     $lid = $proj->lmin;

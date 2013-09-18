@@ -8,9 +8,9 @@
 /*
  * Implements hook_cron_queue_info().
  */
-function l10n_feedback_cron_queue_info() {
-  $queues['l10n_feedback_delete_fake_users'] = array(
-    'worker callback' => 'l10n_feedback_delete_fake_user',
+function btr_ui_cron_queue_info() {
+  $queues['btr_ui_delete_fake_users'] = array(
+    'worker callback' => 'btr_ui_delete_fake_user',
     'time' => 30,
   );
   return $queues;
@@ -19,15 +19,15 @@ function l10n_feedback_cron_queue_info() {
 /*
  * Implements hook_cron().
  */
-function l10n_feedback_cron() {
-  l10n_feedback_cron_nightly();
+function btr_ui_cron() {
+  btr_ui_cron_nightly();
 }
 
 /**
  * Make sure that cron functions runs only once per night,
  * no matter how often cron is called.
  */
-function l10n_feedback_cron_nightly() {
+function btr_ui_cron_nightly() {
   // check whether the crontime has been reached yet
   $crontime = variable_get('btr_ui_crontime', '0');
   if (time() < $crontime)  return;
@@ -37,7 +37,7 @@ function l10n_feedback_cron_nightly() {
   variable_set('btr_ui_crontime', $crontime);
 
   // Call cron functions.
-  l10n_feedback_cleanup_fake_users();
+  btr_ui_cleanup_fake_users();
 }
 
 
@@ -48,7 +48,7 @@ function l10n_feedback_cron_nightly() {
  * Reference:
  * http://drupal.stackexchange.com/questions/54006/how-can-i-prevent-users-from-entering-invalid-e-mail-addresses-at-registration?newsletter=1&nlcode=43535%7c8b76
  */
-function l10n_feedback_cleanup_fake_users() {
+function btr_ui_cleanup_fake_users() {
   $query = new EntityFieldQuery();
 
   $query->entityCondition('entity_type', 'user')
@@ -60,7 +60,7 @@ function l10n_feedback_cleanup_fake_users() {
   $result = $query->execute();
 
   if (isset($result['user'])) {
-    $queue = DrupalQueue::get('l10n_feedback_delete_fake_users');
+    $queue = DrupalQueue::get('btr_ui_delete_fake_users');
     foreach (array_keys($result['user']) as $uid) {
       $queue->createItem($uid);
     }
@@ -71,7 +71,7 @@ function l10n_feedback_cleanup_fake_users() {
  * This function is a callback from the cron-queue,
  * which is used to delete the user with the given $uid.
  */
-function l10n_feedback_delete_fake_user($uid) {
+function btr_ui_delete_fake_user($uid) {
   // Delete from the drupal table 'users'
   user_delete($uid);
 

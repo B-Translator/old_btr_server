@@ -8,7 +8,7 @@
  * Implements hook_user_isert().
  * It is called when a new user account is created.
  */
-function l10n_feedback_user_insert(&$edit, $account, $category) {
+function btr_ui_user_insert(&$edit, $account, $category) {
   btr_user_insert(
     $umail = $account->init,  // initial email that the user used for registration
     $ulng = variable_get('btr_translation_lng', 'fr'),
@@ -23,7 +23,7 @@ function l10n_feedback_user_insert(&$edit, $account, $category) {
  * Implements hook_user_update().
  * It is called after a user account has been updated.
  */
-function l10n_feedback_user_update(&$edit, $account, $category) {
+function btr_ui_user_update(&$edit, $account, $category) {
   btr_user_update(
     $ulng = variable_get('btr_translation_lng', 'fr'),
     $uid = $account->uid,
@@ -36,7 +36,7 @@ function l10n_feedback_user_update(&$edit, $account, $category) {
 /**
  * Implements hook_user_cancel().
  */
-function l10n_feedback_user_cancel(&$edit, $account, $category) {
+function btr_ui_user_cancel(&$edit, $account, $category) {
   btr_user_disable(
     $ulng = variable_get('btr_translation_lng', 'fr'),
     $uid = $account->uid
@@ -47,7 +47,7 @@ function l10n_feedback_user_cancel(&$edit, $account, $category) {
 /**
  * Implements hook_user_delete().
  */
-function l10n_feedback_user_delete($account) {
+function btr_ui_user_delete($account) {
   btr_user_disable(
     $ulng = variable_get('btr_translation_lng', 'fr'),
     $uid = $account->uid
@@ -59,7 +59,7 @@ function l10n_feedback_user_delete($account) {
  * It is called before the user profile page is saved.
  * Store the value for 'field_data_sequential'.
  */
-function l10n_feedback_user_presave(&$edit, $account, $category) {
+function btr_ui_user_presave(&$edit, $account, $category) {
 
   // if skip_presave is defined, then user data is being saved
   // from the code, not from the profile interface
@@ -72,7 +72,7 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
   $obj_edit = (object)$edit;
 
   // get the string-order (random|sequential)
-  $string_order = l10n_feedback_get_string_order($obj_edit);
+  $string_order = btr_ui_get_string_order($obj_edit);
 
   // if string-order is random, no need for 'field_data_sequential'
   if ($string_order == 'random') {
@@ -81,12 +81,12 @@ function l10n_feedback_user_presave(&$edit, $account, $category) {
   }
 
   // get the preferred projects from the user settings
-  $arr_projects = l10n_feedback_get_preferred_projects($obj_edit);
+  $arr_projects = btr_ui_get_preferred_projects($obj_edit);
 
   // if there is no change on the preferred projects,
   // then there is nothing to do, just keep the existing value of 'field_data_sequential'
-  $prev_string_order = l10n_feedback_get_string_order($account);
-  $prev_projects = l10n_feedback_get_preferred_projects($account);
+  $prev_string_order = btr_ui_get_string_order($account);
+  $prev_projects = btr_ui_get_preferred_projects($account);
   if ( $prev_string_order=='sequential'
     and implode(';', $prev_projects) == implode(';', $arr_projects) ) {
 

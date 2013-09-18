@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Test cases for the module l10n_feedback.
+ * Test cases for the module btr_ui.
  *
  * They can be run from commad line by calling the script:
  *   profiles/btranslator/utils/run-tests.sh
@@ -40,17 +40,17 @@
 module_load_include('test', 'simpletest_clone');
 
 /**
- * l10n_feedback test cases
+ * btr_ui test cases
  */
-//class L10nFeedbackTestCase extends DrupalWebTestCase {
-class L10nFeedbackTestCase extends SimpleTestCloneTestCase {
+//class BtrUiTestCase extends DrupalWebTestCase {
+class BtrUiTestCase extends SimpleTestCloneTestCase {
 
   protected $profile = 'btranslator';
 
   public static function getInfo() {
     return array(
-      'name' => 'l10n_feedback',
-      'description' => 'Test the functionality of module l10n_feedback.',
+      'name' => 'btr_ui',
+      'description' => 'Test the functionality of module btr_ui.',
       'group' => 'B-Translator',
     );
   }
@@ -96,7 +96,7 @@ class L10nFeedbackTestCase extends SimpleTestCloneTestCase {
   }
 
   // Test Case1
-  public function testL10nFeedbackCase1() {
+  public function testBtrUiCase1() {
     $this->setupUsers();
     $this->_test_anonymous();
     $this->_test_contributor();
@@ -186,32 +186,32 @@ class L10nFeedbackTestCase extends SimpleTestCloneTestCase {
 
   /*
   // Test Case2
-  public function testL10nFeedbackCase2() {
+  public function testBtrUiCase2() {
     // nothing yet
   }
   */
 }
 
 /**
- * l10n_feedback unit testing
+ * btr_ui unit testing
  */
 /*
-class L10nFeedbackUnitTestCase extends DrupalUnitTestCase {
+class BtrUiUnitTestCase extends DrupalUnitTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => 'l10n_feedback unit tests',
-      'description' => 'Unit testing for module l10n_feedback.',
-      'group' => 'l10n',
+      'name' => 'btr_ui unit tests',
+      'description' => 'Unit testing for module btr_ui.',
+      'group' => 'btr',
     );
   }
 
   function setUp() {
-    //drupal_load('module', 'l10n_feedback');
+    //drupal_load('module', 'btr_ui');
     //parent::setUp();
   }
 
-  public function testL10nFeedbackUnitTestCase1() {
+  public function testBtrUiUnitTestCase1() {
     // nothing yet
   }
 }

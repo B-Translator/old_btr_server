@@ -1,49 +1,49 @@
 <?php
 /**
- * @file l10n_suggestion.install
- * Install and update functions for the module l10n_feedback.
+ * @file btr_ui.install
+ * Install and update functions for the module btr_ui.
  */
 
 // get the functions for creating/deleting user preference fields and instancies
-include drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback.fields.inc';
+include drupal_get_path('module', 'btr_ui') . '/btr_ui.fields.inc';
 
 // get the functions for creating/deleting a custom content type for projects
-include drupal_get_path('module', 'l10n_feedback') . '/l10n_feedback.projects.inc';
+include drupal_get_path('module', 'btr_ui') . '/btr_ui.projects.inc';
 
 /**
  * Implements hook_enable().
  */
-function l10n_feedback_enable() {
-  mailsystem_set(array('l10n_feedback' => 'MimeMailSystem'));
+function btr_ui_enable() {
+  mailsystem_set(array('btr_ui' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_disable().
  */
-function l10n_feedback_disable() {
-  mailsystem_clear(array('l10n_feedback' => 'MimeMailSystem'));
+function btr_ui_disable() {
+  mailsystem_clear(array('btr_ui' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_install().
  */
-function l10n_feedback_install() {
+function btr_ui_install() {
   // create custom fields for user preferencies
-  l10n_feedback_create_userprofile_fields();
+  btr_ui_create_userprofile_fields();
 
   // create a new content type for projects
-  l10n_feedback_create_project_content_type();
+  btr_ui_create_project_content_type();
 }
 
 /**
  * Implements hook_uninstall().
  */
-function l10n_feedback_uninstall() {
+function btr_ui_uninstall() {
   // delete the custom fields of user preferencies
-  l10n_feedback_delete_userprofile_fields();
+  btr_ui_delete_userprofile_fields();
 
   // delete the project content type and anything related to it
-  l10n_feedback_delete_project_content_type();
+  btr_ui_delete_project_content_type();
 
   // delete variables that were used for this module
   $variables = array(

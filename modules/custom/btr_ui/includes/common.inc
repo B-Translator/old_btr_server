@@ -10,7 +10,7 @@
  * for the given user.
  * Return 'random' if the field has no value.
  */
-function l10n_feedback_get_string_order($account) {
+function btr_ui_get_string_order($account) {
 
   $lang = 'und';
   if (isset($account->field_order_of_strings[$lang][0]['value'])) {
@@ -30,7 +30,7 @@ function l10n_feedback_get_string_order($account) {
  * preferred projects on his profile/settings, then get the
  * preferred projects defined by admin on the config page.
  */
-function l10n_feedback_get_preferred_projects($account) {
+function btr_ui_get_preferred_projects($account) {
 
   $lang = 'und';
   $arr_preferred_projects = array();
@@ -72,7 +72,7 @@ function l10n_feedback_get_preferred_projects($account) {
 /**
  * Return the value of the field 'field_auxiliary_languages' as an array.
  */
-function l10n_feedback_get_auxiliary_languages($account) {
+function btr_ui_get_auxiliary_languages($account) {
 
   $lang = 'und';
   $arr_auxiliary_languages = array();
@@ -94,7 +94,7 @@ function l10n_feedback_get_auxiliary_languages($account) {
  * Get the sequential data from the field 'field_data_sequential'.
  * Return NULL if no such data is found.
  */
-function l10n_feedback_get_data_sequential($account) {
+function btr_ui_get_data_sequential($account) {
 
   $lang = 'und';
   if (isset($account->field_data_sequential[$lang][0]['value'])) {
@@ -111,7 +111,7 @@ function l10n_feedback_get_data_sequential($account) {
  * From the given (possibly long) string, returns a short string
  * of the given length (that can be suitable for title, subject, etc.)
  */
-function l10n_feedback_shorten($string, $length) {
+function btr_ui_shorten($string, $length) {
   $str = strip_tags(str_replace("\n", ' ', $string));
   if (strlen($str) > $length) {
     $str = substr($str, 0, strrpos(substr($str, 0, $length - 3), ' '));

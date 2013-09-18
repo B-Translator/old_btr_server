@@ -6,11 +6,11 @@
  */
 
 /**
- * Form submit callback for l10n_feedback_translate_form().
+ * Form submit callback for btr_ui_translate_form().
  *
- * @see l10n_feedback_translate_form().
+ * @see btr_ui_translate_form().
  */
-function l10n_feedback_translate_form_submit($form, &$form_state) {
+function btr_ui_translate_form_submit($form, &$form_state) {
 
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
@@ -28,7 +28,7 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
 
   // Save the values selected on the form (votes or new suggestions).
   if ( user_access('btranslator-vote') || user_access('btranslator-suggest') ) {
-    _l10n_feedback_translate_form_save($form_values);
+    _btr_ui_translate_form_save($form_values);
   }
   elseif (!user_is_logged_in()) {
     drupal_set_message(t("You need to be logged in, in order to be able to submit votes and suggestions."));
@@ -66,7 +66,7 @@ function l10n_feedback_translate_form_submit($form, &$form_state) {
 /**
  * Save the values selected on the form (votes or new suggestions).
  */
-function _l10n_feedback_translate_form_save($form_values) {
+function _btr_ui_translate_form_save($form_values) {
 
   $save_access = (user_access('btranslator-vote') || user_access('btranslator-suggest'));
   if (!$save_access) {
@@ -86,8 +86,8 @@ function _l10n_feedback_translate_form_save($form_values) {
 
   // keep track of the status, so that propper notification
   // can be displayed to the user
-  global $_l10n_feedback_save_status;
-  $_l10n_feedback_save_status = array(
+  global $_btr_ui_save_status;
+  $_btr_ui_save_status = array(
     'cannot_vote' => 0,
     'cannot_suggest' => 0,
     'nr_votes' => 0,
@@ -98,45 +98,45 @@ function _l10n_feedback_translate_form_save($form_values) {
   // Get the voting mode.
   $voting_mode = variable_get('btr_voting_mode', 'single');
 
-  // Iterate outer structure built in l10n_feedback_translate_form().
+  // Iterate outer structure built in btr_ui_translate_form().
   foreach ($form_values['strings'] as $sguid => $string) {
 
     if ($voting_mode == 'single') {
-      _l10n_feedback_translate_form_submit_single($sguid, $lng, $string);
+      _btr_ui_translate_form_submit_single($sguid, $lng, $string);
     }
 
-    // Iterate inner structure built in _l10n_feedback_translate_form_item().
+    // Iterate inner structure built in _btr_ui_translate_form_item().
     // Form items have numeric $tguid values and other keys here.
     foreach ($string as $tguid => $translation) {
       if ($voting_mode == 'multiple') {
-        _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
+        _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
       }
       if ((strlen($tguid) == 40) && !empty($translation['declined'])) {
 	// Delete translation.
-	_l10n_feedback_delete_translation($translation);
+	_btr_ui_delete_translation($translation);
       }
     }
   }
 
   // Tell the user what happened.
-  l10n_feedback_display_notification_messages();
+  btr_ui_display_notification_messages();
 }
 
 /**
  * Return true if a new translation has been submitted.
  */
 function is_not_empty_translation($translation) {
-  $translation = l10n_feedback_pack_string($translation);
+  $translation = btr_ui_pack_string($translation);
   $translation = str_replace(t('<New translation>'), '', $translation);
   $translation = trim($translation);
   return !empty($translation);
 }
 
-function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
+function _btr_ui_translate_form_submit_single($sguid, $lng, $string) {
 
   if ( is_not_empty_translation($string['new']['value']) ) {
     // Add a new suggestion.
-    l10n_feedback_add_suggestion($sguid, $lng, $string['new']['value']);
+    btr_ui_add_suggestion($sguid, $lng, $string['new']['value']);
     return;
   }
 
@@ -148,18 +148,18 @@ function _l10n_feedback_translate_form_submit_single($sguid, $lng, $string) {
     global $user;
     if (!in_array($user->name, array_keys($previous_votes))) {
       $umail = $user->init;  // initial mail of the user
-      l10n_feedback_add_vote($tguid, $umail);
+      btr_ui_add_vote($tguid, $umail);
     }
   }
 }
 
-function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $translation) {
+function _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translation) {
 
   global $user;
 
   $approved = $translation['approved'];
   if ($tguid == 'new' and is_not_empty_translation($translation['value'])) {
-    l10n_feedback_add_suggestion($sguid, $lng, $translation['value']);
+    btr_ui_add_suggestion($sguid, $lng, $translation['value']);
   }
   elseif ($approved != '') {
     // Add a new vote for this translation
@@ -167,7 +167,7 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
     $previous_votes = $translation['original']->votes;
     if (!in_array($user->name, array_keys($previous_votes))) {
       $umail = $user->init;  // initial mail of the user
-      l10n_feedback_add_vote($tguid, $umail);
+      btr_ui_add_vote($tguid, $umail);
     }
   }
   elseif ($approved == '') {
@@ -176,11 +176,11 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
     if (in_array($user->name, array_keys($previous_votes))) {
       if (user_access('btranslator-vote')) {
 	$umail = $user->init;  // initial mail of the user
-	_l10n_feedback_clean_previous_votes($tguid, $umail, $sguid, $lng);
+	_btr_ui_clean_previous_votes($tguid, $umail, $sguid, $lng);
       }
       else {
-	global $_l10n_feedback_save_status;
-	$_l10n_feedback_save_status['cannot_vote']++;
+	global $_btr_ui_save_status;
+	$_btr_ui_save_status['cannot_vote']++;
       }
     }
   }
@@ -198,11 +198,11 @@ function _l10n_feedback_translate_form_submit_multiple($sguid, $tguid, $lng, $tr
  * @return
  *   The ID of the new vote, or NULL.
  */
-function l10n_feedback_add_vote($tguid, $umail) {
+function btr_ui_add_vote($tguid, $umail) {
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
-    global $_l10n_feedback_save_status;
-    $_l10n_feedback_save_status['cannot_vote']++;
+    global $_btr_ui_save_status;
+    $_btr_ui_save_status['cannot_vote']++;
     return NULL;
   }
 
@@ -210,9 +210,9 @@ function l10n_feedback_add_vote($tguid, $umail) {
   $vid = btr_add_vote($tguid, $umail, $ulng);
 
   // Increment the number of the saved votes.
-  global $_l10n_feedback_save_status;
+  global $_btr_ui_save_status;
   if ($vid) {
-    $_l10n_feedback_save_status['nr_votes']++;
+    $_btr_ui_save_status['nr_votes']++;
   }
 
   return $vid;
@@ -236,20 +236,20 @@ function l10n_feedback_add_vote($tguid, $umail) {
  *   The ID of the new translation ($tguid),
  *   or FALSE if no translation was added.
  */
-function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
+function btr_ui_add_suggestion($sguid, $lng, $values, $umail =NULL) {
 
   if ($umail == NULL) {
     global $user;
     $umail = $user->init;
   }
 
-  $translation = l10n_feedback_pack_string($values);
+  $translation = btr_ui_pack_string($values);
   $translation = str_replace(t('<New translation>'), '', $translation);
 
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
-    global $_l10n_feedback_save_status;
-    $_l10n_feedback_save_status['cannot_suggest']++;
+    global $_btr_ui_save_status;
+    $_btr_ui_save_status['cannot_suggest']++;
     return FALSE;
   }
 
@@ -262,8 +262,8 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   if (!$tguid)  return FALSE;  // no translation was added
 
   // Increment the number of the saved suggestions.
-  global $_l10n_feedback_save_status;
-  $_l10n_feedback_save_status['nr_suggestions']++;
+  global $_btr_ui_save_status;
+  $_btr_ui_save_status['nr_suggestions']++;
 
   return $tguid;
 }
@@ -276,7 +276,7 @@ function l10n_feedback_add_suggestion($sguid, $lng, $values, $umail =NULL) {
  * $translation is an array/object structure with all the
  * information about the translation, votes, etc.
  */
-function _l10n_feedback_delete_translation($translation) {
+function _btr_ui_delete_translation($translation) {
   //dpm($translation);  //debug
   $trans = $translation['original'];
 
@@ -295,8 +295,8 @@ function _l10n_feedback_delete_translation($translation) {
     $ulng = variable_get('btr_translation_lng')
   );
 
-  global $_l10n_feedback_save_status;
-  $_l10n_feedback_save_status['nr_deletions']++;
+  global $_btr_ui_save_status;
+  $_btr_ui_save_status['nr_deletions']++;
 }
 
 
@@ -304,10 +304,10 @@ function _l10n_feedback_delete_translation($translation) {
  * Display the number of the votes and translations that
  * are added, deleted, etc.
  */
-function l10n_feedback_display_notification_messages() {
+function btr_ui_display_notification_messages() {
 
-  global $_l10n_feedback_save_status;
-  extract($_l10n_feedback_save_status);
+  global $_btr_ui_save_status;
+  extract($_btr_ui_save_status);
 
   if ($cannot_vote > 0) {
     drupal_set_message(t('You do not have enough rights for submitting votes!'), 'error');

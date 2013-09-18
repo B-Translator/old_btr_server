@@ -15,12 +15,12 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Get translation suggestions for a given string.
  * 'lng' and 'sguid' are passed as parameters to the function.
  */
-function l10n_feedback_get($lng =NULL, $sguid =NULL) {
+function btr_ui_get($lng =NULL, $sguid =NULL) {
 
   // Add the the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'l10n_feedback') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/editor.js');
 
   //get languages and language codes
   $languages = btr_get_languages();
@@ -54,7 +54,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
 
   // Add RTL style if the current language's direction is RTL
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'l10n_feedback') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor-rtl.css');
   }
 
   /*
@@ -72,7 +72,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
 
   // Get the string and its translations.
   global $user;
-  $other_langs = l10n_feedback_get_auxiliary_languages(user_load($user->uid));
+  $other_langs = btr_ui_get_auxiliary_languages(user_load($user->uid));
   $strings = btr_get_strings(array($sguid), $lng, $other_langs);
   //if ($strings) dpm($strings[0]);  //debug
 
@@ -90,7 +90,7 @@ function l10n_feedback_get($lng =NULL, $sguid =NULL) {
   }
 
   // Output the string and its translations.
-  $output = drupal_get_form('l10n_feedback_translate_form', $strings, $lng);
+  $output = drupal_get_form('btr_ui_translate_form', $strings, $lng);
 
   return $output;
 }

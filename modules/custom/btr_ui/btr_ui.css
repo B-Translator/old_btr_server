@@ -1,23 +1,23 @@
 /* Overview navigation tables for projects and languages */
-table.l10n-feedback-overview {
+table.btr-ui-overview {
   width: 100%;
 }
-.l10n-feedback-overview td, .l10n-feedback-overview thead th {
+.btr-ui-overview td, .btr-ui-overview thead th {
   text-align: center;
   vertical-align: middle;
 }
-.l10n-feedback-overview td.rowhead, .l10n-feedback-overview thead th.rowhead {
+.btr-ui-overview td.rowhead, .btr-ui-overview thead th.rowhead {
   text-align: left; /* LTR */
   padding: 0.4em;
 }
-.l10n-feedback-progress {
+.btr-ui-progress {
   height: 1em;
   background-color: #eaeae1;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
 }
-.l10n-feedback-progress-translated,
-.l10n-feedback-progress-untranslated {
+.btr-ui-progress-translated,
+.btr-ui-progress-untranslated {
   background-color: #96bc44;
   height: 1em;
   float: left; /* LTR */
@@ -25,48 +25,48 @@ table.l10n-feedback-overview {
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-.l10n-feedback-progress-untranslated {
+.btr-ui-progress-untranslated {
   background-color: transparent;
 }
 
 /* String search filtering form */
-.l10n-feedback-filter {
+.btr-ui-filter {
   background-color: #f6f6f2;
   padding: 0.6em 150px 1.5em 0.6em; /* LTR */
   position: relative;
 }
-.l10n-feedback-filter .filter-widget {
+.btr-ui-filter .filter-widget {
   float: left; /* LTR */
   padding: 0 1em 0 0; /* LTR */
   height: 6em;
 }
-.l10n-feedback-filter .filter-widget label {
+.btr-ui-filter .filter-widget label {
   font-weight: bold;
   color: #003150;
 }
-.l10n-feedback-filter .filter-widget .form-item {
+.btr-ui-filter .filter-widget .form-item {
   margin-top: 0;
 }
-.l10n-feedback-filter .form-item#edit-status-translation-wrapper {
+.btr-ui-filter .form-item#edit-status-translation-wrapper {
   margin-bottom: 0;
 }
-.l10n-feedback-filter .filter-submit {
+.btr-ui-filter .filter-submit {
   clear: both;
 }
-.l10n-feedback-filter .filter-submit .form-submit {
+.btr-ui-filter .filter-submit .form-submit {
   position: absolute;
   top: 0;
   right: 0; /* LTR */
   margin: 0.5em;
   display: block;
 }
-.l10n-feedback-filter .filter-submit .reset-link {
+.btr-ui-filter .filter-submit .reset-link {
   position: absolute;
   bottom: 0;
   right: 0; /* LTR */
   margin: 0 1em 0.5em 0;
 }
-.l10n-feedback-filter .reveal-link {
+.btr-ui-filter .reveal-link {
   position: absolute;
   bottom: 0;
   left: 0; /* LTR */
@@ -74,15 +74,15 @@ table.l10n-feedback-overview {
 }
 
 /* Emphasized replaceable parts of translatables */
-em.l10n-feedback-marker {
+em.btr-ui-marker {
   font-weight: bold;
 }
 
-#l10n-feedback-pick-go .form-text {
+#btr-ui-pick-go .form-text {
   width: 100%;
 }
 
-#l10n-feedback-explore-projects-jump-form {
+#btr-ui-explore-projects-jump-form {
   text-align: center;
 }
 
@@ -99,10 +99,10 @@ em.l10n-feedback-marker {
   direction:ltr;
 }
 
-#block-l10n_feedback-contributors table {
+#block-btr_ui-contributors table {
   width: 100%;
 }
-#block-l10n_feedback-contributors tr.even, #block-l10n_feedback-contributors tr.odd {
+#block-btr_ui-contributors tr.even, #block-btr_ui-contributors tr.odd {
   background-color: transparent;
 }
 

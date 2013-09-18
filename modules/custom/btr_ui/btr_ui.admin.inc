@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Administrative pages for the l10n_feedback module.
+ * Administrative pages for the btr_ui module.
  */
 
 /**
- * General configuration settings for the module l10n_feedback.
+ * General configuration settings for the module btr_ui.
  *
  * @return
  *   An array containing form items to place on the module settings page.
  */
-function l10n_feedback_config() {
+function btr_ui_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',

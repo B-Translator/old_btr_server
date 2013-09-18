@@ -8,10 +8,10 @@
  * Menu callback: translations/addterm
  * Add a new term on the vocabulary.
  */
-function l10n_feedback_addterm() {
-  $output[] = drupal_get_form('l10n_feedback_addterm_form');
+function btr_ui_addterm() {
+  $output[] = drupal_get_form('btr_ui_addterm_form');
   if(user_access('administer')) {
-    $output[] = drupal_get_form('l10n_feedback_delterm_form');
+    $output[] = drupal_get_form('btr_ui_delterm_form');
   }
   return $output;
 }
@@ -19,9 +19,9 @@ function l10n_feedback_addterm() {
 /**
  * Form: addterm
  */
-function l10n_feedback_addterm_form() {
+function btr_ui_addterm_form() {
   $form = array(
-    '#prefix' => '<div class="l10n-feedback-filter clear-block">',
+    '#prefix' => '<div class="btr-ui-filter clear-block">',
     '#suffix' => '</div>',
   );
 
@@ -55,7 +55,7 @@ function l10n_feedback_addterm_form() {
 /**
  * Submission handler for addterm form.
  */
-function l10n_feedback_addterm_form_submit($form, &$form_state) {
+function btr_ui_addterm_form_submit($form, &$form_state) {
   //dpm($form_state['values']);  //debug
   $string = check_plain(trim($form_state['values']['newterm']));
 
@@ -66,7 +66,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
   }
 
   // notify translators about the new term
-  l10n_feedback_new_term_notification($string, $sguid);
+  btr_ui_new_term_notification($string, $sguid);
 
   // redirect to translating the term
   $lng = variable_get('btr_translation_lng', 'fr');
@@ -76,7 +76,7 @@ function l10n_feedback_addterm_form_submit($form, &$form_state) {
 /**
  * Notify translators about the new term.
  */
-function l10n_feedback_new_term_notification($string, $sguid) {
+function btr_ui_new_term_notification($string, $sguid) {
 
   // Get all the users with role 'translator'.
   $query = "SELECT ur.uid FROM users_roles ur
@@ -106,9 +106,9 @@ function l10n_feedback_new_term_notification($string, $sguid) {
 /**
  * Form: delterm
  */
-function l10n_feedback_delterm_form() {
+function btr_ui_delterm_form() {
   $form = array(
-    '#prefix' => '<div class="l10n-feedback-filter clear-block">',
+    '#prefix' => '<div class="btr-ui-filter clear-block">',
     '#suffix' => '</div>',
   );
 
@@ -142,7 +142,7 @@ function l10n_feedback_delterm_form() {
 /**
  * Submission handler for delterm form.
  */
-function l10n_feedback_delterm_form_submit($form, &$form_state) {
+function btr_ui_delterm_form_submit($form, &$form_state) {
 
   $sguid = check_plain(trim($form_state['values']['sguid']));
   btr_del_term($sguid);
@@ -162,6 +162,6 @@ function l10n_feedback_delterm_form_submit($form, &$form_state) {
  * Menu callback: translations/import
  * Import strings and translations from POT/PO files of projects.
  */
-function l10n_feedback_import() {
+function btr_ui_import() {
   return 'Not implemented yet.';
 }
