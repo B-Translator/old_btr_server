@@ -22,11 +22,23 @@ function btranslator_data_send_notification_by_email($params) {
     $key      = 'notifications',
     $to       = $params->recipient,
     $langcode = $account->language,
-    $params   = btranslator_data_build_notification_email($params),
-    $from     = btranslator_data_get_email_sender(),
+    $params   = _btranslator_data_build_notification_email($params),
+    $from     = _btranslator_data_get_email_sender(),
     $send     = TRUE
   );
 }
+
+
+/**
+ * Return the sender of the email notifications
+ * (which is always the same, as defined on smtp variables)
+ */
+function _btranslator_data_get_email_sender() {
+  $smtp_from = variable_get('smtp_from');
+  $smtp_fromname = variable_get('smtp_fromname');
+  $sender = "$smtp_fromname <$smtp_from>";
+}
+
 
 /**
  * Returns the subject and body of a notification email:
@@ -39,10 +51,10 @@ function btranslator_data_send_notification_by_email($params) {
  * Some common attributes are: $params->uid, $params->sguid,
  * $params->username, $params->string, $params->translation, etc.
  */
-function btranslator_data_build_notification_email($params) {
+function _btranslator_data_build_notification_email($params) {
 
   if (isset($params->sguid)) {
-    $url = get_string_url($params->uid, $params->sguid);
+    $url = _btranslator_data_get_string_url($params->uid, $params->sguid);
   }
   $lng = variable_get('btr_translation_lng', 'fr');
   $subject_prefix = "l10n-$lng";
@@ -55,7 +67,7 @@ function btranslator_data_build_notification_email($params) {
       $subject = t("[!prefix] Translation modified for: !string",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!string' => btranslator_data_shorten($params->string, 30),
+                   '!string' => btr_data_shorten($params->string, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -95,7 +107,7 @@ function btranslator_data_build_notification_email($params) {
       $subject = t("[!prefix] New translation for: !string",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!string' => btranslator_data_shorten($params->string, 30),
+                   '!string' => btr_data_shorten($params->string, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -172,7 +184,7 @@ function btranslator_data_build_notification_email($params) {
       $subject = t("[!prefix] Translation deleted: !translation",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!translation' => btranslator_data_shorten($params->translation, 30),
+                   '!translation' => btr_data_shorten($params->translation, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -202,7 +214,7 @@ function btranslator_data_build_notification_email($params) {
       $subject = t("[!prefix] Translation deleted: !translation",
                  array(
                    '!prefix' => $subject_prefix,
-                   '!translation' => btranslator_data_shorten($params->translation, 30),
+                   '!translation' => btr_data_shorten($params->translation, 30),
                  ));
       $body = array(
         t("Greetings !username,
@@ -273,8 +285,8 @@ function btranslator_data_build_notification_email($params) {
 
     // Send by email a string to be reviewed.
     case 'string-to-be-reviewed':
-      list($string, $translations) = btranslator_data_get_string_and_translations($params->sguid);
-      $subject = "[$subject_prefix] " . btranslator_data_shorten($string, 60);
+      list($string, $translations) = _btranslator_data_get_string_and_translations($params->sguid);
+      $subject = "[$subject_prefix] " . btr_data_shorten($string, 60);
       $body = array(
         t("Greetings !username,
 
@@ -310,7 +322,7 @@ function btranslator_data_build_notification_email($params) {
  * Return a string (and its translations) for the given user:
  * return array($string, $translations)
  */
-function btranslator_data_get_string_and_translations($sguid) {
+function _btranslator_data_get_string_and_translations($sguid) {
   //include_once(drupal_get_path('module', 'btranslator_data') . '/functions.inc');
   return btr_get_string_and_translations(
     $sguid,
@@ -326,7 +338,7 @@ function btranslator_data_get_string_and_translations($sguid) {
  * the user can quickly and easily login and edit
  * the given string.
  */
-function get_string_url($uid, $sguid) {
+function _btranslator_data_get_string_url($uid, $sguid) {
 
   $account = user_load($uid);
   $lng = variable_get('btr_translation_lng', 'fr');
@@ -337,10 +349,10 @@ function get_string_url($uid, $sguid) {
   $url = url("translations/$lng/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
 
   // get a short url
-  $short_url = get_short_url($url);
+  $short_url = _btranslator_data_get_short_url($url);
   if ($short_url == 'wait') {
     sleep(60);
-    $short_url = get_short_url($url);
+    $short_url = _btranslator_data_get_short_url($url);
   }
 
   if ($short_url == NULL or $short_url == 'wait') {
@@ -354,7 +366,7 @@ function get_string_url($uid, $sguid) {
 /**
  * Get a short URL, using http://is.gd/ .
  */
-function get_short_url($url) {
+function _btranslator_data_get_short_url($url) {
 
   $url = urlencode($url);
   $path = "http://v.gd/create.php?format=simple&url=$url";

@@ -4,6 +4,7 @@
  * Functions called by cron.
  */
 
+include_once dirname(__FILE__) . '/mail_notifications.inc';
 
 /*
  * Implements hook_cron_queue_info().

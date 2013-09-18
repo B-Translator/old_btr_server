@@ -4,10 +4,9 @@
  * Module file for btranslator_data.
  */
 
-require_once(dirname(__FILE__) . '/includes/common.inc');
 require_once(dirname(__FILE__) . '/btranslator_data.menu.inc');
+require_once(dirname(__FILE__) . '/includes/functions.inc');
 require_once(dirname(__FILE__) . '/includes/cron.inc');
-require_once(dirname(__FILE__) . '/includes/mail_notifications.inc');
 
 /**
  * Implements hook_help().

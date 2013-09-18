@@ -61,7 +61,7 @@ function btranslator_data_rss_feed($origin =NULL, $project =NULL) {
   $base_url = url('translations', array('absolute' => TRUE));
   $translations = _btranslator_data_get_latest_translations($origin, $project);
   foreach ($translations as $tran) {
-    $title = btranslator_data_shorten($tran->string, 60);
+    $title = btr_data_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
     $str_original_string = t("Original string:");
     $str_suggested_translation = t("Suggested translation:");
@@ -143,8 +143,7 @@ function _btranslator_data_get_latest_translations($origin =NULL, $project =NULL
   $get_latest_translations .= "\n    ORDER BY t.time DESC";
 
   // run the query and get the translations
-  $db = $GLOBALS['btr_db'];
-  $translations = $db->query($get_latest_translations, $args)->fetchAll();
+  $translations = btr_query($get_latest_translations, $args)->fetchAll();
 
   return $translations;
 }
