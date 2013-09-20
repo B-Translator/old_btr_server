@@ -83,16 +83,16 @@
   #+BEGIN_EXAMPLE
   drush @dev features-export \
   --destination=profiles/btranslator/modules/features \
-  btranslator_layout $(cat layout_components)
+  btr_layout $(cat layout_components)
   #+END_EXAMPLE
   It creates a feature on the directory:
-  ~/var/www/btranslator_dev/profiles/btranslator/modules/features/btranslator_layout/~
+  ~/var/www/btr_dev/profiles/btranslator/modules/features/btr_layout/~
 
-  Other features that I have created are: /btranslator_disqus/,
-  /btranslator_invite/, /btranslator_sharethis/,
-  /btranslator_captcha/, /btranslator_drupalchat/,
-  /btranslator_janrain/, /btranslator_simplenews/,
-  /btranslator_mass_contact/, /btranslator_googleanalytics/, etc.  In
+  Other features that I have created are: /btr_disqus/,
+  /btr_invite/, /btr_sharethis/,
+  /btr_captcha/, /btr_drupalchat/,
+  /btr_janrain/, /btr_simplenews/,
+  /btr_mass_contact/, /btr_googleanalytics/, etc.  In
   order to recreate them easily, the script =create-features.sh= can
   be used. It will create a feature for each list of components that
   is on the directory ~components/~.
@@ -102,7 +102,7 @@
   #!/bin/bash
   ### Create all the features.
   ### However some features need manual customization
-  ### after being created (for example btranslator_layout).
+  ### after being created (for example btr_layout).
 
   drush="drush --yes @dev"
   destination="profiles/btranslator/modules/features"
@@ -110,7 +110,7 @@
   function create_feature
   {
       components=$1
-      feature_name="btranslator_$(basename $components)"
+      feature_name="btr_$(basename $components)"
 
 
       xargs --delimiter=$'\n' --arg-file=$components \
@@ -140,7 +140,7 @@
   can further customize it manually if needed. And sometimes there is
   the need for manual customization because the automatic generation
   cannot get always everything right. In the case of the layout
-  feature I added the file ~btranslator_layout.install~, which uses
+  feature I added the file ~btr_layout.install~, which uses
   *hook_enable()* to make further customizations after the feature is
   installed.
   #+BEGIN_EXAMPLE
@@ -149,14 +149,14 @@
   /**
    * Implements hook_enable().
    */
-  function btranslator_layout_enable() {
-    _btranslator_layout_create_aliases();
-    _btranslator_layout_add_login_link();
-    _btranslator_layout_block_settings();
+  function btr_layout_enable() {
+    _btr_layout_create_aliases();
+    _btr_layout_add_login_link();
+    _btr_layout_block_settings();
   }
 
 
-  function _btranslator_layout_create_aliases() {
+  function _btr_layout_create_aliases() {
     $aliases = array(
       'udhezuesi' => 'Udhëzuesi i Përkthyesit',
       'about' => 'About',
@@ -173,7 +173,7 @@
     }
   }
 
-  function _btranslator_layout_add_login_link() {
+  function _btr_layout_add_login_link() {
     $query = "DELETE FROM {menu_links}
 	      WHERE menu_name='user-menu'
 		AND link_path='user/login'
@@ -190,7 +190,7 @@
     menu_link_save($login);
   }
 
-  function _btranslator_layout_block_settings() {
+  function _btr_layout_block_settings() {
     // set the title of the menu block as Navigation
     db_query("UPDATE {block} SET title='Navigation'
 	      WHERE theme='bootstrap1' AND delta='navig-menu'");
@@ -237,12 +237,12 @@
   Drupal modules, and anything that works for Drupal modules works for
   them too.
 
-  For example, for the feature /btranslator_googleanalytics/, I have
-  added this line on ~btranslator_googleanalytics.module~:
+  For example, for the feature /btr_googleanalytics/, I have
+  added this line on ~btr_googleanalytics.module~:
   #+BEGIN_EXAMPLE
-  include_once 'btranslator_googleanalytics.admin.inc';
+  include_once 'btr_googleanalytics.admin.inc';
   #+END_EXAMPLE
-  I have also created the file ~btranslator_googleanalytics.admin.inc~
+  I have also created the file ~btr_googleanalytics.admin.inc~
   with a content like this:
   #+BEGIN_EXAMPLE
   <?php
@@ -254,13 +254,13 @@
   /**
    * Implements hook_menu().
    */
-  function btranslator_googleanalytics_menu() {
+  function btr_googleanalytics_menu() {
     $items = array();
     $items['admin/config/btr/googleanalytics'] = array(
       'title'            => 'GoogleAnalytics',
       'description'      => 'Private GoogleAnalytics settings.',
       'page callback'    => 'drupal_get_form',
-      'page arguments'   => array('btranslator_googleanalytics_config'),
+      'page arguments'   => array('btr_googleanalytics_config'),
       'access arguments' => array('btranslator-admin'),
     );
 
@@ -273,7 +273,7 @@
    * @return
    *   An array containing form items to place on the module settings page.
    */
-  function btranslator_googleanalytics_config() {
+  function btr_googleanalytics_config() {
     $form = array();
 
     $form['googleanalytics_account'] = array(

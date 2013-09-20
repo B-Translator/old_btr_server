@@ -1,7 +1,7 @@
 #!/bin/bash
 ### Create all the features.
 ### However some features need manual customization
-### after being created (for example btranslator_layout).
+### after being created (for example btr_layout).
 
 drush="drush --yes @dev"
 destination="profiles/btranslator/modules/features"
@@ -9,7 +9,7 @@ destination="profiles/btranslator/modules/features"
 function create_feature
 {
     components=$1
-    feature_name="btranslator_$(basename $components)"
+    feature_name="btr_$(basename $components)"
 
 
     xargs --delimiter=$'\n' --arg-file=$components \
