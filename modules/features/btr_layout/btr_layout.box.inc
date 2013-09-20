@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_layout.box.inc
+ * btr_layout.box.inc
  */
 
 /**
  * Implements hook_default_box().
  */
-function btranslator_layout_default_box() {
+function btr_layout_default_box() {
   $export = array();
 
   $box = new stdClass();

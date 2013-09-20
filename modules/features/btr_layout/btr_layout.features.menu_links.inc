@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_layout.features.menu_links.inc
+ * btr_layout.features.menu_links.inc
  */
 
 /**
  * Implements hook_menu_default_menu_links().
  */
-function btranslator_layout_menu_default_menu_links() {
+function btr_layout_menu_default_menu_links() {
   $menu_links = array();
 
   // Exported menu link: main-menu:<front>

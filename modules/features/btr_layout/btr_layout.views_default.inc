@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_layout.views_default.inc
+ * btr_layout.views_default.inc
  */
 
 /**
  * Implements hook_views_default_views().
  */
-function btranslator_layout_views_default_views() {
+function btr_layout_views_default_views() {
   $export = array();
 
   $view = new view();

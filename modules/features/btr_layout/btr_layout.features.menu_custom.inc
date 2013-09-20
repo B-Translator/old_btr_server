@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_layout.features.menu_custom.inc
+ * btr_layout.features.menu_custom.inc
  */
 
 /**
  * Implements hook_menu_default_menu_custom().
  */
-function btranslator_layout_menu_default_menu_custom() {
+function btr_layout_menu_default_menu_custom() {
   $menus = array();
 
   // Exported menu: main-menu.

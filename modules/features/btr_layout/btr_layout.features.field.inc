@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_layout.features.field.inc
+ * btr_layout.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function btranslator_layout_field_default_fields() {
+function btr_layout_field_default_fields() {
   $fields = array();
 
   // Exported field: 'node-article-body'.

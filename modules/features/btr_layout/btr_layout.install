@@ -3,14 +3,14 @@
 /**
  * Implements hook_enable().
  */
-function btranslator_layout_enable() {
-  _btranslator_layout_create_aliases();
-  _btranslator_layout_add_login_link();
-  _btranslator_layout_block_settings();
+function btr_layout_enable() {
+  _btr_layout_create_aliases();
+  _btr_layout_add_login_link();
+  _btr_layout_block_settings();
 }
 
 
-function _btranslator_layout_create_aliases() {
+function _btr_layout_create_aliases() {
   $aliases = array(
     'udhezuesi' => 'Udhëzuesi i Përkthyesit',
     'about' => 'About',
@@ -27,7 +27,7 @@ function _btranslator_layout_create_aliases() {
   }
 }
 
-function _btranslator_layout_add_login_link() {
+function _btr_layout_add_login_link() {
   $query = "DELETE FROM {menu_links}
             WHERE menu_name='user-menu'
               AND link_path='user/login'
@@ -44,7 +44,7 @@ function _btranslator_layout_add_login_link() {
   menu_link_save($login);
 }
 
-function  _btranslator_layout_block_settings() {
+function  _btr_layout_block_settings() {
   // set the title of the menu block as Navigation
   db_query("UPDATE {block} SET title='Navigation'
             WHERE theme='bootstrap1' AND delta='navig-menu'");

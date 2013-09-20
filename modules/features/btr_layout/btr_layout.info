@@ -1,4 +1,4 @@
-name = btranslator_layout
+name = btr_layout
 core = 7.x
 package = Features
 php = 5.2.4
@@ -14,7 +14,7 @@ dependencies[] = file
 dependencies[] = image
 dependencies[] = invite
 dependencies[] = jquery_update
-dependencies[] = l10n_feedback
+dependencies[] = btr_ui
 dependencies[] = menu
 dependencies[] = node
 dependencies[] = options

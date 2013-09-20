@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btr_layout feature.
+ */
+
+include_once 'btr_layout.features.inc';

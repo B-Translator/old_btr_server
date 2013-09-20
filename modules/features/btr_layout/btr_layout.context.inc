@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_layout.context.inc
+ * btr_layout.context.inc
  */
 
 /**
  * Implements hook_context_default_contexts().
  */
-function btranslator_layout_context_default_contexts() {
+function btr_layout_context_default_contexts() {
   $export = array();
 
   $context = new stdClass();
@@ -157,14 +157,14 @@ function btranslator_layout_context_default_contexts() {
           'region' => 'sidebar_first',
           'weight' => '-8',
         ),
-        'l10n_feedback-statistics' => array(
-          'module' => 'l10n_feedback',
+        'btr_ui-statistics' => array(
+          'module' => 'btr_ui',
           'delta' => 'statistics',
           'region' => 'sidebar_first',
           'weight' => '-7',
         ),
-        'l10n_feedback-topcontrib' => array(
-          'module' => 'l10n_feedback',
+        'btr_ui-topcontrib' => array(
+          'module' => 'btr_ui',
           'delta' => 'topcontrib',
           'region' => 'sidebar_first',
           'weight' => '-6',
@@ -250,14 +250,14 @@ function btranslator_layout_context_default_contexts() {
           'region' => 'sidebar_first',
           'weight' => '-23',
         ),
-        'l10n_feedback-statistics' => array(
-          'module' => 'l10n_feedback',
+        'btr_ui-statistics' => array(
+          'module' => 'btr_ui',
           'delta' => 'statistics',
           'region' => 'sidebar_first',
           'weight' => '-22',
         ),
-        'l10n_feedback-topcontrib' => array(
-          'module' => 'l10n_feedback',
+        'btr_ui-topcontrib' => array(
+          'module' => 'btr_ui',
           'delta' => 'topcontrib',
           'region' => 'sidebar_first',
           'weight' => '-21',
@@ -322,7 +322,7 @@ function btranslator_layout_context_default_contexts() {
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
   $context->name = 'translations';
-  $context->description = 'The pages where the translation/feedback activity is happening (module l10n_feedback).';
+  $context->description = 'The pages where the translation/feedback activity is happening (module btr_ui).';
   $context->tag = '';
   $context->conditions = array(
     'path' => array(
@@ -365,7 +365,7 @@ function btranslator_layout_context_default_contexts() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('The pages where the translation/feedback activity is happening (module l10n_feedback).');
+  t('The pages where the translation/feedback activity is happening (module btr_ui).');
   $export['translations'] = $context;
 
   return $export;
