@@ -2,7 +2,7 @@
 ### Reinstall btranslator from scratch.
 ### Useful for testing installation scripts.
 
-mv /var/www/btranslator /var/www/btranslator-bak
+mv /var/www/btr /var/www/btr-bak
 
 cd $(dirname $0)
 cd ../install/install-scripts/
@@ -12,7 +12,7 @@ cd ../install/install-scripts/
 ./30-separate-translation-data.sh
 
 PO_files=/var/www/PO_files
-data=/var/www/btranslator_data
+data=/var/www/data
 ln -sf $PO_files $data/get/
 ln -sf $PO_files $data/import/
 

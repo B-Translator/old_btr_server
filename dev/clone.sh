@@ -1,6 +1,6 @@
 #!/bin/bash
 ### Create a local clone of the main drupal
-### application (/var/www/btranslator).
+### application (/var/www/btr).
 
 if [ $# -ne 1 ]
 then
@@ -9,8 +9,7 @@ then
       Creates a local clone of the main drupal application.
       <variant> can be something like 'dev', 'test', '01', etc.
       It will create a new application with root
-      /var/www/btranslator_<variant> and with DB named
-      btranslator_<variant>
+      /var/www/btr_<variant> and with DB named btr_<variant>
 
       Caution: The root directory and the DB will be erased,
       if they exist.
@@ -18,19 +17,19 @@ then
     exit 1
 fi
 var=$1
-root_dir=/var/www/btranslator_$var
-db_name=btranslator_$var
+root_dir=/var/www/btr_$var
+db_name=btr_$var
 
 ### copy the root directory
 rm -rf $root_dir
-cp -a /var/www/btranslator $root_dir
+cp -a /var/www/btr $root_dir
 
 ### modify settings.php
 domain=$(cat /etc/hostname)
 sed -i $root_dir/sites/default/settings.php \
     -e "/^\\\$databases = array/,+10  s/'database' => .*/'database' => '$db_name',/" \
     -e "/^\\\$base_url/c \$base_url = \"https://$var.$domain\";" \
-    -e "/^\\\$conf\['memcache_key_prefix'\]/c \$conf['memcache_key_prefix'] = 'btranslator_$var';"
+    -e "/^\\\$conf\['memcache_key_prefix'\]/c \$conf['memcache_key_prefix'] = 'btr_$var';"
 
 ### create a drush alias
 sed -i /etc/drush/local.aliases.drushrc.php \
@@ -38,7 +37,7 @@ sed -i /etc/drush/local.aliases.drushrc.php \
 cat <<EOF >> /etc/drush/local.aliases.drushrc.php
 \$aliases['$var'] = array (
   'parent' => '@main',
-  'root' => '/var/www/btranslator_$var',
+  'root' => '/var/www/btr_$var',
   'uri' => 'http://$var.l10n.org.xx',
 );
 
@@ -48,7 +47,7 @@ EOF
 mysql --defaults-file=/etc/mysql/debian.cnf -e "
     DROP DATABASE IF EXISTS $db_name;
     CREATE DATABASE $db_name;
-    GRANT ALL ON $db_name.* TO btranslator@localhost;
+    GRANT ALL ON $db_name.* TO btr@localhost;
 "
 
 ### copy the database
@@ -63,7 +62,7 @@ cp /etc/nginx/sites-available/{default,$var}
 sed -i /etc/nginx/sites-available/$var \
     -e "s/443 default ssl/443 ssl/" \
     -e "s/server_name \(.*\);/server_name $var.\\1;/" \
-    -e "s/btranslator/btranslator_$var/g"
+    -e "s/btr/btr_$var/g"
 ln -s /etc/nginx/sites-{available,enabled}/$var
 
 ### copy and modify the configuration of apache2
@@ -72,10 +71,10 @@ cp /etc/apache2/sites-available/{default,$var}
 cp /etc/apache2/sites-available/{default-ssl,$var-ssl}
 sed -i /etc/apache2/sites-available/$var \
     -e "s/ServerName \(.*\)/ServerName $var.\\1/" \
-    -e "s/btranslator/btranslator_$var/g"
+    -e "s/btr/btr_$var/g"
 sed -i /etc/apache2/sites-available/$var-ssl \
     -e "s/ServerName \(.*\)/ServerName $var.\\1/" \
-    -e "s/btranslator/btranslator_$var/g"
+    -e "s/btr/btr_$var/g"
 a2ensite $var $var-ssl
 
 ### restart services

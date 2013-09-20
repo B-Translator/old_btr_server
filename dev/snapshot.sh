@@ -77,7 +77,7 @@ case $action in
 
         umount $drupal_dir/cache
         mv $drupal_dir $drupal_dir-del
-        mv $snapshot/btranslator* $drupal_dir
+        mv $snapshot/btr* $drupal_dir
         mount -a
 
         profile_dir=$drupal_dir/profiles/btranslator

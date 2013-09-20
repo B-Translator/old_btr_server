@@ -1,6 +1,6 @@
 #!/bin/bash
 ### Reinstall the Drupal profile 'btranslator' and its features.
-### This script touches only the database of Drupal (btranslator)
+### This script touches only the database of Drupal (btr)
 ### and nothing else. Useful for testing the features.
 ###
 ### Usually, when features are un-installed, things are not undone
@@ -15,10 +15,10 @@ then
 fi
 
 ### settings for the database and the drupal site
-appdir="/var/www/btranslator"
-db_name=btranslator
-db_user=btranslator
-db_pass=btranslator
+appdir="/var/www/btr"
+db_name=btr
+db_user=btr
+db_pass=btr
 site_name="B-Translator"
 site_mail="admin@example.com"
 account_name=admin
@@ -42,32 +42,32 @@ drush site-install --verbose --yes btranslator \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
 ### install features modules
-drush --yes pm-enable btranslator_l10n_feedback
-drush --yes features-revert btranslator_l10n_feedback
+drush --yes pm-enable btr_btr_ui
+drush --yes features-revert btr_btr_ui
 
-drush --yes pm-enable btranslator_btranslator
-drush --yes features-revert btranslator_btranslator
+drush --yes pm-enable btr_btr
+drush --yes features-revert btr_btr
 
-drush --yes pm-enable btranslator_misc
-drush --yes features-revert btranslator_misc
+drush --yes pm-enable btr_misc
+drush --yes features-revert btr_misc
 
-drush --yes pm-enable btranslator_layout
-drush --yes features-revert btranslator_layout
+drush --yes pm-enable btr_layout
+drush --yes features-revert btr_layout
 
-drush --yes pm-enable btranslator_disqus
-drush --yes pm-enable btranslator_content
-drush --yes pm-enable btranslator_sharethis
+drush --yes pm-enable btr_disqus
+drush --yes pm-enable btr_content
+drush --yes pm-enable btr_sharethis
 
-drush --yes pm-enable btranslator_captcha
-drush --yes features-revert btranslator_captcha
+drush --yes pm-enable btr_captcha
+drush --yes features-revert btr_captcha
 drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
 drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
 
-drush --yes pm-enable btranslator_invite
-drush --yes pm-enable btranslator_permissions
+drush --yes pm-enable btr_invite
+drush --yes pm-enable btr_permissions
 
-#drush --yes pm-enable btranslator_simplenews
-#drush --yes pm-enable btranslator_mass_contact
-#drush --yes pm-enable btranslator_googleanalytics
-#drush --yes pm-enable btranslator_drupalchat
-#drush --yes pm-enable btranslator_janrain
+#drush --yes pm-enable btr_simplenews
+#drush --yes pm-enable btr_mass_contact
+#drush --yes pm-enable btr_googleanalytics
+#drush --yes pm-enable btr_drupalchat
+#drush --yes pm-enable btr_janrain

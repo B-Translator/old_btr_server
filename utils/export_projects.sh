@@ -3,7 +3,7 @@
 ### Usually called by cron. It can be called by cron like this:
 ###
 ###     0 2 * * * nice \
-###         /var/www/dev.btranslator.org/profiles/btranslator/utils/export_projects.sh \
+###         /var/www/btr_dev/profiles/btranslator/utils/export_projects.sh \
 ###         /var/www/downloads/exports/ \
 ###         /var/www/downloads/exports/projects.txt
 
@@ -35,7 +35,7 @@ do
     lng=$(echo $line | cut -d'/' -f3)
     #echo ./export_tgz.sh $origin $project $lng ; continue  ## debug
     if [ "$project" = '' ]; then continue; fi
-    ../modules/custom/btranslator_data/data/export/export_tgz.sh $origin $project $lng
+    ../modules/custom/btr_data/data/export/export_tgz.sh $origin $project $lng
     filename=$origin-$project-$lng
     mv -f /tmp/$filename.tgz $output_dir/$filename.tgz
 done < $project_list
