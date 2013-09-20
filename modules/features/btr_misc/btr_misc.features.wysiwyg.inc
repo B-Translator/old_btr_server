@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_misc.features.wysiwyg.inc
+ * btr_misc.features.wysiwyg.inc
  */
 
 /**
  * Implements hook_wysiwyg_default_profiles().
  */
-function btranslator_misc_wysiwyg_default_profiles() {
+function btr_misc_wysiwyg_default_profiles() {
   $profiles = array();
 
   // Exported profile: filtered_html

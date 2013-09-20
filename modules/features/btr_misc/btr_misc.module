@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btr_misc feature.
+ */
+
+include_once 'btr_misc.features.inc';

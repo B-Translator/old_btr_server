@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_misc.features.filter.inc
+ * btr_misc.features.filter.inc
  */
 
 /**
  * Implements hook_filter_default_formats().
  */
-function btranslator_misc_filter_default_formats() {
+function btr_misc_filter_default_formats() {
   $formats = array();
 
   // Exported format: Filtered HTML.

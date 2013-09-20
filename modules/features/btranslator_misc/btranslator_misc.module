@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the btranslator_misc feature.
- */
-
-include_once 'btranslator_misc.features.inc';

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_misc.strongarm.inc
+ * btr_misc.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function btranslator_misc_strongarm() {
+function btr_misc_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();
