@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_l10n_feedback.features.field.inc
+ * btr_btr_ui.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function btranslator_l10n_feedback_field_default_fields() {
+function btr_btr_ui_field_default_fields() {
   $fields = array();
 
   // Exported field: 'node-projects-body'.

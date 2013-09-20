@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_l10n_feedback.strongarm.inc
+ * btr_btr_ui.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function btranslator_l10n_feedback_strongarm() {
+function btr_btr_ui_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();

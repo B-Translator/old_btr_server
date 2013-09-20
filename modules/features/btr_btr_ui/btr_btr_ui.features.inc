@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_l10n_feedback.features.inc
+ * btr_btr_ui.features.inc
  */
 
 /**
  * Implements hook_ctools_plugin_api().
  */
-function btranslator_l10n_feedback_ctools_plugin_api() {
+function btr_btr_ui_ctools_plugin_api() {
   list($module, $api) = func_get_args();
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
@@ -17,7 +17,7 @@ function btranslator_l10n_feedback_ctools_plugin_api() {
 /**
  * Implements hook_node_info().
  */
-function btranslator_l10n_feedback_node_info() {
+function btr_btr_ui_node_info() {
   $items = array(
     'projects' => array(
       'name' => t('Translation Projects'),

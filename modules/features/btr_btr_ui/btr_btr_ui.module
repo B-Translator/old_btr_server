@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btr_btr_ui feature.
+ */
+
+include_once 'btr_btr_ui.features.inc';
