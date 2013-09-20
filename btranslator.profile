@@ -37,7 +37,6 @@ function btranslator_install_tasks($install_state) {
   return $tasks;
 }
 
-
 /**
  * General configuration settings for B-Translator.
  *
@@ -52,7 +51,7 @@ function btranslator_config() {
   );
 
   // get a list of available languages
-  $languages = l10n_feedback_get_languages();
+  $languages = btr_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   unset($lang_options['en']);
 
@@ -96,7 +95,7 @@ function btranslator_config() {
 
 
   return system_settings_form($form);
-}  //  End of l10n_feedback_config().
+}  //  End of btranslator_config().
 
 /**
  * Form builder for Mail and SMTP settings.

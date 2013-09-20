@@ -2,7 +2,7 @@
 ### change the old prefix of the tables to the new one
 
 ### what are the old and new prefices
-old='btr__'
+old='btr_'
 new='btr1_'
 
 ### list of all the tables
