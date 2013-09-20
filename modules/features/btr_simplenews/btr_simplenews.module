@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btr_simplenews feature.
+ */
+
+include_once 'btr_simplenews.features.inc';

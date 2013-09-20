@@ -1,4 +1,4 @@
-name = btranslator_simplenews
+name = btr_simplenews
 core = 7.x
 package = Features
 php = 5.2.4
