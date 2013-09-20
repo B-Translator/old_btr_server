@@ -10,11 +10,11 @@
  */
 
 $aliases['main'] = array (
-  'root' => '/var/www/btranslator',
+  'root' => '/var/www/btr',
   'uri' => 'http://l10n.org.xx',
   'path-aliases' => array (
     '%profile' => 'profiles/btranslator',
-    '%data' => '/var/www/btranslator_data',
+    '%data' => '/var/www/data',
     '%po_files' => '/var/www/PO_files',
     '%exports' => '/var/www/exports',
     '%downloads' => '/var/www/downloads',
@@ -23,6 +23,6 @@ $aliases['main'] = array (
 
 $aliases['dev'] = array (
   'parent' => '@main',
-  'root' => '/var/www/btranslator_dev',
+  'root' => '/var/www/btr_dev',
   'uri' => 'http://dev.l10n.org.xx',
 );

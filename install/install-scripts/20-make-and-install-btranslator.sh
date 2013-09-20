@@ -2,7 +2,7 @@
 
 ### retrieve all the projects/modules and build the application directory
 makefile="https://raw.github.com/dashohoxha/B-Translator/master/build-btranslator.make"
-appdir="/var/www/btranslator"
+appdir="/var/www/btr"
 rm -rf $appdir
 drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
@@ -17,9 +17,9 @@ then
 fi
 
 ### settings for the database and the drupal site
-db_name=btranslator
-db_user=btranslator
-db_pass=btranslator
+db_name=btr
+db_user=btr
+db_pass=btr
 site_name="B-Translator"
 site_mail="admin@example.com"
 account_name=admin

@@ -5,7 +5,7 @@
 ### reinstall the whole application).
 
 ### clone btranslator from github
-cd /var/www/btranslator/profiles/
+cd /var/www/btr/profiles/
 mv btranslator btranslator-bak
 git clone https://github.com/dashohoxha/B-Translator btranslator
 
@@ -16,7 +16,7 @@ cp -a btranslator-bak/modules/libraries/ btranslator/modules/
 cp -a btranslator-bak/themes/contrib/ btranslator/themes/
 
 ### copy db connection file
-cp {btranslator-bak,btranslator}/modules/l10n_feedback/data/db/settings.php
+cp {btranslator-bak,btranslator}/modules/custom/btr_data/data/db/settings.php
 
 ### cleanup
 rm -rf btranslator-bak/

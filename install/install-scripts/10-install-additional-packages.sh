@@ -46,7 +46,7 @@ mkdir -p /etc/drush
 cat > /etc/drush/drushrc.php << EOF
 <?php
 // by default use the B-Translator root directory
-\$options['r'] = '/var/www/btranslator';
+\$options['r'] = '/var/www/btr';
 EOF
 
 ### get pology (used for making embedded diffs)

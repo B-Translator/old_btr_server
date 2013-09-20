@@ -9,7 +9,7 @@ $cwd/config/gmailsmtp.sh
 $cwd/config/drupalpass.sh
 $cwd/config/languages.sh
 
-rm -rf /var/www/btranslator/sites/default/files/css/
-rm -rf /var/www/btranslator/sites/default/files/js/
+rm -rf /var/www/btr/sites/default/files/css/
+rm -rf /var/www/btr/sites/default/files/js/
 
 $cwd/config/mysqld.sh stop

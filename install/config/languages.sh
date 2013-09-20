@@ -24,7 +24,7 @@ other_langs=${input:-$other_langs}
 
 ### set the list of languages for import
 languages="$main_lang $other_langs"
-sed -i /var/www/btranslator_data/config.sh \
+sed -i /var/www/data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
 
 ### set drupal variable btr_translation_lng

@@ -2,11 +2,11 @@
 
 ### put the cache on RAM (to improve efficiency)
 sed -i /etc/fstab \
-    -e '/appended by installation scripts/,$ d' 
+    -e '/appended by installation scripts/,$ d'
 cat <<EOF >> /etc/fstab
 ##### appended by installation scripts
 tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
-tmpfs		/var/www/btranslator/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
+tmpfs		/var/www/btr/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
 devpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
 # mount /tmp on RAM for better performance
 tmpfs /tmp tmpfs defaults,noatime,mode=1777,nosuid 0 0
@@ -19,14 +19,14 @@ chown nobody /var/run/memcached/
 ### make the prompt colored and display the chroot name
 sed -i /root/.bashrc \
     -e '/^#force_color_prompt=/c force_color_prompt=yes'
-echo 'btranslator' > /etc/debian_chroot
+echo 'btr' > /etc/debian_chroot
 
 ### configure apache2
 a2enmod ssl
 a2ensite default-ssl
 a2enmod headers rewrite
 ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf.d/phpmyadmin
- 
+
 sed -i /etc/php5/apache2/php.ini \
     -e "/^\[PHP\]/ a apc.rfc1867 = 1" \
     -e "/^display_errors/ c display_errors = On"
@@ -41,9 +41,9 @@ sed -i /etc/apache2/apache2.conf \
 update-locale
 
 ### prevent robots from crawling translations
-sed -i /var/www/btranslator/robots.txt \
+sed -i /var/www/btr/robots.txt \
     -e '/# B-Translator/,$ d'
-cat <<EOF >> /var/www/btranslator/robots.txt
+cat <<EOF >> /var/www/btr/robots.txt
 # B-Translator
 Disallow: /translations/
 Disallow: /?q=translations/

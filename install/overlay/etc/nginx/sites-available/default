@@ -6,10 +6,10 @@ server {
 	ssl_certificate_key	/etc/ssl/private/ssl-cert-snakeoil.key;
 
 	server_name l10n.org.xx;
-	root /var/www/btranslator;
+	root /var/www/btr;
 
-	access_log /var/log/nginx/btranslator.access.log;
- 	error_log  /var/log/nginx/btranslator.error.log info;
+	access_log /var/log/nginx/btr.access.log;
+ 	error_log  /var/log/nginx/btr.error.log info;
 
 	location /downloads {
 		root /var/www/;
@@ -18,7 +18,7 @@ server {
         	autoindex_localtime on;
 	}
 
- 
+
 	# In some cases a favicon does not exist but this is not something you
 	# normally need to worry about. It's also a microscopic image and will
 	# just clutter the logs.
@@ -26,7 +26,7 @@ server {
 		log_not_found off;
 		access_log off;
 	}
- 
+
 	# This is for the robots.txt file used by search engines.
 	location = /robots.txt {
 		# If you have one, you want to allow them access to it.
@@ -36,7 +36,7 @@ server {
 		log_not_found off;
 		access_log off;
 	}
- 
+
 	# This matters if you use drush because drush copies backups of modules
 	# to this directory. In the event personal information wound up in the
 	# module, you want to know outside users can't access it.
@@ -58,7 +58,7 @@ server {
 	location ~ \..*/.*\.php$ {
 		return 403;
 	}
- 
+
 	# This is our primary location block. The try_files directive will
 	# attempt to serve the data in the order listed. First try the exact
 	# request (such as an image or text file). If it doesn't exist, see if
@@ -68,7 +68,7 @@ server {
 		index index.php;
 		try_files $uri $uri/ @rewrite;
 	}
- 
+
 	# This will rewrite our request from domain.com/node/1/ to domain.com/index.php?q=node/1
 	# This could be done in try_files without a rewrite however, the GlobalRedirect
 	# module enforces no slash (/) at the end of URL's. This rewrite removes that
@@ -89,7 +89,7 @@ server {
 		fastcgi_intercept_errors on;
 		fastcgi_pass unix:/var/run/php5-fpm.sock;
 	}
- 
+
 	# The ImageCache module builds an image 'on the fly' which means that
 	# if it doesn't exist, it needs to be created. Nginx is king of static
 	# so there's no point in letting PHP decide if it needs to be servered

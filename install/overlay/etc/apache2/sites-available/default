@@ -2,12 +2,12 @@
         ServerName l10n.org.xy
 	ServerAdmin info@l10n.org.xy
 
-	DocumentRoot /var/www/btranslator
+	DocumentRoot /var/www/btr
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
-	<Directory /var/www/btranslator/>
+	<Directory /var/www/btr/>
 		Options Indexes FollowSymLinks MultiViews
 		# AllowOverride None
 		AllowOverride All

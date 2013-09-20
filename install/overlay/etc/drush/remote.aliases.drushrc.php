@@ -3,7 +3,7 @@
 /* uncomment and modify properly
 
 $aliases['live'] = array (
-  'root' => '/var/www/btranslator',
+  'root' => '/var/www/btr',
   'uri' => 'http://l10n.org.xx',
 
   'remote-host' => 'l10n.org.xx',
@@ -12,7 +12,7 @@ $aliases['live'] = array (
 
   'path-aliases' => array (
     '%profile' => 'profiles/btranslator',
-    '%data' => '/var/www/btranslator_data',
+    '%data' => '/var/www/data',
     '%pofiles' => '/var/www/PO_files',
     '%exports' => '/var/www/exports',
     '%downloads' => '/var/www/downloads',
@@ -30,7 +30,7 @@ $aliases['live'] = array (
 
 $aliases['test'] = array (
   'parent' => '@live',
-  'root' => '/var/www/btranslator_test',
+  'root' => '/var/www/btr_test',
   'uri' => 'http://test.l10n.org.xx',
 
   'command-specific' => array (

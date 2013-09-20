@@ -1,11 +1,11 @@
 #!/bin/bash
 ### Create another database for the translation data
-### and copy to it the relevant tables (of module l10n_feedback).
+### and copy to it the relevant tables (of module btr_data).
 
 ### database and user settings
-db_name=btranslator_data
-db_user=btranslator_data
-db_pass=btranslator_data
+db_name=btr_data
+db_user=btr_data
+db_pass=btr_data
 
 ### create the database and user
 mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B"
@@ -15,23 +15,23 @@ $mysql -e "
     GRANT ALL ON $db_name.* TO $db_user@localhost IDENTIFIED BY '$db_pass';
 "
 
-### copy the tables of l10n_feedback to the new database
-tables=$($mysql -D btranslator -e "SHOW TABLES" | grep 'btr_' )
+### copy the tables of btr_data to the new database
+tables=$($mysql -D btr -e "SHOW TABLES" | grep 'btr_' )
 for table in $tables
 do
     echo "Copy: $table"
     $mysql -e "
-        CREATE TABLE $db_name.$table LIKE btranslator.$table;
-        INSERT INTO $db_name.$table SELECT * FROM btranslator.$table;
+        CREATE TABLE $db_name.$table LIKE btr.$table;
+        INSERT INTO $db_name.$table SELECT * FROM btr.$table;
     "
 done
 
-### put a link to the data directory on /var/www/btranslator_data
-rm -f /var/www/btranslator_data
-ln -s /var/www/btranslator/profiles/btranslator/modules/l10n_feedback/data /var/www/btranslator_data
+### put a link to the data directory on /var/www/data
+rm -f /var/www/data
+ln -s /var/www/btr/profiles/btranslator/modules/custom/btr_data/data /var/www/data
 
-### modify also the DB settings on /var/www/btranslator_data/db/
-cat <<EOF > /var/www/btranslator_data/db/settings.php
+### modify also the DB settings on /var/www/data/db/
+cat <<EOF > /var/www/data/db/settings.php
 <?php
 \$dbdriver = 'mysql';
 \$dbhost   = 'localhost';
@@ -42,7 +42,7 @@ cat <<EOF > /var/www/btranslator_data/db/settings.php
 EOF
 
 # modify Drupal settings
-drupal_settings=/var/www/btranslator/sites/default/settings.php
+drupal_settings=/var/www/btr/sites/default/settings.php
 sed -e '/===== APPENDED BY INSTALLATION SCRIPTS =====/,$ d' -i $drupal_settings
 cat << EOF >> $drupal_settings
 //===== APPENDED BY INSTALLATION SCRIPTS =====
