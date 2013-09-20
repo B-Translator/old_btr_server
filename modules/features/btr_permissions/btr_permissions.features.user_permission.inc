@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_permissions.features.user_permission.inc
+ * btr_permissions.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function btranslator_permissions_user_default_permissions() {
+function btr_permissions_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: access administration pages.

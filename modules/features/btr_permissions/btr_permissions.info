@@ -1,4 +1,4 @@
-name = btranslator_permissions
+name = btr_permissions
 core = 7.x
 package = Features
 php = 5.2.4
