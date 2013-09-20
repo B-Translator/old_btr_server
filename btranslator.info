@@ -87,7 +87,8 @@ dependencies[] = mimemail_compress
 ;--------------------
 ; B-Translator
 ;--------------------
-dependencies[] = l10n_feedback
+dependencies[] = btr_data
+dependencies[] = btr_ui
 
 ;--------------------
 ; Other

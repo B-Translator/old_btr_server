@@ -7,8 +7,8 @@ function btr_ui_menu() {
   $items = array();
 
   $items['admin/config/btr/general'] = array(
-    'title'            => 'B-Translator',
-    'description'      => 'B-Translator configuration settings.',
+    'title'            => 'B-Translator UI',
+    'description'      => 'B-Translator Front-End configuration settings.',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('btr_ui_config'),
     'access arguments' => array('btranslator-admin'),

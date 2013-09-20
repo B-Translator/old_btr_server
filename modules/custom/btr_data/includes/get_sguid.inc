@@ -42,6 +42,8 @@ function btr_get_random_sguid($projects) {
  * Return a random untranslated sguid from the given list of projects.
  */
 function btr_get_untranslated_sguid($projects, $lng) {
+  $db = $GLOBALS['btr_db'];
+
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
   $args[':lng'] = $lng;
@@ -86,6 +88,8 @@ function btr_get_untranslated_sguid($projects, $lng) {
  * Return a random translated sguid from the given list of projects.
  */
 function btr_get_translated_sguid($projects, $lng) {
+  $db = $GLOBALS['btr_db'];
+
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
   $args[':lng'] = $lng;

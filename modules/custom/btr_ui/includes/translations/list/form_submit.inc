@@ -207,7 +207,8 @@ function btr_ui_add_vote($tguid, $umail) {
   }
 
   // Add a vote.
-  $vid = btr_add_vote($tguid, $umail, $ulng);
+  $lng = variable_get('btr_translation_lng', 'fr');
+  $vid = btr_add_vote($tguid, $umail, $lng);
 
   // Increment the number of the saved votes.
   global $_btr_ui_save_status;

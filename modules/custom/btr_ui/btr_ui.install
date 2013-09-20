@@ -60,3 +60,13 @@ function btr_ui_uninstall() {
     variable_del($var);
   }
 }
+
+/**
+ * Implements hook_schema().
+ */
+function btr_ui_schema() {
+  // create a cache table for this module
+  $schema['cache_btr_ui'] = drupal_get_schema_unprocessed('system', 'cache');
+
+  return $schema;
+}

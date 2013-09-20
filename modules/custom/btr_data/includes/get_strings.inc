@@ -32,7 +32,7 @@ function btr_get_strings($arr_sguid, $lng, $alternative_langs = array()) {
   $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->condition('s.sguid', $arr_sguid, 'IN');
-  return btr_get_query_strings($filter_query, $lng, $alternative_langs);
+  return btr_get_query_strings($query, $lng, $alternative_langs);
 }
 
 

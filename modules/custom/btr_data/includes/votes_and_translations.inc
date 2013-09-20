@@ -411,8 +411,9 @@ function _btr_get_author_and_voters($tguid) {
 
   $args = array(':tguid' => $tguid);
 
-  $author = $db->query($get_author, $args)->execute()->fetchObject();
-  $voters = $db->query($get_voters, $args)->execute()->fetchAll();
+  $db = $GLOBALS['btr_db'];
+  $author = $db->query($get_author, $args)->fetchObject();
+  $voters = $db->query($get_voters, $args)->fetchAll();
 
   return array($author, $voters);
 }

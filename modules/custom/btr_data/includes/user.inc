@@ -44,7 +44,7 @@ function btr_user_insert($umail, $ulng, $uid, $name, $status) {
  */
 function btr_user_update($ulng, $uid, $name, $status) {
   $args = array(
-    ':ulng' => $ulng
+    ':ulng' => $ulng,
     ':uid' => $uid,
     ':name' => $name,
     ':status' => $status,

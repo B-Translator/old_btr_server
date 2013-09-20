@@ -2,7 +2,7 @@
 .emacs*
 TAGS
 *.sql.gz
-modules/l10n_feedback/data/db/settings.php
+modules/custom/btr_data/data/db/settings.php
 libraries/
 modules/contrib/
 modules/libraries/
