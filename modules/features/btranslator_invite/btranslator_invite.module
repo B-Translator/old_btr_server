@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the btranslator_invite feature.
- */
-
-include_once 'btranslator_invite.features.inc';

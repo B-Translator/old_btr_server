@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_janrain.strongarm.inc
+ * btr_janrain.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function btranslator_janrain_strongarm() {
+function btr_janrain_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();

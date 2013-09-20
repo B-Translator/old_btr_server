@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_invite.features.user_permission.inc
+ * btr_invite.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function btranslator_invite_user_default_permissions() {
+function btr_invite_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: administer invitations.

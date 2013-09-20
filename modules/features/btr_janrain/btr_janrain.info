@@ -1,4 +1,4 @@
-name = btranslator_janrain
+name = btr_janrain
 core = 7.x
 package = Features
 dependencies[] = ctools

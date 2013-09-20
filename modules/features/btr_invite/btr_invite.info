@@ -1,4 +1,4 @@
-name = btranslator_invite
+name = btr_invite
 core = 7.x
 package = Features
 dependencies[] = ctools
