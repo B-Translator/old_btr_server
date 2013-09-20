@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_mass_contact.strongarm.inc
+ * btr_mass_contact.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function btranslator_mass_contact_strongarm() {
+function btr_mass_contact_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();

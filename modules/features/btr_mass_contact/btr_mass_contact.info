@@ -1,4 +1,4 @@
-name = btranslator_mass_contact
+name = btr_mass_contact
 core = 7.x
 package = Features
 php = 5.2.4

@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the btranslator_mass_contact feature.
- */
-
-include_once 'btranslator_mass_contact.features.inc';

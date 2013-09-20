@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btranslator_mass_contact.features.user_permission.inc
+ * btr_mass_contact.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function btranslator_mass_contact_user_default_permissions() {
+function btr_mass_contact_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: create mass_contact content.
