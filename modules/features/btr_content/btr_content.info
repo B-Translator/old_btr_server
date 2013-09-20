@@ -1,0 +1,16 @@
+name = btr_content
+core = 7.x
+package = Features
+dependencies[] = blog
+dependencies[] = btranslator_layout
+dependencies[] = node_export_features
+features[features_api][] = api:1
+features[node_export_features][] = 04ff4698-bddc-4974-8d02-56a84f83a4e9
+features[node_export_features][] = 1b574c84-6611-4bde-b5d2-e24cd59ec9a6
+features[node_export_features][] = 22ca1b5b-31d6-4bfb-be6f-c5c679af27d9
+features[node_export_features][] = 3bb54687-668d-40d7-8683-c7318ac99856
+features[node_export_features][] = 9e1ce491-f48e-425d-a7a1-650b0207451e
+features[node_export_features][] = bd6727b9-cb89-4e55-8854-0daf971e6dfb
+features[node_export_features][] = cdd868f4-63bd-4c89-b1cc-87d32fe3358f
+features[node_export_features][] = ddf320ff-c253-42cf-8a8e-9dd7c1a39436
+features[node_export_features][] = eee12a5b-41d2-4c8d-97e0-c128a2e28522

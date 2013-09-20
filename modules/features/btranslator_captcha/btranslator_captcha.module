@@ -1,8 +1,0 @@
-<?php
-/**
- * @file
- * Code for the btranslator_captcha feature.
- */
-
-include_once 'btranslator_captcha.admin.inc';
-include_once 'btranslator_captcha.features.inc';

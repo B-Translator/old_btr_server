@@ -1,0 +1,8 @@
+<?php
+/**
+ * @file
+ * Code for the btr_fb feature.
+ */
+
+include_once 'btr_fb.admin.inc';
+include_once 'btr_fb.features.inc';
