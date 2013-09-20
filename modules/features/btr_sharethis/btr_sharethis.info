@@ -1,4 +1,4 @@
-name = btranslator_sharethis
+name = btr_sharethis
 core = 7.x
 package = Features
 dependencies[] = ctools

@@ -7,13 +7,13 @@
 /**
  * Implements hook_menu().
  */
-function btranslator_sharethis_menu() {
+function btr_sharethis_menu() {
   $items = array();
   $items['admin/config/btr/sharethis'] = array(
     'title'            => 'Sharethis',
     'description'      => 'Custom Sharethis settings.',
     'page callback'    => 'drupal_get_form',
-    'page arguments'   => array('btranslator_sharethis_config'),
+    'page arguments'   => array('btr_sharethis_config'),
     'access arguments' => array('btranslator-admin'),
   );
 
@@ -27,7 +27,7 @@ function btranslator_sharethis_menu() {
  * @return
  *   An array containing form items to place on the module settings page.
  */
-function btranslator_sharethis_config() {
+function btr_sharethis_config() {
   $form = array();
 
   $current_options_array = sharethis_get_options_array();
@@ -56,7 +56,7 @@ function btranslator_sharethis_config() {
   return system_settings_form($form);
 }
 
-function btranslator_sharethis_config_validate($form, &$form_state) {
+function btr_sharethis_config_validate($form, &$form_state) {
   // Sanitize the publisher ID option.  Since it's a text field, remove anything that resembles code
   $form_state['values']['sharethis_publisherID'] = filter_xss($form_state['values']['sharethis_publisherID'], array());
 

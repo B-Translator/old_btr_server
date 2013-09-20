@@ -1,0 +1,8 @@
+<?php
+/**
+ * @file
+ * Code for the btr_sharethis feature.
+ */
+
+include_once 'btr_sharethis.admin.inc';
+include_once 'btr_sharethis.features.inc';
