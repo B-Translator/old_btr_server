@@ -37,8 +37,8 @@ them can be used on any Drupal project.
   suitable. It can be started and stopped like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  /var/www/btranslator/profiles/btranslator/dev/apache2.sh start
-  /var/www/btranslator/profiles/btranslator/dev/apache2.sh stop
+  /var/www/btr/profiles/btranslator/dev/apache2.sh start
+  /var/www/btr/profiles/btranslator/dev/apache2.sh stop
   #+END_EXAMPLE
 
   *Important:* When /apache2/ is started, the services /nginx/,
@@ -65,7 +65,7 @@ them can be used on any Drupal project.
   It can be done with the script =dev/install.sh=:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  /var/www/btranslator/profiles/btranslator/dev/reinstall.sh
+  /var/www/btr/profiles/btranslator/dev/reinstall.sh
   #+END_EXAMPLE
   It will rebuild the Drupal directory with *drush make* and install
   the btranslator profile with *drush site-install*, and then do all
@@ -76,11 +76,11 @@ them can be used on any Drupal project.
   want to test the installation profile and the installation scripts.
 
   Another kind of re-installation, which touches only the database of
-  Drupal (btranslator) and nothing else, can be done with the script
+  Drupal (btr) and nothing else, can be done with the script
   =dev/install.sh=:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  /var/www/btranslator/profiles/btranslator/dev/reinstall-db.sh
+  /var/www/btr/profiles/btranslator/dev/reinstall-db.sh
   #+END_EXAMPLE
 
   It is useful for testing the features. Usually, when features are
@@ -95,14 +95,14 @@ them can be used on any Drupal project.
   Inside the chroot I make a clone for development like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  cd /var/www/btranslator/profiles/btranslator/
+  cd /var/www/btr/profiles/btranslator/
   dev/clone.sh dev
   #+END_EXAMPLE
 
-  It creates a new application with root */var/www/btranslator_dev/*
-  and with DB named *btranslator_dev*. It also creates the drush alias
-  *@dev*, and modifies the configuration of the webserver so that the
-  cloned application can be accessed at *dev.l10n.org.xx*.
+  It creates a new application with root */var/www/btr_dev/* and with
+  DB named *btr_dev*. It also creates the drush alias *@dev*, and
+  modifies the configuration of the webserver so that the cloned
+  application can be accessed at *dev.l10n.org.xx*.
 
   *Caution:* The root directory and the DB of the clone will be
   erased, if they exist.
@@ -111,7 +111,7 @@ them can be used on any Drupal project.
   (remove/erase) a clone, we can use *clone_rm.sh* like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  cd /var/www/btranslator/profiles/btranslator/
+  cd /var/www/btr/profiles/btranslator/
   dev/clone_rm.sh dev
   #+END_EXAMPLE
 
@@ -121,8 +121,8 @@ them can be used on any Drupal project.
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
   cd /var/www/
-  drush php-script btranslator/profiles/btranslator/config.php dev1
-  drush @dev php-script btranslator/profiles/btranslator/config.php dev2
+  drush php-script btr/profiles/btranslator/config.php dev1
+  drush @dev php-script btr/profiles/btranslator/config.php dev2
   #+END_EXAMPLE
 
   It will set site_name to 'B-Translator (dev1)', will make site email
@@ -146,19 +146,19 @@ them can be used on any Drupal project.
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
   cd /var/www/
-  ln -s btranslator_dev/profiles/btranslator/ B-Translator
+  ln -s btr_dev/profiles/btranslator/ B-Translator
 
   B-Translator/dev/snapshot.sh make
   B-Translator/dev/snapshot.sh make @dev
   #+END_EXAMPLE
-  These will create the files ~snapshot-btranslator-20130602.tgz~
-  and ~snapshot-btranslator_dev-20130602.tgz~. They can be restored
+  These will create the files ~snapshot-btr-20130602.tgz~
+  and ~snapshot-btr_dev-20130602.tgz~. They can be restored
   like this:
   #+BEGIN_EXAMPLE
-  B-Translator/dev/snapshot.sh restore --file=snapshot-btranslator-20130602.tgz
-  B-Translator/dev/snapshot.sh restore --file=snapshot-btranslator_dev-20130602.tgz
-  B-Translator/dev/snapshot.sh restore @dev --file=snapshot-btranslator-20130602.tgz
-  B-Translator/dev/snapshot.sh restore @dev --file=snapshot-btranslator_dev-20130602.tgz
+  B-Translator/dev/snapshot.sh restore --file=snapshot-btr-20130602.tgz
+  B-Translator/dev/snapshot.sh restore --file=snapshot-btr_dev-20130602.tgz
+  B-Translator/dev/snapshot.sh restore @dev --file=snapshot-btr-20130602.tgz
+  B-Translator/dev/snapshot.sh restore @dev --file=snapshot-btr_dev-20130602.tgz
   #+END_EXAMPLE
   As you may notice, a snapshot of @dev can also be restored on the
   main application, and the other way around.
@@ -167,14 +167,14 @@ them can be used on any Drupal project.
   is needed, and it is more efficient. It can be done with *drush
   sql-dump* and *drush sql-query* like this:
   #+BEGIN_EXAMPLE
-  drush sql-dump > btranslator.sql
-  drush sql-dump @dev > btranslator_dev.sql
+  drush sql-dump > btr.sql
+  drush sql-dump @dev > btr_dev.sql
 
-  drush sql-query --file=$(pwd)/btranslator.sql
-  drush sql-query --file=$(pwd)/btranslator_dev.sql
+  drush sql-query --file=$(pwd)/btr.sql
+  drush sql-query --file=$(pwd)/btr_dev.sql
 
-  drush @dev sql-query --file=$(pwd)/btranslator.sql
-  drush @dev sql-query --file=$(pwd)/btranslator_dev.sql
+  drush @dev sql-query --file=$(pwd)/btr.sql
+  drush @dev sql-query --file=$(pwd)/btr_dev.sql
   #+END_EXAMPLE
 
 
@@ -184,7 +184,7 @@ them can be used on any Drupal project.
   chroot, I create a symbolic link like this:
   #+BEGIN_EXAMPLE
   cd /var/chroot/
-  ln -s btr/var/www/btranslator_dev/profiles/btranslator/ \
+  ln -s btr/var/www/btr_dev/profiles/btranslator/ \
         dev
   #+END_EXAMPLE
 
@@ -197,8 +197,8 @@ them can be used on any Drupal project.
 * Pushing commits to github
 
   The copy of the application on
-  =/var/www/btranslator_dev/profiles/btranslator/= (as well as the one
-  on =/var/www/btranslator/profiles/btranslator/=) are actually clones
+  =/var/www/btr_dev/profiles/btranslator/= (as well as the one
+  on =/var/www/btr/profiles/btranslator/=) are actually clones
   of the git repository at https://github.com/dashohoxha/B-Translator
   so we can *pull* from it and *push* to it. Pulling (to get
   up-to-date) can be done by everybody, however pushing requires a
@@ -246,29 +246,28 @@ them can be used on any Drupal project.
 * Making a local git clone of the dev application
 
   Sometimes it is not easy or suitable to test modifications on the
-  *@dev* application (~/var/www/btranslator_dev~). For example this is
-  the case when I have to test install/uninstall, enable/disable
-  modules, features, etc. In this case I test them on the main
-  application instance (~/var/www/btranslator~). Since both
-  applications are clones of the [[https://github.com/dashohoxha/B-Translator][GitHub repository]], it is easy to push
-  commits from /btranslator_dev/ to /github/ and to pull them from
-  /github/ to /btranslator/.
+  *@dev* application (~/var/www/btr_dev~). For example this is the
+  case when I have to test install/uninstall, enable/disable modules,
+  features, etc. In this case I test them on the main application
+  instance (~/var/www/btr~). Since both applications are clones of the
+  [[https://github.com/dashohoxha/B-Translator][GitHub repository]], it is easy to push commits from /btr_dev/ to
+  /github/ and to pull them from /github/ to /btr/.
 
   However, sometimes it is better to test modifications and make sure
   that they work, before pushing them to /github/. This can be done if
-  the code on /btranslator/ is a git clone of the code on
-  /btranslator_dev/ (instead of being a clone from /github/).
+  the code on /btr/ is a git clone of the code on /btr_dev/ (instead
+  of being a clone from /github/).
 
   The script =dev/git-clone-dev.sh= makes just this. It replaces the
-  code of /btranslator/ with a git clone of the *dev branch* from
-  /btranslator_dev/. Then the workflow is like this:
-  1. Work and commit on the branch *dev* of *btranslator_dev*
-  2. Pull on *btranslator* and test.
+  code of /btr/ with a git clone of the *dev branch* from
+  /btr_dev/. Then the workflow is like this:
+  1. Work and commit on the branch *dev* of *btr_dev*
+  2. Pull on *btr* and test.
   3. Repeat steps *1* and *2* until the modification that we are
      making is OK.
   4. Push changes upwards to github, like this:
      #+BEGIN_EXAMPLE
-     cd /var/www/btranslator_dev/profiles/btranslator
+     cd /var/www/btr_dev/profiles/btranslator
      git checkout master
      git merge dev [--squash]
      git push
@@ -277,9 +276,9 @@ them can be used on any Drupal project.
      #+END_EXAMPLE
      So, after merging to *master* and pushing to /github/, we delete
      the branch *dev* and create a new one.
-  5. Make a git pull on *btranslator* and sync it with *btranslator_dev*
+  5. Make a git pull on *btr* and sync it with *btr_dev*
      #+BEGIN_EXAMPLE
-     cd /var/www/btranslator/profiles/btranslator
+     cd /var/www/btr/profiles/btranslator
      git pull
      #+END_EXAMPLE
 
@@ -313,7 +312,7 @@ them can be used on any Drupal project.
   <?php
 
   $aliases['live'] = array (
-    'root' => '/var/www/btranslator',
+    'root' => '/var/www/btr',
     'uri' => 'http://l10n.org.al',
 
     'remote-host' => 'l10n.org.al',
@@ -322,7 +321,7 @@ them can be used on any Drupal project.
 
     'path-aliases' => array (
       '%profile' => 'profiles/btranslator',
-      '%data' => '/var/www/btranslator_data',
+      '%data' => '/var/www/data',
       '%pofiles' => '/var/www/PO_files',
       '%exports' => '/var/www/exports',
       '%downloads' => '/var/www/downloads',
@@ -340,7 +339,7 @@ them can be used on any Drupal project.
 
   $aliases['test'] = array (
     'parent' => '@live',
-    'root' => '/var/www/btranslator',
+    'root' => '/var/www/btr',
     'uri' => 'http://www2.l10n.org.al',
     'remote-host' => 'www2.l10n.org.al',
 

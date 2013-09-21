@@ -62,7 +62,7 @@ server.
   given properly, then I can correct/change it like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr-1
-  cd /var/www/btranslator/profiles/btranslator
+  cd /var/www/btr/profiles/btranslator
   install/config/domain.sh
   #+END_EXAMPLE
 
@@ -82,7 +82,7 @@ server.
   to be faster and more responsive under heavy load.  Unfortunately it
   has been working very slow, for some reasons that I have not been
   able to find and fix. On the log file
-  ~/var/log/nginx/btranslator.error.log~ I see messages like this:
+  ~/var/log/nginx/btr.error.log~ I see messages like this:
   #+BEGIN_EXAMPLE
   2013/07/15 13:31:57 [info] 10294#0: *47 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: l10n.org.xx
   2013/07/15 13:31:57 [info] 10294#0: *48 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: l10n.org.xx
@@ -93,7 +93,7 @@ server.
   So, I replace NGINX with Apache2 like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr-1
-  cd /var/www/btranslator/profiles/btranslator
+  cd /var/www/btr/profiles/btranslator
   dev/apache2.sh start
   #+END_EXAMPLE
   It will stop services /nginx/, /php5-fpm/ and /memcached/, will
@@ -116,26 +116,26 @@ server.
   and are not enabled by default during installation:
   #+BEGIN_EXAMPLE
   drush features-list
-  drush --yes pm-enable btranslator_simplenews
-  drush --yes pm-enable btranslator_mass_contact
-  ## drush --yes pm-enable btranslator_googleanalytics
-  ## drush --yes pm-enable btranslator_drupalchat
-  ## drush --yes pm-enable btranslator_janrain
+  drush --yes pm-enable btr_simplenews
+  drush --yes pm-enable btr_mass_contact
+  ## drush --yes pm-enable btr_googleanalytics
+  ## drush --yes pm-enable btr_drupalchat
+  ## drush --yes pm-enable btr_janrain
   #+END_EXAMPLE
 
-** Enable the feature btranslator_fb
+** Enable the feature btr_fb
 
-   *Note:* The feature =btranslator_fb= is not yet finished and
-   tested properly.
+   *Note:* The feature =btr_fb= is not yet finished and tested
+   properly.
 
    Enable it like this:
    #+BEGIN_EXAMPLE
-   ## drush --yes pm-enable btranslator_fb
+   ## drush --yes pm-enable btr_fb
    #+END_EXAMPLE
 
-   After installing =btranslator_fb=, the configuration part related
-   to FB should be un-commented, at the end of the file
-   ~/var/www/btranslator/sites/default/settings.php~:
+   After installing =btr_fb=, the configuration part related to FB
+   should be un-commented, at the end of the file
+   ~/var/www/btr/sites/default/settings.php~:
    #+BEGIN_EXAMPLE
    // /* fb config
    $conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
@@ -156,7 +156,7 @@ server.
   well for accessing it easily and for using remote drush commands:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr-1
-  cd /var/www/btranslator/profiles/btranslator
+  cd /var/www/btr/profiles/btranslator
   dev/install-sshd.sh
   #+END_EXAMPLE
 
@@ -183,33 +183,33 @@ server.
   #+BEGIN_EXAMPLE
   <?php
   // by default use the B-Translator root directory
-  $options['r'] = '/var/www/btranslator';
+  $options['r'] = '/var/www/btr';
   #+END_EXAMPLE
   This means that the root directory of =drush= is always
-  ~/var/www/btranslator~, no matter where we call it from.
+  ~/var/www/btr~, no matter where we call it from.
 
 
 * Transfer content
 
   On the master (main/live) server, I export all the content as a
   feature, with the help of the module *node_export*. But first I have
-  to disable the existing *btranslator_content* feature, otherwise the
-  feature export will fail.
+  to disable the existing *btr_content* feature, otherwise the feature
+  export will fail.
   #+BEGIN_EXAMPLE
-  drush --yes pm-disable btranslator_content
-  drush --yes features-export --destination=/tmp btranslator_content_1 node_export_features
-  tar --create --gzip --file=btranslator_content_1.tgz --directory=/tmp btranslator_content_1
+  drush --yes pm-disable btr_content
+  drush --yes features-export --destination=/tmp btr_content_1 node_export_features
+  tar --create --gzip --file=btr_content_1.tgz --directory=/tmp btr_content_1
   #+END_EXAMPLE
 
-  Now I transfer ~btranslator_content_1.tgz~ to the clone server and
+  Now I transfer ~btr_content_1.tgz~ to the clone server and
   replace the existing content with it:
   #+BEGIN_EXAMPLE
-  cd /var/www/btranslator/profiles/btranslator
+  cd /var/www/btr/profiles/btranslator
   cd modules/features/
-  tar --extract --gunzip --file=btranslator_content_1.tgz
-  drush --yes pm-disable btranslator_content
+  tar --extract --gunzip --file=btr_content_1.tgz
+  drush --yes pm-disable btr_content
   drush delete-all all  ## delete all existing nodes
-  drush --yes pm-enable btranslator_content_1
+  drush --yes pm-enable btr_content_1
   #+END_EXAMPLE
 
 
@@ -236,7 +236,7 @@ server.
 
   + Save them on the main site:
     #+BEGIN_EXAMPLE
-    cd /var/www/btranslator/profiles/btranslator
+    cd /var/www/btr/profiles/btranslator
     modules/features/save-private-vars.sh
     #+END_EXAMPLE
     It will generate the file ~restore-private-vars.php~.
@@ -271,14 +271,14 @@ server.
 
   + Export them on the primary site:
     #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
+    cd /var/www/data
     db/export-users.sh
     db/export-contributions.sh
     #+END_EXAMPLE
 
   + Transfer ~*.sql.gz~ files to the clone site and import them:
     #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
+    cd /var/www/data
     db/import-users.sh  users-20130717.sql.gz
     db/import-contributions.sh contributions-00000000-20130717.sql.gz
     #+END_EXAMPLE
@@ -305,7 +305,7 @@ server.
 
   + Export ~vocabulary-sq.po~:
     #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
+    cd /var/www/data
     export/export.sh misc vocabulary sq $(pwd)/tmp
     mv tmp/vocabulary/vocabulary-sq.po .
     rm -rf tmp
@@ -314,7 +314,7 @@ server.
   + Transfer ~vocabulary-sq.po~ to the other system and them import
     it:
     #+BEGIN_EXAMPLE
-    cd /var/www/btranslator_data
+    cd /var/www/data
     mv vocabulary-sq.po vocabulary/
     import/vocabulary.sh
     #+END_EXAMPLE
@@ -330,7 +330,7 @@ server.
 ** Download (get) PO files
 
    #+BEGIN_EXAMPLE
-   cd /var/www/btranslator_data
+   cd /var/www/data
 
    nohup nice get/all.sh &
    tail -f nohup.out
@@ -363,7 +363,7 @@ server.
 ** Import PO files
 
    #+BEGIN_EXAMPLE
-   cd /var/www/btranslator_data
+   cd /var/www/data
    nohup nice import/all.sh &
    tail -f nohup.out
    #+END_EXAMPLE
@@ -378,8 +378,7 @@ server.
     accounts etc. (it offers 10 email accounts for free). To verify
     that I own this domain, GoogleApps requests me to put a certain
     file on the root of my webserver. This file looks like
-    =google9350a51ac2d503bf.html= and I place it on
-    =/var/www/btranslator=.
+    =google9350a51ac2d503bf.html= and I place it on =/var/www/btr=.
 
   + Transfer SSL certificates. I have obtained a free SSL certificate
     for my site (see:

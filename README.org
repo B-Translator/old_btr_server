@@ -23,7 +23,7 @@ This is a Drupal installation profile for B-Translator.
   the system. It will also make the neccessary common configurations
   of the system and prompt for customizing it (for example the domain,
   email address, etc.)
-  
+
   The installation script will also create the init script
   ~/etc/init.d/chroot-btr~, which can be used to start and stop the services
   inside the chroot:
@@ -112,7 +112,7 @@ This is a Drupal installation profile for B-Translator.
     + Web: https://groups.google.com/forum/?fromgroups&hl=en#!forum/btranslator
     + Google+ Community: https://plus.google.com/u/0/communities/109327047119841706609
 
-  - Chat/IRC: *#btranslator* on *irc.freenode.net* 
+  - Chat/IRC: *#btranslator* on *irc.freenode.net*
 
   - Misc
     + Homepage: http://info.btranslator.org
@@ -142,9 +142,9 @@ This is a Drupal installation profile for B-Translator.
     + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/btranslator-project.org][docs/btranslator-project.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/btranslator-project.pdf][docs/btranslator-project.pdf]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/uml/db_schema.org][docs/uml/db_schema.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/l10n_feedback/data/db/docs/db_schema.org][modules/l10n_feedback/data/db/docs/db_schema.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/l10n_feedback/data/README.org][modules/l10n_feedback/data/README.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/l10n_feedback/README.org][modules/l10n_feedback/README.org]]
+    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btr_data/data/db/docs/db_schema.org][modules/custom/btr_data/data/db/docs/db_schema.org]]
+    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btr_data/data/README.org][modules/custom/btr_data/data/README.org]]
+    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btr_ui/README.org][modules/custom/btr_ui/README.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/features/README.org][modules/features/README.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/TKL/patch-btranslator-precise/README.org][TKL/patch-btranslator-precise/README.org]] (deprecated)
 
