@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -x
 ### Replace the profile btranslator with a version
 ### that is cloned from github, so that any updates
 ### can be retrieved easily (without having to

@@ -3,14 +3,19 @@ description = B-Translator User Interface for Drupal.
 package = B-Translator
 core = 7.x
 
-dependencies[] = mailsystem
-dependencies[] = mimemail
-dependencies[] = phpmailer
+dependencies[] = btr_data
 dependencies[] = disqus
 dependencies[] = sharethis
 dependencies[] = edit_profile
 dependencies[] = entity
 dependencies[] = rules
+dependencies[] = field_sql_storage
+dependencies[] = list
+dependencies[] = options
+dependencies[] = text
+dependencies[] = image
+dependencies[] = number
+dependencies[] = options
 
 files[] = btr_ui.test
 configure = admin/config/btr

@@ -41,14 +41,6 @@ echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 pear channel-discover pear.drush.org
 pear install pear.drush.org/drush-5.8.0
 
-### by default use the B-Translator root directory for Drush
-mkdir -p /etc/drush
-cat > /etc/drush/drushrc.php << EOF
-<?php
-// by default use the B-Translator root directory
-\$options['r'] = '/var/www/btr';
-EOF
-
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
 svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology

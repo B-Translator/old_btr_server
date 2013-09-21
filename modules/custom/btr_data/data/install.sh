@@ -11,7 +11,9 @@ mysql=$(drush sql-connect)
 $mysql < db/btr_schema.sql
 
 ### for the time being, data are on the same database with Drupal
-export BTR_DATA=btr
+dbname=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
+export BTR=$dbname
+export BTR_DATA=$dbname
 
 ### create the project 'misc/vocabulary'
 import/vocabulary.sh
