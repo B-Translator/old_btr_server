@@ -25,7 +25,7 @@ projects[google_analytics][version] = "1.3"
 projects[token][version] = "1.5"
 projects[edit_profile][version] = "1.0-beta2"
 projects[examples][version] = "1.x-dev"
-projects[entity][version] = "1.1"
+projects[entity][version] = "1.2"
 projects[rules][version] = "2.3"
 projects[homebox][version] = "2.0-beta6"
 projects[simpletest_clone][version] = "1.0-beta3"
@@ -56,7 +56,7 @@ projects[disqus][version] = "1.9"
 projects[disqus][patch][] = "http://drupal.org/files/disqus-https.patch"
 projects[sharethis][version] = "2.5"
 projects[rpx][version] = "2.4"
-projects[fb][version] = "3.3-beta6"
+projects[fb][version] = "3.4-beta3"
 projects[invite][version] = "2.1-beta2"
 
 ;--------------------
@@ -73,7 +73,7 @@ projects[phpmailer][version] = "3.x-dev"
 projects[mimemail][version] = "1.0-alpha2"
 projects[reroute_email][version] = "1.1"
 projects[simplenews][version] = "1.0"
-projects[mass_contact][version] = "1.0-beta2"
+projects[mass_contact][version] = "1.0-beta3"
 
 
 ;--------------------
@@ -86,7 +86,7 @@ libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/ar
 
 libraries[bootstrap][directory_name] = "bootstrap"
 libraries[bootstrap][download][type] = "get"
-libraries[bootstrap][download][url] = "https://github.com/twbs/bootstrap/archive/3.0.0-wip.zip"
+libraries[bootstrap][download][url] = "https://github.com/twbs/bootstrap/archive/v3.0.0.zip"
 
 libraries[facebook-php-sdk][directory_name] = "facebook-php-sdk"
 libraries[facebook-php-sdk][download][type] = "git"
