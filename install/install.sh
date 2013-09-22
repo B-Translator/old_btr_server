@@ -74,6 +74,7 @@ init_script="/etc/init.d/chroot-$(basename $chroot_dir)"
 sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $install_dir/init.sh > $init_script
 chmod +x $init_script
 update-rc.d $(basename $init_script) defaults
+update-rc.d $(basename $init_script) disable
 
 ### display the name of the chroot on the prompt
 echo $(basename $chroot_dir) > $target_dir/etc/debian_chroot

@@ -37,7 +37,7 @@ echo "
 ===> Edit the file '$file_inc' and modify the list of languages appropriately.
 "
 read -p "Press Enter to continue..." input
-nano --syntax=php +20,5 $file_inc
+nano --syntax=php +23,5 $file_inc
 
 ### add the $main_lang as a drupal language
 drush @btr language-add $main_lang

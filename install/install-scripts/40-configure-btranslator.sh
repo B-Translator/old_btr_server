@@ -57,7 +57,7 @@ EOF
 
 ### update to the latest version of core and modules
 ### $drush is an alias for 'drush --root=/var/www/btr'
-$drush --yes pm-update
+#$drush --yes pm-update
 
 ### install features modules
 $drush --yes pm-enable btr_btr_ui
