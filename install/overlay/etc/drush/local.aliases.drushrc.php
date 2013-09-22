@@ -9,7 +9,7 @@
     drush help sql-sync
  */
 
-$aliases['main'] = array (
+$aliases['btr'] = array (
   'root' => '/var/www/btr',
   'uri' => 'http://l10n.org.xx',
   'path-aliases' => array (
@@ -21,8 +21,8 @@ $aliases['main'] = array (
   ),
 );
 
-$aliases['dev'] = array (
-  'parent' => '@main',
-  'root' => '/var/www/btr_dev',
-  'uri' => 'http://dev.l10n.org.xx',
-);
+// $aliases['dev'] = array (
+//   'parent' => '@btr',
+//   'root' => '/var/www/btr_dev',
+//   'uri' => 'http://dev.l10n.org.xx',
+// );

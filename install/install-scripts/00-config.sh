@@ -2,18 +2,15 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
+export drupal_dir=/var/www/btr
+export drush="drush --root=$drupal_dir"
+
 cwd=$(dirname $0)
 
 $cwd/10-install-additional-packages.sh
-
 $cwd/20-make-and-install-btranslator.sh
-
 $cwd/25-git-clone-btranslator.sh
-
 $cwd/30-separate-translation-data.sh
-
-$cwd/35-separate-po-files.sh
-
 $cwd/40-configure-btranslator.sh
 
 ### copy overlay files over to the system

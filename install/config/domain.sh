@@ -18,8 +18,9 @@ read -p "Enter the domain [$FQDN]: " input
 FQDN=${input:-$FQDN}
 
 echo $FQDN > /etc/hostname
+host=$(hostname)
 sed -i /etc/hosts \
-    -e "/^127.0.0.1/c 127.0.0.1 $FQDN localhost"
+    -e "/^127.0.0.1/c 127.0.0.1 $FQDN $host localhost"
 
 for file in $(ls /etc/nginx/sites-available/*)
 do

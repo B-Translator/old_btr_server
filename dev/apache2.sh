@@ -7,7 +7,7 @@ case $1 in
 	service nginx stop
 	service php5-fpm stop
 
-	drush -y dis memcache
+	drush @local -y dis memcache
 	service memcached stop
 	for file in $(ls /var/www/btr*/sites/default/settings.php)
 	do
@@ -28,7 +28,7 @@ case $1 in
 	    sed -i $file -e "/comment memcache config/ d"
 	done
 	service memcached start
-	drush -y en memcache
+	drush @local -y en memcache
 
 	service php5-fpm start
 	service nginx start

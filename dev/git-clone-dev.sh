@@ -24,9 +24,3 @@ cp -a btranslator-bak/themes/contrib/ btranslator/themes/
 
 ### copy db connection file
 cp {btranslator-bak,btranslator}/modules/custom/btr_data/data/db/settings.php
-
-### fix the links to PO_files
-PO_files=/var/www/PO_files
-data=/var/www/data
-ln -sf $PO_files $data/get/
-ln -sf $PO_files $data/import/

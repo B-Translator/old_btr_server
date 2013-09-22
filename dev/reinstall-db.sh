@@ -18,7 +18,7 @@ fi
 test $1 && cd $1
 
 ### settings for the database and the drupal site
-appdir=$(drush drupal-directory)
+drupal_dir=$(drush drupal-directory)
 db_name=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
 db_user=$(drush sql-connect | tr ' ' "\n" | grep -e '--user=' | cut -d= -f2)
 db_pass=$(drush sql-connect | tr ' ' "\n" | grep -e '--password=' | cut -d= -f2)
@@ -38,7 +38,7 @@ $mysql -e "
 
 ### start site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
-cd $appdir
+cd $drupal_dir
 drush site-install --verbose --yes btranslator \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \

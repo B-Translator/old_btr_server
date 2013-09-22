@@ -3,7 +3,8 @@
 CHROOT=/var/chroot/btr
 
 HOST_SERVICES="mysql apache2"
-CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
+#CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
+CHROOT_SERVICES="cron mysql apache2"
 MOUNT_POINTS="proc dev sys dev/pts"
 
 ### reverse a list of words given as parameter

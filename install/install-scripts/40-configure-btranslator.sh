@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # Protect Drupal settings from prying eyes
-drupal_settings=/var/www/btr/sites/default/settings.php
+drupal_settings=$drupal_dir/sites/default/settings.php
 chown root:www-data $drupal_settings
 chmod 640 $drupal_settings
 
@@ -56,41 +56,42 @@ cat >> $drupal_settings << EOF
 EOF
 
 ### update to the latest version of core and modules
-drush --yes pm-update
+### $drush is an alias for 'drush --root=/var/www/btr'
+$drush --yes pm-update
 
 ### install features modules
-drush --yes pm-enable btr_btr_ui
-drush --yes features-revert btr_btr_ui
+$drush --yes pm-enable btr_btr_ui
+$drush --yes features-revert btr_btr_ui
 
-drush --yes pm-enable btr_btr
-drush --yes features-revert btr_btr
+$drush --yes pm-enable btr_btr
+$drush --yes features-revert btr_btr
 
-drush --yes pm-enable btr_misc
-drush --yes features-revert btr_misc
+$drush --yes pm-enable btr_misc
+$drush --yes features-revert btr_misc
 
-drush --yes pm-enable btr_layout
-drush --yes features-revert btr_layout
+$drush --yes pm-enable btr_layout
+$drush --yes features-revert btr_layout
 
-drush --yes pm-enable btr_disqus
-drush --yes pm-enable btr_content
-drush --yes pm-enable btr_sharethis
+$drush --yes pm-enable btr_disqus
+$drush --yes pm-enable btr_content
+$drush --yes pm-enable btr_sharethis
 
-drush --yes pm-enable btr_captcha
-drush --yes features-revert btr_captcha
-drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
-drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
+$drush --yes pm-enable btr_captcha
+$drush --yes features-revert btr_captcha
+$drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
+$drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
 
-drush --yes pm-enable btr_invite
-drush --yes pm-enable btr_permissions
+$drush --yes pm-enable btr_invite
+$drush --yes pm-enable btr_permissions
 
-#drush --yes pm-enable btr_simplenews
-#drush --yes pm-enable btr_mass_contact
-#drush --yes pm-enable btr_googleanalytics
-#drush --yes pm-enable btr_drupalchat
-#drush --yes pm-enable btr_janrain
+#$drush --yes pm-enable btr_simplenews
+#$drush --yes pm-enable btr_mass_contact
+#$drush --yes pm-enable btr_googleanalytics
+#$drush --yes pm-enable btr_drupalchat
+#$drush --yes pm-enable btr_janrain
 
 ### install FB integration
-#drush --yes pm-enable btr_fb
+#$drush --yes pm-enable btr_fb
 
 # enable FB config
 cat >> $drupal_settings << EOF
@@ -109,7 +110,7 @@ EOF
 #    -e '#^fb config */# c // fb config */'
 
 ### install also multi-language support
-drush --yes pm-enable l10n_client l10n_update
-mkdir -p /var/www/btr/sites/all/translations
-chown -R www-data: /var/www/btr/sites/all/translations
-drush --yes l10n-update
+$drush --yes pm-enable l10n_client l10n_update
+mkdir -p $drupal_dir/sites/all/translations
+chown -R www-data: $drupal_dir/sites/all/translations
+$drush --yes l10n-update

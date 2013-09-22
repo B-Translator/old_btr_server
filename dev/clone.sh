@@ -36,7 +36,7 @@ sed -i /etc/drush/local.aliases.drushrc.php \
     -e "/^\\\$aliases\['$var'\] = /,+5 d"
 cat <<EOF >> /etc/drush/local.aliases.drushrc.php
 \$aliases['$var'] = array (
-  'parent' => '@main',
+  'parent' => '@btr',
   'root' => '/var/www/btr_$var',
   'uri' => 'http://$var.l10n.org.xx',
 );
@@ -51,7 +51,7 @@ mysql --defaults-file=/etc/mysql/debian.cnf -e "
 "
 
 ### copy the database
-drush sql-sync @self @$var
+drush sql-sync @btr @$var
 
 ### clear the cache
 drush @$var cc all
@@ -78,7 +78,8 @@ sed -i /etc/apache2/sites-available/$var-ssl \
 a2ensite $var $var-ssl
 
 ### restart services
-for SRV in php5-fpm memcached mysql nginx
+#for SRV in php5-fpm memcached mysql nginx
+for SRV in mysql apache2
 do
     service $SRV restart
 done

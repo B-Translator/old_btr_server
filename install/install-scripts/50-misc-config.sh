@@ -41,9 +41,9 @@ sed -i /etc/apache2/apache2.conf \
 update-locale
 
 ### prevent robots from crawling translations
-sed -i /var/www/btr/robots.txt \
+sed -i $drupal_dir/robots.txt \
     -e '/# B-Translator/,$ d'
-cat <<EOF >> /var/www/btr/robots.txt
+cat <<EOF >> $drupal_dir/robots.txt
 # B-Translator
 Disallow: /translations/
 Disallow: /?q=translations/
@@ -53,3 +53,7 @@ Disallow: /fb_cb/
 Disallow: /?q=fb_cb/
 Disallow: /downloads/
 EOF
+
+### replace nginx with apache2
+dev_scripts=$drupal_dir/profiles/btranslator/dev
+$dev_scripts/apache2.sh start

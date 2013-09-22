@@ -1,4 +1,4 @@
-#!/usr/bin/drush php-script
+#!/usr/bin/drush @btr php-script
 <?php
    /**
     * Set drupal variables related to email and smtp.

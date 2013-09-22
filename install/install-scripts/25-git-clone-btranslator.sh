@@ -5,7 +5,7 @@
 ### reinstall the whole application).
 
 ### clone btranslator from github
-cd /var/www/btr/profiles/
+cd $drupal_dir/profiles/
 mv btranslator btranslator-bak
 git clone https://github.com/dashohoxha/B-Translator btranslator
 

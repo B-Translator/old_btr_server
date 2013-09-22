@@ -2,12 +2,21 @@
 
 ### retrieve all the projects/modules and build the application directory
 makefile="https://raw.github.com/dashohoxha/B-Translator/master/build-btranslator.make"
-appdir="/var/www/btr"
-rm -rf $appdir
+rm -rf $drupal_dir
 drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
-           $makefile $appdir
-cp -a $appdir/profiles/btranslator/{libraries/bootstrap,themes/contrib/bootstrap/}
+           $makefile $drupal_dir
+cp -a $drupal_dir/profiles/btranslator/{libraries/bootstrap,themes/contrib/bootstrap/}
+
+### create the directory of PO files
+mkdir -p /var/www/PO_files
+chown www-data: /var/www/PO_files
+
+### create the downloads and exports dirs
+mkdir -p /var/www/downloads/
+chown www-data: /var/www/downloads/
+mkdir -p /var/www/exports/
+chown www-data: /var/www/exports/
 
 ### start mysqld manually, if it is not running
 if test -z "$(ps ax | grep [m]ysqld)"
@@ -34,19 +43,13 @@ $mysql -e "
     GRANT ALL ON $db_name.* TO $db_user@localhost IDENTIFIED BY '$db_pass';
 "
 
-### start site installation
+### site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
-cd $appdir
+cd $drupal_dir
 drush site-install --verbose --yes btranslator \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
-
-### create the downloads and exports dirs
-mkdir -p /var/www/downloads/
-chown www-data /var/www/downloads/
-mkdir -p /var/www/exports/
-chown www-data /var/www/exports/
 
 ### set propper directory permissions
 mkdir -p sites/default/files/

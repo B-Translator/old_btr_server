@@ -121,7 +121,7 @@ them can be used on any Drupal project.
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
   cd /var/www/
-  drush php-script btr/profiles/btranslator/config.php dev1
+  drush @btr php-script btr/profiles/btranslator/config.php dev1
   drush @dev php-script btr/profiles/btranslator/config.php dev2
   #+END_EXAMPLE
 

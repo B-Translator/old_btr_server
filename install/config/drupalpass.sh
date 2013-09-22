@@ -10,4 +10,4 @@ stty echo
 echo
 
 $(dirname $0)/mysqld.sh start
-drush user-password admin --password="$passwd"
+drush @btr user-password admin --password="$passwd"
