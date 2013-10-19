@@ -1,0 +1,13 @@
+name = btr_btr_services
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = oauth2_server
+dependencies[] = services
+features[ctools][] = services:services:3
+features[features_api][] = api:1
+features[oauth2_server][] = oauth2_btr
+features[services_endpoint][] = btranslator
+features[user_permission][] = use oauth2 server
