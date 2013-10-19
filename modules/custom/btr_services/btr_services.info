@@ -1,0 +1,11 @@
+name = B-Translator Web Services
+description = Web Services (API-s) that are offered by B-Translator.
+package = B-Translator
+core = 7.x
+
+dependencies[] = btr_data
+dependencies[] = services
+dependencies[] = oauth2_server
+
+;files[] = btr_services.test
+;configure = admin/config/btr

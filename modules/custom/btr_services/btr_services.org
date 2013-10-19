@@ -1,0 +1,50 @@
+
+* Reports
+
+** Top Contributers (topcontrib)
+
+   Statistics about top contributors.
+
+   + $params :: Parameters of the report, comming from the POST
+     request.  It contains these fields (variables):
+        - lng :: language of translations
+        - period :: period of report (last day|week|month|year)
+        - size :: number of results (top contributers), between 5 and 20
+
+   + return :: JSON array of users, where each user is an object with
+     these attributes: { uid, name, umail, score, translations, votes
+     }
+
+*** Examples
+
+    + bash:
+      #+BEGIN_EXAMPLE
+      #!/bin/bash
+      curl -k -i -H "Content-type: application/json"  \
+           -X POST https://dev.l10n.org.xx/btr/report/topcontrib.json	\
+           -d '{"lng": "sq", "period": "week", "size": 10}'
+      #+END_EXAMPLE
+
+    + php (drush):
+      #+BEGIN_EXAMPLE
+      #!/usr/bin/drush php-script
+      <?php
+      $url = 'https://dev.l10n.org.xx/btr/report/topcontrib.json';
+      $params = array(
+	'lng' => 'sq',
+	'period' => 'week',
+	'size' => 10,
+      );
+      $options = array(
+	'method' => 'POST',
+	'data' => http_build_query($params),
+      );
+
+      $response = drupal_http_request($url, $options);
+      print_r($response);
+      #+END_EXAMPLE
+
+    + js:
+      #+BEGIN_EXAMPLE
+
+      #+END_EXAMPLE

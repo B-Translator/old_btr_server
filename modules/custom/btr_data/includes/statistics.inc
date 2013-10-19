@@ -7,8 +7,8 @@
  *
  * @param $lng
  *     Language of contributions (for example sq).
- * @param $from_date
- *     Starting date for calculations, in the format Y-m-d.
+ * @param $period
+ *     Period of report (last day|week|month|year).
  * @param $size
  *     Number of top users to return.
  * @return
@@ -16,13 +16,26 @@
  *     with these attributes:
  *         uid, name, umail, score, translations, votes
  */
-function btr_stat_topcontrib($lng, $from_date, $size) {
+function btr_stat_topcontrib($lng ='fr', $period ='week', $size =5) {
 
-  $cache = cache_get("btr_stat_topcontrib:$lng", 'cache_btr');
+  // validate parameters
+  if (!in_array($lng, array_keys(btr_get_languages()))) {
+    $lng = 'fr';
+  }
+  if (!in_array($period, array('day', 'week', 'month', 'year'))) {
+    $period = 'week';
+  }
+  $size = (int) $size;
+  if ($size < 5) $size = 5;
+  if ($size > 20) $size = 20;
+
   // Return cache if possible.
+  $cache = cache_get("btr_stat_topcontrib:$lng:$period:$size", 'cache_btr');
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     return $cache->data;
   }
+
+  $from_date = date('Y-m-d', strtotime("-1 $period"));
 
   // Give weight 5 to a translation and weight 1 to a vote,
   // get the sum of all the weights grouped by user (umail),
@@ -57,7 +70,7 @@ function btr_stat_topcontrib($lng, $from_date, $size) {
   $topcontrib = $db->queryRange($sql_get_topcontrib, 0, $size, $args)->fetchAll();
 
   // Cache for 12 hours.
-  cache_set("btr_stat_topcontrib:$lng", $topcontrib, 'cache_btr', time() + 12*60*60);
+  cache_set("btr_stat_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btr', time() + 12*60*60);
 
   return $topcontrib;
 }

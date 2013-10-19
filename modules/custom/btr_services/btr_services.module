@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ * Module file for btr_services.
+ */
+
+/**
+ * Implements hook_services_resources().
+ */
+function btr_services_services_resources() {
+  return array(
+    'report' => array(
+      'actions' => array(
+
+        // Getting statistics about top contributors.
+        'topcontrib' => array(
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
+          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'callback' => '_report_topcontrib',
+          'args' => array(
+            array(
+              'name' => 'params',
+              'optional' => FALSE,
+              'source' => 'data',
+              'description' => 'The parameters of the report.',
+              'type' => 'array',
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}

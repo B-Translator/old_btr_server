@@ -33,7 +33,8 @@ rm -f /etc/nginx/sites-{available,enabled}/$var
 rm -f /etc/apache2/sites-{available,enabled}/$var{,-ssl}
 
 ### restart services
-for SRV in php5-fpm memcached mysql nginx
+#for SRV in php5-fpm memcached mysql nginx
+for SRV in mysql apache2
 do
     service $SRV restart
 done

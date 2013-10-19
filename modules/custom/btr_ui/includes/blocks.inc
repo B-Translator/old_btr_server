@@ -152,10 +152,8 @@ function _btr_ui_block_topcontrib() {
 
   $lng = variable_get('btr_translation_lng', 'fr');
   $period = variable_get('btr_topcontrib_period', 'week');
-  $from_date = date('Y-m-d', strtotime("-1 $period"));
   $size = variable_get('btr_topcontrib_size', 5);
-
-  $topusers = btr_stat_topcontrib($lng, $from_date, $size);
+  $topusers = btr_stat_topcontrib($lng, $period, $size);
 
   $output =  array(
     'first_para' => array(
