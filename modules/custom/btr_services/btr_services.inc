@@ -4,7 +4,24 @@
  * Callback functions for btr_services.
  */
 
-function _report_statistics($params) {
+/**
+ * Getting general statistics (number of votes and
+ * translations) for the last week, month and year.
+ *
+ * @param $params
+ *     Parameters of the report, comming from the POST request.
+ *     It contains these fields (variables):
+ *       - lng: language of translations
+ *
+ * @return
+ *     Array of general stats for week, month and year.
+ *
+ * @example
+ *     curl -k -i -H "Content-type: application/json"  \
+ *          -X POST https://dev.l10n.org.xx/btr/report/statistics.json	\
+ *          -d '{"lng": "sq"}'
+ */
+function _btr_report_statistics($params) {
   // get parameters and validate them
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());
@@ -16,7 +33,7 @@ function _report_statistics($params) {
 }
 
 /**
- * Callback function for getting statistics about top contributors.
+ * Getting statistics about top contributors.
  *
  * @param $params
  *     Parameters of the report, comming from the POST request.
@@ -26,8 +43,7 @@ function _report_statistics($params) {
  *       - size: number of results (top contributers), between 5 and 20
  *
  * @return
- *     JSON array of users, where each user is an object
- *     with these attributes:
+ *     Array of users, where each user is an object with these attributes:
  *         uid, name, umail, score, translations, votes
  *
  * @example
@@ -35,7 +51,7 @@ function _report_statistics($params) {
  *          -X POST https://dev.l10n.org.xx/btr/report/topcontrib.json	\
  *          -d '{"lng": "sq", "period": "week", "size": 10}'
  */
-function _report_topcontrib($params) {
+function _btr_report_topcontrib($params) {
   // get parameters and validate them
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());

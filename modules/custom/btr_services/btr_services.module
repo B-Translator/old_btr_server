@@ -18,7 +18,7 @@ function btr_services_services_resources() {
           'access callback' => 'user_access',
           'access arguments' => array('btranslator-stats'),
           'file' => array('type' => 'inc', 'module' => 'btr_services'),
-          'callback' => '_report_statistics',
+          'callback' => '_btr_report_statistics',
           'args' => array(
             array(
               'name' => 'params',
@@ -35,7 +35,7 @@ function btr_services_services_resources() {
           'access callback' => 'user_access',
           'access arguments' => array('btranslator-stats'),
           'file' => array('type' => 'inc', 'module' => 'btr_services'),
-          'callback' => '_report_topcontrib',
+          'callback' => '_btr_report_topcontrib',
           'args' => array(
             array(
               'name' => 'params',
