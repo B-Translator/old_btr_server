@@ -41,6 +41,15 @@ function btr_btr_services_default_services_endpoint() {
   $endpoint->resources = array(
     'report' => array(
       'actions' => array(
+        'statistics' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'scope' => '',
+              'require_authentication' => NULL,
+            ),
+          ),
+        ),
         'topcontrib' => array(
           'enabled' => '1',
           'settings' => array(

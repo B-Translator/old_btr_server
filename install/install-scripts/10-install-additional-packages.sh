@@ -21,7 +21,7 @@ apt-get -y upgrade
 install aptitude tasksel vim nano psmisc language-pack-en
 install mysql-server ssmtp memcached php5-memcached \
         php5-mysql php5-gd php-db php5-dev make php-pear php5-curl php-apc \
-        ssl-cert gawk unzip wget diff phpmyadmin \
+        ssl-cert gawk unzip wget diff curl phpmyadmin \
         git mercurial subversion translate-toolkit
 install screen logwatch
 

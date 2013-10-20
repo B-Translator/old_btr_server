@@ -12,6 +12,24 @@ function btr_services_services_resources() {
     'report' => array(
       'actions' => array(
 
+        // Getting general statistics (number of votes and
+        // translations) for the last week, month and year.
+        'statistics' => array(
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
+          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'callback' => '_report_statistics',
+          'args' => array(
+            array(
+              'name' => 'params',
+              'optional' => FALSE,
+              'source' => 'data',
+              'description' => 'The parameters of the report.',
+              'type' => 'array',
+            ),
+          ),
+        ),
+
         // Getting statistics about top contributors.
         'topcontrib' => array(
           'access callback' => 'user_access',
@@ -28,6 +46,7 @@ function btr_services_services_resources() {
             ),
           ),
         ),
+
       ),
     ),
   );
