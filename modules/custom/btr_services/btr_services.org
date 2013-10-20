@@ -37,7 +37,21 @@
 
     + js:
       #+BEGIN_EXAMPLE
-
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script type="text/javascript">
+	$(document).ready(function() {
+	   $.ajax({
+	     type: "POST",
+	     url: 'https://dev.l10n.org.xx/btr/report/statistics.json',
+	     data: JSON.stringify({lng: 'sq'}),
+	     dataType: 'json',
+	     contentType: 'application/json',
+	     success: function(data, textStatus, jqXHR) {
+			console.log(data);
+		      }
+	   });
+	});
+      </script>
       #+END_EXAMPLE
 
 
@@ -86,5 +100,19 @@
 
     + js:
       #+BEGIN_EXAMPLE
-
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script type="text/javascript">
+	$(document).ready(function() {
+	   $.ajax({
+	     type: "POST",
+	     url: 'https://dev.l10n.org.xx/btr/report/topcontrib.json',
+	     data: JSON.stringify({lng: 'sq', period: 'week', size: 5}),
+	     dataType: 'json',
+	     contentType: 'application/json',
+	     success: function(data, textStatus, jqXHR) {
+			console.log(data);
+		      }
+	   });
+	});
+      </script>
       #+END_EXAMPLE

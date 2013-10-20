@@ -1,0 +1,25 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+       $.ajax({
+         type: "POST",
+         url: 'https://dev.l10n.org.xx/btr/report/statistics.json',
+         data: JSON.stringify({lng: 'sq'}),
+         dataType: 'json',
+         contentType: 'application/json',
+         success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                  }
+       });
+    });
+  </script>
+
+</head>
+<body>
+
+</body>
+</html>
