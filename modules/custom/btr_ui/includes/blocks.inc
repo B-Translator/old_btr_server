@@ -155,6 +155,7 @@ function _btr_ui_block_topcontrib() {
   $size = variable_get('btr_topcontrib_size', 5);
   $topusers = btr_stat_topcontrib($lng, $period, $size);
 
+  $from_date = date('Y-m-d', strtotime("-1 $period"));
   $output =  array(
     'first_para' => array(
       '#type' => 'markup',

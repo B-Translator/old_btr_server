@@ -5,6 +5,7 @@ core = 7.x
 
 dependencies[] = btr_data
 dependencies[] = services
+dependencies[] = rest_server
 dependencies[] = oauth2_server
 
 ;files[] = btr_services.test

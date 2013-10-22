@@ -89,6 +89,7 @@ dependencies[] = mimemail_compress
 ;--------------------
 dependencies[] = btr_data
 dependencies[] = btr_ui
+dependencies[] = btr_services
 
 ;--------------------
 ; Other

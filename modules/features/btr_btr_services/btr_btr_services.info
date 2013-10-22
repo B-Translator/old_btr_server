@@ -6,6 +6,7 @@ dependencies[] = ctools
 dependencies[] = entity
 dependencies[] = features
 dependencies[] = oauth2_server
+dependencies[] = rest_server
 dependencies[] = services
 features[ctools][] = services:services:3
 features[features_api][] = api:1
