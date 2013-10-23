@@ -14,7 +14,7 @@ function btr_btr_default_rules_configuration() {
       "PLUGIN" : "reaction rule",
       "TAGS" : [ "role", "user" ],
       "REQUIRES" : [ "rules" ],
-      "ON" : [ "user_insert" ],
+      "ON" : { "user_insert" : [] },
       "DO" : [
         { "user_add_role" : { "account" : [ "account" ], "roles" : { "value" : { "4" : "4" } } } }
       ]
@@ -25,7 +25,7 @@ function btr_btr_default_rules_configuration() {
       "PLUGIN" : "reaction rule",
       "ACTIVE" : false,
       "REQUIRES" : [ "rules" ],
-      "ON" : [ "user_login" ],
+      "ON" : { "user_login" : [] },
       "DO" : [ { "redirect" : { "url" : "user\\/login?destination=dashboard" } } ]
     }
   }');

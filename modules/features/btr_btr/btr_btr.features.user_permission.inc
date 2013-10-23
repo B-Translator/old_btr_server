@@ -61,7 +61,9 @@ function btr_btr_user_default_permissions() {
   $permissions['btranslator-stats'] = array(
     'name' => 'btranslator-stats',
     'roles' => array(
-      0 => 'moderator',
+      0 => 'anonymous user',
+      1 => 'authenticated user',
+      2 => 'moderator',
     ),
     'module' => 'btr_ui',
   );
