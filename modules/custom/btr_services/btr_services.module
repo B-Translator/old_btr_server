@@ -10,13 +10,39 @@
 function btr_services_services_resources() {
   return array(
     'report' => array(
+
+      'operations' => array(
+
+        // Getting reports of different kinds,
+        'retrieve' => array(
+          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'callback' => '_btr_report_retrieve',
+          'args' => array(
+            array(
+              'name' => 'report',
+              'optional' => FALSE,
+              'source' => array('path' => 0),
+              'description' => 'The name/id of the report.',
+              'type' => 'string',
+            ),
+            array(
+              'name' => 'params',
+              'optional' => FALSE,
+              'source' => 'param',
+              'description' => 'Parameters of the report.',
+              'type' => 'array',
+            ),
+          ),
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
+        ),
+      ),
+
       'actions' => array(
 
         // Getting general statistics (number of votes and
         // translations) for the last week, month and year.
         'statistics' => array(
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
           'file' => array('type' => 'inc', 'module' => 'btr_services'),
           'callback' => '_btr_report_statistics',
           'args' => array(
@@ -28,12 +54,12 @@ function btr_services_services_resources() {
               'type' => 'array',
             ),
           ),
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
         ),
 
         // Getting statistics about top contributors.
         'topcontrib' => array(
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
           'file' => array('type' => 'inc', 'module' => 'btr_services'),
           'callback' => '_btr_report_topcontrib',
           'args' => array(
@@ -45,6 +71,8 @@ function btr_services_services_resources() {
               'type' => 'array',
             ),
           ),
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
         ),
 
       ),

@@ -1,0 +1,32 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+       $.ajax({
+         url: 'https://dev.l10n.org.xx/btr/report/statistics',
+         data: "lng=sq",
+         dataType: 'json',
+         success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                  }
+       });
+
+       $.ajax({
+         url: 'https://dev.l10n.org.xx/btr/report/topcontrib',
+         data: "lng=sq&period=week&size=5",
+         dataType: 'json',
+         success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                  }
+       });
+    });
+  </script>
+
+</head>
+<body>
+
+</body>
+</html>

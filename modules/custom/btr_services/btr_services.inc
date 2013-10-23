@@ -5,6 +5,30 @@
  */
 
 /**
+ * Getting reports of different kinds. Anybody can
+ * retrieve them, there are no access restrictions.
+ *
+ * @param $report
+ *     The name/id of the report.
+ *
+ * @param $params
+ *     Parameters of the report, comming from the
+ *     GET request. They depend on the kind of report.
+ *
+ * @example
+ *     Open in browser:
+ *        https://dev.l10n.org.xx/btr/report/statistics?lng=sq
+ *        https://dev.l10n.org.xx/btr/report/topcontrib?lng=sq&period=week
+ */
+function _btr_report_retrieve($report, $params) {
+  $report_function = '_btr_report_' . $report;
+  if (! function_exists($report_function) ) {
+    return services_error("Unknown report: $report", 406);
+  }
+  return $report_function($params);
+}
+
+/**
  * Getting general statistics (number of votes and
  * translations) for the last week, month and year.
  *

@@ -16,7 +16,7 @@ $mysql -e "
 "
 
 ### copy the tables of btr_data to the new database
-tables=$($mysql -D btr -e "SHOW TABLES" | grep 'btr_' )
+tables=$($mysql -D btr -e "SHOW TABLES" | grep '^btr_' )
 for table in $tables
 do
     echo "Copy: $table"
