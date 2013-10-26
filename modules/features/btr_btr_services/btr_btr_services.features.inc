@@ -38,7 +38,7 @@ function btr_btr_services_default_oauth2_server() {
       "require_exact_redirect_uri" : 1
     },
     "rdf_mapping" : [],
-    "scopes" : []
+    "scopes" : [ { "name" : "basic", "description" : "Basic", "rdf_mapping" : [] } ]
   }');
   return $items;
 }

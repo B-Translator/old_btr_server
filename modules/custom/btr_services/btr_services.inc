@@ -15,6 +15,9 @@
  *     Parameters of the report, comming from the
  *     GET request. They depend on the kind of report.
  *
+ * @return
+ *     The data of the requested report.
+ *
  * @example
  *     Open in browser:
  *        https://dev.l10n.org.xx/btr/report/statistics?lng=sq
@@ -91,4 +94,51 @@ function _btr_report_topcontrib($params) {
   if ($size > 20) $size = 20;
 
   return btr_stat_topcontrib($lng, $period, $size);
+}
+
+/**
+ * Return a string, along with its translations,
+ * votes and other details.
+ *
+ * @param $sguid
+ *     The string (globally unique) id, calculated
+ *     as: $sguid = sha1($string . $context)
+ *     It can also be: next|translated|untranslated
+ *
+ * @param $lng
+ *     The language of translations, like: 'fr', 'sq', etc.
+ *
+ * @return
+ *     A nested structure containing the string, its
+ *     translations, votes, etc.
+ *
+ * @example
+ *     Open in browser:
+ *       https://dev.l10n.org.xx/public/btr/translations/next?lng=sq
+ */
+function _btr_translations_retrieve($sguid, $lng) {
+  $arr_langs = array_keys(btr_get_languages());
+  if (!in_array($lng, $arr_langs)) {
+    return services_error('Language missing or not supported.', 406);
+  }
+
+  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
+    $func_get_sguid = 'btr_sguid_get_' . $sguid;
+    $sguid = $func_get_sguid();
+  }
+
+  $strings = btr_get_strings(array($sguid), $lng, $other_langs);
+  return $strings;
+}
+
+/**
+ * Filter strings and translations according to the given parameters.
+ *
+ * @param $params
+ *     Parameters for filtering the strings etc.
+ *
+ * @example
+ */
+function _btr_translations_index($params) {
+  return $params;
 }

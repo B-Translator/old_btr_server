@@ -1,7 +1,7 @@
 
-* Reports
+* report
 
-** General Statistics (statistics)
+** statistics
 
    General statistics (number of votes and translations) for the last
    week, month and year.
@@ -12,7 +12,13 @@
 
    + return :: Array of general stats for week, month and year.
 
-*** Examples
+   This report can be retrieved either as a GET or a POST request.
+
+*** GET Example
+    Open in browser:
+      https://dev.l10n.org.xx/btr/report/statistics?lng=sq
+
+*** POST Examples
 
     + bash:
       #+BEGIN_EXAMPLE
@@ -55,7 +61,7 @@
       #+END_EXAMPLE
 
 
-** Top Contributers (topcontrib)
+** topcontrib
 
    Statistics about top contributors.
 
@@ -65,11 +71,16 @@
         - period :: period of report (last day|week|month|year)
         - size :: number of results (top contributers), between 5 and 20
 
-   + return :: Array of users, where each user is an object with
-     these attributes: { uid, name, umail, score, translations, votes
-     }
+   + return :: Array of users, where each user is an object with these
+     attributes: {uid, name, umail, score, translations, votes}
 
-*** Examples
+   This report can be retrieved either as a GET or a POST request.
+
+*** GET Example
+    Open in browser:
+      https://dev.l10n.org.xx/btr/report/topcontrib?lng=sq&period=week
+
+*** POST Examples
 
     + bash:
       #+BEGIN_EXAMPLE
@@ -116,3 +127,22 @@
 	});
       </script>
       #+END_EXAMPLE
+
+* translations
+
+** retrieve
+
+   Return a string, along with its translations, votes and other
+   details.
+
+
+   + $sguid :: The string (globally unique) id, calculated as:
+               $sguid = sha1($string . $context)
+               It can also be: next|translated|untranslated
+
+   + $lng :: The language of translations, like fr, en, etc.
+
+  @example
+      Open in browser:
+        https://dev.l10n.org.xx/btr/translations/random?lng=sq
+

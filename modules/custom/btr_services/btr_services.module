@@ -77,5 +77,54 @@ function btr_services_services_resources() {
 
       ),
     ),
+
+    'translations' => array(
+
+      'operations' => array(
+
+        // return a string, along with its translations,
+        // votes and other details
+        'retrieve' => array(
+          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'callback' => '_btr_translations_retrieve',
+          'args' => array(
+            array(
+              'name' => 'sguid',
+              'optional' => FALSE,
+              'source' => array('path' => 0),
+              'description' => 'The string (globally unique) id.',
+              'type' => 'string',
+            ),
+            array(
+              'name' => 'lng',
+              'optional' => FALSE,
+              'source' => array('param' => 'lng'),
+              'description' => 'The language of translations.',
+              'type' => 'string',
+            ),
+          ),
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
+        ),
+
+        // filter strings and translations
+        // according to the given parameters
+        'index' => array(
+          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'callback' => '_btr_translations_index',
+          'args' => array(
+            array(
+              'name' => 'params',
+              'optional' => FALSE,
+              'source' => 'param',
+              'description' => 'Parameters for filtering the strings etc.',
+              'type' => 'array',
+            ),
+          ),
+          'access callback' => 'user_access',
+          'access arguments' => array('btranslator-stats'),
+        ),
+      ),
+    ),
   );
 }
