@@ -26,17 +26,11 @@ function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     $lng = variable_get('btr_translation_lng', 'fr');
   }
 
-  if ($sguid == NULL or $sguid == 'untranslated' or $sguid == 'translated') {
-    if ($sguid == 'untranslated') {
-      $sguid = btr_ui_get_untranslated_sguid();
-    }
-    elseif ($sguid == 'translated') {
-      $sguid = btr_ui_get_translated_sguid();
-    }
-    else {
-      $sguid = btr_ui_get_sguid();
-    }
-    if ($sguid=='') {
+  if ($sguid==NULL)  { $sguid = 'next'; }
+  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
+    $func_get_sguid = 'btr_sguid_get_' . $sguid;
+    $sguid = $func_get_sguid();
+    if (empty($sguid)) {
       drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
       drupal_goto("/");
       return;
@@ -122,117 +116,4 @@ function btr_ui_login_one_time($one_time_login =NULL) {
   $user = $account;
   user_login_finalize();
   return TRUE;
-}
-
-
-/**
- * Return a sguid from the strings that should be voted.
- * This string is selected according to the preferencies
- * of the given user. If no uid is given as parameter,
- * then the current user is assumed.
- */
-function btr_ui_get_sguid($uid =NULL) {
-
-  // if no parameter is given, get the uid of the current user
-  if ($uid == NULL) {
-    global $user;
-    $uid = $user->uid;
-  }
-
-  // get the string-order preference for the user
-  $string_order = btr_ui_get_string_order(user_load($uid));
-
-  // select the string according to the string-order preference
-  switch ($string_order) {
-    default:
-    case 'random':
-      $sguid = btr_ui_get_random_sguid($uid);
-      break;
-
-    case 'sequential':
-      $sguid = btr_ui_get_sequential_sguid($uid);
-      break;
-  }
-
-  return $sguid;
-}
-
-
-/**
- * Return a random sguid from the preferred projects of the user.
- */
-function btr_ui_get_random_sguid($uid) {
-  // get the preferred projects (as an array)
-  $preferred_projects = btr_ui_get_preferred_projects(user_load($uid));
-  return btr_get_random_sguid($preferred_projects);
-}
-
-/**
- * Return a random untranslated sguid from the preferred projects of the user.
- */
-function btr_ui_get_untranslated_sguid() {
-  $account = user_load($GLOBALS['user']->uid);
-  $preferred_projects = btr_ui_get_preferred_projects($account);
-  $lng = variable_get('btr_translation_lng', 'fr');
-  return btr_get_untranslated_sguid($preferred_projects, $lng);
-}
-
-/**
- * Return a random translated sguid from the preferred projects of the user.
- */
-function btr_ui_get_translated_sguid() {
-  $account = user_load($GLOBALS['user']->uid);
-  $preferred_projects = btr_ui_get_preferred_projects($account);
-  $lng = variable_get('btr_translation_lng', 'fr');
-  return btr_get_translated_sguid($preferred_projects, $lng);
-}
-
-
-/**
- * Return a sequential sguid from the preferred projects of the user.
- */
-function btr_ui_get_sequential_sguid($uid) {
-
-  // get the sequential data
-  $account = user_load($uid);
-  $sequential = btr_ui_get_data_sequential($account);
-
-  // if sequential data are not set, then just return a random sguid
-  if ($sequential == NULL) {
-    drupal_set_message(t(
-        "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
-        array('@edit-profile' => "/user/$uid/edit-profile")),
-      'warning');
-    return btr_ui_get_random_sguid($uid);
-  }
-
-  $lid = $sequential->lid;
-  $idx = $sequential->idx;
-  $proj = $sequential->projects[$idx];
-
-  // get the id of the next string location
-  $lid++;
-  if ($lid > $proj->lmax) {
-    $idx++;
-    if ($idx >= sizeof($sequential->projects)) {
-      drupal_set_message(t(
-          "You have reached the end of the preferred project. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
-        array('@edit-profile' => '/user/$uid/edit-profile')),
-      'status');
-      return btr_ui_get_random_sguid($uid);
-    }
-    $proj = $sequential->projects[$idx];
-    $lid = $proj->lmin;
-  }
-
-  // save the new index of the object $sequential
-  $sequential->lid = $lid;
-  $sequential->idx = $idx;
-  //dpm($sequential);  //debug
-  $edit['field_data_sequential']['und'][0]['value'] = serialize($sequential);
-  $edit['skip_presave'] = TRUE;
-  user_save($account, $edit);
-
-  // get and return the sguid
-  return btr_get_sguid_from_lid($lid);
 }

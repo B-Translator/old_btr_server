@@ -1,10 +1,96 @@
 <?php
 
 /**
- * Return a random sguid from the given list of projects.
+ * Return a sguid from the strings that should be voted.
+ * This string is selected according to the preferencies
+ * of the given user. If no uid is given as parameter,
+ * then the current user is assumed.
  */
-function btr_get_random_sguid($projects) {
+function btr_sguid_get_next($uid =NULL) {
+
+  // get the string-order preference for the user
+  if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
+  $string_order = btr_ui_get_string_order(user_load($uid));
+
+  // select the string according to the string-order preference
+  switch ($string_order) {
+    default:
+    case 'random':
+      $sguid = btr_sguid_get_random($uid);
+      break;
+
+    case 'sequential':
+      $sguid = btr_sguid_get_sequential($uid);
+      break;
+  }
+
+  return $sguid;
+}
+
+/**
+ * Return a sequential sguid from the preferred projects of the user.
+ */
+function btr_sguid_get_sequential($uid =NULL) {
+
+  // get the sequential data
+  if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
+  $account = user_load($uid);
+  $sequential = btr_ui_get_data_sequential($account);
+
+  // if sequential data are not set, then just return a random sguid
+  if ($sequential == NULL) {
+    drupal_set_message(t(
+        "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
+        array('@edit-profile' => "/user/$uid/edit-profile")),
+      'warning');
+    return btr_sguid_get_random($uid);
+  }
+
+  $lid = $sequential->lid;
+  $idx = $sequential->idx;
+  $proj = $sequential->projects[$idx];
+
+  // get the id of the next string location
+  $lid++;
+  if ($lid > $proj->lmax) {
+    $idx++;
+    if ($idx >= sizeof($sequential->projects)) {
+      drupal_set_message(t(
+          "You have reached the end of the preferred project. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
+        array('@edit-profile' => '/user/$uid/edit-profile')),
+      'status');
+      return btr_sguid_get_random($uid);
+    }
+    $proj = $sequential->projects[$idx];
+    $lid = $proj->lmin;
+  }
+
+  // save the new index of the object $sequential
+  $sequential->lid = $lid;
+  $sequential->idx = $idx;
+  //dpm($sequential);  //debug
+  $edit['field_data_sequential']['und'][0]['value'] = serialize($sequential);
+  $edit['skip_presave'] = TRUE;
+  user_save($account, $edit);
+
+  // get and return the sguid
+  $query = 'SELECT sguid FROM {btr_locations} WHERE lid=:lid';
+  $args = array(':lid' => $lid);
+  $sguid = $GLOBALS['btr_db']->query($query, $args)->fetchField();
+  return $sguid;
+}
+
+/**
+ * Return a random sguid from the given user.
+ * This random string is selected from the list
+ * of the preferred projects of the user.
+ */
+function btr_sguid_get_random($uid =NULL) {
   $db = $GLOBALS['btr_db'];
+
+  // get the list of preferred projects of the user
+  if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
+  $projects = btr_ui_get_preferred_projects(user_load($uid));
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
@@ -39,10 +125,18 @@ function btr_get_random_sguid($projects) {
 }
 
 /**
- * Return a random untranslated sguid from the given list of projects.
+ * Return a random untranslated sguid from the preferred projects
+ * of the given user.
  */
-function btr_get_untranslated_sguid($projects, $lng) {
+function btr_sguid_get_untranslated($uid =NULL) {
   $db = $GLOBALS['btr_db'];
+
+  // get the preferred projects and the translation language of the user
+  if ($uid == NULL) {
+    $uid = $GLOBALS['user']->uid;
+  }
+  $projects = btr_ui_get_preferred_projects(user_load($uid));
+  $lng = variable_get('btr_translation_lng', 'fr');
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
@@ -85,10 +179,18 @@ function btr_get_untranslated_sguid($projects, $lng) {
 
 
 /**
- * Return a random translated sguid from the given list of projects.
+ * Return a random translated sguid from the preferred projects
+ * of the given user.
  */
-function btr_get_translated_sguid($projects, $lng) {
+function btr_sguid_get_translated($uid =NULL) {
   $db = $GLOBALS['btr_db'];
+
+  // get the preferred projects and the translation language of the user
+  if ($uid == NULL) {
+    $uid = $GLOBALS['user']->uid;
+  }
+  $projects = btr_ui_get_preferred_projects(user_load($uid));
+  $lng = variable_get('btr_translation_lng', 'fr');
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
@@ -132,14 +234,3 @@ function btr_get_translated_sguid($projects, $lng) {
 
   return $sguid;
 }
-
-/**
- * Get the sguid corresponding to the given location id (lid).
- */
-function btr_get_sguid_from_lid($lid) {
-  $query = 'SELECT sguid FROM {btr_locations} WHERE lid=:lid';
-  $args = array(':lid' => $lid);
-  $sguid = $GLOBALS['btr_db']->query($query, $args)->fetchField();
-  return $sguid;
-}
-
