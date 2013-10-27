@@ -45,14 +45,6 @@ function _btr_layout_add_login_link() {
 }
 
 function  _btr_layout_block_settings() {
-  // set the title of the menu block as Navigation
-  db_query("UPDATE {block} SET title='Navigation'
-            WHERE theme='bootstrap1' AND delta='navig-menu'");
-
-  // remove the title of the block user-menu
-  db_query("UPDATE {block} SET title='<none>'
-            WHERE theme='bootstrap1' AND delta='user-menu'");
-
   // disable all the blocks for theme bootstrap1
   // their place is managed by module context
   db_query("UPDATE {block} SET status = '0' WHERE theme = 'bootstrap1'");

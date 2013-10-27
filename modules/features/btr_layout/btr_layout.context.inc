@@ -139,18 +139,6 @@ function btr_layout_context_default_contexts() {
           'region' => 'content',
           'weight' => '-10',
         ),
-        'menu-navig-menu' => array(
-          'module' => 'menu',
-          'delta' => 'navig-menu',
-          'region' => 'sidebar_first',
-          'weight' => '-10',
-        ),
-        'system-user-menu' => array(
-          'module' => 'system',
-          'delta' => 'user-menu',
-          'region' => 'sidebar_first',
-          'weight' => '-9',
-        ),
         'invite-invite' => array(
           'module' => 'invite',
           'delta' => 'invite',
