@@ -7,9 +7,9 @@
 
 /**
  * This function is called by hook_uninstall(), in order
- * to delete the custom fields created by btr_ui.
+ * to delete the custom fields created by btr_data.
  */
-function btr_ui_delete_userprofile_fields() {
+function btr_data_delete_userprofile_fields() {
 
   $field_names = array(
     'field_preferred_projects',
@@ -33,7 +33,7 @@ function btr_ui_delete_userprofile_fields() {
  * to create custom fields about user preferencies for
  * B-Translator.
  */
-function btr_ui_create_userprofile_fields() {
+function btr_data_create_userprofile_fields() {
 
   // create a field and instance for 'field_preferred_projects'
   field_create_field(

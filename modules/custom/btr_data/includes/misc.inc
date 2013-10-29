@@ -90,37 +90,6 @@ function btr_data_shorten($string, $length) {
 
 
 /**
- * For each project on the list, get the min and max location ids
- * and return them in the object $sequential.
- *
- * The data in this object makes it possible for a user to visit
- * the strings of his preferred projects sequentially (in the same
- * order that they appear on the PO file), rather than randomly.
- */
-function btr_get_sequential_data($arr_projects) {
-  list($where_condition, $args) = _btr_projects_to_where_condition($arr_projects);
-  if ($where_condition == '') {
-    $sequential = NULL;
-  }
-  else {
-    $get_all_min_and_max_locations = "
-      SELECT min(l.lid) AS lmin, max(l.lid) AS lmax
-      FROM {btr_locations} l
-      RIGHT JOIN {btr_templates} t ON (l.potid = t.potid)
-      RIGHT JOIN {btr_projects} p ON (t.pguid = p.pguid)
-      WHERE $where_condition
-      GROUP BY p.project
-    ";
-    $result = $GLOBALS['btr_db']->query($get_all_min_and_max_locations, $args);
-    $sequential->projects = $result->fetchAll();
-    $sequential->idx = 0;
-    $sequential->lid = $sequential->projects[0]->lmin;
-  }
-  return $sequential;
-}
-
-
-/**
  * Return an array of a WHERE condition for SQL queries, and arguments
  * that are used in it. These can be used in a db_query() for selecting
  * all the projects specified in the given parameter.
@@ -155,30 +124,4 @@ function _btr_projects_to_where_condition($arr_projects) {
   $where_condition = implode(' OR ', $arr_conditions);
 
   return array($where_condition, $arguments);
-}
-
-
-/**
- * Return an array of the projects that contain the given string.
- * Each item of the array is of the form 'origin/project'.
- */
-function btr_get_projects($sguid) {
-  if (empty($sguid))  return array();
-
-  $args = array(':sguid' => $sguid);
-  $get_projects = "
-      SELECT p.origin, p.project
-      FROM {btr_locations} l
-      LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
-      LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
-      WHERE l.sguid = :sguid
-  ";
-  $db = $GLOBALS['btr_db'];
-  $result = $db->query($get_projects, $args)->fetchAll();
-  $projects = array();
-  foreach ($result as $proj) {
-    $projects[] = $proj->origin . '/' . $proj->project;
-  }
-
-  return $projects;
 }

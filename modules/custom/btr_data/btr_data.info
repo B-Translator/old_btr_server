@@ -9,4 +9,14 @@ dependencies[] = phpmailer
 dependencies[] = entity
 dependencies[] = rules
 
+dependencies[] = edit_profile
+dependencies[] = field_sql_storage
+dependencies[] = list
+dependencies[] = options
+dependencies[] = text
+dependencies[] = image
+dependencies[] = number
+dependencies[] = options
+
+;files[] = btr_data.test
 configure = admin/config/btr

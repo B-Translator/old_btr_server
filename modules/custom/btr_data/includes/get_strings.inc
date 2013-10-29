@@ -28,10 +28,17 @@ function btr_get_search_results($filter, $lng) {
   return $strings;
 }
 
-function btr_get_strings($arr_sguid, $lng, $alternative_langs = array()) {
+function btr_get_strings($arr_sguid, $lng) {
   $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->condition('s.sguid', $arr_sguid, 'IN');
+
+  $alternative_langs = array();
+  global $user;
+  if (isset($user->auxiliary_languages) and is_array($user->auxiliary_languages)) {
+    $alternative_langs = $user->auxiliary_languages;
+  }
+
   return btr_get_query_strings($query, $lng, $alternative_langs);
 }
 

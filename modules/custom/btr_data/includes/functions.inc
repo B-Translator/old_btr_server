@@ -5,7 +5,7 @@
  */
 
 include_once dirname(__FILE__) . '/get_strings.inc';
-include_once dirname(__FILE__) . '/user.inc';
+include_once dirname(__FILE__) . '/hook_user.inc';
 include_once dirname(__FILE__) . '/get_sguid.inc';
 include_once dirname(__FILE__) . '/vocabulary_term.inc';
 include_once dirname(__FILE__) . '/statistics.inc';

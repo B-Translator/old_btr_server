@@ -127,7 +127,7 @@ function _btr_translations_retrieve($sguid, $lng) {
     $sguid = $func_get_sguid();
   }
 
-  $strings = btr_get_strings(array($sguid), $lng, $other_langs);
+  $strings = btr_get_strings(array($sguid), $lng);
   return $strings;
 }
 

@@ -72,14 +72,5 @@ function btr_ui_menu() {
     'weight'          => 5,
   );
 
-  $items['translations/get'] = array(
-    'type'            => MENU_CALLBACK,
-    'title'           => 'Get l10n Translation',
-    'description'     => 'Get translation suggestions for a given string.',
-    'page callback'   => 'btr_ui_get',
-    'file'            => 'includes/translations/get.inc',
-    'access callback' => TRUE,
-  );
-
   return $items;
 }

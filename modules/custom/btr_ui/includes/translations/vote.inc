@@ -68,9 +68,7 @@ function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   drupal_set_title(t('Vote Translations'));
 
   // Get the string and its translations.
-  global $user;
-  $other_langs = btr_ui_get_auxiliary_languages(user_load($user->uid));
-  $strings = btr_get_strings(array($sguid), $lng, $other_langs);
+  $strings = btr_get_strings(array($sguid), $lng);
   //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.
