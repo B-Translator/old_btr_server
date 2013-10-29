@@ -210,6 +210,7 @@ function _btr_data_user_set_fields(&$edit, $account) {
   if (isset($edit['preferred_projects']) && is_array($edit['preferred_projects'])) {
     foreach ($edit['preferred_projects'] as $project) {
       $edit['field_preferred_projects'][$lang][]['value'] = $project;
+    }
   }
 
   if (isset($edit['auxiliary_languages']) && is_array($edit['auxiliary_languages'])) {
