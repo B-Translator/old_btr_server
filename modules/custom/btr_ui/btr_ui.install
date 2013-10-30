@@ -38,10 +38,6 @@ function btr_ui_uninstall() {
 
   // delete variables that were used for this module
   $variables = array(
-    'btr_translation_lng',
-    'btr_preferred_projects',
-    'btr_export_notify_admin',
-
     'btr_topcontrib_size',
     'btr_topcontrib_period',
 
