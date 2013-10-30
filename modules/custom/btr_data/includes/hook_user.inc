@@ -85,7 +85,7 @@ function _btr_data_user_set_data_sequential(&$edit, $account) {
     return;
   }
 
-  $lang = $account->language;
+  $lang = LANGUAGE_NONE;
   $obj_edit = (object)$edit;
   _btr_data_user_get_fields($obj_edit);
 
@@ -142,7 +142,7 @@ function _btr_data_user_set_data_sequential(&$edit, $account) {
  * in hook_user_load().
  */
 function _btr_data_user_get_fields(&$user) {
-  $lang = $user->language;
+  $lang = LANGUAGE_NONE;
 
   // field_order_of_strings
   $user->string_order = 'random';
@@ -169,9 +169,9 @@ function _btr_data_user_get_fields(&$user) {
   }
 
   // field_data_sequential
-  $user->sequential = NULL;
+  $user->data_sequential = NULL;
   if (isset($user->field_data_sequential[$lang][0]['value'])) {
-    $user->sequential = unserialize($user->field_data_sequential[$lang][0]['value']);
+    $user->data_sequential = unserialize($user->field_data_sequential[$lang][0]['value']);
   }
 
   // field_translations_per_day
@@ -201,7 +201,7 @@ function _btr_data_user_get_fields(&$user) {
  */
 function _btr_data_user_set_fields(&$edit, $account) {
 
-  $lang = $account->language;
+  $lang = LANGUAGE_NONE;
 
   if (isset($edit['string_order'])) {
     $edit['field_order_of_strings'][$lang][0]['value'] = $edit['string_order'];

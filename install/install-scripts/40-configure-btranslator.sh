@@ -97,6 +97,7 @@ $drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
 
 $drush --yes pm-enable btr_invite
 $drush --yes pm-enable btr_permissions
+$drush --yes pm-enable btr_btr_services
 
 #$drush --yes pm-enable btr_simplenews
 #$drush --yes pm-enable btr_mass_contact
