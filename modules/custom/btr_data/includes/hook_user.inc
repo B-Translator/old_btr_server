@@ -316,15 +316,3 @@ function _btr_user_disable($ulng, $uid) {
   ";
   $GLOBALS['btr_db']->query($update_user, $args);
 }
-
-
-/**
- * It is used while cleaning fake (spam) users.
- */
-function _btr_user_delete($ulng, $uid) {
-  $db = $GLOBALS['btr_db'];
-  $db->delete('btr_users')
-    ->condition('ulng', $ulng)
-    ->condition('uid', $uid)
-    ->execute();
-}

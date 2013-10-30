@@ -19,6 +19,10 @@ function btr_data_cron_queue_info() {
     'worker callback' => 'btr_data_export_project',
     'time' => 2000,
   );
+  $queues['delete_fake_users'] = array(
+    'worker callback' => 'btr_data_delete_fake_user',
+    'time' => 30,
+  );
   return $queues;
 }
 
@@ -44,6 +48,7 @@ function btr_data_cron_nightly() {
 
   // Call cron functions.
   btr_data_delete_old_export_files();
+  btr_data_cleanup_fake_users();
   btr_data_send_strings_for_review();
 }
 
@@ -54,6 +59,46 @@ function btr_data_delete_old_export_files() {
   $export_path = variable_get('btr_export_path', '/var/www/exports');
   exec("find $export_path/* -mtime +2 -delete");
 }
+
+/**
+ * Cleanup the users that were registered a week ago,
+ * but have never accessed the site since then
+ * (most probably they are created by spamming robots).
+ * Reference:
+ * http://drupal.stackexchange.com/questions/54006/how-can-i-prevent-users-from-entering-invalid-e-mail-addresses-at-registration?newsletter=1&nlcode=43535%7c8b76
+ */
+function btr_data_cleanup_fake_users() {
+  $query = new EntityFieldQuery();
+
+  $query->entityCondition('entity_type', 'user')
+    ->entityCondition('entity_id', 1, '>')
+    ->propertyCondition('access', 0)
+    ->propertyCondition('created', REQUEST_TIME - 7*24*60*60, '<')
+    ->addTag('DANGEROUS_ACCESS_CHECK_OPT_OUT');
+
+  $result = $query->execute();
+
+  if (isset($result['user'])) {
+    $queue = DrupalQueue::get('delete_fake_users');
+    foreach (array_keys($result['user']) as $uid) {
+      $queue->createItem($uid);
+    }
+  }
+}
+
+/**
+ * This function is a callback from the cron-queue,
+ * which is used to delete the user with the given $uid.
+ */
+function btr_data_delete_fake_user($uid) {
+  // Delete from the drupal table 'users'
+  user_delete($uid);
+
+  // Delete from the table 'btr_users'
+  $db = $GLOBALS['btr_db'];
+  $db->delete('btr_users')->condition('uid', $uid)->execute();
+}
+
 
 /**
  * Send by email a string for review to all the active users.

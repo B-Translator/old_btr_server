@@ -5,8 +5,8 @@
  */
 
 require_once(dirname(__FILE__) . '/btr_data.menu.inc');
+require_once(dirname(__FILE__) . '/btr_data.cron.inc');
 require_once(dirname(__FILE__) . '/includes/functions.inc');
-require_once(dirname(__FILE__) . '/includes/cron.inc');
 
 /**
  * Implements hook_help().
