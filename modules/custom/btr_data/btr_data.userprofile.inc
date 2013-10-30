@@ -12,6 +12,7 @@
 function btr_data_delete_userprofile_fields() {
 
   $field_names = array(
+    'field_translation_lng',
     'field_preferred_projects',
     'field_order_of_strings',
     'field_auxiliary_languages',
@@ -34,6 +35,40 @@ function btr_data_delete_userprofile_fields() {
  * B-Translator.
  */
 function btr_data_create_userprofile_fields() {
+
+  // get a list of languages to be used in selection options
+  $languages = array();
+  $arr_langs = btr_get_languages();
+  foreach ($arr_langs as $lng => $language) {
+    $languages[$lng] = $language['name'];
+  }
+  unset($languages['en']);
+  $default_lng = variable_get('btr_translation_lng', 'fr');
+
+  // create a field and instance for 'field_translation_lng'
+  field_create_field(
+    array(
+      'field_name' => 'field_translation_lng',
+      'type' => 'list_text',
+      'cardinality' => 1,
+      'settings' => array('allowed_values' => $languages),
+      'entity_types' => array('user'),
+    ));
+  field_create_instance(
+    array(
+      'field_name' => 'field_translation_lng',
+      'entity_type' => 'user',
+      'bundle' => 'user',
+      'label' => 'Translation Language',
+      'description' => 'The language of translations. You will help with the translations of this language (review existing translations or submit new ones).',
+      'default_value' => array(array('value' => $default_lng)),
+      'settings' => array('user_register_form' => 1),
+      'widget' => array(
+        'weight' => '1',
+        'type' => 'options_select',
+        'module' => 'options',
+      ),
+    ));
 
   // create a field and instance for 'field_preferred_projects'
   field_create_field(
@@ -61,7 +96,7 @@ function btr_data_create_userprofile_fields() {
       ),
     ));
 
-  // create a field and instance for 'field_preferred_projects'
+  // create a field and instance for 'field_order_of_strings'
   field_create_field(
     array(
       'field_name' => 'field_order_of_strings',
@@ -89,13 +124,6 @@ function btr_data_create_userprofile_fields() {
     ));
 
   // create a field and instance for 'field_auxiliary_languages'
-  $languages = array();
-  $arr_langs = btr_get_languages();
-  foreach ($arr_langs as $lng => $language) {
-    $languages[$lng] = $language['name'];
-  }
-  unset($languages['en']);
-
   field_create_field(
     array(
       'field_name' => 'field_auxiliary_languages',
@@ -151,12 +179,12 @@ function btr_data_create_userprofile_fields() {
         'allowed_values' => array(
           'website' => 'Website',
           'email' => 'Email',
-          'desktop' => 'Desktop App',
-          'facebook' => 'Facebook App',
-          'google+' => 'Google+ App',
-          'twitter' => 'Twitter App',
-          'android' => 'Android App',
-          'iphone' => 'iPhone App',
+          //'desktop' => 'Desktop App',
+          //'facebook' => 'Facebook App',
+          //'google+' => 'Google+ App',
+          //'twitter' => 'Twitter App',
+          //'android' => 'Android App',
+          //'iphone' => 'iPhone App',
         ),
       ),
       'entity_types' => array('user'),
@@ -167,8 +195,8 @@ function btr_data_create_userprofile_fields() {
       'entity_type' => 'user',
       'bundle' => 'user',
       'label' => 'Feedback Channels',
-      'description' => "The ways that you would prefer to provide the feedback. <br/>\r\n<strong>Note</strong>: Currently only <em>Website</em> and <em>Email</em> are implemented. You will be sent an email each day with the strings to be reviewed, and you can also provide feedback through the website",
-      //'settings' => array('user_register_form' => 1),
+      //'description' => "The ways that you would prefer to provide the feedback. <br/>\r\n<strong>Note</strong>: Currently only <em>Website</em> and <em>Email</em> are implemented. You will be sent an email each day with the strings to be reviewed, and you can also provide feedback through the website",
+      'settings' => array('user_register_form' => 1),
       'widget' => array(
         'weight' => '6',
         'type' => 'options_buttons',

@@ -88,6 +88,7 @@ function _btr_data_user_set_data_sequential(&$edit, $account) {
   $lang = LANGUAGE_NONE;
   $obj_edit = (object)$edit;
   _btr_data_user_get_fields($obj_edit);
+  $account = user_load($account->uid);
 
   // if string-order is random, no need for 'field_data_sequential'
   if ($obj_edit->string_order == 'random') {
@@ -143,6 +144,12 @@ function _btr_data_user_set_data_sequential(&$edit, $account) {
  */
 function _btr_data_user_get_fields(&$user) {
   $lang = LANGUAGE_NONE;
+
+  // field_translation_lng
+  $user->translation_lng = variable_get('btr_translation_lng', 'fr');
+  if (isset($user->field_translation_lng[$lang][0]['value'])) {
+    $user->translation_lng = $user->field_translation_lng[$lang][0]['value'];
+  }
 
   // field_order_of_strings
   $user->string_order = 'random';
@@ -203,6 +210,10 @@ function _btr_data_user_set_fields(&$edit, $account) {
 
   $lang = LANGUAGE_NONE;
 
+  if (isset($edit['translation_lng'])) {
+    $edit['field_translation_lng'][$lang][0]['value'] = $edit['translation_lng'];
+  }
+
   if (isset($edit['string_order'])) {
     $edit['field_order_of_strings'][$lang][0]['value'] = $edit['string_order'];
   }
@@ -223,8 +234,8 @@ function _btr_data_user_set_fields(&$edit, $account) {
     $edit['field_data_sequential'][$lang][0]['value'] = serialize($edit['data_sequential']);
   }
 
-  if (isset($edit['translation_per_day'])) {
-    $edit['field_translations_per_day'][$lang][0]['value'] = $edit['translation_per_day'];
+  if (isset($edit['translations_per_day'])) {
+    $edit['field_translations_per_day'][$lang][0]['value'] = $edit['translations_per_day'];
   }
 
   if (isset($edit['feedback_channels']) && is_array($edit['feedback_channels'])) {
