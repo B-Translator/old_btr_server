@@ -35,6 +35,7 @@ function btr_get_strings($arr_sguid, $lng) {
 
   $alternative_langs = array();
   global $user;
+  $user = user_load($user->uid);
   if (isset($user->auxiliary_languages) and is_array($user->auxiliary_languages)) {
     $alternative_langs = $user->auxiliary_languages;
   }

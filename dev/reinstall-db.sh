@@ -22,6 +22,7 @@ drupal_dir=$(drush drupal-directory)
 db_name=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
 db_user=$(drush sql-connect | tr ' ' "\n" | grep -e '--user=' | cut -d= -f2)
 db_pass=$(drush sql-connect | tr ' ' "\n" | grep -e '--password=' | cut -d= -f2)
+lng=$(drush vget btr_translation_lng --format=string)
 site_name="B-Translator"
 site_mail="admin@example.com"
 account_name=admin
@@ -74,3 +75,7 @@ drush --yes pm-enable btr_permissions
 #drush --yes pm-enable btr_googleanalytics
 #drush --yes pm-enable btr_drupalchat
 #drush --yes pm-enable btr_janrain
+
+drush --yes pm-enable l10n_client l10n_update
+drush language-add $lng
+drush --yes l10n-update
