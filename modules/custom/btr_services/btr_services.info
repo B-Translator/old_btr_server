@@ -8,5 +8,5 @@ dependencies[] = services
 dependencies[] = rest_server
 dependencies[] = oauth2_server
 
-;files[] = btr_services.test
+;files[] = btrServices.test
 ;configure = admin/config/btr

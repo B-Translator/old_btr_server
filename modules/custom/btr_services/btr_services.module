@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Module file for btr_services.
+ * Module file for btrServices.
  */
 
 /**
  * Implements hook_services_resources().
  */
-function btr_services_services_resources() {
+function btrServices_services_resources() {
   return array(
     'report' => array(
 
@@ -15,7 +15,7 @@ function btr_services_services_resources() {
 
         // Getting reports of different kinds,
         'retrieve' => array(
-          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'file' => array('type' => 'inc', 'module' => 'btrServices'),
           'callback' => '_btr_report_retrieve',
           'args' => array(
             array(
@@ -43,7 +43,7 @@ function btr_services_services_resources() {
         // Getting general statistics (number of votes and
         // translations) for the last week, month and year.
         'statistics' => array(
-          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'file' => array('type' => 'inc', 'module' => 'btrServices'),
           'callback' => '_btr_report_statistics',
           'args' => array(
             array(
@@ -60,7 +60,7 @@ function btr_services_services_resources() {
 
         // Getting statistics about top contributors.
         'topcontrib' => array(
-          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'file' => array('type' => 'inc', 'module' => 'btrServices'),
           'callback' => '_btr_report_topcontrib',
           'args' => array(
             array(
@@ -85,7 +85,7 @@ function btr_services_services_resources() {
         // return a string, along with its translations,
         // votes and other details
         'retrieve' => array(
-          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'file' => array('type' => 'inc', 'module' => 'btrServices'),
           'callback' => '_btr_translations_retrieve',
           'args' => array(
             array(
@@ -110,7 +110,7 @@ function btr_services_services_resources() {
         // filter strings and translations
         // according to the given parameters
         'index' => array(
-          'file' => array('type' => 'inc', 'module' => 'btr_services'),
+          'file' => array('type' => 'inc', 'module' => 'btrServices'),
           'callback' => '_btr_translations_index',
           'args' => array(
             array(

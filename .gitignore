@@ -2,7 +2,7 @@
 .emacs*
 TAGS
 *.sql.gz
-modules/custom/btr_data/data/db/settings.php
+settings.php
 libraries/
 modules/contrib/
 modules/libraries/

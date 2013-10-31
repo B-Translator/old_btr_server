@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Callback functions for btr_services.
+ * Callback functions for btrServices.
  */
 
 /**
