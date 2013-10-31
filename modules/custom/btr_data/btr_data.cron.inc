@@ -9,18 +9,18 @@ include_once dirname(__FILE__) . '/includes/mail_notifications.inc';
 /*
  * Implements hook_cron_queue_info().
  */
-function btr_data_cron_queue_info() {
+function btrCore_cron_queue_info() {
 
   $queues['notifications'] = array(
-    'worker callback' => 'btr_data_send_notification_by_email',
+    'worker callback' => 'btrCore_send_notification_by_email',
     'time' => 240,
   );
   $queues['export_project'] = array(
-    'worker callback' => 'btr_data_export_project',
+    'worker callback' => 'btrCore_export_project',
     'time' => 2000,
   );
   $queues['delete_fake_users'] = array(
-    'worker callback' => 'btr_data_delete_fake_user',
+    'worker callback' => 'btrCore_delete_fake_user',
     'time' => 30,
   );
   return $queues;
@@ -29,33 +29,33 @@ function btr_data_cron_queue_info() {
 /*
  * Implements hook_cron().
  */
-function btr_data_cron() {
-  btr_data_cron_nightly();
+function btrCore_cron() {
+  btrCore_cron_nightly();
 }
 
 /**
  * Make sure that cron functions runs only once per night,
  * no matter how often cron is called.
  */
-function btr_data_cron_nightly() {
+function btrCore_cron_nightly() {
   // check whether the crontime has been reached yet
-  $crontime = variable_get('btr_data_crontime', '0');
+  $crontime = variable_get('btrCore_crontime', '0');
   if (time() < $crontime)  return;
 
   // set the crontime after the next midnight (after 03:00 AM)
   $crontime = strtotime(date('Y-m-d 02:55')) + 24*60*60;
-  variable_set('btr_data_crontime', $crontime);
+  variable_set('btrCore_crontime', $crontime);
 
   // Call cron functions.
-  btr_data_delete_old_export_files();
-  btr_data_cleanup_fake_users();
-  btr_data_send_strings_for_review();
+  btrCore_delete_old_export_files();
+  btrCore_cleanup_fake_users();
+  btrCore_send_strings_for_review();
 }
 
 /**
  * Delete export files that are older than 2 days
  */
-function btr_data_delete_old_export_files() {
+function btrCore_delete_old_export_files() {
   $export_path = variable_get('btr_export_path', '/var/www/exports');
   exec("find $export_path/* -mtime +2 -delete");
 }
@@ -67,7 +67,7 @@ function btr_data_delete_old_export_files() {
  * Reference:
  * http://drupal.stackexchange.com/questions/54006/how-can-i-prevent-users-from-entering-invalid-e-mail-addresses-at-registration?newsletter=1&nlcode=43535%7c8b76
  */
-function btr_data_cleanup_fake_users() {
+function btrCore_cleanup_fake_users() {
   $query = new EntityFieldQuery();
 
   $query->entityCondition('entity_type', 'user')
@@ -90,7 +90,7 @@ function btr_data_cleanup_fake_users() {
  * This function is a callback from the cron-queue,
  * which is used to delete the user with the given $uid.
  */
-function btr_data_delete_fake_user($uid) {
+function btrCore_delete_fake_user($uid) {
   // Delete from the drupal table 'users'
   user_delete($uid);
 
@@ -103,10 +103,10 @@ function btr_data_delete_fake_user($uid) {
 /**
  * Send by email a string for review to all the active users.
  */
-function btr_data_send_strings_for_review() {
+function btrCore_send_strings_for_review() {
 
   // return true if we should NOT send a string by email to the given account
-  function _btr_data_dont_send_email($account) {
+  function _btrCore_dont_send_email($account) {
     // skip admin, disabled accounts, and users that have never logged in
     if ($account->uid < 2 or $account->status != 1 or $account->login == 0) {
       return TRUE;
@@ -133,11 +133,11 @@ function btr_data_send_strings_for_review() {
 
   $accounts = entity_load('user');
   foreach ($accounts as $account) {
-    if (_btr_data_dont_send_email($account))  continue;
+    if (_btrCore_dont_send_email($account))  continue;
 
     // get a sguid according to the user preferencies
     require_once(dirname(__FILE__) . '/translations/vote.inc');
-    $sguid = btr_data_get_sguid($account->uid);
+    $sguid = btrCore_get_sguid($account->uid);
 
     $message_params = array(
       'type' => 'string-to-be-reviewed',
@@ -153,7 +153,7 @@ function btr_data_send_strings_for_review() {
 /**
  * The callback function called from cron_queue export_project.
  */
-function btr_data_export_project($export_params) {
+function btrCore_export_project($export_params) {
 
   // Make sure that exports do not run in parallel,
   // so that the server is not loaded.
@@ -185,7 +185,7 @@ function btr_data_export_project($export_params) {
   exec("rm -f $export_dir/$filename.tgz $export_dir/$filename.diff $export_dir/$filename.ediff");
 
   // Run the export script (with lowered priority).
-  $make_diff_sh = drupal_get_path('module', 'btr_data') . '/data/export/make_diff.sh';
+  $make_diff_sh = drupal_get_path('module', 'btrCore') . '/data/export/make_diff.sh';
   $export_cmd = "nice $make_diff_sh $origin $project $lng $export_dir $filename";
   $export_cmd = "export QUIET=true; $export_cmd";
   if ($export_mode == 'preferred_by_me' or $export_mode == 'preferred_by_my_friends') {

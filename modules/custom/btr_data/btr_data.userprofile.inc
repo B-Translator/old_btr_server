@@ -7,9 +7,9 @@
 
 /**
  * This function is called by hook_uninstall(), in order
- * to delete the custom fields created by btr_data.
+ * to delete the custom fields created by btrCore.
  */
-function btr_data_delete_userprofile_fields() {
+function btrCore_delete_userprofile_fields() {
 
   $field_names = array(
     'field_translation_lng',
@@ -34,7 +34,7 @@ function btr_data_delete_userprofile_fields() {
  * to create custom fields about user preferencies for
  * B-Translator.
  */
-function btr_data_create_userprofile_fields() {
+function btrCore_create_userprofile_fields() {
 
   // get a list of languages to be used in selection options
   $languages = array();

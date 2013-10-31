@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * RSS feed from btr_data.
+ * RSS feed from btrCore.
  */
 
-function btr_data_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
+function btrCore_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
 
   if (empty($lng)) {
     $lng = variable_get('btr_translation_lng', 'fr');
@@ -20,8 +20,8 @@ function btr_data_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
   }
 
   // Get the feed data from cache, if possible.
-  $cid = "btr_data_rss_feed:$lng:$domain";
-  $cache = cache_get($cid, 'cache_btr_data');
+  $cid = "btrCore_rss_feed:$lng:$domain";
+  $cache = cache_get($cid, 'cache_btrCore');
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
     print $cache->data;
@@ -61,9 +61,9 @@ function btr_data_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
     ";
 
   $base_url = url('translations', array('absolute' => TRUE));
-  $translations = _btr_data_get_latest_translations($lng, $origin, $project);
+  $translations = _btrCore_get_latest_translations($lng, $origin, $project);
   foreach ($translations as $tran) {
-    $title = btr_data_shorten($tran->string, 60);
+    $title = btrCore_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
     $str_original_string = t("Original string:");
     $str_suggested_translation = t("Suggested translation:");
@@ -93,7 +93,7 @@ function btr_data_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
   $rss_feed .= "</rss>\n";
 
   // Cache for 2 hours.
-  cache_set($cid, $rss_feed, 'cache_btr_data', strtotime('+2 hours'));
+  cache_set($cid, $rss_feed, 'cache_btrCore', strtotime('+2 hours'));
 
   drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');
   print $rss_feed;
@@ -108,7 +108,7 @@ function btr_data_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
  * The fields that are returned are:
  *   origin, project, sguid, string, lng, translation, tguid, time, name, umail
  */
-function _btr_data_get_latest_translations($lng, $origin =NULL, $project =NULL) {
+function _btrCore_get_latest_translations($lng, $origin =NULL, $project =NULL) {
 
   $get_latest_translations = "
     SELECT p.origin, p.project,

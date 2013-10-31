@@ -18,5 +18,5 @@ dependencies[] = image
 dependencies[] = number
 dependencies[] = options
 
-;files[] = btr_data.test
+;files[] = btrCore.test
 configure = admin/config/btr

@@ -2,7 +2,7 @@
 /**
  * Implements hook_menu().
  */
-function btr_data_menu() {
+function btrCore_menu() {
 
   $items = array();
 
@@ -11,7 +11,7 @@ function btr_data_menu() {
     'description' => 'B-Translator Configuration',
     'weight' => -100,
     'page callback' => 'system_admin_menu_block_page',
-    'access arguments' => array('btr_data_config'),
+    'access arguments' => array('btrCore_config'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
     //'position' => 'right',
@@ -21,9 +21,9 @@ function btr_data_menu() {
     'title'            => 'B-Translator Data',
     'description'      => 'B-Translator Back-End configuration settings.',
     'page callback'    => 'drupal_get_form',
-    'page arguments'   => array('btr_data_config'),
+    'page arguments'   => array('btrCore_config'),
     'access arguments' => array('btranslator-admin'),
-    'file'             => 'btr_data.admin.inc',
+    'file'             => 'btrCore.admin.inc',
   );
 
   // Return a plain-text list of all the imported projects,
@@ -31,7 +31,7 @@ function btr_data_menu() {
   $items['translations/project/list'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project List',
-    'page callback'   => 'btr_data_project_list',
+    'page callback'   => 'btrCore_project_list',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -40,7 +40,7 @@ function btr_data_menu() {
   $items['translations/project/export'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'btr_data_project_export',
+    'page callback'   => 'btrCore_project_export',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -50,7 +50,7 @@ function btr_data_menu() {
   $items['translations/project/export_tgz'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'btr_data_project_export_tgz',
+    'page callback'   => 'btrCore_project_export_tgz',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -61,7 +61,7 @@ function btr_data_menu() {
   $items['translations/project/diff'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'btr_data_project_diff',
+    'page callback'   => 'btrCore_project_diff',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -72,7 +72,7 @@ function btr_data_menu() {
   $items['translations/exports'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Download Exported File',
-    'page callback'   => 'btr_data_get_exported_file',
+    'page callback'   => 'btrCore_get_exported_file',
     'file'            => 'includes/projects.inc',
     'access callback' => TRUE,
   );
@@ -82,7 +82,7 @@ function btr_data_menu() {
   $items['translations/string_details'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'String details',
-    'page callback'   => 'btr_data_string_details',
+    'page callback'   => 'btrCore_string_details',
     'file'            => 'includes/ajax_callbacks.inc',
     'access callback' => TRUE,
   );
@@ -91,7 +91,7 @@ function btr_data_menu() {
   $items['translations/autocomplete/project'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project autocomplete',
-    'page callback'   => 'btr_data_project_autocomplete',
+    'page callback'   => 'btrCore_project_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
@@ -101,7 +101,7 @@ function btr_data_menu() {
   $items['translations/autocomplete/origin'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Origin autocomplete',
-    'page callback'   => 'btr_data_origin_autocomplete',
+    'page callback'   => 'btrCore_origin_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
@@ -111,7 +111,7 @@ function btr_data_menu() {
   $items['translations/autocomplete/user'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'User autocomplete',
-    'page callback'   => 'btr_data_user_autocomplete',
+    'page callback'   => 'btrCore_user_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
     //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
@@ -121,7 +121,7 @@ function btr_data_menu() {
   $items['translations/rss-feed'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Latest Translation Feedback',
-    'page callback'   => 'btr_data_rss_feed',
+    'page callback'   => 'btrCore_rss_feed',
     'file'            => 'includes/rss_feed.inc',
     //'access arguments' => array('access content'),
     'access callback' => TRUE,

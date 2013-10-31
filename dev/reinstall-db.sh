@@ -18,7 +18,7 @@ fi
 test $1 && cd $1
 
 ### settings for the database and the drupal site
-drupal_dir=$(drush drupal-directory)
+drupal_dir=$(drush @dev drupal-directory)
 db_name=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
 db_user=$(drush sql-connect | tr ' ' "\n" | grep -e '--user=' | cut -d= -f2)
 db_pass=$(drush sql-connect | tr ' ' "\n" | grep -e '--password=' | cut -d= -f2)
@@ -68,6 +68,7 @@ drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
 drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
 
 drush --yes pm-enable btr_invite
+drush --yes pm-enable btr_btr_services
 drush --yes pm-enable btr_permissions
 
 #drush --yes pm-enable btr_simplenews

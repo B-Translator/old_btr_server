@@ -1,35 +1,35 @@
 <?php
 /**
- * @file btr_data.install
- * Install and update functions for the module btr_data.
+ * @file btrCore.install
+ * Install and update functions for the module btrCore.
  */
 
 // get the functions for creating/deleting user preference fields and instancies
-include drupal_get_path('module', 'btr_data') . '/btr_data.userprofile.inc';
+include drupal_get_path('module', 'btrCore') . '/btrCore.userprofile.inc';
 
 /**
  * Implements hook_enable().
  */
-function btr_data_enable() {
-  mailsystem_set(array('btr_data' => 'MimeMailSystem'));
+function btrCore_enable() {
+  mailsystem_set(array('btrCore' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_disable().
  */
-function btr_data_disable() {
-  mailsystem_clear(array('btr_data' => 'MimeMailSystem'));
+function btrCore_disable() {
+  mailsystem_clear(array('btrCore' => 'MimeMailSystem'));
 }
 
 /**
  * Implements hook_install().
  */
-function btr_data_install() {
+function btrCore_install() {
   // create custom fields for user preferencies
-  btr_data_create_userprofile_fields();
+  btrCore_create_userprofile_fields();
 
   // import some test PO files
-  $path = drupal_get_path('module', 'btr_data');
+  $path = drupal_get_path('module', 'btrCore');
   $output = shell_exec($path . '/data/install.sh');
   drupal_set_message("<xmp>$output</xmp>");
 }
@@ -37,9 +37,9 @@ function btr_data_install() {
 /**
  * Implements hook_uninstall().
  */
-function btr_data_uninstall() {
+function btrCore_uninstall() {
   // delete the custom fields of user preferencies
-  btr_data_delete_userprofile_fields();
+  btrCore_delete_userprofile_fields();
 
   // delete variables that were used for this module
   $variables = array(
@@ -49,7 +49,7 @@ function btr_data_uninstall() {
     'btr_export_path',
     'btr_export_notify_admin',
 
-    'btr_data_crontime',
+    'btrCore_crontime',
   );
   foreach ($variables as $var) {
     variable_del($var);
@@ -59,10 +59,10 @@ function btr_data_uninstall() {
 /**
  * Implements hook_schema().
  */
-function btr_data_schema() {
+function btrCore_schema() {
 
   // create a cache table for this module
-  $schema['cache_btr_data'] = drupal_get_schema_unprocessed('system', 'cache');
+  $schema['cache_btrCore'] = drupal_get_schema_unprocessed('system', 'cache');
 
   // PO files that are imported and can be exported from the DB.
   $schema['btr_files'] = array(

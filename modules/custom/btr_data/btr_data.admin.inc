@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Administrative pages for the btr_data module.
+ * Administrative pages for the btrCore module.
  */
 
 /**
- * General configuration settings for the module btr_data.
+ * General configuration settings for the module btrCore.
  *
  * @return
  *   An array containing form items to place on the module settings page.
  */
-function btr_data_config() {
+function btrCore_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',
@@ -80,4 +80,4 @@ function btr_data_config() {
   );
 
   return system_settings_form($form);
-}  //  End of btr_data_config().
+}  //  End of btrCore_config().

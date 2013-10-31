@@ -7,7 +7,7 @@
 /**
  * Retrieve a JSON list of autocomplete suggestions for projects.
  */
-function btr_data_project_autocomplete($string = '') {
+function btrCore_project_autocomplete($string = '') {
   $matches = array();
   if ($string) {
     $db = $GLOBALS['btr_db'];
@@ -27,7 +27,7 @@ function btr_data_project_autocomplete($string = '') {
 /**
  * Retrieve a JSON list of autocomplete suggestions for origins of projects.
  */
-function btr_data_origin_autocomplete($string = '') {
+function btrCore_origin_autocomplete($string = '') {
   $matches = array();
   if ($string) {
     $db = $GLOBALS['btr_db'];
@@ -47,7 +47,7 @@ function btr_data_origin_autocomplete($string = '') {
 /**
  * Retrieve a JSON list of autocomplete suggestions for users.
  */
-function btr_data_user_autocomplete($lng, $string = '') {
+function btrCore_user_autocomplete($lng, $string = '') {
   $matches = array();
   if ($string) {
     $db = $GLOBALS['btr_db'];
@@ -75,7 +75,7 @@ function btr_data_user_autocomplete($lng, $string = '') {
  * @param $sguid
  *   Id of the string.
  */
-function btr_data_string_details($sguid) {
+function btrCore_string_details($sguid) {
 
   $output = '';
 

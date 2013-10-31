@@ -3,7 +3,7 @@ description = Web Services (API-s) that are offered by B-Translator.
 package = B-Translator
 core = 7.x
 
-dependencies[] = btr_data
+dependencies[] = btrCore
 dependencies[] = services
 dependencies[] = rest_server
 dependencies[] = oauth2_server

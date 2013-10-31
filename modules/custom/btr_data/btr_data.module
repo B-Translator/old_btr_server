@@ -1,18 +1,18 @@
 <?php
 /**
  * @file
- * Module file for btr_data.
+ * Module file for btrCore.
  */
 
-require_once(dirname(__FILE__) . '/btr_data.menu.inc');
-require_once(dirname(__FILE__) . '/btr_data.cron.inc');
+require_once(dirname(__FILE__) . '/btrCore.menu.inc');
+require_once(dirname(__FILE__) . '/btrCore.cron.inc');
 require_once(dirname(__FILE__) . '/includes/functions.inc');
 
 /**
  * Implements hook_help().
  */
                                /*
-function btr_data_help($path, $args) {
+function btrCore_help($path, $args) {
   switch($path)
     {
       case 'translations/get':
@@ -32,7 +32,7 @@ function btr_data_help($path, $args) {
 /**
  * Implementation of hook_permission().
  */
-function btr_data_permission() {
+function btrCore_permission() {
   return array(
     'btranslator-vote' => array(
       'title' => t('Vote translations.'),
@@ -67,7 +67,7 @@ function btr_data_permission() {
       'description' => t('Can perform administration tasks for B-Translator.'),
     ),
   );
-}  //  End of btr_data_permission().
+}  //  End of btrCore_permission().
 
 
 /**
@@ -89,7 +89,7 @@ function btr_data_permission() {
  * module, the module named in the first argument of drupal_mail(). So it's
  * a callback of a type, but not a hook.
  */
-function btr_data_mail($key, &$message, $params) {
+function btrCore_mail($key, &$message, $params) {
   switch ($key) {
     case 'notifications':
     default:
@@ -103,10 +103,10 @@ function btr_data_mail($key, &$message, $params) {
 /**
  * Implements hook_init().
  */
-function btr_data_init() {
+function btrCore_init() {
 
   /*
-  // Set the parameters of the btr_data database.
+  // Set the parameters of the btrCore database.
   global $databases;
   $databases['btr_db']['default'] = array (
       'database' => 'l10n_tst',
@@ -125,7 +125,7 @@ function btr_data_init() {
   */
 
   // Get a connection to the btr_db. All the queries
-  // of the btr_data module will use this connection.
+  // of the btrCore module will use this connection.
   if (isset($GLOBALS['databases']['btr_db']['default'])) {
     $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
   }
@@ -141,7 +141,7 @@ function btr_data_init() {
  * or whenever drupal_flush_all_caches is invoked.
  * Returns an array of cache table names.
  */
-function btr_data_flush_caches() {
-  return array('cache_btr_data');
+function btrCore_flush_caches() {
+  return array('cache_btrCore');
 }
 

@@ -3,7 +3,7 @@ description = B-Translator User Interface for Drupal.
 package = B-Translator
 core = 7.x
 
-dependencies[] = btr_data
+dependencies[] = btrCore
 dependencies[] = disqus
 dependencies[] = sharethis
 dependencies[] = entity

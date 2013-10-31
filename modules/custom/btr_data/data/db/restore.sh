@@ -1,5 +1,5 @@
 #!/bin/bash
-### restore the tables of the module btr_data
+### restore the tables of the module btrCore
 
 ### check the parameters
 if [ $# -ne 2 ]

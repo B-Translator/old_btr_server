@@ -4,9 +4,9 @@
  * Implements hook_user_load().
  * Act on user objects when loaded from the database.
  */
-function btr_data_user_load($users) {
+function btrCore_user_load($users) {
   foreach($users as $user) {
-    _btr_data_user_get_fields($user);
+    _btrCore_user_get_fields($user);
   }
 }
 
@@ -15,7 +15,7 @@ function btr_data_user_load($users) {
  * Implements hook_user_isert().
  * It is called when a new user account is created.
  */
-function btr_data_user_insert(&$edit, $account, $category) {
+function btrCore_user_insert(&$edit, $account, $category) {
   _btr_user_insert(
     $umail = $account->init,  // initial email that the user used for registration
     $ulng = $account->field_translation_lng['und'][0]['value'],
@@ -30,9 +30,13 @@ function btr_data_user_insert(&$edit, $account, $category) {
  * Implements hook_user_update().
  * It is called after a user account has been updated.
  */
-function btr_data_user_update(&$edit, $account, $category) {
+function btrCore_user_update(&$edit, $account, $category) {
+  $ulng = 'fr';
+  if (isset($account->field_translation_lng['und'][0]['value'])) {
+    $ulng = $account->field_translation_lng['und'][0]['value'];
+  }
   _btr_user_update(
-    $ulng = $account->field_translation_lng['und'][0]['value'],
+    $ulng,
     $uid = $account->uid,
     $name = $account->name,
     $status = $account->status
@@ -43,7 +47,7 @@ function btr_data_user_update(&$edit, $account, $category) {
 /**
  * Implements hook_user_cancel().
  */
-function btr_data_user_cancel(&$edit, $account, $category) {
+function btrCore_user_cancel(&$edit, $account, $category) {
   _btr_user_disable(
     $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid
@@ -54,7 +58,7 @@ function btr_data_user_cancel(&$edit, $account, $category) {
 /**
  * Implements hook_user_delete().
  */
-function btr_data_user_delete($account) {
+function btrCore_user_delete($account) {
   _btr_user_disable(
     $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid
@@ -66,9 +70,9 @@ function btr_data_user_delete($account) {
  * Implements hook_user_presave().
  * It is called before the user profile page is saved.
  */
-function btr_data_user_presave(&$edit, $account, $category) {
-  _btr_data_user_set_data_sequential($edit, $account);
-  _btr_data_user_set_fields($edit, $account);
+function btrCore_user_presave(&$edit, $account, $category) {
+  _btrCore_user_set_data_sequential($edit, $account);
+  _btrCore_user_set_fields($edit, $account);
 }
 
 
@@ -76,7 +80,7 @@ function btr_data_user_presave(&$edit, $account, $category) {
  * Build an index object that is needed for visiting strings
  * sequentially and set it to $edit['data_sequential'].
  */
-function _btr_data_user_set_data_sequential(&$edit, $account) {
+function _btrCore_user_set_data_sequential(&$edit, $account) {
 
   // if skip_presave is defined, then user data is being saved
   // from the code, not from the profile interface
@@ -87,7 +91,7 @@ function _btr_data_user_set_data_sequential(&$edit, $account) {
 
   $lang = LANGUAGE_NONE;
   $obj_edit = (object)$edit;
-  _btr_data_user_get_fields($obj_edit);
+  _btrCore_user_get_fields($obj_edit);
   $account = user_load($account->uid);
 
   // if string-order is random, no need for 'field_data_sequential'
@@ -142,7 +146,7 @@ function _btr_data_user_set_data_sequential(&$edit, $account) {
  * This is called after a user account is loaded,
  * in hook_user_load().
  */
-function _btr_data_user_get_fields(&$user) {
+function _btrCore_user_get_fields(&$user) {
   $lang = LANGUAGE_NONE;
 
   // field_translation_lng
@@ -206,7 +210,7 @@ function _btr_data_user_get_fields(&$user) {
  * This is called before a user account is saved,
  * in hook_user_presave().
  */
-function _btr_data_user_set_fields(&$edit, $account) {
+function _btrCore_user_set_fields(&$edit, $account) {
 
   $lang = LANGUAGE_NONE;
 
