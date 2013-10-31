@@ -4,7 +4,7 @@
  * Functions called by cron.
  */
 
-include_once dirname(__FILE__) . '/mail_notifications.inc';
+include_once dirname(__FILE__) . '/includes/mail_notifications.inc';
 
 /*
  * Implements hook_cron_queue_info().
@@ -167,6 +167,7 @@ function btr_data_export_project($export_params) {
   // Allow the export script to run until completion.
   set_time_limit(0);
 
+  $lng = $export_params->lng;
   $origin = $export_params->origin;
   $project = $export_params->project;
   $export_mode = $export_params->export_mode;
@@ -174,7 +175,6 @@ function btr_data_export_project($export_params) {
   $account = user_load($export_params->uid);
 
   // Get the full path of the export file.
-  $lng = variable_get('btr_translation_lng', 'fr');
   $export_dir = variable_get('btr_export_path', '/var/www/exports');
   $username = strtr(strtolower($account->name), ' ', '_');
   $filename = "$username.$origin-$project-$lng";

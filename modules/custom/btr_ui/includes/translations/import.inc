@@ -69,7 +69,7 @@ function btr_ui_addterm_form_submit($form, &$form_state) {
   btr_ui_new_term_notification($string, $sguid);
 
   // redirect to translating the term
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $lng = variable_get('btr_ui_translation_lng', 'fr');
   drupal_goto("translations/$lng/$sguid");
 }
 
@@ -148,7 +148,7 @@ function btr_ui_delterm_form_submit($form, &$form_state) {
   btr_del_term($sguid);
 
   // redirect to the list of terms
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $lng = variable_get('btr_ui_translation_lng', 'fr');
   drupal_goto("translations/search",
     array('query' => array(
         'lng' => $lng,

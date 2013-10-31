@@ -67,7 +67,7 @@ function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
 
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
-  $translation_lng = variable_get('btr_translation_lng', 'fr');
+  $translation_lng = variable_get('btr_ui_translation_lng', 'fr');
   $enable_submit = ($lng==$translation_lng) && (user_access('btranslator-vote') || user_access('btranslator-suggest'));
   $form['buttons']['submit'] = array(
     '#type' => 'submit',

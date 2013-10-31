@@ -119,6 +119,7 @@ function btr_ui_export_form_submit($form, &$form_state) {
 
   $params = array(
     'uid' => $GLOBALS['user']->uid,
+    'lng' => variable_get('btr_ui_translation_lng', 'fr');,
     'origin' => $origin,
     'project' => $project,
     'export_mode' => $export_mode,

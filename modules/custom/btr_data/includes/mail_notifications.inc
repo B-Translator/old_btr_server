@@ -56,7 +56,8 @@ function _btr_data_build_notification_email($params) {
   if (isset($params->sguid)) {
     $url = _btr_data_get_string_url($params->uid, $params->sguid);
   }
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $account = user_load($params->uid);
+  $lng = $account->translation_lng;
   $subject_prefix = "l10n-$lng";
 
   switch ($params->type) {
@@ -285,7 +286,7 @@ function _btr_data_build_notification_email($params) {
 
     // Send by email a string to be reviewed.
     case 'string-to-be-reviewed':
-      list($string, $translations) = _btr_data_get_string_and_translations($params->sguid);
+      list($string, $translations) = get_string_and_translations($params->sguid, $lng);
       $subject = "[$subject_prefix] " . btr_data_shorten($string, 60);
       $body = array(
         t("Greetings !username,
@@ -319,19 +320,6 @@ function _btr_data_build_notification_email($params) {
 
 
 /**
- * Return a string (and its translations) for the given user:
- * return array($string, $translations)
- */
-function _btr_data_get_string_and_translations($sguid) {
-  //include_once(drupal_get_path('module', 'btr_data') . '/functions.inc');
-  return btr_get_string_and_translations(
-    $sguid,
-    $lng = variable_get('btr_translation_lng', 'fr')
-  );
-}
-
-
-/**
  * Returns a one-time-login url for the given user,
  * which opens the string with the given id.
  * This url is used in mail notifications, so that
@@ -341,7 +329,7 @@ function _btr_data_get_string_and_translations($sguid) {
 function _btr_data_get_string_url($uid, $sguid) {
 
   $account = user_load($uid);
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $lng = $account->translation_lng;
   $timestamp = REQUEST_TIME;
 
   // get the url of the string

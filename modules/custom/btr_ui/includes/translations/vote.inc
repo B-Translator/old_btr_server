@@ -23,13 +23,13 @@ function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   if ($lng == NULL) {
-    $lng = variable_get('btr_translation_lng', 'fr');
+    $lng = variable_get('btr_ui_translation_lng', 'fr');
   }
 
   if ($sguid==NULL)  { $sguid = 'next'; }
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
     $func_get_sguid = 'btr_sguid_get_' . $sguid;
-    $sguid = $func_get_sguid();
+    $sguid = $func_get_sguid($lng);
     if (empty($sguid)) {
       drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
       drupal_goto("/");

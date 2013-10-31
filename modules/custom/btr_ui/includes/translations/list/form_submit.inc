@@ -78,7 +78,7 @@ function _btr_ui_translate_form_save($form_values) {
   $lng = $form_values['langcode'];
 
   // check whether the submitted lng is valid for providing feedback on this site
-  $translation_lng = variable_get('btr_translation_lng', 'fr');
+  $translation_lng = variable_get('btr_ui_translation_lng', 'fr');
   if ($lng != $translation_lng) {
     drupal_set_message(t("You cannot give feedback for the language '@lng' on this site!", array('@lng' => $lng)), 'error');
     return;
@@ -207,7 +207,7 @@ function btr_ui_add_vote($tguid, $umail) {
   }
 
   // Add a vote.
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $lng = variable_get('btr_ui_translation_lng', 'fr');
   $vid = btr_add_vote($tguid, $umail, $lng);
 
   // Increment the number of the saved votes.
@@ -293,7 +293,7 @@ function _btr_ui_delete_translation($translation) {
   btr_del_translation(
     $tguid = $trans->tguid,   // id of the translation to be deleted
     $umail = $account->init,  // email of the user that is deleting it
-    $ulng = variable_get('btr_translation_lng')
+    $ulng = variable_get('btr_ui_translation_lng')
   );
 
   global $_btr_ui_save_status;

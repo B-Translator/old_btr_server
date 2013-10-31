@@ -45,7 +45,7 @@ function btr_build_search_query($filter) {
 
   _btr_filter_by_content($query, $filter['mode'], $filter['words']);
   _btr_filter_by_project($query, $filter['project'], $filter['origin']);
-  _btr_filter_by_author($query, $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
+  _btr_filter_by_author($query, $filter['lng'], $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
   _btr_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
 
   //if nothing has been selected yet, then return FALSE
@@ -125,9 +125,8 @@ function _btr_filter_by_project($query, $project, $origin) {
  * The first parameter, $query, is an object, so it is passed
  * by reference.
  */
-function _btr_filter_by_author($query, $only_mine, $translated_by, $voted_by) {
+function _btr_filter_by_author($query, $lng, $only_mine, $translated_by, $voted_by) {
 
-  $lng = variable_get('btr_translation_lng', 'fr');
   if ($only_mine) {
     _btr_join_table($query, 'votes');
 

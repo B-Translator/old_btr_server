@@ -4,9 +4,11 @@
  * RSS feed from btr_data.
  */
 
-function btr_data_rss_feed($origin =NULL, $project =NULL) {
+function btr_data_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
 
-  $lng = variable_get('btr_translation_lng', 'fr');
+  if (empty($lng)) {
+    $lng = variable_get('btr_translation_lng', 'fr');
+  }
 
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
   $domain = '';
@@ -29,7 +31,7 @@ function btr_data_rss_feed($origin =NULL, $project =NULL) {
   $rss_feed = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
   $rss_feed .= '<rss version="2.0">';
 
-  $link = url('translations/rss-feed', array('absolute' => TRUE));
+  $link = url("translations/rss-feed/$lng", array('absolute' => TRUE));
   if (!empty($domain)) {
     $link .= '/' . $domain;
   }
@@ -59,7 +61,7 @@ function btr_data_rss_feed($origin =NULL, $project =NULL) {
     ";
 
   $base_url = url('translations', array('absolute' => TRUE));
-  $translations = _btr_data_get_latest_translations($origin, $project);
+  $translations = _btr_data_get_latest_translations($lng, $origin, $project);
   foreach ($translations as $tran) {
     $title = btr_data_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
@@ -106,7 +108,7 @@ function btr_data_rss_feed($origin =NULL, $project =NULL) {
  * The fields that are returned are:
  *   origin, project, sguid, string, lng, translation, tguid, time, name, umail
  */
-function _btr_data_get_latest_translations($origin =NULL, $project =NULL) {
+function _btr_data_get_latest_translations($lng, $origin =NULL, $project =NULL) {
 
   $get_latest_translations = "
     SELECT p.origin, p.project,
@@ -123,7 +125,7 @@ function _btr_data_get_latest_translations($origin =NULL, $project =NULL) {
     ";
 
   $args = array(
-    ':lng' => variable_get('btr_translation_lng', 'fr'),
+    ':lng' => $lng,
     ':from_date' => date('Y-m-d', strtotime("-1 day")),
   );
 

@@ -24,7 +24,7 @@ function btr_ui_build_filter() {
   if ($lng == '' && isset($_SESSION['sguid'])) {
     $string = btr_get_string($_SESSION['sguid']);
     if ($string) {
-      $lng = variable_get('btr_translation_lng', 'fr');
+      $lng = variable_get('btr_ui_translation_lng', 'fr');
       $request['words'] = $string;
     }
   }
@@ -347,12 +347,13 @@ function _btr_ui_filter_form_author(&$form, &$form_state) {
     '#default_value' => $form_state['values']['only_mine'],
   );
 
+  $lng = variable_get('btr_ui_translation_lng', 'fr');
   $form['advanced_search']['author']['translated_by'] = array(
     '#type' => 'textfield',
     '#title' => t('Translated By'),
     '#description' => t('Search only the strings with translations suggested by the selected user.'),
     '#default_value' => $form_state['values']['translated_by'],
-    '#autocomplete_path' => 'translations/autocomplete/user',
+    '#autocomplete_path' => "translations/autocomplete/user/$lng",
     '#states' => array(
       'visible' => array(
         ':input[name="only_mine"]' => array('checked' => FALSE),
@@ -365,7 +366,7 @@ function _btr_ui_filter_form_author(&$form, &$form_state) {
     '#title' => t('Voted By'),
     '#description' => t('Search only the strings with translations voted by the selected user.'),
     '#default_value' => $form_state['values']['voted_by'],
-    '#autocomplete_path' => 'translations/autocomplete/user',
+    '#autocomplete_path' => "translations/autocomplete/user/$lng",
     '#states' => array(
       'visible' => array(
         ':input[name="only_mine"]' => array('checked' => FALSE),

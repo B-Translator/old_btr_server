@@ -6,7 +6,7 @@
  * of the given user. If no uid is given as parameter,
  * then the current user is assumed.
  */
-function btr_sguid_get_next($uid =NULL) {
+function btr_sguid_get_next($lng, $uid =NULL) {
 
   // get the string-order preference for the user
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
@@ -17,11 +17,11 @@ function btr_sguid_get_next($uid =NULL) {
   switch ($string_order) {
     default:
     case 'random':
-      $sguid = btr_sguid_get_random($uid);
+      $sguid = btr_sguid_get_random($lng, $uid);
       break;
 
     case 'sequential':
-      $sguid = btr_sguid_get_sequential($uid);
+      $sguid = btr_sguid_get_sequential($lng, $uid);
       break;
   }
 
@@ -129,13 +129,12 @@ function btr_sguid_get_random($uid =NULL) {
  * Return a random untranslated sguid from the preferred projects
  * of the given user.
  */
-function btr_sguid_get_untranslated($uid =NULL) {
+function btr_sguid_get_untranslated($lng, $uid =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // get the list of projects that will be searched
   // and the translation language of the user
   $projects = _btr_get_pool_of_projects($uid);
-  $lng = variable_get('btr_translation_lng', 'fr');
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
@@ -181,13 +180,12 @@ function btr_sguid_get_untranslated($uid =NULL) {
  * Return a random translated sguid from the preferred projects
  * of the given user.
  */
-function btr_sguid_get_translated($uid =NULL) {
+function btr_sguid_get_translated($lng, $uid =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // get the list of projects that will be searched
   // and the translation language of the user
   $projects = _btr_get_pool_of_projects($uid);
-  $lng = variable_get('btr_translation_lng', 'fr');
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);

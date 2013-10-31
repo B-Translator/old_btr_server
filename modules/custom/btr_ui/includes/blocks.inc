@@ -150,7 +150,7 @@ function _btr_ui_block_topcontrib() {
     return $cache->data;
   }
 
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $lng = variable_get('btr_ui_translation_lng', 'fr');
   $period = variable_get('btr_topcontrib_period', 'week');
   $size = variable_get('btr_topcontrib_size', 5);
   $topusers = btr_stat_topcontrib($lng, $period, $size);
@@ -215,7 +215,7 @@ function _btr_ui_block_statistics() {
     return $cache->data;
   }
 
-  $lng = variable_get('btr_translation_lng', 'fr');
+  $lng = variable_get('btr_ui_translation_lng', 'fr');
   $stats = btr_statistics($lng);
 
   foreach ($stats as $period => $stat) {

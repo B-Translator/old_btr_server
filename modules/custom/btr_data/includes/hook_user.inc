@@ -18,7 +18,7 @@ function btr_data_user_load($users) {
 function btr_data_user_insert(&$edit, $account, $category) {
   _btr_user_insert(
     $umail = $account->init,  // initial email that the user used for registration
-    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid,
     $name = $account->name,
     $status = $account->status
@@ -32,7 +32,7 @@ function btr_data_user_insert(&$edit, $account, $category) {
  */
 function btr_data_user_update(&$edit, $account, $category) {
   _btr_user_update(
-    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid,
     $name = $account->name,
     $status = $account->status
@@ -45,7 +45,7 @@ function btr_data_user_update(&$edit, $account, $category) {
  */
 function btr_data_user_cancel(&$edit, $account, $category) {
   _btr_user_disable(
-    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid
   );
 }
@@ -56,7 +56,7 @@ function btr_data_user_cancel(&$edit, $account, $category) {
  */
 function btr_data_user_delete($account) {
   _btr_user_disable(
-    $ulng = variable_get('btr_translation_lng', 'fr'),
+    $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid
   );
 }

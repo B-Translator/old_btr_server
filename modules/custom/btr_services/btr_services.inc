@@ -124,7 +124,7 @@ function _btr_translations_retrieve($sguid, $lng) {
 
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
     $func_get_sguid = 'btr_sguid_get_' . $sguid;
-    $sguid = $func_get_sguid();
+    $sguid = $func_get_sguid($lng);
   }
 
   $strings = btr_get_strings(array($sguid), $lng);

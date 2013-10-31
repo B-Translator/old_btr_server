@@ -47,7 +47,7 @@ function btr_data_origin_autocomplete($string = '') {
 /**
  * Retrieve a JSON list of autocomplete suggestions for users.
  */
-function btr_data_user_autocomplete($string = '') {
+function btr_data_user_autocomplete($lng, $string = '') {
   $matches = array();
   if ($string) {
     $db = $GLOBALS['btr_db'];
@@ -56,7 +56,7 @@ function btr_data_user_autocomplete($string = '') {
               ORDER BY name";
     $args = array(
       ':str' => $string . '%',
-      ':ulng' => variable_get('btr_translation_lng', 'fr'),
+      ':ulng' => $lng,
     );
     $result = $db->queryRange($query, 0, 10, $args);
     foreach ($result as $user) {
