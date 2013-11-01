@@ -32,7 +32,7 @@ $(dirname $0)/mysqld.sh start
 drush @btr --yes --exact vset btr_translation_lng $main_lang
 
 ### modify the list of languages
-file_inc='/var/www/btr/profiles/btranslator/modules/custom/btr_data/includes/languages.inc'
+file_inc='/var/www/btr/profiles/btranslator/modules/custom/btrCore/includes/languages.inc'
 echo "
 ===> Edit the file '$file_inc' and modify the list of languages appropriately.
 "

@@ -16,7 +16,7 @@ cp -a btranslator-bak/modules/libraries/ btranslator/modules/
 cp -a btranslator-bak/themes/contrib/ btranslator/themes/
 
 ### copy db connection file
-cp {btranslator-bak,btranslator}/modules/custom/btr_data/data/db/settings.php
+cp {btranslator-bak,btranslator}/modules/custom/btrCore/data/db/settings.php
 
 ### cleanup
 rm -rf btranslator-bak/

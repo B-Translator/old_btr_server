@@ -142,9 +142,9 @@ This is a Drupal installation profile for B-Translator.
     + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/btranslator-project.org][docs/btranslator-project.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/btranslator-project.pdf][docs/btranslator-project.pdf]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/uml/db_schema.org][docs/uml/db_schema.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btr_data/data/db/docs/db_schema.org][modules/custom/btr_data/data/db/docs/db_schema.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btr_data/data/README.org][modules/custom/btr_data/data/README.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btr_ui/README.org][modules/custom/btr_ui/README.org]]
+    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrCore/data/db/docs/db_schema.org][modules/custom/btrCore/data/db/docs/db_schema.org]]
+    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrCore/data/README.org][modules/custom/btrCore/data/README.org]]
+    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrClient/README.org][modules/custom/btrClient/README.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/features/README.org][modules/features/README.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/TKL/patch-btranslator-precise/README.org][TKL/patch-btranslator-precise/README.org]] (deprecated)
 
