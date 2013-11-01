@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Administrative pages for the btr_ui module.
+ * Administrative pages for the btrClient module.
  */
 
 /**
- * General configuration settings for the module btr_ui.
+ * General configuration settings for the module btrClient.
  *
  * @return
  *   An array containing form items to place on the module settings page.
  */
-function btr_ui_config() {
+function btrClient_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',
@@ -22,13 +22,13 @@ function btr_ui_config() {
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   unset($lang_options['en']);
 
-  // btr_ui_translation_lng
-  $form['defaults']['btr_ui_translation_lng'] = array(
+  // btrClient_translation_lng
+  $form['defaults']['btrClient_translation_lng'] = array(
     '#type' => 'select',
     '#title' => t('Default Translation Language'),
     '#description' => t('The default language of translations (for anonymous users).'),
     '#options' => $lang_options,
-    '#default_value' => variable_get('btr_ui_translation_lng', 'fr'),
+    '#default_value' => variable_get('btrClient_translation_lng', 'fr'),
   );
 
   return system_settings_form($form);

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Test cases for the module btr_ui.
+ * Test cases for the module btrClient.
  *
  * They can be run from commad line by calling the script:
  *   profiles/btranslator/utils/run-tests.sh
@@ -40,7 +40,7 @@
 module_load_include('test', 'simpletest_clone');
 
 /**
- * btr_ui test cases
+ * btrClient test cases
  */
 //class BtrUiTestCase extends DrupalWebTestCase {
 class BtrUiTestCase extends SimpleTestCloneTestCase {
@@ -49,8 +49,8 @@ class BtrUiTestCase extends SimpleTestCloneTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => 'btr_ui',
-      'description' => 'Test the functionality of module btr_ui.',
+      'name' => 'btrClient',
+      'description' => 'Test the functionality of module btrClient.',
       'group' => 'B-Translator',
     );
   }
@@ -193,21 +193,21 @@ class BtrUiTestCase extends SimpleTestCloneTestCase {
 }
 
 /**
- * btr_ui unit testing
+ * btrClient unit testing
  */
 /*
 class BtrUiUnitTestCase extends DrupalUnitTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => 'btr_ui unit tests',
-      'description' => 'Unit testing for module btr_ui.',
+      'name' => 'btrClient unit tests',
+      'description' => 'Unit testing for module btrClient.',
       'group' => 'btr',
     );
   }
 
   function setUp() {
-    //drupal_load('module', 'btr_ui');
+    //drupal_load('module', 'btrClient');
     //parent::setUp();
   }
 

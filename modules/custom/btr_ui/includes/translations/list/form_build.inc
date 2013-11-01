@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * The function btr_ui_translate_form() builds a render array
+ * The function btrClient_translate_form() builds a render array
  * for the strings and their corresponding translations/suggestions.
  * The edit and submit functionality will be available only when suitable.
  */
@@ -19,7 +19,7 @@
  * @return
  *   A render array of the page.
  */
-function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
+function btrClient_translate_form($form, &$form_state, $strings, $lng) {
   $pager = theme('pager', array('tags' => NULL, 'element' => 0));
   $form = array(
     'target' => array(
@@ -36,7 +36,7 @@ function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
     ),
     'strings' => array(
       '#tree' => TRUE,
-      '#theme' => 'btr_ui_translate_table',
+      '#theme' => 'btrClient_translate_table',
       '#lng' => $lng,
     ),
 
@@ -67,7 +67,7 @@ function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
 
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
-  $translation_lng = variable_get('btr_ui_translation_lng', 'fr');
+  $translation_lng = variable_get('btrClient_translation_lng', 'fr');
   $enable_submit = ($lng==$translation_lng) && (user_access('btranslator-vote') || user_access('btranslator-suggest'));
   $form['buttons']['submit'] = array(
     '#type' => 'submit',
@@ -98,7 +98,7 @@ function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
 
   // Fill in string values for the editor.
   foreach ($strings as $sguid => $string) {
-    $form['strings'][$sguid] = _btr_ui_translate_form_item($form_state, $string, $lng);
+    $form['strings'][$sguid] = _btrClient_translate_form_item($form_state, $string, $lng);
     /*
     // TODO: Display the number of comments for each string.
     $form['strings'][$sguid]['disqus'] = array(
@@ -128,11 +128,11 @@ function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
   if (sizeof($strings)==1) {
 
     // set the page title (no longer than 20 chars)
-    $title = btr_ui_shorten($string->string[0], 20);
+    $title = btrClient_shorten($string->string[0], 20);
     drupal_set_title(t('String: !string', array('!string' => $title),
         array('context' => 'set the page title')));
 
-    $short_string = btr_ui_shorten($string->string[0], 50);
+    $short_string = btrClient_shorten($string->string[0], 50);
     $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
 
     // define the sharethis form element
@@ -167,16 +167,16 @@ function btr_ui_translate_form($form, &$form_state, $strings, $lng) {
 /**
  * Creates the form fragment for a source string and its translations.
  */
-function _btr_ui_translate_form_item(&$form_state, $string, $lng) {
+function _btrClient_translate_form_item(&$form_state, $string, $lng) {
 
   $string_unpacked = $string->string;
-  $string->string = btr_ui_unpack_string($string->string);
+  $string->string = btrClient_unpack_string($string->string);
 
   $form = array(
     '#string' => $string,
     '#langcode' => $lng,
     'source' => array(
-      'string' => array('#markup' => _btr_ui_translate_render_textarray($string->string)),
+      'string' => array('#markup' => _btrClient_translate_render_textarray($string->string)),
     ),
   );
 
@@ -193,8 +193,8 @@ function _btr_ui_translate_form_item(&$form_state, $string, $lng) {
    * TODO: Improve alternatives in other languages.
    $arr_items = array();
    foreach ($string->alternatives as $langcode => $string) {
-   $string = btr_ui_unpack_string($string);
-   $rendered_string = _btr_ui_translate_render_textarray($string);
+   $string = btrClient_unpack_string($string);
+   $rendered_string = _btrClient_translate_render_textarray($string);
    $arr_items = array(
    '#markup' => "<strong>$langcode:</strong><label class='l10n-string'>$rendered_string</label>",
    );
@@ -215,13 +215,13 @@ function _btr_ui_translate_form_item(&$form_state, $string, $lng) {
 
   foreach ($translations as $tguid => $translation) {
     // Add the translation to the list.
-    $form[$tguid] = _btr_ui_translate_translation($translation, $string->sguid, $lng);
+    $form[$tguid] = _btrClient_translate_translation($translation, $string->sguid, $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('btranslator-suggest')) {
-    $textarea = _btr_ui_translate_translation_textarea($string, $lng);
-    $form[$textarea->tguid] = _btr_ui_translate_translation($textarea, $string->sguid, $lng);
+    $textarea = _btrClient_translate_translation_textarea($string, $lng);
+    $form[$textarea->tguid] = _btrClient_translate_translation($textarea, $string->sguid, $lng);
   }
 
   return $form;
@@ -230,7 +230,7 @@ function _btr_ui_translate_form_item(&$form_state, $string, $lng) {
 /**
  * Build mock object for new textarea.
  */
-function _btr_ui_translate_translation_textarea($string, $lng) {
+function _btrClient_translate_translation_textarea($string, $lng) {
   global $user;
 
   // Fill in with as many items as required. If the source was plural, we
@@ -255,11 +255,11 @@ function _btr_ui_translate_translation_textarea($string, $lng) {
 /**
  * Creates the form fragment for a translated string.
  */
-function _btr_ui_translate_translation($translation, $string_sguid, $lng) {
+function _btrClient_translate_translation($translation, $string_sguid, $lng) {
 
   global $user;
 
-  $translation->translation = btr_ui_unpack_string($translation->translation);
+  $translation->translation = btrClient_unpack_string($translation->translation);
 
   $is_own = ($user->uid && ($user->name == $translation->author));
   $is_approved = ($user->uid && in_array($user->name, array_keys($translation->votes)));
@@ -267,7 +267,7 @@ function _btr_ui_translate_translation($translation, $string_sguid, $lng) {
   $may_moderate = ($is_own or user_access('btranslator-resolve'));
 
   $form = array(
-    '#theme' => 'btr_ui_translate_translation',
+    '#theme' => 'btrClient_translate_translation',
     'original' => array(
       '#type' => 'value',
       '#value' => $translation,
@@ -279,9 +279,9 @@ function _btr_ui_translate_translation($translation, $string_sguid, $lng) {
   $type = ($voting_mode == 'single') ? 'radio' : 'checkbox';
   $form['approved'] = array(
     '#type' => $type,
-    '#theme' => 'btr_ui_translate_radio',
+    '#theme' => 'btrClient_translate_radio',
     '#theme_wrappers' => array(),
-    '#title' => _btr_ui_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
+    '#title' => _btrClient_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation->tguid,
     '#default_value' => $is_approved ? $translation->tguid : '',
     '#disabled' => !user_access('btranslator-vote'),
@@ -320,7 +320,7 @@ function _btr_ui_translate_translation($translation, $string_sguid, $lng) {
       );
     }
     if ($translation->author != NULL) {
-      $title = btr_ui_translate_byline($translation->author, $translation->uid, $translation->time);
+      $title = btrClient_translate_byline($translation->author, $translation->uid, $translation->time);
 
       $form['author'] = array(
         '#markup' => $title,
@@ -356,11 +356,11 @@ function _btr_ui_translate_translation($translation, $string_sguid, $lng) {
  * Generate markup for an unpacked string.
  *
  * @param $textarray
- *   An array of strings as generated by btr_ui_unpack_string().
+ *   An array of strings as generated by btrClient_unpack_string().
  * @param $empty
  *   Specific data to include as the data to use when empty.
  */
-function _btr_ui_translate_render_textarray($textarray, $empty = '') {
+function _btrClient_translate_render_textarray($textarray, $empty = '') {
   // data-empty is a proprietary attribute used in editor.css to be displayed when
   // starting to submit a new suggestion.
   $empty = !empty($empty) ? ' data-empty="' . check_plain($empty) . '"' : '';
@@ -371,7 +371,7 @@ function _btr_ui_translate_render_textarray($textarray, $empty = '') {
 /**
  * Generates the byline containing meta information about a string.
  */
-function btr_ui_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =TRUE) {
+function btrClient_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $link_user =TRUE) {
   $account = (object) array('name' => $name, 'uid' => $uid);
   $username = ($link_user ? theme('username', array('account' => $account)) : check_plain($name));
   //dpm($username);  //debug
@@ -390,7 +390,7 @@ function btr_ui_translate_byline($name, $uid, $time, $medium =-1, $type =-1, $li
  * From the given (possibly long) string, returns a short string
  * of the given length (that can be suitable for title, subject, etc.)
  */
-function btr_ui_shorten($string, $length) {
+function btrClient_shorten($string, $length) {
   $str = strip_tags(str_replace("\n", ' ', $string));
   if (strlen($str) > $length) {
     $str = substr($str, 0, strrpos(substr($str, 0, $length - 3), ' '));

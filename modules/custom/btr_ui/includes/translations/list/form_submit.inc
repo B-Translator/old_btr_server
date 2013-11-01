@@ -6,11 +6,11 @@
  */
 
 /**
- * Form submit callback for btr_ui_translate_form().
+ * Form submit callback for btrClient_translate_form().
  *
- * @see btr_ui_translate_form().
+ * @see btrClient_translate_form().
  */
-function btr_ui_translate_form_submit($form, &$form_state) {
+function btrClient_translate_form_submit($form, &$form_state) {
 
   $form_values = $form_state['values'];
   //dpm($form_values);  //debug
@@ -28,7 +28,7 @@ function btr_ui_translate_form_submit($form, &$form_state) {
 
   // Save the values selected on the form (votes or new suggestions).
   if ( user_access('btranslator-vote') || user_access('btranslator-suggest') ) {
-    _btr_ui_translate_form_save($form_values);
+    _btrClient_translate_form_save($form_values);
   }
   elseif (!user_is_logged_in()) {
     drupal_set_message(t("You need to be logged in, in order to be able to submit votes and suggestions."));
@@ -66,7 +66,7 @@ function btr_ui_translate_form_submit($form, &$form_state) {
 /**
  * Save the values selected on the form (votes or new suggestions).
  */
-function _btr_ui_translate_form_save($form_values) {
+function _btrClient_translate_form_save($form_values) {
 
   $save_access = (user_access('btranslator-vote') || user_access('btranslator-suggest'));
   if (!$save_access) {
@@ -78,7 +78,7 @@ function _btr_ui_translate_form_save($form_values) {
   $lng = $form_values['langcode'];
 
   // check whether the submitted lng is valid for providing feedback on this site
-  $translation_lng = variable_get('btr_ui_translation_lng', 'fr');
+  $translation_lng = variable_get('btrClient_translation_lng', 'fr');
   if ($lng != $translation_lng) {
     drupal_set_message(t("You cannot give feedback for the language '@lng' on this site!", array('@lng' => $lng)), 'error');
     return;
@@ -86,8 +86,8 @@ function _btr_ui_translate_form_save($form_values) {
 
   // keep track of the status, so that propper notification
   // can be displayed to the user
-  global $_btr_ui_save_status;
-  $_btr_ui_save_status = array(
+  global $_btrClient_save_status;
+  $_btrClient_save_status = array(
     'cannot_vote' => 0,
     'cannot_suggest' => 0,
     'nr_votes' => 0,
@@ -98,45 +98,45 @@ function _btr_ui_translate_form_save($form_values) {
   // Get the voting mode.
   $voting_mode = variable_get('btr_voting_mode', 'single');
 
-  // Iterate outer structure built in btr_ui_translate_form().
+  // Iterate outer structure built in btrClient_translate_form().
   foreach ($form_values['strings'] as $sguid => $string) {
 
     if ($voting_mode == 'single') {
-      _btr_ui_translate_form_submit_single($sguid, $lng, $string);
+      _btrClient_translate_form_submit_single($sguid, $lng, $string);
     }
 
-    // Iterate inner structure built in _btr_ui_translate_form_item().
+    // Iterate inner structure built in _btrClient_translate_form_item().
     // Form items have numeric $tguid values and other keys here.
     foreach ($string as $tguid => $translation) {
       if ($voting_mode == 'multiple') {
-        _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
+        _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $translation);
       }
       if ((strlen($tguid) == 40) && !empty($translation['declined'])) {
 	// Delete translation.
-	_btr_ui_delete_translation($translation);
+	_btrClient_delete_translation($translation);
       }
     }
   }
 
   // Tell the user what happened.
-  btr_ui_display_notification_messages();
+  btrClient_display_notification_messages();
 }
 
 /**
  * Return true if a new translation has been submitted.
  */
 function is_not_empty_translation($translation) {
-  $translation = btr_ui_pack_string($translation);
+  $translation = btrClient_pack_string($translation);
   $translation = str_replace(t('<New translation>'), '', $translation);
   $translation = trim($translation);
   return !empty($translation);
 }
 
-function _btr_ui_translate_form_submit_single($sguid, $lng, $string) {
+function _btrClient_translate_form_submit_single($sguid, $lng, $string) {
 
   if ( is_not_empty_translation($string['new']['value']) ) {
     // Add a new suggestion.
-    btr_ui_add_suggestion($sguid, $lng, $string['new']['value']);
+    btrClient_add_suggestion($sguid, $lng, $string['new']['value']);
     return;
   }
 
@@ -148,18 +148,18 @@ function _btr_ui_translate_form_submit_single($sguid, $lng, $string) {
     global $user;
     if (!in_array($user->name, array_keys($previous_votes))) {
       $umail = $user->init;  // initial mail of the user
-      btr_ui_add_vote($tguid, $umail);
+      btrClient_add_vote($tguid, $umail);
     }
   }
 }
 
-function _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translation) {
+function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $translation) {
 
   global $user;
 
   $approved = $translation['approved'];
   if ($tguid == 'new' and is_not_empty_translation($translation['value'])) {
-    btr_ui_add_suggestion($sguid, $lng, $translation['value']);
+    btrClient_add_suggestion($sguid, $lng, $translation['value']);
   }
   elseif ($approved != '') {
     // Add a new vote for this translation
@@ -167,7 +167,7 @@ function _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translati
     $previous_votes = $translation['original']->votes;
     if (!in_array($user->name, array_keys($previous_votes))) {
       $umail = $user->init;  // initial mail of the user
-      btr_ui_add_vote($tguid, $umail);
+      btrClient_add_vote($tguid, $umail);
     }
   }
   elseif ($approved == '') {
@@ -176,11 +176,11 @@ function _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translati
     if (in_array($user->name, array_keys($previous_votes))) {
       if (user_access('btranslator-vote')) {
 	$umail = $user->init;  // initial mail of the user
-	_btr_ui_clean_previous_votes($tguid, $umail, $sguid, $lng);
+	_btrClient_clean_previous_votes($tguid, $umail, $sguid, $lng);
       }
       else {
-	global $_btr_ui_save_status;
-	$_btr_ui_save_status['cannot_vote']++;
+	global $_btrClient_save_status;
+	$_btrClient_save_status['cannot_vote']++;
       }
     }
   }
@@ -198,22 +198,22 @@ function _btr_ui_translate_form_submit_multiple($sguid, $tguid, $lng, $translati
  * @return
  *   The ID of the new vote, or NULL.
  */
-function btr_ui_add_vote($tguid, $umail) {
+function btrClient_add_vote($tguid, $umail) {
   // Check access permissions.
   if (!user_access('btranslator-vote')) {
-    global $_btr_ui_save_status;
-    $_btr_ui_save_status['cannot_vote']++;
+    global $_btrClient_save_status;
+    $_btrClient_save_status['cannot_vote']++;
     return NULL;
   }
 
   // Add a vote.
-  $lng = variable_get('btr_ui_translation_lng', 'fr');
+  $lng = variable_get('btrClient_translation_lng', 'fr');
   $vid = btr_add_vote($tguid, $umail, $lng);
 
   // Increment the number of the saved votes.
-  global $_btr_ui_save_status;
+  global $_btrClient_save_status;
   if ($vid) {
-    $_btr_ui_save_status['nr_votes']++;
+    $_btrClient_save_status['nr_votes']++;
   }
 
   return $vid;
@@ -237,20 +237,20 @@ function btr_ui_add_vote($tguid, $umail) {
  *   The ID of the new translation ($tguid),
  *   or FALSE if no translation was added.
  */
-function btr_ui_add_suggestion($sguid, $lng, $values, $umail =NULL) {
+function btrClient_add_suggestion($sguid, $lng, $values, $umail =NULL) {
 
   if ($umail == NULL) {
     global $user;
     $umail = $user->init;
   }
 
-  $translation = btr_ui_pack_string($values);
+  $translation = btrClient_pack_string($values);
   $translation = str_replace(t('<New translation>'), '', $translation);
 
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
-    global $_btr_ui_save_status;
-    $_btr_ui_save_status['cannot_suggest']++;
+    global $_btrClient_save_status;
+    $_btrClient_save_status['cannot_suggest']++;
     return FALSE;
   }
 
@@ -263,8 +263,8 @@ function btr_ui_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   if (!$tguid)  return FALSE;  // no translation was added
 
   // Increment the number of the saved suggestions.
-  global $_btr_ui_save_status;
-  $_btr_ui_save_status['nr_suggestions']++;
+  global $_btrClient_save_status;
+  $_btrClient_save_status['nr_suggestions']++;
 
   return $tguid;
 }
@@ -277,7 +277,7 @@ function btr_ui_add_suggestion($sguid, $lng, $values, $umail =NULL) {
  * $translation is an array/object structure with all the
  * information about the translation, votes, etc.
  */
-function _btr_ui_delete_translation($translation) {
+function _btrClient_delete_translation($translation) {
   //dpm($translation);  //debug
   $trans = $translation['original'];
 
@@ -293,11 +293,11 @@ function _btr_ui_delete_translation($translation) {
   btr_del_translation(
     $tguid = $trans->tguid,   // id of the translation to be deleted
     $umail = $account->init,  // email of the user that is deleting it
-    $ulng = variable_get('btr_ui_translation_lng')
+    $ulng = variable_get('btrClient_translation_lng')
   );
 
-  global $_btr_ui_save_status;
-  $_btr_ui_save_status['nr_deletions']++;
+  global $_btrClient_save_status;
+  $_btrClient_save_status['nr_deletions']++;
 }
 
 
@@ -305,10 +305,10 @@ function _btr_ui_delete_translation($translation) {
  * Display the number of the votes and translations that
  * are added, deleted, etc.
  */
-function btr_ui_display_notification_messages() {
+function btrClient_display_notification_messages() {
 
-  global $_btr_ui_save_status;
-  extract($_btr_ui_save_status);
+  global $_btrClient_save_status;
+  extract($_btrClient_save_status);
 
   if ($cannot_vote > 0) {
     drupal_set_message(t('You do not have enough rights for submitting votes!'), 'error');

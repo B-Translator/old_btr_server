@@ -8,10 +8,10 @@
  * Menu callback: translations/addterm
  * Add a new term on the vocabulary.
  */
-function btr_ui_addterm() {
-  $output[] = drupal_get_form('btr_ui_addterm_form');
+function btrClient_addterm() {
+  $output[] = drupal_get_form('btrClient_addterm_form');
   if(user_access('administer')) {
-    $output[] = drupal_get_form('btr_ui_delterm_form');
+    $output[] = drupal_get_form('btrClient_delterm_form');
   }
   return $output;
 }
@@ -19,7 +19,7 @@ function btr_ui_addterm() {
 /**
  * Form: addterm
  */
-function btr_ui_addterm_form() {
+function btrClient_addterm_form() {
   $form = array(
     '#prefix' => '<div class="btr-ui-filter clear-block">',
     '#suffix' => '</div>',
@@ -55,7 +55,7 @@ function btr_ui_addterm_form() {
 /**
  * Submission handler for addterm form.
  */
-function btr_ui_addterm_form_submit($form, &$form_state) {
+function btrClient_addterm_form_submit($form, &$form_state) {
   //dpm($form_state['values']);  //debug
   $string = check_plain(trim($form_state['values']['newterm']));
 
@@ -66,17 +66,17 @@ function btr_ui_addterm_form_submit($form, &$form_state) {
   }
 
   // notify translators about the new term
-  btr_ui_new_term_notification($string, $sguid);
+  btrClient_new_term_notification($string, $sguid);
 
   // redirect to translating the term
-  $lng = variable_get('btr_ui_translation_lng', 'fr');
+  $lng = variable_get('btrClient_translation_lng', 'fr');
   drupal_goto("translations/$lng/$sguid");
 }
 
 /**
  * Notify translators about the new term.
  */
-function btr_ui_new_term_notification($string, $sguid) {
+function btrClient_new_term_notification($string, $sguid) {
 
   // Get all the users with role 'translator'.
   $query = "SELECT ur.uid FROM users_roles ur
@@ -106,7 +106,7 @@ function btr_ui_new_term_notification($string, $sguid) {
 /**
  * Form: delterm
  */
-function btr_ui_delterm_form() {
+function btrClient_delterm_form() {
   $form = array(
     '#prefix' => '<div class="btr-ui-filter clear-block">',
     '#suffix' => '</div>',
@@ -142,13 +142,13 @@ function btr_ui_delterm_form() {
 /**
  * Submission handler for delterm form.
  */
-function btr_ui_delterm_form_submit($form, &$form_state) {
+function btrClient_delterm_form_submit($form, &$form_state) {
 
   $sguid = check_plain(trim($form_state['values']['sguid']));
   btr_del_term($sguid);
 
   // redirect to the list of terms
-  $lng = variable_get('btr_ui_translation_lng', 'fr');
+  $lng = variable_get('btrClient_translation_lng', 'fr');
   drupal_goto("translations/search",
     array('query' => array(
         'lng' => $lng,
@@ -162,6 +162,6 @@ function btr_ui_delterm_form_submit($form, &$form_state) {
  * Menu callback: translations/import
  * Import strings and translations from POT/PO files of projects.
  */
-function btr_ui_import() {
+function btrClient_import() {
   return 'Not implemented yet.';
 }

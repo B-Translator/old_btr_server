@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Module file for btr_ui.
+ * Module file for btrClient.
  */
 
 require_once(dirname(__FILE__) . '/includes/menu.inc');
@@ -11,7 +11,7 @@ require_once(dirname(__FILE__) . '/includes/blocks.inc');
  * Implements hook_help().
  */
                                /*
-function btr_ui_help($path, $args) {
+function btrClient_help($path, $args) {
   switch($path)
     {
       case 'translations/get':
@@ -30,30 +30,30 @@ function btr_ui_help($path, $args) {
 /**
  * Implements hook_theme().
  */
-function btr_ui_theme($existing, $type, $theme, $path) {
+function btrClient_theme($existing, $type, $theme, $path) {
   return array(
-    'btr_ui_filter_form_element' => array(
+    'btrClient_filter_form_element' => array(
       'render element' => 'element',
     ),
-    'btr_ui_translate_translation' => array(
+    'btrClient_translate_translation' => array(
       'render element' => 'element',
     ),
-    'btr_ui_translate_actions' => array(
+    'btrClient_translate_actions' => array(
       'render element' => 'element',
     ),
-    'btr_ui_in_context' => array(
+    'btrClient_in_context' => array(
       'variables' => array('source' => NULL),
     ),
-    'btr_ui_translate_radio' => array(
+    'btrClient_translate_radio' => array(
       'render element' => 'element',
     ),
-    'btr_ui_translate_source' => array(
+    'btrClient_translate_source' => array(
       'render element' => 'element',
     ),
-    'btr_ui_translate_translation_list' => array(
+    'btrClient_translate_translation_list' => array(
       'render element' => 'element',
     ),
-    'btr_ui_translate_table' => array(
+    'btrClient_translate_table' => array(
       'render element' => 'element',
     ),
   );
@@ -66,16 +66,16 @@ function btr_ui_theme($existing, $type, $theme, $path) {
  * or whenever drupal_flush_all_caches is invoked.
  * Returns an array of cache table names.
  */
-function btr_ui_flush_caches() {
-  return array('cache_btr_ui');
+function btrClient_flush_caches() {
+  return array('cache_btrClient');
 }
 
 /**
  * Implements hook_init().
  */
-function btr_ui_init() {
+function btrClient_init() {
   if (arg(0) == 'translations') {
-    drupal_add_css(drupal_get_path('module', 'btr_ui') . '/btr_ui.css');
+    drupal_add_css(drupal_get_path('module', 'btrClient') . '/btrClient.css');
     // For the translation overview pages. This is used to present admin page like panels.
     drupal_add_css(drupal_get_path('module', 'system') . '/admin.css');
   }
@@ -86,7 +86,7 @@ function btr_ui_init() {
   if (array_key_exists($lng, $languages)) {
     // Add RTL style if the current language's direction is RTL
     if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-      drupal_add_css(drupal_get_path('module', 'btr_ui') . '/btr_ui-rtl.css');
+      drupal_add_css(drupal_get_path('module', 'btrClient') . '/btrClient-rtl.css');
     }
   }
 
@@ -98,7 +98,7 @@ function btr_ui_init() {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function btr_ui_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+function btrClient_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // remove the field 'field_data_sequential' from the form
   // it is for internal usage only
   $form['field_data_sequential']['#access'] = FALSE;

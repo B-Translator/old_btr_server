@@ -8,15 +8,15 @@
  * Menu callback: translations/export
  * Export the most voted translations of a project into a PO file.
  */
-function btr_ui_export() {
-  return drupal_get_form('btr_ui_export_form');
+function btrClient_export() {
+  return drupal_get_form('btrClient_export_form');
 }
 
 
 /**
  * Export form.
  */
-function btr_ui_export_form() {
+function btrClient_export_form() {
   $form = array(
     '#prefix' => '<div class="btr-ui-filter clear-block">',
     '#suffix' => '</div>',
@@ -92,7 +92,7 @@ function btr_ui_export_form() {
 /**
  * Submission handler for export form.
  */
-function btr_ui_export_form_submit($form, &$form_state) {
+function btrClient_export_form_submit($form, &$form_state) {
 
   $values = $form_state['values'];
   //dpm($values);  //debug
@@ -119,7 +119,7 @@ function btr_ui_export_form_submit($form, &$form_state) {
 
   $params = array(
     'uid' => $GLOBALS['user']->uid,
-    'lng' => variable_get('btr_ui_translation_lng', 'fr');,
+    'lng' => variable_get('btrClient_translation_lng', 'fr');,
     'origin' => $origin,
     'project' => $project,
     'export_mode' => $export_mode,
@@ -141,7 +141,7 @@ function btr_ui_export_form_submit($form, &$form_state) {
 /**
  * Data validation for export form.
  */
-function btr_ui_export_form_validate($form, &$form_state) {
+function btrClient_export_form_validate($form, &$form_state) {
   $values = $form_state['values'];
   $origin = $values['origin'];
   $project = $values['project'];

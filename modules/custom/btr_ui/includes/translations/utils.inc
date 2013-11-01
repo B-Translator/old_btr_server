@@ -14,7 +14,7 @@
  *   a plural string, or one element in case of a regular string. This
  *  is called a $textarray elsewhere.
  */
-function btr_ui_unpack_string($string) {
+function btrClient_unpack_string($string) {
   return explode("\0", $string);
 }
 
@@ -26,7 +26,7 @@ function btr_ui_unpack_string($string) {
  * @return
  *   A packed string with NULL bytes separating each string.
  */
-function btr_ui_pack_string($strings) {
+function btrClient_pack_string($strings) {
   if (is_array($strings)) {
     return implode("\0", $strings);
   }

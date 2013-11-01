@@ -15,22 +15,22 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/search
  * Search strings and translations using various filters.
  */
-function btr_ui_search() {
+function btrClient_search() {
 
   // Add the the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/editor.js');
 
   // Build the filter from the GET request parameters.
-  $filter = btr_ui_build_filter();
+  $filter = btrClient_build_filter();
   //dpm($filter, '$filter');  //debug
 
   // Add RTL style if the current language's direction is RTL
   $lng = $filter['lng'];
   $languages = btr_get_languages();
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor-rtl.css');
   }
 
   /*
@@ -48,7 +48,7 @@ function btr_ui_search() {
 
   // Add the filter form.
   $output = array(
-    drupal_get_form('btr_ui_filter_form', $filter)
+    drupal_get_form('btrClient_filter_form', $filter)
   );
 
   // Get the strings that match the filter and the corresponding translations.
@@ -60,7 +60,7 @@ function btr_ui_search() {
   }
   else {
     //dpm($strings, '$strings');  //debug
-    $output[] = drupal_get_form('btr_ui_translate_form', $strings, $lng);
+    $output[] = drupal_get_form('btrClient_translate_form', $strings, $lng);
   }
 
   //dpm($output[1], 'translate_form');  //debug

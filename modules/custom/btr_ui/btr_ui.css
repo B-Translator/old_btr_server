@@ -99,10 +99,10 @@ em.btr-ui-marker {
   direction:ltr;
 }
 
-#block-btr_ui-contributors table {
+#block-btrClient-contributors table {
   width: 100%;
 }
-#block-btr_ui-contributors tr.even, #block-btr_ui-contributors tr.odd {
+#block-btrClient-contributors tr.even, #block-btrClient-contributors tr.odd {
   background-color: transparent;
 }
 

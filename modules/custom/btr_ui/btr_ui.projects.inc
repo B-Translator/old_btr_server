@@ -11,9 +11,9 @@
 
 /**
  * Create a new content type for translation projects.
- * This function is called by hook_install() of btr_ui.
+ * This function is called by hook_install() of btrClient.
  */
-function btr_ui_create_project_content_type() {
+function btrClient_create_project_content_type() {
   $t = get_t();
 
   /**** STEP 1 - Create and save a new content object ****/
@@ -54,12 +54,12 @@ function btr_ui_create_project_content_type() {
   /**** STEP 3 - create and add instances of new fields ****/
 
   // create all the fields we are adding to our content type
-  foreach (_btr_ui_project_content_type_fields() as $field) {
+  foreach (_btrClient_project_content_type_fields() as $field) {
     field_create_field($field);
   }
 
   // create all the instances for our fields
-  foreach (_btr_ui_project_content_type_instances() as $instance) {
+  foreach (_btrClient_project_content_type_instances() as $instance) {
     $instance['entity_type'] = 'node';
     $instance['bundle'] = $projects['type'];
     field_create_instance($instance);
@@ -69,9 +69,9 @@ function btr_ui_create_project_content_type() {
 
 /**
  * Delete the project content type and anything related to it
- * This function is called by hook_uninstall() of btr_ui.
+ * This function is called by hook_uninstall() of btrClient.
  */
-function btr_ui_delete_project_content_type() {
+function btrClient_delete_project_content_type() {
   // machine name of the content type
   $content_name = 'projects';
 
@@ -98,7 +98,7 @@ function btr_ui_delete_project_content_type() {
   node_type_delete($content_name);
 
   // find all fields and delete them
-  foreach (array_keys(_btr_ui_project_content_type_fields()) as $field) {
+  foreach (array_keys(_btrClient_project_content_type_fields()) as $field) {
     field_delete_field($field);
   }
 
@@ -119,7 +119,7 @@ function btr_ui_delete_project_content_type() {
  *  An associative array specifying the fields we wish to add to our
  *  new content type.
  */
-function _btr_ui_project_content_type_fields() {
+function _btrClient_project_content_type_fields() {
   return array(
     'field_project_origin' => array(
       'translatable' => '0',
@@ -445,7 +445,7 @@ function _btr_ui_project_content_type_fields() {
  *  An associative array specifying the instances we wish to add to our new
  *  content type.
  */
-function _btr_ui_project_content_type_instances() {
+function _btrClient_project_content_type_instances() {
   return array(
     'field_project_origin' => array(
       'label' => 'Project Origin',

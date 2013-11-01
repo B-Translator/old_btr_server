@@ -14,16 +14,16 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * Menu callback: translations/vote
  * Vote the best translation for a string, or suggest a better translation.
  */
-function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
+function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   if ($one_time_login != NULL) {
-    btr_ui_login_one_time($one_time_login);
+    btrClient_login_one_time($one_time_login);
     drupal_goto("translations/$lng/$sguid");
     return;
   }
 
   if ($lng == NULL) {
-    $lng = variable_get('btr_ui_translation_lng', 'fr');
+    $lng = variable_get('btrClient_translation_lng', 'fr');
   }
 
   if ($sguid==NULL)  { $sguid = 'next'; }
@@ -41,9 +41,9 @@ function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   // Add the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'btr_ui') . '/editor/editor.js');
+  drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/editor.js');
 
   // Get languages and language codes
   $languages = btr_get_languages();
@@ -51,7 +51,7 @@ function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   // Add RTL style if the current language's direction is RTL
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'btr_ui') . '/editor-rtl.css');
+    drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor-rtl.css');
   }
 
   /*
@@ -72,12 +72,12 @@ function btr_ui_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.
-  $output = drupal_get_form('btr_ui_translate_form', $strings, $lng);
+  $output = drupal_get_form('btrClient_translate_form', $strings, $lng);
 
   return $output;
 }
 
-function btr_ui_login_one_time($one_time_login =NULL) {
+function btrClient_login_one_time($one_time_login =NULL) {
 
   if ($one_time_login == NULL)  return FALSE;
 
