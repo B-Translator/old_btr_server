@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btr_btr_ui.strongarm.inc
+ * btr_btrClient.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function btr_btr_ui_strongarm() {
+function btr_btrClient_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();
@@ -34,16 +34,16 @@ function btr_btr_ui_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'btr_topcontrib_period';
+  $strongarm->name = 'btrClient_topcontrib_period';
   $strongarm->value = 'week';
-  $export['btr_topcontrib_period'] = $strongarm;
+  $export['btrClient_topcontrib_period'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'btr_topcontrib_size';
+  $strongarm->name = 'btrClient_topcontrib_size';
   $strongarm->value = '5';
-  $export['btr_topcontrib_size'] = $strongarm;
+  $export['btrClient_topcontrib_size'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

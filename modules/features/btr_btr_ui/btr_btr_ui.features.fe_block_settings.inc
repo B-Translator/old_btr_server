@@ -1,22 +1,22 @@
 <?php
 /**
  * @file
- * btr_btr_ui.features.fe_block_settings.inc
+ * btr_btrClient.features.fe_block_settings.inc
  */
 
 /**
  * Implements hook_default_fe_block_settings().
  */
-function btr_btr_ui_default_fe_block_settings() {
+function btr_btrClient_default_fe_block_settings() {
   $export = array();
 
   $export['version'] = '2.0';
 
-  $export['btr_ui-latest'] = array(
+  $export['btrClient-latest'] = array(
     'cache' => -2,
     'custom' => '0',
     'delta' => 'latest',
-    'module' => 'btr_ui',
+    'module' => 'btrClient',
     'node_types' => array(),
     'pages' => '',
     'roles' => array(),
@@ -50,11 +50,11 @@ function btr_btr_ui_default_fe_block_settings() {
     'visibility' => '0',
   );
 
-  $export['btr_ui-statistics'] = array(
+  $export['btrClient-statistics'] = array(
     'cache' => -2,
     'custom' => '0',
     'delta' => 'statistics',
-    'module' => 'btr_ui',
+    'module' => 'btrClient',
     'node_types' => array(),
     'pages' => '',
     'roles' => array(),
@@ -88,11 +88,11 @@ function btr_btr_ui_default_fe_block_settings() {
     'visibility' => '1',
   );
 
-  $export['btr_ui-topcontrib'] = array(
+  $export['btrClient-topcontrib'] = array(
     'cache' => -2,
     'custom' => '0',
     'delta' => 'topcontrib',
-    'module' => 'btr_ui',
+    'module' => 'btrClient',
     'node_types' => array(),
     'pages' => '',
     'roles' => array(),

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Code for the btr_btr_ui feature.
+ * Code for the btr_btrClient feature.
  */
 
-include_once 'btr_btr_ui.features.inc';
+include_once 'btr_btrClient.features.inc';

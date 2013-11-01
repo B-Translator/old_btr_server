@@ -145,14 +145,14 @@ function btr_layout_context_default_contexts() {
           'region' => 'sidebar_first',
           'weight' => '-8',
         ),
-        'btr_ui-statistics' => array(
-          'module' => 'btr_ui',
+        'btrClient-statistics' => array(
+          'module' => 'btrClient',
           'delta' => 'statistics',
           'region' => 'sidebar_first',
           'weight' => '-7',
         ),
-        'btr_ui-topcontrib' => array(
-          'module' => 'btr_ui',
+        'btrClient-topcontrib' => array(
+          'module' => 'btrClient',
           'delta' => 'topcontrib',
           'region' => 'sidebar_first',
           'weight' => '-6',
@@ -238,14 +238,14 @@ function btr_layout_context_default_contexts() {
           'region' => 'sidebar_first',
           'weight' => '-23',
         ),
-        'btr_ui-statistics' => array(
-          'module' => 'btr_ui',
+        'btrClient-statistics' => array(
+          'module' => 'btrClient',
           'delta' => 'statistics',
           'region' => 'sidebar_first',
           'weight' => '-22',
         ),
-        'btr_ui-topcontrib' => array(
-          'module' => 'btr_ui',
+        'btrClient-topcontrib' => array(
+          'module' => 'btrClient',
           'delta' => 'topcontrib',
           'region' => 'sidebar_first',
           'weight' => '-21',
@@ -310,7 +310,7 @@ function btr_layout_context_default_contexts() {
   $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
   $context->api_version = 3;
   $context->name = 'translations';
-  $context->description = 'The pages where the translation/feedback activity is happening (module btr_ui).';
+  $context->description = 'The pages where the translation/feedback activity is happening (module btrClient).';
   $context->tag = '';
   $context->conditions = array(
     'path' => array(
@@ -353,7 +353,7 @@ function btr_layout_context_default_contexts() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('The pages where the translation/feedback activity is happening (module btr_ui).');
+  t('The pages where the translation/feedback activity is happening (module btrClient).');
   $export['translations'] = $context;
 
   return $export;

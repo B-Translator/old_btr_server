@@ -1,8 +1,8 @@
 variable:btr_export_notify_admin
 variable:btr_export_path
 variable:btr_preferred_projects
-variable:btr_topcontrib_period
-variable:btr_topcontrib_size
+variable:btrClient_topcontrib_period
+variable:btrClient_topcontrib_size
 variable:btr_translation_lng
 variable:btr_voting_mode
 field:user-user-field_preferred_projects
@@ -17,6 +17,6 @@ field:node-projects-field_project_origin
 field:node-projects-field_project_name
 field:node-projects-field_project_icon
 field:node-projects-field_project_screenshots
-fe_block_settings:btr_ui-latest
-fe_block_settings:btr_ui-statistics
-fe_block_settings:btr_ui-topcontrib
+fe_block_settings:btrClient-latest
+fe_block_settings:btrClient-statistics
+fe_block_settings:btrClient-topcontrib
