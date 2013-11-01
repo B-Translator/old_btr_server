@@ -90,8 +90,6 @@ user_permission:view the administration theme
 user_permission:access site reports
 user_permission:block IP addresses
 user_permission:administer taxonomy
-user_permission:edit terms in tags
-user_permission:delete terms in tags
 user_permission:administer unit tests
 user_permission:access toolbar
 user_permission:administer uuid

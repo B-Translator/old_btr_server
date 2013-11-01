@@ -699,15 +699,6 @@ function btr_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: delete terms in tags.
-  $permissions['delete terms in tags'] = array(
-    'name' => 'delete terms in tags',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'taxonomy',
-  );
-
   // Exported permission: edit any article content.
   $permissions['edit any article content'] = array(
     'name' => 'edit any article content',
@@ -828,15 +819,6 @@ function btr_permissions_user_default_permissions() {
       0 => 'administrator',
     ),
     'module' => 'node',
-  );
-
-  // Exported permission: edit terms in tags.
-  $permissions['edit terms in tags'] = array(
-    'name' => 'edit terms in tags',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'taxonomy',
   );
 
   // Exported permission: execute php code.

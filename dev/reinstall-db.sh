@@ -46,6 +46,7 @@ drush site-install --verbose --yes btranslator \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
 ### install features modules
+drush --yes pm-enable btr_btrServices
 drush --yes pm-enable btr_btrClient
 drush --yes features-revert btr_btrClient
 
@@ -68,7 +69,6 @@ drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
 drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
 
 drush --yes pm-enable btr_invite
-drush --yes pm-enable btr_btrServices
 drush --yes pm-enable btr_permissions
 
 #drush --yes pm-enable btr_simplenews
