@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btr_btr_services.features.user_permission.inc
+ * btr_btrServices.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function btr_btr_services_user_default_permissions() {
+function btr_btrServices_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: use oauth2 server.

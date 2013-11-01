@@ -1,4 +1,4 @@
-name = btr_btr_services
+name = btr_btrServices
 core = 7.x
 package = Features
 php = 5.2.4

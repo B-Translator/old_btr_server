@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btr_btr_services.features.inc
+ * btr_btrServices.features.inc
  */
 
 /**
  * Implements hook_ctools_plugin_api().
  */
-function btr_btr_services_ctools_plugin_api() {
+function btr_btrServices_ctools_plugin_api() {
   list($module, $api) = func_get_args();
   if ($module == "services" && $api == "services") {
     return array("version" => "3");
@@ -17,7 +17,7 @@ function btr_btr_services_ctools_plugin_api() {
 /**
  * Implements hook_default_oauth2_server().
  */
-function btr_btr_services_default_oauth2_server() {
+function btr_btrServices_default_oauth2_server() {
   $items = array();
   $items['oauth2_btr'] = entity_import('oauth2_server', '{
     "name" : "oauth2_btr",

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * btr_btr_services.services.inc
+ * btr_btrServices.services.inc
  */
 
 /**
  * Implements hook_default_services_endpoint().
  */
-function btr_btr_services_default_services_endpoint() {
+function btr_btrServices_default_services_endpoint() {
   $export = array();
 
   $endpoint = new stdClass();
