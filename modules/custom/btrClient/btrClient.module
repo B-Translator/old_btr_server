@@ -6,6 +6,7 @@
 
 require_once(dirname(__FILE__) . '/includes/menu.inc');
 require_once(dirname(__FILE__) . '/includes/blocks.inc');
+require_once(dirname(__FILE__) . '/includes/services.inc');
 
 /**
  * Implements hook_help().

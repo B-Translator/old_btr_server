@@ -41,10 +41,22 @@ projects[jquery_update][version] = "2.3"
 projects[boxes][version] = "1.1"
 projects[delete_all][version] = "1.1"
 projects[drush_language][version] = "1.2"
+
+;--------------------
+; Web Services
+;--------------------
 projects[services][version] = "3.5"
 projects[services][patch][] = "https://drupal.org/files/fix_controller_settings-1154420-51.patch"
 projects[entityreference][version] = "1.0"
 projects[oauth2_server][version] = "1.0-rc3"
+
+projects[wsclient][version] = "1.0"
+projects[wsclient][patch] = "https://drupal.org/files/wsclient-1285310-http_basic_authentication-14.patch"
+;projects[wsclient][patch] = ""
+projects[http_client][version] = "2.4"
+projects[http_client][patch] = "https://drupal.org/files/http_client-2042205-create_basic_http_auth_plugin-2.patch"
+;projects[http_client][patch] = ""
+
 
 ;--------------------
 ; Performance
