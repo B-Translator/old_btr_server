@@ -146,3 +146,7 @@
       Open in browser:
         https://dev.l10n.org.xx/btr/translations/random?lng=sq
 
+* How to test
+  - http://blogs.plexibus.com/2009/01/15/rest-esting-with-curl/
+  - https://drupal.org/node/790416
+  - https://drupal.org/node/783722
