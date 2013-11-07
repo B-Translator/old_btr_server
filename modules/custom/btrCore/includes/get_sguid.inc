@@ -6,7 +6,7 @@
  * of the given user. If no uid is given as parameter,
  * then the current user is assumed.
  */
-function btr_sguid_get_next($lng, $uid =NULL) {
+function btr_sguid_get_next($uid =NULL) {
 
   // get the string-order preference for the user
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
@@ -17,11 +17,11 @@ function btr_sguid_get_next($lng, $uid =NULL) {
   switch ($string_order) {
     default:
     case 'random':
-      $sguid = btr_sguid_get_random($lng, $uid);
+      $sguid = btr_sguid_get_random($uid);
       break;
 
     case 'sequential':
-      $sguid = btr_sguid_get_sequential($lng, $uid);
+      $sguid = btr_sguid_get_sequential($uid);
       break;
   }
 

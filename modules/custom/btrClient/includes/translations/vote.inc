@@ -28,8 +28,17 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   if ($sguid==NULL)  { $sguid = 'next'; }
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
-    $func_get_sguid = 'btr_sguid_get_' . $sguid;
-    $sguid = $func_get_sguid($lng);
+    switch ($sguid) {
+      case 'next':
+        $sguid = btr_sguid_get_next();
+        break;
+      case 'translated':
+        $sguid = btr_sguid_get_translated($lng);
+        break;
+      case 'untranslated':
+        $sguid = btr_sguid_get_untranslated($lng);
+        break;
+    }
     if (empty($sguid)) {
       drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
       drupal_goto("/");

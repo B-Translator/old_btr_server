@@ -122,9 +122,16 @@ function _btr_translations_retrieve($sguid, $lng) {
     return services_error('Language missing or not supported.', 406);
   }
 
-  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
-    $func_get_sguid = 'btr_sguid_get_' . $sguid;
-    $sguid = $func_get_sguid($lng);
+  switch ($sguid) {
+    case 'next':
+      $sguid = btr_sguid_get_next();
+      break;
+    case 'translated':
+      $sguid = btr_sguid_get_translated($lng);
+      break;
+    case 'untranslated':
+      $sguid = btr_sguid_get_untranslated($lng);
+      break;
   }
 
   $strings = btr_get_strings(array($sguid), $lng);
