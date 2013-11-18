@@ -32,7 +32,7 @@ function btr_btrServices_default_oauth2_server() {
         "refresh_token" : "refresh_token",
         "password" : "password"
       },
-      "always_issue_new_refresh_token" : 0,
+      "always_issue_new_refresh_token" : 1,
       "access_lifetime" : "3600",
       "refresh_token_lifetime" : "1209600",
       "require_exact_redirect_uri" : 1
