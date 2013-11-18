@@ -2,12 +2,11 @@
 ### see: http://timonweb.com/advice-may-help-you-if-your-drupal-7-has-started-run-slowly
 ### see also this: http://drupal.org/project/clean_missing_modules
 
-site="default"
-#site="dev.btranslator.org"
+drush="drush @dev"
 query="SELECT filename FROM system WHERE status = 1"
-active_modules=$(drush -l "$site" --extra=--skip-column-names sql-query "$query")
+active_modules=$($drush --extra=--skip-column-names sql-query "$query")
 
-cd $(drush -l "$site" drupal-directory)
+cd $($drush drupal-directory)
 for module in $active_modules
 do
     ##echo $module;  continue;  # debug
