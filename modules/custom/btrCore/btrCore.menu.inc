@@ -11,15 +11,15 @@ function btrCore_menu() {
     'description' => 'B-Translator Configuration',
     'weight' => -100,
     'page callback' => 'system_admin_menu_block_page',
-    'access arguments' => array('btrCore_config'),
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
+    'access callback' => TRUE,
     //'position' => 'right',
   );
 
-  $items['admin/config/btr/data'] = array(
-    'title'            => 'B-Translator Data',
-    'description'      => 'B-Translator Back-End configuration settings.',
+  $items['admin/config/btr/core'] = array(
+    'title'            => 'BTR Core',
+    'description'      => 'B-Translator Core configuration settings.',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('btrCore_config'),
     'access arguments' => array('btranslator-admin'),

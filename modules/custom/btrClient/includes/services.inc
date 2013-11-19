@@ -17,18 +17,25 @@
  */
 function btrClient_default_wsclient_service() {
 
-  $btr_url = 'https://dev.l10n.org.xx';
+  $server_url = variable_get('btrClient_server_url', 'https://dev.l10n.org.xx');
+  $client_id = variable_get('btrClient_client_id', 'test1');
+  $client_secret = variable_get('btrClient_client_secret', 'test1');
+  $skip_ssl_check = variable_get('btrClient_skip_ssl_check', TRUE);
 
   // public services
+  $service_endpoint = $server_url . '/public/btr/';
   $service = new WSClientServiceDescription();
   $service->name = 'public/btr';
-  $service->url = $btr_url . '/public/btr/';
+  $service->url = $service_endpoint;
   $service->type = 'rest';
+
   // skip checking the SSL certificate, for testing
-  $service->settings['curl options'] = array(
-    CURLOPT_SSL_VERIFYPEER => FALSE,
-    CURLOPT_SSL_VERIFYHOST => FALSE,
-  );
+  if ($skip_ssl_check) {
+    $service->settings['curl options'] = array(
+      CURLOPT_SSL_VERIFYPEER => FALSE,
+      CURLOPT_SSL_VERIFYHOST => FALSE,
+    );
+  }
 
   $service->operations['report_statistics'] = array(
     'url' => 'report/statistics',
@@ -71,25 +78,34 @@ function btrClient_default_wsclient_service() {
   $services[$service->name] = $service;
 
   // authenticated services
+  $service_endpoint = $server_url . '/btr/';
+  $token_endpoint = $server_url . '/oauth2/token';
+  $authorization_endpoint = $server_url . '/oauth2/authorize';
+  $redirect_uri = url('/oauth2/authorized', array('absolute' => TRUE));
+
   $service = new WSClientServiceDescription();
   $service->name = 'btr';
-  $service->url = $btr_url . '/btr/';
+  $service->url = $service_endpoint;
   $service->type = 'rest';
+
   // skip checking the SSL certificate, for testing
-  $service->settings['curl options'] = array(
-    CURLOPT_SSL_VERIFYPEER => FALSE,
-    CURLOPT_SSL_VERIFYHOST => FALSE,
-  );
+  if ($skip_ssl_check) {
+    $service->settings['curl options'] = array(
+      CURLOPT_SSL_VERIFYPEER => FALSE,
+      CURLOPT_SSL_VERIFYHOST => FALSE,
+    );
+  }
+
   $service->settings['authentication']['oauth2'] = array(
-    'token_endpoint' => 'https://dev.l10n.org.xx/oauth2/token',
+    'token_endpoint' => $token_endpoint,
     // auth_flow can be: server-side | client-credentials | user-password
     'auth_flow' => 'user-password',
-    'client_id' => 'test1',
-    'client_secret' => 'test1',
+    'client_id' => $client_id,
+    'client_secret' => $client_secret,
     'username' => 'user1',
     'password' => 'user1',
-    //'redirect_uri' => 'https://dev.l10n.org.xx/oauth2/authorized',
-    //'authorization_endpoint' => 'https://dev.l10n.org.xx/oauth2/authorize',
+    //'redirect_uri' => $redirect_uri,
+    //'authorization_endpoint' => $authorization_endpoint,
     //'scope' => '',
     //'query_auth' => TRUE,
   );

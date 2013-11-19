@@ -6,9 +6,20 @@ function btrClient_menu() {
 
   $items = array();
 
-  $items['admin/config/btr/general'] = array(
-    'title'            => 'B-Translator UI',
-    'description'      => 'B-Translator Front-End configuration settings.',
+  $items['admin/config/btr'] = array(
+    'title' => 'B-Translator',
+    'description' => 'B-Translator Configuration',
+    'weight' => -100,
+    'page callback' => 'system_admin_menu_block_page',
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+    'access callback' => TRUE,
+    //'position' => 'right',
+  );
+
+  $items['admin/config/btr/client'] = array(
+    'title'            => 'BTR Client',
+    'description'      => 'B-Translator Client configuration settings.',
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('btrClient_config'),
     'access arguments' => array('btranslator-admin'),
