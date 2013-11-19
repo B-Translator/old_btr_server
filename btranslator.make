@@ -40,7 +40,12 @@ projects[xautoload][version] = "2.7"
 projects[jquery_update][version] = "2.3"
 projects[boxes][version] = "1.1"
 projects[delete_all][version] = "1.1"
+
+;--------------------
+; Drush Utilities
+;--------------------
 projects[drush_language][version] = "1.2"
+projects[drush_entity][version] = "5.x-dev"
 
 ;--------------------
 ; Web Services
@@ -56,7 +61,6 @@ projects[oauth2_client][download][url] = "https://github.com/dashohoxha/oauth2_c
 projects[wsclient][version] = "1.0"
 projects[wsclient][patch] = "https://drupal.org/files/wsclient-1285310-http_basic_authentication-14.patch"
 projects[wsclient][patch] = "https://drupal.org/files/issues/wsclient-2138617-oauth2_support.patch"
-;projects[wsclient][patch] = ""
 projects[http_client][version] = "2.4"
 projects[http_client][patch] = "https://drupal.org/files/http_client-2042205-create_basic_http_auth_plugin-2.patch"
 projects[http_client][patch] = "https://drupal.org/files/issues/http_client-2138627-plugin_for_oauth2_authentication.patch"

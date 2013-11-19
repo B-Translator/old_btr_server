@@ -11,52 +11,53 @@
 $tag = drush_shift();
 if ($tag == '')  $tag = 'dev';
 
-// append (dev) to site_name
+// append ($tag) to site_name
 variable_set('site_name', "B-Translator ($tag)");
 
 $site_mail = variable_get('site_mail');
-if (preg_match('/@gmail.com/', $site_mail)) {
 
-  // make site email something like 'user+dev@gmail.com'
-  $email = preg_replace('/@gmail.com/', "+$tag@gmail.com", $site_mail);
-  variable_set('site_mail', $email);
-  variable_set('smtp_from', $email);
-  variable_set('mimemail_mail', $email);
-  variable_set('simplenews_from_address', $email);
-  variable_set('simplenews_test_address', $email);
-  variable_set('mass_contact_default_sender_email', $email);
-  variable_set('reroute_email_address', $email);
-  variable_set('update_notify_emails', array($email));
-
-  // enable email re-routing
-  variable_set('reroute_email_enable', 1);
-  variable_set('reroute_email_enable_message', 1);
-
-  if ($tag == 'dev') {
-    // add a few test users
-    $new_user = array(
-      'name' => 'user1',
-      'mail' => preg_replace('/@gmail.com/', '+user1@gmail.com', $site_mail),
-      'pass' => 'user1',
-      'status' => 1,
-      'init' => 'email address',
-      'roles' => array(
-        DRUPAL_AUTHENTICATED_RID => 'authenticated user',
-      ),
-    );
-    user_save(null, $new_user);
-
-    $new_user['name'] = 'user2';
-    $new_user['pass'] = 'user2';
-    $new_user['mail'] = preg_replace('/@gmail.com/', '+user2@gmail.com', $site_mail);
-    user_save(null, $new_user);
+function update_emails() {
+  // make site email something like 'user+tag@gmail.com'
+  global $site_mail, $tag;
+  if (preg_match('/@gmail.com/', $site_mail)) {
+    $email = preg_replace('/@gmail.com/', "+$tag@gmail.com", $site_mail);
+    variable_set('site_mail', $email);
+    variable_set('smtp_from', $email);
+    variable_set('mimemail_mail', $email);
+    variable_set('simplenews_from_address', $email);
+    variable_set('simplenews_test_address', $email);
+    variable_set('mass_contact_default_sender_email', $email);
+    variable_set('reroute_email_address', $email);
+    variable_set('update_notify_emails', array($email));
   }
 }
 
-// blocks
-if ($tag == 'dev') {
+function enable_email_rerouting() {
+  variable_set('reroute_email_enable', 1);
+  variable_set('reroute_email_enable_message', 1);
+}
+
+function create_test_users() {
+  $new_user = array(
+    'name' => 'user1',
+    'mail' => preg_replace('/@gmail.com/', '+user1@gmail.com', $site_mail),
+    'pass' => 'user1',
+    'status' => 1,
+    'init' => 'email address',
+    'roles' => array(
+      DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+    ),
+  );
+  user_save(null, $new_user);
+
+  $new_user['name'] = 'user2';
+  $new_user['pass'] = 'user2';
+  $new_user['mail'] = preg_replace('/@gmail.com/', '+user2@gmail.com', $site_mail);
+  user_save(null, $new_user);
+}
+
+function show_devel_menu_on_footer() {
   $blocks = array(
-    // show the devel menu on the footer
     array(
       'module' => 'menu',
       'delta'  => 'devel',
@@ -67,6 +68,7 @@ if ($tag == 'dev') {
     ),
   );
   $default_theme = variable_get('theme_default', 'bartik');
+
   foreach ($blocks as $block) {
     extract($block);
     db_update('block')
@@ -83,7 +85,57 @@ if ($tag == 'dev') {
   }
 }
 
-// disable sending review emails
-if ($tag == 'test') {
-  include dirname(__FILE__).'/disable_email_option.php';
+function create_oauth2_clients() {
+  $client = entity_create('oauth2_server_client', array());
+  $client->server = 'oauth2_btr';
+  $client->label = 'Test 1';
+  $client->client_key = 'test1';
+  $client->client_secret = 'test1';
+  $client->redirect_uri = url('oauth2/authorized', array('absolute' => TRUE));
+  $client->automatic_authorization = TRUE;
+  $client->save();
+
+  $client = entity_create('oauth2_server_client', array());
+  $client->server = 'oauth2_btr';
+  $client->label = 'Test 2';
+  $client->client_key = 'test2';
+  $client->client_secret = 'test2';
+  $client->redirect_uri = url('oauth2/authorized', array('absolute' => TRUE));
+  $client->automatic_authorization = FALSE;
+  $client->save();
+}
+
+function create_oauth2_scopes() {
+    $scopes = array(
+      'scope1' => 'Scope 1',
+      'scope2' => 'Scope 2',
+      'scope3' => 'Scope 3',
+    );
+    foreach ($scopes as $scope_name => $scope_label) {
+      $scope = entity_create('oauth2_server_scope', array());
+      $scope->server = 'oauth2_btr';
+      $scope->name = $scope_name;
+      $scope->description = '';
+      $scope->save();
+    }
+}
+
+
+switch ($tag) {
+  default:
+  case 'dev':
+    update_emails();
+    enable_email_rerouting();
+    create_test_users();
+    show_devel_menu_on_footer();
+    create_oauth2_clients();
+    create_oauth2_scopes();
+    break;
+
+  case 'test':
+    update_emails();
+    enable_email_rerouting();
+    // disable sending review emails
+    include dirname(__FILE__).'/disable_email_option.php';
+    break;
 }
