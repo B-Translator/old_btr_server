@@ -1,6 +1,6 @@
 #!/usr/bin/drush php-script
 <?php
-//$btr = wsclient_service_load('public/btr');
+//$btr = wsclient_service_load('public_btr');
 
 //$sguid = '5aa37d12b93b15ea4bbf49b5eb234d70154710ab';
 //$result = $btr->get_translations($sguid, 'sq');

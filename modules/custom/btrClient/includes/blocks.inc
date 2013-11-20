@@ -150,10 +150,20 @@ function _btrClient_block_topcontrib() {
     return $cache->data;
   }
 
-  $lng = variable_get('btrClient_translation_lng', 'fr');
-  $period = variable_get('btrClient_topcontrib_period', 'week');
-  $size = variable_get('btrClient_topcontrib_size', 5);
-  $topusers = btr_stat_topcontrib($lng, $period, $size);
+  // get the list of top contributers
+  try {
+    $lng = variable_get('btrClient_translation_lng', 'fr');
+    $period = variable_get('btrClient_topcontrib_period', 'week');
+    $size = variable_get('btrClient_topcontrib_size', 5);
+    //$topusers = btr_stat_topcontrib($lng, $period, $size);
+    $btr = wsclient_service_load('public_btr');
+    $topusers = $btr->report_topcontrib($lng, $period, $size);
+    //dpm($topusers);  //debug
+  }
+  catch (Exception $e) {
+    drupal_set_message($e->getMessage(), 'error');
+    $topusers = array();
+  }
 
   $from_date = date('Y-m-d', strtotime("-1 $period"));
   $output =  array(
@@ -173,23 +183,23 @@ function _btrClient_block_topcontrib() {
 
   foreach ($topusers as $user) {
     $args = array(
-      '!uid' => $user->uid,
-      '!name' => $user->name,
-      '!mail' => $user->umail,
-      '!score' => $user->score,
-      '!nr_translations' => $user->translations,
-      '!nr_votes' => $user->votes,
-      '@url_user' => url('user/' . $user->uid),
+      '!uid' => $user['uid'],
+      '!name' => $user['name'],
+      '!mail' => $user['umail'],
+      '!score' => $user['score'],
+      '!nr_translations' => $user['translations'],
+      '!nr_votes' => $user['votes'],
+      '@url_user' => url('user/' . $user['uid']),
       '@url_translations' => url('translations/search', array(
                              'query' => array(
                                'lng' => $lng,
-                               'translated_by' => $user->name,
+                               'translated_by' => $user['name'],
                                'from_date' => $from_date
                              ))),
       '@url_votes' => url('translations/search', array(
                       'query' => array(
                         'lng' => $lng,
-                        'voted_by' => $user->name,
+                        'voted_by' => $user['name'],
                         'from_date' => $from_date
                       ))),
     );
@@ -215,9 +225,23 @@ function _btrClient_block_statistics() {
     return $cache->data;
   }
 
-  $lng = variable_get('btrClient_translation_lng', 'fr');
-  $stats = btr_statistics($lng);
+  // get the statistics
+  try {
+    $lng = variable_get('btrClient_translation_lng', 'fr');
+    //$stats = btr_statistics($lng);
+    $btr = wsclient_service_load('public_btr');
+    $stats = $btr->report_statistics($lng);
+    //dpm($stats);  //debug
+  }
+  catch (Exception $e) {
+    drupal_set_message($e->getMessage(), 'error');
+    $stats = array();
+  }
 
+  $output['stats'] =  array(
+    '#items' => array(),
+    '#theme' => 'item_list',
+  );
   foreach ($stats as $period => $stat) {
     $args = array(
       '!nr_votes' => $stat['nr_votes'],
@@ -237,7 +261,7 @@ function _btrClient_block_statistics() {
                                'from_date' => $stat['from_date'],
                              ))),
     );
-    $output['ulist']['#items'][] = t("Last $period:") . '<br/>'
+    $output['stats']['#items'][] = t("Last $period:") . '<br/>'
       . t(" + <a href='@url_votes'>!nr_votes votes</a> <br/> + <a href='@url_translations'>!nr_translations translations</a>",
         $args);
   }

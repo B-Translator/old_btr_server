@@ -23,11 +23,11 @@ function btrClient_default_wsclient_service() {
   $skip_ssl_check = variable_get('btrClient_skip_ssl_check', TRUE);
 
   // public services
-  $service_endpoint = $server_url . '/public/btr/';
   $service = new WSClientServiceDescription();
-  $service->name = 'public/btr';
-  $service->url = $service_endpoint;
+  $service->name = 'public_btr';
+  $service->label = 'Public B-Translator Services';
   $service->type = 'rest';
+  $service->url = $server_url . '/public/btr/';
 
   // skip checking the SSL certificate, for testing
   if ($skip_ssl_check) {
@@ -38,20 +38,23 @@ function btrClient_default_wsclient_service() {
   }
 
   $service->operations['report_statistics'] = array(
+    'label' => 'report_statistics',
     'url' => 'report/statistics',
     'parameter' => array(
-      'lng' => array(),
+      'lng' => array('type' => 'text'),
     ),
   );
   $service->operations['report_topcontrib'] = array(
+    'label' => 'report_topcontrib',
     'url' => 'report/topcontrib',
     'parameter' => array(
-      'lng' => array(),
-      'period' => array(),
-      'size' => array(),
+      'lng' => array('type' => 'text'),
+      'period' => array('type' => 'text'),
+      'size' => array('type' => 'integer'),
     ),
   );
   $service->operations['report_statistics_1'] = array(
+    'label' => 'report_statistics',
     'url' => 'report/statistics',
     'type' => 'POST',
     'data' => 'params',
@@ -60,6 +63,7 @@ function btrClient_default_wsclient_service() {
     ),
   );
   $service->operations['report_topcontrib_1'] = array(
+    'label' => 'report_topcontrib_1',
     'url' => 'report/topcontrib',
     'type' => 'POST',
     'data' => 'params',
@@ -68,6 +72,7 @@ function btrClient_default_wsclient_service() {
     ),
   );
   $service->operations['get_translations'] = array(
+    'label' => 'get_translations',
     'url' => 'translations/@sguid',
     'parameter' => array(
       'sguid' => array(),
@@ -78,15 +83,15 @@ function btrClient_default_wsclient_service() {
   $services[$service->name] = $service;
 
   // authenticated services
-  $service_endpoint = $server_url . '/btr/';
   $token_endpoint = $server_url . '/oauth2/token';
   $authorization_endpoint = $server_url . '/oauth2/authorize';
   $redirect_uri = url('/oauth2/authorized', array('absolute' => TRUE));
 
   $service = new WSClientServiceDescription();
   $service->name = 'btr';
-  $service->url = $service_endpoint;
+  $service->label = 'Authenticated B-Translator Services';
   $service->type = 'rest';
+  $service->url = $server_url . '/btr/';
 
   // skip checking the SSL certificate, for testing
   if ($skip_ssl_check) {
@@ -110,6 +115,7 @@ function btrClient_default_wsclient_service() {
     //'query_auth' => TRUE,
   );
   $service->operations['get_translations'] = array(
+    'label' => 'get_translations',
     'url' => 'translations/@sguid',
     'parameter' => array(
       'sguid' => array(),
