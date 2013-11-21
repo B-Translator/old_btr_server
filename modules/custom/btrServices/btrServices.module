@@ -8,123 +8,117 @@
  * Implements hook_services_resources().
  */
 function btrServices_services_resources() {
-  return array(
-    'report' => array(
+  $resources['report'] = _btrServices_report();
+  $resources['translations'] = _btrServices_translations();
+  return $resources;
+}
 
-      'operations' => array(
-
-        // Getting reports of different kinds,
-        'retrieve' => array(
-          'file' => array('type' => 'inc', 'module' => 'btrServices'),
-          'callback' => '_btr_report_retrieve',
-          'args' => array(
-            array(
-              'name' => 'report',
-              'optional' => FALSE,
-              'source' => array('path' => 0),
-              'description' => 'The name/id of the report.',
-              'type' => 'string',
-            ),
-            array(
-              'name' => 'params',
-              'optional' => FALSE,
-              'source' => 'param',
-              'description' => 'Parameters of the report.',
-              'type' => 'array',
-            ),
-          ),
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
-        ),
+function _btrServices_report() {
+  // Getting reports of different kinds.
+  $report['operations']['retrieve'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_report_retrieve',
+    'args' => array(
+      array(
+        'name' => 'report',
+        'optional' => FALSE,
+        'source' => array('path' => 0),
+        'description' => 'The name/id of the report.',
+        'type' => 'string',
       ),
-
-      'actions' => array(
-
-        // Getting general statistics (number of votes and
-        // translations) for the last week, month and year.
-        'statistics' => array(
-          'file' => array('type' => 'inc', 'module' => 'btrServices'),
-          'callback' => '_btr_report_statistics',
-          'args' => array(
-            array(
-              'name' => 'params',
-              'optional' => FALSE,
-              'source' => 'data',
-              'description' => 'The parameters of the report.',
-              'type' => 'array',
-            ),
-          ),
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
-        ),
-
-        // Getting statistics about top contributors.
-        'topcontrib' => array(
-          'file' => array('type' => 'inc', 'module' => 'btrServices'),
-          'callback' => '_btr_report_topcontrib',
-          'args' => array(
-            array(
-              'name' => 'params',
-              'optional' => FALSE,
-              'source' => 'data',
-              'description' => 'The parameters of the report.',
-              'type' => 'array',
-            ),
-          ),
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
-        ),
-
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'param',
+        'description' => 'Parameters of the report.',
+        'type' => 'array',
       ),
     ),
-
-    'translations' => array(
-
-      'operations' => array(
-
-        // return a string, along with its translations,
-        // votes and other details
-        'retrieve' => array(
-          'file' => array('type' => 'inc', 'module' => 'btrServices'),
-          'callback' => '_btr_translations_retrieve',
-          'args' => array(
-            array(
-              'name' => 'sguid',
-              'optional' => FALSE,
-              'source' => array('path' => 0),
-              'description' => 'The string (globally unique) id.',
-              'type' => 'string',
-            ),
-            array(
-              'name' => 'lng',
-              'optional' => FALSE,
-              'source' => array('param' => 'lng'),
-              'description' => 'The language of translations.',
-              'type' => 'string',
-            ),
-          ),
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
-        ),
-
-        // filter strings and translations
-        // according to the given parameters
-        'index' => array(
-          'file' => array('type' => 'inc', 'module' => 'btrServices'),
-          'callback' => '_btr_translations_index',
-          'args' => array(
-            array(
-              'name' => 'params',
-              'optional' => FALSE,
-              'source' => 'param',
-              'description' => 'Parameters for filtering the strings etc.',
-              'type' => 'array',
-            ),
-          ),
-          'access callback' => 'user_access',
-          'access arguments' => array('btranslator-stats'),
-        ),
-      ),
-    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-stats'),
   );
+
+  // Getting general statistics (number of votes and
+  // translations) for the last week, month and year.
+  $report['actions']['statistics'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_report_statistics',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'The parameters of the report.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-stats'),
+  );
+
+  // Getting statistics about top contributors.
+  $report['actions']['topcontrib'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_report_topcontrib',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'The parameters of the report.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-stats'),
+  );
+
+  return $report;
+}
+
+function _btrServices_translations() {
+  // Return a string, along with its translations,
+  // votes and other details.
+  $translations['operations']['retrieve'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_retrieve',
+    'args' => array(
+      array(
+        'name' => 'sguid',
+        'optional' => FALSE,
+        'source' => array('path' => 0),
+        'description' => 'The string (globally unique) id.',
+        'type' => 'string',
+      ),
+      array(
+        'name' => 'lng',
+        'optional' => FALSE,
+        'source' => array('param' => 'lng'),
+        'description' => 'The language of translations.',
+        'type' => 'string',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-stats'),
+  );
+
+  // Filter strings and translations
+  // according to the given parameters.
+  $translations['operations']['index'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_index',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'param',
+        'description' => 'Parameters for filtering the strings etc.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-stats'),
+  );
+
+  return $translations;
 }

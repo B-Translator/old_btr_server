@@ -54,7 +54,7 @@ function btrClient_default_wsclient_service() {
     ),
   );
   $service->operations['report_statistics_1'] = array(
-    'label' => 'report_statistics',
+    'label' => 'report_statistics_1',
     'url' => 'report/statistics',
     'type' => 'POST',
     'data' => 'params',
@@ -75,8 +75,8 @@ function btrClient_default_wsclient_service() {
     'label' => 'get_translations',
     'url' => 'translations/@sguid',
     'parameter' => array(
-      'sguid' => array(),
-      'lng' => array(),
+      'sguid' => array('type' => 'text'),
+      'lng' => array('type' => 'text'),
     ),
   );
   // add the service
@@ -118,9 +118,8 @@ function btrClient_default_wsclient_service() {
     'label' => 'get_translations',
     'url' => 'translations/@sguid',
     'parameter' => array(
-      'sguid' => array(),
-      'lng' => array(),
-      //'access_token' => array(),
+      'sguid' => array('type' => 'text'),
+      'lng' => array('type' => 'text'),
     ),
   );
   // add the service
