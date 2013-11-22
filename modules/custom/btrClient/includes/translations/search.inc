@@ -53,6 +53,7 @@ function btrClient_search() {
 
   // Get the strings that match the filter and the corresponding translations.
   $strings = btr_get_search_results($filter, $lng);
+  $strings = json_decode(json_encode($strings), true);
 
   // Output the strings.
   if (empty($strings)) {

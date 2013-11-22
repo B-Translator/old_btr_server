@@ -75,6 +75,15 @@ function btrClient_flush_caches() {
  * Implements hook_init().
  */
 function btrClient_init() {
+  // Load the public B-Translator service or the authenticated one.
+  global $btr;
+  if (user_is_logged_in()) {
+    $btr = wsclient_service_load('btr');
+  }
+  else {
+    $btr = wsclient_service_load('public_btr');
+  }
+
   if (arg(0) == 'translations') {
     drupal_add_css(drupal_get_path('module', 'btrClient') . '/btrClient.css');
     // For the translation overview pages. This is used to present admin page like panels.

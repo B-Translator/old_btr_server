@@ -77,7 +77,14 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   drupal_set_title(t('Vote Translations'));
 
   // Get the string and its translations.
-  $strings = btr_get_strings(array($sguid), $lng);
+  //$strings = btr_get_strings(array($sguid), $lng);
+  //$strings = json_decode(json_encode($strings), true);
+  try {
+    $strings = $GLOBALS['btr']->get_translations($sguid, 'sq');
+  }
+  catch (Exception $e) {
+    drupal_set_message($e->getMessage(), 'error');
+  }
   //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.

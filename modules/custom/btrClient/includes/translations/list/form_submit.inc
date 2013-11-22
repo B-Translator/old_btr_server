@@ -144,7 +144,7 @@ function _btrClient_translate_form_submit_single($sguid, $lng, $string) {
   if (strlen($tguid) == 40) {
     // If this is not an existing vote,
     // then add a new vote for this translation.
-    $previous_votes = $string[$tguid]['original']->votes;
+    $previous_votes = $string[$tguid]['original']['votes'];
     global $user;
     if (!in_array($user->name, array_keys($previous_votes))) {
       $umail = $user->init;  // initial mail of the user
@@ -164,7 +164,7 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
   elseif ($approved != '') {
     // Add a new vote for this translation
     // if such a vote does not exist.
-    $previous_votes = $translation['original']->votes;
+    $previous_votes = $translation['original']['votes'];
     if (!in_array($user->name, array_keys($previous_votes))) {
       $umail = $user->init;  // initial mail of the user
       btrClient_add_vote($tguid, $umail);
@@ -172,7 +172,7 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
   }
   elseif ($approved == '') {
     // Remove this vote, if it exists.
-    $previous_votes = $translation['original']->votes;
+    $previous_votes = $translation['original']['votes'];
     if (in_array($user->name, array_keys($previous_votes))) {
       if (user_access('btranslator-vote')) {
 	$umail = $user->init;  // initial mail of the user
@@ -282,7 +282,7 @@ function _btrClient_delete_translation($translation) {
   $trans = $translation['original'];
 
   // Check that the current user has the right to delete translations.
-  $is_own = ($GLOBALS['user']->name == $trans->author);
+  $is_own = ($GLOBALS['user']->name == $trans['author']);
   if (!$is_own and !user_access('btranslator-resolve')) {
     drupal_set_message(t('You are not allowed to delete this translation!'), 'error');
     return;
@@ -291,7 +291,7 @@ function _btrClient_delete_translation($translation) {
   // Delete the translation.
   $account = user_load($GLOBALS['user']->uid);
   btr_del_translation(
-    $tguid = $trans->tguid,   // id of the translation to be deleted
+    $tguid = $trans['tguid'],   // id of the translation to be deleted
     $umail = $account->init,  // email of the user that is deleting it
     $ulng = variable_get('btrClient_translation_lng')
   );

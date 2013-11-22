@@ -128,11 +128,11 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
   if (sizeof($strings)==1) {
 
     // set the page title (no longer than 20 chars)
-    $title = btrClient_shorten($string->string[0], 20);
+    $title = btrClient_shorten($string['string'], 20);
     drupal_set_title(t('String: !string', array('!string' => $title),
         array('context' => 'set the page title')));
 
-    $short_string = btrClient_shorten($string->string[0], 50);
+    $short_string = btrClient_shorten($string['string'], 50);
     $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
 
     // define the sharethis form element
@@ -169,14 +169,13 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
  */
 function _btrClient_translate_form_item(&$form_state, $string, $lng) {
 
-  $string_unpacked = $string->string;
-  $string->string = btrClient_unpack_string($string->string);
+  $string['string'] = btrClient_unpack_string($string['string']);
 
   $form = array(
     '#string' => $string,
     '#langcode' => $lng,
     'source' => array(
-      'string' => array('#markup' => _btrClient_translate_render_textarray($string->string)),
+      'string' => array('#markup' => _btrClient_translate_render_textarray($string['string'])),
     ),
   );
 
@@ -192,7 +191,7 @@ function _btrClient_translate_form_item(&$form_state, $string, $lng) {
   /*******
    * TODO: Improve alternatives in other languages.
    $arr_items = array();
-   foreach ($string->alternatives as $langcode => $string) {
+   foreach ($string['alternatives'] as $langcode => $string) {
    $string = btrClient_unpack_string($string);
    $rendered_string = _btrClient_translate_render_textarray($string);
    $arr_items = array(
@@ -211,17 +210,17 @@ function _btrClient_translate_form_item(&$form_state, $string, $lng) {
   //---------------- Add translations. --------------------
 
   // Translations are stored in an array.
-  $translations = $string->translations;
+  $translations = $string['translations'];
 
   foreach ($translations as $tguid => $translation) {
     // Add the translation to the list.
-    $form[$tguid] = _btrClient_translate_translation($translation, $string->sguid, $lng);
+    $form[$tguid] = _btrClient_translate_translation($translation, $string['sguid'], $lng);
   }
 
   // If the user may add new suggestions, display a textarea.
   if (user_access('btranslator-suggest')) {
     $textarea = _btrClient_translate_translation_textarea($string, $lng);
-    $form[$textarea->tguid] = _btrClient_translate_translation($textarea, $string->sguid, $lng);
+    $form[$textarea['tguid']] = _btrClient_translate_translation($textarea, $string['sguid'], $lng);
   }
 
   return $form;
@@ -237,11 +236,11 @@ function _btrClient_translate_translation_textarea($string, $lng) {
   // need to fill in with a number adequate for this language.
   $languages = btr_get_languages();
   $nplurals = $languages[$lng]['plurals'];
-  $arr_translations = array_fill(0, count($string->string) > 1 ? $nplurals : 1, '');
+  $arr_translations = array_fill(0, count($string['string']) > 1 ? $nplurals : 1, '');
   $translation = implode("\0", $arr_translations);
 
-  return (object) array(
-    'sguid' => $string->sguid,
+  return array(
+    'sguid' => $string['sguid'],
     'tguid' => 'new',
     'lng' => $lng,
     'translation' => $translation,
@@ -259,11 +258,11 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
 
   global $user;
 
-  $translation->translation = btrClient_unpack_string($translation->translation);
+  $translation['translation'] = btrClient_unpack_string($translation['translation']);
 
-  $is_own = ($user->uid && ($user->name == $translation->author));
-  $is_approved = ($user->uid && in_array($user->name, array_keys($translation->votes)));
-  $is_new = ($translation->tguid == 'new');
+  $is_own = ($user->uid && ($user->name == $translation['author']));
+  $is_approved = ($user->uid && in_array($user->name, array_keys($translation['votes'])));
+  $is_new = ($translation['tguid'] == 'new');
   $may_moderate = ($is_own or user_access('btranslator-resolve'));
 
   $form = array(
@@ -281,9 +280,9 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
     '#type' => $type,
     '#theme' => 'btrClient_translate_radio',
     '#theme_wrappers' => array(),
-    '#title' => _btrClient_translate_render_textarray($translation->translation, $is_new ? t('(empty)') : FALSE),
-    '#return_value' => $translation->tguid,
-    '#default_value' => $is_approved ? $translation->tguid : '',
+    '#title' => _btrClient_translate_render_textarray($translation['translation'], $is_new ? t('(empty)') : FALSE),
+    '#return_value' => $translation['tguid'],
+    '#default_value' => $is_approved ? $translation['tguid'] : '',
     '#disabled' => !user_access('btranslator-vote'),
     '#attributes' => array('class' => array('selector')),
   );
@@ -303,7 +302,7 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
   if ($is_new) {
     // Fill in with as many textareas as required to enter translation
     // for this string.
-    $form['value'] = array_fill(0, count($translation->translation), array(
+    $form['value'] = array_fill(0, count($translation['translation']), array(
                        '#type' => 'textarea',
                        '#cols' => 60,
                        '#rows' => 3,
@@ -319,24 +318,24 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
         '#suffix' => '</label>',
       );
     }
-    if ($translation->author != NULL) {
-      $title = btrClient_translate_byline($translation->author, $translation->uid, $translation->time);
+    if ($translation['author'] != NULL) {
+      $title = btrClient_translate_byline($translation['author'], $translation['uid'], $translation['time']);
 
       $form['author'] = array(
         '#markup' => $title,
-        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translations/details/' . $translation->tguid) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
+        //'#prefix' => '<div class="l10n-byline"><a href="' . url('translations/details/' . $translation['tguid']) . '" class="l10n-more-link" title="' . t('Show full details for the translation.') . '">',
         //'#suffix' => '</a><div class="l10n-more-info"></div></div>',
       );
     }
     //TODO: Improve displaying of vote count and the voters.
-    if ($translation->count != '0') {
+    if ($translation['count'] != '0') {
       $voters = array();
-      foreach ($translation->votes as $name => $vote) {
-        $voters[] = theme('username', array('account' => (object) array('name' => $name, 'uid' => $vote->uid)));
+      foreach ($translation['votes'] as $name => $vote) {
+        $voters[] = theme('username', array('account' => (object) array('name' => $name, 'uid' => $vote['uid'])));
       }
       $form['votes'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Number of Votes: !count', array('!count' => $translation->count)),
+        '#title' => t('Number of Votes: !count', array('!count' => $translation['count'])),
         //'#prefix' => '<div class="l10n-more-info">',
         //'#suffix' => '</div>',
         '#collapsible' => TRUE,

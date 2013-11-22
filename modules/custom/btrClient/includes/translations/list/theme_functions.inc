@@ -24,7 +24,7 @@ function theme_btrClient_translate_table($variables) {
 
   foreach (element_children($element) as $key) {
     $lng = $element[$key]['#langcode'];
-    $sguid = $element[$key]['#string']->sguid;
+    $sguid = $element[$key]['#string']['sguid'];
     $rows[] = array(
       array(
         'class' => array('sguid'),
@@ -55,7 +55,7 @@ function theme_btrClient_translate_source($variables) {
   $output .= '<label class="l10n-string' . $filter_match . '">' . drupal_render($element['source']['string']) . '</label>';
   $output .= theme('btrClient_in_context', array('source' => $element['#string']));
 
-  $output .= '<div class="l10n-usage"><a href="' . url('translations/string_details/' . $element['#string']->sguid) . '" class="l10n-more-link" title="' . t('Show the string context and a list of projects where this string is used.') . '">' . t('Show string details.') . '</a><div class="l10n-more-info"></div></div>';
+  $output .= '<div class="l10n-usage"><a href="' . url('translations/string_details/' . $element['#string']['sguid']) . '" class="l10n-more-link" title="' . t('Show the string context and a list of projects where this string is used.') . '">' . t('Show string details.') . '</a><div class="l10n-more-info"></div></div>';
 
   /** TODO: Improve alternatives in other languages.
   $output .= drupal_render($element['alternatives']);
