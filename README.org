@@ -168,3 +168,4 @@ This is a Drupal installation profile for B-Translator.
     + http://dashohoxha.blogspot.com/2012/10/using-nginx-as-web-server-for-drupal.html
     + http://www.havetheknowhow.com/Configure-the-server/Install-ssmtp.html
     + http://arstechnica.com/security/2009/12/how-to-get-set-with-a-secure-sertificate-for-free/
+    + http://codeinthehole.com/writing/pull-requests-and-other-good-practices-for-teams-using-github/
