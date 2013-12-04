@@ -2,6 +2,7 @@ name = B-Translator
 description = Drupal installation profile for B-Translator.
 version = 1.x
 core = 7.x
+exclusive = TRUE
 
 ;--------------------
 ; Files
