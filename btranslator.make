@@ -60,7 +60,8 @@ libraries[oauth2-server-php][directory_name] = "oauth2-server-php"
 libraries[oauth2-server-php][download][type] = "git"
 libraries[oauth2-server-php][download][url] = "https://github.com/bshaffer/oauth2-server-php.git"
 
-projects[oauth2_client][download][type] = git
+projects[oauth2_client][type] = "module"
+projects[oauth2_client][download][type] = "git"
 projects[oauth2_client][download][url] = "https://github.com/dashohoxha/oauth2_client.git"
 
 libraries[PHP-OAuth2][directory_name] = "PHP-OAuth2"
