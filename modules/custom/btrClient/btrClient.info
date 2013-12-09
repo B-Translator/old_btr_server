@@ -15,6 +15,7 @@ dependencies[] = text
 dependencies[] = image
 dependencies[] = number
 dependencies[] = options
+dependencies[] = wsclient
 
 files[] = btrClient.test
 configure = admin/config/btr
