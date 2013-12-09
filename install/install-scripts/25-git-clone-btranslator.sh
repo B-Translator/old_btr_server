@@ -12,7 +12,6 @@ git clone https://github.com/dashohoxha/B-Translator btranslator
 ### copy contrib libraries and modules
 cp -a btranslator-bak/libraries/ btranslator/
 cp -a btranslator-bak/modules/contrib/ btranslator/modules/
-cp -a btranslator-bak/modules/libraries/ btranslator/modules/
 cp -a btranslator-bak/themes/contrib/ btranslator/themes/
 
 ### copy db connection file
