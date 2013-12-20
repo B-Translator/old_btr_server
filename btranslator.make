@@ -90,7 +90,8 @@ projects[drupalchat][version] = "1.0-beta15"
 projects[disqus][version] = "1.9"
 projects[disqus][patch][] = "http://drupal.org/files/disqus-https.patch"
 projects[sharethis][version] = "2.5"
-projects[rpx][version] = "2.4"
+;projects[rpx][version] = "2.4"
+projects[hybridauth][version] = "2.8"
 projects[fb][version] = "3.4-beta3"
 projects[invite][version] = "2.1-beta2"
 
@@ -134,3 +135,11 @@ libraries[geshi][download][url] = "http://downloads.sourceforge.net/project/gesh
 libraries[tinymce][directory_name] = "tinymce"
 libraries[tinymce][download][type] = "get"
 libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce/tinymce_3.5.7.zip"
+
+libraries[hybridauth][directory_name] = "hybridauth-2.1.2"
+libraries[hybridauth][download][type] = "get"
+libraries[hybridauth][download][url] = "http://sourceforge.net/projects/hybridauth/files/hybridauth-2.1.2.zip"
+
+libraries[hybridauth-additional-providers][directory_name] = "hybridauth-additional-providers-1.8"
+libraries[hybridauth-additional-providers][download][type] = "get"
+libraries[hybridauth-additional-providers][download][url] = "http://sourceforge.net/projects/hybridauth/files/hybridauth-additional-providers-1.8.zip"
