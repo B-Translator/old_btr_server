@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the btr_hybridauth feature.
+ */
+
+include_once 'btr_hybridauth.features.inc';
