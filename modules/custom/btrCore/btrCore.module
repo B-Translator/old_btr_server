@@ -145,3 +145,22 @@ function btrCore_flush_caches() {
   return array('cache_btrCore');
 }
 
+/**
+ * Implements hook_robotstxt().
+ *
+ * Called by the module robotstxt. If this module is not installed
+ * then this helps to document the modifications that need to be done
+ * to robots.txt
+ */
+function btrCore_robotstxt() {
+  return array(
+    '# B-Translator paths',
+    'Disallow: /translations/',
+    'Disallow: /?q=translations/',
+    'Disallow: /rpx/',
+    'Disallow: /?q=rpx/',
+    'Disallow: /fb_cb/',
+    'Disallow: /?q=fb_cb/',
+    'Disallow: /downloads/',
+  );
+}
