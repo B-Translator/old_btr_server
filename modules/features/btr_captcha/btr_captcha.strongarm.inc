@@ -182,7 +182,7 @@ function btr_captcha_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'honeypot_time_limit';
-  $strongarm->value = '0';
+  $strongarm->value = '3';
   $export['honeypot_time_limit'] = $strongarm;
 
   $strongarm = new stdClass();
