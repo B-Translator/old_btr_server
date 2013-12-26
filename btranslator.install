@@ -38,6 +38,7 @@ function btranslator_install() {
 
   btranslator_install_mailsystem();
   btranslator_install_actions();
+  btranslator_install_user_restrictions();
 }
 
 function btranslator_install_mailsystem()
@@ -84,3 +85,12 @@ function btranslator_install_actions()
     ->execute();
 }
 
+function btranslator_install_user_restrictions() {
+  db_insert('user_restrictions')
+    ->fields(array(
+      'mask' => '%@netcourrier.com',
+      'type' => 'mail',
+      'status' => 0,  // deny
+      ))
+    ->execute();
+}
