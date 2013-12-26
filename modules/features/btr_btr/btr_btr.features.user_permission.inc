@@ -16,7 +16,7 @@ function btr_btr_user_default_permissions() {
     'roles' => array(
       0 => 'administrator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-export.
@@ -25,7 +25,7 @@ function btr_btr_user_default_permissions() {
     'roles' => array(
       0 => 'translator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-flag.
@@ -36,7 +36,7 @@ function btr_btr_user_default_permissions() {
       1 => 'moderator',
       2 => 'translator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-import.
@@ -45,7 +45,7 @@ function btr_btr_user_default_permissions() {
     'roles' => array(
       0 => 'translator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-resolve.
@@ -54,7 +54,7 @@ function btr_btr_user_default_permissions() {
     'roles' => array(
       0 => 'moderator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-stats.
@@ -65,7 +65,7 @@ function btr_btr_user_default_permissions() {
       1 => 'authenticated user',
       2 => 'moderator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-suggest.
@@ -76,7 +76,7 @@ function btr_btr_user_default_permissions() {
       1 => 'moderator',
       2 => 'translator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   // Exported permission: btranslator-vote.
@@ -87,7 +87,7 @@ function btr_btr_user_default_permissions() {
       1 => 'moderator',
       2 => 'translator',
     ),
-    'module' => 'btrClient',
+    'module' => 'btrCore',
   );
 
   return $permissions;

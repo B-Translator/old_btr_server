@@ -3,6 +3,7 @@ core = 7.x
 package = Features
 php = 5.2.4
 dependencies[] = btrClient
+dependencies[] = btrCore
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = strongarm
