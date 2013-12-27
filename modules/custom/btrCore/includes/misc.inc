@@ -1,6 +1,15 @@
 <?php
 
 /**
+ * Output the given parameter to a log file (useful for debugging).
+ */
+function btr_log($var, $comment ='') {
+  $file = '/tmp/btr.log';
+  $content = "\n==> $comment: " . print_r($var, true);
+  file_put_contents($file, $content, FILE_APPEND);
+}
+
+/**
  * Unpacks a string as retrieved from the database.
  *
  * Creates an array out of the string. If it was a single string, the array
