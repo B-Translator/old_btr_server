@@ -18,7 +18,7 @@ function btr_btrServices_default_services_endpoint() {
   $endpoint->path = 'btr';
   $endpoint->authentication = array(
     'oauth2_server' => array(
-      'server' => 'oauth2_btr',
+      'server' => 'oauth2',
     ),
   );
   $endpoint->server_settings = array(
@@ -39,19 +39,6 @@ function btr_btrServices_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
-    'oauth2user' => array(
-      'actions' => array(
-        'info' => array(
-          'enabled' => '1',
-          'settings' => array(
-            'oauth2_server' => array(
-              'require_authentication' => '1',
-              'scope' => '',
-            ),
-          ),
-        ),
-      ),
-    ),
     'translations' => array(
       'operations' => array(
         'retrieve' => array(

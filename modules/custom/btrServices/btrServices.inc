@@ -5,18 +5,6 @@
  */
 
 /**
- * Retrieves information about the current user.
- */
-function _btr_oauth2user_info() {
-  global $user;
-
-  $data = (array)$user;
-  unset($data['pass']);
-
-  return (object)$data;
-}
-
-/**
  * Getting reports of different kinds. Anybody can
  * retrieve them, there are no access restrictions.
  *

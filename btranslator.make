@@ -76,6 +76,10 @@ projects[http_client][version] = "2.4"
 projects[http_client][patch] = "https://drupal.org/files/http_client-2042205-create_basic_http_auth_plugin-2.patch"
 projects[http_client][patch] = "https://drupal.org/files/issues/http_client-2138627-plugin_for_oauth2_authentication.patch"
 
+projects[oauth2_loginprovider][type] = "module"
+projects[oauth2_loginprovider][download][type] = "git"
+projects[oauth2_loginprovider][download][url] = "https://github.com/dashohoxha/oauth2_loginprovider.git"
+
 
 ;--------------------
 ; Performance

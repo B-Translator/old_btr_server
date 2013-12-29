@@ -8,24 +8,9 @@
  * Implements hook_services_resources().
  */
 function btrServices_services_resources() {
-  $resources['oauth2user'] = _btrServices_oauth2user();
   $resources['report'] = _btrServices_report();
   $resources['translations'] = _btrServices_translations();
   return $resources;
-}
-
-function _btrServices_oauth2user() {
-  $oauth2user['actions']['info'] = array(
-    'help' => 'Retrieves information about the current user',
-    'file' => array('type' => 'inc', 'module' => 'btrServices'),
-    'callback' => '_btr_oauth2user_info',
-    'args' => array(),
-    'access callback' => 'user_access',
-    'access arguments' => array('btranslator-stats'),
-    //'access arguments' => array('access content'),
-    //'access arguments append' => false,
-  );
-  return $oauth2user;
 }
 
 function _btrServices_report() {
