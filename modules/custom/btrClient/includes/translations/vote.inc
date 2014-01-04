@@ -63,16 +63,6 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor-rtl.css');
   }
 
-  /*
-  // Add missing breadcrumb.
-  drupal_set_breadcrumb(
-    array(
-      l(t('Home'), NULL),
-      l(t('Translations'), 'translations'),
-    )
-  );
-  */
-
   // Set the title.
   drupal_set_title(t('Vote Translations'));
 
@@ -80,7 +70,7 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   //$strings = btr_get_strings(array($sguid), $lng);
   //$strings = json_decode(json_encode($strings), true);
   try {
-    $strings = $GLOBALS['btr']->get_translations($sguid, 'sq');
+    $strings = $GLOBALS['btr']->get_translations($sguid, $lng);
   }
   catch (Exception $e) {
     drupal_set_message($e->getMessage(), 'error');
