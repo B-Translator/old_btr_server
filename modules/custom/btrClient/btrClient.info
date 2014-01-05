@@ -18,6 +18,8 @@ dependencies[] = options
 dependencies[] = wsclient
 dependencies[] = wsclient_rest
 dependencies[] = http_client
+dependencies[] = oauth2_client
+dependencies[] = oauth2_login
 
 files[] = btrClient.test
 configure = admin/config/btr

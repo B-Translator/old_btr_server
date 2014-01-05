@@ -7,6 +7,7 @@ dependencies[] = btrCore
 dependencies[] = services
 dependencies[] = rest_server
 dependencies[] = oauth2_server
+dependencies[] = oauth2_loginprovider
 
 ;files[] = btrServices.test
 ;configure = admin/config/btr
