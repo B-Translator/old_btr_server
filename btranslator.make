@@ -65,18 +65,11 @@ projects[oauth2_client][type] = "module"
 projects[oauth2_client][download][type] = "git"
 projects[oauth2_client][download][url] = "https://github.com/dashohoxha/oauth2_client.git"
 
-libraries[PHP-OAuth2][directory_name] = "PHP-OAuth2"
-libraries[PHP-OAuth2][download][type] = "git"
-libraries[PHP-OAuth2][download][url] = "https://github.com/adoy/PHP-OAuth2.git"
-
 projects[wsclient][version] = "1.0"
 projects[wsclient][patch] = "https://drupal.org/files/wsclient-1285310-http_basic_authentication-14.patch"
 projects[wsclient][patch] = "https://drupal.org/files/issues/wsclient-2138617-oauth2_support.patch"
 
-projects[http_client][version] = "2.4"
-projects[http_client][patch] = "https://drupal.org/files/http_client-2042205-create_basic_http_auth_plugin-2.patch"
-projects[http_client][patch] = "https://drupal.org/files/issues/http_client-2138627-6-plugin_for_oauth2_authentication.patch"
-projects[http_client][patch] = "https://drupal.org/files/issues/http_client-2163459-2-support_for_http_proxies.patch"
+projects[http_client][version] = "2.x-dev"
 
 projects[oauth2_loginprovider][type] = "module"
 projects[oauth2_loginprovider][download][type] = "git"
