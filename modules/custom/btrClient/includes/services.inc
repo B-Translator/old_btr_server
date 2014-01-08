@@ -32,7 +32,7 @@ function _btrClient_services_public_service($service_name) {
   $service->label = 'Public B-Translator Services';
   $service->type = 'rest';
   $service->url = $server_url . '/public/btr/';
-  _btrClient_services_development_settings(&$service);
+  _btrClient_services_development_settings($service);
 
   $service->operations['report_statistics'] = array(
     'label' => 'report_statistics',
@@ -98,7 +98,7 @@ function _btrClient_services_authenticated_service($service_name) {
   $service->type = 'rest';
   $service->url = $server_url . '/btr/';
 
-  _btrClient_services_development_settings(&$service);
+  _btrClient_services_development_settings($service);
 
   $service->settings['authentication']['oauth2'] = array(
     'token_endpoint' => $token_endpoint,
