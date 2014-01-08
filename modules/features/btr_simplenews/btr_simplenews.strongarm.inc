@@ -13,13 +13,6 @@ function btr_simplenews_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'additional_settings__active_tab_simplenews';
-  $strongarm->value = 'edit-rpx-ui';
-  $export['additional_settings__active_tab_simplenews'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'simplenews_debug';
   $strongarm->value = 1;
   $export['simplenews_debug'] = $strongarm;

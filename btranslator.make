@@ -93,7 +93,6 @@ projects[drupalchat][version] = "1.0-beta15"
 projects[disqus][version] = "1.9"
 projects[disqus][patch][] = "http://drupal.org/files/disqus-https.patch"
 projects[sharethis][version] = "2.5"
-;projects[rpx][version] = "2.4"
 
 projects[hybridauth][version] = "2.8"
 projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-Adding_support_for_DrupalOAuth2_provider.patch"

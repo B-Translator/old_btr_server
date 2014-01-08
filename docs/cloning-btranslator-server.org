@@ -120,7 +120,6 @@ server.
   drush --yes pm-enable btr_mass_contact
   ## drush --yes pm-enable btr_googleanalytics
   ## drush --yes pm-enable btr_drupalchat
-  ## drush --yes pm-enable btr_janrain
   #+END_EXAMPLE
 
 ** Enable the feature btr_fb

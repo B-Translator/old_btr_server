@@ -7,8 +7,6 @@ cat <<EOF >> $drupal_dir/robots.txt
 # B-Translator
 Disallow: /translations/
 Disallow: /?q=translations/
-Disallow: /rpx/
-Disallow: /?q=rpx/
 Disallow: /fb_cb/
 Disallow: /?q=fb_cb/
 Disallow: /downloads/
@@ -108,7 +106,6 @@ $drush --yes pm-enable btr_permissions
 #$drush --yes pm-enable btr_mass_contact
 #$drush --yes pm-enable btr_googleanalytics
 #$drush --yes pm-enable btr_drupalchat
-#$drush --yes pm-enable btr_janrain
 
 ### install FB integration
 #$drush --yes pm-enable btr_fb

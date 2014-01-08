@@ -22,7 +22,6 @@ features[user_permission][] = edit own simplenews content
 features[user_permission][] = edit terms in newsletter
 features[user_permission][] = send newsletter
 features[user_permission][] = subscribe to newsletters
-features[variable][] = additional_settings__active_tab_simplenews
 features[variable][] = simplenews_debug
 features[variable][] = simplenews_format
 features[variable][] = simplenews_priority

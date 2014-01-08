@@ -59,6 +59,9 @@ drush --yes features-revert btr_misc
 drush --yes pm-enable btr_layout
 drush --yes features-revert btr_layout
 
+drush --yes pm-enable btr_hybridauth
+drush --yes features-revert btr_hybridauth
+
 drush --yes pm-enable btr_disqus
 drush --yes pm-enable btr_content
 drush --yes pm-enable btr_sharethis
@@ -75,7 +78,6 @@ drush --yes pm-enable btr_permissions
 #drush --yes pm-enable btr_mass_contact
 #drush --yes pm-enable btr_googleanalytics
 #drush --yes pm-enable btr_drupalchat
-#drush --yes pm-enable btr_janrain
 
 drush --yes pm-enable l10n_client l10n_update
 drush language-add $lng

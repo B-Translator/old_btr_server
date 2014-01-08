@@ -91,7 +91,7 @@
   Other features that I have created are: /btr_disqus/,
   /btr_invite/, /btr_sharethis/,
   /btr_captcha/, /btr_drupalchat/,
-  /btr_janrain/, /btr_simplenews/,
+  /btr_hybridauth/, /btr_simplenews/,
   /btr_mass_contact/, /btr_googleanalytics/, etc.  In
   order to recreate them easily, the script =create-features.sh= can
   be used. It will create a feature for each list of components that
@@ -224,7 +224,7 @@
   module.
 
   Some of these modules are just wrappers to external API services,
-  like disqus, sharethis, janrain, recaptcha, googleanalytics,
+  like disqus, sharethis, hybridauth, recaptcha, googleanalytics,
   etc. Usually they need some API keys or any other private attributes
   that are different from site to site. We cannot save these private
   attributes on the feature, because they are specific for each
@@ -335,7 +335,6 @@
   sharethis_publisherID
   sharethis_twitter_handle
   sharethis_twitter_suffix
-  rpx_apikey
   simplenews_from_address
   simplenews_test_address
   mass_contact_default_sender_email
