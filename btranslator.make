@@ -66,8 +66,8 @@ projects[oauth2_client][download][type] = "git"
 projects[oauth2_client][download][url] = "https://github.com/dashohoxha/oauth2_client.git"
 
 projects[wsclient][version] = "1.0"
-projects[wsclient][patch] = "https://drupal.org/files/wsclient-1285310-http_basic_authentication-14.patch"
-projects[wsclient][patch] = "https://drupal.org/files/issues/wsclient-2138617-oauth2_support.patch"
+projects[wsclient][patch][] = "https://drupal.org/files/wsclient-1285310-http_basic_authentication-14.patch"
+projects[wsclient][patch][] = "https://drupal.org/files/issues/wsclient-2138617-oauth2_support.patch"
 
 projects[http_client][version] = "2.x-dev"
 
@@ -96,8 +96,8 @@ projects[sharethis][version] = "2.5"
 ;projects[rpx][version] = "2.4"
 
 projects[hybridauth][version] = "2.8"
-projects[hybridauth][patch] = "https://drupal.org/files/issues/hybridauth-2164869-Adding_support_for_DrupalOAuth2_provider.patch"
-projects[hybridauth][patch] = "https://drupal.org/files/issues/hybridauth-2164869-2-Small_fix_on_the_previous_patch.patch"
+projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-Adding_support_for_DrupalOAuth2_provider.patch"
+projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-2-Small_fix_on_the_previous_patch.patch"
 
 projects[fb][version] = "3.4-beta3"
 projects[invite][version] = "2.1-beta2"
