@@ -13,7 +13,6 @@ dependencies[] = features
 dependencies[] = field_sql_storage
 dependencies[] = file
 dependencies[] = image
-dependencies[] = invite
 dependencies[] = jquery_update
 dependencies[] = menu
 dependencies[] = node

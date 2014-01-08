@@ -139,12 +139,6 @@ function btr_layout_context_default_contexts() {
           'region' => 'content',
           'weight' => '-10',
         ),
-        'invite-invite' => array(
-          'module' => 'invite',
-          'delta' => 'invite',
-          'region' => 'sidebar_first',
-          'weight' => '-8',
-        ),
         'btrClient-statistics' => array(
           'module' => 'btrClient',
           'delta' => 'statistics',
@@ -231,12 +225,6 @@ function btr_layout_context_default_contexts() {
           'delta' => 'feed-1',
           'region' => 'sidebar_first',
           'weight' => '-24',
-        ),
-        'invite-invite' => array(
-          'module' => 'invite',
-          'delta' => 'invite',
-          'region' => 'sidebar_first',
-          'weight' => '-23',
         ),
         'btrClient-statistics' => array(
           'module' => 'btrClient',
