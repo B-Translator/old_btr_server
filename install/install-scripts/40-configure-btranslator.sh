@@ -50,6 +50,7 @@ EOF
 # set the memcache configuration
 cat >> $drupal_settings << EOF
 // Adds memcache as a cache backend
+/* comment memcache config
 \$conf['cache_backends'][] = 'profiles/btranslator/modules/contrib/memcache/memcache.inc';
 // Makes it so that memcache is the default caching backend
 \$conf['cache_default_class'] = 'MemCacheDrupal';
@@ -66,6 +67,7 @@ cat >> $drupal_settings << EOF
 
 // If you wanted multiple Drupal installations to share one Memcache instance use the prefix like so:
 \$conf['memcache_key_prefix'] = 'btranslator';
+comment memcache config */
 
 EOF
 
@@ -85,6 +87,9 @@ $drush --yes features-revert btr_misc
 
 $drush --yes pm-enable btr_layout
 $drush --yes features-revert btr_layout
+
+$drush --yes pm-enable btr_hybridauth
+$drush --yes features-revert btr_hybridauth
 
 $drush --yes pm-enable btr_disqus
 $drush --yes pm-enable btr_content

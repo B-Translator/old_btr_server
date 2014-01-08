@@ -75,6 +75,10 @@ projects[oauth2_loginprovider][type] = "module"
 projects[oauth2_loginprovider][download][type] = "git"
 projects[oauth2_loginprovider][download][url] = "https://github.com/dashohoxha/oauth2_loginprovider.git"
 
+projects[oauth2_login][type] = "module"
+projects[oauth2_login][download][type] = "git"
+projects[oauth2_login][download][url] = "https://github.com/dashohoxha/oauth2_login.git"
+
 
 ;--------------------
 ; Performance
