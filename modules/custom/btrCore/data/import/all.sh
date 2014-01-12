@@ -12,7 +12,7 @@ cd $(dirname $0)
 ./btranslator.sh
 ./drupal.sh
 ./firefox-os.sh
-./kturtle_doc.sh
 ./wordpress.sh
+#./kturtle_doc.sh
 #./pingus.sh
 #./vocabulary.sh

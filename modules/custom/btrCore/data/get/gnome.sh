@@ -6,7 +6,7 @@ echo "===== GETTING GNOME ====="
 change_dir GNOME
 
 l10n_gnome='https://l10n.gnome.org/languages'
-version='gnome-3-8'
+version='gnome-3-10'
 for lng in $languages
 do
     rm -rf $lng
