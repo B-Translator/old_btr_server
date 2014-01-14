@@ -7,8 +7,10 @@ drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \
            $makefile $drupal_dir
 cp -a $drupal_dir/profiles/btranslator/{libraries/bootstrap,themes/contrib/bootstrap/}
-cp -a $drupal_dir/profiles/btranslator/{libraries/hybridauth-2.1.2/hybridauth,libraries/}
-cp $drupal_dir/profiles/btranslator/libraries/hybridauth-additional-providers-1.8/hybridauth-github/Providers/GitHub.php $drupal_dir/profiles/btranslator/libraries/hybridauth/Hybrid/Providers/
+#cp -a $drupal_dir/profiles/btranslator/{libraries/hybridauth-2.1.2/hybridauth,libraries/}
+#cp $drupal_dir/profiles/btranslator/libraries/hybridauth-additional-providers-1.8/hybridauth-github/Providers/GitHub.php $drupal_dir/profiles/btranslator/libraries/hybridauth/Hybrid/Providers/
+#cp $drupal_dir/profiles/btranslator/libraries/hybridauth-additional-providers-1.8/hybridauth-github/Providers/DrupalOAuth2.php $drupal_dir/profiles/btranslator/libraries/hybridauth/Hybrid/Providers/
+cp $drupal_dir/profiles/btranslator/libraries/hybridauth/{additional-providers/hybridauth-drupaloauth2/Providers/DrupalOAuth2.php,hybridauth/Hybrid/Providers/}
 
 ### create the directory of PO files
 mkdir -p /var/www/PO_files
