@@ -113,3 +113,19 @@ function btrClient_form_user_profile_form_alter(&$form, &$form_state, $form_id) 
   // it is for internal usage only
   $form['field_data_sequential']['#access'] = FALSE;
 }
+
+/**
+ * Implements hook_oauth2_login_enabled().
+ */
+function btrClient_oauth2_login_enabled($enabled) {
+  db_update('menu_links')
+    ->fields(array(
+        'hidden' => ($enabled ? 1 : 0),
+      ))
+    ->condition('menu_name', 'user-menu')
+    ->condition('link_path', 'user/login')
+    ->condition('router_path', 'user/login')
+    ->condition('plid', 0)
+    ->condition('module', 'menu')
+    ->execute();
+}
