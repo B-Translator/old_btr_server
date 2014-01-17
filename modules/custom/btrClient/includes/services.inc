@@ -27,6 +27,8 @@ function btrClient_default_wsclient_service() {
  * Create and return the public service.
  */
 function _btrClient_services_public_service($service_name) {
+  $server_url = variable_get('oauth2_login_oauth2_server', '');
+
   $service = new WSClientServiceDescription();
   $service->name = $service_name;
   $service->label = 'Public B-Translator Services';
@@ -102,16 +104,12 @@ function _btrClient_services_authenticated_service($service_name) {
 
   $service->settings['authentication']['oauth2'] = array(
     'token_endpoint' => $token_endpoint,
-    // auth_flow can be: server-side | client-credentials | user-password
-      'auth_flow' => 'server-side',
+    'auth_flow' => 'server-side',
     'client_id' => $client_id,
     'client_secret' => $client_secret,
-    //'username' => 'user1',
-    //'password' => 'user1',
     'redirect_uri' => $redirect_uri,
     'authorization_endpoint' => $authorization_endpoint,
     //'scope' => '',
-    //'query_auth' => TRUE,
   );
 
   $service->operations['get_translations'] = array(
