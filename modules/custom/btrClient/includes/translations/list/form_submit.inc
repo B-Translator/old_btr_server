@@ -11,26 +11,37 @@
  * @see btrClient_translate_form().
  */
 function btrClient_translate_form_submit($form, &$form_state) {
-
   $form_values = $form_state['values'];
-  //dpm($form_values);  //debug
 
   // Check that the button clicked was either Save, or Next, or Previous, etc.
   $op = $form_values['op'];
-  if ( $op!=t('Login') && $op!=t('Previous') && $op!=t('Save') && $op!=t('Next')
-       && $op!=t('Translated') && $op!=t('Untranslated') ) {
-    return;
+  $operations = array(
+    t('Login'),
+    t('Previous'),
+    t('Save'),
+    t('Next'),
+    t('Translated'),
+    t('Untranslated'),
+  );
+  if (!in_array($op, $operations))  return;
+
+  if ($op == t('Login')) {
+    oauth2_login();
+    // Function oauth2_login() calls drupal_goto(), so this function
+    // practically ends here, does not continue further down.
   }
 
-  if ($op==t('Login')) {
-    drupal_goto('user', array('query' => drupal_get_destination()));
+  if ($op == t('Save') and !user_is_logged_in()) {
+    // Save $form_state to session and redirect to login.
+    $_SESSION['btrClient']['translate_form_state'] = $form_state;
+    oauth2_login();
   }
 
   // Save the values selected on the form (votes or new suggestions).
-  if ( user_access('btranslator-vote') || user_access('btranslator-suggest') ) {
+  if (user_is_logged_in()) {
     _btrClient_translate_form_save($form_values);
   }
-  elseif (!user_is_logged_in()) {
+  else {
     drupal_set_message(t("You need to be logged in, in order to be able to submit votes and suggestions."));
   }
 

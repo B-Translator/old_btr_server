@@ -109,10 +109,8 @@ function theme_btrClient_translate_translation($variables) {
   $element['#attributes']['class'][] = 'clearfix';
   $element['#attributes']['class'][] = 'translation';
 
-  // Add is-selectable and is-declinable helpers for JS.
-  if (!$element['approved']['#disabled']) {
-    $element['#attributes']['class'][] = 'is-selectable';
-  }
+  //// Add is-selectable and is-declinable helpers for JS.
+  $element['#attributes']['class'][] = 'is-selectable';
   if (isset($element['declined'])) {
     $element['#attributes']['class'][] = 'is-declinable';
   }

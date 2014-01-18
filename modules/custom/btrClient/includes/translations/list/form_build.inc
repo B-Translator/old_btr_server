@@ -68,7 +68,7 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
   // The submit buttons will appear only when the user has
   // permissions to submit votes and suggestions.
   $translation_lng = variable_get('btrClient_translation_lng', 'fr');
-  $enable_submit = ($lng==$translation_lng) && (user_access('btranslator-vote') || user_access('btranslator-suggest'));
+  $enable_submit = ($lng==$translation_lng);
   $form['buttons']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
@@ -179,13 +179,11 @@ function _btrClient_translate_form_item(&$form_state, $string, $lng) {
     ),
   );
 
-  if (user_access('btranslator-suggest')) {
-    $form['source']['edit'] = array(
-      '#markup' => t('Translate'),
-      '#prefix' => '<label title="' . t('Translate') . '">',
-      '#suffix' => '</label>',
-    );
-  }
+  $form['source']['edit'] = array(
+    '#markup' => t('Translate'),
+    '#prefix' => '<label title="' . t('Translate') . '">',
+    '#suffix' => '</label>',
+  );
 
   // Add alternative strings (in other languages).
   /*******
@@ -218,10 +216,8 @@ function _btrClient_translate_form_item(&$form_state, $string, $lng) {
   }
 
   // If the user may add new suggestions, display a textarea.
-  if (user_access('btranslator-suggest')) {
-    $textarea = _btrClient_translate_translation_textarea($string, $lng);
-    $form[$textarea['tguid']] = _btrClient_translate_translation($textarea, $string['sguid'], $lng);
-  }
+  $textarea = _btrClient_translate_translation_textarea($string, $lng);
+  $form[$textarea['tguid']] = _btrClient_translate_translation($textarea, $string['sguid'], $lng);
 
   return $form;
 }
@@ -283,7 +279,6 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
     '#title' => _btrClient_translate_render_textarray($translation['translation'], $is_new ? t('(empty)') : FALSE),
     '#return_value' => $translation['tguid'],
     '#default_value' => $is_approved ? $translation['tguid'] : '',
-    '#disabled' => !user_access('btranslator-vote'),
     '#attributes' => array('class' => array('selector')),
   );
   if ($voting_mode == 'single') {
@@ -311,13 +306,11 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
 
   }
   else {
-    if (user_access('btranslator-suggest')) {
-      $form['edit'] = array(
-        '#markup' => t('Edit a copy'),
-        '#prefix' => '<label title="' . t('Edit a copy') . '">',
-        '#suffix' => '</label>',
-      );
-    }
+    $form['edit'] = array(
+      '#markup' => t('Edit a copy'),
+      '#prefix' => '<label title="' . t('Edit a copy') . '">',
+      '#suffix' => '</label>',
+    );
     if ($translation['author'] != NULL) {
       $title = btrClient_translate_byline($translation['author'], $translation['uid'], $translation['time']);
 

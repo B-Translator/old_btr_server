@@ -49,6 +49,15 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     return;
   }
 
+  // If there is a translate_form_state saved in session, then
+  // this is a redirect after login. Call the submit function again.
+  if (isset($_SESSION['btrClient']['translate_form_state'])) {
+    $form_state = $_SESSION['btrClient']['translate_form_state'];
+    unset($_SESSION['btrClient']['translate_form_state']);
+    //drupal_form_submit('btrClient_translate_form', $form_state);
+    btrClient_translate_form_submit(NULL, $form_state);
+  }
+
   // Add the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/jquery.worddiff.js');
