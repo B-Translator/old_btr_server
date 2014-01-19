@@ -23,7 +23,8 @@ cd $(dirname $0)
 
 ### mysql command
 dbname=${BTR_DATA:-btr_data}
-mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --database=$dbname --skip-column-names"
+connect=$(php ../db/sql-connect.php)
+mysql="mysql $connect -B --database=$dbname --skip-column-names"
 
 ### get from the DB the names of the templates and the filenames
 sql="SELECT t.tplname, f.filename FROM btr_files f

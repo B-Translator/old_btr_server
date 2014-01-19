@@ -34,7 +34,8 @@ then
     project_list=$project
 else
     dbname=${BTR_DATA:-btr_data}
-    mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --skip-column-names"
+    connect=$(php ../db/sql-connect.php)
+    mysql="mysql $connect -B --skip-column-names"
     sql="SELECT project FROM btr_projects WHERE origin = '$origin'"
     project_list=$($mysql -D $dbname -e "$sql")
 fi
