@@ -1,0 +1,2 @@
+
+0 4 * * *    /var/www/btranslator/profiles/btranslator/utils/twitter.sh > /dev/null 2>&1

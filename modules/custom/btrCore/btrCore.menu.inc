@@ -127,6 +127,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a random twitter.
+  $items['translations/twitter'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Return a random string (and translations) in a form suitable for twitter.',
+    'page callback'   => 'btrCore_twitter',
+    'file'            => 'includes/twitter.inc',
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 

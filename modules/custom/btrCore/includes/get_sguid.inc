@@ -87,11 +87,13 @@ function btr_sguid_get_sequential($uid =NULL) {
  * This random string is selected from the list
  * of the preferred projects of the user.
  */
-function btr_sguid_get_random($uid =NULL) {
+function btr_sguid_get_random($uid =NULL, $projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // get the list of projects that will be searched
-  $projects = _btr_get_pool_of_projects($uid);
+  if ($projects == NULL) {
+    $projects = _btr_get_pool_of_projects($uid);
+  }
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
@@ -180,12 +182,14 @@ function btr_sguid_get_untranslated($lng, $uid =NULL) {
  * Return a random translated sguid from the preferred projects
  * of the given user.
  */
-function btr_sguid_get_translated($lng, $uid =NULL) {
+function btr_sguid_get_translated($lng, $uid =NULL, $projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // get the list of projects that will be searched
   // and the translation language of the user
-  $projects = _btr_get_pool_of_projects($uid);
+  if ($projects == NULL) {
+    $projects = _btr_get_pool_of_projects($uid);
+  }
 
   // build the WHERE condition for selecting projects
   list($where, $args) = _btr_projects_to_where_condition($projects);
