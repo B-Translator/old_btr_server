@@ -286,7 +286,7 @@ function _btrCore_build_notification_email($params) {
 
     // Send by email a string to be reviewed.
     case 'string-to-be-reviewed':
-      list($string, $translations) = get_string_and_translations($params->sguid, $lng);
+      list($string, $translations) = btr_get_string_and_translations($params->sguid, $lng);
       $subject = "[$subject_prefix] " . btrCore_shorten($string, 60);
       $body = array(
         t("Greetings !username,
