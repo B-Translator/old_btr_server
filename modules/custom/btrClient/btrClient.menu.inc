@@ -31,7 +31,7 @@ function btrClient_menu() {
     'title'           => 'Translations',
     'description'     => 'Vote the best translation for a string, or suggest a better translation.',
     'page callback'   => 'btrClient_vote',
-    'file'            => 'includes/translations/vote.inc',
+    'file'            => 'translations/vote.inc',
     'access callback' => TRUE,
   );
 
@@ -46,7 +46,7 @@ function btrClient_menu() {
     'title'           => 'Search',
     'description'     => 'Search strings and translations using various filters.',
     'page callback'   => 'btrClient_search',
-    'file'            => 'includes/translations/search.inc',
+    'file'            => 'translations/search.inc',
     'access callback' => TRUE,
     'weight'          => 2,
   );
@@ -56,7 +56,7 @@ function btrClient_menu() {
     'title'           => 'Export',
     'description'     => 'Export the most voted translations of a project into a PO file.',
     'page callback'   => 'btrClient_export',
-    'file'            => 'includes/translations/export.inc',
+    'file'            => 'translations/export.inc',
     'access callback' => 'user_is_logged_in',
     'weight'          => 3,
   );
@@ -66,7 +66,7 @@ function btrClient_menu() {
     'title'           => 'Import',
     'description'     => 'Import strings and translations from POT/PO files of projects.',
     'page callback'   => 'btrClient_import',
-    'file'            => 'includes/translations/import.inc',
+    'file'            => 'translations/import.inc',
     //'access callback' => 'user_access',  //default
     'access arguments' => array('btranslator-import'),
     'weight'          => 4,
@@ -77,7 +77,7 @@ function btrClient_menu() {
     'title'           => 'Add Term',
     'description'     => 'Add a new term on the vocabulary.',
     'page callback'   => 'btrClient_addterm',
-    'file'            => 'includes/translations/import.inc',
+    'file'            => 'translations/import.inc',
     //'access callback' => 'user_access',  //default
     'access arguments' => array('btranslator-import'),
     'weight'          => 5,

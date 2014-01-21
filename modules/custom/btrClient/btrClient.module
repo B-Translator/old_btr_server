@@ -4,9 +4,9 @@
  * Module file for btrClient.
  */
 
-require_once(dirname(__FILE__) . '/includes/menu.inc');
-require_once(dirname(__FILE__) . '/includes/blocks.inc');
-require_once(dirname(__FILE__) . '/includes/services.inc');
+require_once(dirname(__FILE__) . '/btrClient.menu.inc');
+require_once(dirname(__FILE__) . '/btrClient.blocks.inc');
+require_once(dirname(__FILE__) . '/btrClient.services.inc');
 
 /**
  * Implements hook_help().
