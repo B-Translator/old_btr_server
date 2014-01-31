@@ -1,0 +1,5 @@
+### first create a user with `adduser twitter`
+0 */5 * * *  twitter  /var/www/btr/profiles/btranslator/utils/fortune.sh > /dev/null 2>&1
+
+### uncomment this line only for debugging
+#*/5 * * * *  twitter  /var/www/btr/profiles/btranslator/utils/fortune.sh
