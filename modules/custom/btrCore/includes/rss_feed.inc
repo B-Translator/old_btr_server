@@ -65,15 +65,7 @@ function btrCore_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
   foreach ($translations as $tran) {
     $title = btrCore_shorten($tran->string, 60);
     $link = $base_url . '/' . $tran->lng . '/' . $tran->sguid;
-    $str_original_string = t("Original string:");
-    $str_suggested_translation = t("Suggested translation:");
-    $description = "
-	    <strong>$str_original_string</strong><br/>
-	    <xmp>$tran->string</xmp>
-	    <br/><br/>
-	    <strong>$str_suggested_translation</strong><br/>
-	    <xmp>$tran->translation</xmp><br/>
-        ";
+    $description = "$tran->string</xmp> -- <xmp>$tran->translation</xmp>";
     $pubDate = date('r', strtotime($tran->time));
     $rss_feed .= "
       <item>
