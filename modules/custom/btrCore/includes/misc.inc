@@ -10,6 +10,17 @@ function btr_log($var, $comment ='') {
 }
 
 /**
+ * Output the call stack up to the point where this function is called.
+ */
+function btr_trace($comment ='') {
+  $e = new Exception();
+  $trace = $e->getTraceAsString();
+  $trace = preg_replace('/^#0 .*/', '', $trace);
+  $trace = str_replace(DRUPAL_ROOT.'/', '', $trace);
+  btr_log($trace, $comment);
+}
+
+/**
  * Unpacks a string as retrieved from the database.
  *
  * Creates an array out of the string. If it was a single string, the array
