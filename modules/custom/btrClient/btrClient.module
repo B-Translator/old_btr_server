@@ -104,6 +104,26 @@ function btrClient_init() {
   drupal_set_breadcrumb(array());
 }
 
+/**
+ * Invoked when a user has logged in through HybridAuth.
+ * @param object $account
+ *   User account object.
+ * @param array $data
+ *   HybridAuth identity data.
+ */
+function btrClient_hybridauth_user_login($account, $data) {
+  global $btr;
+  $btr = wsclient_service_load('btr');
+}
+
+/**
+ * Implements hook_hybridauth_profile_alter().
+ */
+function btrClient_hybridauth_profile_alter($profile) {
+  //btr_log('btrClient_hybridauth_profile_alter($profile)');
+  //btr_log($profile);
+}
+
 
 /**
  * Implements hook_form_FORM_ID_alter().

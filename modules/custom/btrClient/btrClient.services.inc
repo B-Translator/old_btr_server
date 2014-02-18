@@ -109,7 +109,7 @@ function _btrClient_services_authenticated_service($service_name) {
     'client_secret' => $client_secret,
     'redirect_uri' => $redirect_uri,
     'authorization_endpoint' => $authorization_endpoint,
-    //'scope' => '',
+    'scope' => 'user_profile',
   );
 
   $service->operations['get_translations'] = array(

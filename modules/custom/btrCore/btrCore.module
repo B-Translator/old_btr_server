@@ -162,3 +162,10 @@ function btrCore_robotstxt() {
     'Disallow: /downloads/',
   );
 }
+
+/**
+ * Implements hook_oauth2_loginprovider_userprofile_alter().
+ */
+function btrCore_oauth2_loginprovider_userprofile_alter(&$data) {
+  $data['test'] = 'TEST';
+}
