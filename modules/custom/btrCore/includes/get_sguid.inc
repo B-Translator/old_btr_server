@@ -268,8 +268,8 @@ function _btr_get_pool_of_projects($uid =NULL) {
 
   // if checkbox same_project is checked, constrain the list
   // of projects by the projects of the last string
-  if (isset($_SESSION['same_project']) && $_SESSION['same_project']) {
-    $last_projects = _btr_get_projects_of_sguid($_SESSION['sguid']);
+  if (isset($_SESSION['btr']['same_project']) && $_SESSION['btr']['same_project']) {
+    $last_projects = _btr_get_projects_of_sguid($_SESSION['btr']['sguid']);
     if (!empty($last_projects)) {
       $arr_projects = array_intersect($arr_projects, $last_projects);
       if (empty($arr_projects)) {

@@ -44,16 +44,16 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
       drupal_goto("/");
       return;
     }
-    $_SESSION['sguid'] = $sguid;
+    $_SESSION['btr']['sguid'] = $sguid;
     drupal_goto("translations/$lng/$sguid");
     return;
   }
 
-  // If there is a translate_form_state saved in session, then
-  // this is a redirect after login. Call the submit function again.
-  if (isset($_SESSION['btrClient']['translate_form_state'])) {
-    $form_state = $_SESSION['btrClient']['translate_form_state'];
-    unset($_SESSION['btrClient']['translate_form_state']);
+  // If there is a $_SESSION['btr']['translate_form']['state'],
+  // then this is a redirect after login. Call the submit function again.
+  if (isset($_SESSION['btr']['translate_form']['state'])) {
+    $form_state = $_SESSION['btr']['translate_form']['state'];
+    unset($_SESSION['btr']['translate_form']['state']);
     //drupal_form_submit('btrClient_translate_form', $form_state);
     btrClient_translate_form_submit(NULL, $form_state);
   }

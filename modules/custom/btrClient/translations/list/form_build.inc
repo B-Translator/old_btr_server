@@ -52,7 +52,7 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
   );
 
   // don't show the Back button on the search interface
-  if ( current_path() != 'translations/search' && isset($_SESSION['previous_url']) ) {
+  if ( current_path() != 'translations/search' && isset($_SESSION['btr']['previous_url']) ) {
     $form['buttons']['previous'] = array(
       '#type' => 'submit',
       '#value' => t('Previous'),
@@ -92,7 +92,7 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
     $form['buttons']['same_project'] = array(
       '#type' => 'checkbox',
       '#title' => t('Same Project'),
-      '#value' => isset($_SESSION['same_project']) ? $_SESSION['same_project'] : FALSE,
+      '#value' => isset($_SESSION['btr']['same_project']) ? $_SESSION['btr']['same_project'] : FALSE,
     );
   }
 

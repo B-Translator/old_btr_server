@@ -21,8 +21,8 @@ function btrClient_build_filter() {
   $lng_codes = array_keys($languages);
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
   //by default search for strings similar to the one that is being voted
-  if ($lng == '' && isset($_SESSION['sguid'])) {
-    $string = btr_get_string($_SESSION['sguid']);
+  if ($lng == '' && isset($_SESSION['btr']['sguid'])) {
+    $string = btr_get_string($_SESSION['btr']['sguid']);
     if ($string) {
       $lng = variable_get('btrClient_translation_lng', 'fr');
       $request['words'] = $string;

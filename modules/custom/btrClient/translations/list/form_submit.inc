@@ -33,7 +33,7 @@ function btrClient_translate_form_submit($form, &$form_state) {
 
   if ($op == t('Save') and !user_is_logged_in()) {
     // Save $form_state to session and redirect to login.
-    $_SESSION['btrClient']['translate_form_state'] = $form_state;
+    $_SESSION['btr']['translate_form']['state'] = $form_state;
     oauth2_login();
   }
 
@@ -45,11 +45,11 @@ function btrClient_translate_form_submit($form, &$form_state) {
     drupal_set_message(t("You need to be logged in, in order to be able to submit votes and suggestions."));
   }
 
-  $_SESSION['same_project'] = isset($form_state['input']['same_project']) ? TRUE : FALSE;
+  $_SESSION['btr']['same_project'] = isset($form_state['input']['same_project']) ? TRUE : FALSE;
   if ($op == t('Previous')) {
-    if (isset($_SESSION['previous_url'])) {
-      $previous_url = $_SESSION['previous_url'];
-      $_SESSION['previous_url'] = htmlentities(request_uri());
+    if (isset($_SESSION['btr']['previous_url'])) {
+      $previous_url = $_SESSION['btr']['previous_url'];
+      $_SESSION['btr']['previous_url'] = htmlentities(request_uri());
       drupal_goto($previous_url);
     }
   }
@@ -60,7 +60,7 @@ function btrClient_translate_form_submit($form, &$form_state) {
     $form_state['redirect'] = array($form_values['target']['q'], array('query' => $redirect_args));
   }
   else {
-    $_SESSION['previous_url'] = htmlentities(request_uri());
+    $_SESSION['btr']['previous_url'] = htmlentities(request_uri());
     $lng = $form_values['langcode'];
     if ($op == t('Next')) {
       drupal_goto("translations/$lng/");
