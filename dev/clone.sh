@@ -22,8 +22,10 @@ dst=$2
 if [ "$src" = 'btr' ]
 then
     src_name=btr
+    src_config=default
 else
     src_name=btr_$src
+    src_config=$src
 fi
 dst_name=btr_$dst
 src_dir=/var/www/$src_name
@@ -35,10 +37,15 @@ cp -a $src_dir $dst_dir
 
 ### modify settings.php
 domain=$(cat /etc/hostname)
+hostname=$dst.$domain
 sed -i $dst_dir/sites/default/settings.php \
     -e "/^\\\$databases = array/,+10  s/'database' => .*/'database' => '$dst_name',/" \
-    -e "/^\\\$base_url/c \$base_url = \"https://$dst.$domain\";" \
+    -e "/^\\\$base_url/c \$base_url = \"https://$hostname\";" \
     -e "/^\\\$conf\['memcache_key_prefix'\]/c \$conf['memcache_key_prefix'] = '$dst_name';"
+
+### add to /etc/hosts
+sed -i /etc/hosts -e "/^127.0.0.1  $hostname/d"
+echo "127.0.0.1  $hostname" >> /etc/hosts
 
 ### create a drush alias
 sed -i /etc/drush/local.aliases.drushrc.php \
@@ -47,7 +54,7 @@ cat <<EOF >> /etc/drush/local.aliases.drushrc.php
 \$aliases['$dst'] = array (
   'parent' => '@btr',
   'root' => '$dst_dir',
-  'uri' => 'http://$dst.l10n.org.xx',
+  'uri' => 'http://$hostname',
 );
 
 EOF
@@ -67,22 +74,22 @@ drush @$dst cc all
 
 ### copy and modify the configuration of nginx
 rm -f /etc/nginx/sites-{available,enabled}/$dst
-cp /etc/nginx/sites-available/{default,$dst}
+cp /etc/nginx/sites-available/{$src_config,$dst}
 sed -i /etc/nginx/sites-available/$dst \
     -e "s/443 default ssl/443 ssl/" \
-    -e "s/server_name \(.*\);/server_name $dst.\\1;/" \
+    -e "s/server_name .*;/server_name $hostname;/" \
     -e "s/$src_name/$dst_name/g"
 ln -s /etc/nginx/sites-{available,enabled}/$dst
 
 ### copy and modify the configuration of apache2
 rm -f /etc/apache2/sites-{available,enabled}/$dst{,-ssl}
-cp /etc/apache2/sites-available/{default,$dst}
-cp /etc/apache2/sites-available/{default-ssl,$dst-ssl}
+cp /etc/apache2/sites-available/{$src_config,$dst}
+cp /etc/apache2/sites-available/{$src_config-ssl,$dst-ssl}
 sed -i /etc/apache2/sites-available/$dst \
-    -e "s/ServerName \(.*\)/ServerName $dst.\\1/" \
+    -e "s/ServerName .*/ServerName $hostname/" \
     -e "s/$src_name/$dst_name/g"
 sed -i /etc/apache2/sites-available/$dst-ssl \
-    -e "s/ServerName \(.*\)/ServerName $dst.\\1/" \
+    -e "s/ServerName .*/ServerName $hostname/" \
     -e "s/$src_name/$dst_name/g"
 a2ensite $dst $dst-ssl
 

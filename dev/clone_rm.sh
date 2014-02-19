@@ -32,6 +32,9 @@ rm -f /etc/nginx/sites-{available,enabled}/$var
 ### remove the configuration of apache2
 rm -f /etc/apache2/sites-{available,enabled}/$var{,-ssl}
 
+### remove from /etc/hosts
+sed -i /etc/hosts -e "/^127.0.0.1  $var\./d"
+
 ### restart services
 #for SRV in php5-fpm memcached mysql nginx
 for SRV in mysql apache2
