@@ -203,3 +203,8 @@ function _btrCore_get_btr_permissions() {
 
   return array_values($perms);
 }
+
+/**
+ * Include functions for debug.
+ */
+//require_once(dirname(__FILE__) . '/btrCore.debug.inc');
