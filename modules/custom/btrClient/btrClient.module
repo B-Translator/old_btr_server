@@ -120,8 +120,18 @@ function btrClient_hybridauth_user_login($account, $data) {
  * Implements hook_hybridauth_profile_alter().
  */
 function btrClient_hybridauth_profile_alter($profile) {
-  //btr_log('btrClient_hybridauth_profile_alter($profile)');
-  //btr_log($profile);
+  $btr_user = $profile['remote_profile'];
+  $btr_profile = array(
+    'translation_lng' => $btr_user->translation_lng,
+    'string_order' => $btr_user->string_order,
+    'preferred_projects' => $btr_user->preferred_projects,
+    'auxiliary_languages' => $btr_user->auxiliary_languages,
+    'translations_per_day' => $btr_user->translations_per_day,
+    'feedback_channels' => $btr_user->feedback_channels,
+    'permissions' => $btr_user->permissions,
+  );
+  btr_log($btr_profile);
+  $_SESSION['btrClient']['btr_profile'] = $btr_profile;
 }
 
 
