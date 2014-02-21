@@ -97,8 +97,8 @@ function _btrClient_translate_form_save($form_values) {
 
   // keep track of the status, so that propper notification
   // can be displayed to the user
-  global $_btrClient_notification_messages;
-  $_btrClient_notification_messages = array(
+  global $_btrClient_notifications;
+  $_btrClient_notifications = array(
     'messages' => array(),
     'nr_votes' => 0,
     'nr_suggestions' => 0,
@@ -189,8 +189,9 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
 	_btrClient_clean_previous_votes($tguid, $umail, $sguid, $lng);
       }
       else {
-	global $_btrClient_notification_messages;
-	$_btrClient_notification_messages['messages'][] = array(t('You do not have enough rights for submitting votes!'), 'error');
+	global $_btrClient_notifications;
+	$msg = t('You do not have enough rights for submitting votes!');
+	$_btrClient_notifications['messages'][] = array($msg, 'error');
       }
     }
   }
@@ -209,10 +210,12 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
  *   The ID of the new vote, or NULL.
  */
 function btrClient_add_vote($tguid, $umail) {
+  global $_btrClient_notifications;
+
   // Check access permissions.
   if (!btr_user_access('btranslator-vote')) {
-    global $_btrClient_notification_messages;
-    $_btrClient_notification_messages['messages'][] = array(t('You do not have enough rights for submitting votes!'), 'error');
+    $msg = t('You do not have enough rights for submitting votes!');
+    $_btrClient_notifications['messages'][] = array($msg, 'error');
     return NULL;
   }
 
@@ -221,9 +224,8 @@ function btrClient_add_vote($tguid, $umail) {
   $vid = btr_add_vote($tguid, $umail, $lng);
 
   // Increment the number of the saved votes.
-  global $_btrClient_notification_messages;
   if ($vid) {
-    $_btrClient_notification_messages['nr_votes']++;
+    $_btrClient_notifications['nr_votes']++;
   }
 
   return $vid;
@@ -245,25 +247,25 @@ function btrClient_add_vote($tguid, $umail) {
  *   or FALSE if no translation was added.
  */
 function btrClient_add_suggestion($sguid, $lng, $values) {
-  global $_btrClient_notification_messages;
+  global $_btrClient_notifications;
 
   $translation = btrClient_pack_string($values);
   $translation = str_replace(t('<New translation>'), '', $translation);
 
   // Check access permissions.
   if (!btr_user_access('btranslator-suggest')) {
-    global $_btrClient_notification_messages;
-    $_btrClient_notification_messages['messages'][] = array(t('You do not have enough rights for making suggestions!'), 'error');
+    $msg = t('You do not have enough rights for making suggestions!');
+    $_btrClient_notifications['messages'][] = array($msg, 'error');
     return FALSE;
   }
 
   // Add the translation suggestion.
   list($tguid, $messages) = btr_add_translation($sguid, $lng, $translation);
-  $_btrClient_notification_messages['messages'] += $messages;
+  $_btrClient_notifications['messages'] += $messages;
   if ($tguid === NULL)  return FALSE; // no translation was added
 
   // Increment the number of the saved suggestions.
-  $_btrClient_notification_messages['nr_suggestions']++;
+  $_btrClient_notifications['nr_suggestions']++;
 
   return $tguid;
 }
@@ -295,8 +297,8 @@ function _btrClient_delete_translation($translation) {
     $ulng = variable_get('btrClient_translation_lng')
   );
 
-  global $_btrClient_notification_messages;
-  $_btrClient_notification_messages['nr_deletions']++;
+  global $_btrClient_notifications;
+  $_btrClient_notifications['nr_deletions']++;
 }
 
 
@@ -305,8 +307,8 @@ function _btrClient_delete_translation($translation) {
  * are added, deleted, etc.
  */
 function btrClient_display_notification_messages() {
-  global $_btrClient_notification_messages;
-  extract($_btrClient_notification_messages);
+  global $_btrClient_notifications;
+  extract($_btrClient_notifications);
 
   if ($nr_suggestions > 0) {
     $msg = format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved');
