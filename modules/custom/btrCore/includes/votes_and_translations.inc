@@ -136,12 +136,27 @@ function _btr_clean_previous_votes($tguid, $umail, $sguid, $lng) {
  *   version(s) as well, they are concatenated with NULL bytes ("\0")
  *   between them.
  * @return
- *   Returns the ID of the new translation ($tguid),
- *   or FALSE if no translation was added.
+ *   array($tguid, $messages)
+ *   - $tguid is the ID of the new translation,
+ *               or NULL if no translation was added
+ *   - $messages is an array of notification messages; each notification
+ *               message is an array of a message and a type, where
+ *               type can be one of 'status', 'warning', 'error'
  */
 function btr_add_translation($sguid, $lng, $translation) {
+  // Make sure that the current user can make
+  // translations for the given language.
+  $user = user_load($GLOBALS['user']->uid);
+  if ($lng != $user->translation_lng) {
+    $msg = t('You cannot give translations for the language !lng', array('!lng' => $lng));
+    return array(NULL, array(array($msg, 'error')));
+  }
+
   // Don't add empty translations.
-  if (trim($translation) == '')  return NULL;
+  if (trim($translation) == '')  {
+    $msg = t('The given translation is empty.');
+    return array(NULL, array(array($msg, 'warning')));
+  }
 
   // Make spacing and newlines the same in translation as in the source.
   $string = btr_get_string($sguid);
@@ -154,10 +169,12 @@ function btr_add_translation($sguid, $lng, $translation) {
   $existing = btr_get_translation($tguid);
 
   // If this translation already exists, there is nothing to be added.
-  if (!empty($existing))  return NULL;
+  if (!empty($existing))  {
+    $msg = t('The given translation already exists.');
+    return array(NULL, array(array($msg, 'warning')));
+  }
 
   // Get the email of the author of the translation.
-  $user = user_load($GLOBALS['user']->uid);
   $umail = $user->init;    // email used for registration
 
   // Insert the new suggestion.
@@ -193,7 +210,7 @@ function btr_add_translation($sguid, $lng, $translation) {
   // suggested. Maybe they would like to review it and change their vote.
   _btr_notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $translation);
 
-  return $tguid;
+  return array($tguid, array());
 }
 
 

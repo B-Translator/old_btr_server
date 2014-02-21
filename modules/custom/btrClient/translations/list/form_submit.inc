@@ -245,6 +245,8 @@ function btrClient_add_vote($tguid, $umail) {
  *   or FALSE if no translation was added.
  */
 function btrClient_add_suggestion($sguid, $lng, $values) {
+  global $_btrClient_notification_messages;
+
   $translation = btrClient_pack_string($values);
   $translation = str_replace(t('<New translation>'), '', $translation);
 
@@ -256,11 +258,11 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
   }
 
   // Add the translation suggestion.
-  $tguid  = btr_add_translation($sguid, $lng, $translation);
-  if (!$tguid)  return FALSE;  // no translation was added
+  list($tguid, $messages) = btr_add_translation($sguid, $lng, $translation);
+  $_btrClient_notification_messages['messages'] += $messages;
+  if ($tguid === NULL)  return FALSE; // no translation was added
 
   // Increment the number of the saved suggestions.
-  global $_btrClient_notification_messages;
   $_btrClient_notification_messages['nr_suggestions']++;
 
   return $tguid;
