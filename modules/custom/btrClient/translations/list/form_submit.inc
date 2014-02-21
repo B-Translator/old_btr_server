@@ -97,13 +97,14 @@ function _btrClient_translate_form_save($form_values) {
 
   // keep track of the status, so that propper notification
   // can be displayed to the user
-  global $_btrClient_save_status;
-  $_btrClient_save_status = array(
-    'cannot_vote' => 0,
-    'cannot_suggest' => 0,
+  global $_btrClient_notification_messages;
+  $_btrClient_notification_messages = array(
     'nr_votes' => 0,
     'nr_suggestions' => 0,
     'nr_deletions' => 0,
+    'messages' => array(),
+    'warnings' => array(),
+    'errors' => array(),
   );
 
   // Get the voting mode.
@@ -190,8 +191,8 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
 	_btrClient_clean_previous_votes($tguid, $umail, $sguid, $lng);
       }
       else {
-	global $_btrClient_save_status;
-	$_btrClient_save_status['cannot_vote']++;
+	global $_btrClient_notification_messages;
+	$_btrClient_notification_messages['errors']['cannot_vote'] = t('You do not have enough rights for submitting votes!');
       }
     }
   }
@@ -212,8 +213,8 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
 function btrClient_add_vote($tguid, $umail) {
   // Check access permissions.
   if (!btr_user_access('btranslator-vote')) {
-    global $_btrClient_save_status;
-    $_btrClient_save_status['cannot_vote']++;
+    global $_btrClient_notification_messages;
+    $_btrClient_notification_messages['errors']['cannot_vote'] = t('You do not have enough rights for submitting votes!');
     return NULL;
   }
 
@@ -222,9 +223,9 @@ function btrClient_add_vote($tguid, $umail) {
   $vid = btr_add_vote($tguid, $umail, $lng);
 
   // Increment the number of the saved votes.
-  global $_btrClient_save_status;
+  global $_btrClient_notification_messages;
   if ($vid) {
-    $_btrClient_save_status['nr_votes']++;
+    $_btrClient_notification_messages['nr_votes']++;
   }
 
   return $vid;
@@ -251,8 +252,8 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
 
   // Check access permissions.
   if (!btr_user_access('btranslator-suggest')) {
-    global $_btrClient_save_status;
-    $_btrClient_save_status['cannot_suggest']++;
+    global $_btrClient_notification_messages;
+    $_btrClient_notification_messages['errors']['cannot_vote'] = t('You do not have enough rights for making suggestions!');
     return FALSE;
   }
 
@@ -261,8 +262,8 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
   if (!$tguid)  return FALSE;  // no translation was added
 
   // Increment the number of the saved suggestions.
-  global $_btrClient_save_status;
-  $_btrClient_save_status['nr_suggestions']++;
+  global $_btrClient_notification_messages;
+  $_btrClient_notification_messages['nr_suggestions']++;
 
   return $tguid;
 }
@@ -294,8 +295,8 @@ function _btrClient_delete_translation($translation) {
     $ulng = variable_get('btrClient_translation_lng')
   );
 
-  global $_btrClient_save_status;
-  $_btrClient_save_status['nr_deletions']++;
+  global $_btrClient_notification_messages;
+  $_btrClient_notification_messages['nr_deletions']++;
 }
 
 
@@ -305,26 +306,27 @@ function _btrClient_delete_translation($translation) {
  */
 function btrClient_display_notification_messages() {
 
-  global $_btrClient_save_status;
-  extract($_btrClient_save_status);
-
-  if ($cannot_vote > 0) {
-    drupal_set_message(t('You do not have enough rights for submitting votes!'), 'error');
-  }
-
-  if ($cannot_suggest > 0) {
-    drupal_set_message(t('You do not have enough rights for making suggestions!'), 'error');
-  }
+  global $_btrClient_notification_messages;
+  extract($_btrClient_notification_messages);
 
   if ($nr_suggestions > 0) {
     drupal_set_message(format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved'));
   }
-
   if ($nr_votes > 0) {
     drupal_set_message(format_plural($nr_votes, '1 vote saved', '@count votes saved'));
   }
-
   if ($nr_deletions > 0) {
     drupal_set_message(format_plural($nr_deletions, '1 translation deleted', '@count translations deleted'));
+  }
+
+  // Display messages, warnings and errors.
+  foreach ($messages as $key => $message) {
+    drupal_set_message($message);
+  }
+  foreach ($warnings as $key => $warning_msg) {
+    drupal_set_message($warning_msg, 'warning');
+  }
+  foreach ($errors as $key => $error_msg) {
+    drupal_set_message($error_msg, 'error');
   }
 }
