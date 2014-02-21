@@ -279,13 +279,16 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
  * information about the translation, votes, etc.
  */
 function _btrClient_delete_translation($translation) {
+  global $_btrClient_notifications;
+
   //dpm($translation);  //debug
   $trans = $translation['original'];
 
   // Check that the current user has the right to delete translations.
   $is_own = ($GLOBALS['user']->name == $trans['author']);
   if (!$is_own and !btr_user_access('btranslator-resolve')) {
-    drupal_set_message(t('You are not allowed to delete this translation!'), 'error');
+    $msg = t('You are not allowed to delete this translation!');
+    $_btrClient_notifications['messages'][] = array($msg, 'error');
     return;
   }
 
@@ -297,7 +300,6 @@ function _btrClient_delete_translation($translation) {
     $ulng = variable_get('btrClient_translation_lng')
   );
 
-  global $_btrClient_notifications;
   $_btrClient_notifications['nr_deletions']++;
 }
 
