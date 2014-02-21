@@ -67,7 +67,7 @@ function btrClient_menu() {
     'description'     => 'Import strings and translations from POT/PO files of projects.',
     'page callback'   => 'btrClient_import',
     'file'            => 'translations/import.inc',
-    //'access callback' => 'user_access',  //default
+    'access callback' => 'btr_user_access',
     'access arguments' => array('btranslator-import'),
     'weight'          => 4,
   );
@@ -78,7 +78,7 @@ function btrClient_menu() {
     'description'     => 'Add a new term on the vocabulary.',
     'page callback'   => 'btrClient_addterm',
     'file'            => 'translations/import.inc',
-    //'access callback' => 'user_access',  //default
+    'access callback' => 'btr_user_access',
     'access arguments' => array('btranslator-import'),
     'weight'          => 5,
   );

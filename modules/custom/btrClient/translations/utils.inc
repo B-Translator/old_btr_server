@@ -34,3 +34,16 @@ function btrClient_pack_string($strings) {
     return $strings;
   }
 }
+
+/**
+ * Check whether the btr_user has the given permission.
+ *
+ * @param $permission
+ *   The name of the permission (like btranslator-*).
+ * @return
+ *   TRUE or FALSE
+ */
+function btr_user_access($permission) {
+  $btr_permissions = &$_SESSION['btrClient']['btr_profile']['permissions'];
+  return in_array($permission, $btr_permissions);
+}

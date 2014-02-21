@@ -259,7 +259,7 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
   $is_own = ($user->uid && ($user->name == $translation['author']));
   $is_approved = ($user->uid && in_array($user->name, array_keys($translation['votes'])));
   $is_new = ($translation['tguid'] == 'new');
-  $may_moderate = ($is_own or user_access('btranslator-resolve'));
+  $may_moderate = ($is_own or btr_user_access('btranslator-resolve'));
 
   $form = array(
     '#theme' => 'btrClient_translate_translation',

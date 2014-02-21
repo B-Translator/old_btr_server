@@ -4,6 +4,7 @@
  * Module file for btrClient.
  */
 
+require_once(dirname(__FILE__) . '/translations/utils.inc');
 require_once(dirname(__FILE__) . '/btrClient.menu.inc');
 require_once(dirname(__FILE__) . '/btrClient.blocks.inc');
 require_once(dirname(__FILE__) . '/btrClient.services.inc');

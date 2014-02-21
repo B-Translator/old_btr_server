@@ -46,12 +46,12 @@ function btrClient_export_form() {
     // Those that have the export access right (usually translators)
     // can also export all the projects from the same origin.
     // Contributors can export only a single project at a time.
-    '#required' => !user_access('btranslator-export'),
+    '#required' => !btr_user_access('btranslator-export'),
   );
 
   // Those that have the export access right (usually translators)
   // can also choose an export mode different from the default one.
-  if (user_access('btranslator-export')) {
+  if (btr_user_access('btranslator-export')) {
     $form['export']['export_mode'] = array(
       '#type' => 'select',
       '#title' => t('Export Mode'),
@@ -119,7 +119,7 @@ function btrClient_export_form_submit($form, &$form_state) {
 
   $params = array(
     'uid' => $GLOBALS['user']->uid,
-    'lng' => variable_get('btrClient_translation_lng', 'fr');,
+    'lng' => variable_get('btrClient_translation_lng', 'fr'),
     'origin' => $origin,
     'project' => $project,
     'export_mode' => $export_mode,

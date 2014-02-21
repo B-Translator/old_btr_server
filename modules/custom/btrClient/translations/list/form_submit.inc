@@ -79,7 +79,7 @@ function btrClient_translate_form_submit($form, &$form_state) {
  */
 function _btrClient_translate_form_save($form_values) {
 
-  $save_access = (user_access('btranslator-vote') || user_access('btranslator-suggest'));
+  $save_access = (btr_user_access('btranslator-vote') || btr_user_access('btranslator-suggest'));
   if (!$save_access) {
     drupal_set_message(t("You don't have access for giving feedback!"), 'error');
     return;
@@ -185,7 +185,7 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']['votes'];
     if (in_array($user->name, array_keys($previous_votes))) {
-      if (user_access('btranslator-vote')) {
+      if (btr_user_access('btranslator-vote')) {
 	$umail = $user->init;  // initial mail of the user
 	_btrClient_clean_previous_votes($tguid, $umail, $sguid, $lng);
       }
@@ -211,7 +211,7 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
  */
 function btrClient_add_vote($tguid, $umail) {
   // Check access permissions.
-  if (!user_access('btranslator-vote')) {
+  if (!btr_user_access('btranslator-vote')) {
     global $_btrClient_save_status;
     $_btrClient_save_status['cannot_vote']++;
     return NULL;
@@ -259,7 +259,7 @@ function btrClient_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   $translation = str_replace(t('<New translation>'), '', $translation);
 
   // Check access permissions.
-  if (!user_access('btranslator-suggest')) {
+  if (!btr_user_access('btranslator-suggest')) {
     global $_btrClient_save_status;
     $_btrClient_save_status['cannot_suggest']++;
     return FALSE;
@@ -267,7 +267,7 @@ function btrClient_add_suggestion($sguid, $lng, $values, $umail =NULL) {
 
   // Translators (with the 'btranslator-import' access right)
   // can suggest more than one translation for the same string.
-  $single = (! user_access('btranslator-import'));
+  $single = (! btr_user_access('btranslator-import'));
 
   // Add the translation suggestion.
   $tguid  = btr_add_translation($sguid, $lng, $translation, $umail, $single);
@@ -294,7 +294,7 @@ function _btrClient_delete_translation($translation) {
 
   // Check that the current user has the right to delete translations.
   $is_own = ($GLOBALS['user']->name == $trans['author']);
-  if (!$is_own and !user_access('btranslator-resolve')) {
+  if (!$is_own and !btr_user_access('btranslator-resolve')) {
     drupal_set_message(t('You are not allowed to delete this translation!'), 'error');
     return;
   }

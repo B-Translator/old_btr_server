@@ -10,7 +10,7 @@
  */
 function btrClient_addterm() {
   $output[] = drupal_get_form('btrClient_addterm_form');
-  if(user_access('administer')) {
+  if (btr_user_access('btranslator-admin')) {
     $output[] = drupal_get_form('btrClient_delterm_form');
   }
   return $output;
