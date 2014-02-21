@@ -157,8 +157,7 @@ function _btrClient_translate_form_submit_single($sguid, $lng, $string) {
     $previous_votes = $string[$tguid]['original']['votes'];
     global $user;
     if (!in_array($user->name, array_keys($previous_votes))) {
-      $umail = $user->init;  // initial mail of the user
-      btrClient_add_vote($tguid, $umail);
+      btrClient_add_vote($tguid);
     }
   }
 }
@@ -176,8 +175,7 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
     // if such a vote does not exist.
     $previous_votes = $translation['original']['votes'];
     if (!in_array($user->name, array_keys($previous_votes))) {
-      $umail = $user->init;  // initial mail of the user
-      btrClient_add_vote($tguid, $umail);
+      btrClient_add_vote($tguid);
     }
   }
   elseif ($approved == '') {
@@ -204,12 +202,10 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
  *
  * @param $tguid
  *   ID of the translation.
- * @param $umail
- *   The user email.
  * @return
  *   The ID of the new vote, or NULL.
  */
-function btrClient_add_vote($tguid, $umail) {
+function btrClient_add_vote($tguid) {
   global $_btrClient_notifications;
 
   // Check access permissions.
@@ -220,8 +216,7 @@ function btrClient_add_vote($tguid, $umail) {
   }
 
   // Add a vote.
-  $lng = variable_get('btrClient_translation_lng', 'fr');
-  $vid = btr_add_vote($tguid, $umail, $lng);
+  $vid = btr_add_vote($tguid);
 
   // Increment the number of the saved votes.
   if ($vid) {
@@ -260,19 +255,19 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
   }
 
   // Add the translation suggestion.
-  $response = $GLOBALS['btr']->add_translation(
+  $result = $GLOBALS['btr']->add_translation(
     array(
       'sguid' => $sguid,
       'lng' => $lng,
       'translation' => $translation
     ));
-  $_btrClient_notifications['messages'] += $response['messages'];
-  if ($response['tguid'] === NULL)  return FALSE; // no translation was added
+  $_btrClient_notifications['messages'] += $result['messages'];
+  if ($result['tguid'] === NULL)  return FALSE; // no translation was added
 
   // Increment the number of the saved suggestions.
   $_btrClient_notifications['nr_suggestions']++;
 
-  return $response['tguid'];
+  return $result['tguid'];
 }
 
 

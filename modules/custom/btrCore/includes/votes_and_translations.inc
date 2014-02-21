@@ -1,20 +1,21 @@
 <?php
 
 /**
- * Add a vote for the given translation from the given user.
+ * Add a vote for the given translation from the current user.
  * Make sure that any previous vote is cleaned first
  * (don't allow multiple votes for the same translation).
  *
  * @param $tguid
  *   ID of the translation.
- * @param $umail
- *   The user email.
- * @param $ulng
- *   The language of the user.
  * @return
  *   The ID of the new vote, or NULL.
  */
-function btr_add_vote($tguid, $umail, $ulng) {
+function btr_add_vote($tguid) {
+  // Get the mail and lng of the user.
+  $user = user_load($GLOBALS['user']->uid);
+  $umail = $user->init;    // email used for registration
+  $ulng = $user->translation_lng;
+
   // Fetch the translation details from the DB.
   $db = $GLOBALS['btr_db'];
   $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
@@ -204,7 +205,7 @@ function btr_add_translation($sguid, $lng, $translation) {
   }
 
   // Add also a vote for the new translation.
-  $vid = btr_add_vote($tguid, $umail, $lng);
+  $vid = btr_add_vote($tguid);
 
   // Notify previous voters of this string that a new translation has been
   // suggested. Maybe they would like to review it and change their vote.
