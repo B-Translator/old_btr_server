@@ -135,17 +135,13 @@ function _btr_clean_previous_votes($tguid, $umail, $sguid, $lng) {
  *   The new translation as a string. If the string has plural
  *   version(s) as well, they are concatenated with NULL bytes ("\0")
  *   between them.
- * @param $umail
- *   The email of the author of the translation.
  * @return
  *   Returns the ID of the new translation ($tguid),
  *   or FALSE if no translation was added.
  */
-function btr_add_translation($sguid, $lng, $translation, $umail) {
+function btr_add_translation($sguid, $lng, $translation) {
   // Don't add empty translations.
   if (trim($translation) == '')  return NULL;
-
-  $db = $GLOBALS['btr_db'];
 
   // Make spacing and newlines the same in translation as in the source.
   $string = btr_get_string($sguid);
@@ -160,7 +156,12 @@ function btr_add_translation($sguid, $lng, $translation, $umail) {
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  return NULL;
 
+  // Get the email of the author of the translation.
+  $user = user_load($GLOBALS['user']->uid);
+  $umail = $user->init;    // email used for registration
+
   // Insert the new suggestion.
+  $db = $GLOBALS['btr_db'];
   $db->insert('btr_translations')
     ->fields(array(
         'sguid' => $sguid,

@@ -241,20 +241,11 @@ function btrClient_add_vote($tguid, $umail) {
  * @param $values
  *   Array of strings containing the new translation suggestion
  *   for the singular version and for plural version(s) (if any).
- * @param $umail
- *   The mail of the user that submitted the suggestion. If missing,
- *   the mail of the logged in user will be used.
  * @return
  *   The ID of the new translation ($tguid),
  *   or FALSE if no translation was added.
  */
-function btrClient_add_suggestion($sguid, $lng, $values, $umail =NULL) {
-
-  if ($umail == NULL) {
-    global $user;
-    $umail = $user->init;
-  }
-
+function btrClient_add_suggestion($sguid, $lng, $values) {
   $translation = btrClient_pack_string($values);
   $translation = str_replace(t('<New translation>'), '', $translation);
 
@@ -266,7 +257,7 @@ function btrClient_add_suggestion($sguid, $lng, $values, $umail =NULL) {
   }
 
   // Add the translation suggestion.
-  $tguid  = btr_add_translation($sguid, $lng, $translation, $umail);
+  $tguid  = btr_add_translation($sguid, $lng, $translation);
   if (!$tguid)  return FALSE;  // no translation was added
 
   // Increment the number of the saved suggestions.
