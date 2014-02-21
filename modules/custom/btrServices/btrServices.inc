@@ -149,3 +149,43 @@ function _btr_translations_retrieve($sguid, $lng) {
 function _btr_translations_index($params) {
   return $params;
 }
+
+/**
+ * Add a new translation to a source string.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - sguid
+ *       The string ID for which a new translation should be added.
+ *   - lng
+ *       The language (code) of the new translation.
+ *   - translation
+ *       The new translation as a string. If the string has plural
+ *       version(s) as well, they are concatenated with NULL bytes ("\0")
+ *       between them.
+ *
+ * @return
+ *   Associative array containing:
+ *   - tguid
+ *       ID of the new translation, or NULL if no translation was added.
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btr_translations_add_translation($params) {
+  // get parameters and validate them
+  $sguid = $params['sguid'];
+  $translation = $params['translation'];
+  $lng = $params['lng'];
+  $arr_langs = array_keys(btr_get_languages());
+  if (!in_array($lng, $arr_langs)) {
+    return services_error('Language missing or not supported.', 406);
+  }
+
+  list($tguid, $messages) = btr_add_translation($sguid, $lng, $translation);
+  return array(
+    'tguid' => $tguid,
+    'messages' => $messages
+  );
+}

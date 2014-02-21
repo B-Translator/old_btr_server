@@ -260,14 +260,19 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
   }
 
   // Add the translation suggestion.
-  list($tguid, $messages) = btr_add_translation($sguid, $lng, $translation);
-  $_btrClient_notifications['messages'] += $messages;
-  if ($tguid === NULL)  return FALSE; // no translation was added
+  $response = $GLOBALS['btr']->add_translation(
+    array(
+      'sguid' => $sguid,
+      'lng' => $lng,
+      'translation' => $translation
+    ));
+  $_btrClient_notifications['messages'] += $response['messages'];
+  if ($response['tguid'] === NULL)  return FALSE; // no translation was added
 
   // Increment the number of the saved suggestions.
   $_btrClient_notifications['nr_suggestions']++;
 
-  return $tguid;
+  return $response['tguid'];
 }
 
 

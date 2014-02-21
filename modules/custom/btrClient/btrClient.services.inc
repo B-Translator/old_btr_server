@@ -58,7 +58,7 @@ function _btrClient_services_public_service($service_name) {
     'type' => 'POST',
     'data' => 'params',
     'parameter' => array(
-      'params' => array(),
+      'params' => array('type' => 'array'),
     ),
   );
   $service->operations['report_topcontrib_1'] = array(
@@ -67,7 +67,7 @@ function _btrClient_services_public_service($service_name) {
     'type' => 'POST',
     'data' => 'params',
     'parameter' => array(
-      'params' => array(),
+      'params' => array('type' => 'array'),
     ),
   );
   $service->operations['get_translations'] = array(
@@ -118,6 +118,16 @@ function _btrClient_services_authenticated_service($service_name) {
     'parameter' => array(
       'sguid' => array('type' => 'text'),
       'lng' => array('type' => 'text'),
+    ),
+  );
+
+  $service->operations['add_translation'] = array(
+    'label' => 'add_translation',
+    'url' => 'translations/add_translation',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
     ),
   );
 

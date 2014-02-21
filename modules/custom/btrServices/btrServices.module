@@ -120,5 +120,22 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-stats'),
   );
 
+  // Add a new translation to a source string.
+  $translations['actions']['add_translation'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_add_translation',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation data (sguid, lng, translation).',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-suggest'),
+  );
+
   return $translations;
 }
