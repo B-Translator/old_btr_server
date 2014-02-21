@@ -137,14 +137,11 @@ function _btr_clean_previous_votes($tguid, $umail, $sguid, $lng) {
  *   between them.
  * @param $umail
  *   The email of the author of the translation.
- * @param $single
- *   If false, then the user can add more then one translation
- *   for the same string.
  * @return
  *   Returns the ID of the new translation ($tguid),
  *   or FALSE if no translation was added.
  */
-function btr_add_translation($sguid, $lng, $translation, $umail, $single =TRUE) {
+function btr_add_translation($sguid, $lng, $translation, $umail) {
   // Don't add empty translations.
   if (trim($translation) == '')  return NULL;
 
@@ -177,12 +174,14 @@ function btr_add_translation($sguid, $lng, $translation, $umail, $single =TRUE) 
       ))
     ->execute();
 
-  if ($single) {
-    // If there is another translation for the same string, by the same user,
-    // the new translation should replace the old one. This is useful when
-    // the user wants to correct the translation, but it limits the user to
-    // only one suggested translation per string. If $single is FALSE, then
-    // this limitation does not apply.
+  // If there is another translation for the same string, by the same user,
+  // the new translation should replace the old one. This is useful when
+  // the user wants to correct the translation, but it limits the user to
+  // only one suggested translation per string.
+  // However, translators (with the 'btranslator-import' access right)
+  // do not have this limitation and can suggest more than one translation
+  // for the same string.
+  if (! user_access('btranslator-import')) {
     _btr_remove_old_translation($sguid, $lng, $umail, $tguid);
   }
 

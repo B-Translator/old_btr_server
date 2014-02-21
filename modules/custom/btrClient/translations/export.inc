@@ -25,7 +25,7 @@ function btrClient_export_form() {
   $form['export'] = array(
     '#type' => 'fieldset',
     '#title' => t('Export a Project'),
-    '#description' => t('Submit a request for exporting a project. When the request is completed you will be notified by email.'),
+    '#description' => t('<p>Submit a request for exporting a project. When the request is completed you will be notified by email.</p><br/>'),
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );

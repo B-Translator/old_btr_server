@@ -265,12 +265,8 @@ function btrClient_add_suggestion($sguid, $lng, $values, $umail =NULL) {
     return FALSE;
   }
 
-  // Translators (with the 'btranslator-import' access right)
-  // can suggest more than one translation for the same string.
-  $single = (! btr_user_access('btranslator-import'));
-
   // Add the translation suggestion.
-  $tguid  = btr_add_translation($sguid, $lng, $translation, $umail, $single);
+  $tguid  = btr_add_translation($sguid, $lng, $translation, $umail);
   if (!$tguid)  return FALSE;  // no translation was added
 
   // Increment the number of the saved suggestions.
