@@ -99,12 +99,10 @@ function _btrClient_translate_form_save($form_values) {
   // can be displayed to the user
   global $_btrClient_notification_messages;
   $_btrClient_notification_messages = array(
+    'messages' => array(),
     'nr_votes' => 0,
     'nr_suggestions' => 0,
     'nr_deletions' => 0,
-    'messages' => array(),
-    'warnings' => array(),
-    'errors' => array(),
   );
 
   // Get the voting mode.
@@ -192,7 +190,7 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
       }
       else {
 	global $_btrClient_notification_messages;
-	$_btrClient_notification_messages['errors']['cannot_vote'] = t('You do not have enough rights for submitting votes!');
+	$_btrClient_notification_messages['messages'][] = array(t('You do not have enough rights for submitting votes!'), 'error');
       }
     }
   }
@@ -214,7 +212,7 @@ function btrClient_add_vote($tguid, $umail) {
   // Check access permissions.
   if (!btr_user_access('btranslator-vote')) {
     global $_btrClient_notification_messages;
-    $_btrClient_notification_messages['errors']['cannot_vote'] = t('You do not have enough rights for submitting votes!');
+    $_btrClient_notification_messages['messages'][] = array(t('You do not have enough rights for submitting votes!'), 'error');
     return NULL;
   }
 
@@ -253,7 +251,7 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
   // Check access permissions.
   if (!btr_user_access('btranslator-suggest')) {
     global $_btrClient_notification_messages;
-    $_btrClient_notification_messages['errors']['cannot_vote'] = t('You do not have enough rights for making suggestions!');
+    $_btrClient_notification_messages['messages'][] = array(t('You do not have enough rights for making suggestions!'), 'error');
     return FALSE;
   }
 
@@ -305,28 +303,25 @@ function _btrClient_delete_translation($translation) {
  * are added, deleted, etc.
  */
 function btrClient_display_notification_messages() {
-
   global $_btrClient_notification_messages;
   extract($_btrClient_notification_messages);
 
   if ($nr_suggestions > 0) {
-    drupal_set_message(format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved'));
+    $msg = format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved');
+    $messages[] = array($msg, 'status');
   }
   if ($nr_votes > 0) {
-    drupal_set_message(format_plural($nr_votes, '1 vote saved', '@count votes saved'));
+    $msg = format_plural($nr_votes, '1 vote saved', '@count votes saved');
+    $messages[] = array($msg, 'status');
   }
   if ($nr_deletions > 0) {
-    drupal_set_message(format_plural($nr_deletions, '1 translation deleted', '@count translations deleted'));
+    $msg = format_plural($nr_deletions, '1 translation deleted', '@count translations deleted');
+    $messages[] = array($msg, 'status');
   }
 
   // Display messages, warnings and errors.
-  foreach ($messages as $key => $message) {
-    drupal_set_message($message);
-  }
-  foreach ($warnings as $key => $warning_msg) {
-    drupal_set_message($warning_msg, 'warning');
-  }
-  foreach ($errors as $key => $error_msg) {
-    drupal_set_message($error_msg, 'error');
+  foreach ($messages as $message) {
+    list($msg, $type) = $message;
+    drupal_set_message($msg, $type);
   }
 }
