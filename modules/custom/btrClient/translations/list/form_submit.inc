@@ -216,7 +216,8 @@ function btrClient_add_vote($tguid) {
   }
 
   // Add a vote.
-  $vid = btr_add_vote($tguid);
+  list($vid, $messages) = btr_add_vote($tguid);
+  $_btrClient_notifications['messages'] += $messages;
 
   // Increment the number of the saved votes.
   if ($vid) {
@@ -328,6 +329,9 @@ function btrClient_display_notification_messages() {
   // Display messages, warnings and errors.
   foreach ($messages as $message) {
     list($msg, $type) = $message;
+    if (!in_array($type, array('status', 'warning', 'error'))) {
+      $type = 'status';
+    }
     drupal_set_message($msg, $type);
   }
 }

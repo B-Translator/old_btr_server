@@ -7,8 +7,13 @@
  *
  * @param $tguid
  *   ID of the translation.
+ *
  * @return
- *   The ID of the new vote, or NULL.
+ *   array($vid, $messages)
+ *   - $vid is the ID of the new vote, or NULL
+ *   - $messages is an array of notification messages; each notification
+ *               message is an array of a message and a type, where
+ *               type can be one of 'status', 'warning', 'error'
  */
 function btr_add_vote($tguid) {
   // Get the mail and lng of the user.
@@ -23,7 +28,10 @@ function btr_add_vote($tguid) {
   $trans = $db->query($sql, $args)->fetchObject();
 
   // If there is no such translation, return NULL.
-  if (empty($trans))  return NULL;
+  if (empty($trans)) {
+    $msg = t('The given translation does not exist.');
+    return array(NULL, array(array($msg, 'error')));
+  }
 
   // Clean any previous vote.
   $nr = _btr_clean_previous_votes($tguid, $umail, $trans->sguid, $trans->lng);
@@ -46,7 +54,7 @@ function btr_add_vote($tguid) {
     ->condition('tguid', $tguid)
     ->execute();
 
-  return $vid;
+  return array($vid, array());
 }
 
 
@@ -63,12 +71,16 @@ function btr_add_vote($tguid) {
  *
  * @param $tguid
  *   ID of the translation.
+ *
  * @param $umail
  *   The mail of the user.
+ *
  * @param $sguid
  *   ID of the source string.
+ *
  * @param $lng
  *   Language code of the translation.
+ *
  * @return
  *   Number of previous votes that were deleted.
  *   (Normally should be 0, but can also be 1. If it is >1,
@@ -205,13 +217,13 @@ function btr_add_translation($sguid, $lng, $translation) {
   }
 
   // Add also a vote for the new translation.
-  $vid = btr_add_vote($tguid);
+  list($vid, $messages) = btr_add_vote($tguid);
 
   // Notify previous voters of this string that a new translation has been
   // suggested. Maybe they would like to review it and change their vote.
   _btr_notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $translation);
 
-  return array($tguid, array());
+  return array($tguid, $messages);
 }
 
 
