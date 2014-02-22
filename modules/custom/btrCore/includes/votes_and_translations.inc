@@ -386,12 +386,14 @@ function _btr_notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $t
 
 /**
  * Delete the translation with the given id and any related votes.
- *
- * Parameters $umail and $ulng identify the user that is making
- * the deletion.
  */
-function btr_del_translation($tguid, $umail, $ulng) {
+function btr_del_translation($tguid) {
   $db = $GLOBALS['btr_db'];
+
+  // Get the mail and lng of the user.
+  $user = user_load($GLOBALS['user']->uid);
+  $umail = $user->init;    // email used for registration
+  $ulng = $user->translation_lng;
 
   // Before deleting, get the author and voters (for notifications).
   list($author, $voters) = _btr_get_author_and_voters($tguid);

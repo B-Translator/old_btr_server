@@ -293,13 +293,7 @@ function _btrClient_delete_translation($translation) {
   }
 
   // Delete the translation.
-  $account = user_load($GLOBALS['user']->uid);
-  btr_del_translation(
-    $tguid = $trans['tguid'],   // id of the translation to be deleted
-    $umail = $account->init,  // email of the user that is deleting it
-    $ulng = variable_get('btrClient_translation_lng')
-  );
-
+  btr_del_translation($trans['tguid']);
   $_btrClient_notifications['nr_deletions']++;
 }
 
