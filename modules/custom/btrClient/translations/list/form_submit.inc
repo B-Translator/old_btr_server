@@ -293,8 +293,13 @@ function _btrClient_delete_translation($translation) {
   }
 
   // Delete the translation.
-  btr_del_translation($trans['tguid']);
-  $_btrClient_notifications['nr_deletions']++;
+  $messages = btr_del_translation($trans['tguid']);
+  if (empty($messages)) {
+    $_btrClient_notifications['nr_deletions']++;
+  }
+  else {
+    $_btrClient_notifications['messages'] += $messages;
+  }
 }
 
 

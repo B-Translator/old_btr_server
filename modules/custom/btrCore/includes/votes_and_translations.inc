@@ -386,6 +386,14 @@ function _btr_notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $t
 
 /**
  * Delete the translation with the given id and any related votes.
+ *
+ * @param $tguid
+ *   ID of the translation.
+ *
+ * @return
+ *   Array of notification messages; each notification message
+ *   is an array of a message and a type, where type can be
+ *   one of 'status', 'warning', 'error'
  */
 function btr_del_translation($tguid) {
   $db = $GLOBALS['btr_db'];
@@ -397,6 +405,13 @@ function btr_del_translation($tguid) {
 
   // Before deleting, get the author and voters (for notifications).
   list($author, $voters) = _btr_get_author_and_voters($tguid);
+
+  // Check that the current user has the right to delete translations.
+  $is_own = ($umail == $author->umail);
+  if (!$is_own and !user_access('btranslator-resolve')) {
+    $msg = t('You are not allowed to delete this translation!');
+    return array(array($msg, 'error'));
+  }
 
   // Copy to the trash table the translation that will be deleted.
   $query = $db->select('btr_translations', 't')
@@ -421,6 +436,8 @@ function btr_del_translation($tguid) {
   // Notify the author of a translation and its voters
   // that it has been deleted.
   _btr_notify_voters_on_translation_del($tguid, $author, $voters);
+
+  return array();
 }
 
 /**
