@@ -215,3 +215,26 @@ function _btr_translations_add_vote($params) {
     'messages' => $messages
   );
 }
+
+/**
+ * Delete a translation.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - tguid
+ *       ID of the translation
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btr_translations_del_translation($params) {
+  $tguid = $params['tguid'];
+  $messages = btr_del_translation($tguid);
+  return array(
+    'messages' => $messages
+  );
+}

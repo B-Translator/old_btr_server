@@ -154,5 +154,22 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-vote'),
   );
 
+  // Delete a translation.
+  $translations['actions']['del_translation'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_del_translation',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation (tguid) to be deleted.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-suggest'),
+  );
+
   return $translations;
 }

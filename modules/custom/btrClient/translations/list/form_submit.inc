@@ -293,8 +293,10 @@ function _btrClient_delete_translation($translation) {
   }
 
   // Delete the translation.
-  $messages = btr_del_translation($trans['tguid']);
-  if (empty($messages)) {
+  $result = $GLOBALS['btr']->del_translation(
+    array('tguid' => $trans['tguid'])
+  );
+  if (sizeof($result['messages'])==0) {
     $_btrClient_notifications['nr_deletions']++;
   }
   else {
