@@ -216,15 +216,14 @@ function btrClient_add_vote($tguid) {
   }
 
   // Add a vote.
-  list($vid, $messages) = btr_add_vote($tguid);
-  $_btrClient_notifications['messages'] += $messages;
+  $result = $GLOBALS['btr']->add_vote(array('tguid' => $tguid));
+  $_btrClient_notifications['messages'] += $result['messages'];
+  if ($result['vid'] === NULL)  return NULL;  // no vote was added
 
   // Increment the number of the saved votes.
-  if ($vid) {
-    $_btrClient_notifications['nr_votes']++;
-  }
+  $_btrClient_notifications['nr_votes']++;
 
-  return $vid;
+  return $result['vid'];
 }
 
 
@@ -240,7 +239,7 @@ function btrClient_add_vote($tguid) {
  *   for the singular version and for plural version(s) (if any).
  * @return
  *   The ID of the new translation ($tguid),
- *   or FALSE if no translation was added.
+ *   or NULL if no translation was added.
  */
 function btrClient_add_suggestion($sguid, $lng, $values) {
   global $_btrClient_notifications;
@@ -252,7 +251,7 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
   if (!btr_user_access('btranslator-suggest')) {
     $msg = t('You do not have enough rights for making suggestions!');
     $_btrClient_notifications['messages'][] = array($msg, 'error');
-    return FALSE;
+    return NULL;
   }
 
   // Add the translation suggestion.
@@ -263,9 +262,9 @@ function btrClient_add_suggestion($sguid, $lng, $values) {
       'translation' => $translation
     ));
   $_btrClient_notifications['messages'] += $result['messages'];
-  if ($result['tguid'] === NULL)  return FALSE; // no translation was added
+  if ($result['tguid'] === NULL)  return NULL; // no translation was added
 
-  // Increment the number of the saved suggestions.
+  // Increment the number of the saved suggestions and votes.
   $_btrClient_notifications['nr_suggestions']++;
 
   return $result['tguid'];

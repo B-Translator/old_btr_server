@@ -189,3 +189,29 @@ function _btr_translations_add_translation($params) {
     'messages' => $messages
   );
 }
+
+/**
+ * Add a vote for the given translation.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - tguid
+ *       ID of the translation
+ *
+ * @return
+ *   Associative array containing:
+ *   - vid
+ *       ID of the new vote, or NULL
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btr_translations_add_vote($params) {
+  $tguid = $params['tguid'];
+  list($vid, $messages) = btr_add_vote($tguid);
+  return array(
+    'vid' => $vid,
+    'messages' => $messages
+  );
+}

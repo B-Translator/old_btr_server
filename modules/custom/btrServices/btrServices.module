@@ -137,5 +137,22 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-suggest'),
   );
 
+  // Add a vote for a translation.
+  $translations['actions']['add_vote'] = array(
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_add_vote',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation to be voted (tguid).',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-vote'),
+  );
+
   return $translations;
 }

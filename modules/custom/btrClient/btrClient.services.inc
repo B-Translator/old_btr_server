@@ -131,6 +131,16 @@ function _btrClient_services_authenticated_service($service_name) {
     ),
   );
 
+  $service->operations['add_vote'] = array(
+    'label' => 'add_vote',
+    'url' => 'translations/add_vote',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
+  );
+
   return $service;
 }
 
