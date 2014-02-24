@@ -123,7 +123,7 @@ function _btrClient_services_authenticated_service($service_name) {
 
   $service->operations['add_translation'] = array(
     'label' => 'add_translation',
-    'url' => 'translations/add_translation',
+    'url' => 'translations/add',
     'type' => 'POST',
     'data' => 'params',
     'parameter' => array(
@@ -133,7 +133,7 @@ function _btrClient_services_authenticated_service($service_name) {
 
   $service->operations['add_vote'] = array(
     'label' => 'add_vote',
-    'url' => 'translations/add_vote',
+    'url' => 'translations/vote',
     'type' => 'POST',
     'data' => 'params',
     'parameter' => array(
@@ -143,7 +143,7 @@ function _btrClient_services_authenticated_service($service_name) {
 
   $service->operations['del_translation'] = array(
     'label' => 'del_translation',
-    'url' => 'translations/del_translation',
+    'url' => 'translations/del',
     'type' => 'POST',
     'data' => 'params',
     'parameter' => array(

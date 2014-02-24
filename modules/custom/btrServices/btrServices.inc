@@ -173,7 +173,7 @@ function _btr_translations_index($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_add_translation($params) {
+function _btr_translations_add($params) {
   // get parameters and validate them
   $sguid = $params['sguid'];
   $translation = $params['translation'];
@@ -207,7 +207,7 @@ function _btr_translations_add_translation($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_add_vote($params) {
+function _btr_translations_vote($params) {
   $tguid = $params['tguid'];
   list($vid, $messages) = btr_add_vote($tguid);
   return array(
@@ -231,7 +231,7 @@ function _btr_translations_add_vote($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_del_translation($params) {
+function _btr_translations_del($params) {
   $tguid = $params['tguid'];
   $messages = btr_del_translation($tguid);
   return array(

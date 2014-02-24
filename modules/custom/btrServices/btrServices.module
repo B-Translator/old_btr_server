@@ -16,6 +16,7 @@ function btrServices_services_resources() {
 function _btrServices_report() {
   // Getting reports of different kinds.
   $report['operations']['retrieve'] = array(
+    'help' => 'Reports of different kinds.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
     'callback' => '_btr_report_retrieve',
     'args' => array(
@@ -41,6 +42,7 @@ function _btrServices_report() {
   // Getting general statistics (number of votes and
   // translations) for the last week, month and year.
   $report['actions']['statistics'] = array(
+    'help' => 'General statistics (number of votes and translations) for the last week, month and year.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
     'callback' => '_btr_report_statistics',
     'args' => array(
@@ -58,6 +60,7 @@ function _btrServices_report() {
 
   // Getting statistics about top contributors.
   $report['actions']['topcontrib'] = array(
+    'help' => 'Statistics about top contributors.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
     'callback' => '_btr_report_topcontrib',
     'args' => array(
@@ -80,6 +83,7 @@ function _btrServices_translations() {
   // Return a string, along with its translations,
   // votes and other details.
   $translations['operations']['retrieve'] = array(
+    'help' => 'Return a string, along with its translations, votes and other details.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
     'callback' => '_btr_translations_retrieve',
     'args' => array(
@@ -121,9 +125,10 @@ function _btrServices_translations() {
   );
 
   // Add a new translation to a source string.
-  $translations['actions']['add_translation'] = array(
+  $translations['actions']['add'] = array(
+    'help' => 'Add a new translation to a source string.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
-    'callback' => '_btr_translations_add_translation',
+    'callback' => '_btr_translations_add',
     'args' => array(
       array(
         'name' => 'params',
@@ -138,9 +143,10 @@ function _btrServices_translations() {
   );
 
   // Add a vote for a translation.
-  $translations['actions']['add_vote'] = array(
+  $translations['actions']['vote'] = array(
+    'help' => 'Add a vote for a translation.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
-    'callback' => '_btr_translations_add_vote',
+    'callback' => '_btr_translations_vote',
     'args' => array(
       array(
         'name' => 'params',
@@ -155,9 +161,10 @@ function _btrServices_translations() {
   );
 
   // Delete a translation.
-  $translations['actions']['del_translation'] = array(
+  $translations['actions']['del'] = array(
+    'help' => 'Delete a translation.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
-    'callback' => '_btr_translations_del_translation',
+    'callback' => '_btr_translations_del',
     'args' => array(
       array(
         'name' => 'params',

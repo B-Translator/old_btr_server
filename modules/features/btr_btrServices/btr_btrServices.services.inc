@@ -61,7 +61,7 @@ function btr_btrServices_default_services_endpoint() {
         ),
       ),
       'actions' => array(
-        'add_translation' => array(
+        'add' => array(
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
@@ -70,7 +70,7 @@ function btr_btrServices_default_services_endpoint() {
             ),
           ),
         ),
-        'add_vote' => array(
+        'vote' => array(
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
@@ -79,7 +79,7 @@ function btr_btrServices_default_services_endpoint() {
             ),
           ),
         ),
-        'del_translation' => array(
+        'del' => array(
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
