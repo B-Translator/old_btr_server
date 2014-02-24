@@ -141,6 +141,16 @@ function _btrClient_services_authenticated_service($service_name) {
     ),
   );
 
+  $service->operations['del_translation'] = array(
+    'label' => 'del_translation',
+    'url' => 'translations/del_translation',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
+  );
+
   return $service;
 }
 
