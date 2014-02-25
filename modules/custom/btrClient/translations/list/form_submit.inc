@@ -182,9 +182,9 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']['votes'];
     if (in_array($user->name, array_keys($previous_votes))) {
-      $messages = btr_del_vote($tguid);
+      $result = $GLOBALS['btr']->del_vote(array('tguid' => $tguid));
       global $_btrClient_notifications;
-      $_btrClient_notifications['messages'] += $messages;
+      $_btrClient_notifications['messages'] += $result['messages'];
     }
   }
 }

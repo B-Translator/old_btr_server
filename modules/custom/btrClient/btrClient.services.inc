@@ -151,6 +151,16 @@ function _btrClient_services_authenticated_service($service_name) {
     ),
   );
 
+  $service->operations['del_vote'] = array(
+    'label' => 'del_vote',
+    'url' => 'translations/del_vote',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
+  );
+
   return $service;
 }
 

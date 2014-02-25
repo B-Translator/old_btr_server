@@ -178,5 +178,23 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-suggest'),
   );
 
+  // Delete a vote from a translation.
+  $translations['actions']['del_vote'] = array(
+    'help' => 'Delete a vote from a translation.',
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_del_vote',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation (tguid) to be un-voted.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-vote'),
+  );
+
   return $translations;
 }
