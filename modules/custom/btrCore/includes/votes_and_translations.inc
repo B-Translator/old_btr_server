@@ -16,6 +16,12 @@
  *               type can be one of 'status', 'warning', 'error'
  */
 function btr_add_vote($tguid) {
+  // Check access permissions.
+  if (!user_access('btranslator-vote')) {
+    $msg = t('You do not have enough rights for submitting votes!');
+    return array(NULL, array(array($msg, 'error')));
+  }
+
   // Get the mail and lng of the user.
   $user = user_load($GLOBALS['user']->uid);
   $umail = $user->init;    // email used for registration
@@ -55,6 +61,51 @@ function btr_add_vote($tguid) {
     ->execute();
 
   return array($vid, array());
+}
+
+
+/**
+ * Delete a vote for the given translation from the current user.
+ *
+ * This is useful only when the voting mode is 'multiple'.
+ *
+ * @param $tguid
+ *   ID of the translation.
+ *
+ * @return
+ *   array($messages)
+ *     $messages is an array of notification messages; each notification
+ *     message is an array of a message and a type, where type can be
+ *     one of 'status', 'warning', 'error'
+ */
+function btr_del_vote($tguid) {
+  // Check access permissions.
+  if (!user_access('btranslator-vote')) {
+    $msg = t('You do not have enough rights for submitting votes!');
+    return array(array($msg, 'error'));
+  }
+
+  // Get the mail and lng of the user.
+  $user = user_load($GLOBALS['user']->uid);
+  $umail = $user->init;    // email used for registration
+  $ulng = $user->translation_lng;
+
+  // Fetch the translation details from the DB.
+  $db = $GLOBALS['btr_db'];
+  $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
+  $args = array(':tguid' => $tguid);
+  $trans = $db->query($sql, $args)->fetchObject();
+
+  // If there is no such translation, return NULL.
+  if (empty($trans)) {
+    $msg = t('The given translation does not exist.');
+    return array(array($msg, 'error'));
+  }
+
+  // Clean any previous vote.
+  $nr = _btr_clean_previous_votes($tguid, $umail, $trans->sguid, $trans->lng);
+
+  return array();
 }
 
 
@@ -157,6 +208,12 @@ function _btr_clean_previous_votes($tguid, $umail, $sguid, $lng) {
  *               type can be one of 'status', 'warning', 'error'
  */
 function btr_add_translation($sguid, $lng, $translation) {
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('You do not have enough rights for making suggestions!');
+    return array(NULL, array(array($msg, 'error')));
+  }
+
   // Make sure that the current user can make
   // translations for the given language.
   $user = user_load($GLOBALS['user']->uid);
@@ -166,6 +223,8 @@ function btr_add_translation($sguid, $lng, $translation) {
   }
 
   // Don't add empty translations.
+  $translation = btr_pack_string($translation);
+  $translation = str_replace(t('<New translation>'), '', $translation);
   if (trim($translation) == '')  {
     $msg = t('The given translation is empty.');
     return array(NULL, array(array($msg, 'warning')));

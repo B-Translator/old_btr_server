@@ -182,15 +182,9 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']['votes'];
     if (in_array($user->name, array_keys($previous_votes))) {
-      if (btr_user_access('btranslator-vote')) {
-	$umail = $user->init;  // initial mail of the user
-	_btrClient_clean_previous_votes($tguid, $umail, $sguid, $lng);
-      }
-      else {
-	global $_btrClient_notifications;
-	$msg = t('You do not have enough rights for submitting votes!');
-	$_btrClient_notifications['messages'][] = array($msg, 'error');
-      }
+      $messages = btr_del_vote($tguid);
+      global $_btrClient_notifications;
+      $_btrClient_notifications['messages'] += $messages;
     }
   }
 }
