@@ -161,6 +161,16 @@ function _btrClient_services_authenticated_service($service_name) {
     ),
   );
 
+  $service->operations['submit'] = array(
+    'label' => 'submit',
+    'url' => 'translations/submit',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
+  );
+
   return $service;
 }
 

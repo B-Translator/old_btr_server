@@ -95,16 +95,6 @@ function _btrClient_translate_form_save($form_values) {
     return;
   }
 
-  // keep track of the status, so that propper notification
-  // can be displayed to the user
-  global $_btrClient_notifications;
-  $_btrClient_notifications = array(
-    'messages' => array(),
-    'nr_votes' => 0,
-    'nr_suggestions' => 0,
-    'nr_deletions' => 0,
-  );
-
   // Get the voting mode.
   $voting_mode = variable_get('btr_voting_mode', 'single');
 
@@ -123,13 +113,28 @@ function _btrClient_translate_form_save($form_values) {
       }
       if ((strlen($tguid) == 40) && !empty($translation['declined'])) {
 	// Delete translation.
-	_btrClient_delete_translation($translation);
+	btrClient_add_action('del', array('tguid' => $tguid));
       }
     }
   }
 
-  // Tell the user what happened.
-  btrClient_display_notification_messages();
+  // Submit the actions.
+  global $btr, $_btrClient_actions;
+  $result = $btr->submit($_btrClient_actions);
+
+  // Display any messages, warnings and errors.
+  foreach ($result['messages'] as $message) {
+    list($msg, $type) = $message;
+    if (!in_array($type, array('status', 'warning', 'error'))) {
+      $type = 'status';
+    }
+    drupal_set_message($msg, $type);
+  }
+}
+
+function btrClient_add_action($action, $params) {
+  global $_btrClient_actions;
+  $_btrClient_actions[] = array('action' => $action, 'params' => $params);
 }
 
 /**
@@ -146,7 +151,11 @@ function _btrClient_translate_form_submit_single($sguid, $lng, $string) {
 
   if ( is_not_empty_translation($string['new']['value']) ) {
     // Add a new suggestion.
-    btrClient_add_suggestion($sguid, $lng, $string['new']['value']);
+    btrClient_add_action('add', array(
+        'sguid' => $sguid,
+        'lng' => $lng,
+        'translation' => $string['new']['value'],
+      ));
     return;
   }
 
@@ -157,7 +166,7 @@ function _btrClient_translate_form_submit_single($sguid, $lng, $string) {
     $previous_votes = $string[$tguid]['original']['votes'];
     global $user;
     if (!in_array($user->name, array_keys($previous_votes))) {
-      btrClient_add_vote($tguid);
+      btrClient_add_action('vote', array('tguid' => $tguid));
     }
   }
 }
@@ -168,164 +177,25 @@ function _btrClient_translate_form_submit_multiple($sguid, $tguid, $lng, $transl
 
   $approved = $translation['approved'];
   if ($tguid == 'new' and is_not_empty_translation($translation['value'])) {
-    btrClient_add_suggestion($sguid, $lng, $translation['value']);
+    btrClient_add_action('add', array(
+        'sguid' => $sguid,
+        'lng' => $lng,
+        'translation' => $translation['value'],
+      ));
   }
   elseif ($approved != '') {
     // Add a new vote for this translation
     // if such a vote does not exist.
     $previous_votes = $translation['original']['votes'];
     if (!in_array($user->name, array_keys($previous_votes))) {
-      btrClient_add_vote($tguid);
+      btrClient_add_action('vote', array('tguid' => $tguid));
     }
   }
   elseif ($approved == '') {
     // Remove this vote, if it exists.
     $previous_votes = $translation['original']['votes'];
     if (in_array($user->name, array_keys($previous_votes))) {
-      $result = $GLOBALS['btr']->del_vote(array('tguid' => $tguid));
-      global $_btrClient_notifications;
-      $_btrClient_notifications['messages'] += $result['messages'];
+      btrClient_add_action('del_vote', array('tguid' => $tguid));
     }
-  }
-}
-
-/**
- * Add a vote for the given translation from the given user.
- * Make sure that any previous vote is cleaned first
- * (don't allow multiple votes for the same translation).
- *
- * @param $tguid
- *   ID of the translation.
- * @return
- *   The ID of the new vote, or NULL.
- */
-function btrClient_add_vote($tguid) {
-  global $_btrClient_notifications;
-
-  // Check access permissions.
-  if (!btr_user_access('btranslator-vote')) {
-    $msg = t('You do not have enough rights for submitting votes!');
-    $_btrClient_notifications['messages'][] = array($msg, 'error');
-    return NULL;
-  }
-
-  // Add a vote.
-  $result = $GLOBALS['btr']->add_vote(array('tguid' => $tguid));
-  $_btrClient_notifications['messages'] += $result['messages'];
-  if ($result['vid'] === NULL)  return NULL;  // no vote was added
-
-  // Increment the number of the saved votes.
-  $_btrClient_notifications['nr_votes']++;
-
-  return $result['vid'];
-}
-
-
-/**
- * Adds a new translation suggestion to a source string.
- *
- * @param $sguid
- *   The string ID for which a new suggestion should be added.
- * @param $lng
- *   The language code of the new suggestion.
- * @param $values
- *   Array of strings containing the new translation suggestion
- *   for the singular version and for plural version(s) (if any).
- * @return
- *   The ID of the new translation ($tguid),
- *   or NULL if no translation was added.
- */
-function btrClient_add_suggestion($sguid, $lng, $values) {
-  global $_btrClient_notifications;
-
-  $translation = btrClient_pack_string($values);
-  $translation = str_replace(t('<New translation>'), '', $translation);
-
-  // Check access permissions.
-  if (!btr_user_access('btranslator-suggest')) {
-    $msg = t('You do not have enough rights for making suggestions!');
-    $_btrClient_notifications['messages'][] = array($msg, 'error');
-    return NULL;
-  }
-
-  // Add the translation suggestion.
-  $result = $GLOBALS['btr']->add_translation(
-    array(
-      'sguid' => $sguid,
-      'lng' => $lng,
-      'translation' => $translation
-    ));
-  $_btrClient_notifications['messages'] += $result['messages'];
-  if ($result['tguid'] === NULL)  return NULL; // no translation was added
-
-  // Increment the number of the saved suggestions and votes.
-  $_btrClient_notifications['nr_suggestions']++;
-
-  return $result['tguid'];
-}
-
-
-/**
- * Delete the translation and any related votes.
- * Notify the author and the voters about the deletion.
- *
- * $translation is an array/object structure with all the
- * information about the translation, votes, etc.
- */
-function _btrClient_delete_translation($translation) {
-  global $_btrClient_notifications;
-
-  //dpm($translation);  //debug
-  $trans = $translation['original'];
-
-  // Check that the current user has the right to delete translations.
-  $is_own = ($GLOBALS['user']->name == $trans['author']);
-  if (!$is_own and !btr_user_access('btranslator-resolve')) {
-    $msg = t('You are not allowed to delete this translation!');
-    $_btrClient_notifications['messages'][] = array($msg, 'error');
-    return;
-  }
-
-  // Delete the translation.
-  $result = $GLOBALS['btr']->del_translation(
-    array('tguid' => $trans['tguid'])
-  );
-  if (sizeof($result['messages'])==0) {
-    $_btrClient_notifications['nr_deletions']++;
-  }
-  else {
-    $_btrClient_notifications['messages'] += $messages;
-  }
-}
-
-
-/**
- * Display the number of the votes and translations that
- * are added, deleted, etc.
- */
-function btrClient_display_notification_messages() {
-  global $_btrClient_notifications;
-  extract($_btrClient_notifications);
-
-  if ($nr_suggestions > 0) {
-    $msg = format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved');
-    $messages[] = array($msg, 'status');
-  }
-  if ($nr_votes > 0) {
-    $msg = format_plural($nr_votes, '1 vote saved', '@count votes saved');
-    $messages[] = array($msg, 'status');
-  }
-  if ($nr_deletions > 0) {
-    $msg = format_plural($nr_deletions, '1 translation deleted', '@count translations deleted');
-    $messages[] = array($msg, 'status');
-  }
-
-  // Display messages, warnings and errors.
-  foreach ($messages as $message) {
-    list($msg, $type) = $message;
-    if (!in_array($type, array('status', 'warning', 'error'))) {
-      $type = 'status';
-    }
-    drupal_set_message($msg, $type);
   }
 }

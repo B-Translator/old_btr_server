@@ -262,3 +262,79 @@ function _btr_translations_del_vote($params) {
   );
 }
 
+/**
+ * Submit multiple actions at once.
+ *
+ * @param $params
+ *   Array of the POST data, which contains an item for each action.
+ *   Each action is an associated array that contains the items:
+ *   - action
+ *       The action to be done (add, vote, del, del_vote)
+ *   - params
+ *       Associative array of the needed parameters for this action.
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btr_translations_submit($params) {
+  $messages = array();
+  $nr_votes = $nr_suggestions = $nr_deletions = 0;
+  foreach ($params as $item) {
+    switch ($item['action']) {
+    case 'add':
+      $result = _btr_translations_add($item['params']);
+      if ($result['tguid'] != NULL)  $nr_suggestions++;
+      $messages += $result['messages'];
+      break;
+
+    case 'vote':
+      $result = _btr_translations_vote($item['params']);
+      if ($result['vid'] != NULL)  $nr_votes++;
+      $messages += $result['messages'];
+      break;
+
+    case 'del':
+      $result = _btr_translations_del($item['params']);
+      if (sizeof($result['messages'])==0) {
+	$nr_deletions++;
+      }
+      else {
+	$messages += $result['messages'];
+      }
+      break;
+
+    case 'del_vote':
+      $result = _btr_translations_del_vote($item['params']);
+      $messages += $result['messages'];
+      break;
+
+    default:
+      $msg = t('Action !action is not supported!',
+	       array('!action' => $item['action']));
+      $messages[] = array($msg, 'error');
+      break;
+    }
+  }
+
+  if ($nr_suggestions > 0) {
+    $msg = format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved');
+    $messages[] = array($msg, 'status');
+  }
+  if ($nr_votes > 0) {
+    $msg = format_plural($nr_votes, '1 vote saved', '@count votes saved');
+    $messages[] = array($msg, 'status');
+  }
+  if ($nr_deletions > 0) {
+    $msg = format_plural($nr_deletions, '1 translation deleted', '@count translations deleted');
+    $messages[] = array($msg, 'status');
+  }
+
+  return array(
+    'messages' => $messages
+  );
+}
+

@@ -196,5 +196,23 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-vote'),
   );
 
+  // Submit multiple actions at once.
+  $translations['actions']['submit'] = array(
+    'help' => 'Submit multiple actions at once.',
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_submit',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Array of actions to be executed.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-vote'),
+  );
+
   return $translations;
 }
