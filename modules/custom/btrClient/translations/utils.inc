@@ -44,6 +44,9 @@ function btrClient_pack_string($strings) {
  *   TRUE or FALSE
  */
 function btr_user_access($permission) {
+  if (!isset($_SESSION['btrClient']['btr_profile']['permissions'])) {
+    return FALSE;
+  }
   $btr_permissions = &$_SESSION['btrClient']['btr_profile']['permissions'];
   return in_array($permission, $btr_permissions);
 }

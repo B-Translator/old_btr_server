@@ -121,22 +121,34 @@ function _btr_translations_retrieve($sguid, $lng) {
   if (!in_array($lng, $arr_langs)) {
     return services_error('Language missing or not supported.', 406);
   }
-
-  switch ($sguid) {
-    case 'next':
-      $sguid = btr_sguid_get_next();
-      break;
-    case 'translated':
-      $sguid = btr_sguid_get_translated($lng);
-      break;
-    case 'untranslated':
-      $sguid = btr_sguid_get_untranslated($lng);
-      break;
-  }
-
+  $sguid = btr_get_sguid($sguid, $lng);
   $strings = btr_get_strings(array($sguid), $lng);
   return $strings;
 }
+
+
+/**
+ * Get the sguid of a random string according to the target.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - target
+ *       Can be one of: next|translated|untranslated
+ *   - lng
+ *       Code of the language (required for translated and untranslated)
+ *
+ * @return
+ *   Associative array containing:
+ *   - sguid
+ *       ID of a random string, or the target itself
+ *       if it is different from next|translated|untranslated
+ */
+function _btr_translations_get_random_sguid($params) {
+  return array(
+    'sguid' => btr_get_sguid($params['target'], $params['lng']),
+  );
+}
+
 
 /**
  * Filter strings and translations according to the given parameters.

@@ -1,6 +1,29 @@
 <?php
 
 /**
+ * Returns a sguid for targets: next|translated|untranslated.
+ * Returns the target itself if it does not have one of the
+ * values above.
+ */
+function btr_get_sguid($target, $lng =NULL) {
+  switch ($target) {
+    case 'next':
+      $sguid = btr_sguid_get_next();
+      break;
+    case 'translated':
+      $sguid = btr_sguid_get_translated($lng);
+      break;
+    case 'untranslated':
+      $sguid = btr_sguid_get_untranslated($lng);
+      break;
+    default:
+      $sguid = $target;
+      break;
+  }
+  return $sguid;
+}
+
+/**
  * Return a sguid from the strings that should be voted.
  * This string is selected according to the preferencies
  * of the given user. If no uid is given as parameter,
@@ -269,7 +292,7 @@ function _btr_get_pool_of_projects($uid =NULL) {
   // if checkbox same_project is checked, constrain the list
   // of projects by the projects of the last string
   if (isset($_SESSION['btr']['same_project']) && $_SESSION['btr']['same_project']) {
-    $last_projects = _btr_get_projects_of_sguid($_SESSION['btr']['sguid']);
+    $last_projects = _btr_get_projects_of_sguid($_SESSION['btrClient']['last_sguid']);
     if (!empty($last_projects)) {
       $arr_projects = array_intersect($arr_projects, $last_projects);
       if (empty($arr_projects)) {

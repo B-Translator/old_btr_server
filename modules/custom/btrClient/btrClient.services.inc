@@ -70,6 +70,15 @@ function _btrClient_services_public_service($service_name) {
       'params' => array('type' => 'array'),
     ),
   );
+  $service->operations['get_random_sguid'] = array(
+    'label' => 'get_random_sguid',
+    'url' => 'translations/get_random_sguid',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
+  );
   $service->operations['get_translations'] = array(
     'label' => 'get_translations',
     'url' => 'translations/@sguid',
@@ -110,6 +119,16 @@ function _btrClient_services_authenticated_service($service_name) {
     'redirect_uri' => $redirect_uri,
     'authorization_endpoint' => $authorization_endpoint,
     'scope' => 'user_profile',
+  );
+
+  $service->operations['get_random_sguid'] = array(
+    'label' => 'get_random_sguid',
+    'url' => 'translations/get_random_sguid',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
   );
 
   $service->operations['get_translations'] = array(

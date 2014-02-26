@@ -36,7 +36,7 @@ function _btrServices_report() {
       ),
     ),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-stats'),
+    'access arguments' => array('access content'),
   );
 
   // Getting general statistics (number of votes and
@@ -55,7 +55,7 @@ function _btrServices_report() {
       ),
     ),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-stats'),
+    'access arguments' => array('access content'),
   );
 
   // Getting statistics about top contributors.
@@ -73,7 +73,7 @@ function _btrServices_report() {
       ),
     ),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-stats'),
+    'access arguments' => array('access content'),
   );
 
   return $report;
@@ -103,7 +103,7 @@ function _btrServices_translations() {
       ),
     ),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-stats'),
+    'access arguments' => array('access content'),
   );
 
   // Filter strings and translations
@@ -121,7 +121,25 @@ function _btrServices_translations() {
       ),
     ),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-stats'),
+    'access arguments' => array('access content'),
+  );
+
+  // Get the sguid of a random string according to the target.
+  $translations['actions']['get_random_sguid'] = array(
+    'help' => 'Get the sguid of a random string according to the target, which can be: next|translated|untranslated.',
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_get_random_sguid',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Assoc array containing the target.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
   );
 
   // Add a new translation to a source string.

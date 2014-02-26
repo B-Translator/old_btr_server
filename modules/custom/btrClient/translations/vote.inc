@@ -26,28 +26,20 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     $lng = variable_get('btrClient_translation_lng', 'fr');
   }
 
-  if ($sguid==NULL)  { $sguid = 'next'; }
+  if ($sguid==NULL)  {
+    $sguid = 'next';
+  }
+
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
-    switch ($sguid) {
-      case 'next':
-        $sguid = btr_sguid_get_next();
-        break;
-      case 'translated':
-        $sguid = btr_sguid_get_translated($lng);
-        break;
-      case 'untranslated':
-        $sguid = btr_sguid_get_untranslated($lng);
-        break;
-    }
-    if (empty($sguid)) {
-      drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
-      drupal_goto("/");
-      return;
-    }
-    $_SESSION['btr']['sguid'] = $sguid;
+    $result = $GLOBALS['btr']->get_random_sguid(
+      array('target' => $sguid, 'lng' => $lng)
+    );
+    $sguid = $result['sguid'];
     drupal_goto("translations/$lng/$sguid");
     return;
   }
+  // last_sguid is used in search, to get similar results
+  $_SESSION['btrClient']['last_sguid'] = $sguid;
 
   // If there is a $_SESSION['btr']['translate_form']['state'],
   // then this is a redirect after login. Call the submit function again.
@@ -58,33 +50,27 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     btrClient_translate_form_submit(NULL, $form_state);
   }
 
-  // Add the CSS and JS files.
-  drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor/editor.css');
-  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/jquery.worddiff.js');
-  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/editor.js');
-
-  // Get languages and language codes
-  $languages = btr_get_languages();
-  $lng_codes = array_keys($languages);
-
-  // Add RTL style if the current language's direction is RTL
-  if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
-    drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor-rtl.css');
+  // Get the string and its translations.
+  $strings = $GLOBALS['btr']->get_translations($sguid, $lng);
+  if (empty($strings)) {
+    drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
+    drupal_goto("/");
+    return;
   }
 
   // Set the title.
   drupal_set_title(t('Vote Translations'));
 
-  // Get the string and its translations.
-  //$strings = btr_get_strings(array($sguid), $lng);
-  //$strings = json_decode(json_encode($strings), true);
-  try {
-    $strings = $GLOBALS['btr']->get_translations($sguid, $lng);
+  // Add the CSS and JS files.
+  drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor/editor.css');
+  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/jquery.worddiff.js');
+  drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/editor.js');
+
+  // Add RTL style if the current language's direction is RTL
+  $languages = btr_get_languages();
+  if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
+    drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor-rtl.css');
   }
-  catch (Exception $e) {
-    drupal_set_message($e->getMessage(), 'error');
-  }
-  //if ($strings) dpm($strings);  //debug
 
   // Output the string and its translations.
   $output = drupal_get_form('btrClient_translate_form', $strings, $lng);
