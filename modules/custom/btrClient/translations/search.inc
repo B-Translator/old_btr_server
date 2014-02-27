@@ -34,6 +34,7 @@ function btrClient_search() {
   // If the request has the header 'Accept: application/json'
   // return the output in JSON format and stop.
   if ($_SERVER['HTTP_ACCEPT'] == 'application/json') {
+    drupal_add_http_header('Content-Type', 'application/json; utf-8');
     print json_encode($strings);
     exit;
   }

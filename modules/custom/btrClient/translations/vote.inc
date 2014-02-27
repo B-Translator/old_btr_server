@@ -12,7 +12,14 @@ require_once(dirname(__FILE__) . '/utils.inc');
 
 /**
  * Menu callback: translations/vote
+ *
  * Vote the best translation for a string, or suggest a better translation.
+ *
+ * If the request header 'Accept: application/json' is set, then
+ * the output will be in JSON, otherwise it will be an HTML page.
+ * For example:
+ *   curl -k -i -H 'Accept: application/json' \
+ *     'https://dev.l10n.org.xx/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
  */
 function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
@@ -52,6 +59,16 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 
   // Get the string and its translations.
   $strings = $GLOBALS['btr']->get_translations($sguid, $lng);
+
+  // If the request has the header 'Accept: application/json'
+  // return the output in JSON format and stop.
+  if ($_SERVER['HTTP_ACCEPT'] == 'application/json') {
+    drupal_add_http_header('Content-Type', 'application/json; utf-8');
+    print json_encode($strings);
+    exit;
+  }
+
+  // Display a message if no string was found.
   if (empty($strings)) {
     drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
     drupal_goto("/");
