@@ -2,34 +2,51 @@
 
 /**
  * Returns a sguid for targets: next|translated|untranslated.
- * Returns the target itself if it does not have one of the
- * values above.
+ *
+ * @param $lng
+ *   Useful for 'translated' and 'untranslated' targets.
+ *   If not provided, a default language will be used.
+ *
+ * @param $projects
+ *   Array of scope projects, where each project is in the form
+ *   'origin/project' or 'origin'. If provided, will be used
+ *   to restrict the pool of selection (in addition to the preferred
+ *   projects of the user).
+ *
+ * @return
+ *   The sguid of a randomly selected string, according to the
+ *   given parameters and to the preferencies of the user.
  */
-function btr_get_sguid($target, $lng =NULL) {
+function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
   switch ($target) {
+    default:
     case 'next':
-      $sguid = btr_sguid_get_next();
+      $sguid = btr_sguid_get_next($uid=NULL, $projects);
       break;
     case 'translated':
-      $sguid = btr_sguid_get_translated($lng);
+      $sguid = btr_sguid_get_translated($lng, $uid=NULL, $projects);
       break;
     case 'untranslated':
-      $sguid = btr_sguid_get_untranslated($lng);
-      break;
-    default:
-      $sguid = $target;
+      $sguid = btr_sguid_get_untranslated($lng, $uid=NULL, $projects);
       break;
   }
   return $sguid;
 }
 
 /**
- * Return a sguid from the strings that should be voted.
- * This string is selected according to the preferencies
- * of the given user. If no uid is given as parameter,
- * then the current user is assumed.
+ * Return a sguid from the strings that should be reviewed.
+ *
+ * @param $uid
+ *   Select according to the preferencies of this user.
+ *   If no $uid is given, then the current user is assumed.
+ *
+ * @param $projects
+ *   Array of projects to restrict selection.
+ *
+ * @return
+ *   The sguid of another string.
  */
-function btr_sguid_get_next($uid =NULL) {
+function btr_sguid_get_next($uid =NULL, $projects =NULL) {
 
   // get the string-order preference for the user
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
@@ -40,7 +57,7 @@ function btr_sguid_get_next($uid =NULL) {
   switch ($string_order) {
     default:
     case 'random':
-      $sguid = btr_sguid_get_random($uid);
+      $sguid = btr_sguid_get_random($uid, $projects);
       break;
 
     case 'sequential':
@@ -53,6 +70,13 @@ function btr_sguid_get_next($uid =NULL) {
 
 /**
  * Return a sequential sguid from the preferred projects of the user.
+ *
+ * @param $uid
+ *   The user whose preferencies will be used.
+ *   If no $uid is given, then the current user is assumed.
+ *
+ * @return
+ *   The sguid of the next string in the PO file(s).
  */
 function btr_sguid_get_sequential($uid =NULL) {
 
@@ -92,8 +116,6 @@ function btr_sguid_get_sequential($uid =NULL) {
   // save the new index of the object $sequential
   $sequential->lid = $lid;
   $sequential->idx = $idx;
-  //dpm($sequential);  //debug
-  //$edit['field_data_sequential']['und'][0]['value'] = serialize($sequential);
   $edit['data_sequential'] = $sequential;
   $edit['skip_presave'] = TRUE;
   user_save($account, $edit);
@@ -106,19 +128,25 @@ function btr_sguid_get_sequential($uid =NULL) {
 }
 
 /**
- * Return a random sguid from the given user.
- * This random string is selected from the list
- * of the preferred projects of the user.
+ * Return a random sguid for the given user.
+ *
+ * @param $uid
+ *   Select according to the preferencies of this user.
+ *   If no $uid is given, then the current user is assumed.
+ *
+ * @param $target_projects
+ *   Array of projects to restrict selection.
+ *
+ * @return
+ *   Randomly selected sguid.
  */
-function btr_sguid_get_random($uid =NULL, $projects =NULL) {
+function btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
-  // get the list of projects that will be searched
-  if ($projects == NULL) {
-    $projects = _btr_get_pool_of_projects($uid);
-  }
+  // Get the list of projects that will be searched.
+  $projects = _btr_get_pool_of_projects($uid, $target_projects);
 
-  // build the WHERE condition for selecting projects
+  // Build the WHERE condition for selecting projects.
   list($where, $args) = _btr_projects_to_where_condition($projects);
   if ($where == '')  $where = '(1=1)';
 
@@ -144,24 +172,34 @@ function btr_sguid_get_random($uid =NULL, $projects =NULL) {
     LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
     LIMIT $random_row_number, 1
   ";
-  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
   $sguid = $db->query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }
 
 /**
- * Return a random untranslated sguid from the preferred projects
- * of the given user.
+ * Get an untranslated sguid from the preferred projects of the given user.
+ *
+ * @param $lng
+ *   Language of translations.
+ *
+ * @param $uid
+ *   Select according to the preferencies of this user.
+ *   If no $uid is given, then the current user is assumed.
+ *
+ * @param $target_projects
+ *   Array of projects to restrict selection.
+ *
+ * @return
+ *   The sguid of a randomly selected untranslated string.
  */
-function btr_sguid_get_untranslated($lng, $uid =NULL) {
+function btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
-  // get the list of projects that will be searched
-  // and the translation language of the user
-  $projects = _btr_get_pool_of_projects($uid);
+  // Get the list of projects that will be searched.
+  $projects = _btr_get_pool_of_projects($uid, $target_projects);
 
-  // build the WHERE condition for selecting projects
+  // Build the WHERE condition for selecting projects.
   list($where, $args) = _btr_projects_to_where_condition($projects);
   $args[':lng'] = $lng;
   if ($where == '')  $where = '(1=1)';
@@ -194,7 +232,6 @@ function btr_sguid_get_untranslated($lng, $uid =NULL) {
     ORDER BY s.count DESC
     LIMIT $random_row_number, 1
   ";
-  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
   $sguid = $db->query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
@@ -202,19 +239,28 @@ function btr_sguid_get_untranslated($lng, $uid =NULL) {
 
 
 /**
- * Return a random translated sguid from the preferred projects
- * of the given user.
+ * Get a translated sguid from the preferred projects of the given user.
+ *
+ * @param $lng
+ *   Language of translations.
+ *
+ * @param $uid
+ *   Select according to the preferencies of this user.
+ *   If no $uid is given, then the current user is assumed.
+ *
+ * @param $target_projects
+ *   Array of projects to restrict selection.
+ *
+ * @return
+ *   The sguid of a randomly selected untranslated string.
  */
-function btr_sguid_get_translated($lng, $uid =NULL, $projects =NULL) {
+function btr_sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
-  // get the list of projects that will be searched
-  // and the translation language of the user
-  if ($projects == NULL) {
-    $projects = _btr_get_pool_of_projects($uid);
-  }
+  // Get the list of projects that will be searched.
+  $projects = _btr_get_pool_of_projects($uid, $target_projects);
 
-  // build the WHERE condition for selecting projects
+  // Build the WHERE condition for selecting projects.
   list($where, $args) = _btr_projects_to_where_condition($projects);
   $args[':lng'] = $lng;
   if ($where == '')  $where = '(1=1)';
@@ -251,7 +297,6 @@ function btr_sguid_get_translated($lng, $uid =NULL, $projects =NULL) {
          )  AS st
     LIMIT $random_row_number, 1
   ";
-  //dpm($sql_get_sguid, 'sql_get_sguid');  dpm($args, 'sql_get_sguid_args');  //debug
   $sguid = $db->query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
@@ -259,16 +304,25 @@ function btr_sguid_get_translated($lng, $uid =NULL, $projects =NULL) {
 
 
 /**
- * Return an array of projects from which the next string
- * for the user will be selected. This is normally the
- * preferred projects of the user, but if user has not
- * defined any preferred projects, then the preferred projects
- * of the site (defined by site admin) will be used.
- * However, if the checkbox same_project has been checked,
- * it will further constrain the list of projects to match
- * those of the last string visited.
+ * Get projects from which the next string for review will be selected.
+ *
+ * This is normally the preferred projects of the user, but if user
+ * has not defined any preferred projects, then the preferred projects
+ * of the site (defined by site admin) will be used. However, if the
+ * $scope_projects has been provided, it will be used to restrict (limit)
+ * this list of projects.
+ *
+ * @param $uid
+ *   The user whose preferencies will be used.
+ *   If no $uid is given, then the current user is assumed.
+ *
+ * @param $target_projects
+ *   Array of projects to restrict the selection.
+ *
+ * @return
+ *   Array of projects that will be used for selecting a string.
  */
-function _btr_get_pool_of_projects($uid =NULL) {
+function _btr_get_pool_of_projects($uid =NULL, $target_projects =NULL) {
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
   $user = user_load($uid);
 
@@ -289,15 +343,11 @@ function _btr_get_pool_of_projects($uid =NULL) {
     }
   }
 
-  // if checkbox same_project is checked, constrain the list
-  // of projects by the projects of the last string
-  if (isset($_SESSION['btr']['same_project']) && $_SESSION['btr']['same_project']) {
-    $last_projects = _btr_get_projects_of_sguid($_SESSION['btrClient']['last_sguid']);
-    if (!empty($last_projects)) {
-      $arr_projects = array_intersect($arr_projects, $last_projects);
-      if (empty($arr_projects)) {
-	$arr_projects = $last_projects;
-      }
+  // Use $target_projects to restrict the list of projects.
+  if ($target_projects != NULL) {
+    $arr_projects = array_intersect($arr_projects, $target_projects);
+    if (empty($arr_projects)) {
+      $arr_projects = $target_projects;
     }
   }
 
@@ -306,10 +356,11 @@ function _btr_get_pool_of_projects($uid =NULL) {
 
 /**
  * Return an array of the projects that contain the given string.
+ *
  * Each item of the array is of the form 'origin/project'.
  */
-function _btr_get_projects_of_sguid($sguid) {
-  if (empty($sguid))  return array();
+function btr_get_projects_of_sguid($sguid) {
+  if (empty($sguid))  return NULL;
 
   $args = array(':sguid' => $sguid);
   $get_projects = "
@@ -325,6 +376,7 @@ function _btr_get_projects_of_sguid($sguid) {
   foreach ($result as $proj) {
     $projects[] = $proj->origin . '/' . $proj->project;
   }
+  if (empty($projects))  $projects = NULL;
 
   return $projects;
 }

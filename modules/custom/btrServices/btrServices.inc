@@ -121,7 +121,9 @@ function _btr_translations_retrieve($sguid, $lng) {
   if (!in_array($lng, $arr_langs)) {
     return services_error('Language missing or not supported.', 406);
   }
-  $sguid = btr_get_sguid($sguid, $lng);
+  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
+    $sguid = btr_get_random_sguid($sguid, $lng);
+  }
   $strings = btr_get_strings(array($sguid), $lng);
   return $strings;
 }
@@ -137,7 +139,7 @@ function _btr_translations_retrieve($sguid, $lng) {
  * request. Sometimes this may be more convenient.
  *
  * @param $params
- *     Parameters for filtering the strings etc.
+ *   Parameters for filtering the strings etc.
  *
  * @return
  *   Array containing search results, along with the filters
@@ -244,6 +246,9 @@ function _btr_translations_search($params) {
  *       Can be one of: next|translated|untranslated
  *   - lng
  *       Code of the language (required for translated and untranslated)
+ *   - last_sguid (optional)
+ *       If provided, restricts the pool of selection the project(s)
+ *       of the last reviewed sguid.
  *
  * @return
  *   Associative array containing:
@@ -252,8 +257,14 @@ function _btr_translations_search($params) {
  *       if it is different from next|translated|untranslated
  */
 function _btr_translations_get_random_sguid($params) {
+  $projects = NULL;
+  if (isset($params['last_sguid'])) {
+    $projects = btr_get_projects_of_sguid($params['last_sguid']);
+  }
+  $target = $params['target'];
+  $lng = $params['lng'];
   return array(
-    'sguid' => btr_get_sguid($params['target'], $params['lng']),
+    'sguid' => btr_get_random_sguid($target, $lng, $projects)
   );
 }
 

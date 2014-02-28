@@ -120,6 +120,7 @@ function _btrClient_translate_form_save($form_values) {
 
   // Submit the actions.
   global $btr, $_btrClient_actions;
+  if (empty($_btrClient_actions))  return;
   $result = $btr->submit($_btrClient_actions);
 
   // Display any messages, warnings and errors.

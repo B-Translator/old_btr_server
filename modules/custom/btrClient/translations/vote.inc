@@ -38,9 +38,20 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
+    // If checkbox same_project is checked, constrain the list
+    // of projects by the projects of the last string.
+    $last_sguid = NULL;
+    if (isset($_SESSION['btr']['same_project'])
+	&& $_SESSION['btr']['same_project'])
+      {
+	$last_sguid = $_SESSION['btrClient']['last_sguid'];
+      }
     $result = $GLOBALS['btr']->get_random_sguid(
-      array('target' => $sguid, 'lng' => $lng)
-    );
+      array(
+        'target' => $sguid,
+        'lng' => $lng,
+        'last_sguid' => $last_sguid,
+      ));
     $sguid = $result['sguid'];
     drupal_goto("translations/$lng/$sguid");
     return;
