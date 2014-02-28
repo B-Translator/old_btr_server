@@ -155,10 +155,8 @@ function _btrClient_block_topcontrib() {
     $lng = variable_get('btrClient_translation_lng', 'fr');
     $period = variable_get('btrClient_topcontrib_period', 'week');
     $size = variable_get('btrClient_topcontrib_size', 5);
-    //$topusers = btr_stat_topcontrib($lng, $period, $size);
     $btr = wsclient_service_load('public_btr');
     $topusers = $btr->report_topcontrib($lng, $period, $size);
-    //dpm($topusers);  //debug
   }
   catch (Exception $e) {
     drupal_set_message($e->getMessage(), 'error');
@@ -228,10 +226,8 @@ function _btrClient_block_statistics() {
   // get the statistics
   try {
     $lng = variable_get('btrClient_translation_lng', 'fr');
-    //$stats = btr_statistics($lng);
     $btr = wsclient_service_load('public_btr');
     $stats = $btr->report_statistics($lng);
-    //dpm($stats);  //debug
   }
   catch (Exception $e) {
     drupal_set_message($e->getMessage(), 'error');

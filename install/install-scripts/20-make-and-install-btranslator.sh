@@ -1,4 +1,3 @@
-
 #!/bin/bash -x
 
 ### retrieve all the projects/modules and build the application directory

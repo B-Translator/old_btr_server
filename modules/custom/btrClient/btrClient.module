@@ -131,7 +131,6 @@ function btrClient_hybridauth_profile_alter($profile) {
     'feedback_channels' => $btr_user->feedback_channels,
     'permissions' => $btr_user->permissions,
   );
-  btr_log($btr_profile);
   $_SESSION['btrClient']['btr_profile'] = $btr_profile;
 }
 
