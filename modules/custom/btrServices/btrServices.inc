@@ -150,14 +150,16 @@ function _btr_translations_index($params) {
  *       The language of translations.
  *   - limit
  *       The number of results to be returned (min: 5, max: 50).
+ *   - words
+ *       Words to be searched for.
  *   - mode
  *       Search mode. Can be one of:
  *       - natural-strings       Natural search on strings (default).
  *       - natural-translations  Natural search on translations.
  *       - boolean-strings       Boolean search on strings.
  *       - boolean-translations  Boolean search on translations.
- *   - words
- *       Words to be searched for.
+ *   - page
+ *       Page of results to be displayed.
  *   - project
  *       Limit search only to this project
  *   - origin
@@ -185,24 +187,36 @@ function _btr_translations_index($params) {
  *   containing the string, its translations, votes, etc.
  */
 function _btr_translations_search($params) {
-  // get parameters and validate them
+  // Get and check the parameter 'lng'.
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());
   if (!in_array($lng, $arr_langs)) {
     return services_error('Language missing or not supported.', 406);
   }
 
+  // The PagerDefault of Drupal7 queries gets the current page
+  // from $_GET['page']. This is a trick to make it work.
+  // See: https://api.drupal.org/api/drupal/includes%21pager.inc/function/pager_find_page/7
+  $_GET['page'] = isset($params['page']) ? (int)trim($params['page']) : 0;
+
+  // Build the filter and the query, and then get the strings.
   $filter = btr_build_search_filter($params);
   $query = btr_build_search_query($filter);
-  if ($query === NULL) {
-    $strings = array();
-  }
-  else {
-    $strings = btr_get_query_strings($query, $lng);
-  }
+  $strings = ($query===NULL ? array() : btr_get_query_strings($query, $lng));
+
+  // The PagerDefault of Drupal7 defines the pager variables
+  // as global variables (these variables are later used by theme_pager).
+  // See: https://api.drupal.org/api/drupal/includes!pager.inc/function/pager_default_initialize/7
+  $pager = array(
+    'number_of_items' => $GLOBALS['pager_total_items'][0],
+    'items_per_page' => $GLOBALS['pager_limits'][0],
+    'number_of_pages' => $GLOBALS['pager_total'][0],
+    'current_page' => $GLOBALS['pager_page_array'][0],
+  );
 
   return array(
     'filter' => $filter,
+    'pager' => $pager,
     'strings' => $strings,
   );
 }

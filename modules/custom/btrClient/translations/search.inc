@@ -29,6 +29,7 @@ function btrClient_search() {
   // Get the strings that match the search params.
   $result = $GLOBALS['btr']->search($params);
   $filter = $result['filter'];
+  $pager = $result['pager'];
   $strings = $result['strings'];
 
   // If the request has the header 'Accept: application/json'
@@ -39,7 +40,7 @@ function btrClient_search() {
     exit;
   }
 
-  // Add the the CSS and JS files.
+  // Add the CSS and JS files.
   drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor/editor.css');
   drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/jquery.worddiff.js');
   drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/editor.js');
@@ -64,6 +65,7 @@ function btrClient_search() {
     drupal_set_message(t('No strings found. Try adjusting the filter options.'));
   }
   else {
+    pager_default_initialize($pager['number_of_items'], $pager['items_per_page']);
     $output[] = drupal_get_form('btrClient_translate_form', $strings, $lng);
   }
 

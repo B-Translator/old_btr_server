@@ -35,6 +35,10 @@ function btrClient_get_search_params() {
     list($limit_options, $default_limit) = _btrClient_get_filter_options('limit');
     $params['limit'] = in_array($limit, $limit_options) ? $limit : $default_limit;
   }
+  //page of results to be displayed
+  if (isset($request['page'])) {
+    $params['page'] = (int)trim($request['page']);
+  }
 
   //search can be done either by similarity of l10n strings (natural search),
   //or by matching words according to a certain logic (boolean search);
