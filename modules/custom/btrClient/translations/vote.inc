@@ -41,8 +41,8 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     // If checkbox same_project is checked, constrain the list
     // of projects by the projects of the last string.
     $last_sguid = NULL;
-    if (isset($_SESSION['btr']['same_project'])
-	&& $_SESSION['btr']['same_project'])
+    if (isset($_SESSION['btrClient']['same_project'])
+	&& $_SESSION['btrClient']['same_project'])
       {
 	$last_sguid = $_SESSION['btrClient']['last_sguid'];
       }
@@ -56,14 +56,14 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
     drupal_goto("translations/$lng/$sguid");
     return;
   }
-  // last_sguid is used in search, to get similar results
+  // last_sguid is also used in search, to get similar results
   $_SESSION['btrClient']['last_sguid'] = $sguid;
 
-  // If there is a $_SESSION['btr']['translate_form']['state'],
+  // If there is a $_SESSION['btrClient']['translate_form']['state'],
   // then this is a redirect after login. Call the submit function again.
-  if (isset($_SESSION['btr']['translate_form']['state'])) {
-    $form_state = $_SESSION['btr']['translate_form']['state'];
-    unset($_SESSION['btr']['translate_form']['state']);
+  if (isset($_SESSION['btrClient']['translate_form']['state'])) {
+    $form_state = $_SESSION['btrClient']['translate_form']['state'];
+    unset($_SESSION['btrClient']['translate_form']['state']);
     //drupal_form_submit('btrClient_translate_form', $form_state);
     btrClient_translate_form_submit(NULL, $form_state);
   }
