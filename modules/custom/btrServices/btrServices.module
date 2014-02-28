@@ -124,6 +124,24 @@ function _btrServices_translations() {
     'access arguments' => array('access content'),
   );
 
+  // Search strings and translations using various filters.
+  $translations['actions']['search'] = array(
+    'help' => 'Search strings and translations.',
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_search',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Filters (lng, words, project, etc.)',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
+
   // Get the sguid of a random string according to the target.
   $translations['actions']['get_random_sguid'] = array(
     'help' => 'Get the sguid of a random string according to the target, which can be: next|translated|untranslated.',

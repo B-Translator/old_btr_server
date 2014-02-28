@@ -128,6 +128,87 @@ function _btr_translations_retrieve($sguid, $lng) {
 
 
 /**
+ * Filter strings and translations according to the given parameters.
+ *
+ * @param $params
+ *     Parameters for filtering the strings etc.
+ *
+ * @example
+ */
+function _btr_translations_index($params) {
+  return $params;
+}
+
+
+/**
+ * Search strings and translations using various filters.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains
+ *   the filter parameters. These parameters can be:
+ *   - lng
+ *       The language of translations.
+ *   - limit
+ *       The number of results to be returned (min: 5, max: 50).
+ *   - mode
+ *       Search mode. Can be one of:
+ *       - natural-strings       Natural search on strings (default).
+ *       - natural-translations  Natural search on translations.
+ *       - boolean-strings       Boolean search on strings.
+ *       - boolean-translations  Boolean search on translations.
+ *   - words
+ *       Words to be searched for.
+ *   - project
+ *       Limit search only to this project
+ *   - origin
+ *       Limit search only to the projects of this origin.
+ *   - only_mine (boolean)
+ *       Limit search only to the strings touched (translated or voted)
+ *       by the current user.
+ *   - translated_by
+ *       Limit search by the author of translations
+ *       (can be used only by admins).
+ *   - voted_by
+ *       Limit search by a voter (can be used only by admins).
+ *   - date_filter
+ *       Which date to filter (used only by admins). Can be one of:
+ *       - strings       Filter Strings By Date
+ *       - translations  Filter Translations By Date (default)
+ *       - votes         Filter Votes By Date
+ *   - from_date (YYYY-MM-DD)
+ *       Takes the current date by default.
+ *   - to_date (YYYY-MM-DD)
+ *       Takes the current date by default.
+ *
+ * @return
+ *   Array containing search results. Each result is a nested structure
+ *   containing the string, its translations, votes, etc.
+ */
+function _btr_translations_search($params) {
+  // get parameters and validate them
+  $lng = $params['lng'];
+  $arr_langs = array_keys(btr_get_languages());
+  if (!in_array($lng, $arr_langs)) {
+    return services_error('Language missing or not supported.', 406);
+  }
+
+  $filter = btr_build_search_filter($params);
+  $query = btr_build_search_query($filter);
+  if ($query === NULL) {
+    $strings = array();
+  }
+  else {
+    $strings = btr_get_query_strings($query, $lng);
+  }
+
+  return array(
+    'filter' => $filter,
+    'strings' => $strings,
+  );
+}
+
+
+/**
  * Get the sguid of a random string according to the target.
  *
  * @param $params
@@ -149,18 +230,6 @@ function _btr_translations_get_random_sguid($params) {
   );
 }
 
-
-/**
- * Filter strings and translations according to the given parameters.
- *
- * @param $params
- *     Parameters for filtering the strings etc.
- *
- * @example
- */
-function _btr_translations_index($params) {
-  return $params;
-}
 
 /**
  * Add a new translation to a source string.
@@ -201,6 +270,7 @@ function _btr_translations_add($params) {
     'messages' => $messages
   );
 }
+
 
 /**
  * Add a vote for the given translation.

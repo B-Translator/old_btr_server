@@ -7,12 +7,10 @@
  */
 
 /**
- * Build the filter data from the GET request,
+ * Get the search parameters from the GET request,
  * which is like: translations/search?lng=fr&words=xyz&limit=10
- * Check and sanize the data, and put default values where missing.
  */
-function btrClient_build_filter() {
-
+function btrClient_get_search_params() {
   //get a copy of the request parameters
   $request = $_GET;
 
@@ -29,52 +27,75 @@ function btrClient_build_filter() {
     }
   }
   //set filter language
-  $filter['lng'] = in_array($lng, $lng_codes) ? $lng : 'fr';
+  $params['lng'] = in_array($lng, $lng_codes) ? $lng : 'fr';
 
   //number of results to be displayed
-  $limit = isset($request['limit']) ? (int)trim($request['limit']) : 0;
-  list($limit_options, $default_limit) = _btrClient_get_filter_options('limit');
-  $filter['limit'] = in_array($limit, $limit_options) ? $limit : $default_limit;
+  if (isset($request['limit'])) {
+    $limit = (int)trim($request['limit']);
+    list($limit_options, $default_limit) = _btrClient_get_filter_options('limit');
+    $params['limit'] = in_array($limit, $limit_options) ? $limit : $default_limit;
+  }
 
   //search can be done either by similarity of l10n strings (natural search),
   //or by matching words according to a certain logic (boolean search);
   //search can be performed either on l10n strings or on the translations
-  $mode = isset($request['mode']) ? $request['mode'] : '';
-  list($search_mode_options, $default_search_mode) = _btrClient_get_filter_options('mode');
-  $filter['mode'] = in_array($mode, $search_mode_options) ? $mode : $default_search_mode;
-  $filter['words'] = isset($request['words']) ? $request['words'] : '';
+  if (isset($request['mode'])) {
+    $mode = $request['mode'];
+    list($search_mode_options, $default_search_mode) = _btrClient_get_filter_options('mode');
+    $params['mode'] = in_array($mode, $search_mode_options) ? $mode : $default_search_mode;
+  }
+  if (isset($request['words'])) {
+    $params['words'] = $request['words'];
+  }
 
   //searching can be limited only to certain projects and/or origins
-  $filter['project'] = isset($request['project']) ? trim($request['project']) : '';
-  $filter['origin'] = isset($request['origin']) ? trim($request['origin']) : '';
+  if (isset($request['project'])) {
+    $params['project'] = trim($request['project']);
+  }
+  if (isset($request['origin'])) {
+  $params['origin'] = trim($request['origin']);
+  }
 
-  //limit search only to the strings touched (translated or voted) by the current user
-  $filter['only_mine'] = isset($request['only_mine']) && (int)$request['only_mine'] ? 1 : 0;
+  //limit search only to the strings touched (translated or voted)
+  //by the current user
+  if (isset($request['only_mine']) && (int)$request['only_mine']) {
+    $params['only_mine'] = 1;
+  }
 
   //limit search by the editing users (used by admins)
-  $filter['translated_by'] = isset($request['translated_by']) ? trim($request['translated_by']) : '';
-  $filter['voted_by'] = isset($request['voted_by']) ? trim($request['voted_by']) : '';
+  if (isset($request['translated_by'])) {
+    $params['translated_by'] = trim($request['translated_by']);
+  }
+  if (isset($request['voted_by'])) {
+    $params['voted_by'] = trim($request['voted_by']);
+  }
 
   //limit by date of string, translation or voting (used by admins)
-  $date_filter = isset($request['date_filter']) ? trim($request['date_filter']) : '';
-  list($date_filter_options, $default_date_filter) = _btrClient_get_filter_options('date_filter');
-  $filter['date_filter'] = in_array($date_filter, $date_filter_options) ? $date_filter : $default_date_filter;
+  if (isset($request['date_filter'])) {
+    $date_filter = trim($request['date_filter']);
+    list($date_filter_options, $default_date_filter) = _btrClient_get_filter_options('date_filter');
+    $params['date_filter'] = in_array($date_filter, $date_filter_options) ? $date_filter : $default_date_filter;
+  }
 
   //from_date
-  $from_date = isset($request['from_date']) ? trim($request['from_date']) : '';
-  list($year, $month, $day) = explode('-', $from_date, 3) + array('', '', '');
-  $filter['from_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
-    array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
-    array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+  if (isset($request['from_date'])) {
+    $from_date = trim($request['from_date']);
+    list($year, $month, $day) = explode('-', $from_date, 3) + array('', '', '');
+    $params['from_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
+      array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
+      array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+  }
 
   //to_date
-  $to_date = isset($request['to_date']) ? trim($request['to_date']) : '';
-  list($year, $month, $day) = explode('-', $to_date, 3) + array('', '', '');
-  $filter['to_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
-    array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
-    array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+  if (isset($request['to_date'])) {
+    $to_date = trim($request['to_date']);
+    list($year, $month, $day) = explode('-', $to_date, 3) + array('', '', '');
+    $params['to_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
+      array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
+      array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+  }
 
-  return $filter;
+  return $params;
 }
 
 /**

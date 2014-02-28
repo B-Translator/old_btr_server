@@ -14,20 +14,6 @@ function btr_get_translation($tguid) {
   return $translation;
 }
 
-function btr_get_search_results($filter, $lng) {
-  //get a query for selecting strings that match the filter
-  $query = btr_build_search_query($filter);
-  if (!$query) {
-    drupal_set_message(t('Filter is empty. Put something on the filter options.'));
-  }
-  //dpq($query);  //debug
-
-  //get the strings that match the filter and the corresponding translations
-  $strings = btr_get_query_strings($query, $lng);
-
-  return $strings;
-}
-
 function btr_get_strings($arr_sguid, $lng) {
   $query = $GLOBALS['btr_db']->select('btr_strings', 's')
     ->fields('s', array('sguid'))
@@ -42,7 +28,6 @@ function btr_get_strings($arr_sguid, $lng) {
 
   return btr_get_query_strings($query, $lng, $alternative_langs);
 }
-
 
 /**
  * Get the details of strings, translations and votes and return them

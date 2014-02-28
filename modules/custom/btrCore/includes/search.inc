@@ -1,8 +1,78 @@
 <?php
 /**
  * @file
- * Build the query that selects the strings that match the given filter.
+ * Functions related to search.
  */
+
+
+
+/**
+ * Build the filter data from the given params.
+ *
+ * Check and sanize the data, and put default values where missing.
+ *
+ * @param $params
+ *   Assoc array with filter parameters.
+ *
+ * @return
+ *   Assoc array with filter data.
+ */
+function btr_build_search_filter($params) {
+  //get language
+  $filter['lng'] = $params['lng'];
+
+  //number of results to be returned
+  $limit = isset($params['limit']) ? (int)trim($params['limit']) : 5;
+  if ($limit < 5)  $limit = 5;
+  if ($limit > 50) $limit = 50;
+  $filter['limit'] = $limit;
+
+  //search can be done either by similarity of l10n strings (natural search),
+  //or by matching words according to a certain logic (boolean search);
+  //search can be performed either on l10n strings or on the translations
+  $search_mode_options = array(
+    'natural-strings',
+    'natural-translations',
+    'boolean-strings',
+    'boolean-translations',
+  );
+  $mode = isset($params['mode']) ? $params['mode'] : '';
+  $filter['mode'] = in_array($mode, $search_mode_options) ? $mode : 'natural-strings';
+  $filter['words'] = isset($params['words']) ? $params['words'] : '';
+
+  //searching can be limited only to certain projects and/or origins
+  $filter['project'] = isset($params['project']) ? trim($params['project']) : '';
+  $filter['origin'] = isset($params['origin']) ? trim($params['origin']) : '';
+
+  //limit search only to the strings touched (translated or voted) by the current user
+  $filter['only_mine'] = isset($params['only_mine']) && (int)$params['only_mine'] ? 1 : 0;
+
+  //limit search by the editing users (used by admins)
+  $filter['translated_by'] = isset($params['translated_by']) ? trim($params['translated_by']) : '';
+  $filter['voted_by'] = isset($params['voted_by']) ? trim($params['voted_by']) : '';
+
+  //limit by date of string, translation or voting (used by admins)
+  $date_filter_options = array('strings', 'translations', 'votes');
+  $date_filter = isset($params['date_filter']) ? trim($params['date_filter']) : '';
+  $filter['date_filter'] = in_array($date_filter, $date_filter_options) ? $date_filter : 'translations';
+
+  //from_date
+  $from_date = isset($params['from_date']) ? trim($params['from_date']) : '';
+  list($year, $month, $day) = explode('-', $from_date, 3) + array('', '', '');
+  $filter['from_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
+    array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
+    array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+
+  //to_date
+  $to_date = isset($params['to_date']) ? trim($params['to_date']) : '';
+  list($year, $month, $day) = explode('-', $to_date, 3) + array('', '', '');
+  $filter['to_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
+    array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
+    array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+
+  return $filter;
+}
+
 
 /**
  * Build the query that selects the strings that match
@@ -35,6 +105,7 @@
  *      translated_by, voted_by, date_filter, from_date, to_date
  * @return
  *   A query object that corresponds to the filter.
+ *   NULL if there is nothing to select.
  */
 function btr_build_search_query($filter) {
 
@@ -48,16 +119,14 @@ function btr_build_search_query($filter) {
   _btr_filter_by_author($query, $filter['lng'], $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
   _btr_filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
 
-  //if nothing has been selected yet, then return FALSE
-  //dpm($query->conditions(), 'query_conditions');  //debug
-  if (sizeof($query->conditions()) == 1) return FALSE;
+  //if nothing has been selected yet, then return NULL
+  if (sizeof($query->conditions()) == 1) return NULL;
 
   //if translations are joined, then filter by the language as well
   if ($query->hasTag('join-translations')) {
     $query->condition('t.lng', $filter['lng']);
   }
 
-  dpq($query);  //debug
   return $query;
 }
 
