@@ -14,19 +14,10 @@ function btrClient_get_search_params() {
   //get a copy of the request parameters
   $request = $_GET;
 
-  //get language
+  //get and check the language
+  $lng = isset($request['lng']) ? trim($request['lng']) : '';
   $languages = btr_get_languages();
   $lng_codes = array_keys($languages);
-  $lng = isset($request['lng']) ? trim($request['lng']) : '';
-  //by default search for strings similar to the one that is being voted
-  if ($lng == '' && isset($_SESSION['btrClient']['last_sguid'])) {
-    $string = btr_get_string($_SESSION['btrClient']['last_sguid']);
-    if ($string) {
-      $lng = variable_get('btrClient_translation_lng', 'fr');
-      $request['words'] = $string;
-    }
-  }
-  //set filter language
   $params['lng'] = in_array($lng, $lng_codes) ? $lng : 'fr';
 
   //number of results to be displayed

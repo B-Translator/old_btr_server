@@ -23,6 +23,21 @@ require_once(dirname(__FILE__) . '/utils.inc');
  *        'https://dev.l10n.org.xx/translations/search?lng=sq&words=space'
  */
 function btrClient_search() {
+  // If the search filter is empty, try to search for strings
+  // similar to the last one that was reviewed.
+  if (!isset($_GET['lng']) and isset($_SESSION['btrClient']['last_sguid'])) {
+    $string = btr_get_string($_SESSION['btrClient']['last_sguid']);
+    if ($string) {
+      $lng = variable_get('btrClient_translation_lng', 'fr');
+      $request['words'] = $string;
+      drupal_goto('translations/search',
+        array('query' => array(
+            'lng' => $lng,
+            'words' => $string,
+          )));
+    }
+  }
+
   // Get the search parameters from the GET request.
   $params = btrClient_get_search_params();
 
