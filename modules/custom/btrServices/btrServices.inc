@@ -130,13 +130,25 @@ function _btr_translations_retrieve($sguid, $lng) {
 /**
  * Filter strings and translations according to the given parameters.
  *
+ * This provides the same functionality and has the same parameters
+ * as the operation 'translations/search'. The only difference is that
+ * the parameters are provided as a GET request (in the URL), whereas
+ * the parameters of 'translations/search' are provided as a POST
+ * request. Sometimes this may be more convenient.
+ *
  * @param $params
  *     Parameters for filtering the strings etc.
  *
+ * @return
+ *   Array containing search results, along with the filters
+ *   and the pager info (same as for the search case).
+ *
  * @example
+ *   curl -k -i -H 'Accept: application/json' \
+ *     'https://dev.l10n.org.xx/public/btr/translations?lng=sq&words=file'
  */
 function _btr_translations_index($params) {
-  return $params;
+  return _btr_translations_search($params);
 }
 
 
@@ -183,7 +195,8 @@ function _btr_translations_index($params) {
  *       Takes the current date by default.
  *
  * @return
- *   Array containing search results. Each result is a nested structure
+ *   Array containing search results, along with the filters
+ *   and the pager info. Each result is a nested structure
  *   containing the string, its translations, votes, etc.
  */
 function _btr_translations_search($params) {

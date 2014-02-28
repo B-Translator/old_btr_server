@@ -109,6 +109,7 @@ function _btrServices_translations() {
   // Filter strings and translations
   // according to the given parameters.
   $translations['operations']['index'] = array(
+    'help' => 'Index of strings and translations.',
     'file' => array('type' => 'inc', 'module' => 'btrServices'),
     'callback' => '_btr_translations_index',
     'args' => array(
@@ -116,7 +117,7 @@ function _btrServices_translations() {
         'name' => 'params',
         'optional' => FALSE,
         'source' => 'param',
-        'description' => 'Parameters for filtering the strings etc.',
+        'description' => 'Filter parameters (lng, words, project, etc.)',
         'type' => 'array',
       ),
     ),
