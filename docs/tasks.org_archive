@@ -535,6 +535,56 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
   :ARCHIVE_TODO: DONE
   :END:
 
+* DONE Separate the display interface from the database logic with a web-server API.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-03-01 Sat 19:41
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  This web-server API will also make possible the development
+  of an android app, etc
+* DONE Publish Disqus comments to twitter account @l10n_sq
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-03-01 Sat 19:41
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Publish new translations to twitter, facebook, linkedin, google+, etc.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-03-01 Sat 19:41
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+* DONE API
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-03-01 Sat 19:41
+  :ARCHIVE_FILE: /var/chroot/dev/docs/tasks.org
+  :ARCHIVE_OLPATH: Tasks
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+
+  Build an API/web-service that totally separates the database from
+  the interface. Everything should be done through the
+  API/web-service.
+
+** XML-RPC interface
+   Or some other web-service (API) interface.
+
+** DONE Split the module l10n_feedback into server and client
+   These two should communicate only through the API/web-service.
+
+
+
+
+
 
 
 

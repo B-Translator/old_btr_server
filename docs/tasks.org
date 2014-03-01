@@ -19,9 +19,12 @@
   6. [+] Improve the *email interface* (for voting).
   7. [ ] Add a *mobile interface* (or theme).
   8. [ ] Build the pages for admin dashboard, reports and stats.
-  9. [ ] Add an API for external applications.
+  9. [X] Add an API for external applications.
   10. [ ] Integration with google+, twitter, diaspora, etc.
   11. [ ] Android app that can be used for voting.
+  12. [ ] Desktop application.
+  13. [ ] Plugins/widgets/modules etc. for integration with other
+          systems like WordPress, Joomla, etc.
 
 * Tasks
 
@@ -53,18 +56,6 @@
     + For the 'multiple' mode, an Unlike button should be available as well (in order
       to change the voting at any time).
 
-** API
-
-   Build an API/web-service that totally separates the database from
-   the interface. Everything should be done through the
-   API/web-service.
-
-*** XML-RPC interface
-    Or some other web-service (API) interface.
-
-*** Split the module l10n_feedback into server and client
-    These two should communicate only through the API/web-service.
-
 ** Integration with Facebook
 *** For each translation review add a button for posting it on FB as a poll.
 *** When a FB user votes or leaves a comment, update his status.
@@ -72,14 +63,12 @@
 
 ** Misc
 
+*** Build an application with EmberJS and HTML5.
+*** Export vocabulary in formats CSV, PDF, etc.
+*** Rewrite import/export scripts as drush commands.
+*** Desktop application for submitting feedback.
 *** Try to use Drupal7 entities for strings, translations, etc.
     This can improve the integration with the other Drupal modules.
-
-*** TODO Separate the display interface from the database logic with a web-server API.
-    This web-server API will also make possible the development
-    of an android app, etc
-*** TODO Publish Disqus comments to twitter account @l10n_sq
-*** TODO Publish new translations to twitter, facebook, linkedin, google+, etc.
 
 *** Add in l10n.org.al a page for each project which can be liked, +1-d, etc.
     Update: A content type for projects has been created, but more work
@@ -87,6 +76,7 @@
 *** Use modules: views, pannels, views_slideshow, etc.
     Try also: Organic Groups (for project pages), Display Suite,
     Entity View Attach, Entity Cache, Features, etc.
+*** Use the module MetaTags.
 
 *** TODO Publish/export incremental dumps of the database
     Maybe it should be a synch API which allows different instances of
@@ -97,7 +87,6 @@
     - Internal link to translations into other auxiliary languages.
     - External link to google.com, which tries to get more details
       about the context in which a string is used.
-    - External link to open-trans.eu
     - Other external links (related to the projects to which the
       string appears)
       + transvision.mozfr.org
