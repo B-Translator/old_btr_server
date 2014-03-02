@@ -45,7 +45,7 @@ function _btr_report_retrieve($report, $params) {
  *
  * @example
  *     curl -k -i -H "Content-type: application/json"  \
- *          -X POST https://dev.l10n.org.xx/public/btr/report/statistics.json	\
+ *          -X POST https://dev.l10n.org.xx/public/btr/report/statistics \
  *          -d '{"lng": "sq"}'
  */
 function _btr_report_statistics($params) {
@@ -75,7 +75,7 @@ function _btr_report_statistics($params) {
  *
  * @example
  *     curl -k -i -H "Content-type: application/json"  \
- *          -X POST https://dev.l10n.org.xx/public/btr/report/topcontrib.json	\
+ *          -X POST https://dev.l10n.org.xx/public/btr/report/topcontrib \
  *          -d '{"lng": "sq", "period": "week", "size": 10}'
  */
 function _btr_report_topcontrib($params) {
