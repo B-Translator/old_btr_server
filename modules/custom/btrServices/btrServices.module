@@ -161,6 +161,24 @@ function _btrServices_translations() {
     'access arguments' => array('access content'),
   );
 
+  // Get a string, along with its translations, votes and other details.
+  $translations['actions']['get'] = array(
+    'help' => 'Return a string, along with its translations, votes and other details.',
+    'file' => array('type' => 'inc', 'module' => 'btrServices'),
+    'callback' => '_btr_translations_get',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Parameters (sguid and lng).',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
+
   // Add a new translation to a source string.
   $translations['actions']['add'] = array(
     'help' => 'Add a new translation to a source string.',

@@ -79,6 +79,15 @@ function btr_btrServices_default_services_endpoint() {
             ),
           ),
         ),
+        'get' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
         'add' => array(
           'enabled' => '1',
           'settings' => array(
@@ -184,6 +193,9 @@ function btr_btrServices_default_services_endpoint() {
           'enabled' => '1',
         ),
         'get_random_sguid' => array(
+          'enabled' => '1',
+        ),
+        'get' => array(
           'enabled' => '1',
         ),
       ),

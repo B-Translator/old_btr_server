@@ -98,8 +98,7 @@ function _btr_report_topcontrib($params) {
 }
 
 /**
- * Return a string, along with its translations,
- * votes and other details.
+ * Get a string, along with its translations votes and other details.
  *
  * @param $sguid
  *   The string (globally unique) id, calculated
@@ -118,14 +117,10 @@ function _btr_report_topcontrib($params) {
  *     'https://dev.l10n.org.xx/public/btr/translations/next?lng=sq'
  */
 function _btr_translations_retrieve($sguid, $lng) {
-  $arr_langs = array_keys(btr_get_languages());
-  if (!in_array($lng, $arr_langs)) {
-    return services_error('Language missing or not supported.', 406);
-  }
-  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
-    $sguid = btr_get_random_sguid($sguid, $lng);
-  }
-  $strings = btr_get_strings(array($sguid), $lng);
+  $strings = _btr_translations_get(array(
+               'sguid' => $sguid,
+               'lng' => $lng,
+             ));
   return $strings;
 }
 
@@ -269,6 +264,43 @@ function _btr_translations_get_random_sguid($params) {
   );
 }
 
+
+/**
+ * Get a string, along with its translations votes and other details.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - sguid
+ *       The string (globally unique) id, calculated
+ *       as: $sguid = sha1($string . $context)
+ *       It can also be: next|translated|untranslated
+ *   - lng
+ *       The language of translations, like: 'fr', 'sq', etc.
+ *
+ * @return
+ *   A nested structure containing the string, its
+ *   translations, votes, etc.
+ *
+ * @example
+ *   curl -k -i -H 'Content-type: application/json' \
+ *     -X POST https://dev.l10n.org.xx/public/btr/translations/get
+ *     -d '{"lng": "sq"}'
+ */
+function _btr_translations_get($params) {
+  $lng = $params['lng'];
+  $arr_langs = array_keys(btr_get_languages());
+  if (!in_array($lng, $arr_langs)) {
+    return services_error('Language missing or not supported.', 406);
+  }
+
+  $sguid = $params['sguid'];
+  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
+    $sguid = btr_get_random_sguid($sguid, $lng);
+  }
+
+  $strings = btr_get_strings(array($sguid), $lng);
+  return $strings;
+}
 
 /**
  * Add a new translation to a source string.
