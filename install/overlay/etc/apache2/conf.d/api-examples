@@ -1,0 +1,5 @@
+Alias /api-examples /var/www/api-examples
+
+<Directory /var/www/api-examples>
+    Options Indexes FollowSymLinks
+</Directory>

@@ -23,7 +23,7 @@ $options = array(
   ),
 );
 $result = http_request($url, $options);
-$tguid = $result->tguid;
+$tguid = $result['tguid'];
 
 // Retrive the string and check that the new translation has been added.
 $url = $base_url . "/public/btr/translations/$sguid?lng=sq";

@@ -1,4 +1,8 @@
 <?php
+if (php_sapi_name() != "cli") {
+  highlight_file($_SERVER["SCRIPT_FILENAME"]);
+  flush();
+}
 
 define('DEBUG', TRUE);
 

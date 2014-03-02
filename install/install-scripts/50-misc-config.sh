@@ -53,3 +53,6 @@ update-locale
 ### replace nginx with apache2
 dev_scripts=$drupal_dir/profiles/btranslator/dev
 $dev_scripts/apache2.sh start
+
+### link to api-examples
+ln -s /var/www/btr_dev/profiles/btranslator/modules/custom/btrServices/examples/ /var/www/api-examples

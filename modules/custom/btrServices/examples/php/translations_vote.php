@@ -8,8 +8,8 @@ $url = $base_url . '/public/btr/translations/translated?lng=sq';
 $result = http_request($url);
 
 // Get the tguid of the first translation.
-foreach ((array)$result as $sguid => $string) {
-  foreach ((array)$string->translations as $tguid => $translation) {
+foreach ($result as $sguid => $string) {
+  foreach ($string['translations'] as $tguid => $translation) {
     break;
   }
   break;
