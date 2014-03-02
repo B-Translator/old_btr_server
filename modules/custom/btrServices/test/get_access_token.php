@@ -1,5 +1,4 @@
 <?php
-include_once(dirname(__FILE__) . '/config.php');
 include_once(dirname(__FILE__) . '/http_request.php');
 
 /**
@@ -20,11 +19,5 @@ function get_access_token($params) {
     ),
   );
   $result = http_request($params['token_url'], $options);
-  $result = json_decode($result);
-  //print_r($result);
   return $result->access_token;
 }
-
-$access_token = get_access_token($auth);
-print "\naccess_token = $access_token\n";
-//print "\n===================================================\n";
