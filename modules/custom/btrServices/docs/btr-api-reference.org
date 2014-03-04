@@ -16,7 +16,7 @@
    week, month and year.
 
    + GET public/btr/report/statistics ::
-     - - lng: :: language of translations
+     - lng :: language of translations
 
    + POST public/btr/report/statistics ::
      - lng: :: language of translations
@@ -43,7 +43,7 @@
 
    Get the sguid of a random string according to the target.
 
-   + POST /public/btr/translations/get_random_sguid ::
+   + POST public/btr/translations/get_random_sguid ::
      - target :: Can be one of: =next | translated | untranslated=
      - lng :: Code of the language (required for translated and untranslated)
      - last_sguid :: (optional) Restricts the pool of selection to the
@@ -54,13 +54,13 @@
 
    Get a string, along with its translations, votes and other details.
 
-   + GET /public/btr/translations/$sguid ::
+   + GET public/btr/translations/$sguid ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =next | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-   + POST /public/btr/translations/get ::
+   + POST public/btr/translations/get ::
      - sguid :: The string (globally unique) id, calculated as:
                 =$sguid = sha1($string . $context)= It can also be:
                 =next | translated | untranslated=.
@@ -71,7 +71,7 @@
 
    Add a new translation to a source string.
 
-   + POST /btr/translations/add ::
+   + POST btr/translations/add ::
      - sguid ::
 	 The string ID for which a new translation should be added.
      - lng ::
@@ -86,7 +86,7 @@
 
    Add a vote for the given translation.
 
-   + POST /btr/translations/vote ::
+   + POST btr/translations/vote ::
      - tguid :: ID of the translation
 
 
@@ -94,7 +94,7 @@
 
    Delete a translation
 
-   + POST /btr/translations/del ::
+   + POST btr/translations/del ::
      - tguid :: ID of the translation
 
 
@@ -102,7 +102,7 @@
 
    Delete a vote from the given translation.
 
-   + POST /btr/translations/del_vote ::
+   + POST btr/translations/del_vote ::
      - tguid :: ID of the translation
 
 
@@ -110,14 +110,14 @@
 
    Search strings and translations using various filters.
 
-   + GET /public/btr/translations :: This provides the same
+   + GET public/btr/translations :: This provides the same
          functionality and has the same parameters as the *search*
          operation.  The only difference is that the parameters are
          provided as a GET request (in the URL), whereas the
          parameters of 'search' are provided as a POST
          request. Sometimes this may be more convenient.
 
-   + POST /public/btr/translations/search ::
+   + POST public/btr/translations/search ::
      - lng ::
          The language of translations.
      - limit ::
@@ -159,7 +159,7 @@
 
    Submit multiple actions at once.
 
-   + POST /btr/translations/submit ::
+   + POST btr/translations/submit ::
          Array of actions. Each action is an associated array
 	 that contains the items:
 	 - action ::
