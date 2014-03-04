@@ -1,0 +1,169 @@
+#+TITLE:     B-Translator API Reference
+#+AUTHOR:    Dashamir Hoxha
+#+EMAIL:     dashohoxha@gmail.com
+##+DESCRIPTION:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
+#+STYLE: <link rel="stylesheet" type="text/css" href="css/org.css" />
+
+* report
+
+** statistics
+
+   General statistics (number of votes and translations) for the last
+   week, month and year.
+
+   + GET public/btr/report/statistics ::
+     - - lng: :: language of translations
+
+   + POST public/btr/report/statistics ::
+     - lng: :: language of translations
+
+
+** topcontrib
+
+   Statistics about top contributors.
+
+   + GET public/btr/report/topcontrib ::
+     - lng :: language of translations
+     - period :: period of report (last day|week|month|year)
+     - size :: number of results (top contributers), between 5 and 20
+
+   + POST public/btr/report/topcontrib ::
+     - lng :: language of translations
+     - period :: period of report (last day|week|month|year)
+     - size :: number of results (top contributers), between 5 and 20
+
+
+* translations
+
+** get_random_sguid
+
+   Get the sguid of a random string according to the target.
+
+   + POST /public/btr/translations/get_random_sguid ::
+     - target :: Can be one of: =next | translated | untranslated=
+     - lng :: Code of the language (required for translated and untranslated)
+     - last_sguid :: (optional) Restricts the pool of selection to the
+                     project(s) of the last reviewed sguid.
+
+
+** get
+
+   Get a string, along with its translations, votes and other details.
+
+   + GET /public/btr/translations/$sguid ::
+     - sguid :: The string (globally unique) id, calculated as:
+                =$sguid = sha1($string . $context)= It can also be:
+                =next | translated | untranslated=.
+     - lng :: The language of translations, like fr, de, etc.
+
+   + POST /public/btr/translations/get ::
+     - sguid :: The string (globally unique) id, calculated as:
+                =$sguid = sha1($string . $context)= It can also be:
+                =next | translated | untranslated=.
+     - lng :: The language of translations, like fr, de, etc.
+
+
+** add
+
+   Add a new translation to a source string.
+
+   + POST /btr/translations/add ::
+     - sguid ::
+	 The string ID for which a new translation should be added.
+     - lng ::
+	 The language (code) of the new translation.
+     - translation ::
+	 The new translation as a string. If the string has plural
+	 version(s) as well, they are concatenated with NULL bytes ("\0")
+	 between them.
+
+
+** vote
+
+   Add a vote for the given translation.
+
+   + POST /btr/translations/vote ::
+     - tguid :: ID of the translation
+
+
+** del
+
+   Delete a translation
+
+   + POST /btr/translations/del ::
+     - tguid :: ID of the translation
+
+
+** del_vote
+
+   Delete a vote from the given translation.
+
+   + POST /btr/translations/del_vote ::
+     - tguid :: ID of the translation
+
+
+** search
+
+   Search strings and translations using various filters.
+
+   + GET /public/btr/translations :: This provides the same
+         functionality and has the same parameters as the *search*
+         operation.  The only difference is that the parameters are
+         provided as a GET request (in the URL), whereas the
+         parameters of 'search' are provided as a POST
+         request. Sometimes this may be more convenient.
+
+   + POST /public/btr/translations/search ::
+     - lng ::
+         The language of translations.
+     - limit ::
+         The number of results to be returned (min: 5, max: 50).
+     - words ::
+         Words to be searched for.
+     - mode ::
+         Search mode. Can be one of:
+         - natural-strings :       Natural search on strings (default).
+         - natural-translations :  Natural search on translations.
+         - boolean-strings :       Boolean search on strings.
+         - boolean-translations :  Boolean search on translations.
+     - page ::
+         Page of results to be displayed.
+     - project ::
+         Limit search only to this project
+     - origin ::
+         Limit search only to the projects of this origin.
+     - only_mine :: (boolean)
+         Limit search only to the strings touched (translated or voted)
+         by the current user.
+     - translated_by ::
+         Limit search by the author of translations
+         (can be used only by admins).
+     - voted_by ::
+         Limit search by a voter (can be used only by admins).
+     - date_filter ::
+         Which date to filter (used only by admins). Can be one of:
+         - strings :       Filter Strings By Date
+         - translations :  Filter Translations By Date (default)
+         - votes :         Filter Votes By Date
+     - from_date :: (YYYY-MM-DD)
+         Takes the current date by default.
+     - to_date :: (YYYY-MM-DD)
+         Takes the current date by default.
+
+
+** submit
+
+   Submit multiple actions at once.
+
+   + POST /btr/translations/submit ::
+         Array of actions. Each action is an associated array
+	 that contains the items:
+	 - action ::
+	     The action to be done: =add | vote | del | del_vote=
+	 - params ::
+	     Associative array of the needed parameters for this action.
+
