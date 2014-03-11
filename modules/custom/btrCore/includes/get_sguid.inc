@@ -21,13 +21,13 @@ function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
   switch ($target) {
     default:
     case 'next':
-      $sguid = btr_sguid_get_next($uid=NULL, $projects);
+      $sguid = _btr_sguid_get_next($uid=NULL, $projects);
       break;
     case 'translated':
-      $sguid = btr_sguid_get_translated($lng, $uid=NULL, $projects);
+      $sguid = _btr_sguid_get_translated($lng, $uid=NULL, $projects);
       break;
     case 'untranslated':
-      $sguid = btr_sguid_get_untranslated($lng, $uid=NULL, $projects);
+      $sguid = _btr_sguid_get_untranslated($lng, $uid=NULL, $projects);
       break;
   }
   return $sguid;
@@ -46,7 +46,7 @@ function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
  * @return
  *   The sguid of another string.
  */
-function btr_sguid_get_next($uid =NULL, $projects =NULL) {
+function _btr_sguid_get_next($uid =NULL, $projects =NULL) {
 
   // get the string-order preference for the user
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
@@ -57,11 +57,11 @@ function btr_sguid_get_next($uid =NULL, $projects =NULL) {
   switch ($string_order) {
     default:
     case 'random':
-      $sguid = btr_sguid_get_random($uid, $projects);
+      $sguid = _btr_sguid_get_random($uid, $projects);
       break;
 
     case 'sequential':
-      $sguid = btr_sguid_get_sequential($uid);
+      $sguid = _btr_sguid_get_sequential($uid);
       break;
   }
 
@@ -78,7 +78,7 @@ function btr_sguid_get_next($uid =NULL, $projects =NULL) {
  * @return
  *   The sguid of the next string in the PO file(s).
  */
-function btr_sguid_get_sequential($uid =NULL) {
+function _btr_sguid_get_sequential($uid =NULL) {
 
   // get the sequential data
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
@@ -91,7 +91,7 @@ function btr_sguid_get_sequential($uid =NULL) {
         "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
         array('@edit-profile' => "/user/$uid/edit-profile")),
       'warning');
-    return btr_sguid_get_random($uid);
+    return _btr_sguid_get_random($uid);
   }
 
   $lid = $sequential->lid;
@@ -107,7 +107,7 @@ function btr_sguid_get_sequential($uid =NULL) {
           "You have reached the end of the preferred projects. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
         array('@edit-profile' => '/user/$uid/edit-profile')),
       'status');
-      return btr_sguid_get_random($uid);
+      return _btr_sguid_get_random($uid);
     }
     $proj = $sequential->projects[$idx];
     $lid = $proj->lmin;
@@ -140,7 +140,7 @@ function btr_sguid_get_sequential($uid =NULL) {
  * @return
  *   Randomly selected sguid.
  */
-function btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
+function _btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // Get the list of projects that will be searched.
@@ -193,7 +193,7 @@ function btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
  * @return
  *   The sguid of a randomly selected untranslated string.
  */
-function btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
+function _btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // Get the list of projects that will be searched.
@@ -254,7 +254,7 @@ function btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
  * @return
  *   The sguid of a randomly selected untranslated string.
  */
-function btr_sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
+function _btr_sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
   $db = $GLOBALS['btr_db'];
 
   // Get the list of projects that will be searched.
