@@ -38,7 +38,16 @@ function btr_build_search_filter($params) {
   );
   $mode = isset($params['mode']) ? $params['mode'] : '';
   $filter['mode'] = in_array($mode, $search_mode_options) ? $mode : 'natural-strings';
+
+  // if no searching words are given but there is a sguid in $params
+  // search for that string (find strings similar to that one)
   $filter['words'] = isset($params['words']) ? $params['words'] : '';
+  if ($filter['words'] == '' and isset($params['sguid'])) {
+    $string = btr_get_string($params['sguid']);
+    if ($string) {
+      $filter['words'] = $string;
+    }
+  }
 
   //searching can be limited only to certain projects and/or origins
   $filter['project'] = isset($params['project']) ? trim($params['project']) : '';

@@ -162,6 +162,9 @@ function _btr_translations_index($params) {
  *       The number of results to be returned (min: 5, max: 50).
  *   - words
  *       Words to be searched for.
+ *   - sguid
+ *       If the 'words' is empty and there is a 'sguid' then the
+ *       words of this string are used for searching.
  *   - mode
  *       Search mode. Can be one of:
  *       - natural-strings       Natural search on strings (default).

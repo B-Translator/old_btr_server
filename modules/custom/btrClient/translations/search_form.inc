@@ -14,6 +14,13 @@ function btrClient_get_search_params() {
   //get a copy of the request parameters
   $request = $_GET;
 
+  // If the search filter is empty, try to search for strings
+  // similar to the last one that was reviewed.
+  if (!isset($request['lng']) and isset($_SESSION['btrClient']['last_sguid'])) {
+    $request['lng'] = variable_get('btrClient_translation_lng', 'fr');
+    $params['sguid'] = $_SESSION['btrClient']['last_sguid'];
+  }
+
   //get and check the language
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
   $languages = btr_get_languages();
