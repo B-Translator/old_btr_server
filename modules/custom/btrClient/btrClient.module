@@ -92,7 +92,7 @@ function btrClient_init() {
   }
 
   // Check if language is RTL
-  $languages = btr_get_languages();
+  $languages = btrClient_get_languages();
   $lng = arg(1);
   if (array_key_exists($lng, $languages)) {
     // Add RTL style if the current language's direction is RTL

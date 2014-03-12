@@ -68,3 +68,24 @@ function btrClient_display_messages($messages) {
     drupal_set_message($msg, $type);
   }
 }
+
+/**
+ * Return an array of languages and their details.
+ */
+function btrClient_get_languages() {
+  $cache = cache_get('btrClient_languages', 'cache_btrClient');
+  // Return cache if possible.
+  if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
+    return $cache->data;
+  }
+
+  // Get an array of languages from the server.
+  $btr_server = variable_get('oauth2_login_oauth2_server', $GLOBALS['base_url']);
+  $result = file_get_contents("$btr_server/translations/languages");
+  $languages = json_decode($result, true);
+
+  // Cache until a general cache wipe.
+  cache_set('btrClient_languages', $languages, 'cache_btrClient', CACHE_TEMPORARY);
+
+  return $languages;
+}

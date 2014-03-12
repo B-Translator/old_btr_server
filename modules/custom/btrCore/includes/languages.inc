@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Menu callback for translations/languages.
+ * Returns a json list of languages and their details.
+ */
+function btrCore_languages() {
+  $languages = btr_get_languages();
+  print drupal_json_encode($languages);
+  exit(0);
+}
+
+/**
  * Returns an array of languages and their details.
  */
 function btr_get_languages() {

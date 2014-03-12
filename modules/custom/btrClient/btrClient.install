@@ -39,6 +39,7 @@ function btrClient_uninstall() {
   // delete variables that were used for this module
   $variables = array(
     'btrClient_translation_lng',
+    'btrClient_server',
 
     'btrClient_topcontrib_size',
     'btrClient_topcontrib_period',

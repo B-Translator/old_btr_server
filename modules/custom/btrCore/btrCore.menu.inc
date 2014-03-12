@@ -136,6 +136,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a json list of languages and their details.
+  $items['translations/languages'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Return a json list of languages and their details.',
+    'page callback'   => 'btrCore_languages',
+    'file'            => 'includes/languages.inc',
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 

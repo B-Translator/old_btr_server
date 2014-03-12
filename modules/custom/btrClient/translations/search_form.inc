@@ -23,7 +23,7 @@ function btrClient_get_search_params() {
 
   //get and check the language
   $lng = isset($request['lng']) ? trim($request['lng']) : '';
-  $languages = btr_get_languages();
+  $languages = btrClient_get_languages();
   $lng_codes = array_keys($languages);
   $params['lng'] = in_array($lng, $lng_codes) ? $lng : 'fr';
 
@@ -132,7 +132,7 @@ function btrClient_get_query_values($form_values) {
   $query = array();
 
   //lng
-  $languages = btr_get_languages();
+  $languages = btrClient_get_languages();
   $lng_codes = array_keys($languages);
   $lng = trim($form_values['lng']);
   if (in_array($lng, $lng_codes))
@@ -263,7 +263,7 @@ function btrClient_filter_form($form, &$form_state, $filter) {
  */
 function _btrClient_filter_form_basic_search(&$form, &$form_state) {
 
-  $languages = btr_get_languages();
+  $languages = btrClient_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   $form['lng'] = array(
     '#type' => 'select',

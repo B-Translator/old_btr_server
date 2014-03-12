@@ -46,7 +46,7 @@ function btrClient_search() {
   drupal_add_js(drupal_get_path('module', 'btrClient') . '/editor/editor.js');
 
   // Add RTL style if the current language's direction is RTL
-  $languages = btr_get_languages();
+  $languages = btrClient_get_languages();
   $lng = variable_get('btrClient_translation_lng', 'fr');
   if ($languages[$lng]['direction'] == LANGUAGE_RTL) {
     drupal_add_css(drupal_get_path('module', 'btrClient') . '/editor-rtl.css');

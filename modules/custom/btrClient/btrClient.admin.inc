@@ -18,7 +18,7 @@ function btrClient_config() {
   );
 
   // get a list of available languages
-  $languages = btr_get_languages();
+  $languages = btrClient_get_languages();
   foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
   unset($lang_options['en']);
 
@@ -29,6 +29,14 @@ function btrClient_config() {
     '#description' => t('The default language of translations (for anonymous users).'),
     '#options' => $lang_options,
     '#default_value' => variable_get('btrClient_translation_lng', 'fr'),
+  );
+
+  // btrClient_server
+  $form['defaults']['btrClient_server'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Server URL'),
+    '#default_value' => variable_get('btrClient_server', $GLOBALS['base_url']),
+    '#description' => t('The URL of the B-Translator server.'),
   );
 
   return system_settings_form($form);
