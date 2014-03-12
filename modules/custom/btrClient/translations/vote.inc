@@ -52,9 +52,17 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
         'lng' => $lng,
         'last_sguid' => $last_sguid,
       ));
+
     btrClient_display_messages($result['messages']);
+
     $sguid = $result['sguid'];
-    drupal_goto("translations/$lng/$sguid");
+    if (!$sguid) {
+      drupal_set_message(t('No string found!'), 'warning');
+      drupal_goto('/');
+    }
+    else {
+      drupal_goto("translations/$lng/$sguid");
+    }
     return;
   }
   // last_sguid is also used in search, to get similar results
@@ -87,7 +95,7 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   $string = $result['string'];
   if (empty($string)) {
     drupal_set_message(t('No string found!'), 'warning');
-    drupal_goto("/");
+    drupal_goto('/');
     return;
   }
 

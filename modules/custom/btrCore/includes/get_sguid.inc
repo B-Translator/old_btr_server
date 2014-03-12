@@ -33,6 +33,11 @@ function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
       $sguid = _btr_sguid_get_untranslated($lng, $uid=NULL, $projects);
       break;
   }
+
+  if (!$sguid) {
+    $sguid = _btr_sguid_get_random($uid=NULL, $projects);
+  }
+
   return array($sguid, $_btrCore_messages);
 }
 
@@ -93,7 +98,7 @@ function _btr_sguid_get_sequential($uid =NULL) {
            array('@edit-profile' => "/user/$uid/edit-profile"));
     global $_btrCore_messages;
     $_btrCore_messages[] = array($msg, 'warning');
-    return _btr_sguid_get_random($uid);
+    return NULL;
   }
 
   $lid = $sequential->lid;
@@ -109,7 +114,7 @@ function _btr_sguid_get_sequential($uid =NULL) {
              array('@edit-profile' => "/user/$uid/edit-profile"));
       global $_btrCore_messages;
       $_btrCore_messages[] = array($msg, 'status');
-      return _btr_sguid_get_random($uid);
+      return NULL;
     }
     $proj = $sequential->projects[$idx];
     $lid = $proj->lmin;
