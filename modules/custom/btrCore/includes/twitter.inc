@@ -9,7 +9,7 @@ function btrCore_twitter($lng =NULL) {
     $lng = variable_get('btr_translation_lng', 'fr');
   }
 
-  $sguid = btr_get_random_sguid('next', $lng, array('misc/vocabulary'));
+  list($sguid, $messages) = btr_get_random_sguid('next', $lng, array('misc/vocabulary'));
   list($string, $translations) = btr_get_string_and_translations($sguid, $lng);
 
   $twitter = $string . ' <==> ';

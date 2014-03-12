@@ -52,6 +52,7 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
         'lng' => $lng,
         'last_sguid' => $last_sguid,
       ));
+    btrClient_display_messages($result['messages']);
     $sguid = $result['sguid'];
     drupal_goto("translations/$lng/$sguid");
     return;
@@ -69,19 +70,23 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   // Get the string and its translations.
-  $strings = $GLOBALS['btr']->get_translations($sguid, $lng);
+  $result = $GLOBALS['btr']->get_translations($sguid, $lng);
 
   // If the request has the header 'Accept: application/json'
   // return the output in JSON format and stop.
   if ($_SERVER['HTTP_ACCEPT'] == 'application/json') {
     drupal_add_http_header('Content-Type', 'application/json; utf-8');
-    print json_encode($strings);
+    print json_encode($result);
     exit;
   }
 
-  // Display a message if no string was found.
-  if (empty($strings)) {
-    drupal_set_message(t('No string found! Please check preferred projects and other settings!'), 'warning');
+  // Display any messages, warnings and errors.
+  btrClient_display_messages($result['messages']);
+
+  // Go to home if there is no string.
+  $string = $result['string'];
+  if (empty($string)) {
+    drupal_set_message(t('No string found!'), 'warning');
     drupal_goto("/");
     return;
   }
@@ -101,7 +106,7 @@ function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
   }
 
   // Output the string and its translations.
-  $output = drupal_get_form('btrClient_translate_form', $strings, $lng);
+  $output = drupal_get_form('btrClient_translate_form', array($sguid => $string), $lng);
 
   return $output;
 }

@@ -18,6 +18,9 @@
  *   given parameters and to the preferencies of the user.
  */
 function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
+  global $_btrCore_messages;
+  $_btrCore_messages = array();
+
   switch ($target) {
     default:
     case 'next':
@@ -30,7 +33,7 @@ function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
       $sguid = _btr_sguid_get_untranslated($lng, $uid=NULL, $projects);
       break;
   }
-  return $sguid;
+  return array($sguid, $_btrCore_messages);
 }
 
 /**
@@ -47,7 +50,6 @@ function btr_get_random_sguid($target, $lng =NULL, $projects =NULL) {
  *   The sguid of another string.
  */
 function _btr_sguid_get_next($uid =NULL, $projects =NULL) {
-
   // get the string-order preference for the user
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
   $account = user_load($uid);
@@ -87,10 +89,10 @@ function _btr_sguid_get_sequential($uid =NULL) {
 
   // if sequential data are not set, then just return a random sguid
   if ($sequential == NULL) {
-    drupal_set_message(t(
-        "It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
-        array('@edit-profile' => "/user/$uid/edit-profile")),
-      'warning');
+    $msg = t("It seems that there is something wrong with your preferences. Please <a href='@edit-profile'>check your profile</a>.",
+           array('@edit-profile' => "/user/$uid/edit-profile"));
+    global $_btrCore_messages;
+    $_btrCore_messages[] = array($msg, 'warning');
     return _btr_sguid_get_random($uid);
   }
 
@@ -103,10 +105,10 @@ function _btr_sguid_get_sequential($uid =NULL) {
   if ($lid > $proj->lmax) {
     $idx++;
     if ($idx >= sizeof($sequential->projects)) {
-      drupal_set_message(t(
-          "You have reached the end of the preferred projects. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
-        array('@edit-profile' => '/user/$uid/edit-profile')),
-      'status');
+      $msg = t("You have reached the end of the preferred projects. Please <a href='@edit-profile'>visit your profile</a> and modify them.",
+             array('@edit-profile' => "/user/$uid/edit-profile"));
+      global $_btrCore_messages;
+      $_btrCore_messages[] = array($msg, 'status');
       return _btr_sguid_get_random($uid);
     }
     $proj = $sequential->projects[$idx];

@@ -124,13 +124,7 @@ function _btrClient_translate_form_save($form_values) {
   $result = $btr->submit($_btrClient_actions);
 
   // Display any messages, warnings and errors.
-  foreach ($result['messages'] as $message) {
-    list($msg, $type) = $message;
-    if (!in_array($type, array('status', 'warning', 'error'))) {
-      $type = 'status';
-    }
-    drupal_set_message($msg, $type);
-  }
+  btrClient_display_messages($result['messages']);
 }
 
 function btrClient_add_action($action, $params) {
