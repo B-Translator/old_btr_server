@@ -8,12 +8,7 @@ $url = $base_url . '/public/btr/translations/translated?lng=sq';
 $result = http_request($url);
 
 // Get the tguid of the first translation.
-foreach ($result as $sguid => $string) {
-  foreach ($string['translations'] as $tguid => $translation) {
-    break;
-  }
-  break;
-}
+$tguid = $result[0]['translations'][0]['tguid'];
 
 // Get an access  token.
 $access_token = get_access_token($auth);
