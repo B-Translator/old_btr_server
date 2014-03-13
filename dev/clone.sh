@@ -93,6 +93,10 @@ sed -i /etc/apache2/sites-available/$dst-ssl \
     -e "s/$src_name/$dst_name/g"
 a2ensite $dst $dst-ssl
 
+### fix permissions
+chown www-data: -R $dst_dir/sites/default/files/*
+chown root: $dst_dir/sites/default/files/.htaccess
+
 ### restart services
 #for SRV in php5-fpm memcached mysql nginx
 for SRV in mysql apache2
