@@ -97,7 +97,8 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
   }
 
   // Fill in string values for the editor.
-  foreach ($strings as $sguid => $string) {
+  foreach ($strings as $string) {
+    $sguid = $string['sguid'];
     $form['strings'][$sguid] = _btrClient_translate_form_item($form_state, $string, $lng);
     /*
     // TODO: Display the number of comments for each string.
@@ -210,8 +211,9 @@ function _btrClient_translate_form_item(&$form_state, $string, $lng) {
   // Translations are stored in an array.
   $translations = $string['translations'];
 
-  foreach ($translations as $tguid => $translation) {
+  foreach ($translations as $translation) {
     // Add the translation to the list.
+    $tguid = $translation['tguid'];
     $form[$tguid] = _btrClient_translate_translation($translation, $string['sguid'], $lng);
   }
 

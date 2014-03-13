@@ -306,7 +306,7 @@ function _btr_translations_get($params) {
   }
 
   $strings = btr_get_strings(array($sguid), $lng);
-  $string = empty($strings) ? NULL : $strings[$sguid];
+  $string = empty($strings) ? NULL : $strings[0];
 
   return array(
     'string' => $string,

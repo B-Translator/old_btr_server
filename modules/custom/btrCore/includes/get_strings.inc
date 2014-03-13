@@ -150,11 +150,13 @@ function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()
   // Put strings in the same order as $arr_sguid.
   // Make sure as well that each string has an array of translations
   // (even though it may be empty).
+  $strings = array();
   foreach ($arr_sguid as $sguid) {
     $string = $arr_strings[$sguid];
-    if (!isset($string->translations)) $string->translations = array();
     if (!isset($string->alternatives)) $string->alternatives = array();
-    $strings[$sguid] = $string;
+    if (!isset($string->translations)) $string->translations = array();
+    $string->translations = array_values($string->translations);
+    $strings[] = $string;
   }
 
   return $strings;
