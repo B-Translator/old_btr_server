@@ -80,7 +80,7 @@ function btrClient_get_languages() {
   }
 
   // Get an array of languages from the server.
-  $btr_server = variable_get('oauth2_login_oauth2_server', $GLOBALS['base_url']);
+  $btr_server = variable_get('btrClient_server', $GLOBALS['base_url']);
   $result = file_get_contents("$btr_server/translations/languages");
   $languages = json_decode($result, true);
 
