@@ -80,12 +80,49 @@ function btrClient_get_languages() {
   }
 
   // Get an array of languages from the server.
-  $btr_server = variable_get('btrClient_server', $GLOBALS['base_url']);
-  $result = file_get_contents("$btr_server/translations/languages");
-  $languages = json_decode($result, true);
+  $btr_server = variable_get('btrClient_server', NULL);
+  if (empty($btr_server)) {
+    $languages = _btrClient_get_languages();
+  }
+  else {
+    $result = file_get_contents("$btr_server/translations/languages");
+    $languages = json_decode($result, true);
+  }
 
   // Cache until a general cache wipe.
   cache_set('btrClient_languages', $languages, 'cache_btrClient', CACHE_TEMPORARY);
 
   return $languages;
+}
+
+/**
+ * Returns an array of languages and their details.
+ */
+function _btrClient_get_languages() {
+
+  $arr_langs = array(
+    'en' => array(
+      'code' => 'en',
+      'name' => 'English',
+      'encoding' => 'latin1',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'fr' => array(
+      'code' => 'fr',
+      'name' => 'French',
+      'encoding' => 'latin1',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'sq' => array(
+      'code' => 'sq',
+      'name' => 'Albanian',
+      'encoding' => 'latin1',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+  );
+
+  return $arr_langs;
 }

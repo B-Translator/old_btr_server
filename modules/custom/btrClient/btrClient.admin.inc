@@ -35,9 +35,18 @@ function btrClient_config() {
   $form['defaults']['btrClient_server'] = array(
     '#type' => 'textfield',
     '#title' => t('Server URL'),
-    '#default_value' => variable_get('btrClient_server', $GLOBALS['base_url']),
+    '#default_value' => variable_get('btrClient_server', ''),
     '#description' => t('The URL of the B-Translator server.'),
   );
 
-  return system_settings_form($form);
+  $form = system_settings_form($form);
+  $form['#submit'][] = 'btrClient_config_get_languages';
+  return $form;
+}
+
+function btrClient_config_get_languages() {
+  // Update the cached value of languages.
+  cache_clear_all('btrClient_languages', 'cache_btrClient');
+  $languages = btrClient_get_languages();
+  btr_log($languages);
 }
