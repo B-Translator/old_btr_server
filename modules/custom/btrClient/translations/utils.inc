@@ -81,7 +81,7 @@ function btrClient_get_languages() {
 
   // Get an array of languages from the server.
   $btr_server = variable_get('btrClient_server', NULL);
-  if (empty($btr_server)) {
+  if (!$btr_server) {
     $languages = _btrClient_get_languages();
   }
   else {

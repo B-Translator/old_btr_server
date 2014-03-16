@@ -35,7 +35,6 @@ function btranslator_install() {
   btranslator_install_actions();
   btranslator_install_user_restrictions();
   btranslator_install_config_oauth2_login();
-  btranslator_install_config_btrClient();
 }
 
 function btranslator_install_mailsystem()
@@ -121,13 +120,4 @@ function btranslator_install_config_oauth2_login() {
   module_load_include('inc', 'oauth2_login', 'oauth2_login.admin');
   oauth2_login_update_login_link();
   oauth2_login_admin_set_settings();
-}
-
-/**
- * Set variable btrClient_server.
- */
-function btranslator_install_config_btrClient() {
-  variable_set('btrClient_server', $GLOBALS['base_url']);
-  module_load_include('inc', 'btrClient', 'btrClient.admin');
-  btrClient_config_get_languages();
 }
