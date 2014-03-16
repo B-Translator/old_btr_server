@@ -13,20 +13,3 @@ function btr_btrClient_ctools_plugin_api() {
     return array("version" => "1");
   }
 }
-
-/**
- * Implements hook_node_info().
- */
-function btr_btrClient_node_info() {
-  $items = array(
-    'projects' => array(
-      'name' => t('Translation Projects'),
-      'base' => 'node_content',
-      'description' => t('Translating a software project.'),
-      'has_title' => '1',
-      'title_label' => t('Project Title'),
-      'help' => '',
-    ),
-  );
-  return $items;
-}

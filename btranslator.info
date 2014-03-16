@@ -110,3 +110,18 @@ dependencies[] = devel
 ;--------------------
 dependencies[] = boost
 dependencies[] = memcache
+
+;--------------------
+; B-Translator
+;--------------------
+dependencies[] = btr_btrClient
+dependencies[] = btr_btrServices
+dependencies[] = btr_btr
+dependencies[] = btr_misc
+dependencies[] = btr_layout
+dependencies[] = btr_hybridauth
+dependencies[] = btr_disqus
+dependencies[] = btr_content
+dependencies[] = btr_sharethis
+dependencies[] = btr_captcha
+dependencies[] = btr_permissions

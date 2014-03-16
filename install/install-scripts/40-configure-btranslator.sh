@@ -71,35 +71,7 @@ EOF
 
 ### update to the latest version of core and modules
 ### $drush is an alias for 'drush --root=/var/www/btr'
-#$drush --yes pm-update
-
-### install features modules
-$drush --yes pm-enable btr_btrClient
-$drush --yes features-revert btr_btrClient
-
-$drush --yes pm-enable btr_btr
-$drush --yes features-revert btr_btr
-
-$drush --yes pm-enable btr_misc
-$drush --yes features-revert btr_misc
-
-$drush --yes pm-enable btr_layout
-$drush --yes features-revert btr_layout
-
-$drush --yes pm-enable btr_hybridauth
-$drush --yes features-revert btr_hybridauth
-
-$drush --yes pm-enable btr_disqus
-$drush --yes pm-enable btr_content
-$drush --yes pm-enable btr_sharethis
-
-$drush --yes pm-enable btr_captcha
-$drush --yes features-revert btr_captcha
-$drush vset recaptcha_private_key 6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0
-$drush vset recaptcha_public_key 6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG
-
-$drush --yes pm-enable btr_btrServices
-$drush --yes pm-enable btr_permissions
+$drush --yes pm-update
 
 #$drush --yes pm-enable btr_invite
 #$drush --yes pm-enable btr_simplenews

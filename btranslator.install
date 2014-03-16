@@ -23,14 +23,9 @@ function btranslator_install() {
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';
   standard_install();
 
-  // enable themes and set the default theme
-  theme_enable(array('bartik_fb'));
-
-  theme_enable(array('bootstrap1'));
-  variable_set('theme_default', 'bootstrap1');
-  variable_set('jquery_update_compression_type', 'min');
-  variable_set('jquery_update_jquery_cdn', 'google');
-  variable_set('jquery_update_jquery_version', '1.8');
+  // Apply all the features.
+  features_rebuild();
+  features_revert();
 
   // user settings
   variable_set('user_register', USER_REGISTER_VISITORS);
@@ -39,6 +34,8 @@ function btranslator_install() {
   btranslator_install_mailsystem();
   btranslator_install_actions();
   btranslator_install_user_restrictions();
+  btranslator_install_config_oauth2_login();
+  btranslator_install_config_btrClient();
 }
 
 function btranslator_install_mailsystem()
@@ -93,4 +90,44 @@ function btranslator_install_user_restrictions() {
       'status' => 0,  // deny
       ))
     ->execute();
+}
+
+/**
+ * Configure OAuth2 Login.
+ */
+function btranslator_install_config_oauth2_login() {
+  $client_key = 'oauth2_login_client';
+  $client_secret = md5(uniqid(rand(), TRUE));
+  $redirect_uri = $GLOBALS['base_url'] . '/oauth2/authorized';
+
+  // Register a client on the oauth2 server.
+  $client = entity_create('oauth2_server_client', array());
+  $client->server = 'oauth2';
+  $client->label = 'Client used for OAuth2 Login';
+  $client->client_key = $client_key;
+  $client->client_secret = $client_secret;
+  $client->redirect_uri = $redirect_uri;
+  $client->automatic_authorization = TRUE;
+  $client->save();
+
+  // Set configuration variables of oauth2_login.
+  variable_set('oauth2_login_oauth2_server', $GLOBALS['base_url']);
+  variable_set('oauth2_login_client_id', $client_key);
+  variable_set('oauth2_login_client_secret', $client_secret);
+  variable_set('oauth2_login_skipssl', TRUE);
+
+  // Enable the oauth2 login link and set the settings to hybridauth.
+  variable_set('oauth2_login_enabled', TRUE);
+  module_load_include('inc', 'oauth2_login', 'oauth2_login.admin');
+  oauth2_login_update_login_link();
+  oauth2_login_admin_set_settings();
+}
+
+/**
+ * Set variable btrClient_server.
+ */
+function btranslator_install_config_btrClient() {
+  variable_set('btrClient_server', $GLOBALS['base_url']);
+  module_load_include('inc', 'btrClient', 'btrClient.admin');
+  btrClient_config_get_languages();
 }
