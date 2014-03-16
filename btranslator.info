@@ -87,13 +87,6 @@ dependencies[] = mimemail_action
 dependencies[] = mimemail_compress
 
 ;--------------------
-; B-Translator
-;--------------------
-dependencies[] = btrCore
-dependencies[] = btrServices
-dependencies[] = btrClient
-
-;--------------------
 ; Other
 ;--------------------
 dependencies[] = libraries
@@ -114,6 +107,10 @@ dependencies[] = memcache
 ;--------------------
 ; B-Translator
 ;--------------------
+dependencies[] = btrCore
+dependencies[] = btrServices
+dependencies[] = btrClient
+
 dependencies[] = btr_btrClient
 dependencies[] = btr_btrServices
 dependencies[] = btr_btr

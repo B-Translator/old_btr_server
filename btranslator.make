@@ -1,21 +1,29 @@
-; Include Build Kit install profile makefile via URL
-includes[] = http://drupalcode.org/project/buildkit.git/blob_plain/refs/heads/7.x-2.x:/drupal-org.make
 
+;--------------------
 ; Specify defaults
+;--------------------
+
 defaults[projects][subdir] = "contrib"
 defaults[libraries][type] = "library"
 
 ;--------------------
-; Additional Themes
+; Themes
 ;--------------------
 
 projects[bootstrap][version] = "2.2"
-;projects[bartik_fb][version] = "1.x-dev"
 
 ;--------------------
-; Additional Contrib
+; Contrib
 ;--------------------
 
+projects[coder][version] = 1.2
+projects[context][version] = 3.2
+projects[ctools][version] = 1.4
+projects[devel][version] = 1.4
+projects[diff][version] = 3.2
+projects[features][version] = 1.0
+projects[strongarm][version] = 2.0
+projects[views][version] = 3.7
 projects[geshifilter][version] = "1.2"
 projects[libraries][version] = "2.2"
 projects[module_filter][version] = "1.8"
@@ -35,7 +43,6 @@ projects[honeypot][version] = "1.16"
 projects[features_extra][version] = "1.0-beta1"
 projects[uuid][version] = "1.0-alpha5"
 projects[node_export][version] = "3.0"
-projects[configuration][version] = "2.0-alpha2"
 projects[xautoload][version] = "4.2"
 projects[jquery_update][version] = "2.3"
 projects[boxes][version] = "1.1"
