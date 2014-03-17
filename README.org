@@ -10,7 +10,7 @@ This is a Drupal installation profile for B-Translator.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone --branch v1.0 https://github.com/dashohoxha/B-Translator.git
+  git clone https://github.com/dashohoxha/B-Translator.git
   nohup nice B-Translator/install/install.sh btr &
   tail -f nohup.out
   chroot btr/ /tmp/install/config.sh
