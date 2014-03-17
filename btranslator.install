@@ -95,9 +95,23 @@ function btranslator_install_user_restrictions() {
  * Configure OAuth2 Login.
  */
 function btranslator_install_config_oauth2_login() {
-  $client_key = 'oauth2_login_client';
+  global $base_url;
+  $client_key = 'oauth2_login';
   $client_secret = md5(uniqid(rand(), TRUE));
-  $redirect_uri = $GLOBALS['base_url'] . '/oauth2/authorized';
+  $redirect_uri = $base_url . '/oauth2/authorized';
+
+  // Delete the client if already exists.
+  $query = new EntityFieldQuery();
+  $clients = $query->entityCondition('entity_type', 'oauth2_server_client')
+    ->propertyCondition('server', 'oauth2')
+    ->propertyCondition('client_key',  $client_key)
+    ->execute();
+  if (isset($clients['oauth2_server_client'])) {
+    $cids = array_keys($clients['oauth2_server_client']);
+    foreach ($cids as $cid) {
+      entity_delete('oauth2_server_client', $cid);
+    }
+  }
 
   // Register a client on the oauth2 server.
   $client = entity_create('oauth2_server_client', array());
@@ -110,7 +124,7 @@ function btranslator_install_config_oauth2_login() {
   $client->save();
 
   // Set configuration variables of oauth2_login.
-  variable_set('oauth2_login_oauth2_server', $GLOBALS['base_url']);
+  variable_set('oauth2_login_oauth2_server', $base_url);
   variable_set('oauth2_login_client_id', $client_key);
   variable_set('oauth2_login_client_secret', $client_secret);
   variable_set('oauth2_login_skipssl', TRUE);

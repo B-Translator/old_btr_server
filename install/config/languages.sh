@@ -27,9 +27,10 @@ languages="$main_lang $other_langs"
 sed -i /var/www/data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
 
-### set drupal variable btr_translation_lng
+### set drupal variable btr_translation_lng and btrClient_translation_lng
 $(dirname $0)/mysqld.sh start
 drush @btr --yes --exact vset btr_translation_lng $main_lang
+drush @btr --yes --exact vset btrClient_translation_lng $main_lang
 
 ### modify the list of languages
 file_inc='/var/www/btr/profiles/btranslator/modules/custom/btrCore/includes/languages.inc'
