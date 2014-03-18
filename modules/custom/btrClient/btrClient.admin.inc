@@ -48,5 +48,4 @@ function btrClient_config_get_languages() {
   // Update the cached value of languages.
   cache_clear_all('btrClient_languages', 'cache_btrClient');
   $languages = btrClient_get_languages();
-  btr_log($languages);
 }

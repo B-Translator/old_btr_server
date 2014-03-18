@@ -85,8 +85,8 @@ function btrClient_get_languages() {
     $languages = _btrClient_get_languages();
   }
   else {
-    $result = file_get_contents("$btr_server/translations/languages");
-    $languages = json_decode($result, true);
+    $output = drupal_http_request("$btr_server/translations/languages");
+    $languages = json_decode($output->data, TRUE);
   }
 
   // Cache until a general cache wipe.

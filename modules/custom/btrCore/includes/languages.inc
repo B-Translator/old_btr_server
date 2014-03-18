@@ -6,8 +6,8 @@
  */
 function btrCore_languages() {
   $languages = btr_get_languages();
-  print drupal_json_encode($languages);
-  exit(0);
+  drupal_json_output($languages);
+  drupal_exit();
 }
 
 /**
