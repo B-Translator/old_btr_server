@@ -1,22 +1,18 @@
 # #-#-#-#-#  installer.pot (PROJECT VERSION)  #-#-#-#-#
 # $Id$
-#
 # LANGUAGE translation of Drupal (installer)
 # Copyright 2012 NAME <EMAIL@ADDRESS>
 # Generated from files:
 #  btranslator.install: n/a
 #  btranslator.profile: n/a
-#
 # #-#-#-#-#  general.pot (PROJECT VERSION)  #-#-#-#-#
 # $Id$
-#
 # LANGUAGE translation of Drupal (general)
 # Copyright 2012 NAME <EMAIL@ADDRESS>
 # Generated from files:
 #  btranslator.info: n/a
 #  btranslator.install: n/a
 #  btranslator.profile: n/a
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: 7.x-dev\n"
@@ -32,11 +28,11 @@ msgstr ""
 
 #: btranslator.install:203
 msgid "Send e-mail to admin when a new user is registered"
-msgstr ""
+msgstr "Njofto administratorin kur rregjistrohet një përdorues i ri."
 
 #: btranslator.install:213
 msgid "Send e-mail to admin when user modifies his account"
-msgstr ""
+msgstr "Dërgo e-mail te admin kur një përdorues ndryshon llogarinë e tij"
 
 #: btranslator.info:0 modules/fb_btranslator/fb_btranslator.info:0
 #: modules/l10n_feedback/l10n_feedback.info:0
@@ -45,21 +41,23 @@ msgstr ""
 
 #: btranslator.info:0
 msgid "Drupal installation profile for B-Translator."
-msgstr ""
+msgstr "Profil instalimi Drupal për B-Translator"
 
 #: btranslator.profile:59 modules/l10n_feedback/l10n_feedback.admin.inc:17
 msgid "B-Translator configuration options"
-msgstr ""
+msgstr "Mundësitë e trajtësimit të B-Translator"
 
 #: btranslator.profile:70 modules/l10n_feedback/l10n_feedback.admin.inc:28
 msgid "Translation Language"
-msgstr ""
+msgstr "Gjuha e Përkthimit"
 
 #: btranslator.profile:71 modules/l10n_feedback/l10n_feedback.admin.inc:29
 msgid ""
 "The language of translations. This site is about collecting feedback for the "
 "translations of this language."
 msgstr ""
+"Gjuha e përkthimit. Kjo faqe ka si qëllim rishikimin dhe përmirësimin e "
+"përkthimeve në këtë gjuhë."
 
 #: btranslator.profile:77 modules/l10n_feedback/l10n_feedback.admin.inc:36
 msgid "Single"
@@ -67,7 +65,7 @@ msgstr ""
 
 #: btranslator.profile:78 modules/l10n_feedback/l10n_feedback.admin.inc:37
 msgid "Multiple"
-msgstr ""
+msgstr "Shumëfish"
 
 #: btranslator.profile:80 modules/l10n_feedback/l10n_feedback.admin.inc:39
 msgid ""
@@ -77,14 +75,20 @@ msgid ""
 "<strong>Note:</strong> Switching back from <em>Multiple</em> to <em>Single</"
 "em> may have a bad impact on the existing votes."
 msgstr ""
+"Kur mënyra e votimit është <em>Vetëm një</em>, vetën një përkthim mund të "
+"votohet si i përshtatshëm për secilin varg. Kur mënyra e votimit është "
+"<em>Një ose më shumë</em>, një ose më shumë përkthime mund të zgjidhen si të "
+"përshtatshme për secilin varg. <br/> <strong>Shënim:</strong> Kalimi nga "
+"mënyra <em>Një ose më shumë</em> te <em>Vetëm një</em> mund të ketë një "
+"ndikim të keq te votat egzistuese."
 
 #: btranslator.profile:84 modules/l10n_feedback/l10n_feedback.admin.inc:43
 msgid "Select Voting Mode"
-msgstr ""
+msgstr "Zgjidh Mënyrën e Votimit"
 
 #: btranslator.profile:92 modules/l10n_feedback/l10n_feedback.admin.inc:51
 msgid "B-Translator default settings"
-msgstr ""
+msgstr "Rregullimet normale të B-Translator"
 
 #: btranslator.profile:96 modules/l10n_feedback/l10n_feedback.admin.inc:55
 msgid ""
@@ -100,43 +104,61 @@ msgid ""
 "profile, then the projects listed here will be used. If this list is empty, "
 "then all the imported projects will be used."
 msgstr ""
+"Zgjidh projektet që do të përdoren për rishikim dhe përkthim. Vetëm vargje "
+"nga këto projekte do tu paraqiten përdoruesve. <br/> Mund ti jepni projektet "
+"në formën <em>origjinë/projekt</em>, për shembull: <em>KDE/kdeedu</em>, "
+"<em>Mozilla/browser</em>, etc. Ose mund të përfshini të gjithë projektet nga "
+"një origjinë e caktuar, si: <em>KDE</em>, <em>LibreOffice</em>, etj. <br/> "
+"Shkruajeni çdo projekt në një rresht të veçantë. Lista e projekteve të "
+"importuara mund të shihet <a href='@project-list' target='_blank'>këtu</a>."
+"<br/> <strong>Shënim</strong>: Përdoruesi mund t'i ndryshojë projektet e "
+"pëlqyera në profilin e tij. Nëse përdoruesi nuk ka zgjedhur ndonjë projekt "
+"të pëlqyer, atëherë projektet e rreshtuara këtu do të përdoren. Nëse kjo "
+"listë është bosh, atëherë të gjitha projektet e importuara do të përdoren."
 
 #: btranslator.profile:100 modules/l10n_feedback/l10n_feedback.admin.inc:59
 msgid "The List of Projects that Will be Used for Voting and Translation"
-msgstr ""
+msgstr "Lista e Projekteve që do Përdoren për Votimet dhe Përkthimet"
 
 #: btranslator.profile:115
 msgid "Use PHPMailer to send e-mails"
-msgstr ""
+msgstr "Përdor PHPMailer për të dërguar postën"
 
 #: btranslator.profile:117
 msgid "When enabled, PHPMailer will be used to deliver all site e-mails."
 msgstr ""
+"Kur është në fuqi, PHPMailer do të përdoret për të shpërndarë të gjitha "
+"mesazhet e faqes."
 
 #: btranslator.profile:124
 msgid ""
 "MimeMail has been detected. To enable PHPMailer for mail transport, go to "
-"the <a href=\"@url\">MimeMail settings page</a> and select PHPMailer from "
-"the available e-mail engines."
+"the <a href=\\\"@url\\\">MimeMail settings page</a> and select PHPMailer "
+"from the available e-mail engines."
 msgstr ""
+"Është zbuluar MimeMail. Për të përdorur PHPMailer për dërgimin e postës, "
+"shko te <a href=\\\"@url\\\">faqja e vendosjeve të MimeMail</a> dhe zgjidh "
+"PHPMailer nga motorrat postarë të mundshëm."
 
 #: btranslator.profile:127
 msgid "PHPMailer is currently disabled."
-msgstr ""
+msgstr "PHPMailer është ndërkohë i shfuqizuar."
 
 #: btranslator.profile:132
 msgid "Primary SMTP server"
-msgstr ""
+msgstr "Shërbyesi SMTP kryesor"
 
 #: btranslator.profile:134
 msgid ""
 "The host name or IP address of your primary SMTP server.  Use !gmail-smtp "
 "for Google Mail."
 msgstr ""
+"Emri ose adresa IP e shërbyesit kryesor SMTP.  Përdor !gmail-smtp për Google "
+"Mail."
 
 #: btranslator.profile:139
 msgid "Backup SMTP server"
-msgstr ""
+msgstr "Shërbyes SMTP rezervë"
 
 #: btranslator.profile:141
 msgid ""
@@ -147,19 +169,19 @@ msgstr ""
 
 #: btranslator.profile:145
 msgid "SMTP port"
-msgstr ""
+msgstr "Porta SMTP"
 
 #: btranslator.profile:149
 msgid "The standard SMTP port is 25, for Google Mail use 465."
-msgstr ""
+msgstr "Porta SMTP zakonisht është 25, për Google Mail përdor 465."
 
 #: btranslator.profile:154
 msgid "Use secure protocol"
-msgstr ""
+msgstr "Përdor protokoll të sigurtë"
 
 #: btranslator.profile:156
 msgid "No"
-msgstr ""
+msgstr "Jo"
 
 #: btranslator.profile:156
 msgid "SSL"
@@ -174,36 +196,40 @@ msgid ""
 "Whether to use an encrypted connection to communicate with the SMTP server.  "
 "Google Mail requires SSL."
 msgstr ""
+"Nëse duhet përdorur një lidhje e sigurtë për të komunikuar me shërbyesin "
+"SMTP. Google Mail kërkon SSL."
 
 #: btranslator.profile:162
 msgid ""
 "Note: This option has been disabled since your PHP installation does not "
 "seem to have support for OpenSSL."
 msgstr ""
+"Shënim: Kjo mundësi është shfuqizuar meqë PHP-ja juaj duket se nuk ka "
+"mbështetje për OpenSSL."
 
 #: btranslator.profile:168
 msgid "SMTP authentication"
-msgstr ""
+msgstr "Identifikimi SMTP"
 
 #: btranslator.profile:169
 msgid "Leave blank if your SMTP server does not require authentication."
-msgstr ""
+msgstr "Lëre bosh nëse shërbyesi SMTP nuk kërkon vërtetim."
 
 #: btranslator.profile:175
 msgid "Username"
 msgstr ""
 
 #: btranslator.profile:177
-msgid "For Google Mail, enter your username including \"@gmail.com\"."
-msgstr ""
+msgid "For Google Mail, enter your username including \\\"@gmail.com\\\"."
+msgstr "Për Google Mail, jepe përdoruesin bashkë me \\\"@gmail.com\\\"."
 
 #: btranslator.profile:182;196
 msgid "Password"
-msgstr ""
+msgstr "Fjalëkalimi"
 
 #: btranslator.profile:187
 msgid "Hide password"
-msgstr ""
+msgstr "Fshihe fjalëkalimin"
 
 #: btranslator.profile:189
 msgid ""
@@ -211,53 +237,63 @@ msgid ""
 "eyes. You may still change the password afterwards, but it won't be "
 "displayed anymore."
 msgstr ""
+"Zgjidh këtë mundësi për ti fshehur përfundimisht shkronjat e fjalëkalimit "
+"nga sytë përgjues. Mund ta ndryshosh përsëri fjalëkalimin më vonë, por nuk "
+"ka për tu shfaqur më."
 
 #: btranslator.profile:196
 msgid "Change password"
-msgstr ""
+msgstr "Ndrysho fjalëkalimin"
 
 #: btranslator.profile:197
 msgid "Leave empty if you do not intend to change the current password."
-msgstr ""
+msgstr "Lëre bosh nëse nuk ke ndërmënd të ndryshosh fjalëkalimin e tanishëm."
 
 #: btranslator.profile:203
 msgid "Advanced SMTP settings"
-msgstr ""
+msgstr "Vendosje SMTP të Përparuara"
 
 #: btranslator.profile:209
-msgid "\"From\" name"
-msgstr ""
+msgid "\\\"From\\\" name"
+msgstr "Emri i dërguesit"
 
 #: btranslator.profile:211
 msgid ""
 "Enter a name that should appear as the sender for all messages.  If left "
 "blank the site name will be used instead: %sitename."
 msgstr ""
+"Jep një emër i cili do të shfaqet si dërguesi i të gjitha mesazheve.  Nëse "
+"lihet bosh do të përdoret emri i faqes: %sitename."
 
 #: btranslator.profile:215
-msgid "Always set \"Reply-To\" address"
-msgstr ""
+msgid "Always set \\\"Reply-To\\\" address"
+msgstr "Adresën \\\"Përgjigju-Te\\\" vendose gjithmonë"
 
 #: btranslator.profile:217
 msgid ""
-"Enables setting the \"Reply-To\" address to the original sender of the "
+"Enables setting the \\\"Reply-To\\\" address to the original sender of the "
 "message, if unset.  This is required when using Google Mail, which would "
 "otherwise overwrite the original sender."
 msgstr ""
+"Mundëson vendosjen e adresës \\\"Reply-To\\\" si dërguesi fillestar i "
+"mesazhit, nëse është e pacaktuar.  Kjo është e nevojshme kur përdoret Google "
+"Mail, i cili në të kundërt do ta mbishkruante dërguesin fillestar."
 
 #: btranslator.profile:221
 msgid "Keep connection alive"
-msgstr ""
+msgstr "Mbaje lidhjen gjallë"
 
 #: btranslator.profile:223
 msgid ""
 "Whether to reuse an existing connection during a request.  Improves "
 "performance when sending a lot of e-mails at once."
 msgstr ""
+"Nëse duhet përdorur një lidhje egzistuese gjatë një kërkese. Përmirëson "
+"shpejtësinë kur dërgohen shumë email-a njëherësh."
 
 #: btranslator.profile:227
 msgid "Debug level"
-msgstr ""
+msgstr "Niveli i hetimit"
 
 #: btranslator.profile:229
 msgid "Disabled"
@@ -265,31 +301,35 @@ msgstr ""
 
 #: btranslator.profile:229
 msgid "Errors only"
-msgstr ""
+msgstr "Vetëm gabimet"
 
 #: btranslator.profile:229
 msgid "Server responses"
-msgstr ""
+msgstr "Përgjigjet e serverit"
 
 #: btranslator.profile:229
 msgid "Full communication"
-msgstr ""
+msgstr "Komunikim i plotë"
 
 #: btranslator.profile:230
 msgid ""
 "Debug the communication with the SMTP server.  You normally shouldn't enable "
 "this unless you're trying to debug e-mail sending problems."
 msgstr ""
+"Heto komunikimin me shërbyesin SMTP. Normalisht nuk duhet ta fuqizoni këtë, "
+"nëse nuk po hetoni ndonjë problem me dërgimin e email-ave."
 
 #: btranslator.profile:251
 msgid ""
-"A test e-mail has been sent to %email. <a href=\"@watchdog-url\">Check the "
-"logs</a> for any error messages."
+"A test e-mail has been sent to %email. <a href=\\\"@watchdog-url\\\">Check "
+"the logs</a> for any error messages."
 msgstr ""
+"Një e-mail është dërguar te %email. <a href=\\\"@watchdog-url\\\">Kontrollo "
+"shënimet</a> për ndonjë mesazh gabimi."
 
 #: btranslator.profile:259
 msgid "Test configuration"
-msgstr ""
+msgstr "Provo trajtësimin"
 
 #: btranslator.profile:265
 msgid "Recipient"
@@ -297,19 +337,19 @@ msgstr ""
 
 #: btranslator.profile:267
 msgid "Type in an address to have a test e-mail sent there."
-msgstr ""
+msgstr "Jepni një adresë ku mund të dërgohet një letër për provë."
 
 #: btranslator.profile:281
 msgid "You must enter a valid SMTP port number."
-msgstr ""
+msgstr "Duhet të jepni një portë SMTP të vlefshme."
 
 #: btranslator.profile:297
 msgid "PHPMailer will be used to deliver all site e-mails."
-msgstr ""
+msgstr "PHPMailer do përdoret për të dërguar gjithë postën e faqes."
 
 #: btranslator.profile:316;317
 msgid "PHPMailer has been disabled."
-msgstr ""
+msgstr "PHPMailer u shfuqizua."
 
 #: btranslator.profile:298;317;331
 msgid "phpmailer"
@@ -317,35 +357,35 @@ msgstr ""
 
 #: btranslator.profile:298
 msgid "PHPMailer has been enabled."
-msgstr ""
+msgstr "PHPMailer është fuqizuar."
 
 #: btranslator.profile:331
 msgid "SMTP configuration changed."
-msgstr ""
+msgstr "Konfigurimi SMTP u ndryshua."
 
 #: modules/fb_btranslator/fb_btranslator.module:27;35
 msgid "Share on Facebook"
-msgstr ""
+msgstr "Shpërndaje në Facebook"
 
 #: modules/fb_btranslator/fb_btranslator.module:80
 msgid "Check out my latest post on !site..."
-msgstr ""
+msgstr "Shiko shkrimin tim të fundit në !site..."
 
 #: modules/fb_btranslator/fb_btranslator.module:84;138
 msgid "Read More"
-msgstr ""
+msgstr "Lexo Më Shumë"
 
 #: modules/fb_btranslator/fb_btranslator.module:135
 msgid "Check out my latest comment on !site..."
-msgstr ""
+msgstr "Shiko komentin tim të fundit te !site..."
 
 #: modules/fb_btranslator/fb_btranslator.module:206
 msgid "Thanks for clicking Like!"
-msgstr ""
+msgstr "Faleminderit që i bëre Like!"
 
 #: modules/fb_btranslator/fb_btranslator.module:231
 msgid "Please fill the fields of your profile!"
-msgstr ""
+msgstr "Ju lutem plotësoni fushat e profilit!"
 
 #: modules/fb_btranslator/fb_btranslator.info:0
 msgid "FB l10n_feedback customizations"
@@ -360,99 +400,104 @@ msgstr ""
 
 #: modules/l10n_feedback/l10n_feedback.admin.inc:66
 msgid "B-Translator export configuration"
-msgstr ""
+msgstr "Formësimi i eksporteve në B-Translator"
 
 #: modules/l10n_feedback/l10n_feedback.admin.inc:71
 msgid "Export path"
-msgstr ""
+msgstr "Vendi i eksportimeve"
 
 #: modules/l10n_feedback/l10n_feedback.admin.inc:73
 msgid ""
 "The directory where the exported projects will be placed. Must be accessable "
 "by the web server (www-data)."
 msgstr ""
+"Vendi ku do ruhen projektet që eksportohen. Duhet të jetë e përdorshme nga "
+"shërbyesi web (www-data)."
 
 #: modules/l10n_feedback/l10n_feedback.admin.inc:77
 msgid "Notify admin"
-msgstr ""
+msgstr "Njofto administratorin"
 
 #: modules/l10n_feedback/l10n_feedback.admin.inc:78
 msgid "Send a notification email to admin on each export request."
-msgstr ""
+msgstr "Dërgo një letër njoftimi te mbikëqyrësi për çdo kërkesë eksportimi."
 
 #: (duplicate) modules/l10n_feedback/l10n_feedback.projects.inc:27
 msgid "Translation Projects"
-msgstr ""
+msgstr "Projektet e Përkthimit"
 
 #: (duplicate) modules/l10n_feedback/l10n_feedback.projects.inc:29
 msgid "Project Title"
-msgstr ""
+msgstr "Titulli i Projektit"
 
 #: (duplicate) modules/l10n_feedback/l10n_feedback.projects.inc:30
 msgid "Translating a software project."
-msgstr ""
+msgstr "Përkthimi i një programi."
 
 #: (duplicate) modules/l10n_feedback/l10n_feedback.projects.inc:37
 msgid "Project Description"
-msgstr ""
+msgstr "Përshkrimi i Projektit"
 
 #: modules/l10n_feedback/l10n_feedback.module:40
 msgid "Vote translations."
-msgstr ""
+msgstr "Voto përkthimet."
 
 #: modules/l10n_feedback/l10n_feedback.module:41
 msgid "Can submit votes (or likes) for translation suggestions."
-msgstr ""
+msgstr "Mund të japë vota (ose pëlqime) për përkthimet e sugjeruara."
 
 #: modules/l10n_feedback/l10n_feedback.module:44
 msgid "Suggest new translations."
-msgstr ""
+msgstr "Sugjero përkthime të reja."
 
 #: modules/l10n_feedback/l10n_feedback.module:45
 msgid "Can submit new translation suggestions."
-msgstr ""
+msgstr "Mund të bëjë sugjerime përkthimesh të reja."
 
 #: modules/l10n_feedback/l10n_feedback.module:48
 msgid "Flag translations."
-msgstr ""
+msgstr "Sinjalizo përkthimet."
 
 #: modules/l10n_feedback/l10n_feedback.module:49
 msgid "Can flag translations as inaproppriate."
-msgstr ""
+msgstr "Mund ti shënojë përkthimet si të papërshtatshme."
 
 #: modules/l10n_feedback/l10n_feedback.module:52
 msgid "Import translation (PO) files."
-msgstr ""
+msgstr "Importo skedarët e përkthimit (skedarët PO)."
 
 #: modules/l10n_feedback/l10n_feedback.module:53
 msgid "Can import to B-Translator new translation files (in the PO format)."
 msgstr ""
+"Mund të importojë në B-Translator skedarë të rinj përkthimi (në formatin PO)."
 
 #: modules/l10n_feedback/l10n_feedback.module:56
 msgid "Export translation files."
-msgstr ""
+msgstr "Eksporto skedarët e përkthimit."
 
 #: modules/l10n_feedback/l10n_feedback.module:57
 msgid ""
 "Can export translations from B-Translator (either in PO format, or as diff/"
 "ediff)."
 msgstr ""
+"Mund të eksportojë përkthimet nga B-Translator (në format PO ose si diff/"
+"ediff)."
 
 #: modules/l10n_feedback/l10n_feedback.module:60
 msgid "Statistics."
-msgstr ""
+msgstr "Statistikat."
 
 #: modules/l10n_feedback/l10n_feedback.module:61
 msgid "Can access global statistics of B-Translator."
-msgstr ""
+msgstr "Mund të shohë statistikat e përgjithshme në B-Translator."
 
 #: modules/l10n_feedback/l10n_feedback.module:64
 msgid "Resolve issues."
-msgstr ""
+msgstr "Zgjidh problemet."
 
 #: modules/l10n_feedback/l10n_feedback.module:65
 msgid "Can resolve flag issues and other problems."
-msgstr ""
+msgstr "Mund të vendosë rreth sinjalizimeve dhe për probleme të tjera."
 
 #: modules/l10n_feedback/l10n_feedback.module:68
 msgid "Administer B-Translator."
@@ -460,7 +505,7 @@ msgstr ""
 
 #: modules/l10n_feedback/l10n_feedback.module:69
 msgid "Can perform administration tasks for B-Translator."
-msgstr ""
+msgstr "Mund të bëjë detyra administruese në B-Translator."
 
 #: modules/l10n_feedback/l10n_feedback.info:0
 msgid "l10n feedback"
@@ -469,10 +514,12 @@ msgstr ""
 #: modules/l10n_feedback/l10n_feedback.info:0
 msgid "Getting feedback and suggestions from people about l10n translations."
 msgstr ""
+"Mbledhja e vërejtjeve dhe sugjerimeve nga njerëzit rreth përkthimit të "
+"programeve."
 
 #: modules/l10n_feedback/editor/editor.js:0;0
 msgid "Hide string details."
-msgstr ""
+msgstr "Fshih hollësitë e vargut."
 
 #: modules/l10n_feedback/editor/editor.js:0
 msgid "Show related projects"
@@ -480,7 +527,7 @@ msgstr ""
 
 #: modules/l10n_feedback/editor/editor.js:0;0
 msgid "Loading..."
-msgstr ""
+msgstr "Ngarkimi..."
 
 #: modules/l10n_feedback/editor/editor.js:0;0
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:293
@@ -489,19 +536,19 @@ msgstr ""
 
 #: modules/l10n_feedback/editor/editor.js:0
 msgid "Undo decline"
-msgstr ""
+msgstr "Zhbëj fshirjen"
 
 #: modules/l10n_feedback/editor/editor.js:0
 msgid "Do you want to overwrite the current suggestion?"
-msgstr ""
+msgstr "Do që ta mbishkruash sugjerimin e tanishëm?"
 
 #: modules/l10n_feedback/includes/ajax_callbacks.inc:88
 msgid "Used with context: %context"
-msgstr ""
+msgstr "Përdorur në rrethanat: %context"
 
 #: modules/l10n_feedback/includes/ajax_callbacks.inc:92
 msgid "Used on these projects:"
-msgstr ""
+msgstr "Përdorur në këto projekte:"
 
 #: modules/l10n_feedback/includes/ajax_callbacks.inc:137
 msgid "Translation"
@@ -509,43 +556,47 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/ajax_callbacks.inc:137
 msgid "History"
-msgstr ""
+msgstr "Historia"
 
 #: modules/l10n_feedback/includes/ajax_callbacks.inc:162
 msgid "by !author"
-msgstr ""
+msgstr "nga !author"
 
 #: modules/l10n_feedback/includes/blocks.inc:24
 msgid "B-Translator: Top contributors during the last period"
-msgstr ""
+msgstr "B-Translator: Ndihmuesit më të mirë këto kohët e fundit"
 
 #: modules/l10n_feedback/includes/blocks.inc:30
 msgid ""
 "B-Translator: Contribution statistics (for the last week, month and year)"
 msgstr ""
+"B-Translator: Statistikat e kontributeve (për javën, muajin dhe vitin e "
+"fundit)"
 
 #: modules/l10n_feedback/includes/blocks.inc:36
 msgid "B-Translator: Latest contributions"
-msgstr ""
+msgstr "B-Translator: Ndihmesat e fundit"
 
 #: modules/l10n_feedback/includes/blocks.inc:59
 msgid "Size of the list"
-msgstr ""
+msgstr "Madhësia e listës"
 
 #: modules/l10n_feedback/includes/blocks.inc:60
 msgid ""
 "The number of top contributers that will be shown in the list (5, 10, etc)"
-msgstr ""
+msgstr "Numri i kontribuesve më të mirë që do dalin në listë (5, 10, etj.)"
 
 #: modules/l10n_feedback/includes/blocks.inc:65
 msgid "Accumulation period"
-msgstr ""
+msgstr "Periudha e grumbullimit"
 
 #: modules/l10n_feedback/includes/blocks.inc:66
 msgid ""
 "The period during which the contributions will be counted (last week or last "
 "month)."
 msgstr ""
+"Koha gjatë së cilës ndihmesat do të llogariten (java e fundit ose muaji i "
+"fundit)."
 
 #: modules/l10n_feedback/includes/blocks.inc:68
 msgid "Last week"
@@ -553,23 +604,23 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/blocks.inc:69
 msgid "Last month"
-msgstr ""
+msgstr "Muaji i fundit"
 
 #: modules/l10n_feedback/includes/blocks.inc:123
 msgid "Top @nr contributors"
-msgstr ""
+msgstr "Kontribuesit më të mirë"
 
 #: modules/l10n_feedback/includes/blocks.inc:129
 msgid "Contribution statistics"
-msgstr ""
+msgstr "Statistikat e kontributeve"
 
 #: modules/l10n_feedback/includes/blocks.inc:133
 msgid "Latest contributions"
-msgstr ""
+msgstr "Kontributet e fundit"
 
 #: modules/l10n_feedback/includes/blocks.inc:193
 msgid "<p>Top !nr contributors since !date:</p>"
-msgstr ""
+msgstr "<p>!nr kontribuesit më të mirë qysh prej !date:</p>"
 
 #: modules/l10n_feedback/includes/blocks.inc:227
 msgid ""
@@ -577,18 +628,23 @@ msgid ""
 "href='@url_translations' target='_blank'>!nr_translations translations</a> + "
 "<a href='@url_votes' target='_blank'>!nr_votes votes</a>"
 msgstr ""
+" <strong><a href='@url_user' target='_blank'>!name</a></strong><br/><a "
+"href='@url_translations' target='_blank'>!nr_translations përkthime</a> + <a "
+"href='@url_votes' target='_blank'>!nr_votes vota</a>"
 
 #: modules/l10n_feedback/includes/blocks.inc:290
 msgid ""
 " + <a href='@url_votes'>!nr_votes votes</a> <br/> + <a "
 "href='@url_translations'>!nr_translations translations</a>"
 msgstr ""
+" + <a href='@url_votes'>!nr_votes vota</a> <br/> + <a "
+"href='@url_translations'>!nr_translations përkthime</a>"
 
 #: modules/l10n_feedback/includes/common.inc:0
 msgid "1 year"
 msgid_plural "@count years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 vit"
+msgstr[1] "@count vjet"
 
 #: modules/l10n_feedback/includes/common.inc:0
 msgid "1 week"
@@ -605,14 +661,14 @@ msgstr[1] ""
 #: modules/l10n_feedback/includes/common.inc:0
 msgid "1 hour"
 msgid_plural "@count hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 orë"
+msgstr[1] "@count orë"
 
 #: modules/l10n_feedback/includes/common.inc:0
 msgid "1 min"
 msgid_plural "@count min"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 min"
+msgstr[1] "@count min"
 
 #: modules/l10n_feedback/includes/common.inc:0
 msgid "1 sec"
@@ -623,12 +679,12 @@ msgstr[1] ""
 #: modules/l10n_feedback/includes/common.inc:0
 msgid "1 month"
 msgid_plural "@count months"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 muaj"
+msgstr[1] "@count muaj"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:55
 msgid "[!prefix] Translation modified for: !string"
-msgstr ""
+msgstr "[!prefix] Përkthimi u ndryshua për: !string"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:61
 msgid ""
@@ -654,10 +710,31 @@ msgid ""
 "           ----------\n"
 "           "
 msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"           Përkthimi i mëposhtëm është ndryshuar nga autori.\n"
+"           Po njoftoheni sepse ju keni votuar për përkthimin e vjetër\n"
+"           dhe vota juaj tashmë llogaritet për versionin e ri\n"
+"           të përkthimit.\n"
+"\n"
+"           Nëse versioni i ri i përkthimit ju duket në rregull,\n"
+"           nuk është nevoja të bëni gjë. Përndryshe,\n"
+"           mund ta ndryshoni votën tuaj te kjo lidhje: !url\n"
+"\n"
+"           Faleminderit\n"
+"\n"
+"           ---------- Vargu Origjinal (Anglisht):\n"
+"           !string\n"
+"           ---------- Përkthimi i Vjetër:\n"
+"           !old_translation\n"
+"           ---------- Përkthimi i Ri:\n"
+"           !new_translation\n"
+"           ----------\n"
+"           "
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:95
 msgid "[!prefix] New translation for: !string"
-msgstr ""
+msgstr "[!prefix] Përkthim i ri për: !string"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:101
 msgid ""
@@ -680,10 +757,28 @@ msgid ""
 "           ----------\n"
 "          "
 msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"           Një përkthim i ri është sugjeruar për një varg\n"
+"           që ju keni votuar. Nëse përkthimi i ri\n"
+"           ju duket më i përshtatshëm se ai që keni votuar,\n"
+"           mund ta ndryshoni votën te kjo adresë:\n"
+"           !url\n"
+"\n"
+"           Faleminderit\n"
+"\n"
+"           ---------- Vargu Origjinal (Anglisht):\n"
+"           !string\n"
+"           ---------- Përkthimi i Votuar:\n"
+"           !voted_translation\n"
+"           ---------- Përkthimi i Ri:\n"
+"           !new_translation\n"
+"           ----------\n"
+"          "
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:131
 msgid "[!prefix] New term: !string"
-msgstr ""
+msgstr "[!prefix] Fjalë e re: !string"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:137
 msgid ""
@@ -707,10 +802,28 @@ msgid ""
 "\n"
 "          "
 msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"           !author ka shtuar një fjalë të re në fjalor: !string\n"
+"\n"
+"           Mund ta shikoni përkthimin te kjo lidhje:\n"
+"           !url\n"
+"\n"
+"           Faleminderit\n"
+"\n"
+"           ----------\n"
+"\n"
+"           - Mund të shtoni një fjalë të re te:\n"
+"             !url_add_term\n"
+"\n"
+"           - Mund ti shihni të gjitha fjalët e fjalorit te:\n"
+"             !url_vocabulary\n"
+"\n"
+"          "
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:172;202
 msgid "[!prefix] Translation deleted: !translation"
-msgstr ""
+msgstr "[!prefix] Fshirje përkthimi: !translation"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:178
 msgid ""
@@ -730,6 +843,19 @@ msgid ""
 "           ----------\n"
 "           "
 msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"           Një përkthim që keni bërë ju, është fshirë nga një rregullator.\n"
+"           Vargun dhe përkthimet e mbetura mund ti shihni këtu: !url\n"
+"\n"
+"           Faleminderit\n"
+"\n"
+"           ---------- Vargu Origjinal (Anglisht):\n"
+"           !string\n"
+"           ---------- Përkthimi i Fshirë:\n"
+"           !translation\n"
+"           ----------\n"
+"           "
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:208
 msgid ""
@@ -749,18 +875,31 @@ msgid ""
 "           ----------\n"
 "           "
 msgstr ""
+"Përshëdetje !username,\n"
+"\n"
+"           Një votim i votuar nga ju është fshirë nga një rregullmbajtës.\n"
+"           Vargun dhe pëkthimet e tjera mund ti shihni në këtë lidhje: !url\n"
+"\n"
+"           Faleminderit\n"
+"\n"
+"           ---------- Vargu Fillestar (Anglisht):\n"
+"           !string\n"
+"           ---------- Përkthimi i Fshirë:\n"
+"           !translation\n"
+"           ----------\n"
+"           "
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:232
 msgid "[!prefix] Export request: !origin/!project"
-msgstr ""
+msgstr "[!prefix] Kërkesë eksportimi: !origin/!project"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:239
 msgid "Export request by user !uid for '!origin/!project'."
-msgstr ""
+msgstr "Kërkesë eksportimi nga përdoruesi !uid për '!origin/!project'."
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:250
 msgid "[!prefix] Export: !project"
-msgstr ""
+msgstr "[!prefix] Eksportim: !project"
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:256
 msgid ""
@@ -773,6 +912,14 @@ msgid ""
 "           * !export_url_ediff\n"
 "           "
 msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"           Eksporti i '!project', që keni kërkuar, është kryer.\n"
+"           Mund ta shkarkoni nga këto lidhje:\n"
+"           * !export_url_tgz\n"
+"           * !export_url_diff\n"
+"           * !export_url_ediff\n"
+"           "
 
 #: modules/l10n_feedback/includes/mail_notifications.inc:279
 msgid ""
@@ -788,26 +935,37 @@ msgid ""
 "       ---------- Available Translations:\n"
 "      "
 msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"       Nëse keni kohë, ju lutem ndihmoni për të rishikuar përkthimin\n"
+"       e vargut te kjo lidhje: !url\n"
+"\n"
+"       Faleminderit\n"
+"\n"
+"       ---------- Vargu Origjinal (Anglisht):\n"
+"       !string\n"
+"       ---------- Përkthimet e Mundshme:\n"
+"      "
 
 #: modules/l10n_feedback/includes/rss_feed.inc:38
 msgid "Latest translation suggestions on B-Translator"
-msgstr ""
+msgstr "Përkthimet e fundit të propozuara në B-Translator"
 
 #: modules/l10n_feedback/includes/rss_feed.inc:41
 msgid "Latest translation suggestions on B-Translator, for @domain"
-msgstr ""
+msgstr "Përkthimet më të fundit të sugjeruara në B-Translator, për @domain"
 
 #: modules/l10n_feedback/includes/rss_feed.inc:66
 msgid "Original string:"
-msgstr ""
+msgstr "Vargu origjinal:"
 
 #: modules/l10n_feedback/includes/rss_feed.inc:67
 msgid "Suggested translation:"
-msgstr ""
+msgstr "Përkthimi i sugjeruar:"
 
 #: modules/l10n_feedback/includes/translations/export.inc:27
 msgid "Export a Project"
-msgstr ""
+msgstr "Eksporto një Projekt"
 
 #: modules/l10n_feedback/includes/translations/export.inc:28
 msgid ""
@@ -822,80 +980,85 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/translations/export.inc:37
 msgid "The origin of the project."
-msgstr ""
+msgstr "Prejardhja e projektit."
 
 #: modules/l10n_feedback/includes/translations/export.inc:43
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:314
 msgid "Project"
-msgstr ""
+msgstr "Projekti"
 
 #: modules/l10n_feedback/includes/translations/export.inc:44
 msgid "The name of the project."
-msgstr ""
+msgstr "Emri i projektit."
 
 #: modules/l10n_feedback/includes/translations/export.inc:57
 msgid "Export Mode"
-msgstr ""
+msgstr "Mënyra e Eksportimit"
 
 #: modules/l10n_feedback/includes/translations/export.inc:58
 msgid "The export mode that should be used."
-msgstr ""
+msgstr "Mënyra e eksportimit që duhet të përdoret"
 
 #: modules/l10n_feedback/includes/translations/export.inc:60
 msgid "Export the most voted translations"
-msgstr ""
+msgstr "Eksporto përkthimet më të votuara"
 
 #: modules/l10n_feedback/includes/translations/export.inc:61
 msgid "Prefer translations voted by me"
-msgstr ""
+msgstr "Pëlqej përkthimet e votuara prej meje"
 
 #: modules/l10n_feedback/includes/translations/export.inc:62
 msgid "Prefer translations voted by my friends"
-msgstr ""
+msgstr "Pëlqej përkthimet e votuara nga shokët e mi"
 
 #: modules/l10n_feedback/includes/translations/export.inc:69
 msgid "List of Friends"
-msgstr ""
+msgstr "Lista e Shokëve"
 
 #: modules/l10n_feedback/includes/translations/export.inc:70
 msgid "Enter usernames of your friends, separated by comma."
-msgstr ""
+msgstr "Jepni emrat që përdorin shokët tuaj, të ndarë me presje."
 
 #: modules/l10n_feedback/includes/translations/export.inc:84
 msgid "Export"
-msgstr ""
+msgstr "Eksporto"
 
 #: modules/l10n_feedback/includes/translations/export.inc:131
 msgid ""
 "Export of '!project' is scheduled. You will be notified by email when it is "
 "done."
 msgstr ""
+"Eksportimi i '!project' është vënë në listë. Do të njoftoheni me email kur "
+"të jetë kryer."
 
 #: modules/l10n_feedback/includes/translations/export.inc:165
 msgid "The project '!project' does not exist."
-msgstr ""
+msgstr "Projekti '!project' nuk gjendet."
 
 #: modules/l10n_feedback/includes/translations/export.inc:174
 msgid "The user '!username' does not exist."
-msgstr ""
+msgstr "Përdoruesi '!username' nuk egziston."
 
 #: modules/l10n_feedback/includes/translations/export.inc:190;200
 msgid "Export file '!filename' does not exist!"
-msgstr ""
+msgstr "Skedari i eksportit '!filename' nuk gjendet!"
 
 #: modules/l10n_feedback/includes/translations/get.inc:31
 msgid "Missing parameters lng/sguid."
-msgstr ""
+msgstr "Mungojnë parametrat lng/sguid."
 
 #: modules/l10n_feedback/includes/translations/get.inc:33
 msgid ""
 "The correct usage of this interface is: <strong>translations/get/lng/sguid</"
 "strong> , where <strong>lng</strong> is one of: <strong>!lng_codes</strong> ."
 msgstr ""
+"Përdorimi i drejtë i kësaj ndërfaqeje është: <strong>translations/get/lng/"
+"sguid</strong> , ku <strong>lng</strong> është një nga: <strong>!lng_codes</"
+"strong> ."
 
 #: modules/l10n_feedback/includes/translations/get.inc:43
 msgid "There are no translations for the language '@lng'."
-msgstr ""
+msgstr "Nuk ka përkthime për gjuhën '@lng'."
 
 #: modules/l10n_feedback/includes/translations/get.inc:45
 msgid ""
@@ -903,156 +1066,165 @@ msgid ""
 "languages are: <strong>@lng_codes</strong> . <br/> Try instead to search "
 "with: @search_path"
 msgstr ""
+"Gjuha '<strong>@lng</strong>' nuk ka përkrahje akoma. Gjuhët e gjendshme "
+"janë: <strong>@lng_codes</strong> . <br/> Provo më mirë të kërkosh me: "
+"@search_path"
 
 #: modules/l10n_feedback/includes/translations/get.inc:71
 msgid "Get Translations"
-msgstr ""
+msgstr "Merr Përkthime"
 
 #: modules/l10n_feedback/includes/translations/get.inc:82
 msgid "No strings with GUID '<strong>@sguid</strong>' found."
-msgstr ""
+msgstr "Nuk ka ndonjë varg me GUID '<strong>@sguid</strong>'."
 
 #: modules/l10n_feedback/includes/translations/get.inc:84
 msgid ""
 "No strings with GUID '<strong>!sguid</strong>' found. <br/> Try instead to "
 "search with: !search_path"
 msgstr ""
+"Nuk u gjet ndonjë varg me GUID '<strong>!sguid</strong>' found. <br/> Provo "
+"njëherë të kërkosh me: !search_path"
 
 #: modules/l10n_feedback/includes/translations/import.inc:30
 msgid "Add a New Term"
-msgstr ""
+msgstr "Shto një Fjalë të Re"
 
 #: modules/l10n_feedback/includes/translations/import.inc:31
 msgid "Add a new interesting term on the vocabulary."
-msgstr ""
+msgstr "Shto një fjalë të re interesante në fjalor."
 
 #: modules/l10n_feedback/includes/translations/import.inc:38
 msgid "New Term"
-msgstr ""
+msgstr "Fjala e Re"
 
 #: modules/l10n_feedback/includes/translations/import.inc:48
 msgid "Add"
-msgstr ""
+msgstr "Shto"
 
 #: modules/l10n_feedback/includes/translations/import.inc:72
 msgid "This term already exists."
-msgstr ""
+msgstr "Kjo fjalë është e shënuar."
 
 #: modules/l10n_feedback/includes/translations/import.inc:156
 msgid "Delete a Term"
-msgstr ""
+msgstr "Fshi një Fjalë"
 
 #: modules/l10n_feedback/includes/translations/import.inc:157
 msgid "Delete a term from the vocabulary."
-msgstr ""
+msgstr "Fshi një fjalë nga fjalori."
 
 #: modules/l10n_feedback/includes/translations/import.inc:164
 msgid "String ID"
-msgstr ""
+msgstr "Varg ID"
 
 #: modules/l10n_feedback/includes/translations/import.inc:174
 msgid "Delete"
-msgstr ""
+msgstr "Fshi"
 
 #: modules/l10n_feedback/includes/translations/search.inc:47
 msgid "Search Translations"
-msgstr ""
+msgstr "Kërko te Përkthimet"
 
 #: modules/l10n_feedback/includes/translations/search.inc:57
 msgid "Filter is empty. Put something on the filter options."
-msgstr ""
+msgstr "Filtri është bosh. Vendos diçka në parametrat e filtrit."
 
 #: modules/l10n_feedback/includes/translations/search.inc:67
 msgid "No strings found. Try adjusting the filter options."
-msgstr ""
+msgstr "Nuk u gjet asnjë varg. Ndrysho njëherë vlerat e filtrit."
 
 #: modules/l10n_feedback/includes/translations/vote.inc:68
 msgid "Vote Translations"
-msgstr ""
+msgstr "Voto Përkthimet"
 
 #: modules/l10n_feedback/includes/translations/vote.inc:106
 msgid "Login link has expired."
-msgstr ""
+msgstr "Lidhja e hyrjes ka skaduar."
 
 #: modules/l10n_feedback/includes/translations/vote.inc:112
 msgid "Could not validate login link."
-msgstr ""
+msgstr "Adresa e hyrjes nuk është e vlefshme."
 
 #: modules/l10n_feedback/includes/translations/vote.inc:331
 msgid ""
 "It seems that there is something wrong with your preferences. Please <a "
 "href='@edit-profile'>check your profile</a>."
 msgstr ""
+"Duket se diçka nuk është në rregull me të pëlqyerat tuaja. Ju lutem <a "
+"href='@edit-profile'>kontrolloni profilin tuaj</a>."
 
 #: modules/l10n_feedback/includes/translations/vote.inc:347
 msgid ""
 "You have reached the end of the preferred project. Please <a href='@edit-"
 "profile'>visit your profile</a> and modify them."
 msgstr ""
+"Keni arritur fundin e projekteve të pëlqyer. Ju lutem <a href='@edit-"
+"profile'>vizitoni profilin</a> dhe i ndryshoni."
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:58
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:20;37
 msgid "Previous"
-msgstr ""
+msgstr "Paraardhëse"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:64
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:20;25
 msgid "Login"
-msgstr ""
+msgstr "Hyrje"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:74
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:20;44
 msgid "Save"
-msgstr ""
+msgstr "Ruaj"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:82
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:20;53
 msgid "Next"
-msgstr ""
+msgstr "Tjetra"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:86
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:21;56
 msgid "Translated"
-msgstr ""
+msgstr "Përkthyer"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:90
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:21;59
 msgid "Untranslated"
-msgstr ""
+msgstr "Papërkthyer"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:127
 msgctxt "set the page title"
 msgid "String: !string"
-msgstr ""
+msgstr "Vargu: !string"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:180;181
 msgid "Translate"
-msgstr ""
+msgstr "Përkthe"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:279
 msgid "(empty)"
-msgstr ""
+msgstr "(bosh)"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:305
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:129;343
 msgid "<New translation>"
-msgstr ""
+msgstr "<Përkthim i ri>"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:312;313
 msgid "Edit a copy"
-msgstr ""
+msgstr "Ndrysho një kopje"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:334
 msgid "Number of Votes: !count"
-msgstr ""
+msgstr "Numri i Votave: !count"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:374
 msgid "uknown user"
-msgstr ""
+msgstr "përdorues i panjohur"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:377
 msgid "unknown time"
-msgstr ""
+msgstr "kohë e panjohur"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:378
 msgid "@time ago"
@@ -1060,64 +1232,64 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:378
 msgid "no time record available"
-msgstr ""
+msgstr "nuk ka rregjistrim kohe"
 
 #: modules/l10n_feedback/includes/translations/list/form_build.inc:381
-msgid "by !author <span title=\"@ago\">on @date</span>"
-msgstr ""
+msgid "by !author <span title=\\\"@ago\\\">on @date</span>"
+msgstr "nga !author <span title=\\\"@ago\\\">më @date</span>"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:34
 msgid ""
 "You need to be logged in, in order to be able to submit votes and "
 "suggestions."
-msgstr ""
+msgstr "Duhet të jeni brenda, që të mund të jepni vota dhe sugjerime."
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:72
 msgid "You don't have access for giving feedback!"
-msgstr ""
+msgstr "Nuk keni të drejta për të dhënë sugjerime!"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:82
 msgid "You cannot give feedback for the language '@lng' on this site!"
-msgstr ""
+msgstr "Nuk mund të jepni vlerësime për gjuhën '@lng' në këtë faqe!"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:565
 msgid "You are not allowed to delete this translation!"
-msgstr ""
+msgstr "Nuk ju lejohet ta fshini këtë përkthim!"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:652
 msgid "You do not have enough rights for submitting votes!"
-msgstr ""
+msgstr "Nuk ke të drejta të mjaftueshme për të dhënë vota!"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:656
 msgid "You do not have enough rights for making suggestions!"
-msgstr ""
+msgstr "Nuk ke të drejta të mjaftueshme për të bërë sugjerime!"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:660
 msgid "1 suggestion saved"
 msgid_plural "@count suggestions saved"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 sugjerim u ruajt"
+msgstr[1] "@count sugjerime u ruajtën"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:664
 msgid "1 vote saved"
 msgid_plural "@count votes saved"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 votë u ruajt"
+msgstr[1] "@count vota u ruajtën"
 
 #: modules/l10n_feedback/includes/translations/list/form_submit.inc:668
 msgid "1 translation deleted"
 msgid_plural "@count translations deleted"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "1 përkthim i fshirë"
+msgstr[1] "@count përkthime të fshira"
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:17
 msgid "Source text"
-msgstr ""
+msgstr "Teksti Fillestar"
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:20
 #: btranslator.install:171
 msgid "Translations"
-msgstr ""
+msgstr "Përkthimet"
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:31
 msgid "#"
@@ -1125,63 +1297,71 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:31
 msgid "Direct and permanent link to this string."
-msgstr ""
+msgstr "Lidhje e drejtpërdrejtë dhe e përhershme te ky varg."
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:58
 msgid ""
 "Show the string context and a list of projects where this string is used."
 msgstr ""
+"Trego rrethanat e vargut dhe një listë të projekteve ku përdoret vargu."
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:58
 msgid "Show string details."
-msgstr ""
+msgstr "Trego hollësitë e vargut."
 
 #: modules/l10n_feedback/includes/translations/list/theme_functions.inc:95
 msgid "in context: @context"
-msgstr ""
+msgstr "në rrethana: @context"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:89;222
 msgid "Reset"
-msgstr ""
+msgstr "Rivendos"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:94;217
 msgid "Filter"
-msgstr ""
+msgstr "Filtër"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:228
 msgid "Change Filter Parameters"
-msgstr ""
+msgstr "Ndrysho Parametrat e Filtrit"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:247
 msgid "Language of Translation"
-msgstr ""
+msgstr "Gjuha e Përkthimit"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:248
 msgid "Select the language of the translations to be searched and displayed."
-msgstr ""
+msgstr "Zgjidh gjuhën e përkthimeve që do kërkohen dhe shfaqen."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:255
 msgid "What To Search For"
-msgstr ""
+msgstr "Për Çfarë Të Kërkohet"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:264
 msgid "Search Mode"
-msgstr ""
+msgstr "Mënyra e Kërkimit"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:271
 msgid "The String Or Words To Be Searched"
-msgstr ""
+msgstr "Vargu Ose Fjalët Për Tu Kërkuar"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:272
 msgid ""
 "Search for l10n strings or translations that contain the given words. The "
 "<emphasized>natural</emphasized> search will try to find strings similar to "
-"the given one (see: <a href=\"!url1\">Natural Language Full-Text Searches</"
-"a>). The <emphasized>boolean</emphasized> search will try to match words "
-"according to logical rules. The words can be preceded by + (plus), - "
-"(minus), etc. (for more details see: <a href=\"!url2\">Boolean Full-Text "
+"the given one (see: <a href=\\\"!url1\\\">Natural Language Full-Text "
+"Searches</a>). The <emphasized>boolean</emphasized> search will try to match "
+"words according to logical rules. The words can be preceded by + (plus), - "
+"(minus), etc. (for more details see: <a href=\\\"!url2\\\">Boolean Full-Text "
 "Searches</a>)."
 msgstr ""
+"Kërko për vargje ose përkthime që përmbajnë fjalën e dhënë. Kërkimi "
+"<emphasized>natyral</emphasized> përpiqet të gjejë vargje të ngjashme me atë "
+"të dhënë (shiko: <a href=\\\"!url1\\\">Natural Language Full-Text Searches</"
+"a>). Kërkimi <emphasized>llogjik</emphasized> përpiqet ti përputhë fjalët "
+"sipas disa rregullave llogjike. Fjalët mund të paraprihen nga + (plus), - "
+"(minus), etj. (për më tepër hollësira shiko: <a href=\\\"!url2\\\">Boolean "
+"Full-Text Searches</a>)."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:284
 msgid "Limit"
@@ -1189,52 +1369,54 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:285
 msgid "The number of the results (strings) that can be displayed on a page."
-msgstr ""
+msgstr "Numri i rezultateve (vargjeve) që mund të shfaqen në një faqe."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:298
 msgid "Search Scope"
-msgstr ""
+msgstr "Shtrirja e Kërkimit"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:306
 msgid "Projects"
-msgstr ""
+msgstr "Projektet"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:315
 msgid "Search only the strings belonging to the matching project."
-msgstr ""
+msgstr "Kërko vetëm te vargjet që i përkasin projektit që pëputhet."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:323
 msgid "Limit search only to the projects from a certain origin."
-msgstr ""
+msgstr "Kufizo kërkimin vetëm te projektet nga një origjinë e caktuar."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:337
 msgid "Author"
-msgstr ""
+msgstr "Autori"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:345
 msgid "Only Mine"
-msgstr ""
+msgstr "Vetëm të Miat"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:346
 msgid "Search only the strings with translations suggested or voted by me."
-msgstr ""
+msgstr "Kërko vetëm vargjet me përkthime të bëra ose të pëlqyera prej meje."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:352
 msgid "Translated By"
-msgstr ""
+msgstr "Përkthyer Nga"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:353
 msgid ""
 "Search only the strings with translations suggested by the selected user."
 msgstr ""
+"Kërko vetëm në vargjet me përkthime të sugjeruara nga përdoruesi i zgjedhur."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:365
 msgid "Voted By"
-msgstr ""
+msgstr "Votuar Nga"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:366
 msgid "Search only the strings with translations voted by the selected user."
 msgstr ""
+"Kërko vetëm në vargjet me përkthime të votuara nga përdoruesi i zgjedhur."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:384
 msgid "Date"
@@ -1242,55 +1424,57 @@ msgstr ""
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:393
 msgid "What to Filter"
-msgstr ""
+msgstr "Çfarë të Filtrohet"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:394
 msgid "Select what to filter by date (strings, translations, or votes)."
 msgstr ""
+"Zgjidh se çfarë duhet të filtrohet sipas datës (vargjet, përkthimet, apo "
+"votat)."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:401
 msgid "From Date"
-msgstr ""
+msgstr "Nga Data"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:407
 msgid "To Date"
-msgstr ""
+msgstr "Në Datën"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:439
 msgid "Natural search on strings."
-msgstr ""
+msgstr "Kërkim natyral te vargjet."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:440
 msgid "Natural search on translations."
-msgstr ""
+msgstr "Kërkim i natyrshëm te përkthimet."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:441
 msgid "Boolean search on strings."
-msgstr ""
+msgstr "Kërkim llogjik te vargjet."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:442
 msgid "Boolean search on translations."
-msgstr ""
+msgstr "Kërkim llogjik te përkthimet."
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:450
 msgid "Filter Strings By Date"
-msgstr ""
+msgstr "Filtro Vargjet Sipas Datës"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:451
 msgid "Filter Translations By Date"
-msgstr ""
+msgstr "Filtro Përkthimet Sipas Datës"
 
 #: modules/l10n_feedback/includes/translations/search_filter/form.inc:452
 msgid "Filter Votes By Date"
-msgstr ""
+msgstr "Filtro Votat Sipas Datës"
 
 #: btranslator.install:179
 msgid "Contact"
-msgstr ""
+msgstr "Lidhu"
 
 #: btranslator.profile:24
 msgid "B-Translator Settings"
-msgstr ""
+msgstr "Rregullimet në B-Translator"
 
 #: btranslator.profile:30
 msgid "Mail Settings"
