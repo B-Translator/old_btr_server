@@ -79,14 +79,27 @@ function btrClient_get_languages() {
     return $cache->data;
   }
 
-  // Get an array of languages from the server.
   $btr_server = variable_get('btrClient_server', NULL);
-  if (!$btr_server) {
+
+  // If $btr_server is the same as the current server, recursive call
+  // will happen. Using a flag to avoid recursion.
+  $flag = cache_get('btrClient_languages_flag', 'cache_btrClient');
+  if (!empty($flag) && isset($flag->data) && !empty($flag->data)) {
+    $recursion = TRUE;
+  }
+  else {
+    $recursion = FALSE;
+  }
+
+  // Get an array of languages from the server.
+  if (!$btr_server or $recursion) {
     $languages = _btrClient_get_languages();
   }
   else {
+    cache_set('btrClient_languages_flag', 'on', 'cache_btrClient', time() + 100);
     $output = drupal_http_request("$btr_server/translations/languages");
     $languages = json_decode($output->data, TRUE);
+    cache_clear_all('btrClient_languages_flag', 'cache_btrClient');
   }
 
   // Cache until a general cache wipe.
