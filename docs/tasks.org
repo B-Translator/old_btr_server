@@ -63,12 +63,15 @@
 
 ** Misc
 
-*** TODO Test and fix the installation of a new B-Translator server.
-*** TODO Add API for import/export of PO files, for diffs, for terms, etc.
-*** TODO Build an application with EmberJS and HTML5.
-*** TODO Export vocabulary in formats CSV, PDF, etc.
+*** DONE Test and fix the installation of a new B-Translator server.
 *** TODO Rewrite import/export scripts as drush commands.
-*** Desktop application for submitting feedback.
+*** TODO Add API for import/export of PO files, for diffs, for terms, etc.
+*** TODO Export vocabulary in formats CSV, PDF, etc.
+*** TODO Use the module MetaTags.
+*** TODO Build an application with EmberJS and HTML5.
+*** TODO Client module for Drupal
+    Make btrClient a completely separate Drupal module, which can be
+    installed on any drupal site.
 *** TODO Try to use Drupal7 entities for strings, translations, etc.
     This can improve the integration with the other Drupal modules.
 
@@ -78,23 +81,12 @@
 *** Use modules: views, pannels, views_slideshow, etc.
     Try also: Organic Groups (for project pages), Display Suite,
     Entity View Attach, Entity Cache, Features, etc.
-*** TODO Use the module MetaTags.
 
 *** TODO Publish/export incremental dumps of the database
     Maybe it should be a synch API which allows different instances of
     B-Translator to synchronize with each-other, according to the
     rules defined and agreed by the administrators.
 
-*** Context information about the strings
-    - Internal link to translations into other auxiliary languages.
-    - External link to google.com, which tries to get more details
-      about the context in which a string is used.
-    - Other external links (related to the projects to which the
-      string appears)
-      + transvision.mozfr.org
-    - Links to any related tearms from vocabulary.
-
-*** Improve the look of number of votes.
 *** TODO Try to replace Disqus with something better (maybe LiveFyre).
 
 *** Send out HTML notification emails.
@@ -113,3 +105,15 @@
             developers.
 
 *** Upgrade to Drupal8
+*** Desktop application for submitting feedback.
+*** Improve the look of number of votes.
+*** Context information about the strings
+    - Internal link to translations into other auxiliary languages.
+    - External link to google.com, which tries to get more details
+      about the context in which a string is used.
+    - Other external links (related to the projects to which the
+      string appears)
+      + transvision.mozfr.org
+    - Links to any related tearms from vocabulary.
+
+
