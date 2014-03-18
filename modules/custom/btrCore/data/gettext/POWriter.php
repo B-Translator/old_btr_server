@@ -27,12 +27,6 @@ class POWriter
     $this->_output[] = $line;
   }
 
-  protected function w_quoted($prefix, $value)
-  {
-    $value = str_replace('"', '\\"', $value);
-    $this->w_line($prefix . '"' . $value . '\n"');
-  }
-
   public function write($headers, $comments, $entries, $filename =NULL)
   {
     $this->write_headers($headers, $comments);
@@ -62,7 +56,7 @@ class POWriter
     $arr_headers = explode('\n', $headers);
     foreach ($arr_headers as $header) {
       if ($header=='')  continue;
-      $this->w_quoted('', $header);
+      $this->w_line($this->encode($header . "\n"));
     }
   }
 
@@ -139,21 +133,41 @@ class POWriter
     $lines = preg_split('~(*BSR_ANYCRLF)\R|\\\\n~', $content);
     if (count($lines) == 1)
       {
-	$str = str_replace('"', '\\"', $lines[0]);
-	$this->w_line($prefix . $type . ' "' . $str . '"');
+	$this->w_line($prefix . $type . ' ' . $this->encode($lines[0]));
       }
     else
       {
 	$this->w_line($prefix . $type . ' ""');
 	$last = count($lines) - 1;
 	for ($i=0; $i < $last; $i++) {
-	  $this->w_quoted($prefix, $lines[$i]);
+	  $this->w_line($prefix . $this->encode($lines[$i] . "\n"));
 	}
 	if (!empty($lines[$last])) {
-	  $str = str_replace('"', '\\"', $lines[$last]);
-	  $this->w_line($prefix . '"' . $str . '"');
+	  $this->w_line($prefix . $this->encode($lines[$last]));
 	}
       }
+  }
+
+  /**
+   * Escape the special chars on the given string
+   * and surround it by double quotes.
+   */
+  private function encode($str)
+  {
+    $str1 = '"' . addcslashes($str, "\v\t\n\r\f\"\\") . '"';
+    return $str1;
+
+    // Another solution would be:
+    // $str1 = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    //
+    // However the constants JSON_UNESCAPED_UNICODE and JSON_UNESCAPED_SLASHES
+    // are not defined on PHP < 5.4
+    // For PHP 5.3 this could be another solution:
+    //
+    // $str1 = mb_encode_numericentity($str, array (0x80, 0xffff, 0, 0xffff), 'UTF-8');
+    // $str1 = json_encode($str1);
+    // $str1 = mb_decode_numericentity($str1, array (0x80, 0xffff, 0, 0xffff), 'UTF-8');
+    // $str1 = str_replace("\\/","/", $str1);
   }
 }
 ?>
