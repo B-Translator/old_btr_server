@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B-Translator API Reference</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2014-03-12 17:10:38 CET"/>
+<meta name="generated" content="2014-03-19 10:33:47 CET"/>
 <meta name="author" content="Dashamir Hoxha"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -96,6 +96,7 @@ lang="en" xml:lang="en">
 <li><a href="#sec-2.8">submit </a></li>
 </ul>
 </li>
+<li><a href="#sec-3">misc </a></li>
 </ul>
 </div>
 </div>
@@ -530,18 +531,275 @@ The action to be done: <code>add | vote | del | del_vote</code>
 <p>
 Associative array of the needed parameters for this action.
 </p>
+
 </dd>
 </dl>
 </dd>
 </dl>
 </div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3">misc </h2>
+<div class="outline-text-2" id="text-3">
+
+
+<dl>
+<dt>GET translations/rss-feed/$lng[/$origin[/$project]]</dt><dd>
+Return a
+RSS feed of the latest translations for the given language (origin
+and project are optional).
+
+<p>
+Examples:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/rss-feed'
+curl -k 'https://l10n.org.al/translations/rss-feed/sq'
+curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice'
+curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice/sw'
+</pre>
+
+
+
+
+</dd>
+<dt>GET translations/twitter/$lng</dt><dd>
+Return a random string and its
+translations in a suitable form for the twitter (truncated to 100
+characters).
+<dl>
+<dt>lng</dt><dd>
+Language of translations.
+
+</dd>
+</dl>
+
+<p>Examples:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/twitter/sq'
+curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice'
+curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice/sw'
+</pre>
+
+
+
+
+
+
+</dd>
+<dt>GET translations/$lng/$sguid</dt><dd>
+Returns the details of a string
+and its translations.  If the request header <code>Accept:     application/json</code> is set, then the output will be in JSON
+(otherwise it will be an HTML page). The parameter <i>$sguid</i> can
+also be one of <code>next | translated | untranslated</code>.
+
+<p>
+Example:
+</p>
+
+
+<pre class="example">curl -k -H 'Accept: application/json' \
+  'https://dev.l10n.org.al/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+</pre>
+
+
+
+
+</dd>
+<dt>GET translations/search</dt><dd>
+Search strings and translations using
+various filters.  If the request header <code>Accept: application/json</code>
+is set, then the output will be in JSON (otherwise it will be an
+HTML page). It gets the same parameters as <code>GET public/btr/translations</code>
+
+<p>
+Example:
+</p>
+
+
+<pre class="example">curl -k -H 'Accept: application/json' \
+     'https://dev.l10n.org.al/translations/search?lng=sq&amp;words=space'
+</pre>
+
+
+
+
+
+
+</dd>
+<dt>GET translations/languages</dt><dd>
+Return a json list of languages
+installed on the system and their details.
+
+<p>
+Example:
+</p>
+
+
+<pre class="example">curl -k 'https://dev.l10n.org.al/translations/languages'
+</pre>
+
+
+
+
+</dd>
+<dt>GET translations/project/list/$origin/$project[/$format]</dt><dd>
+
+<p>
+Return a plain-text list of all the imported projects, filtered
+by the given origin/project. Variables $origin and $project can
+contain '*', which is replaced by '%' (for LIKE matches).  If
+$project=='-' then only a list of 'origin' is outputed, otherwise
+a list of 'origin/project'.  The third variable can be JSON or
+TEXT (default).
+</p>
+<p>
+Example:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/project/list/*/-'
+curl -k 'https://l10n.org.al/translations/project/list/*/-/json'
+curl -k 'https://l10n.org.al/translations/project/list/LibreOffice/s*'
+curl -k 'https://l10n.org.al/translations/project/list/LibreOffice'
+curl -k 'https://l10n.org.al/translations/project/list/*/nautil*'
+curl -k 'https://l10n.org.al/translations/project/list/*/*/json'
+curl -k 'https://l10n.org.al/translations/project/list'
+</pre>
+
+
+
+
+
+</dd>
+<dt>GET translations/string_details/$sguid</dt><dd>
+Return string context, a
+list of related projects (where the string appears), etc.  This
+callback is invoked from JavaScript and is used as an AJAX
+provider.
+<dl>
+<dt>sguid</dt><dd>
+Id of the string.
+
+</dd>
+</dl>
+
+<p>Example:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866'
+</pre>
+
+
+
+
+</dd>
+<dt>GET translations/autocomplete/project/$str</dt><dd>
+Retrieve a JSON list
+of autocomplete suggestions for projects.
+<dl>
+<dt>str</dt><dd>
+Beginning of a project name.
+
+</dd>
+</dl>
+
+<p>Example:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/autocomplete/project/kd'
+</pre>
+
+
+
+
+</dd>
+<dt>GET translations/autocomplete/origin/$str</dt><dd>
+Retrieve a JSON list
+of autocomplete suggestions for origins of projects.
+<dl>
+<dt>str</dt><dd>
+Beginning of an origin.
+
+</dd>
+</dl>
+
+<p>Example:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/autocomplete/origin/G'
+</pre>
+
+
+
+
+</dd>
+<dt>GET translations/autocomplete/user/$str</dt><dd>
+Retrieve a JSON list of
+autocomplete suggestions for users.
+<dl>
+<dt>str</dt><dd>
+Beginning of a user name.
+
+</dd>
+</dl>
+
+<p>Example:
+</p>
+
+
+<pre class="example">curl -k 'https://l10n.org.al/translations/autocomplete/user/d'
+</pre>
+
+
+
+
+
+</dd>
+<dt>GET translations/project/export/$origin/$project/$lng</dt><dd>
+
+<p>
+Return as plain-text the PO file for a given $origin/$project/$lng.
+</p>
+</dd>
+<dt>GET translations/project/export_tgz/$origin/$project/$lng</dt><dd>
+
+<p>
+Return an archive of PO files for a given origin/project/lng
+(usefull for projects that have many POT files.)  If
+project=='all', then all the projects of the given origin will be
+exported (it usually takes a very long time).
+</p>
+</dd>
+<dt>GET translations/project/diff/$origin/$project/$lng[/$nr[/$ediff]]</dt><dd>
+
+<p>
+Return as plain-text the diff of the PO file for a given
+origin/project/lng, which contains the latest most-voted
+suggestions since the last snapshot.  It gets the parameters
+origin/project/lng[/nr[/ediff]].  If the parameter 'nr' is '-', it
+returns the latest most-voted suggestions since the last snapshot.
+If the parameter 'nr' is missing, it returns a list of the saved
+diffs instead.
+</p>
+</dd>
+</dl>
 </div>
 </div>
 <div id="postamble">
 <p class="author"> Author: Dashamir Hoxha
 <a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
 </p>
-<p class="date"> Date: 2014-03-12 17:10:38 CET</p>
+<p class="date"> Date: 2014-03-19 10:33:47 CET</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>
