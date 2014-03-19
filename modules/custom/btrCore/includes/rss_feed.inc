@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * RSS feed from btrCore.
+ * RSS feed from B-Translator.
  */
 
 function btrCore_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {

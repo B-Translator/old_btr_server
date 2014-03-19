@@ -174,9 +174,9 @@ function btr_get_string_and_translations($sguid, $lng) {
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = btr_get_query_strings($query, $lng);
 
-  $string = $strings[$sguid]->string;
+  $string = $strings[0]->string;
   $translations = array();
-  foreach ($strings[$sguid]->translations as $tguid => $obj_translation) {
+  foreach ($strings[0]->translations as $obj_translation) {
     $translations[] = $obj_translation->translation;
   }
 
