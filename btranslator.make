@@ -70,23 +70,15 @@ libraries[oauth2-server-php][directory_name] = "oauth2-server-php"
 libraries[oauth2-server-php][download][type] = "git"
 libraries[oauth2-server-php][download][url] = "https://github.com/bshaffer/oauth2-server-php.git"
 
-projects[oauth2_client][type] = "module"
-projects[oauth2_client][download][type] = "git"
-projects[oauth2_client][download][url] = "https://github.com/dashohoxha/oauth2_client.git"
-
 projects[wsclient][version] = "1.0"
 projects[wsclient][patch][] = "https://drupal.org/files/wsclient-1285310-http_basic_authentication-14.patch"
 projects[wsclient][patch][] = "https://drupal.org/files/issues/wsclient-2138617-oauth2_support.patch"
 
 projects[http_client][version] = "2.x-dev"
 
-projects[oauth2_loginprovider][type] = "module"
-projects[oauth2_loginprovider][download][type] = "git"
-projects[oauth2_loginprovider][download][url] = "https://github.com/dashohoxha/oauth2_loginprovider.git"
-
-projects[oauth2_login][type] = "module"
-projects[oauth2_login][download][type] = "git"
-projects[oauth2_login][download][url] = "https://github.com/dashohoxha/oauth2_login.git"
+projects[oauth2_client][version] = "1.0"
+projects[oauth2_login][version] = "1.0"
+projects[oauth2_loginprovider][version] = "1.0"
 
 
 ;--------------------
