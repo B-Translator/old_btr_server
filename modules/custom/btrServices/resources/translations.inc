@@ -1,100 +1,202 @@
 <?php
 /**
  * @file
- * Callback functions for btrServices.
+ * Resource definition and callbacks for translations.
  */
 
-/**
- * Getting reports of different kinds. Anybody can
- * retrieve them, there are no access restrictions.
- *
- * @param $report
- *   The name/id of the report.
- *
- * @param $params
- *   Parameters of the report, comming from the
- *   GET request. They depend on the kind of report.
- *
- * @return
- *   The data of the requested report.
- *
- * @example
- *   curl -k -i \
- *     'https://dev.l10n.org.xx/public/btr/report/statistics?lng=sq'
- *   curl -k -i \
- *     'https://dev.l10n.org.xx/public/btr/report/topcontrib?lng=sq&period=week'
- */
-function _btr_report_retrieve($report, $params) {
-  $report_function = '_btr_report_' . $report;
-  if (! function_exists($report_function) ) {
-    return services_error("Unknown report: $report", 406);
-  }
-  return $report_function($params);
-}
+function _btrServices_translations() {
+  $file = array('type' => 'inc', 'module' => 'btrServices', 'name' => 'resources/translations');
 
-/**
- * Getting general statistics (number of votes and
- * translations) for the last week, month and year.
- *
- * @param $params
- *   Parameters of the report, comming from the POST request.
- *   It contains these fields (variables):
- *   - lng: language of translations
- *
- * @return
- *   Array of general stats for week, month and year.
- *
- * @example
- *   curl -k -i -H "Content-type: application/json"  \
- *        -X POST https://dev.l10n.org.xx/public/btr/report/statistics \
- *        -d '{"lng": "sq"}'
- */
-function _btr_report_statistics($params) {
-  // get parameters and validate them
-  $lng = $params['lng'];
-  $arr_langs = array_keys(btr_get_languages());
-  if (!in_array($lng, $arr_langs)) {
-    return services_error('Language missing or not supported.', 406);
-  }
+  // Return a string, along with its translations,
+  // votes and other details.
+  $translations['operations']['retrieve'] = array(
+    'help' => 'Return a string, along with its translations, votes and other details.',
+    'file' => $file,
+    'callback' => '_btr_translations_retrieve',
+    'args' => array(
+      array(
+        'name' => 'sguid',
+        'optional' => FALSE,
+        'source' => array('path' => 0),
+        'description' => 'The string (globally unique) id.',
+        'type' => 'string',
+      ),
+      array(
+        'name' => 'lng',
+        'optional' => FALSE,
+        'source' => array('param' => 'lng'),
+        'description' => 'The language of translations.',
+        'type' => 'string',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
 
-  return btr_statistics($lng);
-}
+  // Filter strings and translations
+  // according to the given parameters.
+  $translations['operations']['index'] = array(
+    'help' => 'Index of strings and translations.',
+    'file' => $file,
+    'callback' => '_btr_translations_index',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'param',
+        'description' => 'Filter parameters (lng, words, project, etc.)',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
 
-/**
- * Getting statistics about top contributors.
- *
- * @param $params
- *   Parameters of the report, comming from the POST request.
- *   It contains these fields (variables):
- *   - lng: language of translations
- *   - period: period of report (last day|week|month|year)
- *   - size: number of results (top contributers), between 5 and 20
- *
- * @return
- *   Array of users, where each user is an object with these attributes:
- *   uid, name, umail, score, translations, votes
- *
- * @example
- *   curl -k -i -H "Content-type: application/json"  \
- *     -X POST https://dev.l10n.org.xx/public/btr/report/topcontrib \
- *     -d '{"lng": "sq", "period": "week", "size": 10}'
- */
-function _btr_report_topcontrib($params) {
-  // get parameters and validate them
-  $lng = $params['lng'];
-  $arr_langs = array_keys(btr_get_languages());
-  if (!in_array($lng, $arr_langs)) {
-    return services_error('Language missing or not supported.', 406);
-  }
-  $period = $params['period'];
-  if (!in_array($period, array('day', 'week', 'month', 'year'))) {
-    return services_error('Period missing or not supported.', 406);
-  }
-  $size = (int) $params['size'];
-  if ($size < 5)  $size = 5;
-  if ($size > 20) $size = 20;
+  // Search strings and translations using various filters.
+  $translations['actions']['search'] = array(
+    'help' => 'Search strings and translations.',
+    'file' => $file,
+    'callback' => '_btr_translations_search',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Filters (lng, words, project, etc.)',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
 
-  return btr_stat_topcontrib($lng, $period, $size);
+  // Get the sguid of a random string according to the target.
+  $translations['actions']['get_random_sguid'] = array(
+    'help' => 'Get the sguid of a random string according to the target, which can be: next|translated|untranslated.',
+    'file' => $file,
+    'callback' => '_btr_translations_get_random_sguid',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Assoc array containing the target.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
+
+  // Get a string, along with its translations, votes and other details.
+  $translations['actions']['get'] = array(
+    'help' => 'Return a string, along with its translations, votes and other details.',
+    'file' => $file,
+    'callback' => '_btr_translations_get',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Parameters (sguid and lng).',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+  );
+
+  // Add a new translation to a source string.
+  $translations['actions']['add'] = array(
+    'help' => 'Add a new translation to a source string.',
+    'file' => $file,
+    'callback' => '_btr_translations_add',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation data (sguid, lng, translation).',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-suggest'),
+  );
+
+  // Add a vote for a translation.
+  $translations['actions']['vote'] = array(
+    'help' => 'Add a vote for a translation.',
+    'file' => $file,
+    'callback' => '_btr_translations_vote',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation to be voted (tguid).',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-vote'),
+  );
+
+  // Delete a translation.
+  $translations['actions']['del'] = array(
+    'help' => 'Delete a translation.',
+    'file' => $file,
+    'callback' => '_btr_translations_del',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation (tguid) to be deleted.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-suggest'),
+  );
+
+  // Delete a vote from a translation.
+  $translations['actions']['del_vote'] = array(
+    'help' => 'Delete a vote from a translation.',
+    'file' => $file,
+    'callback' => '_btr_translations_del_vote',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Translation (tguid) to be un-voted.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-vote'),
+  );
+
+  // Submit multiple actions at once.
+  $translations['actions']['submit'] = array(
+    'help' => 'Submit multiple actions at once.',
+    'file' => $file,
+    'callback' => '_btr_translations_submit',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Array of actions to be executed.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-vote'),
+  );
+
+  return $translations;
 }
 
 /**
