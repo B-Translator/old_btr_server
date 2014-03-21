@@ -32,7 +32,7 @@ function btrCore_menu() {
     'type'            => MENU_CALLBACK,
     'title'           => 'Project List',
     'page callback'   => 'btrCore_project_list',
-    'file'            => 'includes/projects.inc',
+    'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );
 
@@ -41,7 +41,7 @@ function btrCore_menu() {
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
     'page callback'   => 'btrCore_project_export',
-    'file'            => 'includes/projects.inc',
+    'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );
 
@@ -51,7 +51,7 @@ function btrCore_menu() {
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
     'page callback'   => 'btrCore_project_export_tgz',
-    'file'            => 'includes/projects.inc',
+    'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );
 
@@ -62,7 +62,7 @@ function btrCore_menu() {
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
     'page callback'   => 'btrCore_project_diff',
-    'file'            => 'includes/projects.inc',
+    'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );
 
@@ -73,7 +73,7 @@ function btrCore_menu() {
     'type'            => MENU_CALLBACK,
     'title'           => 'Download Exported File',
     'page callback'   => 'btrCore_get_exported_file',
-    'file'            => 'includes/projects.inc',
+    'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );
 

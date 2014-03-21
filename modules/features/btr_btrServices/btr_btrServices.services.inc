@@ -164,6 +164,13 @@ function btr_btrServices_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
+    'project' => array(
+      'actions' => array(
+        'list' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'report' => array(
       'operations' => array(
         'retrieve' => array(

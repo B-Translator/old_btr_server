@@ -1,72 +1,44 @@
 <?php
 /**
  * @file
- * Functions for listing and exporting projects.
+ * Simple REST API for listing and exporting projects.
  */
 
+module_load_include('inc', 'btrCore', 'includes/projects');
+
 /**
- * Return a list of all the imported projects, filtered by
- * origin/project.
+ * Return a plain-text list of all the imported projects,
+ * filtered by the given origin/project.
  *
  * Variables $origin and $project can contain '*', which
  * is replaced by '%' (for LIKE matches).
  *
  * If $project=='-' then only a list of 'origin' is outputed,
  * otherwise a list of 'origin/project'.
+ *
+ * The third variable can be JSON or TEXT (default).
  */
-function btr_project_list($origin =NULL, $project =NULL) {
+function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
+  $result = btr_project_list($origin, $project);
 
-  // Get and sanitize the parameters.
-  if (!empty($origin)) {
-    $origin = str_replace('*', '%', $origin);
-    $origin = check_plain($origin);
+  // Output the result.
+  if (strtoupper($format) == 'JSON') {
+    drupal_json_output($result);
   }
-  if (!empty($project) && $project != '-') {
-    $project = str_replace('*', '%', $project);
-    $project = check_plain($project);
+  elseif (strtoupper($format) == 'TXT') {
+    print "<xmp>" . implode("\n", $result) . "</xmp>";
   }
-
-  // Start building the query.
-  $query = $GLOBALS['btr_db']->select('btr_projects', 'p')
-    ->fields('p', array('origin'))
-    ->orderBy('origin');
-
-  if ($project == '-') {
-    $query->distinct();
-  }
-  else {
-    $query->fields('p', array('project'))
-      ->orderBy('project');
+  else {  //TEXT
+    print implode("\n", $result);
   }
 
-  // Build the condition of the query.
-  if (!empty($origin)) {
-    $query->condition('origin', $origin, 'LIKE');
-  }
-  if (!empty($project) && $project != '-') {
-    $query->condition('project', $project, 'LIKE');
-  }
-
-  // Execute the query and get the results.
-  $results = $query->execute()->fetchAll();
-
-  // Build the list of projects as an array.
-  $list = array();
-  foreach ($results as $record) {
-    $item = $record->origin;
-    if ($project != '-') {
-      $item .= '/' . $record->project;
-    }
-    $list[] = $item;
-  }
-
-  return $list;
+  drupal_exit();
 }
 
 /**
  * Return as plain-text the PO file for a given origin/project/lng.
  */
-function btr_project_export($origin =NULL, $project =NULL, $lng =NULL) {
+function btrCore_project_export($origin =NULL, $project =NULL, $lng =NULL) {
 
   print "For performance reasons, export is currently disabled.";
   exit(0);
@@ -94,7 +66,7 @@ function btr_project_export($origin =NULL, $project =NULL, $lng =NULL) {
  * If project=='all', then all the projects of the given origin
  * will be exported (it usually takes a very long time).
  */
-function btr_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
+function btrCore_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
 
   print "For performance reasons, export_tgz is currently disabled.";
   exit(0);
@@ -130,7 +102,7 @@ function btr_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='
  * since the last snapshot.
  * If the parameter 'nr' is missing, it returns a list of the saved diffs instead.
  */
-function btr_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
+function btrCore_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
   $origin = check_plain($origin);
   $project = check_plain($project);
   $lng = check_plain($lng);
@@ -165,7 +137,7 @@ function btr_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
  * The URL is of the form 'translations/exports/filename.tgz'
  * where the filename is passed as a parameter to the function.
  */
-function btr_get_exported_file($filename =NULL) {
+function btrCore_get_exported_file($filename =NULL) {
 
   $filename = check_plain($filename);
   if (empty($filename)) {

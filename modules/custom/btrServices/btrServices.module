@@ -10,8 +10,10 @@
 function btrServices_services_resources() {
   module_load_include('inc', 'btrServices', 'resources/report');
   module_load_include('inc', 'btrServices', 'resources/translations');
+  module_load_include('inc', 'btrServices', 'resources/project');
 
   $resources['report'] = _btrServices_report();
   $resources['translations'] = _btrServices_translations();
+  $resources['project'] = _btrServices_project();
   return $resources;
 }

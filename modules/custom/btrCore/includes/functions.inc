@@ -13,5 +13,4 @@ include_once dirname(__FILE__) . '/votes_and_translations.inc';
 include_once dirname(__FILE__) . '/search.inc';
 include_once dirname(__FILE__) . '/misc.inc';
 include_once dirname(__FILE__) . '/languages.inc';
-
-
+include_once dirname(__FILE__) . '/projects.inc';
