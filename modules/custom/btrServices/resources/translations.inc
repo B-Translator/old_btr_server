@@ -12,7 +12,7 @@ function _btrServices_translations() {
   $translations['operations']['retrieve'] = array(
     'help' => 'Return a string, along with its translations, votes and other details.',
     'file' => $file,
-    'callback' => '_btr_translations_retrieve',
+    'callback' => '_btrServices_translations_retrieve',
     'args' => array(
       array(
         'name' => 'sguid',
@@ -38,7 +38,7 @@ function _btrServices_translations() {
   $translations['operations']['index'] = array(
     'help' => 'Index of strings and translations.',
     'file' => $file,
-    'callback' => '_btr_translations_index',
+    'callback' => '_btrServices_translations_index',
     'args' => array(
       array(
         'name' => 'params',
@@ -56,7 +56,7 @@ function _btrServices_translations() {
   $translations['actions']['search'] = array(
     'help' => 'Search strings and translations.',
     'file' => $file,
-    'callback' => '_btr_translations_search',
+    'callback' => '_btrServices_translations_search',
     'args' => array(
       array(
         'name' => 'params',
@@ -74,7 +74,7 @@ function _btrServices_translations() {
   $translations['actions']['get_random_sguid'] = array(
     'help' => 'Get the sguid of a random string according to the target, which can be: next|translated|untranslated.',
     'file' => $file,
-    'callback' => '_btr_translations_get_random_sguid',
+    'callback' => '_btrServices_translations_get_random_sguid',
     'args' => array(
       array(
         'name' => 'params',
@@ -92,7 +92,7 @@ function _btrServices_translations() {
   $translations['actions']['get'] = array(
     'help' => 'Return a string, along with its translations, votes and other details.',
     'file' => $file,
-    'callback' => '_btr_translations_get',
+    'callback' => '_btrServices_translations_get',
     'args' => array(
       array(
         'name' => 'params',
@@ -110,7 +110,7 @@ function _btrServices_translations() {
   $translations['actions']['add'] = array(
     'help' => 'Add a new translation to a source string.',
     'file' => $file,
-    'callback' => '_btr_translations_add',
+    'callback' => '_btrServices_translations_add',
     'args' => array(
       array(
         'name' => 'params',
@@ -128,7 +128,7 @@ function _btrServices_translations() {
   $translations['actions']['vote'] = array(
     'help' => 'Add a vote for a translation.',
     'file' => $file,
-    'callback' => '_btr_translations_vote',
+    'callback' => '_btrServices_translations_vote',
     'args' => array(
       array(
         'name' => 'params',
@@ -146,7 +146,7 @@ function _btrServices_translations() {
   $translations['actions']['del'] = array(
     'help' => 'Delete a translation.',
     'file' => $file,
-    'callback' => '_btr_translations_del',
+    'callback' => '_btrServices_translations_del',
     'args' => array(
       array(
         'name' => 'params',
@@ -164,7 +164,7 @@ function _btrServices_translations() {
   $translations['actions']['del_vote'] = array(
     'help' => 'Delete a vote from a translation.',
     'file' => $file,
-    'callback' => '_btr_translations_del_vote',
+    'callback' => '_btrServices_translations_del_vote',
     'args' => array(
       array(
         'name' => 'params',
@@ -182,7 +182,7 @@ function _btrServices_translations() {
   $translations['actions']['submit'] = array(
     'help' => 'Submit multiple actions at once.',
     'file' => $file,
-    'callback' => '_btr_translations_submit',
+    'callback' => '_btrServices_translations_submit',
     'args' => array(
       array(
         'name' => 'params',
@@ -218,8 +218,8 @@ function _btrServices_translations() {
  *   curl -k -i \
  *     'https://dev.l10n.org.xx/public/btr/translations/next?lng=sq'
  */
-function _btr_translations_retrieve($sguid, $lng) {
-  $strings = _btr_translations_get(array(
+function _btrServices_translations_retrieve($sguid, $lng) {
+  $strings = _btrServices_translations_get(array(
                'sguid' => $sguid,
                'lng' => $lng,
              ));
@@ -247,8 +247,8 @@ function _btr_translations_retrieve($sguid, $lng) {
  *   curl -k -i -H 'Accept: application/json' \
  *     'https://dev.l10n.org.xx/public/btr/translations?lng=sq&words=file'
  */
-function _btr_translations_index($params) {
-  return _btr_translations_search($params);
+function _btrServices_translations_index($params) {
+  return _btrServices_translations_search($params);
 }
 
 
@@ -302,7 +302,7 @@ function _btr_translations_index($params) {
  *   and the pager info. Each result is a nested structure
  *   containing the string, its translations, votes, etc.
  */
-function _btr_translations_search($params) {
+function _btrServices_translations_search($params) {
   // Get and check the parameter 'lng'.
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());
@@ -357,7 +357,7 @@ function _btr_translations_search($params) {
  *       ID of a random string, or the target itself
  *       if it is different from next|translated|untranslated
  */
-function _btr_translations_get_random_sguid($params) {
+function _btrServices_translations_get_random_sguid($params) {
   $projects = NULL;
   if (isset($params['last_sguid'])) {
     $projects = btr_get_projects_of_sguid($params['last_sguid']);
@@ -394,7 +394,7 @@ function _btr_translations_get_random_sguid($params) {
  *     -X POST https://dev.l10n.org.xx/public/btr/translations/get
  *     -d '{"lng": "sq"}'
  */
-function _btr_translations_get($params) {
+function _btrServices_translations_get($params) {
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());
   if (!in_array($lng, $arr_langs)) {
@@ -439,7 +439,7 @@ function _btr_translations_get($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_add($params) {
+function _btrServices_translations_add($params) {
   // get parameters and validate them
   $sguid = $params['sguid'];
   $translation = $params['translation'];
@@ -474,7 +474,7 @@ function _btr_translations_add($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_vote($params) {
+function _btrServices_translations_vote($params) {
   $tguid = $params['tguid'];
   list($vid, $messages) = btr_add_vote($tguid);
   return array(
@@ -498,7 +498,7 @@ function _btr_translations_vote($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_del($params) {
+function _btrServices_translations_del($params) {
   $tguid = $params['tguid'];
   $messages = btr_del_translation($tguid);
   return array(
@@ -521,7 +521,7 @@ function _btr_translations_del($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_del_vote($params) {
+function _btrServices_translations_del_vote($params) {
   $tguid = $params['tguid'];
   $messages = btr_del_vote($tguid);
   return array(
@@ -547,25 +547,25 @@ function _btr_translations_del_vote($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btr_translations_submit($params) {
+function _btrServices_translations_submit($params) {
   $messages = array();
   $nr_votes = $nr_suggestions = $nr_deletions = 0;
   foreach ($params as $item) {
     switch ($item['action']) {
     case 'add':
-      $result = _btr_translations_add($item['params']);
+      $result = _btrServices_translations_add($item['params']);
       if ($result['tguid'] != NULL)  $nr_suggestions++;
       $messages += $result['messages'];
       break;
 
     case 'vote':
-      $result = _btr_translations_vote($item['params']);
+      $result = _btrServices_translations_vote($item['params']);
       if ($result['vid'] != NULL)  $nr_votes++;
       $messages += $result['messages'];
       break;
 
     case 'del':
-      $result = _btr_translations_del($item['params']);
+      $result = _btrServices_translations_del($item['params']);
       if (sizeof($result['messages'])==0) {
 	$nr_deletions++;
       }
@@ -575,7 +575,7 @@ function _btr_translations_submit($params) {
       break;
 
     case 'del_vote':
-      $result = _btr_translations_del_vote($item['params']);
+      $result = _btrServices_translations_del_vote($item['params']);
       $messages += $result['messages'];
       break;
 
