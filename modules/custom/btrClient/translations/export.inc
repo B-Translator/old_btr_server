@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Export the most voted translations of a project into a PO file.
+ * Export the best translations of a project into PO format.
  */
 
 /**
  * Menu callback: translations/export
- * Export the most voted translations of a project into a PO file.
+ * Export the best translations of a project into PO format.
  */
 function btrClient_export() {
   return drupal_get_form('btrClient_export_form');
@@ -91,86 +91,24 @@ function btrClient_export_form() {
 
 /**
  * Submission handler for export form.
+ *
+ * Send the export request to the B-Translator server.
  */
 function btrClient_export_form_submit($form, &$form_state) {
-
   $values = $form_state['values'];
-  //dpm($values);  //debug
-  $origin = $values['origin'];
-  $project = $values['project'];
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-  if (empty($project)) {
-    $project = 'all';
-  }
-
-  $account = user_load($GLOBALS['user']->uid);
-  $arr_voters[] = $account->init;
-
-  $export_mode = isset($values['export_mode']) ? $values['export_mode'] : '';
-  if ($export_mode == 'preferred_by_my_friends') {
-    $friends = isset($values['friends']) ? $values['friends'] : '';
-    $arr_friends = preg_split('/\s*,\s*/', trim($friends));
-    foreach ($arr_friends as $username) {
-      $account = user_load_by_name($username);
-      $arr_voters[] = $account->init;
-    }
-  }
+  $values += array(
+    'origin' => NULL,
+    'project' => NULL,
+    'export_mode' => NULL,
+    'friends' => NULL,
+  );
 
   $params = array(
-    'uid' => $GLOBALS['user']->uid,
-    'lng' => variable_get('btrClient_translation_lng', 'fr'),
-    'origin' => $origin,
-    'project' => $project,
-    'export_mode' => $export_mode,
-    'voters' => implode(',', $arr_voters),
+    'origin' => check_plain($values['origin']),
+    'project' => check_plain($values['project']),
+    'export_mode' => check_plain($values['export_mode']),
+    'friends' => check_plain($values['friends']),
   );
-  btr_queue('export_project', array($params));
-
-  drupal_set_message(t("Export of '!project' is scheduled. You will be notified by email when it is done.",
-      array('!project' => "$origin/$project")));
-
-  $notify_admin = variable_get('btr_export_notify_admin', TRUE);
-  if ($notify_admin) {
-    $params['type'] = 'notify-admin-on-export-request';
-    $params['recipient'] = user_load(1)->mail;
-    btr_queue_notifications(array($params));
-  }
-}
-
-/**
- * Data validation for export form.
- */
-function btrClient_export_form_validate($form, &$form_state) {
-  $values = $form_state['values'];
-  $origin = $values['origin'];
-  $project = $values['project'];
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-
-  if (empty($project)) {
-    $query = "SELECT DISTINCT origin FROM {btr_projects} WHERE BINARY origin = :origin";
-    $params = array(':origin' => $origin);
-  }
-  else {
-    $query = "SELECT project FROM {btr_projects} WHERE BINARY origin = :origin AND BINARY project = :project";
-    $params = array(':origin' => $origin, ':project' => $project);
-  }
-
-  $result = btr_query($query, $params)->fetchField();
-  if (!$result) {
-    form_set_error('', t("The project '!project' does not exist.", array('!project' => "$origin/$project")));
-  }
-
-  $export_mode = isset($values['export_mode']) ? $values['export_mode'] : '';
-  if ($export_mode == 'preferred_by_my_friends') {
-    $friends = isset($values['friends']) ? $values['friends'] : '';
-    $arr_friends = preg_split('/\s*,\s*/', trim($friends));
-    foreach ($arr_friends as $username) {
-      if (!user_load_by_name($username)) {
-        form_set_error('', t("The user '!username' does not exist.", array('!username' => $username)));
-      }
-    }
-    $form_state['values']['friends'] = implode(',', $arr_friends);
-  }
+  $result = $GLOBALS['btr']->export_project($params);
+  btrClient_display_messages($result['messages']);
 }

@@ -26,6 +26,14 @@ function _btrServices_project() {
     'args' => array($params),
   ) + $public_access;
 
+  // Export a project.
+  $translations['actions']['export'] = array(
+    'help' => 'Export a project.',
+    'file' => $file,
+    'callback' => '_btrServices_project_export',
+    'args' => array($params),
+  ) + $public_access;
+
   return $translations;
 }
 
@@ -34,7 +42,7 @@ function _btrServices_project() {
  *
  * @param $params
  *   Associative array of the POST data, which contains
- *   the filter parameters. These parameters can be:
+ *   the parameters. These parameters can be:
  *   - origin
  *   - project
  *
@@ -59,4 +67,67 @@ function _btrServices_project_list($params) {
   $result = btr_project_list($params['origin'], $params['project']);
   drupal_json_output($result);
   drupal_exit();
+}
+
+/**
+ * Export a project.
+ *
+ * Submit a request for exporting a project. When the request
+ * is completed, the user will be notified by email.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains
+ *   the export parameters. These parameters are:
+ *   - origin
+ *       The origin of the project.
+ *   - project
+ *       The name of the project. If not given, then all the projects
+ *       of the 'origin' will be exported, however only those with
+ *       export access rights (usually translators) can do this.
+ *       Contributors can export only a single project at a time.
+ *   - export_mode
+ *       The export mode that should be used. It can be one of:
+ *       (most_voted | preferred_by_me | preferred_by_my_friends).
+ *       Normal users can use only the default mode: most_voted.
+ *       However those with export access rights (usually translators)
+ *       can choose another export mode.
+ *        - When the mode most_voted is used, then the translations
+ *          with the highest number of votes are exported.
+ *        - When the mode preferred_by_me is used, then the translations
+ *          voted by the user take precedence over the other translations
+ *          despite the number of votes.
+ *        - When the mode preferred_by_my_friends is used, then the
+ *          translations voted by any friends of the user take precedence.
+ *          Friends are the users that are listed on the parameter
+ *          'friends' (see below).
+ *   - friends
+ *       Comma separated list of usernames. Used only when export_mode
+ *       is preferred_by_my_friends.
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btrServices_project_export($params) {
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
+    'export_mode' => NULL,
+    'friends' => NULL,
+  );
+  if (empty($params['export_mode'])) {
+    $params['export_mode'] = 'most_voted';
+  }
+
+  $messages = btr_project_export(
+    check_plain($params['origin']),
+    check_plain($params['project']),
+    check_plain($params['export_mode']),
+    check_plain($params['friends'])
+  );
+
+  return array('messages' => $messages);
 }

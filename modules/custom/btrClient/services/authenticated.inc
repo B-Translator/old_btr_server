@@ -14,9 +14,12 @@ function _btrClient_services_authenticated_service($service_name) {
   $service->label = 'Authenticated B-Translator Services';
   $service->type = 'rest';
   $service->url = $server_url . '/btr/';
+
   $service->settings += _btrClient_services_dev_settings();
   $service->settings += _btrClient_services_authentication();
+
   $service->operations += _btrClient_services_authenticated_translations();
+  $service->operations += _btrClient_services_authenticated_projects();
 
   return $service;
 }
@@ -79,6 +82,23 @@ function _btrClient_services_authenticated_translations() {
       ),
     );
   }
+
+  return $operations;
+}
+
+/**
+ * Return definitions for operations about projects.
+ */
+function _btrClient_services_authenticated_projects() {
+  $operations['export_project'] = array(
+    'label' => 'export_project',
+    'url' => 'project/export',
+    'type' => 'POST',
+    'data' => 'params',
+    'parameter' => array(
+      'params' => array('type' => 'array'),
+    ),
+  );
 
   return $operations;
 }
