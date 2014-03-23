@@ -4,9 +4,10 @@
 function print_usage($argv) {
   print "
 Usage: $argv[0] origin project tplname lng [file.po [export_mode [preferred_voters]]]
+
   origin      -- the origin of the project (ubuntu, GNOME, KDE, etc.)
   project     -- the name of the project to be exported
-  tplname     -- The name of the PO template.
+  tplname     -- the name of the PO template
   lng         -- translation to be exported (de, fr, sq, en_GB, etc.)
   file.po     -- output file (stdout if not given)
   export_mode -- 'most_voted' (default), or 'preferred', or 'original'
@@ -72,6 +73,7 @@ $db = new DB_PO_Export;
 $potid = $db->get_template_potid($origin, $project, $tplname);
 if ($potid === NULL) {
   print "Template $origin/$project/$tplname not found!";
+  exit(1);
 }
 
 // Get the headers, strings and translations.
@@ -120,7 +122,7 @@ foreach (array_keys($strings) as $sguid) {
 // Write entries to a PO file.
 include_once(dirname(dirname(__FILE__)).'/gettext/POWriter.php');
 $writer = new POWriter;
-if ($filename === NULL) {
+if ($filename === NULL or $filename == 'stdout') {
   $output = $writer->write($headers, $comments, $strings);
   print(implode("\n", $output) . "\n");
 }

@@ -7,6 +7,8 @@
 module_load_include('inc', 'btrCore', 'includes/projects');
 
 /**
+ * Callback function for the menu translations/project/list.
+ *
  * Return a plain-text list of all the imported projects,
  * filtered by the given origin/project.
  *
@@ -36,28 +38,79 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
 }
 
 /**
- * Return as plain-text the PO file for a given origin/project/lng.
+ * Callback function for the menu 'translations/project/export'
+ *
+ * Return a PO file as plain-text. Does not allow concurrent exports
+ * because they may affect the performance of the server.  Parameters
+ * are received from the request (either GET or POST). They are:
+ *
+ *  - origin
+ *      Origin of the project (ubuntu, GNOME, KDE, etc.)
+ *
+ *  - project
+ *      The name of the project to be exported.
+ *
+ *  - tplname
+ *      The name of the PO template.
+ *
+ *  - lng
+ *      Translation to be exported (de, fr, sq, en_GB, etc.)
+ *
+ *  - export_mode
+ *      Mode of export: most_voted | preferred | original
+ *
+ *      Default is 'most_voted' which exports the most voted
+ *      translations and suggestions.
+ *
+ *      The export mode 'original' exports the translations of the
+ *      original file that was imported (useful for making diffs).
+ *
+ *      The export mode 'preferred' gives priority to translations
+ *      that are voted by a certain user or a group of users. It
+ *      requires an additional argument (preferred_voters) to specify
+ *      the user (or a list of users) whose translations are
+ *      preferred.
+ *
+ * - preferred_voters
+ *      Comma separated list of email addresses of preferred voters.
+ *
+ * Examples:
+ *   curl -k 'https://dev.l10n.org.al/translations/project/export?origin=test&project=kturtle&lng=sq' > test.po
+ *   curl -k https://dev.l10n.org.al/translations/project/export \
+ *        -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test.po
+ *   curl -k https://dev.l10n.org.al/translations/project/export \
+ *        -d origin=test -d project=kturtle -d lng=sq \
+ *        -d preferred_voters=email1@example.com,email2@example.com \
+ *        -d export_mode=preferred > test.po
  */
-function btrCore_project_export($origin =NULL, $project =NULL, $lng =NULL) {
+function btrCore_project_export() {
+  // Try to avoid concurrent exports because they
+  // may affect the performance of the server.
+  if (!lock_acquire('export_project')) {
+    print t("Error: Server is currently busy. Please try to export again later.");
+    drupal_exit();
+  }
 
-  print "For performance reasons, export is currently disabled.";
-  exit(0);
+  // Get the parameters.
+  $origin = check_plain($_REQUEST['origin']);
+  $project = check_plain($_REQUEST['project']);
+  $tplname = check_plain($_REQUEST['tplname']);
+  $lng = check_plain($_REQUEST['lng']);
+  $export_mode = check_plain($_REQUEST['export_mode']);
+  $preferred_voters = check_plain($_REQUEST['preferred_voters']);
+  if (empty($tplname))  $tplname = $project;
 
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-  $lng = check_plain($lng);
-
-  set_time_limit(0);
-
+  // Run the export script.
+  set_time_limit(100);
   $path = drupal_get_path('module', 'btrCore') . '/data/export';
-  $tplname = $project;
-  $output = shell_exec("$path/po_export.php $origin $project $tplname $lng");
+  $output = shell_exec("$path/po_export.php $origin $project $tplname $lng stdout $export_mode $preferred_voters");
 
   // Send the content.
   print $output;
 
   // Stop execution.
-  exit(0);
+  lock_release('export_project');
+  drupal_exit();
 }
 
 /**
