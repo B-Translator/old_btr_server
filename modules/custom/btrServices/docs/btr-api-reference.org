@@ -335,11 +335,44 @@
 
 ** export_tgz
 
-   + GET translations/project/export_tgz/$origin/$project/$lng ::
-     Return an archive of PO files for a given origin/project/lng
-     (usefull for projects that have many POT files.)  If
-     project=='all', then all the projects of the given origin will be
-     exported (it usually takes a very long time).
+   + GET/POST translations/project/export :: Return an archive of PO
+     files for a given origin/project/lng (usefull for projects that
+     have many POT files). Does not allow concurrent exports because
+     they may affect the performance of the server.  Parameters are
+     received from the request (either GET or POST). They are:
+     - origin ::
+	 Origin of the project (ubuntu, GNOME, KDE, etc.)
+     - project ::
+	 The name of the project to be exported.
+     - lng ::
+	 Translation to be exported (de, fr, sq, en_GB, etc.)
+     - export_mode ::
+	 Mode of export: =most_voted | preferred | original=
+
+	 Default is =most_voted= which exports the most voted
+	 translations and suggestions.
+
+	 The export mode =original= exports the translations of the
+	 original file that was imported (useful for making diffs).
+
+	 The export mode =preferred= gives priority to translations
+	 that are voted by a certain user or a group of users. It
+	 requires an additional argument (preferred_voters) to specify
+	 the user (or a list of users) whose translations are
+	 preferred.
+     - preferred_voters ::
+	 Comma separated list of email addresses of preferred voters.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://dev.l10n.org.al/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
+     curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+	  -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
+     curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+	  -d origin=test -d project=kturtle -d lng=sq \
+	  -d preferred_voters=email1@example.com,email2@example.com \
+	  -d export_mode=preferred > test1.tgz
+     #+END_EXAMPLE
 
 ** diff
 

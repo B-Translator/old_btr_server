@@ -113,26 +113,81 @@ function btrCore_project_export() {
   drupal_exit();
 }
 
+
 /**
+ * Callback function for the menu 'translations/project/export_tgz'
+ *
  * Return an archive of PO files for a given origin/project/lng
- * (usefull for projects that have many POT files.)
- * If project=='all', then all the projects of the given origin
- * will be exported (it usually takes a very long time).
+ * (usefull for projects that have many POT files).  Does not allow
+ * concurrent exports because they may affect the performance of the
+ * server.  Parameters are received from the request (either GET or
+ * POST). They are:
+ *
+ *  - origin
+ *      Origin of the project (ubuntu, GNOME, KDE, etc.)
+ *
+ *  - project
+ *      The name of the project to be exported.
+ *
+ *  - lng
+ *      Translation to be exported (de, fr, sq, en_GB, etc.)
+ *
+ *  - export_mode
+ *      Mode of export: most_voted | preferred | original
+ *
+ *      Default is 'most_voted' which exports the most voted
+ *      translations and suggestions.
+ *
+ *      The export mode 'original' exports the translations of the
+ *      original file that was imported (useful for making diffs).
+ *
+ *      The export mode 'preferred' gives priority to translations
+ *      that are voted by a certain user or a group of users. It
+ *      requires an additional argument (preferred_voters) to specify
+ *      the user (or a list of users) whose translations are
+ *      preferred.
+ *
+ * - preferred_voters
+ *      Comma separated list of email addresses of preferred voters.
+ *
+ * Examples:
+ *   curl -k 'https://dev.l10n.org.xx/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
+ *   curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+ *        -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
+ *   curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+ *        -d origin=test -d project=kturtle -d lng=sq \
+ *        -d preferred_voters=email1@example.com,email2@example.com \
+ *        -d export_mode=preferred > test1.tgz
  */
-function btrCore_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
+function btrCore_project_export_tgz() {
 
-  print "For performance reasons, export_tgz is currently disabled.";
-  exit(0);
+  // Try to avoid concurrent exports because they
+  // may affect the performance of the server.
+  if (!lock_acquire('export_project')) {
+    print t("Error: Server is currently busy. Please try to export again later.");
+    drupal_exit();
+  }
 
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-  $lng = check_plain($lng);
-
-  set_time_limit(0);
+  // Get the parameters.
+  $origin = check_plain($_REQUEST['origin']);
+  $project = check_plain($_REQUEST['project']);
+  $lng = check_plain($_REQUEST['lng']);
+  $export_mode = check_plain($_REQUEST['export_mode']);
+  $preferred_voters = check_plain($_REQUEST['preferred_voters']);
+  if ($project == 'all') {
+    print t("Error: Exporting all the projects is not allowed. Please specify a project.");
+    drupal_exit();
+  }
 
   // Export files in a tgz archive.
+  set_time_limit(120);
   $path = drupal_get_path('module', 'btrCore') . '/data/export';
-  $tgz_file = exec("$path/export_tgz.sh $origin $project $lng");
+  $export_cmd = "$path/export_tgz.sh $origin $project $lng";
+  if ($export_mode == 'preferred_by_me'
+      or $export_mode == 'preferred_by_my_friends') {
+    $export_cmd = "export PO_EXPORT_MODE='preferred' ; export PO_EXPORT_VOTERS='$voters' ; $export_cmd";
+  }
+  $tgz_file = exec($export_cmd);
 
   // Send the headers.
   header('Content-Type: application/octet-stream');
@@ -145,7 +200,8 @@ function btrCore_project_export_tgz($origin ='LibreOffice', $project ='all', $ln
   fpassthru($fp);
 
   // Stop execution.
-  exit(0);
+  lock_release('export_project');
+  drupal_exit();
 }
 
 /**

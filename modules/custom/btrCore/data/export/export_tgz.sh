@@ -43,6 +43,7 @@ done
 
 ### create the tgz archive on the output dir
 tgz_file=$output_dir/$filename.tgz
+rm -f $tgz_file
 tar -C $export_dir --create --gzip --file=$tgz_file $origin
 
 ### clean up
