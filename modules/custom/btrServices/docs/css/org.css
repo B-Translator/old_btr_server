@@ -16,8 +16,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color:#232323;
+  color:#aa2323;
   margin:25px 0 10px;
+  font-weight: bold;
 }
 
 p, ul, ol, table, dl {
@@ -82,7 +83,7 @@ h4, h5, h6 {
 }
 
 a {
-  color:#C30000;
+  color:#2323cc;
   font-weight:200;
   text-decoration:none;
 }
@@ -203,6 +204,6 @@ th {
  }
 
 td {
-  padding: 10px;
-  background: #ccc;
+  padding: 0px 10px;
+  background: #ccff88;
  }
