@@ -66,6 +66,18 @@
                 =next | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
+   + GET translations/$lng/$sguid :: Returns the details of a string
+     and its translations.  If the request header =Accept:
+     application/json= is set, then the output will be in JSON
+     (otherwise it will be an HTML page). The parameter /$sguid/ can
+     also be one of =next | translated | untranslated=.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k -H 'Accept: application/json' \
+       'https://dev.l10n.org.al/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+     curl -k -H 'Accept: application/json' https://dev.l10n.org.al/translations/sq/next
+     #+END_EXAMPLE
 
 ** add
 
@@ -111,11 +123,11 @@
    Search strings and translations using various filters.
 
    + GET public/btr/translations :: This provides the same
-         functionality and has the same parameters as the *search*
-         operation.  The only difference is that the parameters are
-         provided as a GET request (in the URL), whereas the
-         parameters of 'search' are provided as a POST
-         request. Sometimes this may be more convenient.
+     functionality and has the same parameters as the *search*
+     operation.  The only difference is that the parameters are
+     provided as a GET request (in the URL), whereas the parameters of
+     'search' are provided as a POST request. Sometimes this may be
+     more convenient.
 
    + POST public/btr/translations/search ::
      - lng ::
@@ -157,6 +169,18 @@
      - to_date :: (YYYY-MM-DD)
          Takes the current date by default.
 
+  + GET translations/search :: Search strings and translations using
+    various filters.  If the request header =Accept: application/json=
+    is set, then the output will be in JSON (otherwise it will be an
+    HTML page). It gets the same parameters as =GET
+    public/btr/translations=
+
+    Example:
+    #+BEGIN_EXAMPLE
+    curl -k -H 'Accept: application/json' \
+	 'https://dev.l10n.org.al/translations/search?lng=sq&words=space'
+    #+END_EXAMPLE
+
 
 ** submit
 
@@ -171,125 +195,80 @@
 	     Associative array of the needed parameters for this action.
 
 
-* misc
+* project
 
-  + GET translations/rss-feed/$lng[/$origin[/$project]] :: Return a
-    RSS feed of the latest translations for the given language (origin
-    and project are optional).
+** list
 
-    Examples:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/rss-feed'
-    curl -k 'https://l10n.org.al/translations/rss-feed/sq'
-    curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice'
-    curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice/sw'
-    #+END_EXAMPLE
+   Get a list of existing projects, filtered by origin/project.
 
-  + GET translations/twitter/$lng :: Return a random string and its
-    translations in a suitable form for the twitter (truncated to 100
-    characters).
-    - lng :: Language of translations.
+   + POST btr/project/list ::
+     - origin :: Filter by origin.
+     - project :: Filter by project.
 
-    Examples:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/twitter/sq'
-    curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice'
-    curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice/sw'
-    #+END_EXAMPLE
+     Parameters *origin* and *project* can contain =*=, which is
+     replaced by =%= (for LIKE matches).
 
+     If *project* is =-= then only a list of 'origin' is outputed,
+     otherwise a list of 'origin/project'.
 
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k -i -X POST https://dev.l10n.org.al/public/btr/project/list
+     curl -k -i -X POST https://dev.l10n.org.al/public/btr/project/list \
+	  -H "Content-type: application/json" \
+	  -d '{"origin": "t*"}'
+     #+END_EXAMPLE
 
-  + GET translations/$lng/$sguid :: Returns the details of a string
-    and its translations.  If the request header =Accept:
-    application/json= is set, then the output will be in JSON
-    (otherwise it will be an HTML page). The parameter /$sguid/ can
-    also be one of =next | translated | untranslated=.
+   + GET translations/project/list/$origin/$project[/$format] ::
+     Return a plain-text list of all the imported projects, filtered
+     by the given origin/project. Parameters *origin* and *project*
+     can contain =*=, which is replaced by =%= (for LIKE matches).  If
+     *project* is =-= then only a list of 'origin' is outputed,
+     otherwise a list of 'origin/project'.  The third variable can be
+     JSON or TEXT (default).
 
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k -H 'Accept: application/json' \
-      'https://dev.l10n.org.al/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-    #+END_EXAMPLE
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/project/list/*/-'
+     curl -k 'https://l10n.org.al/translations/project/list/*/-/json'
+     curl -k 'https://l10n.org.al/translations/project/list/LibreOffice/s*'
+     curl -k 'https://l10n.org.al/translations/project/list/LibreOffice'
+     curl -k 'https://l10n.org.al/translations/project/list/*/nautil*'
+     curl -k 'https://l10n.org.al/translations/project/list/*/*/json'
+     curl -k 'https://l10n.org.al/translations/project/list'
+     #+END_EXAMPLE
 
-  + GET translations/search :: Search strings and translations using
-    various filters.  If the request header =Accept: application/json=
-    is set, then the output will be in JSON (otherwise it will be an
-    HTML page). It gets the same parameters as =GET public/btr/translations=
+** export
 
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k -H 'Accept: application/json' \
-	 'https://dev.l10n.org.al/translations/search?lng=sq&words=space'
-    #+END_EXAMPLE
+   + POST btr/project/export :: Submit a request for exporting a
+     project. When the request is completed, the user will be notified
+     by email. Accepts these parameters:
 
-
-
-  + GET translations/languages :: Return a json list of languages
-    installed on the system and their details.
-
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://dev.l10n.org.al/translations/languages'
-    #+END_EXAMPLE
-
-  + GET translations/project/list/$origin/$project[/$format] ::
-    Return a plain-text list of all the imported projects, filtered
-    by the given origin/project. Variables $origin and $project can
-    contain '*', which is replaced by '%' (for LIKE matches).  If
-    $project=='-' then only a list of 'origin' is outputed, otherwise
-    a list of 'origin/project'.  The third variable can be JSON or
-    TEXT (default).
-
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/project/list/*/-'
-    curl -k 'https://l10n.org.al/translations/project/list/*/-/json'
-    curl -k 'https://l10n.org.al/translations/project/list/LibreOffice/s*'
-    curl -k 'https://l10n.org.al/translations/project/list/LibreOffice'
-    curl -k 'https://l10n.org.al/translations/project/list/*/nautil*'
-    curl -k 'https://l10n.org.al/translations/project/list/*/*/json'
-    curl -k 'https://l10n.org.al/translations/project/list'
-    #+END_EXAMPLE
-
-
-  + GET translations/string_details/$sguid :: Return string context, a
-    list of related projects (where the string appears), etc.  This
-    callback is invoked from JavaScript and is used as an AJAX
-    provider.
-    - sguid :: Id of the string.
-
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866'
-    #+END_EXAMPLE
-
-  + GET translations/autocomplete/project/$str :: Retrieve a JSON list
-    of autocomplete suggestions for projects.
-    - str :: Beginning of a project name.
-
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/autocomplete/project/kd'
-    #+END_EXAMPLE
-
-  + GET translations/autocomplete/origin/$str :: Retrieve a JSON list
-    of autocomplete suggestions for origins of projects.
-    - str :: Beginning of an origin.
-
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/autocomplete/origin/G'
-    #+END_EXAMPLE
-
-  + GET translations/autocomplete/user/$str :: Retrieve a JSON list of
-    autocomplete suggestions for users.
-    - str :: Beginning of a user name.
-
-    Example:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://l10n.org.al/translations/autocomplete/user/d'
-    #+END_EXAMPLE
-
+     - origin ::
+         The origin of the project.
+     - project ::
+         The name of the project. If not given, then all the projects
+         of the /origin/ will be exported, however only those with
+         /export access rights/ (usually translators) can do this.
+         Contributors can export only a single project at a time.
+     - export_mode ::
+         The export mode that should be used. It can be one of:
+         =most_voted | preferred_by_me | preferred_by_my_friends=.
+         Normal users can use only the default mode: =most_voted=.
+         However those with /export access rights/ (usually translators)
+         can choose another export mode.
+	 - When the mode =most_voted= is used, then the translations
+	   with the highest number of votes are exported.
+	 - When the mode =preferred_by_me= is used, then the translations
+	   voted by the user take precedence over the other translations
+	   despite the number of votes.
+	 - When the mode =preferred_by_my_friends= is used, then the
+	   translations voted by any friends of the user take precedence.
+	   Friends are the users that are listed on the parameter
+	   *friends* (see below).
+     - friends ::
+         Comma separated list of usernames. Used only when /export_mode/
+         is =preferred_by_my_friends=.
 
   + GET/POST translations/project/export :: Return a PO file as
     plain-text. Does not allow concurrent exports because they may
@@ -331,18 +310,103 @@
          -d export_mode=preferred > test.po
     #+END_EXAMPLE
 
-  + GET translations/project/export_tgz/$origin/$project/$lng ::
-    Return an archive of PO files for a given origin/project/lng
-    (usefull for projects that have many POT files.)  If
-    project=='all', then all the projects of the given origin will be
-    exported (it usually takes a very long time).
+** export_tgz
 
-  + GET translations/project/diff/$origin/$project/$lng[/$nr[/$ediff]] ::
-    Return as plain-text the diff of the PO file for a given
-    origin/project/lng, which contains the latest most-voted
-    suggestions since the last snapshot.  It gets the parameters
-    origin/project/lng[/nr[/ediff]].  If the parameter 'nr' is '-', it
-    returns the latest most-voted suggestions since the last snapshot.
-    If the parameter 'nr' is missing, it returns a list of the saved
-    diffs instead.
+   + GET translations/project/export_tgz/$origin/$project/$lng ::
+     Return an archive of PO files for a given origin/project/lng
+     (usefull for projects that have many POT files.)  If
+     project=='all', then all the projects of the given origin will be
+     exported (it usually takes a very long time).
 
+** diff
+
+   + GET translations/project/diff/$origin/$project/$lng[/$nr[/$ediff]] ::
+     Return as plain-text the diff of the PO file for a given
+     origin/project/lng, which contains the latest most-voted
+     suggestions since the last snapshot.  It gets the parameters
+     origin/project/lng[/nr[/ediff]].  If the parameter 'nr' is '-', it
+     returns the latest most-voted suggestions since the last snapshot.
+     If the parameter 'nr' is missing, it returns a list of the saved
+     diffs instead.
+
+
+* misc
+
+** rss
+
+   + GET translations/rss-feed/$lng[/$origin[/$project]] :: Return a
+     RSS feed of the latest translations for the given language (origin
+     and project are optional).
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/rss-feed'
+     curl -k 'https://l10n.org.al/translations/rss-feed/sq'
+     curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice'
+     curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice/sw'
+     #+END_EXAMPLE
+
+** twitter
+
+   + GET translations/twitter/$lng :: Return a random string and its
+     translations in a suitable form for the twitter (truncated to 100
+     characters).
+     - lng :: Language of translations.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/twitter/sq'
+     curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice'
+     curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice/sw'
+     #+END_EXAMPLE
+
+** autocomplete
+
+   + GET translations/autocomplete/project/$str :: Retrieve a JSON list
+     of autocomplete suggestions for projects.
+     - str :: Beginning of a project name.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/autocomplete/project/kd'
+     #+END_EXAMPLE
+
+   + GET translations/autocomplete/origin/$str :: Retrieve a JSON list
+     of autocomplete suggestions for origins of projects.
+     - str :: Beginning of an origin.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/autocomplete/origin/G'
+     #+END_EXAMPLE
+
+   + GET translations/autocomplete/user/$str :: Retrieve a JSON list of
+     autocomplete suggestions for users.
+     - str :: Beginning of a user name.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/autocomplete/user/d'
+     #+END_EXAMPLE
+
+** other
+
+   + GET translations/languages :: Return a json list of languages
+     installed on the system and their details.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://dev.l10n.org.al/translations/languages'
+     #+END_EXAMPLE
+
+
+   + GET translations/string_details/$sguid :: Return string context, a
+     list of related projects (where the string appears), etc.  This
+     callback is invoked from JavaScript and is used as an AJAX
+     provider.
+     - sguid :: Id of the string.
+
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://l10n.org.al/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866'
+     #+END_EXAMPLE
