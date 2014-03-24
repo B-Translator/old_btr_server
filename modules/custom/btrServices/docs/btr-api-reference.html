@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B-Translator API Reference</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2014-03-24 14:00:20 CET"/>
+<meta name="generated" content="2014-03-24 17:08:09 CET"/>
 <meta name="author" content="Dashamir Hoxha"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -45,21 +45,6 @@ lang="en" xml:lang="en">
   /*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="css/org.css" />
-<script type="text/javascript" src="org-info.js"></script>
-<script type="text/javascript" >
-<!--/*--><![CDATA[/*><!--*/
-org_html_manager.set("TOC_DEPTH", "3");
-org_html_manager.set("LINK_HOME", "");
-org_html_manager.set("LINK_UP", "");
-org_html_manager.set("LOCAL_TOC", "1");
-org_html_manager.set("VIEW_BUTTONS", "0");
-org_html_manager.set("MOUSE_HINT", "#aadddd");
-org_html_manager.set("FIXED_TOC", "0");
-org_html_manager.set("TOC", "1");
-org_html_manager.set("VIEW", "overview");
-org_html_manager.setup();  // activate after the parameters are set
-/*]]>*///-->
-</script>
 <script type="text/javascript">
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
@@ -117,6 +102,7 @@ org_html_manager.setup();  // activate after the parameters are set
 <li><a href="#sec-3.2">export </a></li>
 <li><a href="#sec-3.3">export_tgz </a></li>
 <li><a href="#sec-3.4">diff </a></li>
+<li><a href="#sec-3.5">import </a></li>
 </ul>
 </li>
 <li><a href="#sec-4">misc </a>
@@ -164,11 +150,13 @@ language of translations
 <dt>lng:</dt><dd>
 language of translations
 
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/report/statistics.php">https://dev.l10n.org.al/api-examples/php/report/statistics.php</a>
+</p>
 </div>
 
 </div>
@@ -189,7 +177,7 @@ Statistics about top contributors.
 language of translations
 </dd>
 <dt>period</dt><dd>
-period of report (last day|week|month|year)
+period of report (last <code>day | week | month | year</code>)
 </dd>
 <dt>size</dt><dd>
 number of results (top contributers), between 5 and 20
@@ -204,16 +192,18 @@ number of results (top contributers), between 5 and 20
 language of translations
 </dd>
 <dt>period</dt><dd>
-period of report (last day|week|month|year)
+period of report (last <code>day | week | month | year</code>)
 </dd>
 <dt>size</dt><dd>
 number of results (top contributers), between 5 and 20
 
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/report/topcontrib.php">https://dev.l10n.org.al/api-examples/php/report/topcontrib.php</a>
+</p>
 </div>
 </div>
 
@@ -249,11 +239,14 @@ Code of the language (required for translated and untranslated)
 (optional) Restricts the pool of selection to the
 project(s) of the last reviewed sguid.
 
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/sguid.php">https://dev.l10n.org.al/api-examples/php/translations/sguid.php</a>
+</p>
+
 </div>
 
 </div>
@@ -294,6 +287,9 @@ The language of translations, like fr, de, etc.
 
 </dd>
 </dl>
+
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/get.php">https://dev.l10n.org.al/api-examples/php/translations/get.php</a>
+</p>
 </dd>
 <dt>GET translations/$lng/$sguid</dt><dd>
 Returns the details of a string
@@ -310,6 +306,7 @@ Example:
   'https://dev.l10n.org.al/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
 curl -k -H 'Accept: application/json' https://dev.l10n.org.al/translations/sq/next
 </pre>
+
 
 
 
@@ -349,9 +346,12 @@ The new translation as a string. If the string has plural
 version(s) as well, they are concatenated with NULL bytes ("\0")
 between them.
 </p>
-
 </dd>
 </dl>
+
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/add.php">https://dev.l10n.org.al/api-examples/php/translations/add.php</a>
+</p>
+
 </dd>
 </dl>
 </div>
@@ -373,11 +373,14 @@ Add a vote for the given translation.
 <dt>tguid</dt><dd>
 ID of the translation
 
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/vote.php">https://dev.l10n.org.al/api-examples/php/translations/vote.php</a>
+</p>
+
 </div>
 
 </div>
@@ -397,11 +400,14 @@ Delete a translation
 <dt>tguid</dt><dd>
 ID of the translation
 
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/add.php">https://dev.l10n.org.al/api-examples/php/translations/add.php</a>
+</p>
+
 </div>
 
 </div>
@@ -421,11 +427,14 @@ Delete a vote from the given translation.
 <dt>tguid</dt><dd>
 ID of the translation
 
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/vote.php">https://dev.l10n.org.al/api-examples/php/translations/vote.php</a>
+</p>
+
 </div>
 
 </div>
@@ -548,6 +557,9 @@ Takes the current date by default.
 
 </dd>
 </dl>
+
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/search.php">https://dev.l10n.org.al/api-examples/php/translations/search.php</a>
+</p>
 </dd>
 </dl>
 <dl>
@@ -601,11 +613,14 @@ The action to be done: <code>add | vote | del | del_vote</code>
 <p>
 Associative array of the needed parameters for this action.
 </p>
+</dd>
+</dl>
+</dd>
+</dl>
 
-</dd>
-</dl>
-</dd>
-</dl>
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/translations/submit.php">https://dev.l10n.org.al/api-examples/php/translations/submit.php</a>
+</p>
+
 </div>
 </div>
 
@@ -646,6 +661,9 @@ replaced by <code>%</code> (for LIKE matches).
 <p>
 If <b>project</b> is <code>-</code> then only a list of 'origin' is outputed,
 otherwise a list of 'origin/project'.
+</p>
+<p>
+Example: <a href="https://dev.l10n.org.al/api-examples/php/project/list.php">https://dev.l10n.org.al/api-examples/php/project/list.php</a>
 </p>
 <p>
 Examples:
@@ -754,9 +772,10 @@ is <code>preferred_by_my_friends</code>.
 </p>
 </dd>
 </dl>
+
+<p>Example: <a href="https://dev.l10n.org.al/api-examples/php/project/export.php">https://dev.l10n.org.al/api-examples/php/project/export.php</a>
+</p>
 </dd>
-</dl>
-<dl>
 <dt>GET/POST translations/project/export</dt><dd>
 Return a PO file as
 plain-text. Does not allow concurrent exports because they may
@@ -803,15 +822,15 @@ requires an additional argument (preferred_voters) to specify
 the user (or a list of users) whose translations are
 preferred.
 </p></dd>
-</dl>
-<dl>
 <dt>preferred_voters</dt><dd>
 
 <p>
 Comma separated list of email addresses of preferred voters.
 </p>
-<p>
-Examples:
+</dd>
+</dl>
+
+<p>Examples:
 </p>
 
 
@@ -827,8 +846,6 @@ curl -k https://dev.l10n.org.al/translations/project/export \
 
 
 
-</dd>
-</dl>
 </dd>
 </dl>
 </div>
@@ -872,9 +889,18 @@ returns the latest most-voted suggestions since the last snapshot.
 If the parameter 'nr' is missing, it returns a list of the saved
 diffs instead.
 </p>
-
 </dd>
 </dl>
+</div>
+
+</div>
+
+<div id="outline-container-3.5" class="outline-3">
+<h3 id="sec-3.5">import </h3>
+<div class="outline-text-3" id="text-3.5">
+
+
+
 </div>
 </div>
 
@@ -913,6 +939,7 @@ curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice/sw'
 
 
 
+
 </dd>
 </dl>
 </div>
@@ -944,6 +971,7 @@ Language of translations.
 curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice'
 curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice/sw'
 </pre>
+
 
 
 
@@ -1081,7 +1109,7 @@ Id of the string.
 <p class="author"> Author: Dashamir Hoxha
 <a href="mailto:dashohoxha@gmail.com">&lt;dashohoxha@gmail.com&gt;</a>
 </p>
-<p class="date"> Date: 2014-03-24 14:00:20 CET</p>
+<p class="date"> Date: 2014-03-24 17:08:09 CET</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>

@@ -5,7 +5,7 @@
 #+LANGUAGE:  en
 #+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
 #+OPTIONS:   TeX:nil LaTeX:nil skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
+##+INFOJS_OPT: view:overview toc:t ltoc:t mouse:#aadddd buttons:0 path:org-info.js
 #+STYLE: <link rel="stylesheet" type="text/css" href="css/org.css" />
 
 * report
@@ -21,6 +21,7 @@
    + POST public/btr/report/statistics ::
      - lng: :: language of translations
 
+   Example: [[https://dev.l10n.org.al/api-examples/php/report/statistics.php]]
 
 ** topcontrib
 
@@ -28,14 +29,15 @@
 
    + GET public/btr/report/topcontrib ::
      - lng :: language of translations
-     - period :: period of report (last day|week|month|year)
+     - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 20
 
    + POST public/btr/report/topcontrib ::
      - lng :: language of translations
-     - period :: period of report (last day|week|month|year)
+     - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 20
 
+   Example: [[https://dev.l10n.org.al/api-examples/php/report/topcontrib.php]]
 
 * translations
 
@@ -48,6 +50,8 @@
      - lng :: Code of the language (required for translated and untranslated)
      - last_sguid :: (optional) Restricts the pool of selection to the
                      project(s) of the last reviewed sguid.
+
+   Example: [[https://dev.l10n.org.al/api-examples/php/translations/sguid.php]]
 
 
 ** get
@@ -66,6 +70,8 @@
                 =next | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
+     Example: [[https://dev.l10n.org.al/api-examples/php/translations/get.php]]
+
    + GET translations/$lng/$sguid :: Returns the details of a string
      and its translations.  If the request header =Accept:
      application/json= is set, then the output will be in JSON
@@ -78,6 +84,7 @@
        'https://dev.l10n.org.al/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
      curl -k -H 'Accept: application/json' https://dev.l10n.org.al/translations/sq/next
      #+END_EXAMPLE
+
 
 ** add
 
@@ -93,6 +100,8 @@
 	 version(s) as well, they are concatenated with NULL bytes ("\0")
 	 between them.
 
+     Example: [[https://dev.l10n.org.al/api-examples/php/translations/add.php]]
+
 
 ** vote
 
@@ -100,6 +109,8 @@
 
    + POST btr/translations/vote ::
      - tguid :: ID of the translation
+
+   Example: [[https://dev.l10n.org.al/api-examples/php/translations/vote.php]]
 
 
 ** del
@@ -109,6 +120,8 @@
    + POST btr/translations/del ::
      - tguid :: ID of the translation
 
+   Example: [[https://dev.l10n.org.al/api-examples/php/translations/add.php]]
+
 
 ** del_vote
 
@@ -116,6 +129,8 @@
 
    + POST btr/translations/del_vote ::
      - tguid :: ID of the translation
+
+   Example: [[https://dev.l10n.org.al/api-examples/php/translations/vote.php]]
 
 
 ** search
@@ -169,6 +184,8 @@
      - to_date :: (YYYY-MM-DD)
          Takes the current date by default.
 
+     Example: [[https://dev.l10n.org.al/api-examples/php/translations/search.php]]
+
   + GET translations/search :: Search strings and translations using
     various filters.  If the request header =Accept: application/json=
     is set, then the output will be in JSON (otherwise it will be an
@@ -194,6 +211,8 @@
 	 - params ::
 	     Associative array of the needed parameters for this action.
 
+   Example: [[https://dev.l10n.org.al/api-examples/php/translations/submit.php]]
+
 
 * project
 
@@ -210,6 +229,8 @@
 
      If *project* is =-= then only a list of 'origin' is outputed,
      otherwise a list of 'origin/project'.
+
+     Example: [[https://dev.l10n.org.al/api-examples/php/project/list.php]]
 
      Examples:
      #+BEGIN_EXAMPLE
@@ -270,45 +291,47 @@
          Comma separated list of usernames. Used only when /export_mode/
          is =preferred_by_my_friends=.
 
-  + GET/POST translations/project/export :: Return a PO file as
-    plain-text. Does not allow concurrent exports because they may
-    affect the performance of the server.  Parameters are received
-    from the request (either GET or POST). They are:
-    - origin ::
-	Origin of the project (ubuntu, GNOME, KDE, etc.)
-    - project ::
-	The name of the project to be exported.
-    - tplname ::
-	The name of the PO template.
-    - lng ::
-	Translation to be exported (de, fr, sq, en_GB, etc.)
-    - export_mode ::
-	Mode of export: =most_voted | preferred | original=
+     Example: [[https://dev.l10n.org.al/api-examples/php/project/export.php]]
 
-	Default is =most_voted= which exports the most voted
-	translations and suggestions.
+   + GET/POST translations/project/export :: Return a PO file as
+     plain-text. Does not allow concurrent exports because they may
+     affect the performance of the server.  Parameters are received
+     from the request (either GET or POST). They are:
+     - origin ::
+	 Origin of the project (ubuntu, GNOME, KDE, etc.)
+     - project ::
+	 The name of the project to be exported.
+     - tplname ::
+	 The name of the PO template.
+     - lng ::
+	 Translation to be exported (de, fr, sq, en_GB, etc.)
+     - export_mode ::
+	 Mode of export: =most_voted | preferred | original=
 
-	The export mode =original= exports the translations of the
-	original file that was imported (useful for making diffs).
+	 Default is =most_voted= which exports the most voted
+	 translations and suggestions.
 
-	The export mode =preferred= gives priority to translations
-	that are voted by a certain user or a group of users. It
-	requires an additional argument (preferred_voters) to specify
-	the user (or a list of users) whose translations are
-	preferred.
-   - preferred_voters ::
-	Comma separated list of email addresses of preferred voters.
+	 The export mode =original= exports the translations of the
+	 original file that was imported (useful for making diffs).
 
-    Examples:
-    #+BEGIN_EXAMPLE
-    curl -k 'https://dev.l10n.org.al/translations/project/export?origin=test&project=kturtle&lng=sq' > test.po
-    curl -k https://dev.l10n.org.al/translations/project/export \
-         -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test.po
-    curl -k https://dev.l10n.org.al/translations/project/export \
-         -d origin=test -d project=kturtle -d lng=sq \
-         -d preferred_voters=email1@example.com,email2@example.com \
-         -d export_mode=preferred > test.po
-    #+END_EXAMPLE
+	 The export mode =preferred= gives priority to translations
+	 that are voted by a certain user or a group of users. It
+	 requires an additional argument (preferred_voters) to specify
+	 the user (or a list of users) whose translations are
+	 preferred.
+     - preferred_voters ::
+	 Comma separated list of email addresses of preferred voters.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k 'https://dev.l10n.org.al/translations/project/export?origin=test&project=kturtle&lng=sq' > test.po
+     curl -k https://dev.l10n.org.al/translations/project/export \
+	  -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test.po
+     curl -k https://dev.l10n.org.al/translations/project/export \
+	  -d origin=test -d project=kturtle -d lng=sq \
+	  -d preferred_voters=email1@example.com,email2@example.com \
+	  -d export_mode=preferred > test.po
+     #+END_EXAMPLE
 
 ** export_tgz
 
@@ -329,6 +352,8 @@
      If the parameter 'nr' is missing, it returns a list of the saved
      diffs instead.
 
+** import
+
 
 * misc
 
@@ -346,6 +371,7 @@
      curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice/sw'
      #+END_EXAMPLE
 
+
 ** twitter
 
    + GET translations/twitter/$lng :: Return a random string and its
@@ -359,6 +385,7 @@
      curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice'
      curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice/sw'
      #+END_EXAMPLE
+
 
 ** autocomplete
 
