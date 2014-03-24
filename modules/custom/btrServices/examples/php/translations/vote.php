@@ -1,7 +1,8 @@
 <?php
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/get_access_token.php');
-include_once(dirname(__FILE__) . '/http_request.php');
+$path = dirname(dirname(__FILE__));
+include_once($path . '/config.php');
+include_once($path . '/http_request.php');
+include_once($path . '/get_access_token.php');
 
 // Get a random translated string.
 $url = $base_url . '/public/btr/translations/translated?lng=sq';

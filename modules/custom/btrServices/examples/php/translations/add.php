@@ -1,7 +1,8 @@
 <?php
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/get_access_token.php');
-include_once(dirname(__FILE__) . '/http_request.php');
+$path = dirname(dirname(__FILE__));
+include_once($path . '/config.php');
+include_once($path . '/http_request.php');
+include_once($path . '/get_access_token.php');
 
 $sguid = '2a12b39f41bbd1ac78fdf456c25a480d2060c06b';
 

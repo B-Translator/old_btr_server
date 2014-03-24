@@ -1,6 +1,7 @@
 <?php
-include_once(dirname(__FILE__) . '/config.php');
-include_once(dirname(__FILE__) . '/http_request.php');
+$path = dirname(dirname(__FILE__));
+include_once($path . '/config.php');
+include_once($path . '/http_request.php');
 
 // GET public/btr/report/statistics
 $url = $base_url . '/public/btr/report/statistics?lng=sq';
