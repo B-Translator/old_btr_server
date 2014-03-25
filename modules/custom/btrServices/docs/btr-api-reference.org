@@ -259,6 +259,22 @@
      curl -k 'https://l10n.org.al/translations/project/list'
      #+END_EXAMPLE
 
+
+** templates
+
+   + GET translations/project/templates/$origin/$project[/$format] ::
+     Return a list of the templates (names of POT files) for a
+     project.  Many projects have just one template, however big
+     projects are composed of many templates. The third parameter can
+     be JSON or TEXT (default).
+     Example:
+     #+BEGIN_EXAMPLE
+     curl -k https://dev.l10n.org.al/translations/project/templates/test/kturtle
+     curl -k https://dev.l10n.org.al/translations/project/templates/test/kturtle/json
+     curl -k https://dev.l10n.org.al/translations/project/templates/KDE/kdeedu
+     #+END_EXAMPLE
+
+
 ** export
 
    + POST btr/project/export :: Submit a request for exporting a

@@ -26,12 +26,21 @@ function btrCore_menu() {
     'file'             => 'btrCore.admin.inc',
   );
 
-  // Return a plain-text list of all the imported projects,
+  // Return a list of the imported projects,
   // filtered by the given origin/project.
   $items['translations/project/list'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project List',
     'page callback'   => 'btrCore_project_list',
+    'file'            => 'includes/project_callback.inc',
+    'access callback' => TRUE,
+  );
+
+  // Return a list of the templates (names of POT files) for a project.
+  $items['translations/project/templates'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project Templates',
+    'page callback'   => 'btrCore_project_templates',
     'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );

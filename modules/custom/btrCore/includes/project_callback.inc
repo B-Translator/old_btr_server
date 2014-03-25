@@ -38,6 +38,44 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
 }
 
 /**
+ * Callback function for the menu translations/project/templates.
+ *
+ * Return a list of the templates (names of POT files) for a project.
+ * Many projects have just one template, however big projects are
+ * composed of many templates. The third parameter can be JSON or TEXT
+ * (default).
+ *
+ * Examples:
+ *   curl -k https://dev.l10n.org.al/translations/project/templates/test/kturtle
+ *   curl -k https://dev.l10n.org.al/translations/project/templates/test/kturtle/json
+ *   curl -k https://dev.l10n.org.al/translations/project/templates/KDE/kdeedu
+ */
+function btrCore_project_templates($origin, $project, $format =NULL) {
+  $origin = check_plain($origin);
+  $project = check_plain($project);
+  $format = check_plain($format);
+
+  $query = "SELECT t.tplname FROM {btr_projects} p
+      LEFT JOIN {btr_templates} t ON (t.pguid = p.pguid)
+      WHERE p.origin = :origin and p.project = :project";
+  $params = array(':origin' => $origin, ':project' => $project);
+  $result = btr_query($query, $params)->fetchCol();
+
+  // Output the result.
+  if (strtoupper($format) == 'JSON') {
+    drupal_json_output($result);
+  }
+  elseif (strtoupper($format) == 'TXT') {
+    print "<xmp>" . implode("\n", $result) . "</xmp>";
+  }
+  else {  //TEXT
+    print implode("\n", $result);
+  }
+
+  drupal_exit();
+}
+
+/**
  * Callback function for the menu 'translations/project/export'
  *
  * Return a PO file as plain-text. Does not allow concurrent exports
