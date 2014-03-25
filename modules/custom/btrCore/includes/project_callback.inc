@@ -243,11 +243,19 @@ function btrCore_project_export_tgz() {
 }
 
 /**
- * Return the diff/ediff of the PO files for a given origin/project/lng/nr.
- * It gets the parameters: origin/project/lng[/nr[/ediff]].
- * If the parameter 'nr' is '-', it returns the latest most-voted suggestions
- * since the last snapshot.
- * If the parameter 'nr' is missing, it returns a list of the saved diffs instead.
+ * Callback function for the menu 'translations/project/diff'
+ *
+ * Return the diff/ediff of the PO files for a given
+ * origin/project/lng/nr.  It gets the parameters:
+ * origin/project/lng[/nr[/ediff]].  If the parameter 'nr' is missing,
+ * it returns a list of the saved diffs instead.
+ *
+ * Examples:
+ *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq
+ *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2 > 2.diff
+ *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
+ *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4 > 4.diff
+ *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
  */
 function btrCore_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
   $origin = check_plain($origin);
@@ -256,26 +264,17 @@ function btrCore_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL)
   $nr = check_plain($nr);
   $format = check_plain($format);
 
-  $fmt = ($format == 'ediff' ? 'ediff' : 'diff');
-
-  set_time_limit(0);
-
   $path = drupal_get_path('module', 'btrCore') . '/data/export';
   if (empty($nr)) {
     $output = shell_exec("$path/db_diff.php list $origin $project $lng");
   }
-  elseif ($nr == '-') {
-    shell_exec("$path/export/make_diff.sh $origin $project $lng");
-    $fname = "$path/export/$origin-$project-$lng";
-    $output = file_get_contents($fname . ".$fmt");
-    shell_exec("rm $fname.tgz $fname.diff $fname.ediff");
-  }
   else {
+    $fmt = ($format == 'ediff' ? 'ediff' : 'diff');
     $output = shell_exec("$path/db_diff.php get $origin $project $lng $nr $fmt");
   }
   print $output;
 
-  exit();
+  drupal_exit();
 }
 
 

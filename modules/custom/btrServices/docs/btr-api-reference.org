@@ -395,11 +395,20 @@
    + GET translations/project/diff/$origin/$project/$lng[/$nr[/$ediff]] ::
      Return as plain-text the diff of the PO file for a given
      origin/project/lng, which contains the latest most-voted
-     suggestions since the last snapshot.  It gets the parameters
-     origin/project/lng[/nr[/ediff]].  If the parameter 'nr' is '-', it
-     returns the latest most-voted suggestions since the last snapshot.
-     If the parameter 'nr' is missing, it returns a list of the saved
-     diffs instead.
+     suggestions since the last snapshot. If the parameter *$nr* is
+     missing, it returns a list of the saved diffs instead.
+
+     For more details about diffs see: [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs][README.org#snapshots-and-diffs]]
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq
+     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2 > 2.diff
+     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
+     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4 > 4.diff
+     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
+     #+END_EXAMPLE
+
 
 ** import
 
