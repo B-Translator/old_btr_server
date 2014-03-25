@@ -63,20 +63,28 @@ do
     fi
 done
 
-### make the unified diff (diff -u) with the previous snapshot
-file_diff=$output_dir/$filename.diff
-test "$QUIET" = '' && echo "diff -rubB $snapshot_dir $export_dir > $file_diff"
-diff -rubB $snapshot_dir $export_dir > $file_diff
+### if directory $snapshot_dir is not empty
+if test "$(ls -A "$snapshot_dir" 2>/dev/null)"
+then
+    ### make the unified diff (diff -u) with the previous snapshot
+    file_diff=$output_dir/$filename.diff
+    test "$QUIET" = '' && echo "diff -rubB $snapshot_dir $export_dir > $file_diff"
+    diff -rubB $snapshot_dir $export_dir > $file_diff
 
-### make the embedded diff (poediff) with the previous snapshot
-pology=pology/bin/poediff
-file_ediff=$output_dir/$filename.ediff
-test "$QUIET" = '' && echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
-$pology -n $snapshot_dir $export_dir > $file_ediff
+    ### make the embedded diff (poediff) with the previous snapshot
+    pology=pology/bin/poediff
+    file_ediff=$output_dir/$filename.ediff
+    test "$QUIET" = '' && echo "$pology -n $snapshot_dir $export_dir > $file_ediff"
+    $pology -n $snapshot_dir $export_dir > $file_ediff
+fi
 
-### create a tarball with the latest export
-export_file=$output_dir/$filename.tgz
-tar -C $export_dir -cz --file=$export_file .
+### if directory $export_dir is not empty
+if test "$(ls -A "$export_dir" 2>/dev/null)"
+then
+    ### create a tarball with the latest export
+    export_file=$output_dir/$filename.tgz
+    tar -C $export_dir -cz --file=$export_file .
+fi
 
 ### clean up
 rm -rf $snapshot_dir

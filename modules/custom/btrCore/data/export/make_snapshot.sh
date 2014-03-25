@@ -41,6 +41,6 @@ then
 fi
 
 ### clean up
-rm $snapshot_file
-rm $file_diff
-rm $file_ediff
+rm -f $snapshot_file
+rm -f $file_diff
+rm -f $file_ediff
