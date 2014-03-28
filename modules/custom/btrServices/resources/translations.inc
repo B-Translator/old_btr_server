@@ -196,6 +196,25 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-vote'),
   );
 
+  // Import translations from PO files.
+  $translations['actions']['import'] = array(
+    'help' => 'Import translations from PO files.',
+    'file' => $file,
+    'callback' => '_btrServices_translations_import',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Assoc array of parameters.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    //'access arguments' => array('access content'),
+    'access arguments' => array('btranslator-import'),
+  );
+
   return $translations;
 }
 
@@ -605,3 +624,38 @@ function _btrServices_translations_submit($params) {
   );
 }
 
+/**
+ * Bulk import of strings and translations from PO files.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - tguid
+ *       ID of the translation
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btrServices_translations_import($params) {
+  $messages = array();
+
+  btr_log($params, '$params');
+  btr_log($_FILES, '$_FILES');
+
+  $lng = $params['lng'];
+
+  $filename = '/tmp/' . sha1_file($_FILES['file']['tmp_name']) . '.po';
+  if (!move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
+    $messages[] = array(t('Failed to move uploaded file.'), 'error');
+  }
+  else {
+    btr_import_translations($filename, $lng);
+  }
+
+  return array(
+    'messages' => $messages
+  );
+}
