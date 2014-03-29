@@ -1,167 +1,140 @@
 <?php
 /**
  * @file
- * Import strings and translations from POT/PO files of projects.
+ * Import translations from PO files.
  */
 
 /**
- * Menu callback: translations/addterm
- * Add a new term on the vocabulary.
+ * Menu callback for 'translations/import'.
+ * Import translations from PO files.
  */
-function btrClient_addterm() {
-  $output[] = drupal_get_form('btrClient_addterm_form');
-  if (btr_user_access('btranslator-admin')) {
-    $output[] = drupal_get_form('btrClient_delterm_form');
-  }
-  return $output;
+function btrClient_import() {
+  return drupal_get_form('btrClient_import_form');
 }
 
 /**
- * Form: addterm
+ * Import form.
  */
-function btrClient_addterm_form() {
+function btrClient_import_form($form, &$form_state) {
   $form = array(
     '#prefix' => '<div class="btr-ui-filter clear-block">',
     '#suffix' => '</div>',
   );
 
-  $form['addterm'] = array(
+  $form['import'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Add a New Term'),
-    '#description' => t('Add a new interesting term on the vocabulary.'),
+    '#title' => t('Import PO files'),
+    '#description' => t('
+<p>Importing translations from PO files is like a bulk translation and
+voting service. For any translation in the PO files, it will be added
+as a suggestion if such a translation does not exist, or it will just
+be voted if such a translation already exists. In case that the
+translation already exists but its author is not known, then you (the
+user who makes the import) will be recorded as the author of the
+translation.</p>
+
+<p>This functionality can be useful if you prefer to work off-line
+with PO files. You can export the PO files of a project, work on them
+with desktop tools (like Lokalize) to translate or correct exported
+translations, and then import back to B-Translator the
+translated/corrected PO files.</p>
+'),
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   );
 
-  $form['addterm']['newterm'] = array(
-    '#type' => 'textfield',
-    '#title' => t('New Term'),
-    '#required' => TRUE,
-    //'#description' => t('The origin of the project.'),
+  $form['import']['translation_file'] = array(
+    '#type' => 'file',
+    '#description' => t('Upload a PO file. If you have many files, upload them as an archive (tar, tgz, bz2, 7z, zip).'),
   );
 
-  $form['addterm']['buttons'] = array(
-    //'#prefix' => '<div class="export-submit">',
+  $form['buttons'] = array(
+    //'#prefix' => '<div class="import-submit">',
     //'#suffix' => '</div>',
   );
-  $form['addterm']['buttons']['submit'] = array(
-    '#value' => t('Add'),
+  $form['buttons']['submit'] = array(
+    '#value' => t('Upload'),
     '#type' => 'submit',
   );
 
   return $form;
 }
 
-/**
- * Submission handler for addterm form.
- */
-function btrClient_addterm_form_submit($form, &$form_state) {
-  //dpm($form_state['values']);  //debug
-  $string = check_plain(trim($form_state['values']['newterm']));
+function btrClient_import_form_validate($form, &$form_state) {
+  $file_name = $_FILES['files']['name']['translation_file'];
+  $file_type = $_FILES['files']['type']['translation_file'];
+  $file_tmp_name = $_FILES['files']['tmp_name']['translation_file'];
+  $file_error = $_FILES['files']['error']['translation_file'];
+  $file_size = $_FILES['files']['size']['translation_file'];
 
-  $sguid = btr_add_term($string);
-  if (empty($sguid)) {
-    drupal_set_message(t('This term already exists.'));
+  $extensions = 'po tar gz tgz bz2 xz 7z zip';
+  $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
+  if (!preg_match($regex, $file_name)) {
+    form_set_error('file',
+      t('Only files with the following extensions are allowed: %files-allowed.',
+        array('%files-allowed' => $extensions))
+    );
     return;
   }
 
-  // notify translators about the new term
-  btrClient_new_term_notification($string, $sguid);
-
-  // redirect to translating the term
-  $lng = variable_get('btrClient_translation_lng', 'fr');
-  drupal_goto("translations/$lng/$sguid");
-}
-
-/**
- * Notify translators about the new term.
- */
-function btrClient_new_term_notification($string, $sguid) {
-
-  // Get all the users with role 'translator'.
-  $query = "SELECT ur.uid FROM users_roles ur
-            RIGHT JOIN role r ON (ur.rid = r.rid)
-            WHERE r.name = 'translator' ";
-  $uids = db_query($query)->fetchCol();
-  $translators = user_load_multiple($uids);
-
-  // Notify the translators about the new term.
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($translators as $translator) {
-    $notification_params = array(
-      'type' => 'notify-translator-on-new-term',
-      'uid' => $translator->uid,
-      'username' => $translator->name,
-      'recipient' => $translator->name . ' <' . $translator->mail . '>',
-      'sguid' => $sguid,
-      'string' => $string,
-      'author' => $GLOBALS['user']->name,
+  $known_file_types = array(
+    'text/x-gettext-translation',
+    'application/x-tar',
+    'application/x-compressed-tar',
+    'application/x-bzip',
+    'application/x-7z-compressed',
+    'application/zip',
+  );
+  if (!in_array($file_type, $known_file_types)) {
+    form_set_error('file',
+      t('File has unknown type: %file_type.',
+        array('%file_type' => $file_type))
     );
-    $queue->createItem((object)$notification_params);
+    return;
   }
+
+  if ($file_error != 0) {
+    form_set_error('file',
+      t("Error %error happened during file upload.",
+        array('%error' => $file_error))
+    );
+    return;
+  }
+
+  /*
+  $file = file_save_upload('pofile', array(
+      'file_validate_extensions' => array('po tar gz tgz bz2 xz 7z zip'),
+  ));
+  if (!$file) {
+    form_set_error('file', t('No file was uploaded.'));
+    return;
+  }
+
+  if ($file = file_move($file, 'temporary://')) {
+    $form_state['values']['import']['file'] = $file;
+  }
+  else {
+    form_set_error('file', t('Failed to write the uploaded file the site\'s file folder.'));
+  }
+  */
 }
 
 
-/**
- * Form: delterm
- */
-function btrClient_delterm_form() {
-  $form = array(
-    '#prefix' => '<div class="btr-ui-filter clear-block">',
-    '#suffix' => '</div>',
+function btrClient_import_form_submit($form, &$form_state) {
+  $file_name = $_FILES['files']['name']['translation_file'];
+  $file_type = $_FILES['files']['type']['translation_file'];
+  $file_tmp_name = $_FILES['files']['tmp_name']['translation_file'];
+  $file_error = $_FILES['files']['error']['translation_file'];
+  $file_size = $_FILES['files']['size']['translation_file'];
+
+  /*
+  $file=$form_state['values']['import']['file'];
+  unset($form_state['values']['import']['file']);
+  //$file->status = FILE_STATUS_PERMANENT;
+  //file_save($file);
+  */
+  drupal_set_message(
+    t("The file '@filename' was uploaded successfully.",
+      array('@filename' => $file_name))
   );
-
-  $form['delterm'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Delete a Term'),
-    '#description' => t('Delete a term from the vocabulary.'),
-    '#collapsible' => FALSE,
-    '#collapsed' => FALSE,
-  );
-
-  $form['delterm']['sguid'] = array(
-    '#type' => 'textfield',
-    '#title' => t('String ID'),
-    '#required' => TRUE,
-    //'#description' => t('The origin of the project.'),
-  );
-
-  $form['delterm']['buttons'] = array(
-    //'#prefix' => '<div class="export-submit">',
-    //'#suffix' => '</div>',
-  );
-  $form['delterm']['buttons']['submit'] = array(
-    '#value' => t('Delete'),
-    '#type' => 'submit',
-  );
-
-  return $form;
-}
-
-/**
- * Submission handler for delterm form.
- */
-function btrClient_delterm_form_submit($form, &$form_state) {
-
-  $sguid = check_plain(trim($form_state['values']['sguid']));
-  btr_del_term($sguid);
-
-  // redirect to the list of terms
-  $lng = variable_get('btrClient_translation_lng', 'fr');
-  drupal_goto("translations/search",
-    array('query' => array(
-        'lng' => $lng,
-        'project' => 'vocabulary',
-        'limit' => 10,
-      )));
-}
-
-
-/**
- * Menu callback: translations/import
- * Import strings and translations from POT/PO files of projects.
- */
-function btrClient_import() {
-  return 'Not implemented yet.';
 }
