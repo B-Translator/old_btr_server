@@ -60,15 +60,31 @@ translated/corrected PO files.</p>
   return $form;
 }
 
+/**
+ * Implements hook form_validate() for btrClient_import_form.
+ */
 function btrClient_import_form_validate($form, &$form_state) {
-  $file_name = $_FILES['files']['name']['translation_file'];
-  $file_type = $_FILES['files']['type']['translation_file'];
+  // Check that a file is uploaded.
   $file_tmp_name = $_FILES['files']['tmp_name']['translation_file'];
-  $file_error = $_FILES['files']['error']['translation_file'];
-  $file_size = $_FILES['files']['size']['translation_file'];
+  if ($file_tmp_name == '') {
+    form_set_error('file', t("Please select a file."));
+    return;
+  }
 
+  // Check for any other upload errors.
+  $file_error = $_FILES['files']['error']['translation_file'];
+  if ($file_error != 0) {
+    form_set_error('file',
+      t("Error %error happened during file upload.",
+        array('%error' => $file_error))
+    );
+    return;
+  }
+
+  // Check the extension of the uploaded file.
   $extensions = 'po tar gz tgz bz2 xz 7z zip';
   $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
+  $file_name = $_FILES['files']['name']['translation_file'];
   if (!preg_match($regex, $file_name)) {
     form_set_error('file',
       t('Only files with the following extensions are allowed: %files-allowed.',
@@ -77,6 +93,8 @@ function btrClient_import_form_validate($form, &$form_state) {
     return;
   }
 
+  // Check the type of the uploaded file.
+  $file_type = $_FILES['files']['type']['translation_file'];
   $known_file_types = array(
     'text/x-gettext-translation',
     'application/x-tar',
@@ -92,49 +110,75 @@ function btrClient_import_form_validate($form, &$form_state) {
     );
     return;
   }
-
-  if ($file_error != 0) {
-    form_set_error('file',
-      t("Error %error happened during file upload.",
-        array('%error' => $file_error))
-    );
-    return;
-  }
-
-  /*
-  $file = file_save_upload('pofile', array(
-      'file_validate_extensions' => array('po tar gz tgz bz2 xz 7z zip'),
-  ));
-  if (!$file) {
-    form_set_error('file', t('No file was uploaded.'));
-    return;
-  }
-
-  if ($file = file_move($file, 'temporary://')) {
-    $form_state['values']['import']['file'] = $file;
-  }
-  else {
-    form_set_error('file', t('Failed to write the uploaded file the site\'s file folder.'));
-  }
-  */
 }
 
-
+/**
+ * Implements hook form_submit() for btrClient_import_form.
+ */
 function btrClient_import_form_submit($form, &$form_state) {
+  $messages = _btrClient_import_translations();
+  btrClient_display_messages($messages);
+}
+
+/**
+ * Make an http request for uploading the file
+ * to the service 'btr/translations/import'.
+ * This is done manually with curl because wsclient
+ * cannot handle it.
+ *
+ * TODO: Replace this function and wsclient by Guzzle
+ *       (requires PHP 5.4).
+ */
+function _btrClient_import_translations() {
+  global $btr;
+
+  // Get an access_token.
+  module_load_include('inc', 'oauth2_client', 'oauth2_client');
+  $oauth2_settings = $btr->settings['authentication']['oauth2'];
+  $oauth2_client = new OAuth2\Client($oauth2_settings);
+  try {
+    $access_token = $oauth2_client->getAccessToken();
+  }
+  catch (Exception $e) {
+    drupal_set_message($e->getMessage(), 'error');
+    return;
+  }
+
+  // Get the details of the uploaded file.
   $file_name = $_FILES['files']['name']['translation_file'];
-  $file_type = $_FILES['files']['type']['translation_file'];
   $file_tmp_name = $_FILES['files']['tmp_name']['translation_file'];
-  $file_error = $_FILES['files']['error']['translation_file'];
   $file_size = $_FILES['files']['size']['translation_file'];
 
-  /*
-  $file=$form_state['values']['import']['file'];
-  unset($form_state['values']['import']['file']);
-  //$file->status = FILE_STATUS_PERMANENT;
-  //file_save($file);
-  */
-  drupal_set_message(
-    t("The file '@filename' was uploaded successfully.",
-      array('@filename' => $file_name))
+  // Make an http request with curl.
+  $ch = curl_init($btr->url . 'translations/import');
+  curl_setopt_array($ch, array(
+      CURLOPT_POST => TRUE,
+      CURLOPT_POSTFIELDS => array(
+        'lng' => variable_get('btrClient_translation_lng', 'sq'),
+        'file' => "@$file_tmp_name;filename=$file_name",
+      ),
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: multipart/form-data',
+        'Authorization: Bearer ' . $access_token,
+        'Accept: application/json',
+      ),
+      CURLOPT_RETURNTRANSFER => TRUE,
+    )
+    + $btr->settings['curl options']
   );
+  $result = curl_exec($ch);
+
+  // Check for any errors and get the result.
+  if (curl_errno($ch)) {
+    $messages = array(
+      array(curl_error($ch), 'error'),
+    );
+  }
+  else {
+    $result = json_decode($result, TRUE);
+    $messages = $result['messages'];
+  }
+  curl_close($ch);
+
+  return $messages;
 }

@@ -625,12 +625,12 @@ function _btrServices_translations_submit($params) {
 }
 
 /**
- * Bulk import of strings and translations from PO files.
+ * Bulk import of translations from PO files.
  *
  * @param $params
  *   Associative array of the POST data, which contains:
- *   - tguid
- *       ID of the translation
+ *   - lng
+ *       Language of translations.
  *
  * @return
  *   Associative array containing:
@@ -640,19 +640,46 @@ function _btrServices_translations_submit($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_translations_import($params) {
-  $messages = array();
-
-  btr_log($params, '$params');
-  btr_log($_FILES, '$_FILES');
-
+  // Get and check the parameter 'lng'.
   $lng = $params['lng'];
+  $arr_langs = array_keys(btr_get_languages());
+  if (!in_array($lng, $arr_langs)) {
+    return services_error('Language missing or not supported.', 406);
+  }
 
-  $filename = '/tmp/' . sha1_file($_FILES['file']['tmp_name']) . '.po';
-  if (!move_uploaded_file($_FILES['file']['tmp_name'], $filename)) {
-    $messages[] = array(t('Failed to move uploaded file.'), 'error');
+  // Get the parameters.
+  if (!isset($_FILES['file'])) {
+    return services_error('No file uploaded.', 406);
+  }
+  $uploaded_file = $_FILES['file'];
+
+  // Check that a file is uploaded.
+  if (!$uploaded_file['tmp_name']) {
+    return services_error('File upload failed.', 406);
+  }
+
+  // Check for any other upload errors.
+  if ($uploaded_file['error'] != 0) {
+    return services_error('Error ' . $uploaded_file['error'] . 'happened during file upload.', 406);
+  }
+
+  // Check the extension of the uploaded file.
+  $extensions = 'po tar gz tgz bz2 xz 7z zip';
+  $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
+  if (!preg_match($regex, $uploaded_file['name'])) {
+    $msg = t('Only files with the following extensions are allowed: %files-allowed.',
+           array('%files-allowed' => $extensions));
+    return array('messages' => array($msg, 'error'));
+  }
+
+  // Import translations.
+  $filename = '/tmp/' . sha1_file($uploaded_file['tmp_name']) . '.po';
+  if (!move_uploaded_file($uploaded_file['tmp_name'], $filename)) {
+    $msg = array(t('Failed to move uploaded file.'), 'error');
+    $messages = array($msg);
   }
   else {
-    btr_import_translations($filename, $lng);
+    $messages = btr_import_translations($filename, $lng);
   }
 
   return array(

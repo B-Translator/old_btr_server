@@ -1,5 +1,32 @@
 <?php
-
+/**
+ * Importing translations from PO files.
+ *
+ * It is like a bulk translation and voting service. For any
+ * translation in the PO files, it will be added as a suggestion if
+ * such a translation does not exist, or it will just be voted if such
+ * a translation already exists. In case that the translation already
+ * exists but its author is not known, then you (the user who makes
+ * the import) will be recorded as the author of the translation.
+ *
+ * This can be useful for translators if they prefer to work off-line
+ * with PO files. They can export the PO files of a project, work on
+ * them with desktop tools (like Lokalize) to translate or correct
+ * exported translations, and then import back to B-Translator the
+ * translated/corrected PO files.
+ *
+ * @param $pofile
+ *   A PO file with translations, or an archive of PO files
+ *   (accepted extensions: .tar, .gz, .tgz, .bz2, .xz, .7z, .zip).
+ *
+ * @param $lng
+ *   Language of translations.
+ *
+ * @return
+ *   Array of notification messages; each notification message
+ *   is an array of a message and a type, where type can be one of
+ *   'status', 'warning', 'error'.
+ */
 function btr_import_translations($pofile, $lng) {
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
@@ -34,6 +61,8 @@ function btr_import_translations($pofile, $lng) {
     // Add the translation for this string.
     _btr_import_add_translation($sguid, $lng, $translation);
   }
+
+  return array();
 }
 
 /**
