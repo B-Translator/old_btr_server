@@ -669,20 +669,53 @@ function _btrServices_translations_import($params) {
   if (!preg_match($regex, $uploaded_file['name'])) {
     $msg = t('Only files with the following extensions are allowed: %files-allowed.',
            array('%files-allowed' => $extensions));
-    return array('messages' => array($msg, 'error'));
+    return array('messages' => array(array($msg, 'error')));
   }
 
-  // Import translations.
-  $filename = '/tmp/' . sha1_file($uploaded_file['tmp_name']) . '.po';
-  if (!move_uploaded_file($uploaded_file['tmp_name'], $filename)) {
+  // Move the uploaded file to 'private://' (/var/www/uploads/).
+  //$file_uri = 'private://' . sha1_file($uploaded_file['tmp_name']) . '.po';
+  $file_uri = 'private://' . $uploaded_file['name'];
+  if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
     $msg = array(t('Failed to move uploaded file.'), 'error');
-    $messages = array($msg);
-  }
-  else {
-    $messages = btr_import_translations($filename, $lng);
+    return array('messages' => array($msg));
   }
 
-  return array(
-    'messages' => $messages
+  // Save the file data to the DB.
+  $file = new stdClass();
+  $file->uid = $GLOBALS['user']->uid;
+  $file->status = FILE_STATUS_PERMANENT;
+  $file->filename = trim(drupal_basename($uploaded_file['name']), '.');
+  $file->uri = $file_uri;
+  $file->filemime = file_get_mimetype($file->filename);
+  $file->filesize = $uploaded_file['size'];
+  try {
+    $file = file_save($file);
+    $messages = array();
+  }
+  catch (Exception $e) {
+    $msg = array($e->getMessage(), 'error');
+    return array('messages' => array($msg));
+  }
+
+  // Schedule the import.
+  $queue_params = array(
+    'uid' => $GLOBALS['user']->uid,
+    'fid' => $file->fid,
+    'lng' => $lng,
   );
+  btr_queue('import_translations', array($queue_params));
+
+  // Schedule a notification to the admin.
+  // TODO: Send this notification to the project admin.
+  $notify_admin = variable_get('btr_import_notify_admin', TRUE);
+  if ($notify_admin) {
+    $queue_params['type'] = 'notify-admin-on-import-request';
+    $queue_params['recipient'] = user_load(1)->mail;
+    btr_queue_notifications(array($params));
+  }
+
+  // Return a notification message.
+  $msg = t("Import of the file '!filename' is scheduled. You will be notified by email when it is done.",
+         array('!filename' => $file->filename));
+  return array('messages' => array(array($msg, 'status')));
 }

@@ -19,6 +19,8 @@ mkdir -p /var/www/downloads/
 chown www-data: /var/www/downloads/
 mkdir -p /var/www/exports/
 chown www-data: /var/www/exports/
+mkdir -p /var/www/uploads/
+chown www-data: /var/www/uploads/
 
 ### start mysqld manually, if it is not running
 if test -z "$(ps ax | grep [m]ysqld)"
