@@ -240,7 +240,7 @@ function _btrCore_build_notification_email($params) {
       );
       break;
 
-    // Notify the user that the export is ready for download.
+    // Notify admin about an export request.
     case 'notify-admin-on-export-request':
       $subject = t("[!prefix] Export request: !origin/!project",
                  array(
@@ -254,6 +254,20 @@ function _btrCore_build_notification_email($params) {
             '!uid' => $params->uid,
             '!project' => $params->project,
             '!origin' => $params->origin,
+          )),
+      );
+      break;
+
+    // Notify admin about an import request.
+    case 'notify-admin-on-import-request':
+      $subject = t("[!prefix] Import request",
+                 array('!prefix' => $subject_prefix));
+      $body = array(
+        t("Import request by user !username (!uid): !filename.",
+          array(
+            '!username' => $params->username,
+            '!uid' => $params->uid,
+            '!filename' => $params->filename,
           )),
       );
       break;
@@ -280,6 +294,29 @@ function _btrCore_build_notification_email($params) {
             '!export_url_tgz' => $params->export_url_tgz,
             '!export_url_diff' => $params->export_url_diff,
             '!export_url_ediff' => $params->export_url_ediff,
+          )),
+      );
+      break;
+
+    // Notify the user that the import is done.
+    case 'notify-that-import-is-done':
+      $file =
+      $subject = t("[!prefix] Import of !filename",
+                 array(
+                   '!prefix' => $subject_prefix,
+                   '!filename' => $params->filename,
+                 ));
+      $body = array(
+        t("Greetings !username,
+
+           The import of '!filename', that you have requested, is done.
+           Check out the new translations here:
+           !search_url
+           ",
+          array(
+            '!username' => $params->username,
+            '!filename' => $params->filename,
+            '!search_url' => $params->search_url,
           )),
       );
       break;

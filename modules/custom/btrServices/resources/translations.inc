@@ -640,11 +640,25 @@ function _btrServices_translations_submit($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_translations_import($params) {
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('You do not have enough rights for submitting translations!');
+    return array('messages' => array(array($msg, 'error')));
+  }
+
   // Get and check the parameter 'lng'.
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());
   if (!in_array($lng, $arr_langs)) {
     return services_error('Language missing or not supported.', 406);
+  }
+
+  // Make sure that the current user can make
+  // translations for the given language.
+  $user = user_load($GLOBALS['user']->uid);
+  if ($lng != $user->translation_lng) {
+    $msg = t('You cannot submit translations for the language !lng', array('!lng' => $lng));
+    return array('messages' => array(array($msg, 'error')));
   }
 
   // Get the parameters.
@@ -673,7 +687,6 @@ function _btrServices_translations_import($params) {
   }
 
   // Move the uploaded file to 'private://' (/var/www/uploads/).
-  //$file_uri = 'private://' . sha1_file($uploaded_file['tmp_name']) . '.po';
   $file_uri = 'private://' . $uploaded_file['name'];
   if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
     $msg = array(t('Failed to move uploaded file.'), 'error');
@@ -711,6 +724,8 @@ function _btrServices_translations_import($params) {
   if ($notify_admin) {
     $queue_params['type'] = 'notify-admin-on-import-request';
     $queue_params['recipient'] = user_load(1)->mail;
+    $queue_params['username'] = $GLOBALS['user']->name;
+    $queue_params['filename'] = $file->filename;
     btr_queue_notifications(array($params));
   }
 

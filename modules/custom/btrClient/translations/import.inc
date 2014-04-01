@@ -100,7 +100,9 @@ function btrClient_import_form_validate($form, &$form_state) {
     'application/x-tar',
     'application/x-compressed-tar',
     'application/x-bzip',
+    'application/x-gzip',
     'application/x-7z-compressed',
+    'application/x-xz',
     'application/zip',
   );
   if (!in_array($file_type, $known_file_types)) {

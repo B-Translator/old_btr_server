@@ -22,25 +22,18 @@
  * @param $lng
  *   Language of translations.
  *
+ * @param $uid
+ *   ID of the user that has uploaded the file.
+ *
  * @return
  *   Array of notification messages; each notification message
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function btr_import_translations($pofile, $lng) {
-  // Check access permissions.
-  if (!user_access('btranslator-suggest')) {
-    $msg = t('You do not have enough rights for making suggestions!');
-    return array(array($msg, 'error'));
-  }
-
-  // Make sure that the current user can make
-  // translations for the given language.
-  $user = user_load($GLOBALS['user']->uid);
-  if ($lng != $user->translation_lng) {
-    $msg = t('You cannot give translations for the language !lng', array('!lng' => $lng));
-    return array(array($msg, 'error'));
-  }
+function btr_import_translations($pofile, $lng, $uid) {
+  // Get the mail of the user.
+  $account = user_load($uid);
+  $umail = $account->init;
 
   // Parse the given PO file.
   $data_path = drupal_get_path('module', 'btrCore') . '/data';
@@ -51,7 +44,7 @@ function btr_import_translations($pofile, $lng) {
   // Process each gettext entry.
   foreach ($entries as $entry) {
     // Get the string sguid.
-    $sguid = _btr_import_get_sguid($entry);
+    $sguid = _btr_import_get_sguid($entry, $uid);
     if ($sguid === NULL)  continue;
 
     // Get the translation.
@@ -59,10 +52,8 @@ function btr_import_translations($pofile, $lng) {
     if (trim($translation) === '')  continue;
 
     // Add the translation for this string.
-    _btr_import_add_translation($sguid, $lng, $translation);
+    _btr_import_add_translation($sguid, $lng, $translation, $umail);
   }
-
-  return array();
 }
 
 /**
@@ -73,7 +64,7 @@ function btr_import_translations($pofile, $lng) {
  * it. The same for some other entries like 'translator-credits' etc.
  * In such cases return NULL.
  */
-function _btr_import_get_sguid($entry) {
+function _btr_import_get_sguid($entry, $uid) {
   // Get the string.
   $string = $entry['msgid'];
   if (isset($entry['msgid_plural'])) {
@@ -102,7 +93,7 @@ function _btr_import_get_sguid($entry) {
       ':string' => $string,
       ':context' => $context,
       ':sguid' => $sguid,
-      ':uid' => $GLOBALS['user']->uid,
+      ':uid' => $uid,
       ':time' => REQUEST_TIME,
       ':count' => 1,
     );
@@ -117,7 +108,7 @@ function _btr_import_get_sguid($entry) {
  * If it exists, just add a vote for the translation and set the
  * author, if the translation has no author.
  */
-function _btr_import_add_translation($sguid, $lng, $translation) {
+function _btr_import_add_translation($sguid, $lng, $translation, $umail) {
   $tguid = sha1($translation . $lng . $sguid);
 
   // Check whether this translation exists.
@@ -138,7 +129,7 @@ function _btr_import_add_translation($sguid, $lng, $translation) {
                   SET umail = :umail
                   WHERE tguid = :tguid';
       $args = array(
-		    ':umail' => $GLOBALS['user']->init,
+        ':umail' => $umail,
         ':tguid' => $tguid,
       );
       btr_query($query, $args);

@@ -19,6 +19,10 @@ function btrCore_cron_queue_info() {
     'worker callback' => 'btrCore_export_project',
     'time' => 2000,
   );
+  $queues['import_translations'] = array(
+    'worker callback' => 'btrCore_import_translations',
+    'time' => 2000,
+  );
   $queues['delete_fake_users'] = array(
     'worker callback' => 'btrCore_delete_fake_user',
     'time' => 30,
@@ -210,4 +214,72 @@ function btrCore_export_project($export_params) {
 
   // This export is done, allow any other exports to run.
   lock_release('export_project');
+}
+
+/**
+ * The callback function called from cron_queue import_translations.
+ */
+function btrCore_import_translations($params) {
+
+  // Make sure that imports do not run in parallel,
+  // so that the server is not overloaded.
+  if (!lock_acquire('import_translations', 3000)) {
+    // If we cannot get the lock, just stop the execution, do not return,
+    // because after the callback function returns, the cron_queue will
+    // remove the item from the queue, no matter whether it is processed or not.
+    exit();
+  }
+
+  // Allow the import script to run until completion.
+  set_time_limit(0);
+
+  // Get the parameters.
+  $lng = $params->lng;
+  $account = user_load($params->uid);
+  $file = file_load($params->fid);
+
+  // Create a temporary directory.
+  $tmpdir = '/tmp/' . sha1_file($file->uri);
+  mkdir($tmpdir, 0700);
+
+  // Copy the file there and extract it (if it is an archive).
+  file_unmanaged_copy($file->uri, $tmpdir);
+  exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
+
+  // Get a list of all PO files on the temp dir.
+  $files = file_scan_directory($tmpdir, '/.*\.po$/');
+
+  // Import the PO files.
+  foreach ($files as $uri => $f) {
+    btr_import_translations($uri, $lng, $account->uid);
+  }
+
+  // Notify the user that the export is done.
+  $queue = DrupalQueue::get('notifications');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  $params = array(
+    'type' => 'notify-that-import-is-done',
+    'uid' => $account->uid,
+    'username' => $account->name,
+    'recipient' => $account->name .' <' . $account->mail . '>',
+    'filename' => $file->filename,
+    'search_url' => url('translations/search', array(
+                    'absolute' => TRUE,
+                    'https' => TRUE,
+                    'query' => array(
+                      'lng' => $lng,
+                      'translated_by' => $account->name,
+                      'voted_by' => $account->name,
+                      'from_date' => date('Y-m-d', REQUEST_TIME),
+                    )
+                  )),
+  );
+  $queue->createItem((object)$params);
+
+  // Cleanup, remove the temp dir and delete the file.
+  exec("rm -rf $tmpdir/");
+  file_delete($file, TRUE);
+
+  // This import is done, allow any other imports to run.
+  lock_release('import_translations');
 }
