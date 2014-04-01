@@ -11,21 +11,37 @@ $access_token = get_access_token($auth);
 $url = $base_url . '/btr/translations/import';
 
 $ch = curl_init($url);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-    'lng' => 'sq',
-    'file' => '@'.dirname(__FILE__).'/pingus-sq.po',
-));
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    'Content-Type: multipart/form-data',
-    //'Content-type: application/x-www-form-urlencoded',
-    'Authorization: Bearer ' . $access_token,
-  ));
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$server_output = curl_exec($ch);
+curl_setopt_array($ch, array(
+    CURLOPT_POST => TRUE,
+    CURLOPT_POSTFIELDS => array(
+      'lng' => 'sq',
+      'file' => '@'.dirname(__FILE__).'/pingus-sq.po;filename=test-pingus-sq.po',
+    ),
+    CURLOPT_HTTPHEADER => array(
+      'Content-Type: multipart/form-data',
+      'Authorization: Bearer ' . $access_token,
+      'Accept: application/json',
+    ),
+    CURLOPT_RETURNTRANSFER => TRUE,
+    CURLOPT_SSL_VERIFYPEER => FALSE,
+    CURLOPT_SSL_VERIFYHOST => 0,
+  )
+);
+$result = curl_exec($ch);
+
+// Check for any errors and get the result.
+if (curl_errno($ch)) {
+  $messages = array(
+    array(curl_error($ch), 'error'),
+  );
+}
+else {
+  $result = json_decode($result, TRUE);
+  $messages = $result['messages'];
+}
 curl_close($ch);
 
 print "===> RESULT\n";
-print_r($server_output);
+print '<xmp>';
+print_r($result);
+print '</xmp>';
