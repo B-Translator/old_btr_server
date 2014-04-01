@@ -66,18 +66,10 @@ function btr_build_search_filter($params) {
   $filter['date_filter'] = in_array($date_filter, $date_filter_options) ? $date_filter : 'translations';
 
   //from_date
-  $from_date = isset($params['from_date']) ? trim($params['from_date']) : '';
-  list($year, $month, $day) = explode('-', $from_date, 3) + array('', '', '');
-  $filter['from_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
-    array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
-    array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+  $filter['from_date'] = isset($params['from_date']) ? trim($params['from_date']) : '';
 
   //to_date
-  $to_date = isset($params['to_date']) ? trim($params['to_date']) : '';
-  list($year, $month, $day) = explode('-', $to_date, 3) + array('', '', '');
-  $filter['to_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
-    array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
-    array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+  $filter['to_date'] = isset($params['to_date']) ? trim($params['to_date']) : '';
 
   return $filter;
 }
@@ -270,20 +262,10 @@ function _btr_filter_by_author($query, $lng, $only_mine, $translated_by, $voted_
  * by reference.
  *
  * $date_filter has one of the values ('strings', 'translations', 'votes')
- * $from_date and $to_date are associative arrays of the format
- * array('year' => int, 'month' => int, 'day' => int)
  */
 function _btr_filter_by_date($query, $date_filter, $from_date, $to_date) {
-
-  //convert $from_date and $to_date to the string format YYYY-MM-DD
-  $from_date_str = date('Y-m-d', mktime(1, 0, 0, $from_date['month'], $from_date['day'], $from_date['year']));
-  $to_date_str = date('Y-m-d', mktime(1, 0, 0, $to_date['month'], $to_date['day'], $to_date['year']));
-
-  //get the current date in the standard string format 'YYYY-MM-DD'
-  $today_str = date('Y-m-d');
-
-  //if both dates are equal to today, there is no condition to be added
-  if ($from_date_str == $today_str && $to_date_str == $today_str)  return;
+  // If both dates are empty, there is no condition to be added.
+  if ($from_date == '' and $to_date == '')  return;
 
   //if the date of translations or votes has to be checked,
   //then the corresponding tables must be joined
@@ -301,16 +283,16 @@ function _btr_filter_by_date($query, $date_filter, $from_date, $to_date) {
 
   //add to query the propper date condition;
   //if none of the dates are given, no condition is added
-  if ($from_date_str != $today_str and $to_date_str != $today_str) {
-    $query->condition($field, array($from_date_str, $to_date_str), 'BETWEEN');
+  if ($from_date != '' and $to_date != '') {
+    $query->condition($field, array($from_date, $to_date), 'BETWEEN');
     $query->orderBy($field, 'DESC');
   }
-  elseif ($from_date_str == $today_str and $to_date_str != $today_str) {
-    $query->condition($field, $to_date_str, '<=');
+  elseif ($from_date == '' and $to_date != '') {
+    $query->condition($field, $to_date, '<=');
     $query->orderBy($field, 'DESC');
   }
-  elseif ($from_date_str != $today_str and $to_date_str == $today_str) {
-    $query->condition($field, $from_date_str, '>=');
+  elseif ($from_date != '' and $to_date == '') {
+    $query->condition($field, $from_date, '>=');
     $query->orderBy($field, 'DESC');
   }
   else {

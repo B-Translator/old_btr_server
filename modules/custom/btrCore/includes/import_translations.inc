@@ -126,10 +126,11 @@ function _btr_import_add_translation($sguid, $lng, $translation, $umail) {
     // Update the author of the translations.
     if ($result->umail == 'admin@example.com') {
       $query = 'UPDATE {btr_translations}
-                  SET umail = :umail
+                  SET umail = :umail, time = :time
                   WHERE tguid = :tguid';
       $args = array(
         ':umail' => $umail,
+        ':time' => REQUEST_TIME,
         ':tguid' => $tguid,
       );
       btr_query($query, $args);

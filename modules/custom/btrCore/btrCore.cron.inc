@@ -270,7 +270,10 @@ function btrCore_import_translations($params) {
                       'lng' => $lng,
                       'translated_by' => $account->name,
                       'voted_by' => $account->name,
-                      'from_date' => date('Y-m-d', REQUEST_TIME),
+                      'date_filter' => 'votes',
+                      'from_date' => date('Y-m-d H:i:s', REQUEST_TIME - 1),
+                      'to_date' => date('Y-m-d H:i:s', REQUEST_TIME + 1),
+		      'limit' => 50,
                     )
                   )),
   );

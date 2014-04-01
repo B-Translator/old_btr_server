@@ -82,19 +82,21 @@ function btrClient_get_search_params() {
   //from_date
   if (isset($request['from_date'])) {
     $from_date = trim($request['from_date']);
-    list($year, $month, $day) = explode('-', $from_date, 3) + array('', '', '');
-    $params['from_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
-      array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
-      array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+    if ($from_date != '') {
+      $from_date = date('Y-m-d H:i:s', strtotime($from_date));
+      $from_date = str_replace(' 00:00:00', '', $from_date);
+    }
+    $params['from_date'] = $from_date;
   }
 
   //to_date
   if (isset($request['to_date'])) {
     $to_date = trim($request['to_date']);
-    list($year, $month, $day) = explode('-', $to_date, 3) + array('', '', '');
-    $params['to_date'] = checkdate((int)$month, (int)$day, (int)$year) ?
-      array('year' => (int)$year, 'month' => (int)$month, 'day' => (int)$day) :
-      array('year' => date('Y'), 'month' => date('n'), 'day' => date('j'));
+    if ($to_date != '') {
+      $to_date = date('Y-m-d H:i:s', strtotime($to_date));
+      $to_date = str_replace(' 00:00:00', '', $to_date);
+    }
+    $params['to_date'] = $to_date;
   }
 
   return $params;
@@ -164,16 +166,12 @@ function btrClient_get_query_values($form_values) {
     }
 
     //from_date
-    $arr_date = $form_values['from_date'];
-    $str_date = date('Y-m-d', mktime(1, 0, 0, $arr_date['month'], $arr_date['day'], $arr_date['year']));
-    if ($str_date != date('Y-m-d'))
-      $query['from_date'] = $str_date;
+    if (trim($form_values['from_date']) != '' )
+      $query['from_date'] = $form_values['from_date'];
 
     //to_date
-    $arr_date = $form_values['to_date'];
-    $str_date = date('Y-m-d', mktime(1, 0, 0, $arr_date['month'], $arr_date['day'], $arr_date['year']));
-    if ($str_date != date('Y-m-d'))
-      $query['to_date'] = $str_date;
+    if (trim($form_values['to_date']) != '' )
+      $query['to_date'] = $form_values['to_date'];
   }
 
   //limit
@@ -406,7 +404,6 @@ function _btrClient_filter_form_date(&$form, &$form_state) {
   $form['advanced_search']['date'] = array(
     '#type' => 'fieldset',
     '#title' => t('Date'),
-    //'#description' => t('Limit the search scope by date.'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -421,13 +418,13 @@ function _btrClient_filter_form_date(&$form, &$form_state) {
   );
 
   $form['advanced_search']['date']['from_date'] = array(
-    '#type' => 'date',
+    '#type' => 'textfield',
     '#title' => t('From Date'),
     '#default_value' => $form_state['values']['from_date'],
   );
 
   $form['advanced_search']['date']['to_date'] = array(
-    '#type' => 'date',
+    '#type' => 'textfield',
     '#title' => t('To Date'),
     '#default_value' => $form_state['values']['to_date'],
   );

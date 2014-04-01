@@ -56,10 +56,8 @@ $result = http_request($url, $options);
  *       - strings       Filter Strings By Date
  *       - translations  Filter Translations By Date (default)
  *       - votes         Filter Votes By Date
- *   - from_date (YYYY-MM-DD)
- *       Takes the current date by default.
- *   - to_date (YYYY-MM-DD)
- *       Takes the current date by default.
+ *   - from_date
+ *   - to_date
  *
  * @return
  *   Array containing search results, along with the filters
