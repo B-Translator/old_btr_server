@@ -62,7 +62,7 @@ function btrCore_config() {
 
   $form['export'] = array(
     '#type'  => 'fieldset',
-    '#title' => t('B-Translator Export'),
+    '#title' => t('B-Translator Export/Import'),
   );
 
   $form['export']['btr_export_path'] = array(
@@ -77,6 +77,13 @@ function btrCore_config() {
     '#title' => t('Notify admin'),
     '#description' => t('Send a notification email to admin on each export request.'),
     '#default_value' => variable_get('btr_export_notify_admin', TRUE),
+  );
+
+  $form['export']['btr_import_notify_admin'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Notify admin'),
+    '#description' => t('Send a notification email to admin on each import request.'),
+    '#default_value' => variable_get('btr_import_notify_admin', TRUE),
   );
 
   return system_settings_form($form);

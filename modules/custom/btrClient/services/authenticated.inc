@@ -70,6 +70,7 @@ function _btrClient_services_authenticated_translations() {
     'del_translation' => 'translations/del',
     'del_vote' => 'translations/del_vote',
     'submit' => 'translations/submit',
+    //'import_translations' => 'translations/import',
   );
   foreach($POST_operations as $name  => $url) {
     $operations[$name] = array(

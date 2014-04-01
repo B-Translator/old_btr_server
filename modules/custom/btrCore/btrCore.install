@@ -48,6 +48,7 @@ function btrCore_uninstall() {
     'btr_preferred_projects',
     'btr_export_path',
     'btr_export_notify_admin',
+    'btr_import_notify_admin',
 
     'btrCore_crontime',
   );

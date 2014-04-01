@@ -196,6 +196,25 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-vote'),
   );
 
+  // Import translations from PO files.
+  $translations['actions']['import'] = array(
+    'help' => 'Import translations from PO files.',
+    'file' => $file,
+    'callback' => '_btrServices_translations_import',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'Assoc array of parameters.',
+        'type' => 'array',
+      ),
+    ),
+    'access callback' => 'user_access',
+    //'access arguments' => array('access content'),
+    'access arguments' => array('btranslator-import'),
+  );
+
   return $translations;
 }
 
@@ -605,3 +624,113 @@ function _btrServices_translations_submit($params) {
   );
 }
 
+/**
+ * Bulk import of translations from PO files.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - lng
+ *       Language of translations.
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btrServices_translations_import($params) {
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('You do not have enough rights for submitting translations!');
+    return array('messages' => array(array($msg, 'error')));
+  }
+
+  // Get and check the parameter 'lng'.
+  $lng = $params['lng'];
+  $arr_langs = array_keys(btr_get_languages());
+  if (!in_array($lng, $arr_langs)) {
+    return services_error('Language missing or not supported.', 406);
+  }
+
+  // Make sure that the current user can make
+  // translations for the given language.
+  $user = user_load($GLOBALS['user']->uid);
+  if ($lng != $user->translation_lng) {
+    $msg = t('You cannot submit translations for the language !lng', array('!lng' => $lng));
+    return array('messages' => array(array($msg, 'error')));
+  }
+
+  // Get the parameters.
+  if (!isset($_FILES['file'])) {
+    return services_error('No file uploaded.', 406);
+  }
+  $uploaded_file = $_FILES['file'];
+
+  // Check that a file is uploaded.
+  if (!$uploaded_file['tmp_name']) {
+    return services_error('File upload failed.', 406);
+  }
+
+  // Check for any other upload errors.
+  if ($uploaded_file['error'] != 0) {
+    return services_error('Error ' . $uploaded_file['error'] . 'happened during file upload.', 406);
+  }
+
+  // Check the extension of the uploaded file.
+  $extensions = 'po tar gz tgz bz2 xz 7z zip';
+  $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
+  if (!preg_match($regex, $uploaded_file['name'])) {
+    $msg = t('Only files with the following extensions are allowed: %files-allowed.',
+           array('%files-allowed' => $extensions));
+    return array('messages' => array(array($msg, 'error')));
+  }
+
+  // Move the uploaded file to 'private://' (/var/www/uploads/).
+  $file_uri = 'private://' . $uploaded_file['name'];
+  if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
+    $msg = array(t('Failed to move uploaded file.'), 'error');
+    return array('messages' => array($msg));
+  }
+
+  // Save the file data to the DB.
+  $file = new stdClass();
+  $file->uid = $GLOBALS['user']->uid;
+  $file->status = FILE_STATUS_PERMANENT;
+  $file->filename = trim(drupal_basename($uploaded_file['name']), '.');
+  $file->uri = $file_uri;
+  $file->filemime = file_get_mimetype($file->filename);
+  $file->filesize = $uploaded_file['size'];
+  try {
+    $file = file_save($file);
+    $messages = array();
+  }
+  catch (Exception $e) {
+    $msg = array($e->getMessage(), 'error');
+    return array('messages' => array($msg));
+  }
+
+  // Schedule the import.
+  $queue_params = array(
+    'uid' => $GLOBALS['user']->uid,
+    'fid' => $file->fid,
+    'lng' => $lng,
+  );
+  btr_queue('import_translations', array($queue_params));
+
+  // Schedule a notification to the admin.
+  // TODO: Send this notification to the project admin.
+  $notify_admin = variable_get('btr_import_notify_admin', TRUE);
+  if ($notify_admin) {
+    $queue_params['type'] = 'notify-admin-on-import-request';
+    $queue_params['recipient'] = user_load(1)->mail;
+    $queue_params['username'] = $GLOBALS['user']->name;
+    $queue_params['filename'] = $file->filename;
+    btr_queue_notifications(array($params));
+  }
+
+  // Return a notification message.
+  $msg = t("Import of the file '!filename' is scheduled. You will be notified by email when it is done.",
+         array('!filename' => $file->filename));
+  return array('messages' => array(array($msg, 'status')));
+}

@@ -77,7 +77,7 @@ function btrClient_menu() {
     'title'           => 'Add Term',
     'description'     => 'Add a new term on the vocabulary.',
     'page callback'   => 'btrClient_addterm',
-    'file'            => 'translations/import.inc',
+    'file'            => 'translations/addterm.inc',
     'access callback' => 'btr_user_access',
     'access arguments' => array('btranslator-import'),
     'weight'          => 5,
