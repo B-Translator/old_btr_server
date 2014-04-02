@@ -45,11 +45,12 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
     ->execute();
 
   // Get the template id.
+  if (empty($tplname))  $tplname = $project;
   $query = "SELECT potid FROM {btr_templates}
             WHERE pguid = :pguid AND tplname = :tplname";
   $args = array(
     ':pguid' => sha1($origin . $project),
-    ':tplname' => $potname,
+    ':tplname' => $tplname,
   );
   $potid = $db->query($query, $args)->fetchField();
 

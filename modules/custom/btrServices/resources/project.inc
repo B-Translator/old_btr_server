@@ -34,6 +34,27 @@ function _btrServices_project() {
     'args' => array($params),
   ) + $public_access;
 
+
+  // Add a new string to a project (useful for vocabularies).
+  $translations['actions']['add_string'] = array(
+    'help' => 'Add a new string to a project.',
+    'file' => $file,
+    'callback' => '_btrServices_project_add_string',
+    'args' => array($params),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-import'),
+  );
+
+  // Delete a string from a project (useful for vocabularies).
+  $translations['actions']['del_string'] = array(
+    'help' => 'Delete a string from a project.',
+    'file' => $file,
+    'callback' => '_btrServices_project_del_string',
+    'args' => array($params),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-admin'),
+  );
+
   return $translations;
 }
 
@@ -130,4 +151,62 @@ function _btrServices_project_export($params) {
   );
 
   return array('messages' => $messages);
+}
+
+
+/**
+ * Add a new string to a project (useful for vocabularies).
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - origin
+ *       Origin (category) of the project.
+ *   - project
+ *       Name of the project.
+ *   - tplname (optional)
+ *       Name of the template (POT) file.
+ *   - string
+ *       String to be added.
+ *   - context (optional)
+ *       The context of the string.
+ *
+ * @return
+ *   The sguid of the new string, or NULL if such a string already exists.
+ */
+function _btrServices_project_add_string($params) {
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
+    'tplname' => NULL,
+    'string' => NULL,
+    'context' => NULL,
+  );
+  $sguid = btr_add_string(
+    check_plain($params['origin']),
+    check_plain($params['project']),
+    check_plain($params['tplname']),
+    check_plain($params['string']),
+    check_plain($params['context'])
+  );
+  return array('sguid' => $sguid);
+}
+
+/**
+ * Delete a string from a project (useful for vocabularies).
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - sguid
+ *       ID of the string to be deleted.
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btrServices_project_del_string($params) {
+  $sguid = check_plain($params['sguid']);
+  btr_del_string($sguid);
 }
