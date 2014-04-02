@@ -818,4 +818,5 @@ function _btrServices_translations_add_string($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_translations_del_string($params) {
+  btr_del_string($params['sguid']);
 }

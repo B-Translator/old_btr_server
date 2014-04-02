@@ -68,7 +68,7 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
 /**
  * Delete the term with the given id.
  */
-function btr_del_term($sguid) {
+function btr_del_string($sguid) {
   $db = $GLOBALS['btr_db'];
   $db->delete('btr_strings')->condition('sguid', $sguid)->execute();
   $db->delete('btr_locations')->condition('sguid', $sguid)->execute();
