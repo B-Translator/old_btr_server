@@ -56,10 +56,17 @@ function btrClient_addterm_form() {
  * Submission handler for addterm form.
  */
 function btrClient_addterm_form_submit($form, &$form_state) {
-  //dpm($form_state['values']);  //debug
   $string = check_plain(trim($form_state['values']['newterm']));
 
-  $sguid = btr_add_term($string);
+  $result = $GLOBALS['btr']->add_string(array(
+              'origin' => 'misc',
+              'project' => 'vocabulary',
+              'tplname' => 'vocabulary',
+              'string' => $string,
+              'context' => 'vocabulary',
+            ));
+  $sguid = $result['sguid'];
+
   if (empty($sguid)) {
     drupal_set_message(t('This term already exists.'));
     return;
@@ -143,9 +150,8 @@ function btrClient_delterm_form() {
  * Submission handler for delterm form.
  */
 function btrClient_delterm_form_submit($form, &$form_state) {
-
   $sguid = check_plain(trim($form_state['values']['sguid']));
-  btr_del_term($sguid);
+  $GLOBALS['btr']->del_string(array('sguid' => $sguid));
 
   // redirect to the list of terms
   $lng = variable_get('btrClient_translation_lng', 'fr');
