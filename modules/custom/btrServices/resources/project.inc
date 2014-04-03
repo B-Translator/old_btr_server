@@ -169,6 +169,8 @@ function _btrServices_project_export($params) {
  *       String to be added.
  *   - context (optional)
  *       The context of the string.
+ *   - notify (optional)
+ *       It TRUE, notify translators about the new string.
  *
  * @return
  *   The sguid of the new string, or NULL if such a string already exists.
@@ -180,13 +182,15 @@ function _btrServices_project_add_string($params) {
     'tplname' => NULL,
     'string' => NULL,
     'context' => NULL,
+    'notify' => NULL,
   );
   $sguid = btr_add_string(
     check_plain($params['origin']),
     check_plain($params['project']),
     check_plain($params['tplname']),
     check_plain($params['string']),
-    check_plain($params['context'])
+    check_plain($params['context']),
+    check_plain($params['notify'])
   );
   return array('sguid' => $sguid);
 }

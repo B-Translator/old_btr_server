@@ -18,7 +18,7 @@
  * @return
  *   The sguid of the new string, or NULL if such a string already exists.
  */
-function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NULL) {
+function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NULL, $notify =FALSE) {
   if ($context === NULL)  $context = '';
   $sguid = sha1($string . $context);
 
@@ -62,6 +62,11 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
       ))
     ->execute();
 
+  // Notify translators about the new string.
+  if ($notify) {
+    _btr_new_string_notification($string, $sguid);
+  }
+
   return $sguid;
 }
 
@@ -74,4 +79,34 @@ function btr_del_string($sguid) {
   $db->delete('btr_strings')->condition('sguid', $sguid)->execute();
   $db->delete('btr_locations')->condition('sguid', $sguid)->execute();
   $db->delete('btr_translations')->condition('sguid', $sguid)->execute();
+}
+
+
+/**
+ * Notify translators about the new string that was added.
+ */
+function _btr_new_string_notification($string, $sguid) {
+
+  // Get all the users with role 'translator'.
+  $query = "SELECT ur.uid FROM users_roles ur
+            RIGHT JOIN role r ON (ur.rid = r.rid)
+            WHERE r.name = 'translator' ";
+  $uids = db_query($query)->fetchCol();
+  $translators = user_load_multiple($uids);
+
+  // Notify the translators about the new term.
+  $queue = DrupalQueue::get('notifications');
+  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  foreach ($translators as $translator) {
+    $notification_params = array(
+      'type' => 'notify-translator-on-new-term',
+      'uid' => $translator->uid,
+      'username' => $translator->name,
+      'recipient' => $translator->name . ' <' . $translator->mail . '>',
+      'sguid' => $sguid,
+      'string' => $string,
+      'author' => $GLOBALS['user']->name,
+    );
+    $queue->createItem((object)$notification_params);
+  }
 }
