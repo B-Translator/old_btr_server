@@ -443,6 +443,51 @@
      #+END_EXAMPLE
 
 
+** add_string
+
+   Add a new string to a project (useful for vocabularies).
+
+   + POST btr/project/add_string ::
+     - origin ::
+         Origin (category) of the project.
+     - project ::
+         Name of the project.
+     - tplname :: (optional)
+         Name of the template (POT) file.
+     - string ::
+         String to be added.
+     - context :: (optional)
+         The context of the string.
+     - notify :: (optional)
+         It TRUE, notify translators about the new string.
+
+     Returns associative array containing:
+     - sguid ::
+         The sguid of the new string, or NULL if such a string
+         already exists.
+
+   Example: [[https://dev.l10n.org.al/api-examples/php/project/add_string.php]]
+
+   Vocabularies are fake translation projects, in the sense that they
+   are not strings extracted from a program. Their strings are added
+   manually. They serve as a collection/dictionary of interesting,
+   important and frequently used terms and their suggested
+   translations. They can be useful for translators on their everyday
+   job and also can help to discuss and unify the terminology used
+   across different programs.
+
+
+** del_string
+
+   Delete a string from a project (useful for vocabularies).
+
+   + POST btr/project/del_string ::
+     - sguid ::
+         ID of the string to be deleted.
+
+   Example: [[https://dev.l10n.org.al/api-examples/php/project/add_string.php]]
+
+
 ** import
 
 

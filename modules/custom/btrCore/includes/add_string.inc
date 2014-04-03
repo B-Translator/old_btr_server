@@ -14,6 +14,8 @@
  *       String to be added.
  *   - context (optional)
  *       The context of the string.
+ *   - notify (optional)
+ *       It TRUE, notify translators about the new string.
  *
  * @return
  *   The sguid of the new string, or NULL if such a string already exists.
@@ -72,7 +74,7 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
 
 
 /**
- * Delete the term with the given id.
+ * Delete the string with the given id.
  */
 function btr_del_string($sguid) {
   $db = $GLOBALS['btr_db'];

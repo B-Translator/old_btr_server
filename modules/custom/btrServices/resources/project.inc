@@ -202,13 +202,6 @@ function _btrServices_project_add_string($params) {
  *   Associative array of the POST data, which contains:
  *   - sguid
  *       ID of the string to be deleted.
- *
- * @return
- *   Associative array containing:
- *   - messages
- *       Array of notification messages; each notification message
- *       is an array of a message and a type, where type can be one of
- *       'status', 'warning', 'error'.
  */
 function _btrServices_project_del_string($params) {
   $sguid = check_plain($params['sguid']);
