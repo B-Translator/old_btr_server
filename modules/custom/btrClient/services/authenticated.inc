@@ -91,15 +91,22 @@ function _btrClient_services_authenticated_translations() {
  * Return definitions for operations about projects.
  */
 function _btrClient_services_authenticated_projects() {
-  $operations['export_project'] = array(
-    'label' => 'export_project',
-    'url' => 'project/export',
-    'type' => 'POST',
-    'data' => 'params',
-    'parameter' => array(
-      'params' => array('type' => 'array'),
-    ),
+  $POST_operations = array(
+    'export_projects' => 'project/export',
+    'add_string' => 'project/add_string',
+    'del_string' => 'project/del_string',
   );
+  foreach($POST_operations as $name  => $url) {
+    $operations[$name] = array(
+      'label' => $name,
+      'url' => $url,
+      'type' => 'POST',
+      'data' => 'params',
+      'parameter' => array(
+        'params' => array('type' => 'array'),
+      ),
+    );
+  }
 
   return $operations;
 }

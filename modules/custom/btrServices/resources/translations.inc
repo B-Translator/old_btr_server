@@ -211,7 +211,6 @@ function _btrServices_translations() {
       ),
     ),
     'access callback' => 'user_access',
-    //'access arguments' => array('access content'),
     'access arguments' => array('btranslator-import'),
   );
 
