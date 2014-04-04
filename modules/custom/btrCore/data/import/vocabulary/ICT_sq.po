@@ -1,0 +1,402 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 7.x-dev\n"
+"POT-Creation-Date: 2012-10-12 01:41+0200\n"
+"PO-Revision-Date: 2012-10-12 01:49+0200\n"
+"Last-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\n"
+"Language-Team: Albanian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sq\n"
+
+msgid "Vocabulary"
+msgstr "Fjalorth"
+
+msgid "cookie"
+msgstr "gjurmues"
+
+msgctxt "vocabulary"
+msgid "object"
+msgstr "send"
+
+msgctxt "vocabulary"
+msgid "entries"
+msgstr "zërat"
+
+msgctxt "vocabulary"
+msgid "configuration"
+msgstr "trajtësim"
+
+msgctxt "vocabulary"
+msgid "configure"
+msgstr "trajtëso"
+
+msgctxt "vocabulary"
+msgid "document"
+msgstr "shkresë"
+
+msgctxt "vocabulary"
+msgid "options"
+msgstr "mundësitë"
+
+msgctxt "vocabulary"
+msgid "path"
+msgstr "shteg"
+
+msgctxt "vocabulary"
+msgid "shortcut"
+msgstr "shkurtore"
+
+msgctxt "vocabulary"
+msgid "bookmark"
+msgstr "faqembajtës"
+
+msgctxt "vocabulary"
+msgid "tab"
+msgstr "vesh"
+
+msgctxt "vocabulary"
+msgid "selection"
+msgstr "përzgjedhje"
+
+msgctxt "vocabulary"
+msgid "scroll"
+msgstr "lëviz"
+
+msgctxt "vocabulary"
+msgid "tab stop"
+msgstr "ndalesa tab"
+
+msgctxt "vocabulary"
+msgid "original"
+msgstr "fillestar"
+
+msgctxt "vocabulary"
+msgid "fonts"
+msgstr "shkronjat"
+
+msgctxt "vocabulary"
+msgid "frame"
+msgstr "kornizë"
+
+msgctxt "vocabulary"
+msgid "restore"
+msgstr "rikthe"
+
+msgctxt "vocabulary"
+msgid "print preview"
+msgstr "paraqitja e shtypjes"
+
+msgctxt "vocabulary"
+msgid "computer"
+msgstr "dijepunues"
+
+msgctxt "vocabulary"
+msgid "available"
+msgstr "i gatshëm"
+
+msgctxt "vocabulary"
+msgid "screenshot"
+msgstr "pamje ekrani"
+
+msgctxt "vocabulary"
+msgid "copy-paste"
+msgstr "kap-e-vendos"
+
+msgctxt "vocabulary"
+msgid "properties"
+msgstr "vetitë"
+
+msgctxt "vocabulary"
+msgid "run (a program)"
+msgstr "nis (një program)"
+
+msgctxt "vocabulary"
+msgid "software"
+msgstr "softuer"
+
+msgctxt "vocabulary"
+msgid "read-only"
+msgstr "vetëm-lexim"
+
+msgctxt "vocabulary"
+msgid "read-write"
+msgstr "lexim-shkrim"
+
+msgctxt "vocabulary"
+msgid "moderator"
+msgstr "moderator"
+
+msgctxt "vocabulary"
+msgid "preview"
+msgstr "para-shikim"
+
+msgctxt "vocabulary"
+msgid "wizard"
+msgstr "udhëzues"
+
+msgctxt "vocabulary"
+msgid "uninstallation"
+msgstr "heqje"
+
+msgctxt "vocabulary"
+msgid "is not running"
+msgstr "nuk punon"
+
+msgctxt "vocabulary"
+msgid "insert"
+msgstr "fut"
+
+msgctxt "vocabulary"
+msgid "automatically"
+msgstr "vetvetiu"
+
+msgctxt "vocabulary"
+msgid "set (the value of an attribute)"
+msgstr "cakto (vlerën e një vetie)"
+
+msgctxt "vocabulary"
+msgid "default"
+msgstr "paracaktuar"
+
+msgctxt "vocabulary"
+msgid "fullscreen"
+msgstr "gjithekrani"
+
+msgctxt "vocabulary"
+msgid "settings"
+msgstr "rregullimet"
+
+msgctxt "vocabulary"
+msgid "debug (a program)"
+msgstr "heto (një program)"
+
+msgctxt "vocabulary"
+msgid "debugging"
+msgstr "hetim"
+
+msgctxt "vocabulary"
+msgid "preferencies"
+msgstr "shijet"
+
+msgctxt "vocabulary"
+msgid "dimension"
+msgstr "përmasë"
+
+msgctxt "vocabulary"
+msgid "web"
+msgstr "rrjet"
+
+msgctxt "vocabulary"
+msgid "resolution (of screen)"
+msgstr "imtësia (e ekranit)"
+
+msgctxt "vocabulary"
+msgid "heading (of section)"
+msgstr "kokëzim (i pjesës)"
+
+msgctxt "vocabulary"
+msgid "editor"
+msgstr "ndryshues"
+
+msgctxt "vocabulary"
+msgid "ignore"
+msgstr "shpërfill"
+
+msgctxt "vocabulary"
+msgid "index"
+msgstr "tregues"
+
+msgctxt "vocabulary"
+msgid "autoscrolling"
+msgstr "vetlëvizje"
+
+msgctxt "vocabulary"
+msgid "endless loop"
+msgstr "cikel i pafund"
+
+msgctxt "vocabulary"
+msgid "skip"
+msgstr "anashkalo"
+
+msgctxt "vocabulary"
+msgid "tutorial"
+msgstr "ushtrues"
+
+msgctxt "vocabulary"
+msgid "reset"
+msgstr "rifillo"
+
+msgctxt "vocabulary"
+msgid "active"
+msgstr "vepror"
+
+msgctxt "vocabulary"
+msgid "contact"
+msgstr "lidhu"
+
+msgctxt "vocabulary"
+msgid "character"
+msgstr "shkronja"
+
+msgctxt "vocabulary"
+msgid "alignment"
+msgstr "radhitje"
+
+msgctxt "vocabulary"
+msgid "position"
+msgstr "vendodhja"
+
+msgctxt "vocabulary"
+msgid "font family"
+msgstr "lloji i shkronjave"
+
+msgctxt "vocabulary"
+msgid "my username"
+msgstr "emri që përdor"
+
+msgctxt "vocabulary"
+msgid "encrypted connection"
+msgstr "lidhje e kriptuar"
+
+msgctxt "vocabulary"
+msgid "tabs"
+msgstr "veshoret"
+
+msgctxt "vocabulary"
+msgid "context"
+msgstr "rrethana"
+
+msgctxt "vocabulary"
+msgid "outline"
+msgstr "përvijim"
+
+msgctxt "vocabulary"
+msgid "authentication"
+msgstr "identifikim"
+
+msgctxt "vocabulary"
+msgid "mail server"
+msgstr "shërbyesi postar"
+
+msgctxt "vocabulary"
+msgid "relatively"
+msgstr "varësisht"
+
+msgctxt "vocabulary"
+msgid "background"
+msgstr "rrethina"
+
+msgctxt "vocabulary"
+msgid "merge"
+msgstr "ndërthur"
+
+msgctxt "vocabulary"
+msgid "information"
+msgstr "njohuri"
+
+msgctxt "vocabulary"
+msgid "ascending"
+msgstr "përpjet"
+
+msgctxt "vocabulary"
+msgid "descending"
+msgstr "përposht"
+
+msgctxt "vocabulary"
+msgid "subject"
+msgstr "çështja"
+
+msgctxt "vocabulary"
+msgid "about"
+msgstr "ç'është"
+
+msgctxt "vocabulary"
+msgid "link"
+msgstr "vegëz"
+
+msgctxt "vocabulary"
+msgid "setup"
+msgstr "themelimi"
+
+msgctxt "vocabulary"
+msgid "untitled"
+msgstr "patitull"
+
+msgctxt "vocabulary"
+msgid "alignment (left or right)"
+msgstr "rreshtimi (majtas apo djathtas)"
+
+msgctxt "vocabulary"
+msgid "footnote"
+msgstr "shënim"
+
+msgctxt "vocabulary"
+msgid "text"
+msgstr "shkrim"
+
+msgctxt "vocabulary"
+msgid "user"
+msgstr "përdorues"
+
+msgctxt "vocabulary"
+msgid "indents"
+msgstr "dhëmbëzimet"
+
+msgctxt "vocabulary"
+msgid "file"
+msgstr "skedar"
+
+msgctxt "vocabulary"
+msgid "parameter"
+msgstr "parametër"
+
+msgctxt "vocabulary"
+msgid "scope"
+msgstr "shtrirja"
+
+msgctxt "vocabulary"
+msgid "boolean (logic, value)"
+msgstr "vërtetësie (llogjikë, vlerë)"
+
+msgctxt "vocabulary"
+msgid "next"
+msgstr "tjetra"
+
+msgctxt "vocabulary"
+msgid "clipboard"
+msgstr "kujtesa"
+
+msgctxt "vocabulary"
+msgid "type"
+msgstr "lloji"
+
+msgctxt "vocabulary"
+msgid "mail merge"
+msgstr "ndërthurja e letrave"
+
+msgctxt "vocabulary"
+msgid "edit"
+msgstr "tëharr"
+
+msgctxt "vocabulary"
+msgid "table cell"
+msgstr "kuti tabele"
+
+msgctxt "vocabulary"
+msgid "interactive"
+msgstr "ndërveprues"
+
+msgctxt "vocabulary"
+msgid "email"
+msgstr "postel"
+
+msgctxt "vocabulary"
+msgid "initials"
+msgstr "nistoret"
+
+msgctxt "vocabulary"
+msgid "graphic objects"
+msgstr "sende pamore"

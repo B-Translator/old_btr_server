@@ -75,7 +75,7 @@ function btrClient_menu() {
   $items['translations/addterm'] = array(
     'type'            => MENU_LOCAL_TASK,
     'title'           => 'Add Term',
-    'description'     => 'Add a new term on the vocabulary.',
+    'description'     => 'Add a new term on a vocabulary.',
     'page callback'   => 'btrClient_addterm',
     'file'            => 'translations/addterm.inc',
     'access callback' => 'btr_user_access',

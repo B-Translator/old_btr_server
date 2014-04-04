@@ -15,7 +15,7 @@ dbname=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
 export BTR=$dbname
 export BTR_DATA=$dbname
 
-### create the project 'misc/vocabulary'
+### import the vocabulary projects
 import/vocabulary.sh
 
 ### import some PO files, just for testing/development

@@ -1,17 +1,17 @@
 #!/bin/bash
-### import the project 'misc/vocabulary'
+### import the vocabulary projects
 
 cd $(dirname $0)
 
-origin='misc'
-project='vocabulary'
-potname='vocabulary'
+origin='vocabulary'
+for file in $(ls vocabulary/*.po)
+do
+    filename=$(basename $file)
+    project=${filename%.po}
+    potname=$project
+    lng=${project##*_}
 
-po_dir='../vocabulary'
-#file_pot="$po_dir/vocabulary.pot"
-file_pot="$po_dir/vocabulary-sq.po"
-file_sq_po="$po_dir/vocabulary-sq.po"
-
-./pot_import.php $origin $project $potname $file_pot
-./po_import.php $origin $project $potname sq $file_sq_po
+    ./pot_import.php $origin $project $potname $file
+    ./po_import.php $origin $project $potname $lng $file
+done
 
