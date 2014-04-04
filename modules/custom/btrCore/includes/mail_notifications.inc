@@ -149,7 +149,7 @@ function _btrCore_build_notification_email($params) {
       $body = array(
         t("Greetings !username,
 
-           A new term has been added to the vocabulary
+           A new term has been added to the vocabulary !project
            by !author: !string
 
            You can review its translation at this link:
@@ -168,6 +168,7 @@ function _btrCore_build_notification_email($params) {
           ",
           array(
             '!username' => $params->username,
+            '!project' => $params->project,
             '!author' => $params->author,
             '!string' => $params->string,
             '!url' => $url,

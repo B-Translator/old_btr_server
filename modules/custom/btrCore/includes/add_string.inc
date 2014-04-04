@@ -30,21 +30,19 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
   $query = "SELECT sguid FROM {btr_strings} WHERE sguid = :sguid";
   $args = array(':sguid' => $sguid);
   $field = $db->query($query, $args)->fetchField();
-  if (!empty($field)) {
-    return NULL;
+  if (empty($field)) {
+    // Insert a new string.
+    $db->insert('btr_strings')
+      ->fields(array(
+          'string' => $string,
+          'context' => $context,
+          'sguid' => $sguid,
+          'uid' => $GLOBALS['user']->uid,
+          'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+          'count' => 1,
+        ))
+      ->execute();
   }
-
-  // Insert a new string.
-  $db->insert('btr_strings')
-    ->fields(array(
-        'string' => $string,
-        'context' => $context,
-        'sguid' => $sguid,
-        'uid' => $GLOBALS['user']->uid,
-        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
-        'count' => 1,
-      ))
-    ->execute();
 
   // Get the template id.
   if (empty($tplname))  $tplname = $project;
@@ -56,6 +54,18 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
   );
   $potid = $db->query($query, $args)->fetchField();
 
+  // Check that the location does not already exist.
+  $query = "SELECT lid FROM {btr_locations}
+            WHERE sguid = :sguid AND potid = :potid";
+  $args = array(
+    ':sguid' => $sguid,
+    ':potid' => $potid,
+  );
+  $lid = $db->query($query, $args)->fetchField();
+  if (!empty($lid)) {
+    return NULL;
+  }
+
   // Insert a new location.
   $db->insert('btr_locations')
     ->fields(array(
@@ -66,7 +76,7 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
 
   // Notify translators about the new string.
   if ($notify) {
-    _btr_new_string_notification($string, $sguid);
+    _btr_new_string_notification($project, $string, $sguid);
   }
 
   return $sguid;
@@ -87,13 +97,18 @@ function btr_del_string($sguid) {
 /**
  * Notify translators about the new string that was added.
  */
-function _btr_new_string_notification($string, $sguid) {
+function _btr_new_string_notification($project, $string, $sguid) {
+  // Get the language of the project.
+  $lng = preg_replace('/^.*_/', '', $project);
 
-  // Get all the users with role 'translator'.
-  $query = "SELECT ur.uid FROM users_roles ur
-            RIGHT JOIN role r ON (ur.rid = r.rid)
-            WHERE r.name = 'translator' ";
-  $uids = db_query($query)->fetchCol();
+  // Get all the translators for this language.
+  $query = "
+    SELECT t1.uid FROM users_roles t1
+    INNER JOIN role t2 ON (t2.rid = t1.rid)
+    LEFT JOIN field_data_field_translation_lng t3 ON (t3.entity_id = t1.uid)
+    WHERE t2.name = 'translator'
+      AND t3.field_translation_lng_value = :lng";
+  $uids = db_query($query, array(':lng' => $lng))->fetchCol();
   $translators = user_load_multiple($uids);
 
   // Notify the translators about the new term.
@@ -105,8 +120,9 @@ function _btr_new_string_notification($string, $sguid) {
       'uid' => $translator->uid,
       'username' => $translator->name,
       'recipient' => $translator->name . ' <' . $translator->mail . '>',
-      'sguid' => $sguid,
+      'project' => $project,
       'string' => $string,
+      'sguid' => $sguid,
       'author' => $GLOBALS['user']->name,
     );
     $queue->createItem((object)$notification_params);
