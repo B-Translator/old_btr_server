@@ -10,7 +10,7 @@
  * @return
  *   An associative array describing commands.
  */
-function btrCore_drush_command() {
+function btranslator_drush_command() {
   $items = array();
 
   // The 'pot-import' command
@@ -68,13 +68,13 @@ function btrCore_drush_command() {
 
   // These will appear in the list of topics when `drush topic` is executed.
   // To view this topic, run `drush --include=/full/path/to/examples topic`
-  $items['btrCore-exposition'] = array(
-    'description' => dt('Importing and exporting PO files from the btrCore module.'),
+  $items['btranslator-exposition'] = array(
+    'description' => dt('Importing and exporting PO files from B-Translator.'),
     'hidden' => TRUE,
     'topic' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'callback' => 'drush_print_file',
-    'callback arguments' => array(dirname(__FILE__) . '/btrCore-topic.txt'),
+    'callback arguments' => array(dirname(__FILE__) . '/btranslator-topic.txt'),
   );
 
   return $items;
@@ -89,7 +89,7 @@ function btrCore_drush_command() {
  * @return
  *   A string with the help text for your command.
  */
-function btrCore_drush_help($section) {
+function btranslator_drush_help($section) {
   switch ($section) {
     case 'drush:pot-import':
       return dt("This command will import into DB the POT file of a project.");
@@ -97,9 +97,9 @@ function btrCore_drush_help($section) {
       return dt("This command will import into DB a PO file of a project.");
     case 'drush:po-export':
       return dt("This command will export a PO file from the DB.");
-    case 'meta:btrCore:title':
+    case 'meta:btranslator:title':
       return dt("B-Translator Commands");
-    case 'meta:btrCore:summary':
+    case 'meta:btranslator:summary':
       return dt("Handle the import/export of PO/POT files for B-Translator.");
   }
 }
@@ -125,7 +125,7 @@ function btrCore_drush_help($section) {
 /**
  * Command callback for pot-import.
  */
-function drush_btrCore_pot_import($origin, $project, $file) {
+function drush_btranslator_pot_import($origin, $project, $file) {
   $path = drupal_get_path('module', 'btrCore') . '/data/import';
   $output = shell_exec("$path/pot_import.php $origin $project $file");
   print $output;
@@ -134,7 +134,7 @@ function drush_btrCore_pot_import($origin, $project, $file) {
 /**
  * Command callback for po-import.
  */
-function drush_btrCore_po_import($origin, $project, $lng, $file) {
+function drush_btranslator_po_import($origin, $project, $lng, $file) {
   $path = drupal_get_path('module', 'btrCore') . '/data/import';
   $output = shell_exec("$path/po_import.php $origin $project $lng $file");
   print $output;
@@ -143,7 +143,7 @@ function drush_btrCore_po_import($origin, $project, $lng, $file) {
 /**
  * Command callback for po-export.
  */
-function drush_btrCore_po_export($origin, $project, $lng, $file =NULL) {
+function drush_btranslator_po_export($origin, $project, $lng, $file =NULL) {
   $path = drupal_get_path('module', 'btrCore') . '/data/export';
   $output = shell_exec("$path/po_export.php $origin $project $lng $file");
   print $output;
