@@ -272,7 +272,7 @@ function _btrClient_translate_translation($translation, $string_sguid, $lng) {
   );
 
   // The 'approved' radio/checkbox is used to pick the approved (voted/liked) translation(s).
-  $voting_mode = variable_get('btr_voting_mode', 'single');
+  $voting_mode = variable_get('btrClient_voting_mode', 'single');
   $type = ($voting_mode == 'single') ? 'radio' : 'checkbox';
   $form['approved'] = array(
     '#type' => $type,

@@ -96,7 +96,7 @@ function _btrClient_translate_form_save($form_values) {
   }
 
   // Get the voting mode.
-  $voting_mode = variable_get('btr_voting_mode', 'single');
+  $voting_mode = variable_get('btrClient_voting_mode', 'single');
 
   // Iterate outer structure built in btrClient_translate_form().
   foreach ($form_values['strings'] as $sguid => $string) {
