@@ -523,6 +523,26 @@
      #+END_EXAMPLE
 
 
+** vocabulary
+
+   + GET translations/vocabulary/export/$vocabulary[/$format] ::
+     Return the list of terms in a vocabulary and all the suggested
+     translations.
+     - $vocabulary ::
+         The name of the vocabulary project (which ends in =_lng=).
+
+     - $format ::
+         The output format: =json | txt1 | txt2 | org=.
+         Default is =json=.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl -k https://l10n.org.al/translations/vocabulary/export/ICT_sq
+     curl -k https://l10n.org.al/translations/vocabulary/export/ICT_sq/txt1
+     curl -k https://l10n.org.al/translations/vocabulary/export/ICT_sq/org > ICT_sq.org
+     #+END_EXAMPLE
+
+
 ** autocomplete
 
    + GET translations/autocomplete/project/$str :: Retrieve a JSON list
