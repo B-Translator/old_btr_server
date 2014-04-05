@@ -64,6 +64,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return the items of a vocabulary and all the corresponding translations.
+  $items['translations/vocabulary/export'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Export Vocabulary',
+    'page callback'   => 'btrCore_vocabulary_export',
+    'file'            => 'includes/vocabulary.inc',
+    'access callback' => TRUE,
+  );
+
   // Return as plain-text the diff of the PO file for a given origin/project/lng,
   // which contains the latest most-voted suggestions since the last snapshot.
   // It gets the parameters origin/project/lng[/nr[/ediff]].

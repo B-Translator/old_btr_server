@@ -10,7 +10,7 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   }
 
   // Get the search scope.
-  $scope = 'misc/vocabulary';
+  $scope = 'vocabulary';
   if (!empty($origin)) {
     $scope = $origin;
     if (!empty($project)) {
@@ -41,13 +41,8 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
 
   // Append hash tags.
   $twitter .= " #l10n_$lng";
-  if ($lng == 'sq' and $scope == 'misc/vocabulary') {
-    $twitter .= ' #fjalori';
-  }
-  else {
-    if (!empty($origin))  $twitter .= " #$origin";
-    if (!empty($project)) $twitter .= " #$project";
-  }
+  if (!empty($origin))  $twitter .= " #$origin";
+  if (!empty($project)) $twitter .= " #$project";
 
   // Append the url.
   $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
