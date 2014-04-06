@@ -55,6 +55,16 @@ function _btrServices_project() {
     'access arguments' => array('btranslator-admin'),
   );
 
+  // Import project from POT file(s).
+  $translations['actions']['import'] = array(
+    'help' => 'Import project from POT file(s).',
+    'file' => $file,
+    'callback' => '_btrServices_project_import',
+    'args' => array($params),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-import'),
+  );
+
   return $translations;
 }
 
@@ -206,4 +216,109 @@ function _btrServices_project_add_string($params) {
 function _btrServices_project_del_string($params) {
   $sguid = check_plain($params['sguid']);
   btr_del_string($sguid);
+}
+
+/**
+ * Import project from POT files.
+ *
+ * Create a custom project or update an existing one. The POT files
+ * that are uploaded will be used for importing strings of the
+ * project. PO files can be uploaded instead of POT files, however
+ * only their strings will be used, any translations they have will be
+ * ignored. If the project has several template files, they can be
+ * uploaded as an archive (tar, tgz, bz2, 7z, zip).
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - project
+ *       The name of the project that will be imported
+ *       (the origin is always 'custom').
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btrServices_project_import($params) {
+  // Check access permissions.
+  if (!user_access('btranslator-import')) {
+    $msg = t('You do not have enough rights for importing projects!');
+    return array('messages' => array(array($msg, 'error')));
+  }
+
+  // Get the parameters.
+  if (!isset($_FILES['file'])) {
+    return services_error('No file uploaded.', 406);
+  }
+  $uploaded_file = $_FILES['file'];
+  $project = check_plain($params['project']);
+
+  // Check that a file is uploaded.
+  if (!$uploaded_file['tmp_name']) {
+    return services_error('File upload failed.', 406);
+  }
+
+  // Check for any other upload errors.
+  if ($uploaded_file['error'] != 0) {
+    return services_error('Error ' . $uploaded_file['error'] . 'happened during file upload.', 406);
+  }
+
+  // Check the extension of the uploaded file.
+  $extensions = 'pot po tar gz tgz bz2 xz 7z zip';
+  $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
+  if (!preg_match($regex, $uploaded_file['name'])) {
+    $msg = t('Only files with the following extensions are allowed: %files-allowed.',
+           array('%files-allowed' => $extensions));
+    return array('messages' => array(array($msg, 'error')));
+  }
+
+  // Move the uploaded file to 'private://' (/var/www/uploads/).
+  $file_uri = 'private://' . $uploaded_file['name'];
+  if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
+    $msg = array(t('Failed to move uploaded file.'), 'error');
+    return array('messages' => array($msg));
+  }
+
+  // Save the file data to the DB.
+  $file = new stdClass();
+  $file->uid = $GLOBALS['user']->uid;
+  $file->status = FILE_STATUS_PERMANENT;
+  $file->filename = trim(drupal_basename($uploaded_file['name']), '.');
+  $file->uri = $file_uri;
+  $file->filemime = file_get_mimetype($file->filename);
+  $file->filesize = $uploaded_file['size'];
+  try {
+    $file = file_save($file);
+    $messages = array();
+  }
+  catch (Exception $e) {
+    $msg = array($e->getMessage(), 'error');
+    return array('messages' => array($msg));
+  }
+
+  // Schedule the import.
+  $queue_params = array(
+    'uid' => $GLOBALS['user']->uid,
+    'fid' => $file->fid,
+    'lng' => $lng,
+  );
+  btr_queue('import_project', array($queue_params));
+
+  // Schedule a notification to the admin.
+  // TODO: Send this notification to the project admin.
+  $notify_admin = variable_get('btr_import_notify_admin', TRUE);
+  if ($notify_admin) {
+    $queue_params['type'] = 'notify-admin-on-import-request';
+    $queue_params['recipient'] = user_load(1)->mail;
+    $queue_params['username'] = $GLOBALS['user']->name;
+    $queue_params['filename'] = $file->filename;
+    btr_queue_notifications(array($params));
+  }
+
+  // Return a notification message.
+  $msg = t("Import of the project '!project' is scheduled. You will be notified by email when it is done.",
+         array('!project' => 'custom/' . $project));
+  return array('messages' => array(array($msg, 'status')));
 }
