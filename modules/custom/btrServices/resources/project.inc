@@ -255,6 +255,15 @@ function _btrServices_project_import($params) {
   $uploaded_file = $_FILES['file'];
   $project = check_plain($params['project']);
 
+  // Check that the given project does not belong to another user.
+  $query = "SELECT uid FROM {btr_projects} WHERE pguid = :pguid";
+  $args = array(':pguid' => sha1('custom' . $project));
+  $uid = btr_query($query, $args)->fetchField();
+  if ($uid && ($uid != $GLOBALS['user']->uid)) {
+    $msg = t("There is already a project '!project' created by another user! Please choose another project name.", array('!project' => $project));
+    return array('messages' => array(array($msg, 'error')));
+  }
+
   // Check that a file is uploaded.
   if (!$uploaded_file['tmp_name']) {
     return services_error('File upload failed.', 406);
@@ -302,7 +311,7 @@ function _btrServices_project_import($params) {
   $queue_params = array(
     'uid' => $GLOBALS['user']->uid,
     'fid' => $file->fid,
-    'lng' => $lng,
+    'project' => $project,
   );
   btr_queue('import_project', array($queue_params));
 
