@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Copyright (C) 2011, Dashamir Hoxha (dashohoxha@gmail.com).
+ * Copyright (C) 2011,2014, Dashamir Hoxha (dashohoxha@gmail.com).
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,18 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class POWriter
-{
+namespace BTranslator;
+
+class POWriter {
   /** Array of lines. */
   private $_output = array();
 
-  protected function w_line($line)
-  {
+  protected function w_line($line) {
     $this->_output[] = $line;
   }
 
-  public function write($headers, $comments, $entries, $filename =NULL)
-  {
+  public function write($headers, $comments, $entries, $filename =NULL) {
     $this->write_headers($headers, $comments);
     foreach ($entries as $entry) {
       $this->write_entry($entry);
@@ -42,12 +40,11 @@ class POWriter
     }
   }
 
-  protected function write_headers($headers, $comments)
-  {
+  protected function write_headers($headers, $comments) {
     if (!empty($comments)) {
       $comment_lines = explode("\n", $comments);
       foreach ($comment_lines as $comment) {
-	$this->w_line('# ' . $comment);
+        $this->w_line('# ' . $comment);
       }
     }
 
@@ -60,8 +57,7 @@ class POWriter
     }
   }
 
-  protected function write_entry($entry)
-  {
+  protected function write_entry($entry) {
     $this->w_line('');   //add an empty line as separator
 
     if (isset($entry->translator_comments)) {
@@ -79,7 +75,7 @@ class POWriter
     if (isset($entry->flags)) {
       $flags = explode(' ', $entry->flags);
       foreach ($flags as $flag) {
-	$this->w_line('#, ' . $flag);
+        $this->w_line('#, ' . $flag);
       }
     }
 
@@ -108,52 +104,45 @@ class POWriter
 
     // msgstr (or msgstr[])
     $arr_translation = explode("\0", $entry->translation);
-    if (count($arr_translation) == 1)
-      {
-	$this->write_msgx('', 'msgstr', $arr_translation[0]);
+    if (count($arr_translation) == 1) {
+      $this->write_msgx('', 'msgstr', $arr_translation[0]);
+    }
+    else {
+      foreach ($arr_translation as $i => $translation) {
+        $this->write_msgx('', "msgstr[$i]", $translation);
       }
-    else
-      {
-	foreach ($arr_translation as $i => $translation) {
-	  $this->write_msgx('', "msgstr[$i]", $translation);
-	}
-      }
+    }
   }
 
-  protected function write_comments($prefix, $comments)
-  {
+  protected function write_comments($prefix, $comments) {
     $comment_lines = explode("\n", $comments);
     foreach ($comment_lines as $comment) {
       $this->w_line($prefix . $comment);
     }
   }
 
-  protected function write_msgx($prefix, $type, $content)
-  {
+  protected function write_msgx($prefix, $type, $content) {
     $lines = preg_split('~(*BSR_ANYCRLF)\R|\\\\n~', $content);
-    if (count($lines) == 1)
-      {
-	$this->w_line($prefix . $type . ' ' . $this->encode($lines[0]));
+    if (count($lines) == 1) {
+      $this->w_line($prefix . $type . ' ' . $this->encode($lines[0]));
+    }
+    else {
+      $this->w_line($prefix . $type . ' ""');
+      $last = count($lines) - 1;
+      for ($i=0; $i < $last; $i++) {
+        $this->w_line($prefix . $this->encode($lines[$i] . "\n"));
       }
-    else
-      {
-	$this->w_line($prefix . $type . ' ""');
-	$last = count($lines) - 1;
-	for ($i=0; $i < $last; $i++) {
-	  $this->w_line($prefix . $this->encode($lines[$i] . "\n"));
-	}
-	if (!empty($lines[$last])) {
-	  $this->w_line($prefix . $this->encode($lines[$last]));
-	}
+      if (!empty($lines[$last])) {
+        $this->w_line($prefix . $this->encode($lines[$last]));
       }
+    }
   }
 
   /**
    * Escape the special chars on the given string
    * and surround it by double quotes.
    */
-  private function encode($str)
-  {
+  private function encode($str) {
     $str1 = '"' . addcslashes($str, "\v\t\n\r\f\"\\") . '"';
     return $str1;
 
@@ -170,4 +159,3 @@ class POWriter
     // $str1 = str_replace("\\/","/", $str1);
   }
 }
-?>
