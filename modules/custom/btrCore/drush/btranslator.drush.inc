@@ -13,38 +13,38 @@
 function btranslator_drush_command() {
   $items = array();
 
-  // The 'pot-import' command
-  $items['pot-import'] = array(
-    'description' => "Import the POT file of a project into the DB.",
+  // The command 'btr-project-import-templates'
+  $items['btr-project-import-templates'] = array(
+    'description' => "Import the POT files of a project into the B-Translator DB.",
     'arguments' => array(
-      'origin'   => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
-      'project'  => 'The name of the project that is being imported.',
-      'file.pot' => 'The POT file of the project (absolute path or relative to DRUPAL_ROOT).',
+      'origin' => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
+      'project' => 'The name of the project that is being imported.',
+      'path' => 'The directory of the POT files of the project (absolute path or relative to DRUPAL_ROOT).',
     ),
     'options' => array(
     ),
     'examples' => array(
-      "drush -l l10n-sq.org impot \\\n   KDE kturtle kturtle.pot" => 'Import kturtle.pot into the DB.',
+      "drush btr-impot KDE kturtle \\      \n      \$(pwd)/kturtle/" => 'Import kturtle into the DB.',
     ),
-    'aliases' => array('impot'),
+    'aliases' => array('btr-impot'),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
 
-  // The 'po-import' command
-  $items['po-import'] = array(
-    'description' => "Import the PO file of a translation into the DB.",
+  // The command 'btr-project-import-translations'
+  $items['btr-project-import-translations'] = array(
+    'description' => "Import the translation (PO) files of a project/language into the DB.",
     'arguments' => array(
       'origin'  => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
-      'project' => 'The name of the project that is being imported.',
+      'project' => 'The name of the project.',
       'lng'     => 'The language of translation (de, fr, sq, en_GB, etc.)',
-      'file.po' => 'The PO file of the translation (absolute path or relative to DRUPAL_ROOT).',
+      'path' => 'The directory of the POT files of the project (absolute path or relative to DRUPAL_ROOT).',
     ),
     'options' => array(
     ),
     'examples' => array(
-      "drush -l l10n-sq.org impo \\\n   KDE kturtle fr kturtle.po" => 'Import the French translation of kturtle into the DB.',
+      "drush btr-impo \\\n   KDE kturtle fr \$(pwd)/kturtle_fr/" => 'Import the French translation of kturtle into the DB.',
     ),
-    'aliases' => array('impo'),
+    'aliases' => array('btr-impo'),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
 
@@ -91,10 +91,10 @@ function btranslator_drush_command() {
  */
 function btranslator_drush_help($section) {
   switch ($section) {
-    case 'drush:pot-import':
-      return dt("This command will import into DB the POT file of a project.");
-    case 'drush:po-import':
-      return dt("This command will import into DB a PO file of a project.");
+    case 'drush:btr-project-import-templates':
+      return dt("Import the POT files of a project into the B-Translator DB.");
+    case 'drush:btr-project-import-translations':
+      return dt("Import the PO files of a project/language into the DB.");
     case 'drush:po-export':
       return dt("This command will export a PO file from the DB.");
     case 'meta:btranslator:title':
@@ -123,21 +123,19 @@ function btranslator_drush_help($section) {
 */
 
 /**
- * Command callback for pot-import.
+ * Command callback for btr-project-import-templates.
  */
-function drush_btranslator_pot_import($origin, $project, $file) {
-  $path = drupal_get_path('module', 'btrCore') . '/data/import';
-  $output = shell_exec("$path/pot_import.php $origin $project $file");
-  print $output;
+function drush_btranslator_btr_project_import_templates($origin, $project, $path) {
+  module_load_include('inc', 'btrCore', 'data/lib/project/import_pot');
+  BTranslator\Data\Project\import($origin, $project, $path);
 }
 
 /**
- * Command callback for po-import.
+ * Command callback for btr-project-import-translations.
  */
-function drush_btranslator_po_import($origin, $project, $lng, $file) {
-  $path = drupal_get_path('module', 'btrCore') . '/data/import';
-  $output = shell_exec("$path/po_import.php $origin $project $lng $file");
-  print $output;
+function drush_btranslator_btr_project_import_translations($origin, $project, $lng, $path) {
+  module_load_include('inc', 'btrCore', 'data/lib/import_po');
+  BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path);
 }
 
 /**
