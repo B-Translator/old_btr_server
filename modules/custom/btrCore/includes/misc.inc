@@ -55,10 +55,6 @@ function btr_pack_string($strings) {
   }
 }
 
-function btr_query($sql, $args) {
-  return $GLOBALS['btr_db']->query($sql, $args);
-}
-
 /**
  * Queue actions for batch execution.
  * @param $queue_name

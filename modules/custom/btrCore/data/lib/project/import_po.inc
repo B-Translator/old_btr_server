@@ -6,6 +6,9 @@
 
 namespace BTranslator\Data\Project;
 
+module_load_include('inc', 'btrCore', 'data/lib/query');
+
+
 /**
  * Import translation (PO) files of a project.
  *

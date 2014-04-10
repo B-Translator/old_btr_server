@@ -6,6 +6,9 @@
 
 namespace BTranslator\Data\Project;
 
+module_load_include('inc', 'btrCore', 'data/lib/query');
+
+
 /**
  * Delete everything related to the given origin and project.
  *
@@ -73,7 +76,7 @@ function _get_projects($origin, $project) {
   }
   if ($project != NULL) {
     if ($condition != '')  $condition .= ' AND ';
-    $condition = 'project = :project';
+    $condition .= 'project = :project';
     $args[':project'] = $project;
   }
 

@@ -4,6 +4,8 @@
  * Functions called from the front-end (UI).
  */
 
+module_load_include('inc', 'btrCore', 'data/lib/query');
+
 include_once dirname(__FILE__) . '/get_strings.inc';
 include_once dirname(__FILE__) . '/hook_user.inc';
 include_once dirname(__FILE__) . '/get_sguid.inc';

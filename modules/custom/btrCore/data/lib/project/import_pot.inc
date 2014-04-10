@@ -6,6 +6,7 @@
 
 namespace BTranslator\Data\Project;
 
+module_load_include('inc', 'btrCore', 'data/lib/query');
 require_once(dirname(__FILE__) . '/erase.inc');
 
 /**
@@ -27,7 +28,7 @@ function import($origin, $project, $path) {
   erase($origin, $project, $purge = TRUE);
 
   // Create a project.
-  $pguid = _create_project($origin, $project)
+  $pguid = _create_project($origin, $project);
 
   // Get a list of all POT files on the given directory.
   $files = file_scan_directory($path, '/.*\.pot$/');
