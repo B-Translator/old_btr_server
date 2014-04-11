@@ -24,15 +24,13 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
   if ($context === NULL)  $context = '';
   $sguid = sha1($string . $context);
 
-  $db = $GLOBALS['btr_db'];
-
   // Check whether this string already exists or not.
   $query = "SELECT sguid FROM {btr_strings} WHERE sguid = :sguid";
   $args = array(':sguid' => $sguid);
-  $field = $db->query($query, $args)->fetchField();
+  $field = btr_query($query, $args)->fetchField();
   if (empty($field)) {
     // Insert a new string.
-    $db->insert('btr_strings')
+    btr_insert('btr_strings')
       ->fields(array(
           'string' => $string,
           'context' => $context,
@@ -52,7 +50,7 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
     ':pguid' => sha1($origin . $project),
     ':tplname' => $tplname,
   );
-  $potid = $db->query($query, $args)->fetchField();
+  $potid = btr_query($query, $args)->fetchField();
 
   // Check that the location does not already exist.
   $query = "SELECT lid FROM {btr_locations}
@@ -61,13 +59,13 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
     ':sguid' => $sguid,
     ':potid' => $potid,
   );
-  $lid = $db->query($query, $args)->fetchField();
+  $lid = btr_query($query, $args)->fetchField();
   if (!empty($lid)) {
     return NULL;
   }
 
   // Insert a new location.
-  $db->insert('btr_locations')
+  btr_insert('btr_locations')
     ->fields(array(
         'sguid' => $sguid,
         'potid' => $potid,
@@ -87,10 +85,9 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
  * Delete the string with the given id.
  */
 function btr_del_string($sguid) {
-  $db = $GLOBALS['btr_db'];
-  $db->delete('btr_strings')->condition('sguid', $sguid)->execute();
-  $db->delete('btr_locations')->condition('sguid', $sguid)->execute();
-  $db->delete('btr_translations')->condition('sguid', $sguid)->execute();
+  btr_delete('btr_strings')->condition('sguid', $sguid)->execute();
+  btr_delete('btr_locations')->condition('sguid', $sguid)->execute();
+  btr_delete('btr_translations')->condition('sguid', $sguid)->execute();
 }
 
 

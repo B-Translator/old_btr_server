@@ -50,7 +50,7 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   $potid = btr_query($query, $params)->fetchField();
 
   // Build the query for getting all the strings of this vocabulary.
-  $query = $GLOBALS['btr_db']->select('btr_locations', 'l')
+  $query = btr_select('btr_locations', 'l')
     ->fields('l', array('sguid'))
     ->condition('l.potid', $potid);
   $query->leftJoin('btr_strings', 's', 's.sguid = l.sguid');

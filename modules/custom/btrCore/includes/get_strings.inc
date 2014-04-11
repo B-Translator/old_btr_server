@@ -3,19 +3,19 @@
 function btr_get_string($sguid) {
   $sql = 'SELECT string FROM {btr_strings} WHERE sguid = :sguid';
   $args = array(':sguid' => $sguid);
-  $string = $GLOBALS['btr_db']->query($sql, $args)->fetchField();
+  $string = btr_query($sql, $args)->fetchField();
   return $string;
 }
 
 function btr_get_translation($tguid) {
   $sql = 'SELECT translation FROM {btr_translations} WHERE tguid = :tguid';
   $args = array(':tguid' => $tguid);
-  $translation = $GLOBALS['btr_db']->query($sql, $args)->fetchField();
+  $translation = btr_query($sql, $args)->fetchField();
   return $translation;
 }
 
 function btr_get_strings($arr_sguid, $lng) {
-  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
+  $query = btr_select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->condition('s.sguid', $arr_sguid, 'IN');
 
@@ -48,9 +48,6 @@ function btr_get_strings($arr_sguid, $lng) {
  *   associative arrays.
  */
 function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()) {
-
-  $db = $GLOBALS['btr_db'];
-
   //get the IDs of the strings that are returned by the filter query
   $assoc_arr_sguid = $filter_query->execute()->fetchAllAssoc('sguid');
   if (empty($assoc_arr_sguid))  return array();
@@ -63,7 +60,7 @@ function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()
       WHERE sguid IN (:arr_sguid)
   ";
   $args = array(':arr_sguid' => $arr_sguid);
-  $result = $db->query($get_strings, $args);
+  $result = btr_query($get_strings, $args);
   $arr_strings = $result->fetchAllAssoc('sguid');
 
   //get translations
@@ -77,7 +74,7 @@ function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()
       ORDER BY t.count DESC
   ";
   $args = array(':lng' => $lng, ':arr_sguid' => $arr_sguid);
-  $result = $db->query($get_translations, $args);
+  $result = btr_query($get_translations, $args);
   $arr_translations = $result->fetchAllAssoc('tguid');
 
   //get votes
@@ -95,7 +92,7 @@ function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()
         ORDER BY v.time DESC
     ";
     $args = array(':arr_tguid' => $arr_tguid);
-    $result = $db->query($get_votes, $args);
+    $result = btr_query($get_votes, $args);
     $arr_votes = $result->fetchAllAssoc('vid');
   }
 
@@ -117,7 +114,7 @@ function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()
         GROUP BY t.sguid, t.lng, t.count
     ";
     $args = array(':arr_lng' => $alternative_langs, ':arr_sguid' => $arr_sguid);
-    $result = $db->query($get_alternatives, $args);
+    $result = btr_query($get_alternatives, $args);
     $arr_alternatives = $result->fetchAllAssoc('tguid');
   }
   //dpm($arr_alternatives, '$arr_alternatives');  //debug
@@ -168,8 +165,7 @@ function btr_get_query_strings($filter_query, $lng, $alternative_langs = array()
  * return array($string, $translations)
  */
 function btr_get_string_and_translations($sguid, $lng) {
-  $db = $GLOBALS['btr_db'];
-  $query = $db->select('btr_strings', 's')
+  $query = btr_select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = btr_get_query_strings($query, $lng);

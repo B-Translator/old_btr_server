@@ -130,7 +130,7 @@ function _btrCore_user_set_data_sequential(&$edit, $account) {
       WHERE $where_condition
       GROUP BY p.project
     ";
-    $result = $GLOBALS['btr_db']->query($get_all_min_and_max_locations, $args);
+    $result = btr_query($get_all_min_and_max_locations, $args);
     $sequential->projects = $result->fetchAll();
     $sequential->idx = 0;
     $sequential->lid = $sequential->projects[0]->lmin;
@@ -262,9 +262,6 @@ function _btrCore_user_set_fields(&$edit, $account) {
  * existing record like that, and then insert a new one.
  */
 function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
-
-  $db = $GLOBALS['btr_db'];
-
   // Delete first any existing user which has the same umail and ulng.
   $args = array(
     ':umail' => $umail,
@@ -276,7 +273,7 @@ function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
     WHERE umail = :umail
       AND (ulng = :ulng OR ulng = :ulng_old)
   ";
-  $result = $db->query($delete_user, $args);
+  $result = btr_query($delete_user, $args);
 
   // Insert a new user with the given fields.
   $args = array(
@@ -290,7 +287,7 @@ function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
       INSERT INTO {btr_users} (umail, ulng, uid, name, status)
       VALUES (:umail, :ulng, :uid, :name, :status)
     ";
-  $db->query($insert_user, $args);
+  btr_query($insert_user, $args);
 }
 
 
@@ -304,5 +301,5 @@ function _btr_user_disable($umail, $ulng) {
     SET status = 0
     WHERE umail = :umail AND :ulng = ulng
   ";
-  $GLOBALS['btr_db']->query($update_user, $args);
+  btr_query($update_user, $args);
 }

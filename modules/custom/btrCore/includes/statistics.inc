@@ -66,8 +66,7 @@ function btr_stat_topcontrib($lng ='fr', $period ='week', $size =5) {
     ORDER BY score DESC
   ";
   $args = array(':lng' => $lng, ':from_date' => $from_date);
-  $db = $GLOBALS['btr_db'];
-  $topcontrib = $db->queryRange($sql_get_topcontrib, 0, $size, $args)->fetchAll();
+  $topcontrib = btr_query_range($sql_get_topcontrib, 0, $size, $args)->fetchAll();
 
   // Cache for 12 hours.
   cache_set("btr_stat_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btr', time() + 12*60*60);
@@ -88,8 +87,6 @@ function btr_statistics($lng) {
     return $cache->data;
   }
 
-  $db = $GLOBALS['btr_db'];
-
   $sql_count_translations = "SELECT count(*) as cnt FROM {btr_translations}
                              WHERE ulng = :lng AND time >= :from_date
                                AND umail NOT IN ('admin@example.com', 'admin@btranslator.org', '')";
@@ -101,8 +98,8 @@ function btr_statistics($lng) {
   foreach (array('week', 'month', 'year') as $period) {
     $from_date = date('Y-m-d', strtotime("-1 $period"));
     $args = array(':lng' => $lng, ':from_date' => $from_date);
-    $nr_votes = $db->query($sql_count_votes, $args)->fetchField();
-    $nr_translations = $db->query($sql_count_translations, $args)->fetchField();
+    $nr_votes = btr_query($sql_count_votes, $args)->fetchField();
+    $nr_translations = btr_query($sql_count_translations, $args)->fetchField();
 
     $stats[$period] = array(
       'period' => $period,

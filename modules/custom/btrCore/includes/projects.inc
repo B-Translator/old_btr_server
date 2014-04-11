@@ -27,7 +27,7 @@ function btr_project_list($origin =NULL, $project =NULL) {
   }
 
   // Start building the query.
-  $query = $GLOBALS['btr_db']->select('btr_projects', 'p')
+  $query = btr_select('btr_projects', 'p')
     ->fields('p', array('origin'))
     ->orderBy('origin');
 

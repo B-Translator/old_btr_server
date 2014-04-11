@@ -130,7 +130,7 @@ function _btr_sguid_get_sequential($uid =NULL) {
   // get and return the sguid
   $query = 'SELECT sguid FROM {btr_locations} WHERE lid=:lid';
   $args = array(':lid' => $lid);
-  $sguid = $GLOBALS['btr_db']->query($query, $args)->fetchField();
+  $sguid = btr_query($query, $args)->fetchField();
   return $sguid;
 }
 
@@ -148,8 +148,6 @@ function _btr_sguid_get_sequential($uid =NULL) {
  *   Randomly selected sguid.
  */
 function _btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
-  $db = $GLOBALS['btr_db'];
-
   // Get the list of projects that will be searched.
   $projects = _btr_get_pool_of_projects($uid, $target_projects);
 
@@ -165,7 +163,7 @@ function _btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
     LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
     LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
   ";
-  $nr_strings = $db->query($sql_count, $args)->fetchField();
+  $nr_strings = btr_query($sql_count, $args)->fetchField();
 
   // Get a random row number.
   $random_row_number = rand(0, $nr_strings - 1);
@@ -179,7 +177,7 @@ function _btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
     LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
     LIMIT $random_row_number, 1
   ";
-  $sguid = $db->query($sql_get_sguid, $args)->fetchField();
+  $sguid = btr_query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }
@@ -201,8 +199,6 @@ function _btr_sguid_get_random($uid =NULL, $target_projects =NULL) {
  *   The sguid of a randomly selected untranslated string.
  */
 function _btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
-  $db = $GLOBALS['btr_db'];
-
   // Get the list of projects that will be searched.
   $projects = _btr_get_pool_of_projects($uid, $target_projects);
 
@@ -221,7 +217,7 @@ function _btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
     LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
     WHERE t.sguid IS NULL
   ";
-  $nr_strings = $db->query($sql_count, $args)->fetchField();
+  $nr_strings = btr_query($sql_count, $args)->fetchField();
 
   // Get the sguid of a random untranslated. 'count' keeps in how many projects
   // a string appears. Ordering by 'count' and getting a random string
@@ -239,7 +235,7 @@ function _btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
     ORDER BY s.count DESC
     LIMIT $random_row_number, 1
   ";
-  $sguid = $db->query($sql_get_sguid, $args)->fetchField();
+  $sguid = btr_query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }
@@ -262,8 +258,6 @@ function _btr_sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
  *   The sguid of a randomly selected untranslated string.
  */
 function _btr_sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
-  $db = $GLOBALS['btr_db'];
-
   // Get the list of projects that will be searched.
   $projects = _btr_get_pool_of_projects($uid, $target_projects);
 
@@ -284,7 +278,7 @@ function _btr_sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
 	   WHERE t.sguid IS NOT NULL
          )  AS st
   ";
-  $nr_strings = $db->query($sql_count, $args)->fetchField();
+  $nr_strings = btr_query($sql_count, $args)->fetchField();
 
   // Get the sguid of a random translated string. We sort strings
   // by the number of translations they have, and try to select one
@@ -304,7 +298,7 @@ function _btr_sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
          )  AS st
     LIMIT $random_row_number, 1
   ";
-  $sguid = $db->query($sql_get_sguid, $args)->fetchField();
+  $sguid = btr_query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }
@@ -385,8 +379,7 @@ function btr_get_projects_of_sguid($sguid) {
       LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
       WHERE l.sguid = :sguid
   ";
-  $db = $GLOBALS['btr_db'];
-  $result = $db->query($get_projects, $args)->fetchAll();
+  $result = btr_query($get_projects, $args)->fetchAll();
   $projects = array();
   foreach ($result as $proj) {
     $projects[] = $proj->origin . '/' . $proj->project;

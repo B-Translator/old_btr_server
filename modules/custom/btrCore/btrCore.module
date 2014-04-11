@@ -104,33 +104,12 @@ function btrCore_mail($key, &$message, $params) {
  * Implements hook_init().
  */
 function btrCore_init() {
-
-  /*
-  // Set the parameters of the btrCore database.
-  global $databases;
-  $databases['btr_db']['default'] = array (
-      'database' => 'l10n_tst',
-      'username' => 'l10n_tst',
-      'password' => 'l10n_tst',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
-   );
-
-  // Somehow, declaring the database here does not work.
-  // Instead, this should be added to settings.php, and then
-  // it will work.
-
-  */
-
-  // Get a connection to the btr_db. All the queries
-  // of the btrCore module will use this connection.
+  // Define the database of B-Translator.
   if (isset($GLOBALS['databases']['btr_db']['default'])) {
-    $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
+    define('BTR_DB', 'btr_db');
   }
   else {
-    $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
+    define('BTR_DB', 'default');
   }
 }
 

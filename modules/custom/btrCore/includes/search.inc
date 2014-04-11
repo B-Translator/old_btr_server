@@ -110,7 +110,7 @@ function btr_build_search_filter($params) {
  */
 function btr_build_search_query($filter) {
 
-  $query = $GLOBALS['btr_db']->select('btr_strings', 's')
+  $query = btr_select('btr_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
   $query->addField('s', 'sguid');
   $query->groupBy('s.sguid');
@@ -217,20 +217,19 @@ function _btr_filter_by_author($query, $lng, $only_mine, $translated_by, $voted_
   }
 
   //get the umail for $translated_by and $voted_by
-  $db = $GLOBALS['btr_db'];
   $get_umail = 'SELECT umail FROM {btr_users} WHERE name = :name AND ulng = :ulng';
   $args = array();
   $args[':ulng'] = $lng;
   $args[':name'] = $translated_by;
-  $t_umail = ($translated_by == '') ? '' : $db->query($get_umail, $args)->fetchField();
+  $t_umail = ($translated_by == '') ? '' : btr_query($get_umail, $args)->fetchField();
   $args[':name'] = $voted_by;
-  $v_umail = ($voted_by == '') ? '' : $db->query($get_umail, $args)->fetchField();
+  $v_umail = ($voted_by == '') ? '' : btr_query($get_umail, $args)->fetchField();
 
   //if it is the same user, then search for strings
   //translated OR voted by this user
   if ($t_umail==$v_umail and $t_umail!='') {
     _btr_join_table($query, 'votes');
-    $query ->condition(db_or()
+    $query->condition(db_or()
       ->condition(db_and()
         ->condition('t.umail', $t_umail)
         ->condition('t.ulng', $lng)
