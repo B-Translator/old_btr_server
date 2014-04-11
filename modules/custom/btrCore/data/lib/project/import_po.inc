@@ -34,7 +34,7 @@ function import_po_files($origin, $project, $lng, $path) {
 
   // Check that the project exists.
   $query = "SELECT pguid FROM {btr_projects} WHERE pguid = '$pguid'";
-  if (!btr_query($query)) {
+  if (!btr_query($query)->fetchField()) {
     $errors[] = t("The project '!origin/!project' does not exist.",
                 array('!origin' => $origin, '!project' => $project));
     return $errors;
@@ -46,7 +46,7 @@ function import_po_files($origin, $project, $lng, $path) {
   // Process each PO file.
   foreach ($files as $file) {
     // Get the filename relative to the path, and the name of the template.
-    $filename = preg_replace("#^.*/$path/#", '', $file);
+    $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.po?$#', '', $filename);
 
     // Get the template id.
@@ -63,8 +63,10 @@ function import_po_files($origin, $project, $lng, $path) {
     }
 
     // Process this PO file.
-    _process_po_file($potid, $tplname, $lng, $file, $filename);
+    _process_po_file($potid, $tplname, $lng, $file->uri, $filename);
   }
+
+  return $errors;
 }
 
 /**
@@ -74,7 +76,7 @@ function import_po_files($origin, $project, $lng, $path) {
 function _process_po_file($potid, $tplname, $lng, $file, $filename) {
   // Parse the PO file.
   module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
-  $parser = new POParser;
+  $parser = new \BTranslator\POParser;
   $entries = $parser->parse($file);
 
   // Get headers and comments.
@@ -97,8 +99,7 @@ function _process_po_file($potid, $tplname, $lng, $file, $filename) {
     // Add the translation for this string.
     $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
     if (trim($translation) != '') {
-      //print_r('--  ' . $translation . "\n");  //debug
-      $tguid = $db->insert_translation($sguid, $lng, $translation);
+      _add_translation($sguid, $lng, $translation);
     }
   }
 }
@@ -151,8 +152,8 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
 }
 
 function _insert_file($file, $filename, $hash, $potid, $lng, $headers, $comments) {
-  $query = '
-    INSERT INTO btr_files
+  $insert_file = '
+    INSERT INTO {btr_files}
       ( filename, content, hash, potid,
         lng, headers, comments, uid, time )
     VALUES
@@ -167,9 +168,10 @@ function _insert_file($file, $filename, $hash, $potid, $lng, $headers, $comments
     ':headers' => $headers,
     ':comments' => $comments,
     ':uid' => $GLOBALS['user']->uid,
-    ':time' => REQUEST_TIME,
+    ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
   );
-  $fid = btr_query($query, $args);
+  btr_query($insert_file, $args);
+  $fid = btr_query('SELECT LAST_INSERT_ID()')->fetchField();
 
   return $fid;
 }
@@ -204,15 +206,22 @@ function _get_string_sguid($entry) {
 /**
  * Insert a translation into DB.
  */
-function _insert_translation($sguid, $lng, $translation) {
+function _add_translation($sguid, $lng, $translation) {
   $tguid = sha1($translation . $lng . $sguid);
-  $account = user_load($GLOBALS['user']->uid);
+
+  // Check first that such a translation does not exist.
+  $get_tguid = 'SELECT tguid FROM {btr_translations} WHERE tguid = :tguid';
+  $args = array(':tguid' => $tguid);
+  if (btr_query($get_tguid, $args)->fetchField())  return $tguid;
+
+  // Insert a new translations.
   $insert_translation = '
-    INSERT INTO btr_translations
+    INSERT INTO {btr_translations}
       (sguid, lng, translation, tguid, count, umail, ulng, time)
     VALUES
       (:sguid, :lng, :translation, :tguid, :count, :umail, :ulng, :time) ';
-  $params = array(
+  $account = user_load($GLOBALS['user']->uid);
+  $args = array(
     ':sguid' => $sguid,
     ':lng' => $lng,
     ':translation' => $translation,
@@ -220,9 +229,7 @@ function _insert_translation($sguid, $lng, $translation) {
     ':count' => 0,
     ':umail' => $account->init,
     ':ulng' => $lng,
-    ':time' => REQUEST_TIME,
+    ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
   );
-  btr_query($insert_translation, $params);
-
-  return $tguid;
+  btr_query($insert_translation, $args);
 }

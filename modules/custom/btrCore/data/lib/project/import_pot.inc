@@ -40,11 +40,11 @@ function import($origin, $project, $path) {
   // Process each POT file.
   foreach ($files as $file) {
     // Get the filename relative to the path, and the name of the template.
-    $filename = preg_replace("#^.*/$path/#", '', $file);
+    $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.pot?$#', '', $filename);
 
     // Process the POT file.
-    _process_pot_file($pguid, $tplname, $file, $filename);
+    _process_pot_file($pguid, $tplname, $file->uri, $filename);
   }
 }
 
@@ -64,7 +64,7 @@ function _create_project($origin, $project) {
       ':origin' => $origin,
       ':project' => $project,
       ':uid' => $GLOBALS['user']->uid,
-      ':time' => REQUEST_TIME,
+      ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
     ));
 
   return $pguid;
@@ -80,8 +80,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
 
   // Parse the POT file.
   module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
-  //include_once(dirname(dirname(__FILE__)).'/gettext/POParser.php');
-  $parser = new POParser;
+  $parser = new \BTranslator\POParser;
   $entries = $parser->parse($file);
 
   // Process each gettext entry.
@@ -105,13 +104,14 @@ function _create_template($tplname, $filename, $pguid) {
       VALUES
         (:tplname, :filename, :pguid, :uid, :time)
     ';
-  $potid = btr_query($insert_template, array(
-             ':tplname' => $tplname,
-             ':filename' => $filename,
-             ':pguid' => $pguid,
-             ':uid' => $GLOBALS['user']->uid,
-             ':time' => REQUEST_TIME,
-           ));
+  btr_query($insert_template, array(
+      ':tplname' => $tplname,
+      ':filename' => $filename,
+      ':pguid' => $pguid,
+      ':uid' => $GLOBALS['user']->uid,
+      ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
+    ));
+  $potid = btr_query('SELECT LAST_INSERT_ID()')->fetchField();
   return $potid;
 }
 
@@ -171,7 +171,7 @@ function _insert_string($string, $context) {
     ':context' => $context,
     ':sguid' => sha1($string . $context),
     ':uid' => $GLOBALS['user']->uid,
-    ':time' => REQUEST_TIME,
+    ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
     ':count' => 1,
   );
   btr_query($insert_string, $params);
@@ -184,15 +184,15 @@ function _insert_location($potid, $sguid, $entry) {
   $entry += array(
     'translator-comments' => NULL,
     'extracted-comments' => NULL,
-    'references' => NULL,
-    'flags' => NULL,
+    'references' => array(),
+    'flags' => array(),
     'previous-msgctxt' => NULL,
     'previous-msgid' => NULL,
     'previous-msgid_plural' => NULL,
   );
 
   $insert_location = '
-    INSERT INTO btr_locations
+    INSERT INTO {btr_locations}
       (sguid, potid,
        translator_comments, extracted_comments, line_references, flags,
        previous_msgctxt, previous_msgid, previous_msgid_plural)
@@ -200,16 +200,16 @@ function _insert_location($potid, $sguid, $entry) {
       (:sguid, :potid,
        :translator_comments, :extracted_comments, :line_references, :flags,
        :previous_msgctxt, :previous_msgid, :previous_msgid_plural) ';
-  $params = array(
+  $args = array(
     ':sguid' => $sguid,
     ':potid' => $potid,
     ':translator_comments' => $entry['translator-comments'],
     ':extracted_comments' => $entry['extracted-comments'],
-    ':line_references' => $entry['references'],
-    ':flags' => $entry['flags'],
+    ':line_references' => implode(' ', $entry['references']),
+    ':flags' => implode(' ', $entry['flags']),
     ':previous_msgctxt' => $entry['previous-msgctxt'],
     ':previous_msgid' => $entry['previous-msgid'],
     ':previous_msgid_plural' => $entry['previous-msgid_plural'],
   );
-  btr_query($insert_location, $params);
+  btr_query($insert_location, $args);
 }
