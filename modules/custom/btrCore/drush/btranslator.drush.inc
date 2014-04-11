@@ -27,7 +27,7 @@ function btranslator_drush_command() {
       "drush btr-impot KDE kturtle \\      \n      \$(pwd)/kturtle/" => 'Import kturtle into the DB.',
     ),
     'aliases' => array('btr-impot'),
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    //'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_LOGIN,
   );
 
   // The command 'btr-project-import-translations'
@@ -45,7 +45,6 @@ function btranslator_drush_command() {
       "drush btr-impo \\\n   KDE kturtle fr \$(pwd)/kturtle_fr/" => 'Import the French translation of kturtle into the DB.',
     ),
     'aliases' => array('btr-impo'),
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
 
   // The 'po-export' command
@@ -63,7 +62,6 @@ function btranslator_drush_command() {
       "drush -l l10n-sq.org expo \\\n  KDE kturtle sq ../kturtle_sq.po" => 'Export KDE/kturtle Albanian into kturtle_sq.po.',
     ),
     'aliases' => array('expo'),
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
   );
 
   // These will appear in the list of topics when `drush topic` is executed.
@@ -72,7 +70,6 @@ function btranslator_drush_command() {
     'description' => dt('Importing and exporting PO files from B-Translator.'),
     'hidden' => TRUE,
     'topic' => TRUE,
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'callback' => 'drush_print_file',
     'callback arguments' => array(dirname(__FILE__) . '/btranslator-topic.txt'),
   );
@@ -134,8 +131,17 @@ function drush_btranslator_btr_project_import_templates($origin, $project, $path
  * Command callback for btr-project-import-translations.
  */
 function drush_btranslator_btr_project_import_translations($origin, $project, $lng, $path) {
-  module_load_include('inc', 'btrCore', 'data/lib/import_po');
-  BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path);
+  module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
+  try {
+    $errors = BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path);
+    foreach ($errors as $error)  drush_log($error, 'error');
+  }
+  catch (Exception $e) {
+    $trace = $e->getTraceAsString();
+    $trace = preg_replace('/^#0 .*/', '', $trace);
+    $trace = str_replace(DRUPAL_ROOT.'/', '', $trace);
+    drush_log($trace, 'error');
+  }
 }
 
 /**
