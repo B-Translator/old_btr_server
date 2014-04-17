@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>B-Translator API Examples</title>
+
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+    <script src="jquery.min.js"></script>
+    <script src="jquery-ui.js"></script>
+
+    <script src="config.js"></script>
+    <script src="http_request.js"></script>
+    <!-- <script src="get_access_token.js"></script> -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#examples" ).accordion();
+
+            // Load an example when it is clicked.
+            $(".example").click(function(){
+                var filename = this.id + '.js';
+                $.get(filename, 'script')
+                    .done(function (file_content) {
+                        $("#code").text(file_content);
+                    });
+            });
+        });
+    </script>
+  </head>
+
+  <body>
+    <h1>B-Translator API Examples</h1>
+
+    <div id="examples">
+      <h2>report</h2>
+      <div>
+        <h3>statistics</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="report/statistics_get">GET public/btr/report/statistics</span></li>
+            <li><span class="example" id="report/statistics_post">POST public/btr/report/statistics</span></li>
+          </ul>
+        </div>
+
+        <h3>topcontrib</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="report/topcontrib_get">GET public/btr/report/topcontrib</span></li>
+            <li><span class="example" id="report/topcontrib_post">POST public/btr/report/topcontrib</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>translations</h2>
+      <div>
+        <h3>add</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/add">POST btr/translations/add</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>project</h2>
+      <div>
+        <p>...</p>
+      </div>
+    </div>
+
+    <div id="div-output">
+      <h2>Example</h2>
+      <pre id="code"> code </pre>
+      <h2>Result</h2>
+      <pre id="output"> output </pre>
+    </div>
+  </body>
+</html>
