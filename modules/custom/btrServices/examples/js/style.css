@@ -21,17 +21,18 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 26px;
 }
 
 h2 {
   font-size: 20px;
+  cursor: pointer;
 }
 
 h3 {
   font-size: 18px;
   border: none;
-  margin: 0px;
+  margin-left: 20px;
 }
 
 hr {

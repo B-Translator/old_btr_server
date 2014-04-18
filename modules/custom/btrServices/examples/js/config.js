@@ -1,4 +1,13 @@
+
+/**
+ * Base URL of the server that offers the services.
+ */
 var base_url = 'https://dev.l10n.org.xx';
+
+/**
+ * Settings for getting an OAuth2 access_token with
+ * the user credentials flow ('password' grant_type).
+ */
 var oauth2 = {
     token_url: base_url + '/oauth2/token',
     client_id: 'emberjs',
