@@ -16,7 +16,7 @@ var http_request = function(url, settings) {
         async: settings.async,
         beforeSend: function() {
             var str_settings = JSON.stringify(settings, undefined, 4);
-            debug('------------ start http_request -----------------'
+            debug("\n------------ start http_request -----------------"
                   + "\n===> URL: " + url
                   + "\n===> SETTINGS:\n" + str_settings);
             return true;
@@ -29,7 +29,7 @@ var http_request = function(url, settings) {
         debug(textStatus + ' ' + jqXHR.status + ': ' + errorThrown);
     });
     request.always(function(){
-        debug("\n------------ end http_request -----------------");
+        debug("\n------------ end http_request -----------------\n");
     });
     return request;
 }
