@@ -12,28 +12,7 @@
     <script src="config.js"></script>
     <script src="http_request.js"></script>
     <script src="get_access_token.js"></script>
-    <script type="text/javascript">
-        // Write a debug message on the output area.
-        var debug = function(msg) {
-            $('#output').append(msg);
-        };
-
-        $(document).ready(function() {
-            $("#examples" ).accordion();
-
-            // Load an example when it is clicked.
-            $(".example").click(function(){
-                $('#code').html('');
-                $('#output').html('');
-
-                var filename = this.id + '.js';
-                $.get(filename, 'script')
-                    .done(function (file_content) {
-                        $("#code").text(file_content);
-                    });
-            });
-        });
-    </script>
+    <script src="examples.js"></script>
   </head>
 
   <body>
@@ -67,7 +46,15 @@
             <li><span class="example" id="translations/add">POST btr/translations/add</span></li>
           </ul>
         </div>
+
+        <h3>get</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/get">POST public/btr/translations/get</span></li>
+          </ul>
+        </div>
       </div>
+
 
       <h2>project</h2>
       <div>
