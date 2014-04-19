@@ -14,6 +14,7 @@ var http_request = function(url, settings) {
         headers: settings.headers,
         dataType: 'json',
         async: settings.async,
+        crossDomain: settings.crossDomain || true,
         beforeSend: function() {
             var str_settings = JSON.stringify(settings, undefined, 4);
             debug("\n------------ start http_request -----------------"
@@ -26,7 +27,7 @@ var http_request = function(url, settings) {
         debug("\n===> RESULT:\n" + JSON.stringify(response, undefined, 4));
     });
     request.fail(function(jqXHR, textStatus, errorThrown) {
-        debug(textStatus + ' ' + jqXHR.status + ': ' + errorThrown);
+        debug("\n===> ERROR " + jqXHR.status + ': ' + errorThrown);
     });
     request.always(function(){
         debug("\n------------ end http_request -----------------\n");

@@ -4,11 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>B-Translator API Examples</title>
 
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
-    <script src="jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- <script src="jquery.min.js"></script> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="jquery-ui.js"></script>
 
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <script src="config.js"></script>
     <script src="http_request.js"></script>
     <script src="get_access_token.js"></script>
@@ -40,6 +41,37 @@
 
       <h2>translations</h2>
       <div>
+        <h3>get_random_sguid</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/get_random_sguid">GET public/btr/translations/get_random_sguid</span></li>
+          </ul>
+        </div>
+
+        <h3>get</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/retrieve">GET public/btr/translations/string_id</span></li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/get">POST public/btr/translations/get</span></li>
+          </ul>
+        </div>
+
+        <h3>search</h3>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/list">GET public/btr/translations</span></li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li><span class="example" id="translations/search">POST public/btr/translations/search</span></li>
+          </ul>
+        </div>
+
         <h3>add</h3>
         <div>
           <ul>
@@ -47,12 +79,6 @@
           </ul>
         </div>
 
-        <h3>get</h3>
-        <div>
-          <ul>
-            <li><span class="example" id="translations/get">POST public/btr/translations/get</span></li>
-          </ul>
-        </div>
       </div>
 
 

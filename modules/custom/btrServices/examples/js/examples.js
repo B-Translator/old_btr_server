@@ -4,17 +4,20 @@ var debug = function(msg) {
 };
 
 $(document).ready(function() {
-    $("#examples" ).accordion();
+    $('#examples' ).accordion({
+        active: 1,
+        heightStyle: 'content',
+    });
 
     // Load an example when it is clicked.
-    $(".example").click(function(){
+    $('.example').click(function(){
         $('#code').html('');
         $('#output').html('');
 
         var filename = this.id + '.js';
         $.get(filename, 'script')
             .done(function (file_content) {
-                $("#code").text(file_content);
+                $('#code').text(file_content);
             });
     });
 });
