@@ -30,9 +30,10 @@ h2 {
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 16px;
   border: none;
-  margin-left: 20px;
+  margin: 5px 0 0 15px;
+  padding-bottom: 0;
 }
 
 hr {
@@ -43,11 +44,11 @@ hr {
 }
 
 p, ul, ol {
-  margin: 0 0 5px;
+  margin: 0px;
 }
 
 li {
-  margin: 5px;
+  margin: 0 0 0 5px;
 }
 
 a {
@@ -62,12 +63,12 @@ a:hover {
 
 #examples {
   float: left;
-  width: 300px;
+  width: 350px;
 }
 
 #div-output {
   float: left;
-  margin: 2px 30px 5px 15px;
+  margin: 2px 10px 5px 15px;
   width: 60%;
 }
 

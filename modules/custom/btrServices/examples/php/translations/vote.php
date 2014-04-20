@@ -8,8 +8,9 @@ include_once($path . '/get_access_token.php');
 $url = $base_url . '/public/btr/translations/translated?lng=sq';
 $result = http_request($url);
 
-// Get the tguid of the first translation.
-$tguid = $result[0]['translations'][0]['tguid'];
+// Get the sguid and the tguid of the first translation.
+$sguid = $result['string']['sguid'];
+$tguid = $result['string']['translations'][0]['tguid'];
 
 // Get an access  token.
 $access_token = get_access_token($auth);
