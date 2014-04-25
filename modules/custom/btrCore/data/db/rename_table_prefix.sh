@@ -2,11 +2,24 @@
 ### change the old prefix of the tables to the new one
 
 ### what are the old and new prefices
-old='btr_'
-new='btr1_'
+old='btranslator_data.l10n_feedback_'
+new='btr_data.btr_'
 
 ### list of all the tables
-tables="diffs snapshots files projects templates locations strings translations votes users"
+tables="
+  diffs
+  snapshots
+  files
+  projects
+  templates
+  locations
+  strings
+  translations
+  translations_trash
+  votes
+  votes_trash
+  users
+"
 
 dbname=${BTR_DATA:-btr_data}
 mysql="mysql --defaults-file=/etc/mysql/debian.cnf -B --database=$dbname"
