@@ -4,7 +4,7 @@
  * Functions called by cron.
  */
 
-include_once dirname(__FILE__) . '/includes/mail_notifications.inc';
+module_load_include('inc', 'btrCore', 'includes/mail_notifications');
 
 /*
  * Implements hook_cron_queue_info().
@@ -140,8 +140,8 @@ function btrCore_send_strings_for_review() {
     if (_btrCore_dont_send_email($account))  continue;
 
     // get a sguid according to the user preferencies
-    require_once(dirname(__FILE__) . '/translations/vote.inc');
-    $sguid = btrCore_get_sguid($account->uid);
+    module_load_include('inc', 'btrCore', 'includes/get_sguid');
+    $sguid = _btr_sguid_get_next($account->uid);
 
     $message_params = array(
       'type' => 'string-to-be-reviewed',
