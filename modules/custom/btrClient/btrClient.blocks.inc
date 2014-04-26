@@ -198,6 +198,7 @@ function _btrClient_block_topcontrib() {
                       'query' => array(
                         'lng' => $lng,
                         'voted_by' => $user['name'],
+                        'date_filter' => 'votes',
                         'from_date' => $from_date
                       ))),
     );
