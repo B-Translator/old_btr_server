@@ -142,7 +142,7 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
       '#tag' => 'div', // Wrap it in a div.
       '#type' => 'html_tag',
       '#attributes' => array('class' => 'sharethis-buttons'),
-      '#value' => sharethis_get_button_HTML($data_options, $path=$url, "String: $short_string"),
+      '#value' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $short_string")),
       '#weight' => 100,
     );
 
