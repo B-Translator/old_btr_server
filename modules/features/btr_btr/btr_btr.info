@@ -9,6 +9,7 @@ dependencies[] = features
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
+features[rules_config][] = rules_assign_contributor_role
 features[user_permission][] = btranslator-admin
 features[user_permission][] = btranslator-export
 features[user_permission][] = btranslator-flag
