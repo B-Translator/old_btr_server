@@ -1,0 +1,13 @@
+name = btr_service_links
+core = 7.x
+package = Features
+dependencies[] = ctools
+dependencies[] = strongarm
+dependencies[] = service_links
+dependencies[] = general_services
+
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[variable][] = service_links_path_icons
+features[variable][] = service_links_show
+features[variable][] = service_links_style

@@ -1,0 +1,5 @@
+dependencies:service_links
+dependencies:general_services
+variable:service_links_path_icons
+variable:service_links_show
+variable:service_links_style
