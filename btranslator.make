@@ -97,12 +97,13 @@ projects[drupalchat][version] = "1.0-beta15"
 projects[disqus][version] = "1.10"
 projects[disqus][patch][] = "http://drupal.org/files/disqus-https.patch"
 projects[sharethis][version] = "2.6"
+projects[service_links][version] = "2.2"
 
 projects[hybridauth][version] = "2.8"
 projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-Adding_support_for_DrupalOAuth2_provider.patch"
 projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-2-Small_fix_on_the_previous_patch.patch"
 
-projects[fb][version] = "3.4-beta3"
+projects[fb][version] = "3.4"
 projects[invite][version] = "2.1-beta2"
 
 ;--------------------
@@ -118,8 +119,8 @@ projects[mailsystem][version] = "2.34"
 projects[phpmailer][version] = "3.x-dev"
 projects[mimemail][version] = "1.0-beta3"
 projects[reroute_email][version] = "1.1"
-projects[simplenews][version] = "1.0"
-projects[mass_contact][version] = "1.0-beta3"
+projects[simplenews][version] = "1.1"
+projects[mass_contact][version] = "1.0"
 
 
 ;--------------------
