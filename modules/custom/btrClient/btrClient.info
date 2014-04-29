@@ -4,8 +4,8 @@ package = B-Translator
 core = 7.x
 
 dependencies[] = btrCore
-dependencies[] = disqus
-dependencies[] = sharethis
+;dependencies[] = disqus
+;dependencies[] = sharethis
 dependencies[] = entity
 dependencies[] = rules
 dependencies[] = field_sql_storage

@@ -136,29 +136,45 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
     $short_string = btrClient_shorten($string['string'], 50);
     $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
 
-    // define the sharethis form element
-    $data_options = sharethis_get_options_array();
-    $form['sharethis'] = array(
-      '#tag' => 'div', // Wrap it in a div.
-      '#type' => 'html_tag',
-      '#attributes' => array('class' => 'sharethis-buttons'),
-      '#value' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $short_string")),
-      '#weight' => 100,
-    );
+    if (module_exists('service_links')) {
+      // define the service_links form element
+      $style = SERVICE_LINKS_STYLE_IMAGE;
+      $form['service_links'] = array(
+        '#tag' => 'div', // Wrap it in a div.
+        '#type' => 'html_tag',
+        '#attributes' => array('class' => 'service-links-buttons'),
+        '#value' => theme('service_links_block_format', array('items' => service_links_render(NULL, FALSE, $style), 'style' => $style)),
+        '#weight' => 100,
+      );
+    }
 
-    // define the disqus form element
-    $form['disqus'] = array(
-      '#type' => 'disqus',
-      '#disqus' => array(
-        'domain' => variable_get('disqus_domain', 'dev-btranslator'),
-        'status' => TRUE,
-        'url' => $url,
-        'title' => $short_string,
-        'identifier' => "translations/$lng/$sguid",
-        'developer' => variable_get('disqus_developer', '1'),
-      ),
-      '#weight' => 101,
-    );
+    if (module_exists('sharethis')) {
+      // define the sharethis form element
+      $data_options = sharethis_get_options_array();
+      $form['sharethis'] = array(
+        '#tag' => 'div', // Wrap it in a div.
+        '#type' => 'html_tag',
+        '#attributes' => array('class' => 'sharethis-buttons'),
+        '#value' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $short_string")),
+        '#weight' => 100,
+      );
+    }
+
+    if (module_exists('disqus')) {
+      // define the disqus form element
+      $form['disqus'] = array(
+        '#type' => 'disqus',
+        '#disqus' => array(
+          'domain' => variable_get('disqus_domain', 'dev-btranslator'),
+          'status' => TRUE,
+          'url' => $url,
+          'title' => $short_string,
+          'identifier' => "translations/$lng/$sguid",
+          'developer' => variable_get('disqus_developer', '1'),
+        ),
+        '#weight' => 101,
+      );
+    }
   }
 
   //dpm($form, '$form');  //debug
