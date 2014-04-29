@@ -140,11 +140,11 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
       // define the service_links form element
       $style = SERVICE_LINKS_STYLE_IMAGE;
       $form['service_links'] = array(
-        '#tag' => 'div', // Wrap it in a div.
-        '#type' => 'html_tag',
-        '#attributes' => array('class' => 'service-links-buttons'),
-        '#value' => theme('service_links_block_format', array('items' => service_links_render(NULL, FALSE, $style), 'style' => $style)),
         '#weight' => 100,
+        '#prefix' => '<div id="service-links-block">',
+        '#markup' => '<h3>' . t('Share:') . '</h3>'
+        . theme('service_links_block_format', array('items' => service_links_render(NULL, FALSE, $style), 'style' => $style)),
+        '#suffix' => '</div>',
       );
     }
 
@@ -152,11 +152,10 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
       // define the sharethis form element
       $data_options = sharethis_get_options_array();
       $form['sharethis'] = array(
-        '#tag' => 'div', // Wrap it in a div.
-        '#type' => 'html_tag',
-        '#attributes' => array('class' => 'sharethis-buttons'),
-        '#value' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $short_string")),
         '#weight' => 100,
+        '#prefix' => '<div id="sharethis-buttons">',
+        '#markup' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $short_string")),
+        '#suffix' => '</div>',
       );
     }
 

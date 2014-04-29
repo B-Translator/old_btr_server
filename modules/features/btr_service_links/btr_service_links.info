@@ -5,6 +5,8 @@ dependencies[] = ctools
 dependencies[] = strongarm
 dependencies[] = service_links
 dependencies[] = general_services
+stylesheets[screen][] = btr_service_links_screen.css
+stylesheets[print][] = btr_service_links_print.css
 
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1

@@ -14,7 +14,7 @@ function btr_service_links_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'service_links_path_icons';
-  $strongarm->value = 'profiles/btranslator/modules/contrib/service_links/images';
+  $strongarm->value = 'profiles/btranslator/modules/features/btr_service_links/images';
   $export['service_links_path_icons'] = $strongarm;
 
   $strongarm = new stdClass();
