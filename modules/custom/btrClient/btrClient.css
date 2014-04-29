@@ -1,3 +1,9 @@
+
+/* Don't show the header for the page of translations. */
+body.page-translations h1.page-header {
+  display: none;
+}
+
 /* Overview navigation tables for projects and languages */
 table.btr-ui-overview {
   width: 100%;
