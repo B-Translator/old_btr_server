@@ -374,6 +374,8 @@ function _btrCore_get_string_url($uid, $sguid) {
   $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
   $url = url("translations/$lng/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
 
+  return $url;
+  /*
   // get a short url
   $short_url = _btrCore_get_short_url($url);
   if ($short_url == 'wait') {
@@ -387,6 +389,7 @@ function _btrCore_get_string_url($uid, $sguid) {
   else {
     return $short_url;
   }
+  */
 }
 
 /**
