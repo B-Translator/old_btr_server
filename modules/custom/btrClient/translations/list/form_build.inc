@@ -40,10 +40,7 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
       '#lng' => $lng,
     ),
 
-    'buttons' => array(
-      //'#prefix' => '<div class="filter-submit">',
-      //'#suffix' => '</div>',
-    ),
+    'buttons' => _btrClient_translate_form_buttons($lng),
 
     'pager_bottom' => array(
       '#weight' => 10,
@@ -51,15 +48,45 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
     ),
   );
 
+  // Fill in string values for the editor.
+  foreach ($strings as $string) {
+    $sguid = $string['sguid'];
+    $form['strings'][$sguid] = _btrClient_translate_form_item($form_state, $string, $lng);
+    // TODO: Display the number of comments for each string.
+  }
+
+  // If there is only one string.
+  if (sizeof($strings)==1) {
+    // Set the page title (no longer than 20 chars).
+    $title = btrClient_shorten($string['string'], 20);
+    drupal_set_title(t('String: !string', array('!string' => $title),
+        array('context' => 'set the page title')));
+
+    // Append the social share buttons and comments to the form.
+    $path = "translations/$lng/$sguid";
+    $title = btrClient_shorten($string['string'], 50);
+    _btrClient_translate_form_add_share_and_comment($form, $path, $title);
+  }
+
+  return $form;
+}
+
+/**
+ * Get the buttons of the form.
+ */
+function _btrClient_translate_form_buttons($lng) {
+  //$buttons['#prefix'] = '<div class="filter-submit">';
+  //$buttons['#suffix'] = '</div>';
+
   // don't show the Back button on the search interface
   if ( current_path() != 'translations/search' && isset($_SESSION['btrClient']['previous_url']) ) {
-    $form['buttons']['previous'] = array(
+    $buttons['previous'] = array(
       '#type' => 'submit',
       '#value' => t('Previous'),
     );
   }
 
-  $form['buttons']['login'] = array(
+  $buttons['login'] = array(
     '#type' => 'submit',
     '#value' => t('Login'),
     '#access' => !user_is_logged_in(),
@@ -69,7 +96,7 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
   // permissions to submit votes and suggestions.
   $translation_lng = variable_get('btrClient_translation_lng', 'fr');
   $enable_submit = ($lng==$translation_lng);
-  $form['buttons']['submit'] = array(
+  $buttons['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
     '#access' => $enable_submit,
@@ -77,107 +104,75 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
 
   // don't show the Next buttons on the search interface
   if (current_path() != 'translations/search') {
-    $form['buttons']['next'] = array(
+    $buttons['next'] = array(
       '#type' => 'submit',
       '#value' => t('Next'),
     );
-    $form['buttons']['translated'] = array(
+    $buttons['translated'] = array(
       '#type' => 'submit',
       '#value' => t('Translated'),
     );
-    $form['buttons']['untranslated'] = array(
+    $buttons['untranslated'] = array(
       '#type' => 'submit',
       '#value' => t('Untranslated'),
     );
-    $form['buttons']['same_project'] = array(
+    $buttons['same_project'] = array(
       '#type' => 'checkbox',
       '#title' => t('Same Project'),
       '#value' => isset($_SESSION['btrClient']['same_project']) ? $_SESSION['btrClient']['same_project'] : FALSE,
     );
   }
 
-  // Fill in string values for the editor.
-  foreach ($strings as $string) {
-    $sguid = $string['sguid'];
-    $form['strings'][$sguid] = _btrClient_translate_form_item($form_state, $string, $lng);
-    /*
-    // TODO: Display the number of comments for each string.
-    $form['strings'][$sguid]['disqus'] = array(
-      '#theme' => 'links',
-      '#links' => array('disqus_comments_num' => array(
-      'title' => t('Comments'),
-      'href' => "translations/$lng/$sguid",
-      'fragment' => 'disqus_thread',
-      'attributes' => array(
-      // Identify the node for Disqus with the unique identifier:
-      // http://docs.disqus.com/developers/universal/#comment-count
-      'data-disqus-identifier' => "translations/$lng/$sguid",
-      )
-      )),
-      '#attributes' => array(
-      'class' => array('links', 'inline'),
-      ),
-      );
-      $form['strings'][$sguid]['#attached']['js'][] = drupal_get_path('module', 'disqus') . '/disqus.js';
-      $form['strings'][$sguid]['#attached']['js'][] = array(
-      'data' => array('disqusComments' => "l10n-$lng"),
-      'type' => 'setting',
+  return $buttons;
+}
+
+/**
+ * Append the social share buttons and comments to the form.
+ */
+function _btrClient_translate_form_add_share_and_comment(&$form, $path, $title) {
+  $url = url($path, array('absolute' => TRUE));
+
+  if (module_exists('service_links')) {
+    // define the service_links form element
+    $style = SERVICE_LINKS_STYLE_IMAGE;
+    $form['service_links'] = array(
+      '#weight' => 100,
+      '#prefix' => '<div id="service-links-block">',
+      '#markup' => '<h3>' . t('Share:') . '</h3>'
+      . theme('service_links_block_format', array(
+          'items' => service_links_render(NULL, FALSE, $style),
+          'style' => $style,
+        )),
+      '#suffix' => '</div>',
     );
-    */
   }
 
-  if (sizeof($strings)==1) {
-
-    // set the page title (no longer than 20 chars)
-    $title = btrClient_shorten($string['string'], 20);
-    drupal_set_title(t('String: !string', array('!string' => $title),
-        array('context' => 'set the page title')));
-
-    $short_string = btrClient_shorten($string['string'], 50);
-    $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
-
-    if (module_exists('service_links')) {
-      // define the service_links form element
-      $style = SERVICE_LINKS_STYLE_IMAGE;
-      $form['service_links'] = array(
-        '#weight' => 100,
-        '#prefix' => '<div id="service-links-block">',
-        '#markup' => '<h3>' . t('Share:') . '</h3>'
-        . theme('service_links_block_format', array('items' => service_links_render(NULL, FALSE, $style), 'style' => $style)),
-        '#suffix' => '</div>',
-      );
-    }
-
-    if (module_exists('sharethis')) {
-      // define the sharethis form element
-      $data_options = sharethis_get_options_array();
-      $form['sharethis'] = array(
-        '#weight' => 100,
-        '#prefix' => '<div id="sharethis-buttons">',
-        '#markup' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $short_string")),
-        '#suffix' => '</div>',
-      );
-    }
-
-    if (module_exists('disqus')) {
-      // define the disqus form element
-      $form['disqus'] = array(
-        '#type' => 'disqus',
-        '#disqus' => array(
-          'domain' => variable_get('disqus_domain', 'dev-btranslator'),
-          'status' => TRUE,
-          'url' => $url,
-          'title' => $short_string,
-          'identifier' => "translations/$lng/$sguid",
-          'developer' => variable_get('disqus_developer', '1'),
-        ),
-        '#weight' => 101,
-      );
-    }
+  if (module_exists('sharethis')) {
+    // define the sharethis form element
+    $data_options = sharethis_get_options_array();
+    $form['sharethis'] = array(
+      '#weight' => 100,
+      '#prefix' => '<div id="sharethis-buttons">',
+      '#markup' => theme('sharethis', array('data_options' => $data_options, 'm_path' => $url, 'm_title' => "String: $title")),
+      '#suffix' => '</div>',
+    );
   }
 
-  //dpm($form, '$form');  //debug
-  return $form;
+  if (module_exists('disqus')) {
+    // define the disqus form element
+    $form['disqus'] = array(
+      '#type' => 'disqus',
+      '#disqus' => array(
+        'domain' => variable_get('disqus_domain', 'dev-btranslator'),
+        'status' => TRUE,
+        'url' => $url,
+        'title' => $title,
+        'identifier' => $path,
+        'developer' => variable_get('disqus_developer', '1'),
+      ),
+      '#weight' => 101,
+    );
+  }
 }
 
 /**
