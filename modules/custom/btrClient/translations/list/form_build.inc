@@ -180,7 +180,7 @@ function _btrClient_translate_form_add_share_and_comment(&$form, $path, $title) 
 
 function _btrClient_translate_form_add_metatags($string) {
   // Get the title.
-  $title = btrClient_shorten($string['string'], 70);
+  $title = btrClient_shorten($string['string'], 100);
 
   // Get the description.
   $description = $string['string'];
@@ -189,7 +189,7 @@ function _btrClient_translate_form_add_metatags($string) {
     $arr_translations[] = strip_tags($trans['translation']);
   }
   if (!empty($arr_translations)) {
-    $description .= ' <==> ' . implode(' / ', $arr_translations);
+    $description = implode(' / ', $arr_translations);
   }
 
   // Get the image.
