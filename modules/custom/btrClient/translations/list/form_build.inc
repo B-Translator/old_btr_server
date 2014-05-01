@@ -62,6 +62,9 @@ function btrClient_translate_form($form, &$form_state, $strings, $lng) {
     drupal_set_title(t('String: !string', array('!string' => $title),
         array('context' => 'set the page title')));
 
+    // Add metatags (og:title, og:description, og:image).
+    _btrClient_translate_form_add_metatags($string);
+
     // Append the social share buttons and comments to the form.
     $path = "translations/$lng/$sguid";
     $title = btrClient_shorten($string['string'], 50);
@@ -173,6 +176,52 @@ function _btrClient_translate_form_add_share_and_comment(&$form, $path, $title) 
       '#weight' => 101,
     );
   }
+}
+
+function _btrClient_translate_form_add_metatags($string) {
+  // Get the title.
+  $title = btrClient_shorten($string['string'], 70);
+
+  // Get the description.
+  $description = $string['string'];
+  $arr_translations = array();
+  foreach ($string['translations'] as $trans) {
+    $arr_translations[] = strip_tags($trans['translation']);
+  }
+  if (!empty($arr_translations)) {
+    $description .= ' <==> ' . implode(' / ', $arr_translations);
+  }
+
+  // Get the image.
+  $image = $GLOBALS['base_url'] . '/logo.png';
+
+  $element = array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      "property" => "og:title",
+      "content" => $title,
+    ),
+  );
+  drupal_add_html_head($element,'og_title');
+
+  $element = array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      "property" => "og:description",
+      "content" => $description,
+    ),
+  );
+  drupal_add_html_head($element,'og_description');
+
+  // Add og:image
+  $element = array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+      "property" => "og:image",
+      "content" => $GLOBALS['base_url'] . '/logo.png',
+    ),
+  );
+  drupal_add_html_head($element,'facebook_share_image');
 }
 
 /**
