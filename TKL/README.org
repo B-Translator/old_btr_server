@@ -11,6 +11,6 @@ Installing B-Translator on Turnkey Linux, using TKLPatch
 
 How to install tklcore inside an ubuntu/precise chroot:
 #+BEGIN_EXAMPLE
-git clone https://github.com/dashohoxha/B-Translator.git
+git clone https://github.com/B-Translator/server.git
 sudo B-Translator/TKL/install_tklcore_chroot.sh precise
 #+END_EXAMPLE

@@ -125,7 +125,7 @@ B-Translator.
 
   #+BEGIN_EXAMPLE
   cd /var/www/
-  sudo git clone https://github.com/dashohoxha/B-Translator.git
+  sudo git clone https://github.com/B-Translator/server.git
   sudo B-Translator/install/dev/all.sh
   #+END_EXAMPLE
 

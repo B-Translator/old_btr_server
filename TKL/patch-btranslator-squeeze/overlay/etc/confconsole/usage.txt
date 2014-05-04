@@ -15,5 +15,5 @@ SSH/SFTP:     root@$ipaddr (port 22)
 
 
 For more information visit:
-  - https://github.com/dashohoxha/B-Translator
+  - https://github.com/B-Translator/server
   - http://www.turnkeylinux.org

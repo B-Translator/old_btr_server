@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 ### retrieve all the projects/modules and build the application directory
-makefile="https://raw.github.com/dashohoxha/B-Translator/master/build-btranslator.make"
+makefile="https://raw.github.com/B-Translator/server/master/build-btranslator.make"
 rm -rf $drupal_dir
 drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btranslator \

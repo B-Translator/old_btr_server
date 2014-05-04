@@ -10,7 +10,7 @@ This is a Drupal installation profile for B-Translator.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone https://github.com/dashohoxha/B-Translator.git
+  git clone https://github.com/B-Translator/server.git
   nohup nice B-Translator/install/install.sh btr &
   tail -f nohup.out
   chroot btr/ /tmp/install/config.sh
@@ -116,8 +116,8 @@ This is a Drupal installation profile for B-Translator.
 
   - Misc
     + Homepage: http://info.btranslator.org
-    + Wiki: https://github.com/dashohoxha/B-Translator/wiki
-    + Issues: https://github.com/dashohoxha/B-Translator/issues
+    + Wiki: https://github.com/B-Translator/server/wiki
+    + Issues: https://github.com/B-Translator/server/issues
 
 
 * Sites
@@ -132,20 +132,20 @@ This is a Drupal installation profile for B-Translator.
 * Documentation
 
   - Internal doc files:
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/README.org][README.org]] (this file)
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/dev/README.org][dev/README.org]] (tips for developers)
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/INSTALL.org][docs/INSTALL.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/NGINX.org][docs/NGINX.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/tasks.org][docs/tasks.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/notes.org][docs/notes.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/README.org][docs/README.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/btranslator-project.org][docs/btranslator-project.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/btranslator-project.pdf][docs/btranslator-project.pdf]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/docs/uml/db_schema.org][docs/uml/db_schema.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrCore/data/db/docs/db_schema.org][modules/custom/btrCore/data/db/docs/db_schema.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrCore/data/README.org][modules/custom/btrCore/data/README.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/custom/btrClient/README.org][modules/custom/btrClient/README.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/modules/features/README.org][modules/features/README.org]]
+    + [[https://github.com/B-Translator/server/blob/master/README.org][README.org]] (this file)
+    + [[https://github.com/B-Translator/server/blob/master/dev/README.org][dev/README.org]] (tips for developers)
+    + [[https://github.com/B-Translator/server/blob/master/docs/INSTALL.org][docs/INSTALL.org]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/NGINX.org][docs/NGINX.org]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/tasks.org][docs/tasks.org]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/notes.org][docs/notes.org]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/README.org][docs/README.org]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/btranslator-project.org][docs/btranslator-project.org]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/btranslator-project.pdf][docs/btranslator-project.pdf]]
+    + [[https://github.com/B-Translator/server/blob/master/docs/uml/db_schema.org][docs/uml/db_schema.org]]
+    + [[https://github.com/B-Translator/server/blob/master/modules/custom/btrCore/data/db/docs/db_schema.org][modules/custom/btrCore/data/db/docs/db_schema.org]]
+    + [[https://github.com/B-Translator/server/blob/master/modules/custom/btrCore/data/README.org][modules/custom/btrCore/data/README.org]]
+    + [[https://github.com/B-Translator/server/blob/master/modules/custom/btrClient/README.org][modules/custom/btrClient/README.org]]
+    + [[https://github.com/B-Translator/server/blob/master/modules/features/README.org][modules/features/README.org]]
     + [[https://github.com/dashohoxha/B-Translator/blob/master/TKL/patch-btranslator-precise/README.org][TKL/patch-btranslator-precise/README.org]] (deprecated)
 
   - External docs:

@@ -31,7 +31,7 @@ server.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone --branch v1.0 https://github.com/dashohoxha/B-Translator.git
+  git clone --branch v1.0 https://github.com/B-Translator/server.git
   nohup nice B-Translator/install/install.sh btr-1 &
   tail -f nohup.out
   #+END_EXAMPLE

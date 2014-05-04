@@ -7,7 +7,7 @@ Development Setup of B-Translator
 [[http://info.btranslator.org][B-Translator]] helps to get feedback about /l10n/ (translations of the
 programs). It tries to collect very small translation contributions
 from a wide crowd of people and to dilute them into something useful.
-It is developed as a Drupal7 profile and the [[https://github.com/dashohoxha/B-Translator][code]] is hosted on GitHub.
+It is developed as a Drupal7 profile and the [[https://github.com/B-Translator/server][code]] is hosted on GitHub.
 Here I describe the development setup and process that I use for this
 project. Most of the the tips are project specific, however some of
 them can be used on any Drupal project.
@@ -19,7 +19,7 @@ them can be used on any Drupal project.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone https://github.com/dashohoxha/B-Translator.git
+  git clone https://github.com/B-Translator/server.git
   nohup nice B-Translator/install/install.sh btr &
   tail -f nohup.out
   chroot btr/ /tmp/install/config.sh
@@ -199,7 +199,7 @@ them can be used on any Drupal project.
   The copy of the application on
   =/var/www/btr_dev/profiles/btranslator/= (as well as the one
   on =/var/www/btr/profiles/btranslator/=) are actually clones
-  of the git repository at https://github.com/dashohoxha/B-Translator
+  of the git repository at https://github.com/B-Translator/server
   so we can *pull* from it and *push* to it. Pulling (to get
   up-to-date) can be done by everybody, however pushing requires a
   username and password (the ones that are used to access the account
@@ -250,7 +250,7 @@ them can be used on any Drupal project.
   case when I have to test install/uninstall, enable/disable modules,
   features, etc. In this case I test them on the main application
   instance (~/var/www/btr~). Since both applications are clones of the
-  [[https://github.com/dashohoxha/B-Translator][GitHub repository]], it is easy to push commits from /btr_dev/ to
+  [[https://github.com/B-Translator/server][GitHub repository]], it is easy to push commits from /btr_dev/ to
   /github/ and to pull them from /github/ to /btr/.
 
   However, sometimes it is better to test modifications and make sure

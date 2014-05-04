@@ -31,7 +31,7 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
 
     3. Get the code of B-Translator from github:
        #+BEGIN_EXAMPLE
-       git clone https://github.com/dashohoxha/B-Translator.git
+       git clone https://github.com/B-Translator/server.git
        #+END_EXAMPLE
 
     4. Apply the patch to the ISO:
@@ -58,7 +58,7 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
 
     4. From within the installed server, get the code of B-Translator:
        #+BEGIN_EXAMPLE
-       git clone https://github.com/dashohoxha/B-Translator.git
+       git clone https://github.com/B-Translator/server.git
        #+END_EXAMPLE
 
     5. Apply the patch to the root of the installed sytem (from inside it):
@@ -101,7 +101,7 @@ This is a TKLpatch for installing B-Translator on Turnkey Linux 12.x
 
   + Mount the patch inside the /rootfs/:
     #+BEGIN_EXAMPLE
-    git clone https://github.com/dashohoxha/B-Translator.git
+    git clone https://github.com/B-Translator/server.git
     mkdir rootfs/btranslator/
     mount -o bind B-Translator/tklpatch/ rootfs/btranslator
     #+END_EXAMPLE
