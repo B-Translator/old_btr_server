@@ -1,7 +1,0 @@
-#!/bin/bash -e
-# set mysql passwords for btranslator and btranslator_data
-
-. /etc/default/inithooks
-
-[ -e $INITHOOKS_CONF ] && . $INITHOOKS_CONF
-$INITHOOKS_PATH/bin/mysqlconf_btranslator.py --drupal-pass="$DB_DRUPAL_PASS" --data-pass="$DB_DATA_PASS"

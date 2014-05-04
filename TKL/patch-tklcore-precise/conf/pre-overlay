@@ -1,6 +1,0 @@
-#!/bin/bash -ex
-# executed before apply-overlay
-
-# source our custom functions
-cwd=$(dirname $0)
-source $cwd/functions
