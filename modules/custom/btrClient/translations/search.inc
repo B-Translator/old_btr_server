@@ -20,7 +20,7 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * the output will be in JSON, otherwise it will be an HTML page.
  * For example:
  *   curl -k -i -H 'Accept: application/json' \
- *        'https://dev.l10n.org.xx/translations/search?lng=sq&words=space'
+ *        'https://dev.btr.example.org/translations/search?lng=sq&words=space'
  */
 function btrClient_search() {
   // Get the search parameters from the GET request.

@@ -9,7 +9,7 @@
  * Defines web service descriptions (one public and one private).
  * This hook is invoked when web service descriptions
  * are loaded like this:
- *     $btr = wsclient_service_load('dev.l10n.org.xx');
+ *     $btr = wsclient_service_load('dev.btr.example.org');
  *     $result = $btr->statistics('sq');
  *
  * @return

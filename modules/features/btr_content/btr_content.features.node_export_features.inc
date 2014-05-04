@@ -135,7 +135,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => TRUE,
-        \'url\' => \'https://l10n.org.xx/fjalori-drejtshkrimor\',
+        \'url\' => \'https://btr.example.org/fjalori-drejtshkrimor\',
         \'title\' => \'Instalimi i Fjalorit Drejtshkrimor\',
         \'identifier\' => \'node/1\',
         \'developer\' => 1,
@@ -246,7 +246,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => TRUE,
-        \'url\' => \'https://l10n.org.xx/node/2\',
+        \'url\' => \'https://btr.example.org/node/2\',
         \'title\' => \'Server i ri për l10n.org.al\',
         \'identifier\' => \'node/2\',
         \'developer\' => 1,
@@ -351,7 +351,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => FALSE,
-        \'url\' => \'https://l10n.org.xx/privacy\',
+        \'url\' => \'https://btr.example.org/privacy\',
         \'title\' => \'Privacy Policy\',
         \'identifier\' => \'node/3\',
         \'developer\' => 1,
@@ -461,7 +461,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => FALSE,
-        \'url\' => \'https://l10n.org.xx/about\',
+        \'url\' => \'https://btr.example.org/about\',
         \'title\' => \'About\',
         \'identifier\' => \'node/4\',
         \'developer\' => 1,
@@ -608,7 +608,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => TRUE,
-        \'url\' => \'https://l10n.org.xx/udhezuesi\',
+        \'url\' => \'https://btr.example.org/udhezuesi\',
         \'title\' => \'Udhëzuesi i Përkthyesit\',
         \'identifier\' => \'node/5\',
         \'developer\' => 1,
@@ -765,7 +765,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => TRUE,
-        \'url\' => \'https://l10n.org.xx/gjuha-shqipe\',
+        \'url\' => \'https://btr.example.org/gjuha-shqipe\',
         \'title\' => \'Vendosja e Gjuhës Shqipe në Ubuntu\',
         \'identifier\' => \'node/6\',
         \'developer\' => 1,
@@ -875,7 +875,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => FALSE,
-        \'url\' => \'https://l10n.org.xx/terms\',
+        \'url\' => \'https://btr.example.org/terms\',
         \'title\' => \'Terms of Service\',
         \'identifier\' => \'node/7\',
         \'developer\' => 1,
@@ -1017,7 +1017,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => TRUE,
-        \'url\' => \'https://l10n.org.xx/node/8\',
+        \'url\' => \'https://btr.example.org/node/8\',
         \'title\' => \'Si të Përkthejmë Programet në Ubuntu\',
         \'identifier\' => \'node/8\',
         \'developer\' => 1,
@@ -1154,7 +1154,7 @@ function btr_content_node_export_features_default() {
       \'disqus\' => array(
         \'domain\' => \'btranslator\',
         \'status\' => TRUE,
-        \'url\' => \'https://l10n.org.xx/tastiera-shqipe\',
+        \'url\' => \'https://btr.example.org/tastiera-shqipe\',
         \'title\' => \'Vendosja e Tastierës Shqipe në Ubuntu\',
         \'identifier\' => \'node/9\',
         \'developer\' => 1,

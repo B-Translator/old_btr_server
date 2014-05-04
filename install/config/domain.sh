@@ -13,7 +13,7 @@ It will modify the files:
  4) /etc/apache2/sites-available/*
  5) /var/www/btr*/sites/default/settings.php
 "
-FQDN='l10n.org.xx'
+FQDN='btr.example.org'
 read -p "Enter the domain [$FQDN]: " input
 FQDN=${input:-$FQDN}
 

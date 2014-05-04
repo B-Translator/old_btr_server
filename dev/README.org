@@ -55,7 +55,7 @@ them can be used on any Drupal project.
   I also add something like this on */etc/hosts*, so that I can access
   it on the browser with a domain name:
   #+BEGIN_EXAMPLE
-  127.0.0.1  l10n.org.xx dev.l10n.org.xx
+  127.0.0.1  btr.example.org dev.btr.example.org
   #+END_EXAMPLE
   This modification has to be done manually as well.
 
@@ -102,7 +102,7 @@ them can be used on any Drupal project.
   It creates a new application with root */var/www/btr_dev/* and with
   DB named *btr_dev*. It also creates the drush alias *@dev*, and
   modifies the configuration of the webserver so that the cloned
-  application can be accessed at *dev.l10n.org.xx*.
+  application can be accessed at *dev.btr.example.org*.
 
   *Caution:* The root directory and the DB of the clone will be
   erased, if they exist.

@@ -234,7 +234,7 @@ function _btrServices_translations() {
  *
  * @example
  *   curl -k -i \
- *     'https://dev.l10n.org.xx/public/btr/translations/next?lng=sq'
+ *     'https://dev.btr.example.org/public/btr/translations/next?lng=sq'
  */
 function _btrServices_translations_retrieve($sguid, $lng) {
   $strings = _btrServices_translations_get(array(
@@ -263,7 +263,7 @@ function _btrServices_translations_retrieve($sguid, $lng) {
  *
  * @example
  *   curl -k -i -H 'Accept: application/json' \
- *     'https://dev.l10n.org.xx/public/btr/translations?lng=sq&words=file'
+ *     'https://dev.btr.example.org/public/btr/translations?lng=sq&words=file'
  */
 function _btrServices_translations_index($params) {
   return _btrServices_translations_search($params);
@@ -407,7 +407,7 @@ function _btrServices_translations_get_random_sguid($params) {
  *
  * @example
  *   curl -k -i -H 'Content-type: application/json' \
- *     -X POST https://dev.l10n.org.xx/public/btr/translations/get
+ *     -X POST https://dev.btr.example.org/public/btr/translations/get
  *     -d '{"lng": "sq"}'
  */
 function _btrServices_translations_get($params) {

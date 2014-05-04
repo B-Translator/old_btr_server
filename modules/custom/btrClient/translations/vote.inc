@@ -19,7 +19,7 @@ require_once(dirname(__FILE__) . '/utils.inc');
  * the output will be in JSON, otherwise it will be an HTML page.
  * For example:
  *   curl -k -i -H 'Accept: application/json' \
- *     'https://dev.l10n.org.xx/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+ *     'https://dev.btr.example.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
  */
 function btrClient_vote($lng =NULL, $sguid =NULL, $one_time_login =NULL) {
 

@@ -189,7 +189,7 @@ function btrCore_project_export() {
  *      Comma separated list of email addresses of preferred voters.
  *
  * Examples:
- *   curl -k 'https://dev.l10n.org.xx/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
+ *   curl -k 'https://dev.btr.example.org/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
  *   curl -k https://dev.l10n.org.al/translations/project/export_tgz \
  *        -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
  *   curl -k https://dev.l10n.org.al/translations/project/export_tgz \
