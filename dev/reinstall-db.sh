@@ -48,13 +48,7 @@ drush site-install --verbose --yes btranslator \
 ### update to the latest version of core and modules
 drush --yes pm-update
 
-## install features modules
-#drush --yes pm-enable btr_invite
-#drush --yes pm-enable btr_simplenews
-#drush --yes pm-enable btr_mass_contact
-#drush --yes pm-enable btr_googleanalytics
-#drush --yes pm-enable btr_drupalchat
-
+### install l10n support
 drush --yes pm-enable l10n_update
 drush language-add $lng
 drush --yes l10n-update
