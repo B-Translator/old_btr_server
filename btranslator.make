@@ -101,6 +101,12 @@ projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164
 
 
 ;--------------------
+; Drupal Localization
+;--------------------
+projects[l10n_update][version] = "1.0"
+
+
+;--------------------
 ; Mail Related
 ;--------------------
 projects[mailsystem][version] = "2.34"
