@@ -1,7 +1,7 @@
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
-        ServerName l10n.org.xy
-	ServerAdmin info@l10n.org.xy
+        ServerName btr.example.org
+	ServerAdmin info@btr.example.org
 
 	DocumentRoot /var/www/btr
 	<Directory />

@@ -67,12 +67,12 @@ server.
   #+END_EXAMPLE
 
   If this is a local copy (installed on my local machine) and its
-  domain name is for example =l10n.org.xy=, then I also add this
+  domain name is for example =btr.example.org=, then I also add this
   domain name on the file ~/etc/hosts~ of my machine:
   #+BEGIN_EXAMPLE
-  127.0.0.1       l10n.org.xy  localhost
+  127.0.0.1       btr.example.org  localhost
   #+END_EXAMPLE
-  This way I can access it by typing =https://l10n.org.xy= on the
+  This way I can access it by typing =https://btr.example.org= on the
   browser location (not =https://127.0.0.1= or =https://localhost=).
 
 

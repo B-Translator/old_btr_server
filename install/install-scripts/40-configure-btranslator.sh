@@ -19,7 +19,7 @@ chmod 640 $drupal_settings
 
 ### Modify Drupal settings
 
-# diable poor man's cron
+# disable poor man's cron
 cat >> $drupal_settings << EOF
 /**
  * Disable Poor Man's Cron:
@@ -71,7 +71,7 @@ EOF
 
 ### update to the latest version of core and modules
 ### $drush is an alias for 'drush --root=/var/www/btr'
-$drush --yes pm-update
+#$drush --yes pm-update
 
 #$drush --yes pm-enable btr_invite
 #$drush --yes pm-enable btr_simplenews

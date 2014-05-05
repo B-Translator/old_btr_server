@@ -12,5 +12,4 @@ $cwd/config/languages.sh
 
 $cwd/config/mysqld.sh stop
 
-rm -rf /var/www/btr/sites/default/files/css/
-rm -rf /var/www/btr/sites/default/files/js/
+rm -rf /var/www/btr/sites/default/files/*

@@ -54,5 +54,6 @@ update-locale
 dev_scripts=$drupal_dir/profiles/btranslator/dev
 $dev_scripts/apache2.sh start
 
-### link to api-examples
+### link to api-examples and api-docs
 ln -s /var/www/btr_dev/profiles/btranslator/modules/custom/btrServices/examples/ /var/www/api-examples
+ln -s /var/www/btr_dev/profiles/btranslator/modules/custom/btrServices/docs/ /var/www/api-docs

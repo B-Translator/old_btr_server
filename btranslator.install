@@ -34,7 +34,7 @@ function btranslator_install() {
   btranslator_install_mailsystem();
   btranslator_install_actions();
   btranslator_install_user_restrictions();
-  btranslator_install_config_oauth2_login();
+  //btranslator_install_config_oauth2_login();
 }
 
 function btranslator_install_mailsystem()
