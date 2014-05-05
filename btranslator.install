@@ -32,9 +32,7 @@ function btranslator_install() {
   variable_set('user_email_verification', TRUE);
 
   btranslator_install_mailsystem();
-  btranslator_install_actions();
   btranslator_install_user_restrictions();
-  //btranslator_install_config_oauth2_login();
 }
 
 function btranslator_install_mailsystem()
@@ -47,40 +45,6 @@ function btranslator_install_mailsystem()
   variable_set('mail_system', $mail_system);
 }
 
-function btranslator_install_actions()
-{
-  $site_mail = variable_get('site_mail');
-
-  // create actions
-  $action_id_1 = actions_save(
-    'system_send_email_action',
-    'system',
-    array(
-      'recipient' => $site_mail,
-      'subject' => '[btranslator] New user: [user:name]',
-      'message' => 'New user: [user:name]',
-    ),
-    t('Send e-mail to admin when a new user is registered')
-  );
-  $action_id_2 = actions_save(
-    'system_send_email_action',
-    'system',
-    array(
-      'recipient' => $site_mail,
-      'subject' => '[btranslator] [user:name] has modified his account',
-      'message' => 'The user [user:name] has modified his account.',
-    ),
-    t('Send e-mail to admin when user modifies his account')
-  );
-
-  // assign actions to triggers
-  db_insert('trigger_assignments')
-    ->fields(array('hook', 'aid', 'weight'))
-    ->values(array('hook' => 'user_insert', 'aid' => $action_id_1, 'weight' => 0))
-    ->values(array('hook' => 'user_update', 'aid' => $action_id_2, 'weight' => 0))
-    ->execute();
-}
-
 function btranslator_install_user_restrictions() {
   db_insert('user_restrictions')
     ->fields(array(
@@ -89,49 +53,4 @@ function btranslator_install_user_restrictions() {
       'status' => 0,  // deny
       ))
     ->execute();
-}
-
-/**
- * Configure OAuth2 Login.
- */
-function btranslator_install_config_oauth2_login() {
-  global $base_url;
-  $client_key = 'oauth2_login';
-  $client_secret = md5(uniqid(rand(), TRUE));
-  $redirect_uri = $base_url . '/oauth2/authorized';
-
-  // Delete the client if already exists.
-  $query = new EntityFieldQuery();
-  $clients = $query->entityCondition('entity_type', 'oauth2_server_client')
-    ->propertyCondition('server', 'oauth2')
-    ->propertyCondition('client_key',  $client_key)
-    ->execute();
-  if (isset($clients['oauth2_server_client'])) {
-    $cids = array_keys($clients['oauth2_server_client']);
-    foreach ($cids as $cid) {
-      entity_delete('oauth2_server_client', $cid);
-    }
-  }
-
-  // Register a client on the oauth2 server.
-  $client = entity_create('oauth2_server_client', array());
-  $client->server = 'oauth2';
-  $client->label = 'Client used for OAuth2 Login';
-  $client->client_key = $client_key;
-  $client->client_secret = $client_secret;
-  $client->redirect_uri = $redirect_uri;
-  $client->automatic_authorization = TRUE;
-  $client->save();
-
-  // Set configuration variables of oauth2_login.
-  variable_set('oauth2_login_oauth2_server', $base_url);
-  variable_set('oauth2_login_client_id', $client_key);
-  variable_set('oauth2_login_client_secret', $client_secret);
-  variable_set('oauth2_login_skipssl', TRUE);
-
-  // Enable the oauth2 login link and set the settings to hybridauth.
-  variable_set('oauth2_login_enabled', TRUE);
-  module_load_include('inc', 'oauth2_login', 'oauth2_login.admin');
-  oauth2_login_update_login_link();
-  oauth2_login_admin_set_settings();
 }
