@@ -41,9 +41,6 @@ date_format_long
 reroute_email_address
 reroute_email_enable
 reroute_email_enable_message
-btrClient_server_url
-btrClient_client_id
-btrClient_client_secret
 hybridauth_provider_Facebook_keys_id
 hybridauth_provider_Facebook_keys_secret
 hybridauth_provider_GitHub_keys_id
