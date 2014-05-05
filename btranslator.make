@@ -26,7 +26,6 @@ projects[diff][version] = 3.2
 projects[features][version] = 1.0
 projects[strongarm][version] = 2.0
 projects[views][version] = 3.7
-;projects[geshifilter][version] = "1.2"
 projects[libraries][version] = "2.2"
 projects[module_filter][version] = "1.8"
 projects[profiler_builder][version] = "1.0-rc3"
