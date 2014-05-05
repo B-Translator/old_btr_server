@@ -99,7 +99,7 @@ EOF
 #    -e '#^fb config */# c // fb config */'
 
 ### install also multi-language support
-$drush --yes pm-enable l10n_client l10n_update
+$drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 $drush --yes l10n-update

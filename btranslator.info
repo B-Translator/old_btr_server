@@ -75,7 +75,6 @@ dependencies[] = user_restrictions
 ; Drupal Localization
 ;--------------------
 ;dependencies[] = l10n_update
-;dependencies[] = l10n_client
 
 ;--------------------
 ; Contrib Mail

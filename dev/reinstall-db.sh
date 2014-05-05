@@ -55,6 +55,6 @@ drush --yes pm-update
 #drush --yes pm-enable btr_googleanalytics
 #drush --yes pm-enable btr_drupalchat
 
-drush --yes pm-enable l10n_client l10n_update
+drush --yes pm-enable l10n_update
 drush language-add $lng
 drush --yes l10n-update
