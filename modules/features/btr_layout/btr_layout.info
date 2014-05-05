@@ -45,7 +45,6 @@ features[menu_custom][] = main-menu
 features[menu_links][] = main-menu:<front>
 features[menu_links][] = main-menu:contact
 features[menu_links][] = main-menu:node/1
-features[menu_links][] = main-menu:node/9
 features[node][] = article
 features[node][] = book
 features[node][] = page
