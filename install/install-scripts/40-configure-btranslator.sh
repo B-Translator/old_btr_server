@@ -69,12 +69,16 @@ comment memcache config */
 
 EOF
 
-### update to the latest version of core and modules
-### $drush is an alias for 'drush --root=/var/www/btr'
-#$drush --yes pm-update
-
 ### install also multi-language support
+### $drush is an alias for 'drush --root=/var/www/btr'
 $drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
-$drush --yes l10n-update
+
+### set the directory for uploads
+mkdir -p /var/www/uploads/
+chown www-data: /var/www/uploads/
+$drush variable-set file_private_path '/var/www/uploads/' --exact --yes
+
+### update to the latest version of core and modules
+#$drush --yes pm-update
