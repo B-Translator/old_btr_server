@@ -578,20 +578,6 @@ function btr_misc_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_client_server';
-  $strongarm->value = 'http://localize.drupal.org';
-  $export['l10n_client_server'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'l10n_client_use_server';
-  $strongarm->value = 1;
-  $export['l10n_client_use_server'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'l10n_update_check_disabled';
   $strongarm->value = 0;
   $export['l10n_update_check_disabled'] = $strongarm;

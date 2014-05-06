@@ -31,7 +31,7 @@ server.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone --branch v1.0 https://github.com/dashohoxha/B-Translator.git
+  git clone --branch v1.0 https://github.com/B-Translator/server.git
   nohup nice B-Translator/install/install.sh btr-1 &
   tail -f nohup.out
   #+END_EXAMPLE
@@ -67,12 +67,12 @@ server.
   #+END_EXAMPLE
 
   If this is a local copy (installed on my local machine) and its
-  domain name is for example =l10n.org.xy=, then I also add this
+  domain name is for example =btr.example.org=, then I also add this
   domain name on the file ~/etc/hosts~ of my machine:
   #+BEGIN_EXAMPLE
-  127.0.0.1       l10n.org.xy  localhost
+  127.0.0.1       btr.example.org  localhost
   #+END_EXAMPLE
-  This way I can access it by typing =https://l10n.org.xy= on the
+  This way I can access it by typing =https://btr.example.org= on the
   browser location (not =https://127.0.0.1= or =https://localhost=).
 
 
@@ -84,8 +84,8 @@ server.
   able to find and fix. On the log file
   ~/var/log/nginx/btr.error.log~ I see messages like this:
   #+BEGIN_EXAMPLE
-  2013/07/15 13:31:57 [info] 10294#0: *47 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: l10n.org.xx
-  2013/07/15 13:31:57 [info] 10294#0: *48 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: l10n.org.xx
+  2013/07/15 13:31:57 [info] 10294#0: *47 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: btr.example.org
+  2013/07/15 13:31:57 [info] 10294#0: *48 client closed prematurely connection while SSL handshaking, client: 127.0.0.1, server: btr.example.org
   #+END_EXAMPLE
   *Note:* If find out what is wrong with NGINX and manage to fix it,
   please let me know.
@@ -356,7 +356,7 @@ server.
    that's how it is). For example if the output of the command
    =hostname= is =dashamir=, then ~/etc/hosts~ should look like this:
    #+BEGIN_EXAMPLE
-   127.0.0.1 l10n.org.xx localhost dashamir
+   127.0.0.1 btr.example.org localhost dashamir
    #+END_EXAMPLE
 
 ** Import PO files

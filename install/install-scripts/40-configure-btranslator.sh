@@ -19,7 +19,7 @@ chmod 640 $drupal_settings
 
 ### Modify Drupal settings
 
-# diable poor man's cron
+# disable poor man's cron
 cat >> $drupal_settings << EOF
 /**
  * Disable Poor Man's Cron:
@@ -41,7 +41,7 @@ EOF
 
 # set base_url
 cat >> $drupal_settings << EOF
-\$base_url = "https://l10n.org.xx";
+\$base_url = "https://btr.example.org";
 
 EOF
 
@@ -71,35 +71,10 @@ EOF
 
 ### update to the latest version of core and modules
 ### $drush is an alias for 'drush --root=/var/www/btr'
-$drush --yes pm-update
-
-#$drush --yes pm-enable btr_invite
-#$drush --yes pm-enable btr_simplenews
-#$drush --yes pm-enable btr_mass_contact
-#$drush --yes pm-enable btr_googleanalytics
-#$drush --yes pm-enable btr_drupalchat
-
-### install FB integration
-#$drush --yes pm-enable btr_fb
-
-# enable FB config
-cat >> $drupal_settings << EOF
-/* fb config
-\$conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
-include "profiles/btranslator/modules/contrib/fb/fb_url_rewrite.inc";
-include "profiles/btranslator/modules/contrib/fb/fb_settings.inc";
-if (!headers_sent()) {
-  header('P3P: CP="We do not have a P3P policy."');
-}
-fb config */
-
-EOF
-#sed -i $drupal_settings \
-#    -e '#^/*fb config# c // /* fb config' \
-#    -e '#^fb config */# c // fb config */'
+#$drush --yes pm-update
 
 ### install also multi-language support
-$drush --yes pm-enable l10n_client l10n_update
+$drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 $drush --yes l10n-update

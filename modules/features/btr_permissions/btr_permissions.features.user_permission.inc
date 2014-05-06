@@ -900,16 +900,6 @@ function btr_permissions_user_default_permissions() {
     'module' => 'comment',
   );
 
-  // Exported permission: submit translations to localization server.
-  $permissions['submit translations to localization server'] = array(
-    'name' => 'submit translations to localization server',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'translator',
-    ),
-    'module' => 'l10n_client',
-  );
-
   // Exported permission: switch users.
   $permissions['switch users'] = array(
     'name' => 'switch users',
@@ -945,16 +935,6 @@ function btr_permissions_user_default_permissions() {
       0 => 'administrator',
     ),
     'module' => 'search',
-  );
-
-  // Exported permission: use on-page translation.
-  $permissions['use on-page translation'] = array(
-    'name' => 'use on-page translation',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'translator',
-    ),
-    'module' => 'l10n_client',
   );
 
   // Exported permission: use text format filtered_html.

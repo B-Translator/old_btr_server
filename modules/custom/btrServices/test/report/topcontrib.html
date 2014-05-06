@@ -7,7 +7,7 @@
     $(document).ready(function() {
        $.ajax({
          type: "POST",
-         url: 'https://dev.l10n.org.xx/public/btr/report/topcontrib.json',
+         url: 'https://dev.btr.example.org/public/btr/report/topcontrib.json',
          data: JSON.stringify({lng: 'sq', period: 'week', size: 5}),
          dataType: 'json',
          contentType: 'application/json',

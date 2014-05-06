@@ -1,4 +1,0 @@
-# deb http://archive.turnkeylinux.org/debian squeeze main
-deb http://archive.turnkeylinux.org/ubuntu lucid main universe
-
-deb http://archive.ubuntu.com/ubuntu precise main restricted universe multiverse

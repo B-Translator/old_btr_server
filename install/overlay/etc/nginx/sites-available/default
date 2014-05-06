@@ -5,7 +5,7 @@ server {
 	ssl_certificate		/etc/ssl/certs/ssl-cert-snakeoil.pem;
 	ssl_certificate_key	/etc/ssl/private/ssl-cert-snakeoil.key;
 
-	server_name l10n.org.xx;
+	server_name btr.example.org;
 	root /var/www/btr;
 
 	access_log /var/log/nginx/btr.access.log;

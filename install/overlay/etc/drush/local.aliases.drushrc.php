@@ -11,7 +11,7 @@
 
 $aliases['btr'] = array (
   'root' => '/var/www/btr',
-  'uri' => 'http://l10n.org.xx',
+  'uri' => 'http://btr.example.org',
   'path-aliases' => array (
     '%profile' => 'profiles/btranslator',
     '%data' => '/var/www/data',
@@ -24,5 +24,5 @@ $aliases['btr'] = array (
 // $aliases['dev'] = array (
 //   'parent' => '@btr',
 //   'root' => '/var/www/btr_dev',
-//   'uri' => 'http://dev.l10n.org.xx',
+//   'uri' => 'http://dev.btr.example.org',
 // );

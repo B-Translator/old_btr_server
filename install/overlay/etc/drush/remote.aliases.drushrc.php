@@ -4,9 +4,9 @@
 
 $aliases['live'] = array (
   'root' => '/var/www/btr',
-  'uri' => 'http://l10n.org.xx',
+  'uri' => 'http://btr.example.org',
 
-  'remote-host' => 'l10n.org.xx',
+  'remote-host' => 'btr.example.org',
   'remote-user' => 'root',
   'ssh-options' => '-p 2201 -i /root/.ssh/id_rsa',
 
@@ -31,7 +31,7 @@ $aliases['live'] = array (
 $aliases['test'] = array (
   'parent' => '@live',
   'root' => '/var/www/btr_test',
-  'uri' => 'http://test.l10n.org.xx',
+  'uri' => 'http://test.btr.example.org',
 
   'command-specific' => array (
     'sql-sync' => array (

@@ -27,9 +27,6 @@ function btrCore_boot() {
   if (isset($_SESSION['btrCore'])) {
     _btrCore_log($_SESSION['btrCore'], '$_SESSION[btrCore]');
   }
-  if (isset($_SESSION['btrClient'])) {
-    _btrCore_log($_SESSION['btrClient'], '$_SESSION[btrClient]');
-  }
   if (isset($_SESSION['btrServices'])) {
     _btrCore_log($_SESSION['btrServices'], '$_SESSION[btrServices]');
   }

@@ -6,7 +6,7 @@ cwd=$(dirname $0)
 
 $cwd/mysqld.sh start
 
-### to remove the current password do: 
+### to remove the current password do:
 ### mysqladmin -u root -pcurrent_password password
 
 ### regenerate the password of debian-sys-maint
@@ -33,4 +33,3 @@ stty echo
 echo
 root_passwd=${passwd:-$random_passwd}
 set_mysql_passwd root $root_passwd
-

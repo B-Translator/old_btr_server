@@ -80,8 +80,6 @@ variable:features_semaphore
 variable:file_temporary_path
 variable:filter_fallback_format
 variable:image_toolkit
-variable:l10n_client_server
-variable:l10n_client_use_server
 variable:l10n_update_check_disabled
 variable:l10n_update_check_frequency
 variable:l10n_update_check_mode
