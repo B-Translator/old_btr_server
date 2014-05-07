@@ -1,5 +1,5 @@
-name = B-Translator
-description = Drupal installation profile for B-Translator.
+name = B-Translator Server
+description = Drupal installation profile for B-Translator Server.
 version = 1.x
 core = 7.x
 exclusive = TRUE
@@ -104,7 +104,7 @@ dependencies[] = boost
 dependencies[] = memcache
 
 ;--------------------
-; B-Translator
+; B-Translator Server
 ;--------------------
 dependencies[] = btrCore
 dependencies[] = btrServices

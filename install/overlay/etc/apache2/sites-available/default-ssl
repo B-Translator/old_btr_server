@@ -14,6 +14,7 @@
 		AllowOverride All
 		Order allow,deny
 		allow from all
+		Header set Access-Control-Allow-Origin "*"
 	</Directory>
 
 	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
