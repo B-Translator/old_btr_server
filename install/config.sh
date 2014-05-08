@@ -11,4 +11,6 @@ $cwd/config/languages.sh
 
 $cwd/config/mysqld.sh stop
 
+### drush may create some css/js files with wrong permissions
+### clean them up
 rm -rf /var/www/btr/sites/default/files/*

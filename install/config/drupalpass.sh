@@ -11,3 +11,7 @@ echo
 
 $(dirname $0)/mysqld.sh start
 drush @btr user-password admin --password="$passwd"
+
+### drush may create css/js files with wrong(root) permissions
+rm -rf /var/www/btr/sites/default/files/css/
+rm -rf /var/www/btr/sites/default/files/js/

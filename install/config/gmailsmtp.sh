@@ -38,3 +38,7 @@ sed -i /etc/apache2/sites-available/default-ssl \
 echo "Modifying drupal variables that are used for sending email..."
 $(dirname $0)/mysqld.sh start
 drush @btr php-script $(dirname $0)/gmailsmtp.php "$GMAIL" "$PASSWD"
+
+### drush may create css/js files with wrong(root) permissions
+rm -rf /var/www/btr/sites/default/files/css/
+rm -rf /var/www/btr/sites/default/files/js/

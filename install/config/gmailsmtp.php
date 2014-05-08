@@ -25,6 +25,7 @@ variable_set('mimemail_mail', $email);
 variable_set('reroute_email_address', $email);
 variable_set('update_notify_emails', array($email));
 
+// Set the email of admin.
 $query = 'UPDATE users SET mail = :email, init = :email WHERE uid=1';
 db_query($query, array(':email' => $email));
 
