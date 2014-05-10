@@ -13,7 +13,7 @@ $aliases['btr'] = array (
   'root' => '/var/www/btr',
   'uri' => 'http://btr.example.org',
   'path-aliases' => array (
-    '%profile' => 'profiles/btranslator',
+    '%profile' => 'profiles/btr_server',
     '%data' => '/var/www/data',
     '%po_files' => '/var/www/PO_files',
     '%exports' => '/var/www/exports',
@@ -21,8 +21,10 @@ $aliases['btr'] = array (
   ),
 );
 
-// $aliases['dev'] = array (
-//   'parent' => '@btr',
-//   'root' => '/var/www/btr_dev',
-//   'uri' => 'http://dev.btr.example.org',
-// );
+/*
+$aliases['dev'] = array (
+  'parent' => '@btr',
+  'root' => '/var/www/btr_dev',
+  'uri' => 'http://dev.btr.example.org',
+);
+*/

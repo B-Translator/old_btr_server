@@ -42,9 +42,9 @@ php scripts/run-tests.sh --clean
 ### run the test scripts
 if [ "$stdout" != '' ]
 then
-    php scripts/run-tests.sh --url "$URL" --verbose --color B-Translator
+    php scripts/run-tests.sh --url "$URL" --verbose --color btr_server
 else
-    php scripts/run-tests.sh --url "$URL" --verbose B-Translator > $output_file
+    php scripts/run-tests.sh --url "$URL" --verbose btr_server > $output_file
     echo
     echo " - Results stored on the file: "
     echo "     $drupal_dir/$output_file"

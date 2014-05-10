@@ -49,7 +49,7 @@ EOF
 cat >> $drupal_settings << EOF
 // Adds memcache as a cache backend
 /* comment memcache config
-\$conf['cache_backends'][] = 'profiles/btranslator/modules/contrib/memcache/memcache.inc';
+\$conf['cache_backends'][] = 'profiles/btr_server/modules/contrib/memcache/memcache.inc';
 // Makes it so that memcache is the default caching backend
 \$conf['cache_default_class'] = 'MemCacheDrupal';
 // Keep forms in persistent storage, as per discussed at the beginning
@@ -64,7 +64,7 @@ cat >> $drupal_settings << EOF
 \$conf['memcache_bins'] = array('cache' => 'default');
 
 // If you wanted multiple Drupal installations to share one Memcache instance use the prefix like so:
-\$conf['memcache_key_prefix'] = 'btranslator';
+\$conf['memcache_key_prefix'] = 'btr_server';
 comment memcache config */
 
 EOF

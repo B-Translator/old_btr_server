@@ -28,7 +28,7 @@ done
 
 ### put a link to the data directory on /var/www/data
 rm -f /var/www/data
-ln -s $drupal_dir/profiles/btranslator/modules/custom/btrCore/data /var/www/data
+ln -s $drupal_dir/profiles/btr_server/modules/custom/btrCore/data /var/www/data
 
 ### modify also the DB settings on /var/www/data/db/
 cat <<EOF > /var/www/data/db/settings.php

@@ -431,7 +431,7 @@
      suggestions since the last snapshot. If the parameter *$nr* is
      missing, it returns a list of the saved diffs instead.
 
-     For more details about diffs see: [[https://github.com/B-Translator/server/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs][README.org#snapshots-and-diffs]]
+     For more details about diffs see: [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/README.org#snapshots-and-diffs][README.org#snapshots-and-diffs]]
 
      Examples:
      #+BEGIN_EXAMPLE

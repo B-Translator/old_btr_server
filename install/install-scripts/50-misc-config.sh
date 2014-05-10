@@ -51,9 +51,9 @@ sed -i /etc/apache2/apache2.conf \
 update-locale
 
 ### replace nginx with apache2
-dev_scripts=$drupal_dir/profiles/btranslator/dev
+dev_scripts=$drupal_dir/profiles/btr_server/dev
 $dev_scripts/apache2.sh start
 
 ### link to api-examples and api-docs
-ln -s /var/www/btr_dev/profiles/btranslator/modules/custom/btrServices/examples/ /var/www/api-examples
-ln -s /var/www/btr_dev/profiles/btranslator/modules/custom/btrServices/docs/ /var/www/api-docs
+ln -s /var/www/btr_dev/profiles/btr_server/modules/custom/btrServices/examples/ /var/www/api-examples
+ln -s /var/www/btr_dev/profiles/btr_server/modules/custom/btrServices/docs/ /var/www/api-docs

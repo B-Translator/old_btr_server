@@ -18,7 +18,7 @@ B-Translator.
     #+BEGIN_EXAMPLE
     [precise]
     description=Ubuntu Precise LTS
-    location=/var/chroot/btranslator
+    location=/var/chroot/btr
     priority=3
     users=ubuntu
     groups=sbuild
@@ -28,11 +28,11 @@ B-Translator.
   + Bootstrap the chroot with a minimal Ubuntu installation:
     #+BEGIN_EXAMPLE
     debootstrap --variant=minbase --arch=amd64 precise \
-        /var/chroot/btranslator http://mirror.rackspace.com/ubuntu/
-    cp /etc/resolv.conf /var/chroot/btranslator/etc/resolv.conf
-    cp /etc/apt/sources.list /var/chroot/btranslator/etc/apt/
-    mount -o bind /proc /var/chroot/btranslator/proc
-    chroot /var/chroot/btranslator/
+        /var/chroot/btr http://mirror.rackspace.com/ubuntu/
+    cp /etc/resolv.conf /var/chroot/btr/etc/resolv.conf
+    cp /etc/apt/sources.list /var/chroot/btr/etc/apt/
+    mount -o bind /proc /var/chroot/btr/proc
+    chroot /var/chroot/btr/
 
     apt-get install ubuntu-minimal
     apt-get update
@@ -47,11 +47,11 @@ B-Translator.
     tasksel install lamp-server
     #+END_EXAMPLE
 
-  + Make a startup script =/etc/init.d/chroot-btranslator= with a
+  + Make a startup script =/etc/init.d/chroot-btr= with a
     content like this:
     #+BEGIN_EXAMPLE
 
-    CHROOT=/var/chroot/btranslator
+    CHROOT=/var/chroot/btr
 
     case "$1" in
       start)
@@ -84,9 +84,9 @@ B-Translator.
 
   + Make it executable and start it at boot:
     #+BEGIN_EXAMPLE
-    chmod +x /etc/init.d/chroot-btranslator
-    update-rc.d chroot-btranslator defaults
-    service chroot-btranslator start
+    chmod +x /etc/init.d/chroot-btr
+    update-rc.d chroot-btr defaults
+    service chroot-btr start
     #+END_EXAMPLE
 
   Referencies:
@@ -119,14 +119,14 @@ B-Translator.
 
   For those like me that use Emacs for development, checkout this:
   http://drupal.org/project/emacs
-  
 
-* Install the profile btranslator
+
+* Install the profile btr_server
 
   #+BEGIN_EXAMPLE
   cd /var/www/
-  sudo git clone https://github.com/B-Translator/server.git
-  sudo B-Translator/install/dev/all.sh
+  sudo git clone https://github.com/B-Translator/btr_server.git
+  sudo btr_server/install/dev/all.sh
   #+END_EXAMPLE
 
 
@@ -170,14 +170,14 @@ B-Translator.
 
 ** Site configurations for development and testing
 
-   + Create configuration files ~/etc/apache2/sites-available/btranslator-dev~,
-     and ~/etc/apache2/sites-available/btranslator-dev-ssl~ by copying ~default~
+   + Create configuration files ~/etc/apache2/sites-available/btr-dev~,
+     and ~/etc/apache2/sites-available/btr-dev-ssl~ by copying ~default~
      and ~default-ssl~ and modifying them like this:
      #+BEGIN_EXAMPLE
      <VirtualHost *:80>
-	 ServerName dev.btranslator.org
+	 ServerName dev.btr.org
 	 ServerAdmin dashohoxha@gmail.com
-	 DocumentRoot /var/www/btranslator-dev
+	 DocumentRoot /var/www/btr-dev
 
 	 <Directory />
 	     Options FollowSymLinks
@@ -185,7 +185,7 @@ B-Translator.
 	 </Directory>
 
 	 ### directory where application is installed
-	 <Directory /var/www/btranslator-dev/>
+	 <Directory /var/www/btr-dev/>
 	     Options Indexes FollowSymLinks MultiViews
 	     # AllowOverride None
 	     AllowOverride All   ### this is needed for clean URLs
@@ -197,9 +197,9 @@ B-Translator.
      #+BEGIN_EXAMPLE
      <IfModule mod_ssl.c>
      <VirtualHost *:443>
-	 ServerName dev.btranslator.org
+	 ServerName dev.btr.org
 	 ServerAdmin dashohoxha@gmail.com
-	 DocumentRoot /var/www/btranslator-dev
+	 DocumentRoot /var/www/btr-dev
 
 	 <Directory />
 	     Options FollowSymLinks
@@ -207,7 +207,7 @@ B-Translator.
 	 </Directory>
 
 	 ### directory where application is installed
-	 <Directory /var/www/btranslator-dev/>
+	 <Directory /var/www/btr-dev/>
 	     Options Indexes FollowSymLinks MultiViews
 	     # AllowOverride None
 	     AllowOverride All   ### this is needed for clean URLs
@@ -217,19 +217,19 @@ B-Translator.
      #+END_EXAMPLE
 
    + Similarly, create the configuration files
-     ~/etc/apache2/sites-available/btranslator-tst~, and
-     ~/etc/apache2/sites-available/btranslator-tst-ssl~ for a testing
+     ~/etc/apache2/sites-available/btr-tst~, and
+     ~/etc/apache2/sites-available/btr-tst-ssl~ for a testing
      installation.
 
    + Enable the sites:
      #+BEGIN_EXAMPLE
-     a2ensite btranslator-dev btranslator-dev-ssl btranslator-tst btranslator-tst-ssl
+     a2ensite btr-dev btr-dev-ssl btr-tst btr-tst-ssl
      #+END_EXAMPLE
 
    + Add these lines to ~/etc/hosts~
      #+BEGIN_EXAMPLE
-     127.0.0.1    dev.btranslator.org
-     127.0.0.1    tst.btranslator.org
+     127.0.0.1    dev.btr.org
+     127.0.0.1    tst.btr.org
      #+END_EXAMPLE
 
    + Finally restart apache: =service apache2 restart=.
@@ -249,7 +249,7 @@ B-Translator.
 
   + On /Site information/ page
     (=/admin/config/system/site-information=) set email address to your
-    email address (for example ~dashohoxha+btranslator@gmail.com~).  Modify
+    email address (for example ~dashohoxha+btr@gmail.com~).  Modify
     also the site name and slogan.
 
   + Install module SMTP Authentication support and enable and
@@ -259,8 +259,8 @@ B-Translator.
     - Use encrypted protocol: ~Use SSL~
     - SMTP authentication username: ~dashohoxha@gmail.com~ (set
       the password as well)
-    - Email from address: ~dashohoxha+btranslator@gmail.com~
-    - Email from name: ~btranslator~
+    - Email from address: ~dashohoxha+btr@gmail.com~
+    - Email from name: ~btr~
     - Allow to send email formatted as html: ~checked~
     - Sends also a test email to ~dashohoxha+test@gmail.com~
 
@@ -290,13 +290,13 @@ B-Translator.
 
   + Run =crontab -e= and add these lines:
     #+BEGIN_EXAMPLE
-    ### https://dev.btranslator.org
-    0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://dev.btranslator.org/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+    ### https://dev.btr.org
+    0 2 * * *  wget -O - -q -t 1 --no-check-certificate https://dev.btr.org/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
     #+END_EXAMPLE
 
   + Test it by running this command from command line:
     #+BEGIN_EXAMPLE
-    wget -O - -q -t 1 --no-check-certificate https://dev.btranslator.org/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
+    wget -O - -q -t 1 --no-check-certificate https://dev.btr.org/cron.php?cron_key=YVXQ7X8AmcbpDYEF_NGXISgbC-5z7_pOvxpjYEm2B_M
     #+END_EXAMPLE
 
   For the correct cron URL to be used, check =/admin/reports/status=

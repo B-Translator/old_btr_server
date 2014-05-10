@@ -2,7 +2,7 @@
 
 ### read $main_lang
 echo "
-===> Main translation language of B-Translator
+===> Main translation language of B-Translator Server
 
 This is the code of the main translation language
 of your site (something like 'sq' or 'sq_AL').
@@ -13,7 +13,7 @@ main_lang=${input:-$main_lang}
 
 ### read $other_langs
 echo "
-===> Auxiliary languages of B-Translator
+===> Auxiliary languages of B-Translator Server
 
 These are the codes of helping (auxiliary) languages,
 separated by space (like 'fr de it').
@@ -32,7 +32,7 @@ $(dirname $0)/mysqld.sh start
 drush @btr --yes --exact vset btr_translation_lng $main_lang
 
 ### modify the list of languages
-file_inc='/var/www/btr/profiles/btranslator/modules/custom/btrCore/includes/languages.inc'
+file_inc='/var/www/btr/profiles/btr_server/modules/custom/btrCore/includes/languages.inc'
 echo "
 ===> Edit the file '$file_inc' and modify the list of languages appropriately.
 "

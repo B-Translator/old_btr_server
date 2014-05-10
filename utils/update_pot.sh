@@ -1,14 +1,13 @@
 #/bin/bash
-### Extract translatable strings of B-Translator
-### and update the file 'btrserver.pot'.
+### Extract translatable strings of B-Translator Server and update the
+### file 'btrserver.pot'.
 ###
-### Run it on a copy of B-Translator that is just
-### cloned from git, don't run it on an installed
-### copy of B-Translator, otherwise 'potx-cli.php'
-### will scan also the other modules that are on
-### the directory 'modules/'.
+### Run it on a copy of B-Translator Server that is just cloned from
+### git, don't run it on an installed copy of B-Translator, otherwise
+### 'potx-cli.php' will scan also the other modules that are on the
+### directory 'modules/'.
 
-### go to the btranslator directory
+### go to the btr_server directory
 cd $(dirname $0)
 cd ..
 

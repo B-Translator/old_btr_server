@@ -9,8 +9,8 @@ lng=sq
 
 #drupal_dir=$(drush dd)
 drupal_dir=/var/www/btr
-btranslator_pot=$drupal_dir/profiles/btranslator/l10n/btranslator.pot
-btranslator_po=$drupal_dir/profiles/btranslator/l10n/btranslator.$lng.po
+btrserver_pot=$drupal_dir/profiles/btr_server/l10n/btrserver.pot
+btrserver_po=$drupal_dir/profiles/btr_server/l10n/btrserver.$lng.po
 
 ### include snapshot functions
 . make-snapshot.sh
@@ -20,11 +20,11 @@ make-last-snapshot $origin $project $lng
 
 ### import the templates
 potpl=$project
-./pot_import.php $origin $project $potpl $btranslator_pot
+./pot_import.php $origin $project $potpl $btrserver_pot
 
 ### import the PO files
-./po_import.php $origin $project $potpl $lng $btranslator_po
+./po_import.php $origin $project $potpl $lng $btrserver_po
 
 ## make initial snapshots after (re)import
-make-snapshot $origin $project $lng $btranslator_po
+make-snapshot $origin $project $lng $btrserver_po
 

@@ -37,7 +37,7 @@ $aid1 = actions_save(
   'system',
   array(
     'recipient' => $email,
-    'subject' => '[btranslator] New user: [user:name]',
+    'subject' => '[btr] New user: [user:name]',
     'message' => 'New user: [user:name]',
   ),
   t('Send e-mail to admin when a new user is registered')
@@ -47,7 +47,7 @@ $aid2 = actions_save(
   'system',
   array(
     'recipient' => $email,
-    'subject' => '[btranslator] [user:name] has modified his account',
+    'subject' => '[btr] [user:name] has modified his account',
     'message' => 'The user [user:name] has modified his account.',
   ),
   t('Send e-mail to admin when user modifies his account')

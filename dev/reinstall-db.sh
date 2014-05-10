@@ -1,5 +1,5 @@
 #!/bin/bash
-### Reinstall the Drupal profile 'btranslator' and its features.
+### Reinstall the Drupal profile 'btr_server' and its features.
 ### This script touches only the database of Drupal (btr)
 ### and nothing else. Useful for testing the features.
 ###
@@ -40,7 +40,7 @@ $mysql -e "
 ### start site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
 cd $drupal_dir
-drush site-install --verbose --yes btranslator \
+drush site-install --verbose --yes btr_server \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"

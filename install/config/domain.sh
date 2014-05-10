@@ -4,7 +4,7 @@ echo "
 ===> Set the domain name (fqdn) of the server
 
 This is the domain that you have registered
-(or plan to register) for the B-Translator.
+(or plan to register) for the B-Translator Server.
 
 It will modify the files:
  1) /etc/hostname

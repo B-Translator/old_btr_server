@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Install functions for the profile B-Translator.
+ * Install functions for the profile B-Translator Server.
  */
 
 /**
@@ -9,7 +9,7 @@
  *
  * Perform actions to set up the site for this profile.
  */
-function btranslator_install() {
+function btr_server_install() {
 
   // Get a connection to the btr_db. All the queries
   // of the l10n_feedback module will use this connection.
@@ -31,11 +31,11 @@ function btranslator_install() {
   variable_set('user_register', USER_REGISTER_VISITORS);
   variable_set('user_email_verification', TRUE);
 
-  btranslator_install_mailsystem();
-  btranslator_install_user_restrictions();
+  _btrserver_install_mailsystem();
+  _btrserver_install_user_restrictions();
 }
 
-function btranslator_install_mailsystem()
+function _btrserver_install_mailsystem()
 {
   variable_set('mailsystem_theme', 'current');
 
@@ -45,7 +45,7 @@ function btranslator_install_mailsystem()
   variable_set('mail_system', $mail_system);
 }
 
-function btranslator_install_user_restrictions() {
+function _btrserver_install_user_restrictions() {
   db_insert('user_restrictions')
     ->fields(array(
       'mask' => '%@netcourrier.com',

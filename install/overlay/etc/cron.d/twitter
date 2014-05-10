@@ -1,5 +1,5 @@
 ### first create a user with `adduser twitter`
-0 4 * * *  twitter  /var/www/btr/profiles/btranslator/utils/twitter.sh > /dev/null 2>&1
+0 4 * * *  twitter  /var/www/btr/profiles/btr_server/utils/twitter.sh > /dev/null 2>&1
 
 ### uncomment this line only for debugging
-#*/5 * * * *  twitter  /var/www/btr/profiles/btranslator/utils/twitter.sh
+#*/5 * * * *  twitter  /var/www/btr/profiles/btr_server/utils/twitter.sh

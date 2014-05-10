@@ -293,7 +293,7 @@
     The latest changes should be exported in a format that is easy to
     review, modify and apply (diff or ediff).
 
-    
+
 
 \section{Analyzing the functionality in more details}
 \label{sec-4}
@@ -323,7 +323,7 @@
 
    The actors and use-cases that can be identified for B-Translator
    are these:
-   
+
 \begin{itemize}
 \item \textbf{guest} (anonymous user)
 
@@ -488,7 +488,7 @@
     The admin should be able to customize the overall behavior of the
     module, to check activity, to get reports and statistics, to
     maintain the data (backup, restore, update) etc.
-    
+
 
 \section{Designing the software}
 \label{sec-5}
@@ -768,7 +768,7 @@
 
   As a version control system I use git. Actually the repository of
   the project is hosted on github.com
-  (\href{https://github.com/B-Translator/server}{https://github.com/B-Translator/server}). Usage of a version control
+  (\href{https://github.com/B-Translator/btr_server}{https://github.com/B-Translator/btr_server}). Usage of a version control
   system is a must for every software development project, because:
 \begin{itemize}
 \item It keeps all the history of changes in the project and allows you
@@ -816,7 +816,7 @@
   The majority of tasks usually are related to programing and
   implementation, however anything else can be a task (for example,
   collecting requirements, performing the functional analysis, etc.).
-  
+
   There are some steps or phases that are common for all software
   engineering projects, like:
 \begin{itemize}
@@ -828,7 +828,7 @@
 \item testing, debugging and making sure that they work correctly
 \item etc.
 \end{itemize}
-  
+
   How these phases are combined together depends on the software that
   is to be build. If you have enough experience with building such
   kind of software, and you have a clear idea from the beginning about
@@ -882,7 +882,7 @@
 
   Right now, for bug reporting, feature requests, etc. the issues
   section on GitHub can be used:
-  \href{https://github.com/B-Translator/server/issues}{https://github.com/B-Translator/server/issues} . Later maybe I
+  \href{https://github.com/B-Translator/btr_server/issues}{https://github.com/B-Translator/btr_server/issues} . Later maybe I
   can install \href{http://trac.edgewall.org/}{trac}, which is nice tool for software project
   management.
 
@@ -903,14 +903,14 @@
 
 \begin{verbatim}
 cd /var/www/
-sudo git clone https://github.com/B-Translator/server.git
+sudo git clone https://github.com/B-Translator/btr_server.git
 sudo B-Translator/install/all.sh
 \end{verbatim}
 
 
 
    For more detailed information about installation see:
-   \href{https://github.com/B-Translator/server/blob/master/docs/INSTALL.org}{https://github.com/B-Translator/server/blob/master/docs/INSTALL.org}
+   \href{https://github.com/B-Translator/btr\_server/blob/master/docs/INSTALL.org}{https://github.com/B-Translator/btr\_server/blob/master/docs/INSTALL.org}
 
 \subsection{How B-Translator works}
 \label{sec-8.2}
@@ -1131,7 +1131,7 @@ sudo B-Translator/install/all.sh
     \texttt{\$data\_root}, which is defined in \texttt{config.sh}. Besides \texttt{\$data\_root},
     \texttt{config.sh} defines also the variable \texttt{\$languages}, which is a list
     of the codes of the languages that are supported by the system.
-    
+
     Projects on the \texttt{\$data\_root} are also grouped (categorized) by
     origin.  For example all the GNOME projects are placed on the same
     directory, all the KDE projects on another directory, and so on.
@@ -1160,7 +1160,7 @@ sudo B-Translator/install/all.sh
     Importing is done in two steps: the first step is to import the
     template (POT) files of the project, and the second step is to
     import the translation (PO) files for each language.  A POT file
-    usually has a corresponding PO file for each language. 
+    usually has a corresponding PO file for each language.
 
     The template (POT) files contain the translatable strings of the
     project, with empty translations (this is why they are called
@@ -1199,7 +1199,7 @@ Examples:
      existing project is used.  However, if the given template already
      exists (for this project), then it is deleted first (along with the
      locations and files related to it), and then recreated.
-      
+
      Along with the template, locations that are contained in this
      template are created as well. The string corresponding to each
      location is created only if it does not already exist. Otherwise
@@ -1234,11 +1234,11 @@ Example:
      that the POT file of the project has already been imported,
      otherwise it will quit without doing anything.  If the file has
      been already imported, then it is skipped.
-       
+
      For each file, all the information that is needed for exporting it
      is stored, like the file name and path, the headers of the file,
      the content of the file, etc.
-       
+
      Along with the file, it also inserts the translations for the
      corresponding strings, when such translations do not exist.
 
@@ -1393,7 +1393,7 @@ Usage: ./export.sh origin project lng output_dir
      Their path under the \texttt{output\_dir} is the same as the path of the
      imported files. This is useful for making diffs with the original
      files of the project.
-    
+
 
 \item Exporting projects in tgz format (export\_{}tgz.sh)\\
 \label{sec-8.4.3.3}
@@ -1521,7 +1521,7 @@ Examples:
 
 
      This script compares the current translation files of an \texttt{\{origin,      project, lng\}} with the last snapshot.
-   
+
 
 \begin{verbatim}
 $ ./make_diff.sh
@@ -1609,7 +1609,7 @@ diff_comment="Import diff. Contains formating changes, any skipped entries, etc.
      differences that come as a result of formatting changes between the
      original format and the exported format. It also contains the
      entries that are skipped during the import.
-     
+
      Whenever a translator checks the latest diff, he should also make a
      snapshot, which will also generate the diff with the previous
      snapshot (and store it on the DB). As a result, the translations
@@ -1628,7 +1628,7 @@ diff_comment="Contains the latest suggestions before import."
 \end{verbatim}
 
 
-   
+
      Then an initial snapshot is made again with the original files,
      using \texttt{db\_snapshot.php init ...} (which will not generate any
      diff).  After it, a snapshot using the \texttt{original} mode of export is
@@ -1677,7 +1677,7 @@ Usage: ./wget-diffs.sh origin project lng [nr]
     If 'nr' is missing, then the list of diffs will be retrieved instead.
     If 'nr' is '-', then the latest diffs (since the last snapshot)
     will be computed and returned (it will take longer to execute, since
-    the diffs are calculated on the fly). 
+    the diffs are calculated on the fly).
 
 Examples:
     ./wget-diffs.sh KDE kdelibs sq

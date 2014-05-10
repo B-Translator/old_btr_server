@@ -3,7 +3,7 @@
 ### Usually called by cron. It can be called by cron like this:
 ###
 ###     0 2 * * * nice \
-###         /var/www/btr_dev/profiles/btranslator/utils/export_projects.sh \
+###         /var/www/btr_dev/profiles/btr_server/utils/export_projects.sh \
 ###         /var/www/downloads/exports/ \
 ###         /var/www/downloads/exports/projects.txt
 

@@ -82,11 +82,11 @@
   command like this:
   #+BEGIN_EXAMPLE
   drush @dev features-export \
-  --destination=profiles/btranslator/modules/features \
+  --destination=profiles/btr_server/modules/features \
   btr_layout $(cat layout_components)
   #+END_EXAMPLE
   It creates a feature on the directory:
-  ~/var/www/btr_dev/profiles/btranslator/modules/features/btr_layout/~
+  ~/var/www/btr_dev/profiles/btr_server/modules/features/btr_layout/~
 
   Other features that I have created are: /btr_disqus/,
   /btr_invite/, /btr_sharethis/,
@@ -105,7 +105,7 @@
   ### after being created (for example btr_layout).
 
   drush="drush --yes @dev"
-  destination="profiles/btranslator/modules/features"
+  destination="profiles/btr_server/modules/features"
 
   function create_feature
   {
@@ -216,7 +216,7 @@
 * Making features configurable
 
   Some of the features are required and will be automatically
-  installed when the (btranslator) profile is installed, and some
+  installed when the (btr_server) profile is installed, and some
   others are optional and can be installed later by the site
   administrator, if they wish. Most of these features are closely
   related to some contrib modules and basically just save

@@ -1,13 +1,13 @@
 #!/bin/bash -x
 
 ### retrieve all the projects/modules and build the application directory
-makefile="https://raw.github.com/B-Translator/server/master/build-btranslator.make"
+makefile="https://raw.github.com/B-Translator/btr_server/master/build-btrserver.make"
 rm -rf $drupal_dir
 drush make --prepare-install --force-complete \
-           --contrib-destination=profiles/btranslator \
+           --contrib-destination=profiles/btr_server \
            $makefile $drupal_dir
-cp -a $drupal_dir/profiles/btranslator/{libraries/bootstrap,themes/contrib/bootstrap/}
-cp $drupal_dir/profiles/btranslator/libraries/hybridauth/{additional-providers/hybridauth-github/Providers/GitHub.php,hybridauth/Hybrid/Providers/}
+cp -a $drupal_dir/profiles/btr_server/{libraries/bootstrap,themes/contrib/bootstrap/}
+cp $drupal_dir/profiles/btr_server/libraries/hybridauth/{additional-providers/hybridauth-github/Providers/GitHub.php,hybridauth/Hybrid/Providers/}
 
 ### create the directory of PO files
 mkdir -p /var/www/PO_files
@@ -49,7 +49,7 @@ $mysql -e "
 ### site installation
 sed -e '/memory_limit/ c memory_limit = -1' -i /etc/php5/cli/php.ini
 cd $drupal_dir
-drush site-install --verbose --yes btranslator \
+drush site-install --verbose --yes btr_server \
       --db-url="mysql://$db_user:$db_pass@localhost/$db_name" \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"

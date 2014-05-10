@@ -31,8 +31,8 @@ server.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
-  git clone --branch v1.0 https://github.com/B-Translator/server.git
-  nohup nice B-Translator/install/install.sh btr-1 &
+  git clone --branch v1.0 https://github.com/B-Translator/btr_server.git
+  nohup nice btr_server/install/install.sh btr-1 &
   tail -f nohup.out
   #+END_EXAMPLE
 
@@ -62,7 +62,7 @@ server.
   given properly, then I can correct/change it like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr-1
-  cd /var/www/btr/profiles/btranslator
+  cd /var/www/btr/profiles/btr_server
   install/config/domain.sh
   #+END_EXAMPLE
 
@@ -93,7 +93,7 @@ server.
   So, I replace NGINX with Apache2 like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr-1
-  cd /var/www/btr/profiles/btranslator
+  cd /var/www/btr/profiles/btr_server
   dev/apache2.sh start
   #+END_EXAMPLE
   It will stop services /nginx/, /php5-fpm/ and /memcached/, will
@@ -137,9 +137,9 @@ server.
    ~/var/www/btr/sites/default/settings.php~:
    #+BEGIN_EXAMPLE
    // /* fb config
-   $conf['fb_api_file'] = 'profiles/btranslator/libraries/facebook-php-sdk/src/facebook.php';
-   include "profiles/btranslator/modules/contrib/fb/fb_url_rewrite.inc";
-   include "profiles/btranslator/modules/contrib/fb/fb_settings.inc";
+   $conf['fb_api_file'] = 'profiles/btr_server/libraries/facebook-php-sdk/src/facebook.php';
+   include "profiles/btr_server/modules/contrib/fb/fb_url_rewrite.inc";
+   include "profiles/btr_server/modules/contrib/fb/fb_settings.inc";
    if (!headers_sent()) {
      header('P3P: CP="We do not have a P3P policy."');
    }
@@ -155,7 +155,7 @@ server.
   well for accessing it easily and for using remote drush commands:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr-1
-  cd /var/www/btr/profiles/btranslator
+  cd /var/www/btr/profiles/btr_server
   dev/install-sshd.sh
   #+END_EXAMPLE
 
@@ -203,7 +203,7 @@ server.
   Now I transfer ~btr_content_1.tgz~ to the clone server and
   replace the existing content with it:
   #+BEGIN_EXAMPLE
-  cd /var/www/btr/profiles/btranslator
+  cd /var/www/btr/profiles/btr_server
   cd modules/features/
   tar --extract --gunzip --file=btr_content_1.tgz
   drush --yes pm-disable btr_content
@@ -235,7 +235,7 @@ server.
 
   + Save them on the main site:
     #+BEGIN_EXAMPLE
-    cd /var/www/btr/profiles/btranslator
+    cd /var/www/btr/profiles/btr_server
     modules/features/save-private-vars.sh
     #+END_EXAMPLE
     It will generate the file ~restore-private-vars.php~.

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Installation steps for the profile B-Translator.
+ * Installation steps for the profile B-Translator Server.
  */
 
 /**
@@ -9,7 +9,7 @@
  *
  * Allows the profile to alter the site configuration form.
  */
-function btranslator_form_install_configure_form_alter(&$form, $form_state) {
+function btr_server_form_install_configure_form_alter(&$form, $form_state) {
   // Pre-populate the site name with the server name.
   $form['site_information']['site_name']['#default_value'] = 'B-Translator';
 }
@@ -17,20 +17,20 @@ function btranslator_form_install_configure_form_alter(&$form, $form_state) {
 /**
  * Implements hook_install_tasks().
  */
-function btranslator_install_tasks($install_state) {
+function btr_server_install_tasks($install_state) {
   // Add our custom CSS file for the installation process
-  //drupal_add_css(drupal_get_path('profile', 'btranslator') . '/btranslator.css');
+  //drupal_add_css(drupal_get_path('profile', 'btr_server') . '/btr_server.css');
 
   require_once(drupal_get_path('module', 'phpmailer') . '/phpmailer.admin.inc');
 
   $tasks = array(
-    'btranslator_config' => array(
-      'display_name' => st('B-Translator Settings'),
+    'btr_server_config' => array(
+      'display_name' => st('B-Translator Server Settings'),
       'type' => 'form',
       'run' => INSTALL_TASK_RUN_IF_NOT_COMPLETED,
-      'function' => 'btranslator_config',
+      'function' => 'btr_server_config',
     ),
-    'btranslator_mail_config' => array(
+    'btr_server_mail_config' => array(
       'display_name' => st('Mail Settings'),
       'type' => 'form',
       'run' => INSTALL_TASK_RUN_IF_NOT_COMPLETED,
@@ -42,16 +42,16 @@ function btranslator_install_tasks($install_state) {
 }
 
 /**
- * General configuration settings for B-Translator.
+ * General configuration settings for B-Translator Server.
  *
  * @return
  *   An array containing form items to place on the module settings page.
  */
-function btranslator_config() {
+function btr_server_config() {
 
   $form['config'] = array(
     '#type'  => 'fieldset',
-    '#title' => t('B-Translator configuration options'),
+    '#title' => t('B-Translator Server configuration options'),
   );
 
   // get a list of available languages
@@ -84,7 +84,7 @@ function btranslator_config() {
 
   $form['defaults'] = array(
     '#type'  => 'fieldset',
-    '#title' => t('B-Translator default settings'),
+    '#title' => t('B-Translator Server default settings'),
   );
 
   // btr_preferred_projects
@@ -99,4 +99,4 @@ function btranslator_config() {
 
 
   return system_settings_form($form);
-}  //  End of btranslator_config().
+}  //  End of btr_server_config().

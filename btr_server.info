@@ -7,8 +7,8 @@ exclusive = TRUE
 ;--------------------
 ; Files
 ;--------------------
-files[] = btranslator.install
-files[] = btranslator.profile
+files[] = btr_server.install
+files[] = btr_server.profile
 
 ;--------------------
 ; Core
