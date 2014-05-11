@@ -67,7 +67,7 @@ mysql --defaults-file=/etc/mysql/debian.cnf -e "
 "
 
 ### copy the database
-drush sql-sync @$src @$dst
+drush --yes sql-sync @$src @$dst
 
 ### clear the cache
 drush @$dst cc all

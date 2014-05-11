@@ -1,4 +1,5 @@
-127.0.0.1 btr.example.org localhost
+127.0.0.1 example.org localhost
+127.0.0.1 btr.example.org
 
 #Required for IPv6 capable hosts
 ::1 ip6-localhost ip6-loopback

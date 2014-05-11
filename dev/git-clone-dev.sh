@@ -2,19 +2,19 @@
 ### Clone the dev branch from
 ### /var/www/btr_dev/profiles/btr_server/
 
-### create a symlink /var/www/btr_server to the git repo
+### create a symlink /var/www/dev_btr_server to the git repo
 cd /var/www/
-test -h btr_server || ln -s btr_dev/profiles/btr_server/ .
+test -h dev_btr_server || ln -s btr_dev/profiles/btr_server/ dev_btr_server
 
 ### on the repo create a 'dev' branch
-cd btr_server/
+cd dev_btr_server/
 git branch dev master
 
 ### clone the dev branch
 cd /var/www/btr/profiles/
 rm -rf btr_server-bak
 mv btr_server btr_server-bak
-git clone -b dev /var/www/btr_server
+git clone -b dev /var/www/dev_btr_server
 
 ### copy contrib libraries and modules
 cp -a btr_server-bak/libraries/ btr_server/

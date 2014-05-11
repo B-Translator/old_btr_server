@@ -13,6 +13,9 @@ $cwd/25-git-clone-btrserver.sh
 $cwd/30-separate-translation-data.sh
 $cwd/40-configure-btrserver.sh
 
+### install btr_client as well
+$cwd/45-install-btrclient.sh
+
 ### copy overlay files over to the system
 cp -TdR $(dirname $cwd)/overlay/ /
 
