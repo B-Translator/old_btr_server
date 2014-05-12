@@ -8,7 +8,7 @@ cd btr_server/
 git pull
 
 ### make a clone of /var/www/btr to /var/www/btr_dev
-dev/clone.sh btr dev
+dev/clone.sh btr btr_dev
 
 ### comment out the configuration of the database 'btr_db' so that
 ### the internal test database can be used instead for translations

@@ -22,6 +22,9 @@ variable_set('smtp_always_replyto', '1');
 
 variable_set('smtp_from', $email);
 variable_set('mimemail_mail', $email);
+variable_set('simplenews_from_address', $email);
+variable_set('simplenews_test_address', $email);
+variable_set('mass_contact_default_sender_email', $email);
 variable_set('reroute_email_address', $email);
 variable_set('update_notify_emails', array($email));
 

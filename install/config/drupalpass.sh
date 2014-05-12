@@ -1,8 +1,9 @@
 #!/bin/bash
 ### Set the admin password of Drupal.
 
+base_url=$(drush @btr eval 'print $GLOBALS["base_url"]')
 echo "
-===> Please enter new password for the Drupal 'admin' account.
+===> Password for Drupal 'admin' on $base_url.
 "
 stty -echo
 read -p "Enter the password: " passwd

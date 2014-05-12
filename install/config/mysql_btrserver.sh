@@ -7,9 +7,7 @@ cwd=$(dirname $0)
 $cwd/mysqld.sh start
 
 echo "
-===> MySQL Password of Drupal Database
-
-Please enter new password for the MySQL 'btr' account.
+===> Please enter new password for the MySQL 'btr' account.
 "
 random_passwd=$(mcookie | head -c 16)
 stty -echo
@@ -19,9 +17,7 @@ echo
 drupal_passwd=${passwd:-$random_passwd}
 
 echo "
-===> MySQL Password of the Translations Database
-
-Please enter new password for the MySQL 'btr_data' account.
+===> Please enter new password for the MySQL 'btr_data' account.
 "
 random_passwd=$(mcookie | head -c 16)
 stty -echo

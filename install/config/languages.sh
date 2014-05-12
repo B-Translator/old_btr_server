@@ -1,35 +1,34 @@
 #!/bin/bash
 
-### read $main_lang
+### read $default_lang
 echo "
-===> Main translation language of B-Translator Server
+===> Default translation language of B-Translator Server
 
-This is the code of the main translation language
-of your site (something like 'sq' or 'sq_AL').
+The code of the default language (like 'fr' or 'fr_FR').
 "
-main_lang='sq'
-read -p "Enter the language code [$main_lang]: " input
-main_lang=${input:-$main_lang}
+default_lang='fr'
+read -p "Enter the language code [$default_lang]: " input
+default_lang=${input:-$default_lang}
 
 ### read $other_langs
 echo "
-===> Auxiliary languages of B-Translator Server
+===> Other languages of B-Translator Server
 
-These are the codes of helping (auxiliary) languages,
-separated by space (like 'fr de it').
+The codes of the other languages supported by the server,
+separated by a space (like 'fr de it').
 "
 other_langs='fr'
 read -p "Enter the language codes [$other_langs]: " input
 other_langs=${input:-$other_langs}
 
 ### set the list of languages for import
-languages="$main_lang $other_langs"
+languages="$default_lang $other_langs"
 sed -i /var/www/data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
 
 ### set drupal variable btr_translation_lng
 $(dirname $0)/mysqld.sh start
-drush @btr --yes --exact vset btr_translation_lng $main_lang
+drush @btr --yes --exact vset btr_translation_lng $default_lang
 
 ### modify the list of languages
 file_inc='/var/www/btr/profiles/btr_server/modules/custom/btrCore/includes/languages.inc'
@@ -39,6 +38,9 @@ echo "
 read -p "Press Enter to continue..." input
 nano --syntax=php +23,5 $file_inc
 
-### add the $main_lang as a drupal language
-drush @btr language-add $main_lang
+### add the Drupal translations of each language
+for lng in $languages
+do
+    drush @btr language-add $lng
+done
 drush @btr --yes l10n-update
