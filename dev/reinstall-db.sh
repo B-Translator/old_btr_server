@@ -18,7 +18,7 @@ fi
 test $1 && cd $1
 
 ### settings for the database and the drupal site
-drupal_dir=$(drush @dev drupal-directory)
+drupal_dir=$(drush @btr_dev drupal-directory)
 db_name=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
 db_user=$(drush sql-connect | tr ' ' "\n" | grep -e '--user=' | cut -d= -f2)
 db_pass=$(drush sql-connect | tr ' ' "\n" | grep -e '--password=' | cut -d= -f2)
