@@ -7,7 +7,8 @@ cat <<EOF >> /etc/fstab
 ##### appended by installation scripts
 tmpfs		/dev/shm	tmpfs	defaults,noexec,nosuid	0	0
 tmpfs		/var/www/btr/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
-tmpfs		/var/www/bcl/cache	tmpfs	defaults,size=5M,mode=0777,noexedevpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
+tmpfs		/var/www/bcl/cache	tmpfs	defaults,size=5M,mode=0777,noexec,nosuid	0	0
+devpts		/dev/pts	devpts	rw,noexec,nosuid,gid=5,mode=620		0	0
 # mount /tmp on RAM for better performance
 tmpfs /tmp tmpfs defaults,noatime,mode=1777,nosuid 0 0
 EOF
@@ -33,7 +34,8 @@ sed -i /root/.bashrc \
 
 ### configure apache2
 a2enmod ssl
-a2ensite default-ssl
+a2dissite 000-default
+a2ensite btr btr-ssl
 a2enmod headers rewrite
 ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf.d/phpmyadmin
 
