@@ -1,7 +1,7 @@
 #!/bin/bash
 
-btr=/var/www/btr/install
-bcl=/var/www/bcl/install
+btr=/var/www/btr/profiles/btr_server/install
+bcl=/var/www/bcl/profiles/btr_client/install
 
 $btr/config/domain.sh
 
