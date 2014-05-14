@@ -17,9 +17,12 @@ $btr/config/drupalpass.sh
 $bcl/config/languages.sh
 $btr/config/languages.sh
 
+$btr/config/oauth2_login.sh
+
 ### drush may create some css/js files with wrong permissions
 ### clean them up
 rm -rf /var/www/btr/sites/default/files/*
+rm -rf /var/www/bcl/sites/default/files/*
 
 $btr/../dev/make-dev-clone.sh
 $bcl/../dev/make-dev-clone.sh
