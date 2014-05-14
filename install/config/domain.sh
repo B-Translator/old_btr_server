@@ -27,7 +27,7 @@ FQDN2=${input:-$FQDN2}
 
 echo $FQDN1 > /etc/hostname
 sed -i /etc/hosts \
-    -e "/localhost/c 127.0.0.1 $FQDN1 $FQDN2 localhost"
+    -e "/ localhost/c 127.0.0.1 $FQDN1 $FQDN2 localhost"
 
 ### change config files for the client
 for file in $(ls /etc/nginx/sites-available/bcl*)
