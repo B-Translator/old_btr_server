@@ -42,7 +42,6 @@ function btrCore_create_userprofile_fields() {
   foreach ($arr_langs as $lng => $language) {
     $languages[$lng] = $language['name'];
   }
-  unset($languages['en']);
 
   // create a field and instance for 'field_translation_lng'
   field_create_field(
