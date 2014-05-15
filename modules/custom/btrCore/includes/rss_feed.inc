@@ -6,9 +6,7 @@
 
 function btrCore_rss_feed($lng =NULL, $origin =NULL, $project =NULL) {
 
-  if (empty($lng)) {
-    $lng = variable_get('btr_translation_lng', 'fr');
-  }
+  if (empty($lng))  $lng = 'fr';
 
   // get the domain of the feed in the form of 'origin/project' (or just 'origin')
   $domain = '';

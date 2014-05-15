@@ -1,4 +1,3 @@
-btr_translation_lng
 btr_preferred_projects
 btr_export_notify_admin
 recaptcha_private_key

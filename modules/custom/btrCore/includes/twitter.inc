@@ -5,9 +5,7 @@
  */
 
 function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
-  if (empty($lng)) {
-    $lng = variable_get('btr_translation_lng', 'fr');
-  }
+  if (empty($lng))  $lng = 'fr';
 
   // Get the search scope.
   $scope = 'vocabulary';

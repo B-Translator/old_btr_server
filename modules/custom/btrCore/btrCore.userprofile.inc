@@ -43,7 +43,6 @@ function btrCore_create_userprofile_fields() {
     $languages[$lng] = $language['name'];
   }
   unset($languages['en']);
-  $default_lng = variable_get('btr_translation_lng', 'fr');
 
   // create a field and instance for 'field_translation_lng'
   field_create_field(
@@ -61,7 +60,7 @@ function btrCore_create_userprofile_fields() {
       'bundle' => 'user',
       'label' => 'Translation Language',
       'description' => 'The language of translations. You will help with the translations of this language (review existing translations or submit new ones).',
-      'default_value' => array(array('value' => $default_lng)),
+      //'default_value' => array(array('value' => 'fr')),
       'settings' => array('user_register_form' => 1),
       'widget' => array(
         'weight' => '1',
