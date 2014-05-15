@@ -7,6 +7,11 @@ export drush="drush --root=$drupal_dir"
 
 cwd=$(dirname $0)
 
+### get config settings from etc/config.sh
+set -a
+.  $(dirname $cwd)/etc/config.sh
+set +a
+
 $cwd/10-install-additional-packages.sh
 $cwd/20-make-and-install-btrserver.sh
 $cwd/25-git-clone-btrserver.sh

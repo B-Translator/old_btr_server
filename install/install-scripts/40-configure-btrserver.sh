@@ -69,16 +69,34 @@ comment memcache config */
 
 EOF
 
-### install also multi-language support
+### set the directory for uploads
 ### $drush is an alias for 'drush --root=/var/www/btr'
+mkdir -p /var/www/uploads/
+chown www-data: /var/www/uploads/
+$drush variable-set file_private_path '/var/www/uploads/' --exact --yes
+
+### install multi-language support
 $drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 
-### set the directory for uploads
-mkdir -p /var/www/uploads/
-chown www-data: /var/www/uploads/
-$drush variable-set file_private_path '/var/www/uploads/' --exact --yes
+### copy the list of languages to module btrCore
+lng_file=$(dirname $(dirname $0))/etc/languages.inc
+cp $lng_file $drupal_dir/profiles/btr_server/modules/custom/btrCore/
+
+### get a list of language codes
+languages=$(grep code $lng_file | sed -e 's/.* => .//' -e 's/.,.*//')
+
+### set the list of languages for import
+sed -i /var/www/data/config.sh \
+    -e "/^languages=/c languages=\"$languages\""
+
+### add these languages to drupal and import their translations
+for lng in $languages
+do
+    drush @btr language-add $lng
+done
+drush @btr --yes l10n-update
 
 ### update to the latest version of core and modules
 #$drush --yes pm-update

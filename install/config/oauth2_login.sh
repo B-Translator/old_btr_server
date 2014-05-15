@@ -30,4 +30,3 @@ drush @bcl cc all
 ### drush may create css/js files with wrong(root) permissions
 rm -rf /var/www/btr/sites/default/files/*
 rm -rf /var/www/bcl/sites/default/files/*
-
