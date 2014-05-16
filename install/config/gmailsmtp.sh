@@ -8,14 +8,14 @@ Emails from the server are sent through the SMTP
 of a GMAIL account. Please enter the full email
 of the gmail account, and the password.
 "
-if [ -z ${gmail_account+xxx} -o "$gmail_account" = '' ]
+if [ -z "${gmail_account+xxx}" -o "$gmail_account" = '' ]
 then
     gmail_account='MyEmailAddress@gmail.com'
     read -p "Enter the gmail address [$gmail_account]: " input
     gmail_account=${input:-$gmail_account}
 fi
 
-if [ -z ${gmail_passwd+xxx} -o "$gmail_passwd" = '' ]
+if [ -z "${gmail_passwd+xxx}" -o "$gmail_passwd" = '' ]
 then
     stty -echo
     read -p "Enter the gmail password: " gmail_passwd

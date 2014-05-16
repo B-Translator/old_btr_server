@@ -2,7 +2,7 @@
 ### Set the admin password of Drupal.
 
 ### get a password for the Drupal user 'admin'
-if [ -z ${btr_admin_passwd+xxx} -o "$btr_admin_passwd" = '' ]
+if [ -z "${btr_admin_passwd+xxx}" -o "$btr_admin_passwd" = '' ]
 then
     base_url=$(drush @bcl eval 'print $GLOBALS["base_url"]')
     echo

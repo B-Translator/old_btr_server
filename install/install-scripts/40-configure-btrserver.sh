@@ -87,9 +87,9 @@ sed -i /var/www/data/config.sh \
 ### add these languages to drupal and import their translations
 for lng in $languages
 do
-    drush @btr language-add $lng
+    $drush language-add $lng
 done
-drush @btr --yes l10n-update
+$drush --yes l10n-update
 
 ### update to the latest version of core and modules
 #$drush --yes pm-update

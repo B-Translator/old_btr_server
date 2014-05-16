@@ -26,7 +26,7 @@ set_mysql_passwd phpmyadmin $PASSWD
 if [ "$mysql_passwd_root" = 'random' ]
 then
     mysql_passwd_root=$(mcookie | head -c 16)
-elif [ -z ${mysql_passwd_root+xxx} -o "$mysql_passwd_root" = '' ]
+elif [ -z "${mysql_passwd_root+xxx}" -o "$mysql_passwd_root" = '' ]
 then
     echo
     echo "===> Set a new password for the 'root' user of MySQL"

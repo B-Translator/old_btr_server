@@ -17,14 +17,14 @@ It will modify the files:
  8) /var/www/btr*/sites/default/settings.php
 "
 
-if [ -z ${bcl_domain+xxx} -o "$bcl_domain" = '' ]
+if [ -z "${bcl_domain+xxx}" -o "$bcl_domain" = '' ]
 then
     bcl_domain='example.org'
     read -p "Enter the domain name for btr_client [$bcl_domain]: " input
     bcl_domain=${input:-$bcl_domain}
 fi
 
-if [ -z ${btr_domain+xxx} -o "$btr_domain" = '' ]
+if [ -z "${btr_domain+xxx}" -o "$btr_domain" = '' ]
 then
     btr_domain='btr.example.org'
     read -p "Enter the domain name for btr_server [$btr_domain]: " input

@@ -10,7 +10,7 @@ $cwd/mysqld.sh start
 if [ "$mysql_passwd_btr" = 'random' ]
 then
     mysql_passwd_btr=$(mcookie | head -c 16)
-elif [ -z ${mysql_passwd_btr+xxx} -o "$mysql_passwd_btr" = '' ]
+elif [ -z "${mysql_passwd_btr+xxx}" -o "$mysql_passwd_btr" = '' ]
 then
     echo
     echo "===> Please enter new password for the MySQL 'btr' account."
@@ -27,7 +27,7 @@ fi
 if [ "$mysql_passwd_btr_data" = 'random' ]
 then
     mysql_passwd_btr_data=$(mcookie | head -c 16)
-elif [ -z ${mysql_passwd_btr_data+xxx} -o "$mysql_passwd_btr_data" = '' ]
+elif [ -z "${mysql_passwd_btr_data+xxx}" -o "$mysql_passwd_btr_data" = '' ]
 then
     echo
     echo "===> Please enter new password for the MySQL 'btr_data' account."

@@ -29,9 +29,6 @@ $btr/config/gmailsmtp.sh
 $bcl/config/drupalpass.sh
 $btr/config/drupalpass.sh
 
-### set the translation language for B-Translator Client
-$bcl/config/languages.sh
-
 ### configurations for oauth2 login
 $btr/config/oauth2_login.sh
 

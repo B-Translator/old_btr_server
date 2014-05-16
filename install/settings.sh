@@ -28,6 +28,9 @@ gmail_passwd=
 ### are used instead of template files (when they are missing).
 languages='fr de it sq'
 
+### Translation language of B-Translator Client.
+bcl_translation_lng='sq'
+
 ### Mysql passwords. Leave it as 'random'
 ### to generate a new one randomly
 mysql_passwd_root='random'
