@@ -47,6 +47,10 @@ case "$1" in
 	    chroot $CHROOT/ service $SRV stop
 	done
 
+        # kill any remaining processes that are still running on CHROOT
+        for p in /proc/*/root; do ls -l $p; done  \
+            | grep $CHROOT | cut -d'/' -f3 | xargs kill -9
+
 	chroot $CHROOT/ umount -a
 
 	# umount /proc etc. from the CHROOT
