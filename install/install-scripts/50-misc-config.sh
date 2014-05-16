@@ -35,7 +35,7 @@ sed -i /root/.bashrc \
 ### configure apache2
 a2enmod ssl
 a2dissite 000-default
-a2ensite btr btr-ssl
+a2ensite bcl bcl-ssl btr btr-ssl
 a2enmod headers rewrite
 ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf.d/phpmyadmin
 

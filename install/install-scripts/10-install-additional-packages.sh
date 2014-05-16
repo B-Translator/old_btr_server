@@ -10,8 +10,8 @@ function install
 
 ### set a temporary hostname
 sed -i /etc/hosts \
-    -e "/^127.0.0.1/c 127.0.0.1 localhost btr.example.org"
-hostname btr.example.org
+    -e "/^127.0.0.1/c 127.0.0.1 example.org localhost"
+hostname example.org
 
 ### install and upgrade packages
 apt-get update
