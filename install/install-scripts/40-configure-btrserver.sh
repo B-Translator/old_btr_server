@@ -80,13 +80,6 @@ $drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 
-### copy the list of languages to module btrCore
-lng_file=$(dirname $(dirname $0))/etc/languages.inc
-cp $lng_file $drupal_dir/profiles/btr_server/modules/custom/btrCore/
-
-### get a list of language codes
-languages=$(grep code $lng_file | sed -e 's/.* => .//' -e 's/.,.*//')
-
 ### set the list of languages for import
 sed -i /var/www/data/config.sh \
     -e "/^languages=/c languages=\"$languages\""

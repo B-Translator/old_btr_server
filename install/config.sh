@@ -1,9 +1,13 @@
 #!/bin/bash
 
-### get config settings from etc/config.sh
-set -a
-.  $(dirname $0)/etc/config.sh
-set +a
+### get config settings from a file
+if [ "$1" != '' ]
+then
+    settings=$1
+    set -a
+    source  $settings
+    set +a
+fi
 
 ### install dirs of the btr_server and btr_client
 btr=/var/www/btr/profiles/btr_server/install
