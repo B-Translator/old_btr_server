@@ -7,6 +7,15 @@
 ### properly. To leave out a feature, it should not be installed
 ### since the beginning. So, it is important to test them.
 
+### get the alias of the site to be reinstalled
+if [ "$1" = '' ]
+then
+    echo "Usage: $0 @alias"
+    exit 1
+fi
+alias=$1
+drush="drush $alias"
+
 ### start mysqld manually, if it is not running
 if test -z "$(ps ax | grep [m]ysqld)"
 then
@@ -14,17 +23,16 @@ then
     sleep 5  # give time mysqld to start
 fi
 
-### go to the directory given as argument
-test $1 && cd $1
+### go to the directory of the site to be reinstalled
+drupal_dir=$($drush drupal-directory)
+cd $drupal_dir
 
 ### settings for the database and the drupal site
-drupal_dir=$(drush @btr_dev drupal-directory)
 db_name=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
 db_user=$(drush sql-connect | tr ' ' "\n" | grep -e '--user=' | cut -d= -f2)
 db_pass=$(drush sql-connect | tr ' ' "\n" | grep -e '--password=' | cut -d= -f2)
-#lng=$(drush vget btr_translation_lng --format=string)
-site_name="B-Translator"
-site_mail="admin@example.com"
+site_name=$(drush vget site_name --format=string)
+site_mail=$(drush vget site_mail --format=string)
 account_name=admin
 account_pass=admin
 account_mail="admin@example.com"
@@ -45,10 +53,14 @@ drush site-install --verbose --yes btr_server \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
-### update to the latest version of core and modules
-drush --yes pm-update
+## install features modules
+#drush --yes pm-enable btr_btr
 
-### install l10n support
+### add languages
 drush --yes pm-enable l10n_update
-#drush language-add $lng
+source /var/www/data/config.sh
+for lng in $languages; do drush language-add $lng; done
 drush --yes l10n-update
+
+### update to the latest version of core and modules
+#drush --yes pm-update
