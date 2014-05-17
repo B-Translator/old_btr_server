@@ -71,7 +71,7 @@ cp /etc/nginx/sites-available/{$src,$dst}
 sed -i /etc/nginx/sites-available/$dst \
     -e "s/443 default ssl/443 ssl/" \
     -e "s/server_name .*;/server_name $hostname;/" \
-    -e "s/$src/$dst/g"
+    -e "s#$src_dir#$dst_dir#g"
 ln -s /etc/nginx/sites-{available,enabled}/$dst
 
 ### copy and modify the configuration of apache2
@@ -80,10 +80,10 @@ cp /etc/apache2/sites-available/{$src,$dst}
 cp /etc/apache2/sites-available/{$src-ssl,$dst-ssl}
 sed -i /etc/apache2/sites-available/$dst \
     -e "s/ServerName .*/ServerName $hostname/" \
-    -e "s/$src/$dst/g"
+    -e "s#$src_dir#$dst_dir#g"
 sed -i /etc/apache2/sites-available/$dst-ssl \
     -e "s/ServerName .*/ServerName $hostname/" \
-    -e "s/$src/$dst/g"
+    -e "s#$src_dir#$dst_dir#g"
 a2ensite $dst $dst-ssl
 
 ### fix permissions
