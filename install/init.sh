@@ -48,8 +48,8 @@ case "$1" in
 	done
 
         # kill any remaining processes that are still running on CHROOT
-        for p in /proc/*/root; do ls -l $p; done  \
-            | grep $CHROOT | cut -d'/' -f3 | xargs kill -9
+        chroot_pids=$(for p in /proc/*/root; do ls -l $p; done | grep $CHROOT | cut -d'/' -f3)
+	[ -z $chroot_pids ] || kill -9 $chroot_pids
 
 	chroot $CHROOT/ umount -a
 
