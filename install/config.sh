@@ -34,8 +34,7 @@ $btr/config/oauth2_login.sh
 
 ### drush may create some css/js files with wrong permissions
 ### clean them up
-rm -rf /var/www/btr/sites/default/files/*
-rm -rf /var/www/bcl/sites/default/files/*
+rm -rf /var/www/{btr,bcl}*/sites/default/files/*
 
 ### make clones btr_dev and bcl_dev
 $btr/../dev/make-dev-clone.sh

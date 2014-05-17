@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 ### Reinstall the Drupal profile 'btr_server' and its features.
 ### This script touches only the database of Drupal (btr)
 ### and nothing else. Useful for testing the features.
@@ -14,7 +14,6 @@ then
     exit 1
 fi
 alias=$1
-drush="drush $alias"
 
 ### start mysqld manually, if it is not running
 if test -z "$(ps ax | grep [m]ysqld)"
@@ -24,7 +23,7 @@ then
 fi
 
 ### go to the directory of the site to be reinstalled
-drupal_dir=$($drush drupal-directory)
+drupal_dir=$(drush $alias drupal-directory)
 cd $drupal_dir
 
 ### settings for the database and the drupal site
@@ -55,6 +54,7 @@ drush site-install --verbose --yes btr_server \
 
 ## install features modules
 #drush --yes pm-enable btr_btr
+#drush --yes features-revert btr_btr
 
 ### add languages
 drush --yes pm-enable l10n_update

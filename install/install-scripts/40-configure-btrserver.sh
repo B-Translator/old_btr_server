@@ -75,6 +75,10 @@ mkdir -p /var/www/uploads/
 chown www-data: /var/www/uploads/
 $drush variable-set file_private_path '/var/www/uploads/' --exact --yes
 
+### install additional features
+#$drush --yes pm-enable btr_btr
+#$drush --yes features-revert btr_btr
+
 ### install multi-language support
 $drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
