@@ -21,16 +21,7 @@ $aliases['btr'] = array (
   ),
 );
 
-$aliases['bcl'] = array (
-  'root' => '/var/www/bcl',
-  'uri' => 'http://example.org',
-  'path-aliases' => array (
-    '%profile' => 'profiles/btr_client',
-    '%downloads' => '/var/www/downloads',
-  ),
-);
-
-// $aliases['dev'] = array (
+// $aliases['btr_dev'] = array (
 //   'parent' => '@btr',
 //   'root' => '/var/www/btr_dev',
 //   'uri' => 'http://dev.btr.example.org',

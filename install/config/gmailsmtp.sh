@@ -43,7 +43,9 @@ done
 ### modify drupal variables that are used for sending email
 echo "Modifying drupal variables that are used for sending email..."
 $(dirname $0)/mysqld.sh start
-drush --yes @local php-script $(dirname $0)/gmailsmtp.php  \
+drush --yes @local_bcl php-script $(dirname $0)/gmailsmtp.php  \
+    "$gmail_account" "$gmail_passwd"
+drush --yes @local_btr php-script $(dirname $0)/gmailsmtp.php  \
     "$gmail_account" "$gmail_passwd"
 
 ### drush may create css/js files with wrong(root) permissions

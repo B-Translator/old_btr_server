@@ -11,7 +11,7 @@ then
       <dst> can be something like 'btr_dev', 'btr_test', 'btr_01', etc.
 
       Note: Using something like 'btr-dev' is not suitable
-      for the name of the database. 
+      for the name of the database.
 
       Caution: The root directory and the DB of the destination
       will be erased, if they exist.
@@ -41,9 +41,9 @@ sed -i /etc/hosts -e "/^127.0.0.1 $hostname/d"
 echo "127.0.0.1 $hostname" >> /etc/hosts
 
 ### create a drush alias
-sed -i /etc/drush/local.aliases.drushrc.php \
+sed -i /etc/drush/local_btr.aliases.drushrc.php \
     -e "/^\\\$aliases\['$dst'\] = /,+5 d"
-cat <<EOF >> /etc/drush/local.aliases.drushrc.php
+cat <<EOF >> /etc/drush/local_btr.aliases.drushrc.php
 \$aliases['$dst'] = array (
   'parent' => '@btr',
   'root' => '$dst_dir',

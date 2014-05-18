@@ -16,7 +16,7 @@ target=$1
 rm -rf /var/www/$target
 
 ### delete the drush alias
-sed -i /etc/drush/local.aliases.drushrc.php \
+sed -i /etc/drush/local_btr.aliases.drushrc.php \
     -e "/^\\\$aliases\['$target'\] = /,+5 d"
 
 ### drop the database
