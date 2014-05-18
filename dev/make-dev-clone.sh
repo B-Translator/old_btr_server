@@ -1,13 +1,7 @@
 #!/bin/bash -x
 
-### get a copy of 'btr_server' to /var/www/github/btr_server/
-mkdir -p /var/www/github/
-cd /var/www/github/
-test -d btr_server || git clone https://github.com/B-Translator/btr_server.git
-cd btr_server/
-git pull
-
 ### make a clone of /var/www/btr to /var/www/btr_dev
+cd /var/www/code/btr_server/
 dev/clone.sh btr btr_dev
 
 ### comment out the configuration of the database 'btr_db' so that

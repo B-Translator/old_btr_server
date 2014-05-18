@@ -48,3 +48,9 @@ pear install pear.drush.org/drush-6.2.0.0
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
 svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
+
+### get a local copy of btr_server and btr_client
+code_dir=/var/www/code
+mkdir -p $code_dir
+git clone https://github.com/B-Translator/btr_server.git $code_dir/btr_server
+git clone https://github.com/B-Translator/btr_client.git $code_dir/btr_client
