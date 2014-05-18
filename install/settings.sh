@@ -9,6 +9,9 @@ apt_mirror='http://archive.ubuntu.com/ubuntu'
 ### If you want to do it automatically, set it to 'true'.
 reboot='false'
 
+### Start chroot service automatically on reboot.
+start_on_boot='false'
+
 ### Domain of the website.
 bcl_domain='example.org'
 btr_domain='btr.example.org'

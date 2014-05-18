@@ -3,7 +3,7 @@
 
 function usage {
     echo "
-Usage: $0 [OPTIONS] <settings>
+Usage: $0 [OPTIONS] <settings> [options]
 Install B-Translator inside a chroot in the target directory.
 
     <settings>    file of installation/configuration settings
@@ -12,13 +12,10 @@ Install B-Translator inside a chroot in the target directory.
     --suite=S     system to be installed (default precise)
     --mirror=M    source of the apt packages
                   (default http://archive.ubuntu.com/ubuntu)
+    --opt_name=V  override any settings in the config file
 "
     exit 0
 }
-
-### get default options from the config file
-settings=$(dirname $0)/settings.sh
-set -a ;   source $settings ;   set +a
 
 ### get the options
 for opt in "$@"
@@ -29,15 +26,33 @@ do
 	--suite=*)     suite=${opt#*=} ;;
 	--mirror=*)    apt_mirror=${opt#*=} ;;
 	-h|--help)     usage ;;
+        --*=*)
+	    optvalue=${opt#*=}
+	    optname=${opt%%=*}
+	    optname=${optname:2}
+	    eval export $optname="$optvalue"
+	    ;;
 	*)
 	    if [ ${opt:0:1} = '-' ]; then usage; fi
+
 	    settings=$opt
-	    set -a
-	    source $settings
-	    set +a
+	    if ! test -f "$settings"
+            then
+		echo "File '$settings' does not exist."
+		exit 1
+	    fi
+	    set -a;  source $settings;  set +a
 	    ;;
     esac
 done
+
+### check that there was at least one settings file
+if [ "$settings" = '' ]
+then
+    echo
+    echo "Error: No settings file was given."
+    usage
+fi
 
 ### install debootstrap dchroot
 apt-get install -y debootstrap dchroot
@@ -69,7 +84,7 @@ cp -a $install_dir/* $target_dir/tmp/install/
 cp -f $settings $target_dir/tmp/install/settings.sh
 chroot $target_dir /tmp/install/install-scripts/00-install.sh
 
-### create an init script and make it start at boot
+### create an init script
 current_dir=$(pwd)
 cd $target_dir
 chroot_dir=$(pwd)
@@ -77,8 +92,16 @@ cd $current_dir
 init_script="/etc/init.d/chroot-$(basename $chroot_dir)"
 sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $install_dir/init.sh > $init_script
 chmod +x $init_script
-update-rc.d $(basename $init_script) defaults
-update-rc.d $(basename $init_script) disable
+
+### start the chroot system on boot
+service=$(basename $init_script)
+update-rc.d $service defaults
+if [ "$start_on_boot" = 'true' ]
+then
+    update-rc.d $service enable
+else
+    update-rc.d $service disable
+fi
 
 ### display the name of the chroot on the prompt
 echo $(basename $chroot_dir) > $target_dir/etc/debian_chroot
@@ -91,7 +114,4 @@ chroot $target_dir /tmp/install/config.sh
 $init_script stop
 
 ### reboot
-if [ "$reboot" = 'true' ]
-then
-    reboot
-fi
+test "$reboot" = 'true' && reboot

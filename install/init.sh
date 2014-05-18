@@ -49,8 +49,7 @@ case "$1" in
 
         # kill any remaining processes that are still running on CHROOT
         chroot_pids=$(for p in /proc/*/root; do ls -l $p; done | grep $CHROOT | cut -d'/' -f3)
-	test -z "$chroot_pids" || kill -9 $chroot_pids
-	sleep 3
+	test -z "$chroot_pids" || (kill -9 $chroot_pids; sleep 2)
 
 	chroot $CHROOT/ umount -a
 
