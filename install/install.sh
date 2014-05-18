@@ -3,10 +3,11 @@
 
 function usage {
     echo "
-Usage: $0 [OPTIONS] <target>
+Usage: $0 [OPTIONS] <settings>
 Install B-Translator inside a chroot in the target directory.
 
-    --settings=F  file containing default settings and options
+    <settings>    file of installation/configuration settings
+    --target=D    target dir where the system will be installed
     --arch=A      set the architecture to install (default i386)
     --suite=S     system to be installed (default precise)
     --mirror=M    source of the apt packages
@@ -23,16 +24,17 @@ set -a ;   source $settings ;   set +a
 for opt in "$@"
 do
     case $opt in
-	--settings=*)  settings=${opt#*=}
-                       set -a;  source $settings;  set +a
-                       ;;
+	--target=*)    target_dir=${opt#*=} ;;
 	--arch=*)      arch=${opt#*=} ;;
 	--suite=*)     suite=${opt#*=} ;;
 	--mirror=*)    apt_mirror=${opt#*=} ;;
 	-h|--help)     usage ;;
 	*)
 	    if [ ${opt:0:1} = '-' ]; then usage; fi
-	    target_dir=$opt
+	    settings=$opt
+	    set -a
+	    source $settings
+	    set +a
 	    ;;
     esac
 done
