@@ -114,9 +114,13 @@ projects[l10n_update][version] = "1.0"
 ;--------------------
 
 projects[mailsystem][version] = "2.34"
-projects[phpmailer][version] = "3.x-dev"
 projects[mimemail][version] = "1.0-beta3"
 projects[reroute_email][version] = "1.1"
+
+;projects[phpmailer][version] = "3.x-dev"
+projects[phpmailer][download][type] = "git"
+projects[phpmailer][download][url] = "http://git.drupal.org/project/phpmailer.git"
+projects[phpmailer][download][branch] = "7.x-3.x"
 
 libraries[phpmailer][directory_name] = "phpmailer"
 libraries[phpmailer][download][type] = "get"
