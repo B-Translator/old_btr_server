@@ -77,15 +77,27 @@ chroot $target_dir apt-get -y install ubuntu-minimal
 for SRV in apache2 nginx mysql
 do service $SRV stop; done
 
-### apply to chroot the scripts and the overlay
+### make sure that we are using the right version of install scripts
+export btr_version=${btr_git_version#*:}
+export bcl_version=${bcl_git_version#*:}
+current_dir=$(pwd)
 install_dir=$(dirname $0)
+cd $install_dir
+git pull
+git checkout $btr_version
+cd $current_dir
+
+### run installation/configuration scripts
 chroot $target_dir mkdir -p /tmp/install
 cp -a $install_dir/* $target_dir/tmp/install/
-cp -f $settings $target_dir/tmp/install/settings.sh
 chroot $target_dir /tmp/install/install-scripts/00-install.sh
+chroot $target_dir /tmp/install/config.sh
+chroot $target_dir rm -rf /tmp/install
+
+### display the name of the chroot on the prompt
+echo $(basename $chroot_dir) > $target_dir/etc/debian_chroot
 
 ### create an init script
-current_dir=$(pwd)
 cd $target_dir
 chroot_dir=$(pwd)
 cd $current_dir
@@ -102,13 +114,6 @@ then
 else
     update-rc.d $service disable
 fi
-
-### display the name of the chroot on the prompt
-echo $(basename $chroot_dir) > $target_dir/etc/debian_chroot
-
-### customize the configuration of the chroot system
-chroot $target_dir /tmp/install/config.sh
-#chroot $target_dir rm -rf /tmp/install
 
 ### stop the services inside chroot
 $init_script stop

@@ -12,4 +12,5 @@ includes[drupal] = drupal-org-core.make
 projects[btr_server][type] = profile
 projects[btr_server][download][type] = git
 projects[btr_server][download][url] = /var/www/code/btr_server
+; version to be used
 projects[btr_server][download][branch] = master
