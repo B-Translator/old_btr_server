@@ -1,17 +1,13 @@
 
 ### Default settings for building the chroot.
-target_dir='btr'
+target='btr'
 arch='i386'
 suite='precise'
 apt_mirror='http://archive.ubuntu.com/ubuntu'
 
-### Git repositories and branches that will be used.
-### Version can be 'branch:branch_name' or 'tag:tag_name'
-### or 'revision:commit_id'
-btr_git_repo='https://github.com/B-Translator/btr_server.git'
-btr_git_version='branch:master'
-bcl_git_repo='https://github.com/B-Translator/btr_client.git'
-bcl_git_version='branch:master'
+### Git branches that will be used.
+bcl_git_branch='master'
+btr_git_branch='master'
 
 ### Domain of the website.
 bcl_domain='example.org'

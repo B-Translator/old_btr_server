@@ -21,14 +21,13 @@ mv /var/www/{bcl,bcl-bak}
 export drupal_dir=/var/www/btr
 export drush="drush --root=$drupal_dir"
 export code_dir=/var/www/code
-cd $code_dir/btr_server/install/install-scripts/
-./20-make-and-install-btrserver.sh
-./25-git-clone-btrserver.sh
-./30-separate-translation-data.sh
-./40-configure-btrserver.sh
+cd $code_dir/btr_server/install/scripts/
+./drupal-make-and-install.sh
+./separate-translation-data.sh
+./drupal-config.sh
 
-./45-install-btrclient.sh
+### install btr_client as well
+./install-btr-client.sh
 
-### configure (both /var/www/btr/ and /var/www/bcl/)
-cd $code_dir/btr_server/install/
-./config.sh
+### btranslator configuration
+$code_dir/btr_server/install/config.sh

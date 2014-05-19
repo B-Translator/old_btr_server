@@ -8,17 +8,16 @@ function install
 	install $@
 }
 
-### set a temporary hostname
-sed -i /etc/hosts \
-    -e "/^127.0.0.1/c 127.0.0.1 example.org localhost"
-hostname example.org
+### install localization
+install language-pack-en
+update-locale
 
 ### install and upgrade packages
 apt-get update
 apt-get -y upgrade
 
 ### install other needed packages
-install aptitude tasksel vim nano psmisc language-pack-en
+install aptitude tasksel vim nano psmisc
 install mysql-server ssmtp memcached php5-memcached \
         php5-mysql php5-gd php-db php5-dev make php-pear php5-curl php-apc \
         ssl-cert gawk unzip wget diff curl phpmyadmin \
@@ -48,10 +47,3 @@ pear install pear.drush.org/drush-6.2.0.0
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
 svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
-
-### get a local copy of btr_client
-### code_dir=/var/www/code and install.sh
-### has placed a copy of btr_server there
-git clone $bcl_git_repo $code_dir/btr_client
-cd $code_dir/btr_client
-git checkout $bcl_version

@@ -1,12 +1,11 @@
 #!/bin/bash -x
 
 ### set the right version to the make file
-version_type=${btr_git_version%%:*}
 makefile="$code_dir/btr_server/build-btrserver.make"
 sed -i $makefile -e '/^; version to be used/,$ d'
 cat <<EOF >> $makefile
 ; version to be used
-projects[btr_server][download][$version_type] = '$btr_version'
+projects[btr_server][download][branch] = '$btr_git_branch'
 EOF
 
 ### retrieve all the projects/modules and build the application directory
@@ -67,3 +66,19 @@ mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
+
+### replace the profile btr_server with a version
+### that is a git clone, so that any updates
+### can be retrieved easily (without having to
+### reinstall the whole application).
+cd $drupal_dir/profiles/
+mv btr_server btr_server-bak
+cp -a $code_dir/btr_server .
+### copy contrib libraries and modules
+cp -a btr_server-bak/libraries/ btr_server/
+cp -a btr_server-bak/modules/contrib/ btr_server/modules/
+cp -a btr_server-bak/themes/contrib/ btr_server/themes/
+### copy db connection file
+cp {btr_server-bak,btr_server}/modules/custom/btrCore/data/db/settings.php
+### cleanup
+rm -rf btr_server-bak/

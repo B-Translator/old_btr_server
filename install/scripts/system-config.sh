@@ -1,5 +1,11 @@
 #!/bin/bash -x
 
+### go to the script directory
+cd $(dirname $0)
+
+### copy overlay files over to the system
+cp -TdR $code_dir/btr_client/install/overlay/ /
+
 ### put the cache on RAM (to improve efficiency)
 sed -i /etc/fstab \
     -e '/appended by installation scripts/,$ d'
