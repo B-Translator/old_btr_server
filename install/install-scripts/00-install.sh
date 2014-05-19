@@ -5,18 +5,18 @@ export DEBIAN_FRONTEND=noninteractive
 export drupal_dir=/var/www/btr
 export drush="drush --root=$drupal_dir"
 
-cwd=$(dirname $0)
+cd $code_dir/btr_server/install/install-scripts/
 
-$cwd/10-install-additional-packages.sh
-$cwd/20-make-and-install-btrserver.sh
-$cwd/25-git-clone-btrserver.sh
-$cwd/30-separate-translation-data.sh
-$cwd/40-configure-btrserver.sh
+./10-install-additional-packages.sh
+./20-make-and-install-btrserver.sh
+./25-git-clone-btrserver.sh
+./30-separate-translation-data.sh
+./40-configure-btrserver.sh
 
 ### install btr_client as well
-$cwd/45-install-btrclient.sh
+./45-install-btrclient.sh
 
 ### copy overlay files over to the system
-cp -TdR $(dirname $cwd)/overlay/ /
+cp -TdR ../overlay/ /
 
-$cwd/50-misc-config.sh
+./50-misc-config.sh

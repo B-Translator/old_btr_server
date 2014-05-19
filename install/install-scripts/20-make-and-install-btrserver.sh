@@ -2,7 +2,7 @@
 
 ### set the right version to the make file
 version_type=${btr_git_version%%:*}
-makefile="/var/www/code/btr_server/build-btrserver.make"
+makefile="$code_dir/btr_server/build-btrserver.make"
 sed -i $makefile -e '/^; version to be used/,$ d'
 cat <<EOF >> $makefile
 ; version to be used

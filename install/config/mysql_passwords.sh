@@ -1,10 +1,9 @@
 #!/bin/bash
 ### regenerate mysql and phpmyadmin secrets
 
-cwd=$(dirname $0)
-. $cwd/set_mysql_passwd.sh
-
-$cwd/mysqld.sh start
+### make sure that mysqld is running
+source $(dirname $0)/set_mysql_passwd.sh
+$(dirname $0)/mysqld.sh start
 
 ### to remove the current password do:
 ### mysqladmin -u root -pcurrent_password password

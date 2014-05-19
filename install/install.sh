@@ -72,37 +72,40 @@ mount -o bind /proc $target_dir/proc
 chroot $target_dir apt-get update
 chroot $target_dir apt-get -y install ubuntu-minimal
 
-### stop any services that may get into the way
-### of installing services inside the chroot
-for SRV in apache2 nginx mysql
-do service $SRV stop; done
+### display the name of the chroot on the prompt
+echo $(basename $target_dir) > $target_dir/etc/debian_chroot
 
 ### make sure that we are using the right version of install scripts
 export btr_version=${btr_git_version#*:}
 export bcl_version=${bcl_git_version#*:}
 current_dir=$(pwd)
-install_dir=$(dirname $0)
-cd $install_dir
+git_repo=$(dirname $(dirname $0))
+cd $git_repo
 git pull
 git checkout $btr_version
 cd $current_dir
 
-### run installation/configuration scripts
-chroot $target_dir mkdir -p /tmp/install
-cp -a $install_dir/* $target_dir/tmp/install/
-chroot $target_dir /tmp/install/install-scripts/00-install.sh
-chroot $target_dir /tmp/install/config.sh
-chroot $target_dir rm -rf /tmp/install
+### copy the local git repository to the target dir
+export code_dir=/var/www/code
+chroot $target_dir mkdir -p $code_dir
+cp -a $git_repo $target_dir/$code_dir/btr_server
 
-### display the name of the chroot on the prompt
-echo $(basename $chroot_dir) > $target_dir/etc/debian_chroot
+### stop any services that may get into the way
+### of installing services inside the chroot
+for SRV in apache2 nginx mysql
+do service $SRV stop; done
+
+### run install/config scripts
+chroot $target_dir $code_dir/btr_server/install/install-scripts/00-install.sh
+chroot $target_dir $code_dir/btr_server/install/config.sh
 
 ### create an init script
 cd $target_dir
 chroot_dir=$(pwd)
 cd $current_dir
+template_init=$git_repo/install/init.sh
 init_script="/etc/init.d/chroot-$(basename $chroot_dir)"
-sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $install_dir/init.sh > $init_script
+sed -e "/^CHROOT=/c CHROOT='$chroot_dir'" $template_init > $init_script
 chmod +x $init_script
 
 ### start the chroot system on boot

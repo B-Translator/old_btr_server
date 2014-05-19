@@ -20,7 +20,8 @@ mv /var/www/{bcl,bcl-bak}
 ### reinstall
 export drupal_dir=/var/www/btr
 export drush="drush --root=$drupal_dir"
-cd /var/www/code/btr_server/install/install-scripts/
+export code_dir=/var/www/code
+cd $code_dir/btr_server/install/install-scripts/
 ./20-make-and-install-btrserver.sh
 ./25-git-clone-btrserver.sh
 ./30-separate-translation-data.sh
@@ -29,6 +30,5 @@ cd /var/www/code/btr_server/install/install-scripts/
 ./45-install-btrclient.sh
 
 ### configure (both /var/www/btr/ and /var/www/bcl/)
-cd /var/www/code/btr_server/install/
+cd $code_dir/btr_server/install/
 ./config.sh
-

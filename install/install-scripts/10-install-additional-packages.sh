@@ -49,14 +49,9 @@ pear install pear.drush.org/drush-6.2.0.0
 rm -rf /usr/local/lib/pology
 svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
 
-### get a local copy of btr_server and btr_client
-code_dir=/var/www/code
-mkdir -p $code_dir
-git clone $btr_git_repo $code_dir/btr_server
+### get a local copy of btr_client
+### code_dir=/var/www/code and install.sh
+### has placed a copy of btr_server there
 git clone $bcl_git_repo $code_dir/btr_client
-
-### make sure that we are using the right version
-cd $code_dir/btr_server
-git checkout $btr_version
 cd $code_dir/btr_client
 git checkout $bcl_version
