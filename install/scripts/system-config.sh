@@ -4,7 +4,7 @@
 cd $(dirname $0)
 
 ### copy overlay files over to the system
-cp -TdR $code_dir/btr_client/install/overlay/ /
+cp -TdR $code_dir/btr_server/install/overlay/ /
 
 ### put the cache on RAM (to improve efficiency)
 sed -i /etc/fstab \

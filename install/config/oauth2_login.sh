@@ -14,15 +14,15 @@ redirect_url=https://$btrclient/oauth2/authorized
 skip_ssl=1
 
 ### register an oauth2 client on btr_server
-btr=/var/www/btr/profiles/btr_server/install/config
+btr=/var/www/code/btr_server/install/config
 $btr/mysqld.sh start
 drush --yes @btr php-script --script-path=$btr register_oauth2_client.php  \
     "$client_id" "$client_secret" "$redirect_url"
 drush @btr cc all
 
 ### setup oauth2 login on btr_client
-bcl=/var/www/bcl/profiles/btr_client/install/config
-$bcl/mysqld.sh start
+bcl=/var/www/code/btr_client/install/config
+#$bcl/mysqld.sh start
 drush --yes @bcl php-script --script-path=$bcl oauth2_login.php  \
     "$server_url" "$client_id" "$client_secret" "$skip_ssl"
 drush @bcl cc all
