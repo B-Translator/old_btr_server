@@ -68,11 +68,9 @@ fi
 
 ### make sure that we are using the right version of install scripts
 cd btr_client/
-git fetch
-git checkout $bcl_git_branch
-cd ../btr_server
-git fetch
-git checkout $btr_git_branch
+git checkout $bcl_git_branch && git pull origin $bcl_git_branch
+cd ../btr_server/
+git checkout $btr_git_branch && git pull origin $btr_git_branch
 cd ..
 
 ### install debootstrap dchroot
