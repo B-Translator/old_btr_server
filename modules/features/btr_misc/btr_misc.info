@@ -157,5 +157,3 @@ features[variable][] = user_picture_style
 features[variable][] = user_pictures
 features[variable][] = user_register
 features[variable][] = user_signatures
-features[wysiwyg][] = filtered_html
-features[wysiwyg][] = full_html

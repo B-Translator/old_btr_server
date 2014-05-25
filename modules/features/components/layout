@@ -4,13 +4,10 @@ box:headerbox
 context:admin
 context:content
 context:frontpage
-context:page
 context:sitewide
 views_view:front_page
 variable:site_frontpage
 menu_links:main-menu:<front>
-menu_links:main-menu:node/9
-menu_links:main-menu:node/1
 menu_links:main-menu:contact
 variable:jquery_update_compression_type
 variable:jquery_update_jquery_cdn

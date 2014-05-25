@@ -614,7 +614,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'language_count';
-  $strongarm->value = 3;
+  $strongarm->value = 5;
   $export['language_count'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -744,49 +744,45 @@ function btr_misc_strongarm() {
     3 => 493,
     4 => 253,
     5 => 252,
-    6 => 251,
-    7 => 250,
-    8 => 247,
-    9 => 246,
-    10 => 245,
-    11 => 127,
-    12 => 126,
-    13 => 125,
-    14 => 124,
-    15 => 123,
-    16 => 122,
-    17 => 121,
-    18 => 117,
-    19 => 63,
-    20 => 62,
-    21 => 61,
-    22 => 60,
-    23 => 59,
-    24 => 58,
-    25 => 56,
-    26 => 52,
-    27 => 45,
-    28 => 44,
-    29 => 31,
-    30 => 30,
-    31 => 29,
-    32 => 28,
-    33 => 27,
-    34 => 24,
-    35 => 23,
-    36 => 22,
-    37 => 21,
-    38 => 15,
-    39 => 14,
-    40 => 13,
-    41 => 12,
-    42 => 11,
-    43 => 7,
-    44 => 6,
-    45 => 5,
-    46 => 3,
-    47 => 2,
-    48 => 1,
+    6 => 250,
+    7 => 247,
+    8 => 246,
+    9 => 245,
+    10 => 126,
+    11 => 125,
+    12 => 124,
+    13 => 123,
+    14 => 122,
+    15 => 121,
+    16 => 117,
+    17 => 63,
+    18 => 62,
+    19 => 61,
+    20 => 60,
+    21 => 59,
+    22 => 58,
+    23 => 56,
+    24 => 52,
+    25 => 44,
+    26 => 31,
+    27 => 30,
+    28 => 29,
+    29 => 28,
+    30 => 27,
+    31 => 24,
+    32 => 23,
+    33 => 21,
+    34 => 15,
+    35 => 14,
+    36 => 13,
+    37 => 12,
+    38 => 11,
+    39 => 7,
+    40 => 6,
+    41 => 5,
+    42 => 3,
+    43 => 2,
+    44 => 1,
   );
   $export['menu_masks'] = $strongarm;
 
@@ -850,7 +846,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_admin_theme';
-  $strongarm->value = '1';
+  $strongarm->value = 0;
   $export['node_admin_theme'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -871,9 +867,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'path_alias_whitelist';
-  $strongarm->value = array(
-    'node' => TRUE,
-  );
+  $strongarm->value = array();
   $export['path_alias_whitelist'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -929,7 +923,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'smtp_always_replyto';
-  $strongarm->value = 1;
+  $strongarm->value = '1';
   $export['smtp_always_replyto'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -957,14 +951,14 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'smtp_keepalive';
-  $strongarm->value = 1;
+  $strongarm->value = '1';
   $export['smtp_keepalive'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'smtp_on';
-  $strongarm->value = 1;
+  $strongarm->value = '1';
   $export['smtp_on'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -1141,7 +1135,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'user_email_verification';
-  $strongarm->value = 1;
+  $strongarm->value = TRUE;
   $export['user_email_verification'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -1211,7 +1205,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'user_register';
-  $strongarm->value = '1';
+  $strongarm->value = 1;
   $export['user_register'] = $strongarm;
 
   $strongarm = new stdClass();
