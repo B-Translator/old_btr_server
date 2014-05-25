@@ -46,4 +46,4 @@ pear install pear.drush.org/drush-6.2.0.0
 
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
-svn checkout svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
+svn checkout -r 1387659 svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
