@@ -263,15 +263,6 @@ function btr_permissions_user_default_permissions() {
     'module' => 'filter',
   );
 
-  // Exported permission: administer homebox.
-  $permissions['administer homebox'] = array(
-    'name' => 'administer homebox',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'homebox',
-  );
-
   // Exported permission: administer image styles.
   $permissions['administer image styles'] = array(
     'name' => 'administer image styles',

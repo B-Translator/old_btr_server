@@ -25,7 +25,6 @@ user_permission:manage features
 user_permission:administer filters
 user_permission:use text format filtered_html
 user_permission:use text format full_html
-user_permission:administer homebox
 user_permission:administer image styles
 user_permission:administer languages
 user_permission:translate interface
