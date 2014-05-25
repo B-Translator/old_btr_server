@@ -13,25 +13,19 @@ files[] = btr_server.profile
 ;--------------------
 ; Core
 ;--------------------
-dependencies[] = book
 dependencies[] = contact
-dependencies[] = blog
-dependencies[] = field
-dependencies[] = field_sql_storage
-dependencies[] = field_ui
-dependencies[] = file
 dependencies[] = menu
 dependencies[] = path
 dependencies[] = taxonomy
 dependencies[] = block
 dependencies[] = aggregator
-dependencies[] = comment
 dependencies[] = dashboard
 dependencies[] = filter
-dependencies[] = image
+;dependencies[] = blog
+;dependencies[] = image
+;dependencies[] = search
 dependencies[] = locale
 dependencies[] = node
-dependencies[] = search
 dependencies[] = system
 dependencies[] = toolbar
 dependencies[] = trigger
@@ -39,69 +33,73 @@ dependencies[] = update
 dependencies[] = user
 dependencies[] = syslog
 dependencies[] = rdf
-dependencies[] = list
-dependencies[] = number
-dependencies[] = options
-dependencies[] = text
+;dependencies[] = field
+;dependencies[] = field_sql_storage
+;dependencies[] = field_ui
+;dependencies[] = file
+;dependencies[] = list
+;dependencies[] = number
+;dependencies[] = options
+;dependencies[] = text
 
 ;--------------------
 ; Contrib
 ;--------------------
-dependencies[] = context
-dependencies[] = context_ui
+
+;;; Development
+dependencies[] = reroute_email
+dependencies[] = devel
+dependencies[] = diff
+;dependencies[] = coder
+;dependencies[] = simpletest_clone
+
+;;; Extensions
 dependencies[] = ctools
-dependencies[] = strongarm
-dependencies[] = views
-dependencies[] = views_ui
-dependencies[] = edit_profile
+dependencies[] = libraries
+dependencies[] = entity
+dependencies[] = xautoload
 dependencies[] = token
-dependencies[] = color
-dependencies[] = simpletest_clone
 dependencies[] = rules_scheduler
 dependencies[] = rules_admin
-dependencies[] = features
-dependencies[] = diff
-dependencies[] = fe_block
+dependencies[] = pathauto
+dependencies[] = subpathauto
+
+;;; User Interface
+dependencies[] = context
+dependencies[] = context_ui
+dependencies[] = views
+dependencies[] = views_ui
 dependencies[] = boxes
+dependencies[] = edit_profile
+dependencies[] = color
+dependencies[] = jquery_update
+
+;;; Features
+dependencies[] = strongarm
+dependencies[] = features
+dependencies[] = fe_block
 dependencies[] = uuid
 dependencies[] = node_export
 dependencies[] = node_export_features
-dependencies[] = xautoload
-dependencies[] = jquery_update
-dependencies[] = delete_all
+
+;;; Admin Utils
+dependencies[] = module_filter
+dependencies[] = l10n_update
 dependencies[] = user_restrictions
 
-;--------------------
-; Drupal Localization
-;--------------------
-;dependencies[] = l10n_update
+;;; Performance
+dependencies[] = boost
+;dependencies[] = memcache
 
 ;--------------------
-; Contrib Mail
+; Sending Emails
 ;--------------------
+
 dependencies[] = mailsystem
 dependencies[] = phpmailer
 dependencies[] = mimemail
 dependencies[] = mimemail_action
 dependencies[] = mimemail_compress
-
-;--------------------
-; Other
-;--------------------
-dependencies[] = libraries
-dependencies[] = module_filter
-
-;--------------------
-; Development
-;--------------------
-dependencies[] = reroute_email
-dependencies[] = devel
-
-;--------------------
-; Performance and scalability
-;--------------------
-dependencies[] = boost
-dependencies[] = memcache
 
 ;--------------------
 ; B-Translator Server
@@ -114,6 +112,5 @@ dependencies[] = btr_btr
 dependencies[] = btr_misc
 dependencies[] = btr_layout
 dependencies[] = btr_hybridauth
-dependencies[] = btr_content
 dependencies[] = btr_captcha
 dependencies[] = btr_permissions
