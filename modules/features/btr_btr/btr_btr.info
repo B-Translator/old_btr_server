@@ -21,4 +21,5 @@ features[user_role][] = administrator
 features[user_role][] = contributor
 features[user_role][] = moderator
 features[user_role][] = translator
+features[variable][] = btr_preferred_projects
 features[variable][] = user_admin_role
