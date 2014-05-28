@@ -3,8 +3,8 @@
 CHROOT=/var/chroot/btr
 
 HOST_SERVICES="mysql apache2"
-#CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
-CHROOT_SERVICES="cron mysql apache2"
+#CHROOT_SERVICES="php5-fpm memcached mysql nginx"
+CHROOT_SERVICES="mysql apache2"
 MOUNT_POINTS="proc dev sys dev/pts"
 
 ### reverse a list of words given as parameter
@@ -38,9 +38,15 @@ case "$1" in
 	do
 	    chroot $CHROOT/ service $SRV start
 	done
+
+	# start cron
+	chroot $CHROOT/ cron
 	;;
 
     stop)
+	# stop cron
+	chroot $CHROOT/ killall cron
+
 	# stop the services inside the CHROOT
 	for SRV in $(reverse "$CHROOT_SERVICES")
 	do
