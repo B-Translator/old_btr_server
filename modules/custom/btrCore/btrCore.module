@@ -205,6 +205,15 @@ function _btrCore_get_btr_permissions() {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function btrCore_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  // remove the field 'field_data_sequential' from the form
+  // it is for internal usage only
+  $form['field_data_sequential']['#access'] = FALSE;
+}
+
+/**
  * Include functions for debug.
  */
 //require_once(dirname(__FILE__) . '/btrCore.debug.inc');
