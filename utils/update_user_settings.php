@@ -9,12 +9,17 @@ $action_id = db_query("SELECT aid FROM {trigger_assignments} WHERE hook='user_up
 db_query("DELETE FROM {trigger_assignments} WHERE hook='user_update'");
 
 $edit = array(
+  /*
   // enable feedback channels 'website' and 'email'
   'field_feedback_channels' => array(
     'und' => array(
       array('value' => 'website'),
       array('value' => 'email'),
     ),
+  ),
+  */
+  'field_translation_lng' => array(
+    'und' => array(array('value' => 'sq')),
   ),
 );
 
