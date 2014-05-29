@@ -100,8 +100,8 @@ function btr_layout_context_default_contexts() {
         'boxes-boxabout' => array(
           'module' => 'boxes',
           'delta' => 'boxabout',
-          'region' => 'header',
-          'weight' => '-8',
+          'region' => 'content',
+          'weight' => '-10',
         ),
       ),
     ),

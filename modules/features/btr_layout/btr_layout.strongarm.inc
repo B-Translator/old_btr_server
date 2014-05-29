@@ -321,7 +321,7 @@ function btr_layout_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'theme_bootstrap1_settings';
   $strongarm->value = array(
-    'toggle_logo' => 0,
+    'toggle_logo' => 1,
     'toggle_name' => 1,
     'toggle_slogan' => 0,
     'toggle_node_user_picture' => 1,
@@ -330,15 +330,14 @@ function btr_layout_strongarm() {
     'toggle_favicon' => 1,
     'toggle_main_menu' => 1,
     'toggle_secondary_menu' => 1,
-    'default_logo' => 1,
-    'logo_path' => '',
-    'logo_upload' => '',
+    'default_logo' => 0,
+    'logo_path' => drupal_get_path('module', 'btr_layout') . '/small_logo.png',
     'default_favicon' => 1,
     'favicon_path' => '',
     'favicon_upload' => '',
     'bootstrap_rebuild_registry' => 0,
     'cdn_bootstrap' => 1,
-    'cdn_bootstrap_version' => '2.3.1',
+    'cdn_bootstrap_version' => '2.3.2',
   );
   $export['theme_bootstrap1_settings'] = $strongarm;
 
