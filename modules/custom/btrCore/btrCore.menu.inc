@@ -135,12 +135,12 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
-  // Return a RSS feed.
-  $items['translations/rss-feed'] = array(
+  // Return latest translations.
+  $items['translations/latest'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Latest Translation Feedback',
-    'page callback'   => 'btrCore_rss_feed',
-    'file'            => 'includes/rss_feed.inc',
+    'page callback'   => 'btrCore_latest',
+    'file'            => 'includes/latest.inc',
     //'access arguments' => array('access content'),
     'access callback' => TRUE,
   );
