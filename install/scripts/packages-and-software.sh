@@ -28,6 +28,11 @@ install screen logwatch
 curl http://hub.github.com/standalone -sLo /bin/hub
 chmod +x /bin/hub
 
+### install twitter cli client
+### see also: http://xmodulo.com/2013/12/access-twitter-command-line-linux.html
+install ruby-dev
+gem install t
+
 ### phpmyadmin will install apache2 and start it
 ### so we should stop and disable it
 service apache2 stop
