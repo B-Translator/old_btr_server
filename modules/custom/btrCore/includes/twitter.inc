@@ -14,7 +14,7 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   if (empty($lng))  $lng = 'fr';
 
   // Get the search scope.
-  $scope = "ICT_$lng";
+  $scope = "vocabulary/ICT_$lng";
   if (!empty($origin)) {
     $scope = $origin;
     if (!empty($project)) {
