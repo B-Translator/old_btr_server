@@ -254,6 +254,10 @@ function btrCore_import_translations($params) {
     btr_import_translations($uri, $lng, $account->uid);
   }
 
+  // Get the base_url of the site.
+  module_load_include('inc', 'btrCore', 'includes/sites');
+  $base_url = btr_get_base_url($lng);
+
   // Notify the user that the export is done.
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
@@ -263,9 +267,7 @@ function btrCore_import_translations($params) {
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
     'filename' => $file->filename,
-    'search_url' => url('translations/search', array(
-                    'absolute' => TRUE,
-                    'https' => TRUE,
+    'search_url' => $base_url . url('translations/search', array(
                     'query' => array(
                       'lng' => $lng,
                       'translated_by' => $account->name,

@@ -60,6 +60,11 @@ function _btrCore_build_notification_email($params) {
   $lng = $account->translation_lng;
   $subject_prefix = "l10n-$lng";
 
+  // Get the base_url of the translation site.
+  module_load_include('inc', 'btrCore', 'includes/sites');
+  $base_url = btr_get_base_url($lng);
+
+
   switch ($params->type) {
 
     // Send an email notification to a user, when a translation that he
@@ -172,11 +177,12 @@ function _btrCore_build_notification_email($params) {
             '!author' => $params->author,
             '!string' => $params->string,
             '!url' => $url,
-            '!url_add_term' => url('translations/addterm', array('absolute' => TRUE)),
-            '!url_vocabulary' => url('translations/search', array(
-                                 'absolute' => TRUE,
-                                 'query' => array('project' => 'vocabulary', 'lng' => $lng)
-                               )),
+            '!url_add_term' => $base_url . url('translations/addterm'),
+            '!url_vocabulary' => $base_url . url('translations/search', array(
+                                 'query' => array(
+                                   'project' => 'vocabulary',
+                                   'lng' => $lng,
+                                 ))),
           )),
       );
       break;
@@ -370,9 +376,13 @@ function _btrCore_get_string_url($uid, $sguid) {
   $lng = $account->translation_lng;
   $timestamp = REQUEST_TIME;
 
+  // Get the base_url of the translation site.
+  module_load_include('inc', 'btrCore', 'includes/sites');
+  $base_url = btr_get_base_url($lng);
+
   // get the url of the string
   $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
-  $url = url("translations/$lng/$sguid/$timestamp.$uid.$rehash", array('absolute' => TRUE));
+  $url = $base_url . "/translations/$lng/$sguid/$timestamp.$uid.$rehash";
 
   return $url;
   /*
