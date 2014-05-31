@@ -43,7 +43,10 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   if (!empty($project)) $twitter .= " #$project";
 
   // Append the url.
-  $url = url("translations/$lng/$sguid", array('absolute' => TRUE));
+  module_load_include('inc', 'btrCore', 'includes/sites');
+  $sites = btr_get_sites();
+  $base_url = isset($sites[$lng]['base_url']) ? $sites[$lng]['base_url'] : $GLOBALS['base_url'];
+  $url = $base_url . "/translations/$lng/$sguid";
   $twitter .= ' ' . $url;
 
   print $twitter;
