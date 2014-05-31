@@ -22,11 +22,6 @@ function btr_add_vote($tguid) {
     return array(NULL, array(array($msg, 'error')));
   }
 
-  // Get the mail and lng of the user.
-  $user = user_load($GLOBALS['user']->uid);
-  $umail = $user->init;    // email used for registration
-  $ulng = $user->translation_lng;
-
   // Fetch the translation details from the DB.
   $db = $GLOBALS['btr_db'];
   $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
@@ -36,6 +31,18 @@ function btr_add_vote($tguid) {
   // If there is no such translation, return NULL.
   if (empty($trans)) {
     $msg = t('The given translation does not exist.');
+    return array(NULL, array(array($msg, 'error')));
+  }
+
+  // Get the mail and lng of the user.
+  $user = user_load($GLOBALS['user']->uid);
+  $umail = $user->init;    // email used for registration
+  $ulng = $user->translation_lng;
+
+  // Make sure that the language of the user
+  // matches the language of the translation.
+  if ($ulng != $trans->lng) {
+    $msg = t('You cannot vote the translations of language <strong>!lng</strong>', array('!lng' => $trans->lng));
     return array(NULL, array(array($msg, 'error')));
   }
 
@@ -218,7 +225,7 @@ function btr_add_translation($sguid, $lng, $translation) {
   // translations for the given language.
   $user = user_load($GLOBALS['user']->uid);
   if ($lng != $user->translation_lng) {
-    $msg = t('You cannot give translations for the language !lng', array('!lng' => $lng));
+    $msg = t('You cannot give translations for the language <strong>!lng</strong>', array('!lng' => $lng));
     return array(NULL, array(array($msg, 'error')));
   }
 
