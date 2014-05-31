@@ -55,7 +55,6 @@ function btr_layout_context_default_contexts() {
         'blog' => 'blog',
         'book' => 'book',
         'page' => 'page',
-        'projects' => 'projects',
       ),
       'options' => array(
         'node_form' => '0',

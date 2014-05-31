@@ -58,14 +58,6 @@ function btr_layout_node_info() {
       'title_label' => t('Title'),
       'help' => '',
     ),
-    'projects' => array(
-      'name' => t('Translation Projects'),
-      'base' => 'node_content',
-      'description' => t('Translating a software project.'),
-      'has_title' => '1',
-      'title_label' => t('Project Title'),
-      'help' => '',
-    ),
   );
   return $items;
 }
