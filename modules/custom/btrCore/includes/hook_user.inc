@@ -47,7 +47,7 @@ function btrCore_user_update(&$edit, $account, $category) {
 /**
  * Implements hook_user_cancel().
  */
-function btrCore_user_cancel(&$edit, $account, $category) {
+function btrCore_user_cancel($edit, $account, $category) {
   _btr_user_disable(
     $ulng = $account->field_translation_lng['und'][0]['value'],
     $uid = $account->uid
