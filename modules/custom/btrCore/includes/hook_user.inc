@@ -16,12 +16,14 @@ function btrCore_user_load($users) {
  * It is called when a new user account is created.
  */
 function btrCore_user_insert(&$edit, $account, $category) {
-  _btr_user_insert(
+  _btrCore_user_get_fields($account);
+  _btr_user_update(
     $umail = $account->init,  // initial email that the user used for registration
-    $ulng = $account->field_translation_lng['und'][0]['value'],
+    $ulng = $account->translation_lng,
+    $ulng_old = 'und',  // undefined
     $uid = $account->uid,
     $name = $account->name,
-    $status = $account->status
+    $status = 1
   );
 }
 
@@ -31,12 +33,11 @@ function btrCore_user_insert(&$edit, $account, $category) {
  * It is called after a user account has been updated.
  */
 function btrCore_user_update(&$edit, $account, $category) {
-  $ulng = 'fr';
-  if (isset($account->field_translation_lng['und'][0]['value'])) {
-    $ulng = $account->field_translation_lng['und'][0]['value'];
-  }
+  _btrCore_user_get_fields($account);
   _btr_user_update(
-    $ulng,
+    $umail = $account->init,
+    $ulng = $account->translation_lng,
+    $ulng_old = $account->original->translation_lng,
     $uid = $account->uid,
     $name = $account->name,
     $status = $account->status
@@ -48,9 +49,10 @@ function btrCore_user_update(&$edit, $account, $category) {
  * Implements hook_user_cancel().
  */
 function btrCore_user_cancel($edit, $account, $category) {
+  _btrCore_user_get_fields($account);
   _btr_user_disable(
-    $ulng = $account->field_translation_lng['und'][0]['value'],
-    $uid = $account->uid
+    $umail = $account->init,
+    $ulng = $account->translation_lng
   );
 }
 
@@ -59,9 +61,10 @@ function btrCore_user_cancel($edit, $account, $category) {
  * Implements hook_user_delete().
  */
 function btrCore_user_delete($account) {
+  _btrCore_user_get_fields($account);
   _btr_user_disable(
-    $ulng = $account->field_translation_lng['und'][0]['value'],
-    $uid = $account->uid
+    $umail = $account->init,
+    $ulng = $account->translation_lng
   );
 }
 
@@ -251,72 +254,55 @@ function _btrCore_user_set_fields(&$edit, $account) {
 
 
 /**
- * It is called when a new user account is created.
+ * It is called when a new user account is created,
+ * or after a user account has been updated.
+ *
+ * We want to make sure that there is only one record
+ * with the same (umail, ulng), so we delete first any
+ * existing record like that, and then insert a new one.
  */
-function _btr_user_insert($umail, $ulng, $uid, $name, $status) {
+function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
 
   $db = $GLOBALS['btr_db'];
 
+  // Delete first any existing user which has the same umail and ulng.
   $args = array(
     ':umail' => $umail,
     ':ulng' => $ulng,
+    ':ulng_old' => $ulng_old,
   );
-  $select_user = "
-    SELECT * FROM {btr_users}
-    WHERE umail = :umail AND ulng = :ulng
+  $delete_user = "
+    DELETE FROM {btr_users}
+    WHERE umail = :umail
+      AND (ulng = :ulng OR ulng = :ulng_old)
   ";
-  $result = $db->query($select_user, $args);
+  $result = $db->query($delete_user, $args);
 
-  $args[':uid'] = $uid;
-  $args[':name'] = $name;
-
-  if ($result->rowCount() > 0) {
-    _btr_user_update($ulng, $uid, $name, $status);
-    $update_user = "
-      UPDATE {btr_users}
-      SET uid = :uid, name = :name, status = 1
-      WHERE umail = :umail AND ulng = :ulng
-    ";
-    $db->query($update_user, $args);
-  }
-  else {
-    $insert_user = "
-      INSERT INTO {btr_users} (umail, ulng, uid, name, status)
-      VALUES (:umail, :ulng, :uid, :name, 1)
-    ";
-    $db->query($insert_user, $args);
-  }
-}
-
-
-/**
- * It is called after a user account has been updated.
- */
-function _btr_user_update($ulng, $uid, $name, $status) {
+  // Insert a new user with the given fields.
   $args = array(
+    ':umail' => $umail,
     ':ulng' => $ulng,
     ':uid' => $uid,
     ':name' => $name,
     ':status' => $status,
   );
-  $update_user = "
-    UPDATE {btr_users}
-    SET name = :name, status = :status
-    WHERE uid = :uid AND :ulng = ulng
-  ";
-  $GLOBALS['btr_db']->query($update_user, $args);
+  $insert_user = "
+      INSERT INTO {btr_users} (umail, ulng, uid, name, status)
+      VALUES (:umail, :ulng, :uid, :name, :status)
+    ";
+  $db->query($insert_user, $args);
 }
 
 
 /**
  * It is called when a user is cancelled or deleted.
  */
-function _btr_user_disable($ulng, $uid) {
-  $args = array(':ulng' => $ulng, ':uid' => $uid);
+function _btr_user_disable($umail, $ulng) {
+  $args = array(':umail' => $umail, ':ulng' => $ulng);
   $update_user = "
     UPDATE {btr_users}
     SET status = 0
-    WHERE uid = :uid AND :ulng = ulng
+    WHERE umail = :umail AND :ulng = ulng
   ";
   $GLOBALS['btr_db']->query($update_user, $args);
 }
