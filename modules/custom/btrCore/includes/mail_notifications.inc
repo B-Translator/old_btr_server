@@ -53,9 +53,6 @@ function _btrCore_get_email_sender() {
  */
 function _btrCore_build_notification_email($params) {
 
-  if (isset($params->sguid)) {
-    $url = _btrCore_get_string_url($params->uid, $params->sguid);
-  }
   $account = user_load($params->uid);
   $lng = $account->translation_lng;
   $subject_prefix = "l10n-$lng";
@@ -64,6 +61,9 @@ function _btrCore_build_notification_email($params) {
   module_load_include('inc', 'btrCore', 'includes/sites');
   $base_url = btr_get_base_url($lng);
 
+  if (isset($params->sguid)) {
+    $url = $base_url . "/translations/$lng/" . $params->sguid;
+  }
 
   switch ($params->type) {
 
@@ -360,80 +360,4 @@ function _btrCore_build_notification_email($params) {
     'subject' => $subject,
     'body' => $body,
   );
-}
-
-
-/**
- * Returns a one-time-login url for the given user,
- * which opens the string with the given id.
- * This url is used in mail notifications, so that
- * the user can quickly and easily login and edit
- * the given string.
- */
-function _btrCore_get_string_url($uid, $sguid) {
-
-  $account = user_load($uid);
-  $lng = $account->translation_lng;
-  $timestamp = REQUEST_TIME;
-
-  // Get the base_url of the translation site.
-  module_load_include('inc', 'btrCore', 'includes/sites');
-  $base_url = btr_get_base_url($lng);
-
-  // get the url of the string
-  $rehash = user_pass_rehash($account->pass, $timestamp, $account->login);
-  $url = $base_url . "/translations/$lng/$sguid/$timestamp.$uid.$rehash";
-
-  return $url;
-  /*
-  // get a short url
-  $short_url = _btrCore_get_short_url($url);
-  if ($short_url == 'wait') {
-    sleep(60);
-    $short_url = _btrCore_get_short_url($url);
-  }
-
-  if ($short_url == NULL or $short_url == 'wait') {
-    return $url;
-  }
-  else {
-    return $short_url;
-  }
-  */
-}
-
-/**
- * Get a short URL, using http://is.gd/ .
- */
-function _btrCore_get_short_url($url) {
-
-  $url = urlencode($url);
-  $path = "http://v.gd/create.php?format=simple&url=$url";
-
-  //We need to set a context with ignore_errors on otherwise PHP doesn't fetch
-  //page content for failure HTTP status codes (v.gd needs this to return error
-  //messages when using simple format)
-  $opts = array("http" => array("ignore_errors" => TRUE));
-  $context = stream_context_create($opts);
-
-  $response = @file_get_contents($path, FALSE, $context);
-
-  if (!isset($http_response_header)) {
-    return NULL;
-  }
-
-  //Hacky way of getting the HTTP status code from the response headers
-  if (!preg_match("{[0-9]{3}}", $http_response_header[0], $http_status)) {
-    return NULL;
-  }
-
-  if ($http_status[0] == 200) {
-    return $response;
-  }
-  elseif ($http_status[0] == 502) {
-    return 'wait';
-  }
-  else {
-    return NULL;
-  }
 }
