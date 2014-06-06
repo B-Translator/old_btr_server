@@ -61,7 +61,7 @@ libraries[tinymce][download][url] = "http://github.com/downloads/tinymce/tinymce
 ;;; Security
 projects[captcha][version] = "1.0"
 projects[recaptcha][version] = "1.11"
-projects[honeypot][version] = "1.16"
+projects[honeypot][version] = "1.17"
 projects[user_restrictions][version] = "1.0"
 
 ;;; Features

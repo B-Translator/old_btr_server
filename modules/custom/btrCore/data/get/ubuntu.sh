@@ -9,11 +9,11 @@
 ## See also: https://wiki.ubuntu.com/UpstreamToKDE
 ##
 ## Where to get them:
-## https://translations.launchpad.net/ubuntu/precise/+language-packs
+## https://translations.launchpad.net/ubuntu/trusty/+language-packs
 ##
 ## Get the base pack and the latest update:
-## wget https://translations.launchpad.net/ubuntu/precise/+latest-full-language-pack
-## wget http://launchpadlibrarian.net/109392762/ubuntu-precise-translations-update.tar.gz
+## wget https://translations.launchpad.net/ubuntu/trusty/+latest-full-language-pack
+## wget http://launchpadlibrarian.net/109392762/ubuntu-trusty-translations-update.tar.gz
 ######################################################################################
 
 echo "===== GETTING UBUNTU ====="
@@ -27,7 +27,7 @@ wget https://translations.launchpad.net/ubuntu/$release/+latest-full-language-pa
 mv +latest-full-language-pack ubuntu-$release-translations.tar.gz
 ## Note: Find the URL of the latest update on this page:
 ##       https://translations.launchpad.net/ubuntu/$release/+language-packs
-wget http://launchpadlibrarian.net/173430791/ubuntu-$release-translations-update.tar.gz
+wget http://launchpadlibrarian.net/176551502/ubuntu-$release-translations-update.tar.gz
 
 
 ### downloaded language packs
