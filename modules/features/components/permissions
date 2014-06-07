@@ -63,11 +63,6 @@ user_permission:edit own page content
 user_permission:edit any page content
 user_permission:delete own page content
 user_permission:delete any page content
-user_permission:create projects content
-user_permission:edit own projects content
-user_permission:edit any projects content
-user_permission:delete own projects content
-user_permission:delete any projects content
 user_permission:export nodes
 user_permission:export own nodes
 user_permission:use PHP to import nodes

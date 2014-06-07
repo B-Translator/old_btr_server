@@ -569,15 +569,6 @@ function btr_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: create projects content.
-  $permissions['create projects content'] = array(
-    'name' => 'create projects content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: create url aliases.
   $permissions['create url aliases'] = array(
     'name' => 'create url aliases',
@@ -617,15 +608,6 @@ function btr_permissions_user_default_permissions() {
   // Exported permission: delete any page content.
   $permissions['delete any page content'] = array(
     'name' => 'delete any page content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: delete any projects content.
-  $permissions['delete any projects content'] = array(
-    'name' => 'delete any projects content',
     'roles' => array(
       0 => 'administrator',
     ),
@@ -672,15 +654,6 @@ function btr_permissions_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: delete own projects content.
-  $permissions['delete own projects content'] = array(
-    'name' => 'delete own projects content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
   // Exported permission: delete revisions.
   $permissions['delete revisions'] = array(
     'name' => 'delete revisions',
@@ -720,15 +693,6 @@ function btr_permissions_user_default_permissions() {
   // Exported permission: edit any page content.
   $permissions['edit any page content'] = array(
     'name' => 'edit any page content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit any projects content.
-  $permissions['edit any projects content'] = array(
-    'name' => 'edit any projects content',
     'roles' => array(
       0 => 'administrator',
     ),
@@ -799,15 +763,6 @@ function btr_permissions_user_default_permissions() {
     'roles' => array(
       0 => 'administrator',
       1 => 'translator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: edit own projects content.
-  $permissions['edit own projects content'] = array(
-    'name' => 'edit own projects content',
-    'roles' => array(
-      0 => 'administrator',
     ),
     'module' => 'node',
   );

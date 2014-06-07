@@ -388,19 +388,10 @@ function btr_layout_field_default_fields() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Any screenshots from the project.');
   t('Body');
   t('Enter a comma-separated list of words to describe your content.');
   t('Image');
-  t('Project Description');
-  t('Project Icon');
-  t('Project Name');
-  t('Project Origin');
-  t('Project Screenshots');
   t('Tags');
-  t('The icon that usually represents the project (if any).');
-  t('The name of the project, as registered during import (for example: kturtle or pingus.)');
-  t('The origin of the project, as registered by the import (for example: KDE, GNOME, Mozilla, etc.) See a <a href="translations/project/list/*/-/txt" target="_blank">list of available origins</a> that can be used.');
   t('Upload an image to go with this article.');
 
   return $fields;
