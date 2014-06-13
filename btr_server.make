@@ -22,9 +22,10 @@ libraries[bootstrap][download][url] = "https://github.com/twbs/bootstrap/archive
 ; Web Services
 ;--------------------
 
-projects[oauth2_loginprovider][type] = "module"
-projects[oauth2_loginprovider][download][type] = "git"
-projects[oauth2_loginprovider][download][url] = "https://github.com/dashohoxha/oauth2_loginprovider.git"
+projects[oauth2_loginprovider][version] = "1.x-dev"
+;projects[oauth2_loginprovider][type] = "module"
+;projects[oauth2_loginprovider][download][type] = "git"
+;projects[oauth2_loginprovider][download][url] = "https://github.com/dashohoxha/oauth2_loginprovider.git"
 
 ;--------------------
 ; Contrib
@@ -98,6 +99,16 @@ projects[phpmailer][download][branch] = "7.x-3.x"
 libraries[phpmailer][directory_name] = "phpmailer"
 libraries[phpmailer][download][type] = "get"
 libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/archive/v5.2.6.zip"
+
+;--------------------
+; Custom
+;--------------------
+
+projects[btrClient][type] = "module"
+projects[btrClient][subdir] = "custom"
+projects[btrClient][download][type] = "git"
+projects[btrClient][download][url] = "https://github.com/B-Translator/btrClient.git"
+;projects[btrClient][download][branch] = "7.x-1.x"
 
 ;--------------------
 ; HybridAuth
