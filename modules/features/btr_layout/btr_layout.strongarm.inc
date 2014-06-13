@@ -293,12 +293,13 @@ function btr_layout_strongarm() {
     'toggle_secondary_menu' => 1,
     'default_logo' => 0,
     'logo_path' => drupal_get_path('module', 'btr_layout') . '/small_logo.png',
-    'default_favicon' => 1,
-    'favicon_path' => '',
-    'favicon_upload' => '',
+    'logo_upload' => '',
+    'default_favicon' => 0,
+    'favicon_path' => drupal_get_path('module', 'btr_layout') . '/favicon.png',
     'bootstrap_rebuild_registry' => 0,
     'cdn_bootstrap' => 1,
     'cdn_bootstrap_version' => '2.3.2',
+    'favicon_mimetype' => 'image/png',
   );
   $export['theme_bootstrap1_settings'] = $strongarm;
 
