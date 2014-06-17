@@ -10,44 +10,28 @@ This is a Drupal installation profile for B-Translator Server.
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
+  git clone https://github.com/B-Translator/btr_client.git
   git clone https://github.com/B-Translator/btr_server.git
-  nohup nice btr_server/install/install.sh btr &
+  cp btr_server/install/settings.sh btr.sh
+  vim btr.sh
+  nohup nice btr_server/install/chroot.sh btr.sh &
   tail -f nohup.out
-  chroot btr/ /tmp/install/config.sh
-  chroot btr/ rm -rf /tmp/install
-  reboot  ## it is advisable to reboot the host after this installation
+  less -r nohup.out
   #+END_EXAMPLE
 
-  This will install in ~/var/chroot/btr~ a minimal ubuntu system,
-  B-Translator Server, and everything that is needed for the normal work of
-  the system. It will also make the neccessary common configurations
-  of the system and prompt for customizing it (for example the domain,
-  email address, etc.)
+  This will install in ~/var/chroot/~ a minimal ubuntu system,
+  B-Translator Server, B-Translator Client, and everything that is
+  needed for the normal work of the system. It will also make the
+  neccessary common configurations of the system.
 
-  The installation script will also create the init script
-  ~/etc/init.d/chroot-btr~, which can be used to start and stop the services
-  inside the chroot:
+  The installation script will create as well the init script
+  ~/etc/init.d/chroot-btr~, which can be used to start and stop the
+  services inside the chroot:
   #+BEGIN_EXAMPLE
   service chroot-btr start
   service chroot-btr stop
   #+END_EXAMPLE
 
-  *Note:* The default options of the script are: =--arch=i386=,
-  =--suite=precise= and =--mirror=http://archive.ubuntu.com/ubuntu=
-  . If you want to use something different, you have to give the
-  option explicitly on the command line. For example, on a /rackspace/
-  server it can be like this:
-  #+BEGIN_EXAMPLE
-  nohup nice btr_server/install/install.sh btr \
-        --mirror=http://mirror.rackspace.com/ubuntu/ --arch=amd64 &
-  #+END_EXAMPLE
-  On /amazon/ it can be like this:
-  =--mirror=http://us-east-1.ec2.archive.ubuntu.com/ubuntu/=
-
-  For development purposes, the scripts in ~btr_server/install/dev/~
-  can be used to make a development environment.
-
-  For more detailed information about installation see *docs/INSTALL.org*.
 
 * What is B-Translator
 
@@ -59,46 +43,6 @@ This is a Drupal installation profile for B-Translator Server.
   It can also be decoded like *Be Translator*, as an invitation to
   anybody to give his small contribution for translating programs or
   making their translations better.
-
-  If you could come up with some other interesting explanations,
-  please let me know.
-
-* The goals of the project
-
-  This software helps to get feedback about l10n (translations of the
-  programs). It also helps to unify all the different translations and
-  to ensure consistency among the translations.
-
-  The motivation for developing such a software is that the
-  traditional (current) l10n workflow requires highly dedicated
-  people, and does not allow (or at least does not facilitate) small
-  contributions from random people that do not have such a high
-  dedication, determination and enough free time.
-
-  Also, the process of reviewing and correcting translations is not
-  easy and does not facilitate the feedback from the users of the
-  translated programs. Although the translators are usually very good
-  and professional, they can make mistakes too, and sometimes they may
-  miss the best translation for some certain terms. Some feedback from
-  the crowd of the users would be more than welcome, if there are
-  tools to collect and facilitate it.
-
-  Another problem with translations is that sometimes they are not
-  consistent. The same string has different translations in different
-  programs, and sometimes even the same translator may have provided
-  different translations for the same string in different cases.
-
-  To summarize, the problems that this software tries to solve are
-  these:
-  + Merging translations from different sources (for example
-    translations made on Launchpad and those made on KDE or GNOME).
-  + Helping to ensure consistency among the translations.
-  + Getting feedback about the translations from a wide crowd of
-    people and users. This feedback can be in terms of votes for the
-    best translation (when there are more than one translations for
-    the same string), or it can be a new alternative translation (for
-    an existing translation), or it can be a new translation
-    suggestion (for a string that is not translated yet).
 
 
 * Contacts
@@ -127,44 +71,3 @@ This is a Drupal installation profile for B-Translator Server.
 
   To install and setup your site you would need some basic skills on
   Ubuntu server administration and Drupal administration.
-
-
-* Documentation
-
-  - Internal doc files:
-    + [[https://github.com/B-Translator/btr_server/blob/master/README.org][README.org]] (this file)
-    + [[https://github.com/B-Translator/btr_server/blob/master/dev/README.org][dev/README.org]] (tips for developers)
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/INSTALL.org][docs/INSTALL.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/NGINX.org][docs/NGINX.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/tasks.org][docs/tasks.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/notes.org][docs/notes.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/README.org][docs/README.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/btranslator-project.org][docs/btranslator-project.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/btranslator-project.pdf][docs/btranslator-project.pdf]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/docs/uml/db_schema.org][docs/uml/db_schema.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/db/docs/db_schema.org][modules/custom/btrCore/data/db/docs/db_schema.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/README.org][modules/custom/btrCore/data/README.org]]
-    + [[https://github.com/B-Translator/btr_server/blob/master/modules/features/README.org][modules/features/README.org]]
-    + [[https://github.com/dashohoxha/B-Translator/blob/master/TKL/patch-btranslator-precise/README.org][TKL/patch-btranslator-precise/README.org]] (deprecated)
-
-  - External docs:
-    + http://dashohoxha.blogspot.com/2012/08/btranslator-project.html
-    + http://academia.edu/3415945/B-Translator_as_a_Software_Engineering_Project
-    + http://www.slideshare.net/dashohoxha/btranslator-as-a-software-engineering-project
-    + http://www.slideshare.net/dashohoxha/btranslator-as-a-software-engineering-project-14195013
-    + http://academia.edu/3993827/Development_Setup_Of_B-Translator
-    + http://academia.edu/3992404/Using_Drupal_Features_In_B-Translator
-
-  - Code docs generated by doxygen:
-    + html: http://btranslator.org/downloads/btranslator-doxygen/
-    + html.tgz: http://btranslator.org/downloads/btranslator-doxygen.tgz
-    + pdf: http://btranslator.org/downloads/btranslator-doxygen.pdf
-
-  - Other docs that may be useful:
-    + http://dashohoxha.blogspot.com/2012/08/how-to-secure-ubuntu-server.html
-    + http://dashohoxha.blogspot.com/2013/07/how-to-manage-your-own-domain-name.html
-    + http://dashohoxha.blogspot.com/2013/02/how-to-set-up-chroot-environment-for.html
-    + http://dashohoxha.blogspot.com/2012/10/using-nginx-as-web-server-for-drupal.html
-    + http://www.havetheknowhow.com/Configure-the-server/Install-ssmtp.html
-    + http://arstechnica.com/security/2009/12/how-to-get-set-with-a-secure-sertificate-for-free/
-    + http://codeinthehole.com/writing/pull-requests-and-other-good-practices-for-teams-using-github/
