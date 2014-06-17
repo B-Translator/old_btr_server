@@ -27,7 +27,7 @@ mysql --defaults-file=/etc/mysql/debian.cnf \
 rm -f /etc/nginx/sites-{available,enabled}/$target
 
 ### remove the configuration of apache2
-rm -f /etc/apache2/sites-{available,enabled}/$target{,-ssl}
+rm -f /etc/apache2/sites-{available,enabled}/$target{,-ssl}.conf
 
 ### remove from /etc/hosts
 domain=$(grep ' localhost' /etc/hosts | head -n 1 | cut -d' ' -f3)

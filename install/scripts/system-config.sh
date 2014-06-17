@@ -43,17 +43,41 @@ a2enmod ssl
 a2dissite 000-default
 a2ensite bcl bcl-ssl btr btr-ssl
 a2enmod headers rewrite
-ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf.d/phpmyadmin
+ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+a2enconf api-docs api-examples downloads phpmyadmin
 
 sed -i /etc/php5/apache2/php.ini \
-    -e "/^\[PHP\]/ a apc.rfc1867 = 1" \
-    -e "/^display_errors/ c display_errors = On"
+    -e '/^\[PHP\]/ a apc.rfc1867 = 1' \
+    -e '/^display_errors/ c display_errors = On'
 
-sed -i /etc/apache2/apache2.conf \
-    -e "/^<IfModule mpm_prefork_module>/,+5 s/StartServers.*/StartServers 2/" \
-    -e "/^<IfModule mpm_prefork_module>/,+5 s/MinSpareServers.*/MinSpareServers 2/" \
-    -e "/^<IfModule mpm_prefork_module>/,+5 s/MaxSpareServers.*/MaxSpareServers 4/" \
-    -e "/^<IfModule mpm_prefork_module>/,+5 s/MaxClients.*/MaxClients 50/"
+sed -i /etc/apache2/mods-available/mpm_prefork.conf \
+    -e '/^<IfModule/,+5 s/StartServers.*/StartServers 2/' \
+    -e '/^<IfModule/,+5 s/MinSpareServers.*/MinSpareServers 2/' \
+    -e '/^<IfModule/,+5 s/MaxSpareServers.*/MaxSpareServers 4/' \
+    -e '/^<IfModule/,+5 s/MaxRequestWorkers.*/MaxRequestWorkers 50/'
+
+### modify the configuration of php5
+cat <<EOF > /etc/php5/conf.d/apc.ini
+extension=apc.so
+apc.mmap_file_mask=/tmp/apc.XXXXXX
+apc.shm_size=96M
+EOF
+
+sed -i /etc/php5/fpm/php.ini \
+    -e '/^;\?max_execution_time/ c max_execution_time = 90' \
+    -e '/^;\?display_errors/ c display_errors = On' \
+    -e '/^;\?post_max_size/ c post_max_size = 16M' \
+    -e '/^;\?cgi\.fix_pathinfo/ c cgi.fix_pathinfo = 1' \
+    -e '/^;\?upload_max_filesize/ c upload_max_filesize = 16M' \
+    -e '/^;\?default_socket_timeout/ c default_socket_timeout = 90'
+
+sed -i /etc/php5/fpm/pool.d/www.conf \
+    -e '/listen = 127.0.0.1:9000/ c listen = /run/php5-fpm.sock' \
+    -e '/^;\?pm\.max_children/ c pm.max_children = 20' \
+    -e '/^;\?pm\.max_requests/ c pm.max_requests = 5000' \
+    -e '/^;\?php_flag\[display_errors/ c php_flag[display_errors] = on' \
+    -e '/^;\?php_admin_value\[memory_limit/ c php_admin_value[memory_limit] = 128M'
+echo 'php_admin_value[max_execution_time] = 90' >> /etc/php5/fpm/pool.d/www.conf
 
 ### generates the file /etc/defaults/locale
 update-locale

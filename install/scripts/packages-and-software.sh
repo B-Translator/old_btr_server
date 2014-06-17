@@ -20,7 +20,7 @@ apt-get -y upgrade
 install aptitude tasksel vim nano psmisc
 install mysql-server ssmtp memcached php5-memcached \
         php5-mysql php5-gd php-db php5-dev make php-pear php5-curl php-apc \
-        ssl-cert gawk unzip wget diff curl phpmyadmin \
+        ssl-cert gawk unzip wget diffutils curl phpmyadmin \
         git mercurial subversion translate-toolkit ruby dtrx
 install screen logwatch
 
@@ -41,13 +41,26 @@ update-rc.d apache2 disable
 ### install nginx and php5-fpm
 install nginx nginx-common nginx-full php5-fpm
 
-# install uploadprogress bar (from PECL) (requested by Drupal 7)
+### There is some problem with php-pear in 14.04
+### See: http://askubuntu.com/questions/451953/php-pear-is-not-working-after-upgrading-to-ubuntu-14-04
+### and: https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1310552
+### I am using below a workaround described there.
+
+### install uploadprogress bar (from PECL) (requested by Drupal 7)
 pecl install uploadprogress
+
+gunzip /build/buildd/php5-*/pear-build-download/uploadprogress-*
+pear upgrade /build/buildd/php5-*/pear-build-download/uploadprogress-*
+
+mkdir -p /etc/php5/conf.d/
 echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 
 ### install drush
 pear channel-discover pear.drush.org
 pear install pear.drush.org/drush-6.2.0.0
+
+gunzip /build/buildd/php5-*/pear-build-download/drush-*
+pear upgrade /build/buildd/php5-*/pear-build-download/drush-*
 
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
