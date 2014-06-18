@@ -4,9 +4,9 @@ This is a Drupal installation profile for B-Translator Server.
 * Installation
 
   The recommended way of installation for a production server is to
-  install it inside a chroot, in precise (ubuntu 12.04). Assuming that
-  we have already installed a minimal ubuntu server 12.04 (precise),
-  btr_server can be installed in it like this:
+  install it inside a chroot, in /trusty/ (ubuntu 14.04). Assuming
+  that we have already installed a minimal ubuntu server 14.04
+  (trusty), btr_server can be installed in it like this:
   #+BEGIN_EXAMPLE
   mkdir /var/chroot
   cd /var/chroot/
