@@ -4,12 +4,12 @@
 
 case $1 in
     start)
-	service nginx stop
-	service php5-fpm stop
+	/etc/init.d/nginx stop
+	/etc/init.d/php5-fpm stop
 
 	drush @local_bcl -y dis memcache
 	drush @local_btr -y dis memcache
-	service memcached stop
+	/etc/init.d/memcached stop
 	for file in $(ls /var/www/btr*/sites/default/settings.php)
 	do
 	    sed -i $file -e "/comment memcache config/ d"
@@ -18,22 +18,22 @@ case $1 in
 		-e "/'memcache_key_prefix'/a comment memcache config */"
 	done
 
-	service apache2 start
+	/etc/init.d/apache2 start
 	;;
 
     stop)
-	service apache2 stop
+	/etc/init.d/apache2 stop
 
 	for file in $(ls /var/www/btr*/sites/default/settings.php)
 	do
 	    sed -i $file -e "/comment memcache config/ d"
 	done
-	service memcached start
+	/etc/init.d/memcached start
 	drush @local_bcl -y en memcache
 	drush @local_btr -y en memcache
 
-	service php5-fpm start
-	service nginx start
+	/etc/init.d/php5-fpm start
+	/etc/init.d/nginx start
 	;;
     *)
 	echo " * Usage: $0 {start|stop}"

@@ -91,8 +91,8 @@ chown www-data: -R $dst_dir/sites/default/files/*
 chown root: $dst_dir/sites/default/files/.htaccess
 
 ### restart services
-#for SRV in php5-fpm memcached mysql nginx
-for SRV in mysql apache2
+#for service in php5-fpm memcached mysql nginx
+for service in mysql apache2
 do
-    service $SRV restart
+    /etc/init.d/$service restart
 done

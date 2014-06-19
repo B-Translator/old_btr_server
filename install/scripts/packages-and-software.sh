@@ -35,7 +35,7 @@ gem install t
 
 ### phpmyadmin will install apache2 and start it
 ### so we should stop and disable it
-service apache2 stop
+/etc/init.d/apache2 stop
 update-rc.d apache2 disable
 
 ### install nginx and php5-fpm

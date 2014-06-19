@@ -36,8 +36,8 @@ hostname=$sub.$domain
 sed -i /etc/hosts -e "/^127.0.0.1 $hostname/d"
 
 ### restart services
-#for SRV in php5-fpm memcached mysql nginx
-for SRV in mysql apache2
+#for service in php5-fpm memcached mysql nginx
+for service in mysql apache2
 do
-    service $SRV restart
+    /etc/init.d/$service restart
 done
