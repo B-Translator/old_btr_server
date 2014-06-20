@@ -52,14 +52,44 @@ drush site-install --verbose --yes btr_server \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
-## install features modules
-#drush --yes pm-enable btr_btr
-#drush --yes features-revert btr_btr
+### install features
+drush --yes pm-enable btr_btrServices
+drush --yes features-revert btr_btrServices
+
+drush --yes pm-enable btr_btr
+drush --yes features-revert btr_btr
+
+drush --yes pm-enable btr_misc
+drush --yes features-revert btr_misc
+
+drush --yes pm-enable btr_layout
+drush --yes features-revert btr_layout
+
+drush --yes pm-enable btr_hybridauth
+drush --yes features-revert btr_hybridauth
+
+drush --yes pm-enable btr_captcha
+drush --yes features-revert btr_captcha
+
+drush --yes pm-enable btr_permissions
+drush --yes features-revert btr_permissions
+
+### install btrClient
+drush --yes pm-enable btrClient
+
+drush --yes pm-enable bcl_service_links
+drush --yes features-revert bcl_service_links
+
+#drush --yes pm-enable bcl_disqus
+#drush --yes features-revert bcl_disqus
 
 ### add languages
 drush --yes pm-enable l10n_update
 source /var/www/data/config.sh
-for lng in $languages; do drush language-add $lng; done
+for lng in $languages
+do
+    drush language-add $lng
+done
 drush --yes l10n-update
 
 ### update to the latest version of core and modules

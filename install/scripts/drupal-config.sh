@@ -75,9 +75,36 @@ mkdir -p /var/www/uploads/
 chown www-data: /var/www/uploads/
 $drush variable-set file_private_path '/var/www/uploads/' --exact --yes
 
-### install additional features
-#$drush --yes pm-enable btr_btr
-#$drush --yes features-revert btr_btr
+### install features
+$drush --yes pm-enable btr_btrServices
+$drush --yes features-revert btr_btrServices
+
+$drush --yes pm-enable btr_btr
+$drush --yes features-revert btr_btr
+
+$drush --yes pm-enable btr_misc
+$drush --yes features-revert btr_misc
+
+$drush --yes pm-enable btr_layout
+$drush --yes features-revert btr_layout
+
+$drush --yes pm-enable btr_hybridauth
+$drush --yes features-revert btr_hybridauth
+
+$drush --yes pm-enable btr_captcha
+$drush --yes features-revert btr_captcha
+
+$drush --yes pm-enable btr_permissions
+$drush --yes features-revert btr_permissions
+
+### install btrClient
+$drush --yes pm-enable btrClient
+
+$drush --yes pm-enable bcl_service_links
+$drush --yes features-revert bcl_service_links
+
+#$drush --yes pm-enable bcl_disqus
+#$drush --yes features-revert bcl_disqus
 
 ### install multi-language support
 mkdir -p $drupal_dir/sites/all/translations
