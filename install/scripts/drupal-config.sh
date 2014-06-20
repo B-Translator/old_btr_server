@@ -80,7 +80,6 @@ $drush variable-set file_private_path '/var/www/uploads/' --exact --yes
 #$drush --yes features-revert btr_btr
 
 ### install multi-language support
-$drush --yes pm-enable l10n_update
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 
@@ -91,8 +90,10 @@ sed -i /var/www/data/config.sh \
 ### add these languages to drupal and import their translations
 for lng in $languages
 do
+    $drush cc drush
     $drush language-add $lng
 done
+$drush cc drush
 $drush --yes l10n-update
 
 ### update to the latest version of core and modules
