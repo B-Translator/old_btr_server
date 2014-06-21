@@ -31,3 +31,6 @@ cd $code_dir/btr_server/install/scripts/
 
 ### btranslator configuration
 $code_dir/btr_server/install/config.sh
+
+### restart mysql
+/etc/init.d/mysql restart

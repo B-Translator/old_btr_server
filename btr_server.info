@@ -21,9 +21,6 @@ dependencies[] = block
 dependencies[] = aggregator
 dependencies[] = dashboard
 dependencies[] = filter
-;dependencies[] = blog
-;dependencies[] = image
-;dependencies[] = search
 dependencies[] = locale
 dependencies[] = node
 dependencies[] = system
@@ -33,14 +30,7 @@ dependencies[] = update
 dependencies[] = user
 dependencies[] = syslog
 dependencies[] = rdf
-;dependencies[] = field
-;dependencies[] = field_sql_storage
-;dependencies[] = field_ui
-;dependencies[] = file
-;dependencies[] = list
-;dependencies[] = number
-;dependencies[] = options
-;dependencies[] = text
+dependencies[] = comment
 
 ;--------------------
 ; Contrib
