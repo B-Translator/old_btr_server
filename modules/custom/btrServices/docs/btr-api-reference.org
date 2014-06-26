@@ -21,7 +21,7 @@
    + POST public/btr/report/statistics ::
      - lng: :: language of translations
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/report/statistics.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/report/statistics.php]]
 
 ** topcontrib
 
@@ -37,7 +37,7 @@
      - period :: period of report (last =day | week | month | year=)
      - size :: number of results (top contributers), between 5 and 20
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/report/topcontrib.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/report/topcontrib.php]]
 
 * translations
 
@@ -51,7 +51,7 @@
      - last_sguid :: (optional) Restricts the pool of selection to the
                      project(s) of the last reviewed sguid.
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/translations/sguid.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/translations/sguid.php]]
 
 
 ** get
@@ -70,7 +70,7 @@
                 =next | translated | untranslated=.
      - lng :: The language of translations, like fr, de, etc.
 
-     Example: [[https://dev.l10n.org.al/api-examples/php/translations/get.php]]
+     Example: [[https://dev.btranslator.org/api-examples/php/translations/get.php]]
 
    + GET translations/$lng/$sguid :: Returns the details of a string
      and its translations.  If the request header =Accept:
@@ -81,8 +81,8 @@
      Example:
      #+BEGIN_EXAMPLE
      curl -k -H 'Accept: application/json' \
-       'https://dev.l10n.org.al/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
-     curl -k -H 'Accept: application/json' https://dev.l10n.org.al/translations/sq/next
+       'https://dev.btranslator.org/translations/sq/ee178b82f7ff3b5fb48537b834db673b42d48556'
+     curl -k -H 'Accept: application/json' https://dev.btranslator.org/translations/sq/next
      #+END_EXAMPLE
 
 
@@ -100,7 +100,7 @@
 	 version(s) as well, they are concatenated with NULL bytes ("\0")
 	 between them.
 
-     Example: [[https://dev.l10n.org.al/api-examples/php/translations/add.php]]
+     Example: [[https://dev.btranslator.org/api-examples/php/translations/add.php]]
 
 
 ** vote
@@ -110,7 +110,7 @@
    + POST btr/translations/vote ::
      - tguid :: ID of the translation
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/translations/vote.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/translations/vote.php]]
 
 
 ** del
@@ -120,7 +120,7 @@
    + POST btr/translations/del ::
      - tguid :: ID of the translation
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/translations/add.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/translations/add.php]]
 
 
 ** del_vote
@@ -130,7 +130,7 @@
    + POST btr/translations/del_vote ::
      - tguid :: ID of the translation
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/translations/vote.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/translations/vote.php]]
 
 
 ** search
@@ -184,7 +184,7 @@
      - to_date ::
          Date and time.
 
-     Example: [[https://dev.l10n.org.al/api-examples/php/translations/search.php]]
+     Example: [[https://dev.btranslator.org/api-examples/php/translations/search.php]]
 
   + GET translations/search :: Search strings and translations using
     various filters.  If the request header =Accept: application/json=
@@ -195,7 +195,9 @@
     Example:
     #+BEGIN_EXAMPLE
     curl -k -H 'Accept: application/json' \
-	 'https://dev.l10n.org.al/translations/search?lng=sq&words=space'
+	 'https://dev.btranslator.org/translations/search?lng=sq&words=space'
+    curl -k -H 'Accept: application/json' \
+	 'https://l10n.org.al/translations/search?lng=sq&words=space'
     #+END_EXAMPLE
 
 
@@ -211,7 +213,7 @@
 	 - params ::
 	     Associative array of the needed parameters for this action.
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/translations/submit.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/translations/submit.php]]
 
 
 ** import
@@ -231,7 +233,7 @@
          is an array of a message and a type, where type can be one of
          'status', 'warning', 'error'.
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/translations/import.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/translations/import.php]]
 
    This is like a bulk translation and voting service. For any
    translation in the PO files, it will be added as a suggestion if
@@ -253,7 +255,7 @@
 
    Get a list of existing projects, filtered by origin/project.
 
-   + POST btr/project/list ::
+   + POST public/btr/project/list ::
      - origin :: Filter by origin.
      - project :: Filter by project.
 
@@ -263,12 +265,12 @@
      If *project* is =-= then only a list of 'origin' is outputed,
      otherwise a list of 'origin/project'.
 
-     Example: [[https://dev.l10n.org.al/api-examples/php/project/list.php]]
+     Example: [[https://dev.btranslator.org/api-examples/php/project/list.php]]
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k -i -X POST https://dev.l10n.org.al/public/btr/project/list
-     curl -k -i -X POST https://dev.l10n.org.al/public/btr/project/list \
+     curl -k -X POST https://dev.btranslator.org/public/btr/project/list
+     curl -k -X POST https://dev.btranslator.org/public/btr/project/list \
 	  -H "Content-type: application/json" \
 	  -d '{"origin": "t*"}'
      #+END_EXAMPLE
@@ -283,13 +285,13 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/project/list/*/-'
-     curl -k 'https://l10n.org.al/translations/project/list/*/-/json'
-     curl -k 'https://l10n.org.al/translations/project/list/LibreOffice/s*'
-     curl -k 'https://l10n.org.al/translations/project/list/LibreOffice'
-     curl -k 'https://l10n.org.al/translations/project/list/*/nautil*'
-     curl -k 'https://l10n.org.al/translations/project/list/*/*/json'
-     curl -k 'https://l10n.org.al/translations/project/list'
+     curl 'https://btranslator.org/translations/project/list/*/-'
+     curl 'https://btranslator.org/translations/project/list/*/-/json'
+     curl 'https://btranslator.org/translations/project/list/LibreOffice/s*'
+     curl 'https://btranslator.org/translations/project/list/LibreOffice'
+     curl 'https://btranslator.org/translations/project/list/*/nautil*'
+     curl 'https://btranslator.org/translations/project/list/*/*/json'
+     curl 'https://btranslator.org/translations/project/list'
      #+END_EXAMPLE
 
 
@@ -302,9 +304,9 @@
      be JSON or TEXT (default).
      Example:
      #+BEGIN_EXAMPLE
-     curl -k https://dev.l10n.org.al/translations/project/templates/test/kturtle
-     curl -k https://dev.l10n.org.al/translations/project/templates/test/kturtle/json
-     curl -k https://dev.l10n.org.al/translations/project/templates/KDE/kdeedu
+     curl -k https://dev.btranslator.org/translations/project/templates/test/kturtle
+     curl -k https://dev.btranslator.org/translations/project/templates/test/kturtle/json
+     curl -k https://dev.btranslator.org/translations/project/templates/KDE/kdeedu
      #+END_EXAMPLE
 
 
@@ -340,7 +342,7 @@
          Comma separated list of usernames. Used only when /export_mode/
          is =preferred_by_my_friends=.
 
-     Example: [[https://dev.l10n.org.al/api-examples/php/project/export.php]]
+     Example: [[https://dev.btranslator.org/api-examples/php/project/export.php]]
 
    + GET/POST translations/project/export :: Return a PO file as
      plain-text. Does not allow concurrent exports because they may
@@ -373,10 +375,10 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://dev.l10n.org.al/translations/project/export?origin=test&project=kturtle&lng=sq' > test.po
-     curl -k https://dev.l10n.org.al/translations/project/export \
+     curl -k 'https://dev.btranslator.org/translations/project/export?origin=test&project=kturtle&lng=sq' > test.po
+     curl -k https://dev.btranslator.org/translations/project/export \
 	  -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test.po
-     curl -k https://dev.l10n.org.al/translations/project/export \
+     curl -k https://dev.btranslator.org/translations/project/export \
 	  -d origin=test -d project=kturtle -d lng=sq \
 	  -d preferred_voters=email1@example.com,email2@example.com \
 	  -d export_mode=preferred > test.po
@@ -414,10 +416,10 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://dev.l10n.org.al/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
-     curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+     curl -k 'https://dev.btranslator.org/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
+     curl -k https://dev.btranslator.org/translations/project/export_tgz \
 	  -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
-     curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+     curl -k https://dev.btranslator.org/translations/project/export_tgz \
 	  -d origin=test -d project=kturtle -d lng=sq \
 	  -d preferred_voters=email1@example.com,email2@example.com \
 	  -d export_mode=preferred > test1.tgz
@@ -435,11 +437,11 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq
-     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2 > 2.diff
-     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
-     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4 > 4.diff
-     curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
+     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq
+     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/2 > 2.diff
+     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
+     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/4 > 4.diff
+     curl https://btranslator.org/translations/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
      #+END_EXAMPLE
 
 
@@ -466,7 +468,7 @@
          The sguid of the new string, or NULL if such a string
          already exists.
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/project/add_string.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/project/add_string.php]]
 
    Vocabularies are fake translation projects, in the sense that they
    are not strings extracted from a program. Their strings are added
@@ -485,7 +487,7 @@
      - sguid ::
          ID of the string to be deleted.
 
-   Example: [[https://dev.l10n.org.al/api-examples/php/project/add_string.php]]
+   Example: [[https://dev.btranslator.org/api-examples/php/project/add_string.php]]
 
 
 ** import
@@ -493,34 +495,72 @@
 
 * misc
 
-** rss
+** latest
 
-   + GET translations/rss-feed/$lng[/$origin[/$project]] :: Return a
-     RSS feed of the latest translations for the given language (origin
-     and project are optional).
+   + GET translations/latest/$lng[/$origin[/$project]] :: Return a
+     JSON array of the latest translations for the given language
+     (origin and project are optional). Latest means yesterday.
+     Results are cached, so last minute translations may not appear on
+     the list.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/rss-feed'
-     curl -k 'https://l10n.org.al/translations/rss-feed/sq'
-     curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice'
-     curl -k 'https://l10n.org.al/translations/rss-feed/sq/LibreOffice/sw'
+     curl https://btranslator.org/translations/latest/sq
+     curl https://btranslator.org/translations/latest/sq/LibreOffice
+     curl https://btranslator.org/translations/latest/sq/LibreOffice/sw
+     #+END_EXAMPLE
+
+
+** rss-feed
+
+   + GET translations/rss-feed[/$origin[/$project]] :: Return a RSS
+     feed of the latest translations (origin and project are
+     optional). Latest means yesterday.  Results are cached, so last
+     minute translations may not appear on the list.
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl https://l10n.org.al/translations/rss-feed
+     curl https://l10n.org.al/translations/rss-feed/LibreOffice
+     curl https://l10n.org.al/translations/rss-feed/LibreOffice/sw
      #+END_EXAMPLE
 
 
 ** twitter
 
-   + GET translations/twitter/$lng :: Return a random string and its
-     translations in a suitable form for the twitter (truncated to 100
-     characters).
+   + GET translations/twitter[/$origin[/$project]] :: Return a random
+     string and its translations in a suitable form for the twitter
+     (truncated to 100 characters).
+
+     Examples:
+     #+BEGIN_EXAMPLE
+     curl https://l10n.org.al/translations/twitter
+     curl https://l10n.org.al/translations/twitter/LibreOffice
+     curl https://l10n.org.al/translations/twitter/LibreOffice/sw
+     #+END_EXAMPLE
+
+     *Note:* This can be used in combination with /cli twitter
+     clients/ and with *cron* to post random tweets about
+     translations.  See this script as an example:
+     https://github.com/B-Translator/btr_client/blob/master/utils/twitter.sh
+
+
+   + GET translations/twitter/$lng[/$origin[/$project]] :: Return a
+     random string and its translations in a suitable form for the
+     twitter (truncated to 100 characters).
      - lng :: Language of translations.
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/twitter/sq'
-     curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice'
-     curl -k 'https://l10n.org.al/translations/twitter/sq/LibreOffice/sw'
+     curl https://btranslator.org/translations/twitter/sq
+     curl https://btranslator.org/translations/twitter/sq/LibreOffice
+     curl https://btranslator.org/translations/twitter/sq/LibreOffice/sw
      #+END_EXAMPLE
+
+     *Note:* This can be used in combination with /cli twitter
+     clients/ and with *cron* to post random tweets about
+     translations.  See this script as an example:
+     https://github.com/B-Translator/btr_server/blob/master/utils/twitter.sh
 
 
 ** vocabulary
@@ -537,9 +577,9 @@
 
      Examples:
      #+BEGIN_EXAMPLE
-     curl -k https://l10n.org.al/translations/vocabulary/export/ICT_sq
-     curl -k https://l10n.org.al/translations/vocabulary/export/ICT_sq/txt1
-     curl -k https://l10n.org.al/translations/vocabulary/export/ICT_sq/org > ICT_sq.org
+     curl https://btranslator.org/translations/vocabulary/export/ICT_sq
+     curl https://btranslator.org/translations/vocabulary/export/ICT_sq/txt1
+     curl https://btranslator.org/translations/vocabulary/export/ICT_sq/org > ICT_sq.org
      #+END_EXAMPLE
 
 
@@ -551,7 +591,7 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/autocomplete/project/kd'
+     curl https://btranslator.org/translations/autocomplete/project/kd
      #+END_EXAMPLE
 
    + GET translations/autocomplete/origin/$str :: Retrieve a JSON list
@@ -560,16 +600,17 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/autocomplete/origin/G'
+     curl https://btranslator.org/translations/autocomplete/origin/G
      #+END_EXAMPLE
 
-   + GET translations/autocomplete/user/$str :: Retrieve a JSON list of
+   + GET translations/autocomplete/user/$lng/$str :: Retrieve a JSON list of
      autocomplete suggestions for users.
+     - lng :: Language of translations.
      - str :: Beginning of a user name.
 
      Example:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/autocomplete/user/d'
+     curl https://btranslator.org/translations/autocomplete/user/sq/d
      #+END_EXAMPLE
 
 ** other
@@ -579,7 +620,7 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl -k 'https://dev.l10n.org.al/translations/languages'
+     curl https://btranslator.org/translations/languages
      #+END_EXAMPLE
 
 
@@ -591,5 +632,5 @@
 
      Example:
      #+BEGIN_EXAMPLE
-     curl -k 'https://l10n.org.al/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866'
+     curl https://btranslator.org/translations/string_details/2a430d7b80a053872c2c79a9e3ce2e69dbc37866
      #+END_EXAMPLE
