@@ -581,6 +581,59 @@ Archived entries from file /var/www-ssl/drupal/sites/all/modules/l10n_feedback/d
 ** DONE Split the module l10n_feedback into server and client
    These two should communicate only through the API/web-service.
 
+* DONE Test and fix the installation of a new B-Translator server.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-07-02 Wed 14:41
+  :ARCHIVE_FILE: /var/chroot/btr_dev/tasks/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+* DONE Export vocabulary in formats CSV, PDF, etc.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-07-02 Wed 14:41
+  :ARCHIVE_FILE: /var/chroot/btr_dev/tasks/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Exported in json, txt, org (which can be converted to html, pdf, etc.).
+* DONE Use the module MetaTags.
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-07-02 Wed 14:41
+  :ARCHIVE_FILE: /var/chroot/btr_dev/tasks/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Implemented meta-tags programatically, without the module.
+* DONE Client module for Drupal
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-07-02 Wed 14:41
+  :ARCHIVE_FILE: /var/chroot/btr_dev/tasks/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  Make btrClient a completely separate Drupal module, which can be
+  installed on any drupal site.
+
+* DONE Upgrade the server on rackspace
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-07-02 Wed 14:41
+  :ARCHIVE_FILE: /var/chroot/btr_dev/tasks/tasks.org
+  :ARCHIVE_OLPATH: Tasks/Misc
+  :ARCHIVE_CATEGORY: tasks
+  :ARCHIVE_TODO: DONE
+  :END:
+  The server was moved to cloud.google.com, with 1.7GB RAM
+  and with almost the same price as the previous server.
+
+
+
+
+
+
 
 
 
