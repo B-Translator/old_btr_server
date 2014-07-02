@@ -82,7 +82,7 @@ function btr_hybridauth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'hybridauth_provider_Facebook_display';
-  $strongarm->value = 'popup';
+  $strongarm->value = 'page';
   $export['hybridauth_provider_Facebook_display'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -157,7 +157,7 @@ function btr_hybridauth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'hybridauth_provider_Facebook_window_type';
-  $strongarm->value = 'popup';
+  $strongarm->value = 'current';
   $export['hybridauth_provider_Facebook_window_type'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -192,7 +192,7 @@ function btr_hybridauth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'hybridauth_provider_GitHub_window_type';
-  $strongarm->value = 'popup';
+  $strongarm->value = 'current';
   $export['hybridauth_provider_GitHub_window_type'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -234,7 +234,7 @@ function btr_hybridauth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'hybridauth_provider_Google_window_type';
-  $strongarm->value = 'popup';
+  $strongarm->value = 'current';
   $export['hybridauth_provider_Google_window_type'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -269,7 +269,7 @@ function btr_hybridauth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'hybridauth_provider_LinkedIn_window_type';
-  $strongarm->value = 'popup';
+  $strongarm->value = 'current';
   $export['hybridauth_provider_LinkedIn_window_type'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -304,7 +304,7 @@ function btr_hybridauth_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'hybridauth_provider_Twitter_window_type';
-  $strongarm->value = 'popup';
+  $strongarm->value = 'current';
   $export['hybridauth_provider_Twitter_window_type'] = $strongarm;
 
   $strongarm = new stdClass();
