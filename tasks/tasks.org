@@ -66,10 +66,12 @@
 *** DONE Test and fix the installation of a new B-Translator server.
 *** TODO Rewrite import/export scripts as drush commands.
 *** TODO Add API for import/export of PO files, for diffs, for terms, etc.
-*** TODO Export vocabulary in formats CSV, PDF, etc.
-*** TODO Use the module MetaTags.
+*** DONE Export vocabulary in formats CSV, PDF, etc.
+    Exported in json, txt, org (which can be converted to html, pdf, etc.).
+*** DONE Use the module MetaTags.
+    Implemented meta-tags programatically, without the module.
 *** TODO Build an application with EmberJS and HTML5.
-*** TODO Client module for Drupal
+*** DONE Client module for Drupal
     Make btrClient a completely separate Drupal module, which can be
     installed on any drupal site.
 *** TODO Try to use Drupal7 entities for strings, translations, etc.
@@ -93,11 +95,11 @@
     Replace one-time-login with one-time-submittion on the
     notification emails
 
-*** Upgrade the server on rackspace
-    From 512MB RAM and 20GB HDD, to 1024MB RAM and 40GB HDD.
-    Need to find some funds or sponsors, to support this.
+*** DONE Upgrade the server on rackspace
+    The server was moved to cloud.google.com, with 1.7GB RAM
+    and with almost the same price as the previous server.
 
-*** TODO POSTPONED Start with simple tests (l10n_feedback.test)
+*** TODO POSTPONED Start with simple tests
     Status: Already started, but it needs some work to define
             more tests, and actually it is not so useful,
             or important, or urgent. Probably it can become
