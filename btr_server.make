@@ -50,7 +50,7 @@ projects[subpathauto][version] = "1.3"
 ;;; User interface
 projects[context][version] = "3.2"
 projects[views][version] = "3.8"
-projects[boxes][version] = "1.1"
+projects[boxes][version] = "1.2"
 projects[edit_profile][version] = "1.0-beta2"
 
 projects[wysiwyg][version] = "2.2"
@@ -114,17 +114,8 @@ projects[btrClient][download][url] = "https://github.com/B-Translator/btrClient.
 ; HybridAuth
 ;--------------------
 
-projects[hybridauth][version] = "2.8"
-projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-Adding_support_for_DrupalOAuth2_provider.patch"
-projects[hybridauth][patch][] = "https://drupal.org/files/issues/hybridauth-2164869-2-Small_fix_on_the_previous_patch.patch"
+projects[hybridauth][version] = "2.9"
 
 libraries[hybridauth][directory_name] = "hybridauth"
-libraries[hybridauth][download][type] = "git"
-libraries[hybridauth][download][url] = "https://github.com/dashohoxha/hybridauth.git"
-
-;libraries[hybridauth][directory_name] = "hybridauth"
-;libraries[hybridauth][download][type] = "get"
-;libraries[hybridauth][download][url] = "http://sourceforge.net/projects/hybridauth/files/hybridauth-2.1.2.zip"
-;libraries[hybridauth-additional-providers][directory_name] = "hybridauth-additional-providers-1.8"
-;libraries[hybridauth-additional-providers][download][type] = "get"
-;libraries[hybridauth-additional-providers][download][url] = "http://sourceforge.net/projects/hybridauth/files/hybridauth-additional-providers-1.8.zip"
+libraries[hybridauth][download][type] = "get"
+libraries[hybridauth][download][url] = "https://github.com/hybridauth/hybridauth/archive/v2.2.1.tar.gz"
