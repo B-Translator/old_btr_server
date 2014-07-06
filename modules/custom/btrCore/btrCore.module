@@ -214,6 +214,53 @@ function btrCore_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_hybridauth_registration_form().
+ */
+function btrCore_hybridauth_registration_form($data) {
+  return !isset($data['translation_lng']);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function btrCore_form_hybridauth_additional_info_form_alter(&$form, &$form_state, $form_id) {
+  // Get a list of available languages.
+  $languages = btr_get_languages();
+  foreach ($languages as $code => $lang) {
+    $lang_options[$code] = $lang['name'];
+  }
+
+  // Field translation_lng.
+  $form['fset']['translation_lng'] = array(
+    '#type' => 'select',
+    '#title' => t('Translation Language'),
+    '#description' => t('The language of translations. You will help with the translations of this language (review existing translations or submit new ones).'),
+    '#options' => $lang_options,
+  );
+
+  // $form['#validate'][] = 'btrCore_form_hybridauth_additional_info_form_validate';
+  array_unshift($form['#submit'], 'btrCore_form_hybridauth_additional_info_form_submit');
+}
+
+/*function btrCore_form_hybridauth_additional_info_form_validate($form, &$form_state) {
+}*/
+
+function btrCore_form_hybridauth_additional_info_form_submit($form, &$form_state) {
+  if (isset($form_state['values']['translation_lng'])) {
+    $form_state['values']['data']['translation_lng'] = $form_state['values']['translation_lng'];
+  }
+}
+
+/**
+ * Implements hook_hybridauth_userinfo_alter().
+ */
+function btrCore_hybridauth_userinfo_alter(&$userinfo, $data) {
+  if (array_key_exists('translation_lng', $data)) {
+    $userinfo['translation_lng'] = $data['translation_lng'];
+  }
+}
+
+/**
  * Include functions for debug.
  */
 //require_once(dirname(__FILE__) . '/btrCore.debug.inc');
