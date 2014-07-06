@@ -44,7 +44,7 @@ a2dissite 000-default
 a2ensite bcl bcl-ssl btr btr-ssl
 a2enmod headers rewrite
 ln -sf /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
-a2enconf api-docs api-examples downloads phpmyadmin
+a2enconf api-examples downloads phpmyadmin
 
 sed -i /etc/php5/apache2/php.ini \
     -e '/^\[PHP\]/ a apc.rfc1867 = 1' \
@@ -96,6 +96,5 @@ update-locale
 dev_scripts=$drupal_dir/profiles/btr_server/dev
 $dev_scripts/apache2.sh start
 
-### link to api-examples and api-docs
+### link to api-examples
 ln -s /var/www/btr_dev/profiles/btr_server/modules/custom/btrServices/examples/ /var/www/api-examples
-ln -s /var/www/btr_dev/profiles/btr_server/modules/custom/btrServices/docs/ /var/www/api-docs
