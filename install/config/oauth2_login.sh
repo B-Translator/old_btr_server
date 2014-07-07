@@ -27,5 +27,17 @@ drush --yes @bcl php-script --script-path=$bcl oauth2_login.php  \
     "$server_url" "$client_id" "$client_secret" "$skip_ssl"
 drush @bcl cc all
 
+### install on the server a loopback client
+server_url=https://$btrserver
+client_id='loopback'
+client_secret=$(mcookie)
+redirect_url=https://$btrserver/oauth2/authorized
+skip_ssl=1
+drush --yes @btr php-script --script-path=$btr register_oauth2_client.php  \
+    "$client_id" "$client_secret" "$redirect_url"
+drush --yes @btr php-script --script-path=$btr oauth2_login.php  \
+    "$server_url" "$client_id" "$client_secret" "$skip_ssl"
+drush @bcl cc all
+
 ### drush may create css/js files with wrong(root) permissions
 rm -rf /var/www/{btr,bcl}/sites/default/files/*
