@@ -25,7 +25,7 @@ if (isset($clients['oauth2_server_client'])) {
 // Register a client on the oauth2 server.
 $client = entity_create('oauth2_server_client', array());
 $client->server = 'oauth2';
-$client->label = 'OAuth2 Login for local client';
+$client->label = $client_key;
 $client->client_key = $client_key;
 $client->client_secret = $client_secret;
 $client->redirect_uri = $redirect_uri;

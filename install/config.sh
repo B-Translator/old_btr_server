@@ -41,4 +41,5 @@ $btr/../dev/make-dev-clone.sh
 $bcl/../dev/make-dev-clone.sh
 $btr/config/oauth2_login.sh @bcl_dev @btr_dev
 
+### stop mysql
 $btr/config/mysqld.sh stop

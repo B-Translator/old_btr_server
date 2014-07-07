@@ -7,3 +7,6 @@
 ### the internal test database can be used instead for translations
 sed -i /var/www/btr_dev/sites/default/settings.php \
     -e '/$databases..btr_db/,+8 s#^/*#//#'
+
+### add a test user
+drush @btr_dev user-create user1 --password=user1 --mail='user1@example.org'
