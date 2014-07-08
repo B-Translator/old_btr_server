@@ -38,6 +38,9 @@ mysql_passwd_bcl='random'
 mysql_passwd_btr='random'
 mysql_passwd_btr_data='random'
 
+### Install also extra things that are useful for development.
+development='true'
+
 ### A reboot is needed after installation/configuration.
 ### If you want to do it automatically, set it to 'true'.
 reboot='false'

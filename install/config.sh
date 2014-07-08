@@ -37,9 +37,12 @@ $btr/config/oauth2_login.sh @bcl @btr
 rm -rf /var/www/{btr,bcl}*/sites/default/files/*
 
 ### make clones btr_dev and bcl_dev
-$btr/../dev/make-dev-clone.sh
-$bcl/../dev/make-dev-clone.sh
-$btr/config/oauth2_login.sh @bcl_dev @btr_dev
+if [ "$development" = 'true' ]
+then
+    $btr/../dev/make-dev-clone.sh
+    $bcl/../dev/make-dev-clone.sh
+    $btr/config/oauth2_login.sh @bcl_dev @btr_dev
+fi
 
 ### stop mysql
 $btr/config/mysqld.sh stop

@@ -19,6 +19,12 @@ libraries[bootstrap][download][type] = "get"
 libraries[bootstrap][download][url] = "https://github.com/twbs/bootstrap/archive/v3.0.0.zip"
 
 ;--------------------
+; Custom
+;--------------------
+
+projects[btrclient][version] = "1.x-dev"
+
+;--------------------
 ; Web Services
 ;--------------------
 
@@ -99,16 +105,6 @@ projects[phpmailer][download][branch] = "7.x-3.x"
 libraries[phpmailer][directory_name] = "phpmailer"
 libraries[phpmailer][download][type] = "get"
 libraries[phpmailer][download][url] = "https://github.com/PHPMailer/PHPMailer/archive/v5.2.6.zip"
-
-;--------------------
-; Custom
-;--------------------
-
-projects[btrClient][type] = "module"
-projects[btrClient][subdir] = "custom"
-projects[btrClient][download][type] = "git"
-projects[btrClient][download][url] = "https://github.com/B-Translator/btrClient.git"
-;projects[btrClient][download][branch] = "7.x-1.x"
 
 ;--------------------
 ; HybridAuth

@@ -80,7 +80,13 @@ cp -a btr_server-bak/modules/contrib/ btr_server/modules/
 cp -a btr_server-bak/themes/contrib/ btr_server/themes/
 ### copy db connection file
 cp {btr_server-bak,btr_server}/modules/custom/btrCore/data/db/settings.php
-### get a clone of btrClient from github
-git clone https://github.com/B-Translator/btrClient btr_server/modules/custom/btrClient
 ### cleanup
 rm -rf btr_server-bak/
+
+### get a clone of btrClient from github
+if [ "$development" = 'true' ]
+then
+    rm -rf btr_server/modules/contrib/btrclient
+    git clone https://github.com/B-Translator/btrClient.git \
+              btr_server/modules/custom/btrClient
+fi
