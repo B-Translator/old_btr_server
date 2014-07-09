@@ -21,6 +21,7 @@ dependencies[] = block
 dependencies[] = aggregator
 dependencies[] = dashboard
 dependencies[] = filter
+dependencies[] = image
 dependencies[] = locale
 dependencies[] = node
 dependencies[] = system

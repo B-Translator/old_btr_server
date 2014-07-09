@@ -22,6 +22,7 @@ function btr_server_install_tasks($install_state) {
   drupal_add_css(drupal_get_path('profile', 'btr_server') . '/btr_server.css');
 
   module_load_include('inc', 'phpmailer', 'phpmailer.admin');
+  module_load_include('inc', 'btrCore', 'includes/languages');
   module_load_include('inc', 'btrCore', 'btrCore.admin');
 
   $tasks = array(
