@@ -32,10 +32,6 @@ $btr/config/drupalpass.sh
 ### configurations for oauth2 login
 $btr/config/oauth2_login.sh @bcl @btr
 
-### drush may create some css/js files with wrong permissions
-### clean them up
-rm -rf /var/www/{btr,bcl}*/sites/default/files/*
-
 ### make clones btr_dev and bcl_dev
 if [ "$development" = 'true' ]
 then
@@ -43,6 +39,9 @@ then
     $bcl/../dev/make-dev-clone.sh
     $btr/config/oauth2_login.sh @bcl_dev @btr_dev
 fi
+
+### drush may create some css/js files with wrong permissions
+chown www-data: -R /var/www/{btr,bcl}*/sites/default/files
 
 ### stop mysql
 $btr/config/mysqld.sh stop

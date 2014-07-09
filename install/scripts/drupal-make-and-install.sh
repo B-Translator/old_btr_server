@@ -13,8 +13,38 @@ rm -rf $drupal_dir
 drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btr_server \
            $makefile $drupal_dir
-cp -a $drupal_dir/profiles/btr_server/{libraries/bootstrap,themes/contrib/bootstrap/}
-cp $drupal_dir/profiles/btr_server/libraries/hybridauth/{additional-providers/hybridauth-github/Providers/GitHub.php,hybridauth/Hybrid/Providers/}
+
+### fix some things on the application directory
+cd $drupal_dir/profiles/btr_server/
+cp -a libraries/bootstrap themes/contrib/bootstrap/
+cd $drupal_dir/profiles/btr_server/libraries/hybridauth/
+cp additional-providers/hybridauth-github/Providers/GitHub.php \
+   hybridauth/Hybrid/Providers/
+
+### replace the profile btr_server with a version
+### that is a git clone, so that any updates
+### can be retrieved easily (without having to
+### reinstall the whole application).
+cd $drupal_dir/profiles/
+mv btr_server btr_server-bak
+cp -a $code_dir/btr_server .
+### copy contrib libraries and modules
+cp -a btr_server-bak/libraries/ btr_server/
+cp -a btr_server-bak/modules/contrib/ btr_server/modules/
+cp -a btr_server-bak/themes/contrib/ btr_server/themes/
+### copy db connection file
+cp {btr_server-bak,btr_server}/modules/custom/btrCore/data/db/settings.php
+### cleanup
+rm -rf btr_server-bak/
+
+### get a clone of btrclient from github
+if [ "$development" = 'true' ]
+then
+    cd $drupal_dir/profiles/btr_server/modules/contrib/btrclient
+    git clone https://github.com/B-Translator/btrclient.git
+    cp -a btrclient/.git .
+    rm -rf btrclient/
+fi
 
 ### create the directory of PO files
 mkdir -p /var/www/PO_files
@@ -66,27 +96,3 @@ mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
-
-### replace the profile btr_server with a version
-### that is a git clone, so that any updates
-### can be retrieved easily (without having to
-### reinstall the whole application).
-cd $drupal_dir/profiles/
-mv btr_server btr_server-bak
-cp -a $code_dir/btr_server .
-### copy contrib libraries and modules
-cp -a btr_server-bak/libraries/ btr_server/
-cp -a btr_server-bak/modules/contrib/ btr_server/modules/
-cp -a btr_server-bak/themes/contrib/ btr_server/themes/
-### copy db connection file
-cp {btr_server-bak,btr_server}/modules/custom/btrCore/data/db/settings.php
-### cleanup
-rm -rf btr_server-bak/
-
-### get a clone of btrClient from github
-if [ "$development" = 'true' ]
-then
-    rm -rf btr_server/modules/contrib/btrclient
-    git clone https://github.com/B-Translator/btrClient.git \
-              btr_server/modules/custom/btrClient
-fi
