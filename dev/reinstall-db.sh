@@ -52,6 +52,12 @@ drush site-install --verbose --yes btr_server \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
+### install btrClient
+drush --yes pm-enable btrClient
+drush --yes pm-enable bcl_service_links
+#drush --yes pm-enable bcl_disqus
+#drush --yes features-revert bcl_disqus
+
 ### install features
 drush --yes pm-enable btr_btrServices
 drush --yes features-revert btr_btrServices
@@ -73,12 +79,6 @@ drush --yes features-revert btr_captcha
 
 drush --yes pm-enable btr_permissions
 drush --yes features-revert btr_permissions
-
-### install btrClient
-drush --yes pm-enable btrClient
-drush --yes pm-enable bcl_service_links
-#drush --yes pm-enable bcl_disqus
-#drush --yes features-revert bcl_disqus
 
 ### add languages
 drush --yes pm-enable l10n_update
