@@ -17,3 +17,19 @@ function btrServices_services_resources() {
   $resources['project'] = _btrServices_project();
   return $resources;
 }
+
+/**
+ * Implements hook_boot().
+ */
+function btrServices_boot() {
+  if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") {
+    //header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: POST, GET');
+    header('Access-Control-Allow-Headers: Authorization');
+    header('Access-Control-Max-Age: 1728000');
+    header("Content-Length: 0");
+    header("Content-Type: text/plain");
+    exit(0);
+  }
+}
