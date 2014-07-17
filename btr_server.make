@@ -62,7 +62,7 @@ libraries[tinymce][download][type] = get
 libraries[tinymce][download][url] = http://github.com/downloads/tinymce/tinymce/tinymce_3.5.7.zip
 
 ;;; Security
-projects[captcha] = 1.0
+projects[captcha] = 1.1
 projects[recaptcha] = 1.11
 projects[honeypot] = 1.17
 projects[user_restrictions] = 1.0
