@@ -111,7 +111,6 @@ function btrCore_menu() {
     'title'           => 'Project autocomplete',
     'page callback'   => 'btrCore_project_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
-    //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
   );
 
@@ -121,7 +120,6 @@ function btrCore_menu() {
     'title'           => 'Origin autocomplete',
     'page callback'   => 'btrCore_origin_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
-    //'access arguments' => array('access localization community'),
     'access callback' => TRUE,
   );
 
@@ -131,7 +129,15 @@ function btrCore_menu() {
     'title'           => 'User autocomplete',
     'page callback'   => 'btrCore_user_autocomplete',
     'file'            => 'includes/ajax_callbacks.inc',
-    //'access arguments' => array('access localization community'),
+    'access callback' => TRUE,
+  );
+
+  // Autocomplete callback for strings.
+  $items['translations/autocomplete/string'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'String autocomplete',
+    'page callback'   => 'btrCore_string_autocomplete',
+    'file'            => 'includes/ajax_callbacks.inc',
     'access callback' => TRUE,
   );
 
@@ -141,7 +147,6 @@ function btrCore_menu() {
     'title'           => 'Latest Translation Feedback',
     'page callback'   => 'btrCore_latest',
     'file'            => 'includes/latest.inc',
-    //'access arguments' => array('access content'),
     'access callback' => TRUE,
   );
 

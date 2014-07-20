@@ -67,7 +67,6 @@ function btrCore_user_autocomplete($lng, $string = '') {
   exit();
 }
 
-
 /**
  * Return string context, a list of related projects (where the string appears), etc.
  * This callback is invoked from JavaScript and is used as an AJAX provider.
@@ -105,4 +104,48 @@ function btrCore_string_details($sguid) {
 
   print $output;
   exit(0);
+}
+
+/**
+ * Retrieve a JSON list of autocomplete suggestions for strings.
+ */
+function btrCore_string_autocomplete($string = '', $project = NULL, $origin = NULL) {
+  if (!$string) {
+    print drupal_json_encode(array());
+    exit();
+  }
+
+  // Get the query arguments and the condition for joining with project.
+  $query_args = array(':string' => $string . '%');
+  $project_join_condition = 'p.pguid = t.pguid';
+  if ($project) {
+    $query_args[':project'] = $project;
+    $project_join_condition .= ' AND p.project = :project';
+  }
+  if ($origin) {
+    $query_args[':origin'] = $origin;
+    $project_join_condition .= ' AND p.origin = :origin';
+  }
+
+  // Build the query.
+  $query = "SELECT DISTINCT s.string FROM {btr_strings} s ";
+  if ($origin or $project) {
+    $query .= "JOIN {btr_locations} l ON (l.sguid = s.sguid)
+               JOIN {btr_templates} t ON (t.potid = l.potid)
+               JOIN {btr_projects}  p ON ($project_join_condition) ";
+  }
+  $query .= "WHERE s.string LIKE :string
+             ORDER BY s.string ASC";
+
+  // Run the query and get the results.
+  $db = $GLOBALS['btr_db'];
+  $result = $db->queryRange($query, 0, 10, $query_args);
+  $matches = array();
+  foreach ($result as $str) {
+    $matches[$str->string] = check_plain($str->string);
+  }
+
+  // Return the matches.
+  print drupal_json_encode($matches);
+  exit();
 }
