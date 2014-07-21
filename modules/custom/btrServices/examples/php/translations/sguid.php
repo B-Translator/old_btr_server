@@ -52,3 +52,15 @@ $options = array(
   ),
 );
 $result = http_request($url, $options);
+
+$options = array(
+  'method' => 'POST',
+  'data' => array(
+    'target' => 'next',
+    'scope' => 'vocabulary/ICT_sq',
+  ),
+  'headers' => array(
+    'Content-type' => 'application/x-www-form-urlencoded',
+  ),
+);
+$result = http_request($url, $options);

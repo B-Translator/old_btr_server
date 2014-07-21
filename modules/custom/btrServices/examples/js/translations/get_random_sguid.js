@@ -25,3 +25,9 @@ settings.data = {
     last_sguid: 'c7ac448a01c566680d8ffb00430a55ffc779f24b',
 };
 http_request(url, settings);
+
+settings.data = {
+    target: 'next',
+    scope: 'vocabulary/ICT_sq',
+};
+http_request(url, settings);

@@ -364,8 +364,12 @@ function _btrServices_translations_search($params) {
  *   - lng
  *       Code of the language (required for translated and untranslated)
  *   - last_sguid (optional)
- *       If provided, restricts the pool of selection the project(s)
+ *       If provided, restricts the pool of selection to the project(s)
  *       of the last reviewed sguid.
+ *   - scope (optional)
+ *       If provided, restricts the pool of selection to the given
+ *       list of project. It is a space separated list of origin/project
+ *       like this: 'origin1/project1 origin2 origin1/project2'
  *
  * @return
  *   Associative array containing:
@@ -377,6 +381,14 @@ function _btrServices_translations_get_random_sguid($params) {
   $projects = NULL;
   if (isset($params['last_sguid'])) {
     $projects = btr_get_projects_of_sguid($params['last_sguid']);
+  }
+  if (isset($params['scope'])) {
+    $projects = array();
+    $scope = preg_replace('/\s+/', ' ', trim($params['scope']));
+    $arr = explode(' ', $scope);
+    foreach ($arr as $proj) {
+      $projects[] = $proj;
+    }
   }
   $target = $params['target'];
   $lng = $params['lng'];
