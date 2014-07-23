@@ -109,27 +109,31 @@ function btrCore_string_details($sguid) {
 /**
  * Retrieve a JSON list of autocomplete suggestions for strings.
  */
-function btrCore_string_autocomplete($string = '', $project = NULL, $origin = NULL) {
-  if (!$string) {
+function btrCore_string_autocomplete($origin = '*', $project = '*', $string = '') {
+  $string = trim($string);
+  if (empty($string)) {
     print drupal_json_encode(array());
     exit();
   }
 
+  $origin = empty($origin) ? '*' : $origin;
+  $project = empty($project) ? '*' : $project;
+
   // Get the query arguments and the condition for joining with project.
   $query_args = array(':string' => $string . '%');
   $project_join_condition = 'p.pguid = t.pguid';
-  if ($project) {
+  if ($project != '*') {
     $query_args[':project'] = $project;
     $project_join_condition .= ' AND p.project = :project';
   }
-  if ($origin) {
+  if ($origin != '*') {
     $query_args[':origin'] = $origin;
     $project_join_condition .= ' AND p.origin = :origin';
   }
 
   // Build the query.
   $query = "SELECT DISTINCT s.string FROM {btr_strings} s ";
-  if ($origin or $project) {
+  if ($origin != '*' or $project != '*') {
     $query .= "JOIN {btr_locations} l ON (l.sguid = s.sguid)
                JOIN {btr_templates} t ON (t.potid = l.potid)
                JOIN {btr_projects}  p ON ($project_join_condition) ";
