@@ -74,10 +74,12 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   switch ($format) {
     default:
     case 'JSON':
+      header('Content-Type: application/json; charset=utf-8');
       $output = drupal_json_encode($result);
       break;
 
     case 'TXT1':
+      header('Content-Type: text/plain; charset=utf-8');
       $output = "Vocabulary: $vocabulary\n\n";
       foreach ($result as $string => $translations) {
         $output .= $string . ' <==> ' . implode(' / ', $translations) . "\n";
@@ -85,6 +87,7 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
       break;
 
     case 'TXT2':
+      header('Content-Type: text/plain; charset=utf-8');
       $output = "Vocabulary: $vocabulary\n\n";
       foreach ($result as $string => $translations) {
         $output .= '  + ' . $string . "\n";
@@ -96,6 +99,7 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
       break;
 
     case 'ORG':
+      header('Content-Type: text/plain; charset=utf-8');
       $output = "* Vocabulary: $vocabulary\n\n";
       foreach ($result as $string => $translations) {
         $output .= '  | *' . $string . '* | -- | ';
@@ -106,9 +110,7 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   }
 
   // Send the content.
-  print '<xmp>';
   print $output;
-  print '</xmp>';
 
   // Stop execution.
   lock_release('export_project');
