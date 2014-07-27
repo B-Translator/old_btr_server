@@ -7,6 +7,8 @@ cat <<EOF >> $drupal_dir/robots.txt
 # B-Translator
 Disallow: /translations/
 Disallow: /?q=translations/
+Disallow: /vocabulary/
+Disallow: /?q=vocabulary/
 Disallow: /fb_cb/
 Disallow: /?q=fb_cb/
 Disallow: /downloads/
