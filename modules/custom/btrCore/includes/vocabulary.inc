@@ -74,20 +74,26 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   switch ($format) {
     default:
     case 'JSON':
-      header('Content-Type: application/json; charset=utf-8');
       $output = drupal_json_encode($result);
+      header('Content-Type: application/json; charset=utf-8');
+      print $output;
       break;
 
     case 'TXT1':
-      header('Content-Type: text/plain; charset=utf-8');
       $output = "Vocabulary: $vocabulary\n\n";
       foreach ($result as $string => $translations) {
         $output .= $string . ' <==> ' . implode(' / ', $translations) . "\n";
       }
+
+      // Send the output.
+      header('Content-Type: text/plain; charset=utf-8');
+      header('Content-Disposition: attachment; filename="vocabulary-' . $vocabulary . '.txt"');
+      header('Content-Transfer-Encoding: binary');
+      header("Content-Length: " . sizeof($output));
+      print $output;
       break;
 
     case 'TXT2':
-      header('Content-Type: text/plain; charset=utf-8');
       $output = "Vocabulary: $vocabulary\n\n";
       foreach ($result as $string => $translations) {
         $output .= '  + ' . $string . "\n";
@@ -96,16 +102,29 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
         }
         $output .= "\n";
       }
+
+      // Send the output.
+      header('Content-Type: text/plain; charset=utf-8');
+      header('Content-Disposition: attachment; filename="vocabulary-' . $vocabulary . '.txt"');
+      header('Content-Transfer-Encoding: binary');
+      header("Content-Length: " . sizeof($output));
+      print $output;
       break;
 
     case 'ORG':
-      header('Content-Type: text/plain; charset=utf-8');
       $output = "* Vocabulary: $vocabulary\n\n";
       foreach ($result as $string => $translations) {
         $output .= '  | *' . $string . '* | -- | ';
         $output .= implode('; ', $translations);
         $output .= " |\n";
       }
+
+      // Send the output.
+      header('Content-Type: text/plain; charset=utf-8');
+      header('Content-Disposition: attachment; filename="vocabulary-' . $vocabulary . '.org"');
+      header('Content-Transfer-Encoding: binary');
+      header("Content-Length: " . sizeof($output));
+      print $output;
       break;
   }
 
