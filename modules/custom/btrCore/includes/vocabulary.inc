@@ -128,9 +128,6 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
       break;
   }
 
-  // Send the content.
-  print $output;
-
   // Stop execution.
   lock_release('export_project');
   drupal_exit();
