@@ -49,5 +49,4 @@ drush --yes @local_btr php-script $(dirname $0)/gmailsmtp.php  \
     "$gmail_account" "$gmail_passwd"
 
 ### drush may create css/js files with wrong(root) permissions
-rm -rf /var/www/btr/sites/default/files/css/
-rm -rf /var/www/btr/sites/default/files/js/
+chown www-data: -R /var/www/btr*/sites/default/files/{css,js}
