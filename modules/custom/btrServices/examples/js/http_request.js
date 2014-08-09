@@ -28,6 +28,7 @@ var http_request = function(url, settings) {
     });
     request.fail(function(jqXHR, textStatus, errorThrown) {
         debug("\n===> ERROR " + jqXHR.status + ': ' + errorThrown);
+	console.log(errorThrown);
     });
     request.always(function(){
         debug("\n------------ end http_request -----------------\n");

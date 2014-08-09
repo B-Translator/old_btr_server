@@ -2,7 +2,8 @@
 /**
  * Base URL of the server that offers the services.
  */
-var base_url = 'https://dev.btranslator.org';
+//var base_url = 'https://dev.btranslator.org';
+var base_url = 'https://dev.btr.example.org';
 
 /**
  * Settings for getting an OAuth2 access_token with

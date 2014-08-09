@@ -1,12 +1,9 @@
 #!/bin/bash -x
 
-### set the right version to the make file
+### make sure that we have the right git branch on the make file
 makefile="$code_dir/btr_server/build-btrserver.make"
-sed -i $makefile -e '/^; version to be used/,$ d'
-cat <<EOF >> $makefile
-; version to be used
-projects[btr_server][download][branch] = '$btr_git_branch'
-EOF
+sed -i $makefile \
+    -e "/btr_server..download..branch/ c projects[btr_server][download][branch] = $btr_git_branch"
 
 ### retrieve all the projects/modules and build the application directory
 rm -rf $drupal_dir
