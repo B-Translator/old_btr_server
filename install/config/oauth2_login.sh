@@ -53,4 +53,4 @@ drush --yes $btr_alias \
 drush $btr_alias cc all
 
 ### drush may create css/js files with wrong(root) permissions
-rm -rf /var/www/{btr,bcl}/sites/default/files/*
+chown www-data: -R /var/www/{btr,bcl}*/sites/default/files/{css,js}
