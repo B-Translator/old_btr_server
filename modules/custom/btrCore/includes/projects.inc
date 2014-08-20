@@ -1,67 +1,8 @@
 <?php
 /**
  * @file
- * Functions for listing and exporting projects.
+ * Functions for exporting projects.
  */
-
-/**
- * Return a list of all the imported projects, filtered by
- * origin/project.
- *
- * Variables $origin and $project can contain '*', which
- * is replaced by '%' (for LIKE matches).
- *
- * If $project=='-' then only a list of 'origin' is outputed,
- * otherwise a list of 'origin/project'.
- */
-function btr_project_list($origin =NULL, $project =NULL) {
-
-  // Get and sanitize the parameters.
-  if (!empty($origin)) {
-    $origin = str_replace('*', '%', $origin);
-    $origin = check_plain($origin);
-  }
-  if (!empty($project) && $project != '-') {
-    $project = str_replace('*', '%', $project);
-    $project = check_plain($project);
-  }
-
-  // Start building the query.
-  $query = btr_select('btr_projects', 'p')
-    ->fields('p', array('origin'))
-    ->orderBy('origin');
-
-  if ($project == '-') {
-    $query->distinct();
-  }
-  else {
-    $query->fields('p', array('project'))
-      ->orderBy('project');
-  }
-
-  // Build the condition of the query.
-  if (!empty($origin)) {
-    $query->condition('origin', $origin, 'LIKE');
-  }
-  if (!empty($project) && $project != '-') {
-    $query->condition('project', $project, 'LIKE');
-  }
-
-  // Execute the query and get the results.
-  $results = $query->execute()->fetchAll();
-
-  // Build the list of projects as an array.
-  $list = array();
-  foreach ($results as $record) {
-    $item = $record->origin;
-    if ($project != '-') {
-      $item .= '/' . $record->project;
-    }
-    $list[] = $item;
-  }
-
-  return $list;
-}
 
 /**
  * Schedule a project for export. When the request

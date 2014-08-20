@@ -95,8 +95,25 @@ function _btrServices_project() {
  */
 function _btrServices_project_list($params) {
   $params += array('origin' => NULL, 'project' => NULL);
-  $result = btr_project_list($params['origin'], $params['project']);
-  drupal_json_output($result);
+
+  // Get and sanitize the parameters.
+  $origin = $params['origin'];
+  $project = $params['project'];
+  if (!empty($origin)) {
+    $origin = str_replace('*', '%', $origin);
+    $origin = check_plain($origin);
+  }
+  if (!empty($project) && $project != '-') {
+    $project = str_replace('*', '%', $project);
+    $project = check_plain($project);
+  }
+
+  // Get the project list.
+  module_load_include('inc', 'btrCore', 'data/lib/project/list');
+  $project_list = BTranslator\Data\Project\project_list($origin, $project);
+
+  // Output it as json.
+  drupal_json_output($project_list);
   drupal_exit();
 }
 

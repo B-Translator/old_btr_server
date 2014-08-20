@@ -21,17 +21,29 @@ module_load_include('inc', 'btrCore', 'includes/projects');
  * The third variable can be JSON or TEXT (default).
  */
 function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
-  $result = btr_project_list($origin, $project);
+  // Get and sanitize the parameters.
+  if (!empty($origin)) {
+    $origin = str_replace('*', '%', $origin);
+    $origin = check_plain($origin);
+  }
+  if (!empty($project) && $project != '-') {
+    $project = str_replace('*', '%', $project);
+    $project = check_plain($project);
+  }
+
+  // Get the project list.
+  module_load_include('inc', 'btrCore', 'data/lib/project/list');
+  $project_list = BTranslator\Data\Project\project_list($origin, $project);
 
   // Output the result.
   if (strtoupper($format) == 'JSON') {
-    drupal_json_output($result);
+    drupal_json_output($project_list);
   }
   elseif (strtoupper($format) == 'TXT') {
-    print "<xmp>" . implode("\n", $result) . "</xmp>";
+    print "<xmp>" . implode("\n", $project_list) . "</xmp>";
   }
   else {  //TEXT
-    print implode("\n", $result);
+    print implode("\n", $project_list);
   }
 
   drupal_exit();
