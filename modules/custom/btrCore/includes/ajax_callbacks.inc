@@ -86,7 +86,7 @@ function btrCore_string_details($sguid) {
   // List projects where this string is used.
   $output .= '<h3>' . t('Used on these projects:') . '</h3>';
   $sql = "
-    SELECT CONCAT(p.origin, ' / ', p.project) AS proj
+    SELECT DISTINCT CONCAT(p.origin, ' / ', p.project) AS proj
     FROM {btr_strings} s
     RIGHT JOIN {btr_locations} l ON (l.sguid = s.sguid)
     RIGHT JOIN {btr_templates} t ON (t.potid = l.potid)
