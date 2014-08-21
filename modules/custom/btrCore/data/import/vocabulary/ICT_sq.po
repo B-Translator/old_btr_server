@@ -11,9 +11,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: sq\n"
 
+msgctxt "vocabulary"
 msgid "Vocabulary"
 msgstr "Fjalorth"
 
+msgctxt "vocabulary"
 msgid "cookie"
 msgstr "gjurmues"
 
