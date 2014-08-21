@@ -239,7 +239,9 @@ function btrCore_import_project($params) {
   // Get the parameters.
   $account = user_load($params->uid);
   $file = file_load($params->fid);
+  $origin = $params->origin;
   $project = $params->project;
+  $lng = $account->translation_lng;
 
   // Create a temporary directory.
   $tmpdir = '/tmp/' . sha1_file($file->uri);
@@ -249,33 +251,32 @@ function btrCore_import_project($params) {
   file_unmanaged_copy($file->uri, $tmpdir);
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
-  // Get a list of all POT files on the temp dir.
-  $files = file_scan_directory($tmpdir, '/.*\.pot$/');
-  if (empty($files)) {
-    // If there are no POT files, search for PO files instead.
-    $files = file_scan_directory($tmpdir, '/.*\.po$/');
-  }
+  // Import the project.
+  module_load_include('inc', 'btrCore', 'data/lib/project/import_pot');
+  BTranslator\Data\Project\import($origin, $project, $tmpdir);
 
-  // Import the template files.
-  foreach ($files as $uri => $f) {
-    btr_import_translations($uri, $lng, $account->uid);
-  }
+  // If there are any PO files, import translations from them.
+  module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
+  BTranslator\Data\Project\import_po_files($origin, $project, $lng, $tmpdir);
+
+  // Get the base_url of the site.
+  module_load_include('inc', 'btrCore', 'includes/sites');
+  $base_url = btr_get_base_url($lng);
 
   // Notify the user that the project import is done.
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
+
   $params = array(
     'type' => 'notify-that-project-import-is-done',
     'uid' => $account->uid,
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
-    'project' => $project,
-    'search_url' => url('translations/search', array(
-                    'absolute' => TRUE,
-                    'https' => TRUE,
+    'project' => $origin . '/' . $project,
+    'search_url' => $base_url . url('translations/search', array(
                     'query' => array(
-                      'lng' => $account->translation_lng,
-                      'origin' => 'custom',
+                      'lng' => $lng,
+                      'origin' => $origin,
                       'project' => $project,
                       'limit' => 50,
                     )

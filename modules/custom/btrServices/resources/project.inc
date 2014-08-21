@@ -270,14 +270,15 @@ function _btrServices_project_import($params) {
     return services_error('No file uploaded.', 406);
   }
   $uploaded_file = $_FILES['file'];
+  $origin = check_plain($params['origin']);
   $project = check_plain($params['project']);
 
   // Check that the given project does not belong to another user.
   $query = "SELECT uid FROM {btr_projects} WHERE pguid = :pguid";
-  $args = array(':pguid' => sha1('custom' . $project));
+  $args = array(':pguid' => sha1($origin . $project));
   $uid = btr_query($query, $args)->fetchField();
   if ($uid && ($uid != $GLOBALS['user']->uid)) {
-    $msg = t("There is already a project '!project' created by another user! Please choose another project name.", array('!project' => $project));
+    $msg = t("There is already a project '!project' created by another user! Please choose another project name.", array('!project' => "$origin/$project"));
     return array('messages' => array(array($msg, 'error')));
   }
 
@@ -328,6 +329,7 @@ function _btrServices_project_import($params) {
   $queue_params = array(
     'uid' => $GLOBALS['user']->uid,
     'fid' => $file->fid,
+    'origin' => $origin,
     'project' => $project,
   );
   btr_queue('import_project', array($queue_params));
@@ -345,6 +347,6 @@ function _btrServices_project_import($params) {
 
   // Return a notification message.
   $msg = t("Import of the project '!project' is scheduled. You will be notified by email when it is done.",
-         array('!project' => 'custom/' . $project));
+         array('!project' => $origin . '/' . $project));
   return array('messages' => array(array($msg, 'status')));
 }
