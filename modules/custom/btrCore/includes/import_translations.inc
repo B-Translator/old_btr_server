@@ -31,9 +31,15 @@
  *   'status', 'warning', 'error'.
  */
 function btr_import_translations($pofile, $lng, $uid) {
+  // Switch to the user that has uploaded the file.
+  global $user;
+  $original_user = $user;
+  $old_state = drupal_save_session();
+  drupal_save_session(FALSE);
+  $user = user_load($uid);
+
   // Get the mail of the user.
-  $account = user_load($uid);
-  $umail = $account->init;
+  $umail = $user->init;
 
   // Parse the given PO file.
   $data_path = drupal_get_path('module', 'btrCore') . '/data';
@@ -54,6 +60,10 @@ function btr_import_translations($pofile, $lng, $uid) {
     // Add the translation for this string.
     _btr_import_add_translation($sguid, $lng, $translation, $umail);
   }
+
+  // Switch back to the original user.
+  $user = $original_user;
+  drupal_save_session($old_state);
 }
 
 /**
@@ -94,7 +104,7 @@ function _btr_import_get_sguid($entry, $uid) {
       ':context' => $context,
       ':sguid' => $sguid,
       ':uid' => $uid,
-      ':time' => REQUEST_TIME,
+      ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ':count' => 1,
     );
     btr_query($query, $params);
@@ -130,7 +140,7 @@ function _btr_import_add_translation($sguid, $lng, $translation, $umail) {
                   WHERE tguid = :tguid';
       $args = array(
         ':umail' => $umail,
-        ':time' => REQUEST_TIME,
+        ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
         ':tguid' => $tguid,
       );
       btr_query($query, $args);
