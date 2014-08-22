@@ -27,9 +27,19 @@ module_load_include('inc', 'btrCore', 'data/lib/query');
  *
  * @param $path
  *   The directory where the translation (PO) files are located.
+ *
+ * @param $uid
+ *   ID of the user that has requested the import.
  */
-function import_po_files($origin, $project, $lng, $path) {
-  $errors = array();
+function import_po_files($origin, $project, $lng, $path, $uid = 0) {
+  // Switch to the given user.
+  global $user;
+  $original_user = $user;
+  $old_state = drupal_save_session();
+  drupal_save_session(FALSE);
+  $user = user_load($uid);
+
+  // Calculate the project ID.
   $pguid = sha1($origin . $project);
 
   // Check that the project exists.
@@ -44,6 +54,7 @@ function import_po_files($origin, $project, $lng, $path) {
   $files = file_scan_directory($path, '/.*\.po$/');
 
   // Process each PO file.
+  $errors = array();
   foreach ($files as $file) {
     // Get the filename relative to the path, and the name of the template.
     $filename = preg_replace("#^$path/#", '', $file->uri);
@@ -65,6 +76,10 @@ function import_po_files($origin, $project, $lng, $path) {
     // Process this PO file.
     _process_po_file($potid, $tplname, $lng, $file->uri, $filename);
   }
+
+  // Switch back to the original user.
+  $user = $original_user;
+  drupal_save_session($old_state);
 
   return $errors;
 }

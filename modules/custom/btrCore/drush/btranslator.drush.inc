@@ -171,8 +171,9 @@ function drush_btranslator_btr_project_list() {
  * Command callback for btr-project-import-templates.
  */
 function drush_btranslator_btr_project_import_templates($origin, $project, $path) {
+  global $user;
   module_load_include('inc', 'btrCore', 'data/lib/project/import_pot');
-  BTranslator\Data\Project\import($origin, $project, $path);
+  BTranslator\Data\Project\import($origin, $project, $path, $user->uid);
 }
 
 /**
@@ -181,7 +182,7 @@ function drush_btranslator_btr_project_import_templates($origin, $project, $path
 function drush_btranslator_btr_project_import_translations($origin, $project, $lng, $path) {
   module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
   try {
-    $errors = BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path);
+    $errors = BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path, $GLOBALS['user']->uid);
     foreach ($errors as $error)  drush_log($error, 'error');
   }
   catch (Exception $e) {

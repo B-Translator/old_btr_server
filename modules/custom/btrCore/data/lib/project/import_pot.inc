@@ -22,8 +22,18 @@ require_once(dirname(__FILE__) . '/erase.inc');
  *
  * @param $path
  *   The directory where the template (POT) files are located.
+ *
+ * @param $uid
+ *   ID of the user that has requested the import.
  */
-function import($origin, $project, $path) {
+function import($origin, $project, $path, $uid = 0) {
+  // Switch to the given user.
+  global $user;
+  $original_user = $user;
+  $old_state = drupal_save_session();
+  drupal_save_session(FALSE);
+  $user = user_load($uid);
+
   // Erase the project if it exists.
   erase($origin, $project, $purge = TRUE);
 
@@ -55,6 +65,10 @@ function import($origin, $project, $path) {
     // Process the POT file.
     _process_pot_file($pguid, $tplname, $file->uri, $filename);
   }
+
+  // Switch back to the original user.
+  $user = $original_user;
+  drupal_save_session($old_state);
 }
 
 /**

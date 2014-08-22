@@ -253,11 +253,11 @@ function btrCore_import_project($params) {
 
   // Import the project.
   module_load_include('inc', 'btrCore', 'data/lib/project/import_pot');
-  BTranslator\Data\Project\import($origin, $project, $tmpdir);
+  BTranslator\Data\Project\import($origin, $project, $tmpdir, $account->uid);
 
   // If there are any PO files, import translations from them.
   module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
-  BTranslator\Data\Project\import_po_files($origin, $project, $lng, $tmpdir);
+  BTranslator\Data\Project\import_po_files($origin, $project, $lng, $tmpdir, $account->uid);
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');
