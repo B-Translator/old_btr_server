@@ -29,12 +29,16 @@ variable_set('reroute_email_address', $email);
 variable_set('update_notify_emails', array($email));
 
 // Set the email of admin.
-$query = 'UPDATE users SET mail = :email, init = :email WHERE uid=1';
-db_query($query, array(':email' => $email));
+db_update('users')->fields(array(
+    'mail' => $email,
+    'init' => $email,
+  ))->condition('uid', 1)->execute();
 
 // Create actions for email notifications and assign them to triggers.
-db_query("DELETE FROM actions
-          WHERE type = 'system' AND callback = 'system_send_email_action'");
+db_delete('actions')
+  ->condition('type', 'system')
+  ->condition('callback', 'system_send_email_action')
+  ->execute();
 $aid1 = actions_save(
   'system_send_email_action',
   'system',
@@ -57,9 +61,22 @@ $aid2 = actions_save(
 );
 
 // assign actions to triggers
-db_query("DELETE FROM trigger_assignments
-          WHERE hook IN ('user_insert', 'user_update')");
-db_query("INSERT INTO trigger_assignments (hook, aid, weight)
-          VALUES ('user_insert', $aid1, 0)");
-db_query("INSERT INTO trigger_assignments (hook, aid, weight)
-          VALUES ('user_update', $aid2, 0)");
+db_delete('trigger_assignments')
+  ->condition('hook', array('user_insert', 'user_update'), 'IN')
+  ->execute();
+
+db_insert('trigger_assignments')
+  ->fields(array(
+      'hook' => 'user_insert',
+      'aid' => $aid1,
+      'weight' => 0,
+    ))
+  ->execute();
+
+db_insert('trigger_assignments')
+  ->fields(array(
+      'hook' => 'user_update',
+      'aid' => $aid2,
+      'weight' => 0,
+    ))
+  ->execute();

@@ -9,7 +9,7 @@
 
 // disable sending notification on user update
 $action_id = db_query("SELECT aid FROM {trigger_assignments} WHERE hook='user_update'")->fetchField();
-db_query("DELETE FROM {trigger_assignments} WHERE hook='user_update'");
+db_delete('trigger_assignments')->condition('hook', 'user_update')->execute();
 
 // process each account
 $accounts = entity_load('user');
@@ -34,4 +34,7 @@ foreach ($accounts as $account) {
 }
 
 // re-enable sending notification on user update
-db_query("INSERT INTO {trigger_assignments} (hook, aid) VALUES ('user_update', $action_id)");
+db_insert('trigger_assignments')->fields(array(
+    'hook' => 'user_update',
+    'aid' => $action_id,
+  )) ->execute();

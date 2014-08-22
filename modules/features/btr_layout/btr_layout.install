@@ -20,19 +20,26 @@ function _btr_layout_create_aliases() {
     $query = "SELECT nid FROM {node} WHERE title='$title' AND status=1";
     $nid = db_query($query)->fetchField();
     if ($nid == FALSE)  continue;
+
     $source = "node/$nid";
-    db_query("DELETE FROM {url_alias} WHERE source='$source' AND alias='$alias'");
-    $args = array('source' => $source, 'alias' => $alias);
-    path_save($args);
+    db_delete('url_alias')
+      ->condition('source', $source)
+      ->condition('alias', $alias)
+      ->execute();
+    path_save(array(
+        'source' => $source,
+        'alias' => $alias,
+      ));
   }
 }
 
 function _btr_layout_add_login_link() {
-  $query = "DELETE FROM {menu_links}
-            WHERE menu_name='user-menu'
-              AND link_path='user/login'
-              AND link_title='Login' AND plid='0' ";
-  db_query($query);
+  db_delete('menu_links')
+    ->condition('menu_name', 'user-menu')
+    ->condition('link_path', 'user/login')
+    ->condition('link_title', 'Login')
+    ->condition('plid', 0)
+    ->execute();
 
   $login = array(
     'menu_name' => 'user-menu',
@@ -47,5 +54,10 @@ function _btr_layout_add_login_link() {
 function  _btr_layout_block_settings() {
   // disable all the blocks for theme bootstrap1
   // their place is managed by module context
-  db_query("UPDATE {block} SET status = '0' WHERE theme = 'bootstrap1'");
+  db_update('block')
+    ->fields(array(
+        'status' => 0,
+      ))
+    ->condition('theme', 'bootstrap1')
+    ->execute();
 }
