@@ -263,31 +263,24 @@ function _btrCore_user_set_fields(&$edit, $account) {
  */
 function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
   // Delete first any existing user which has the same umail and ulng.
-  $args = array(
-    ':umail' => $umail,
-    ':ulng' => $ulng,
-    ':ulng_old' => $ulng_old,
-  );
-  $delete_user = "
-    DELETE FROM {btr_users}
-    WHERE umail = :umail
-      AND (ulng = :ulng OR ulng = :ulng_old)
-  ";
-  $result = btr_query($delete_user, $args);
+  btr_delete('btr_users')
+    ->condition('umail', $umail)
+    ->condition(db_or()
+      ->condition('ulng', $ulng)
+      ->condition('ulng', $ulng_old)
+    )
+    ->execute();
 
   // Insert a new user with the given fields.
-  $args = array(
-    ':umail' => $umail,
-    ':ulng' => $ulng,
-    ':uid' => $uid,
-    ':name' => $name,
-    ':status' => $status,
-  );
-  $insert_user = "
-      INSERT INTO {btr_users} (umail, ulng, uid, name, status)
-      VALUES (:umail, :ulng, :uid, :name, :status)
-    ";
-  btr_query($insert_user, $args);
+  btr_insert('btr_users')
+    ->fields(array(
+        'umail' => $umail,
+        'ulng' => $ulng,
+        'uid' => $uid,
+        'name' => $name,
+        'status' => $status,
+      ))
+    ->execute();
 }
 
 
@@ -295,11 +288,11 @@ function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
  * It is called when a user is cancelled or deleted.
  */
 function _btr_user_disable($umail, $ulng) {
-  $args = array(':umail' => $umail, ':ulng' => $ulng);
-  $update_user = "
-    UPDATE {btr_users}
-    SET status = 0
-    WHERE umail = :umail AND :ulng = ulng
-  ";
-  btr_query($update_user, $args);
+  btr_update('btr_users')
+    ->fields(array(
+        'status' => 0,
+      ))
+    ->condition('umail', $umail)
+    ->condition('ulng', $ulng)
+    ->execute();
 }

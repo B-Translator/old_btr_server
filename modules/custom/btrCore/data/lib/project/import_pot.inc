@@ -28,9 +28,18 @@ function import($origin, $project, $path) {
   erase($origin, $project, $purge = TRUE);
 
   // Create a project.
-  $pguid = _create_project($origin, $project);
+  $pguid = sha1($origin . $project);
+  btr_insert('btr_projects')
+    ->fields(array(
+        'pguid' => $pguid,
+        'origin' => $origin,
+        'project' => $project,
+        'uid' => $GLOBALS['user']->uid,
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+      ))
+    ->execute();
 
-  // Get a list of all POT files on the given directory.
+  // Get a list of all template (POT) files on the given directory.
   $files = file_scan_directory($path, '/.*\.pot$/');
   if (empty($files)) {
     // If there are no POT files, get a list of PO files instead.
@@ -49,34 +58,20 @@ function import($origin, $project, $path) {
 }
 
 /**
- * Insert a project into the table of projects.
- */
-function _create_project($origin, $project) {
-  $insert_project = '
-    INSERT INTO {btr_projects}
-      (pguid, origin, project, uid, time)
-    VALUES
-      (:pguid, :origin, :project, :uid, :time) ';
-
-  $pguid = sha1($origin . $project);
-  btr_query($insert_project, array(
-      ':pguid' => $pguid,
-      ':origin' => $origin,
-      ':project' => $project,
-      ':uid' => $GLOBALS['user']->uid,
-      ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-    ));
-
-  return $pguid;
-}
-
-/**
  * Create a new template, parse the POT file, insert the locations
  * and insert the strings.
  */
 function _process_pot_file($pguid, $tplname, $file, $filename) {
   // Create a new template.
-  $potid = _create_template($tplname, $filename, $pguid);
+  $potid = btr_insert('btr_templates')
+    ->fields(array(
+        'tplname' => $tplname,
+        'filename' => $filename,
+        'pguid' => $pguid,
+        'uid' => $GLOBALS['user']->uid,
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+      ))
+    ->execute();
 
   // Parse the POT file.
   module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
@@ -92,27 +87,6 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
     // Insert a new location record.
     _insert_location($potid, $sguid, $entry);
   }
-}
-
-/**
- * Insert a new template on the table and return its id.
- */
-function _create_template($tplname, $filename, $pguid) {
-  $insert_template = '
-      INSERT INTO {btr_templates}
-        (tplname, filename, pguid, uid, time)
-      VALUES
-        (:tplname, :filename, :pguid, :uid, :time)
-    ';
-  btr_query($insert_template, array(
-      ':tplname' => $tplname,
-      ':filename' => $filename,
-      ':pguid' => $pguid,
-      ':uid' => $GLOBALS['user']->uid,
-      ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-    ));
-  $potid = btr_query('SELECT LAST_INSERT_ID()')->fetchField();
-  return $potid;
 }
 
 /**
@@ -144,37 +118,30 @@ function _add_string($entry) {
   $sguid = sha1($string . $context);
 
   // Increment the count of the string.
+  $count = btr_update('btr_strings')
+    ->expression('count', 'count + :one', array(':one' => 1))
+    ->condition('sguid', $sguid)
+    ->execute();
+
   // If no record was affected, it means that such a string
   // does not exist, so insert a new string.
-  $query = 'UPDATE {btr_strings} SET count = count + 1 WHERE sguid = :sguid';
-  $count = btr_query($query, array(':sguid' => $sguid));
   if (!$count) {
-    _insert_string($string, $context);
-    // TODO: If the entry has a previous-msgid, then deprecate the
-    //       corresponding string.
+    btr_insert('btr_strings')
+      ->fields(array(
+          'string' => $string,
+          'context' => $context,
+          'sguid' => sha1($string . $context),
+          'uid' => $GLOBALS['user']->uid,
+          'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+          'count' => 1,
+        ))
+      ->execute();
   }
 
-  return $sguid;
-}
+  // TODO: If the entry has a previous-msgid, then deprecate the
+  //       corresponding string.
 
-/**
- * Insert a new record on the table of strings.
- */
-function _insert_string($string, $context) {
-  $insert_string = '
-      INSERT INTO {btr_strings}
-        (string, context, sguid, uid, time, count)
-      VALUES
-        (:string, :context, :sguid, :uid, :time, :count) ';
-  $params = array(
-    ':string' => $string,
-    ':context' => $context,
-    ':sguid' => sha1($string . $context),
-    ':uid' => $GLOBALS['user']->uid,
-    ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-    ':count' => 1,
-  );
-  btr_query($insert_string, $params);
+  return $sguid;
 }
 
 /**
@@ -190,26 +157,17 @@ function _insert_location($potid, $sguid, $entry) {
     'previous-msgid' => NULL,
     'previous-msgid_plural' => NULL,
   );
-
-  $insert_location = '
-    INSERT INTO {btr_locations}
-      (sguid, potid,
-       translator_comments, extracted_comments, line_references, flags,
-       previous_msgctxt, previous_msgid, previous_msgid_plural)
-    VALUES
-      (:sguid, :potid,
-       :translator_comments, :extracted_comments, :line_references, :flags,
-       :previous_msgctxt, :previous_msgid, :previous_msgid_plural) ';
-  $args = array(
-    ':sguid' => $sguid,
-    ':potid' => $potid,
-    ':translator_comments' => $entry['translator-comments'],
-    ':extracted_comments' => $entry['extracted-comments'],
-    ':line_references' => implode(' ', $entry['references']),
-    ':flags' => implode(' ', $entry['flags']),
-    ':previous_msgctxt' => $entry['previous-msgctxt'],
-    ':previous_msgid' => $entry['previous-msgid'],
-    ':previous_msgid_plural' => $entry['previous-msgid_plural'],
-  );
-  btr_query($insert_location, $args);
+  btr_insert('btr_locations')
+    ->fields(array(
+        'sguid' => $sguid,
+        'potid' => $potid,
+        'translator_comments' => $entry['translator-comments'],
+        'extracted_comments' => $entry['extracted-comments'],
+        'line_references' => implode(' ', $entry['references']),
+        'flags' => implode(' ', $entry['flags']),
+        'previous_msgctxt' => $entry['previous-msgctxt'],
+        'previous_msgid' => $entry['previous-msgid'],
+        'previous_msgid_plural' => $entry['previous-msgid_plural'],
+      ))
+    ->execute();
 }

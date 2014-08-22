@@ -146,34 +146,21 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
   }
 
   // Insert the file.
-  $fid = _insert_file($file, $filename, $hash, $potid, $lng, $headers, $comments);
+  $fid = btr_insert('btr_files')
+    ->fields(array(
+        'filename' => $filename,
+        'content' => file_get_contents($file),
+        'hash' => $hash,
+        'potid' => $potid,
+        'lng' => $lng,
+        'headers' => $headers,
+        'comments' => $comments,
+        'uid' => $GLOBALS['user']->uid,
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+      ))
+    ->execute();
 
   return array($fid, $messages);
-}
-
-function _insert_file($file, $filename, $hash, $potid, $lng, $headers, $comments) {
-  $insert_file = '
-    INSERT INTO {btr_files}
-      ( filename, content, hash, potid,
-        lng, headers, comments, uid, time )
-    VALUES
-      ( :filename, :content, :hash, :potid,
-        :lng, :headers, :comments, :uid, :time ) ';
-  $args = array(
-    ':filename' => $filename,
-    ':content' => file_get_contents($file),
-    ':hash' => $hash,
-    ':potid' => $potid,
-    ':lng' => $lng,
-    ':headers' => $headers,
-    ':comments' => $comments,
-    ':uid' => $GLOBALS['user']->uid,
-    ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-  );
-  btr_query($insert_file, $args);
-  $fid = btr_query('SELECT LAST_INSERT_ID()')->fetchField();
-
-  return $fid;
 }
 
 /**
@@ -195,7 +182,7 @@ function _get_string_sguid($entry) {
 
   // Check that it exists.
   $get_sguid = "SELECT sguid FROM {btr_strings} WHERE sguid = '$sguid'";
-  if (btr_query($get_sguid)) {
+  if ($sguid == btr_query($get_sguid)->fetchField()) {
     return $sguid;
   }
   else {
@@ -215,21 +202,17 @@ function _add_translation($sguid, $lng, $translation) {
   if (btr_query($get_tguid, $args)->fetchField())  return $tguid;
 
   // Insert a new translations.
-  $insert_translation = '
-    INSERT INTO {btr_translations}
-      (sguid, lng, translation, tguid, count, umail, ulng, time)
-    VALUES
-      (:sguid, :lng, :translation, :tguid, :count, :umail, :ulng, :time) ';
   $account = user_load($GLOBALS['user']->uid);
-  $args = array(
-    ':sguid' => $sguid,
-    ':lng' => $lng,
-    ':translation' => $translation,
-    ':tguid' => $tguid,
-    ':count' => 0,
-    ':umail' => $account->init,
-    ':ulng' => $lng,
-    ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-  );
-  btr_query($insert_translation, $args);
+  btr_insert('btr_translations')
+    ->fields(array(
+        'sguid' => $sguid,
+        'lng' => $lng,
+        'translation' => $translation,
+        'tguid' => $tguid,
+        'count' => 0,
+        'umail' => $account->init,
+        'ulng' => $lng,
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+      ))
+    ->execute();
 }

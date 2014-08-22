@@ -48,14 +48,14 @@ function erase($origin =NULL, $project =NULL, $purge =TRUE) {
   if ($purge) {
     // Delete the diffs and snapshots of each project.
     foreach ($pguid_list as $pguid) {
-      $args = array(':pguid' => $pguid);
-      btr_query('DELETE FROM {btr_diffs} WHERE pguid = :pguid', $args);
-      btr_query('DELETE FROM {btr_snapshots} WHERE pguid = :pguid', $args);
+      btr_delete('btr_diffs')->condition('pguid', $pguid)->execute();
+      btr_delete('btr_snapshots')->condition('pguid', $pguid)->execute();
     }
 
     // Delete the projects themselves.
-    $del_projects = 'DELETE FROM {btr_projects} WHERE pguid IN (:pguid_list)';
-    btr_query($del_projects, array(':pguid_list' => $pguid_list));
+    btr_delete('btr_projects')
+      ->condition('pguid', $pguid_list, 'IN')
+      ->execute();
   }
 }
 
@@ -102,16 +102,9 @@ function _erase_template($potid) {
     SET s.count = s.count - 1';
   btr_query($update_strings, $args);
 
-  // Delete the locations of this template.
-  $del_locations = 'DELETE FROM {btr_locations} WHERE potid = :potid';
-  btr_query($del_locations, $args);
-
-  // Delete the files related to this template.
-  $del_files = 'DELETE FROM {btr_files} WHERE potid = :potid';
-  btr_query($del_files, $args);
-
-  // Delete the template itself.
-  $del_template = 'DELETE FROM {btr_templates} WHERE potid = :potid';
-  btr_query($del_template, $args);
+  // Delete the locations, files, and the template itself.
+  btr_delete('btr_locations')->condition('potid', $potid)->execute();
+  btr_delete('btr_files')->condition('potid', $potid)->execute();
+  btr_delete('btr_templates')->condition('potid', $potid)->execute();
 }
 

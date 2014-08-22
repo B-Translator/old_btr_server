@@ -94,20 +94,16 @@ function _btr_import_get_sguid($entry, $uid) {
 
   // Make sure that such a string is stored in the DB.
   if (!btr_get_string($sguid)) {
-    $query = "
-      INSERT INTO btr_strings
-	 (string, context, sguid, uid, time, count)
-      VALUES
-	 (:string, :context, :sguid, :uid, :time, :count)";
-    $params = array(
-      ':string' => $string,
-      ':context' => $context,
-      ':sguid' => $sguid,
-      ':uid' => $uid,
-      ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-      ':count' => 1,
-    );
-    btr_query($query, $params);
+    btr_insert('btr_strings')
+      ->fields(array(
+          'string' => $string,
+          'context' => $context,
+          'sguid' => $sguid,
+          'uid' => $uid,
+          'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+          'count' => 1,
+        ))
+      ->execute();
   }
 
   return $sguid;
@@ -135,15 +131,13 @@ function _btr_import_add_translation($sguid, $lng, $translation, $umail) {
     btr_add_vote($tguid);
     // Update the author of the translations.
     if ($result->umail == 'admin@example.com') {
-      $query = 'UPDATE {btr_translations}
-                  SET umail = :umail, time = :time
-                  WHERE tguid = :tguid';
-      $args = array(
-        ':umail' => $umail,
-        ':time' => date('Y-m-d H:i:s', REQUEST_TIME),
-        ':tguid' => $tguid,
-      );
-      btr_query($query, $args);
+      btr_update('btr_translations')
+        ->fields(array(
+            'umail' => $umail,
+            'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+          ))
+        ->condition('tguid', $tguid)
+        ->execute();
     }
   }
 }
