@@ -63,7 +63,7 @@ DROP TABLE IF EXISTS `btr_templates`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `btr_templates` (
   `potid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Auto-increment internal identifier.',
-  `tplname` varchar(50) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'The name of the POT template (to distinguish it from the other templates of the same project).',
+  `tplname` varchar(200) CHARACTER SET ascii COLLATE ascii_bin NOT NULL COMMENT 'The name of the POT template (to distinguish it from the other templates of the same project).',
   `filename` varchar(250) COLLATE utf8_bin DEFAULT NULL COMMENT 'The path and name of the imported POT file.',
   `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the project to which this PO template belongs.',
   `uid` int(11) DEFAULT NULL COMMENT 'Id of the user that registered the project.',
@@ -79,13 +79,13 @@ CREATE TABLE `btr_locations` (
   `lid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Internal numeric identifier of a line.',
   `sguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Reference to the id of the l10n string contained in this line.',
   `potid` int(11) NOT NULL COMMENT 'Reference to the id of the template (POT) that contains this line.',
-  `translator_comments` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Translator comments in the PO entry (starting with "# ").',
-  `extracted_comments` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Extracted comments in the PO entry (starting with "#. ").',
-  `line_references` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Line numbers where the sting occurs (starting with "#: ").',
-  `flags` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'Flags of the PO entry (starting with "#, ").',
-  `previous_msgctxt` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgctxt in the PO entry (starting with "#| msgctxt ").',
-  `previous_msgid` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid in the PO entry (starting with "#| msgid ").',
-  `previous_msgid_plural` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid_plural in the PO entry (starting with "#| msgid_plural ").',
+  `translator_comments` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Translator comments in the PO entry (starting with "# ").',
+  `extracted_comments` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Extracted comments in the PO entry (starting with "#. ").',
+  `line_references` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Line numbers where the sting occurs (starting with "#: ").',
+  `flags` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Flags of the PO entry (starting with "#, ").',
+  `previous_msgctxt` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgctxt in the PO entry (starting with "#| msgctxt ").',
+  `previous_msgid` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid in the PO entry (starting with "#| msgid ").',
+  `previous_msgid_plural` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'Previous msgid_plural in the PO entry (starting with "#| msgid_plural ").',
   PRIMARY KEY (`lid`),
   KEY `sguid` (`sguid`),
   KEY `potid` (`potid`)
@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `btr_strings`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `btr_strings` (
   `string` text COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
-  `context` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
+  `context` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
   `sguid` char(40) CHARACTER SET ascii NOT NULL DEFAULT '' COMMENT 'Globally Unique ID of the string, generated as a hash of the string and context: SHA1(CONCAT(string,context)) ',
   `uid` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
   `time` datetime DEFAULT NULL COMMENT 'The time that this string was entered on the DB.',

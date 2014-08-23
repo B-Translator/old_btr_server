@@ -143,7 +143,7 @@ function _add_string($entry) {
     btr_insert('btr_strings')
       ->fields(array(
           'string' => $string,
-          'context' => $context,
+          'context' => _cut($context, 1000),
           'sguid' => sha1($string . $context),
           'uid' => $GLOBALS['user']->uid,
           'time' => date('Y-m-d H:i:s', REQUEST_TIME),
@@ -175,13 +175,21 @@ function _insert_location($potid, $sguid, $entry) {
     ->fields(array(
         'sguid' => $sguid,
         'potid' => $potid,
-        'translator_comments' => $entry['translator-comments'],
-        'extracted_comments' => $entry['extracted-comments'],
-        'line_references' => implode(' ', $entry['references']),
-        'flags' => implode(' ', $entry['flags']),
-        'previous_msgctxt' => $entry['previous-msgctxt'],
-        'previous_msgid' => $entry['previous-msgid'],
-        'previous_msgid_plural' => $entry['previous-msgid_plural'],
+        'translator_comments' => _cut($entry['translator-comments'], 1000),
+        'extracted_comments' => _cut($entry['extracted-comments'], 1000),
+        'line_references' => _cut(implode(' ', $entry['references']), 1000),
+        'flags' => _cut(implode(' ', $entry['flags']), 1000),
+        'previous_msgctxt' => _cut($entry['previous-msgctxt'], 1000),
+        'previous_msgid' => _cut($entry['previous-msgid'], 1000),
+        'previous_msgid_plural' => _cut($entry['previous-msgid_plural'], 1000),
       ))
     ->execute();
+}
+
+/**
+ * Return only the first $length chars of the string.
+ */
+function _cut($str, $length) {
+  $l = $length - 3;
+  return (strlen($str) > $l + 3) ? substr($str, 0, $l) . '...' : $str;
 }
