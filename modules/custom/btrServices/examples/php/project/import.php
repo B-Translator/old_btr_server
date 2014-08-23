@@ -14,7 +14,8 @@ $ch = curl_init($url);
 curl_setopt_array($ch, array(
     CURLOPT_POST => TRUE,
     CURLOPT_POSTFIELDS => array(
-      'project' => 'test1',
+      'origin' => 'test1',
+      'project' => 'pingus',
       'file' => '@'.dirname(__FILE__).'/pingus-sq.po;filename=test-pingus-sq.po',
     ),
     CURLOPT_HTTPHEADER => array(

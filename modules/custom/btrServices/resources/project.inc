@@ -57,7 +57,7 @@ function _btrServices_project() {
 
   // Import project from POT file(s).
   $translations['actions']['import'] = array(
-    'help' => 'Import project from POT file(s).',
+    'help' => 'Import project from PO/POT file(s).',
     'file' => $file,
     'callback' => '_btrServices_project_import',
     'args' => array($params),
@@ -236,20 +236,29 @@ function _btrServices_project_del_string($params) {
 }
 
 /**
- * Import project from POT files.
+ * Create a custom project or update an existing one by importing PO/POT files.
  *
- * Create a custom project or update an existing one. The POT files
- * that are uploaded will be used for importing strings of the
- * project. PO files can be uploaded instead of POT files, however
- * only their strings will be used, any translations they have will be
- * ignored. If the project has several template files, they can be
- * uploaded as an archive (tar, tgz, bz2, 7z, zip).
+ * This is useful for creating custom translation projects. The PO/POT
+ * files that are uploaded will be used for importing strings and
+ * translations. If there are no POT files, then the PO files will be
+ * used both for importing strings and for importing translations. If
+ * there are POT files and PO files, their names have to match (except
+ * for the extension).
+ *
+ * If there are several PO/POT files, upload them as an archive (tar,
+ * tgz, bz2, 7z, zip).
+ *
+ * If you want to create a vocabulary, use 'vocabulary' as the origin
+ * of the project, and add the suffix '_lng' to the project name. Also
+ * use 'msgctxt "vocabulary"' as the context of each string in the
+ * PO/POT file.
  *
  * @param $params
  *   Associative array of the POST data, which contains:
+ *   - origin
+ *       The origin of the project that will be imported.
  *   - project
- *       The name of the project that will be imported
- *       (the origin is always 'custom').
+ *       The name of the project that will be imported.
  *
  * @return
  *   Associative array containing:
