@@ -26,10 +26,11 @@ function _btr_layout_create_aliases() {
       ->condition('source', $source)
       ->condition('alias', $alias)
       ->execute();
-    path_save(array(
-        'source' => $source,
-        'alias' => $alias,
-      ));
+    $path = array(
+      'source' => $source,
+      'alias' => $alias,
+    );
+    path_save($path);
   }
 }
 
