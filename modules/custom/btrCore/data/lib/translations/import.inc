@@ -1,5 +1,15 @@
 <?php
 /**
+ * @file
+ * Importing translations from PO files.
+ */
+
+namespace BTranslator\Data\Translations;
+
+module_load_include('inc', 'btrCore', 'data/lib/query');
+module_load_include('inc', 'btrCore', 'includes/votes_and_translations');
+
+/**
  * Importing translations from PO files.
  *
  * It is like a bulk translation and voting service. For any
@@ -15,22 +25,21 @@
  * exported translations, and then import back to B-Translator the
  * translated/corrected PO files.
  *
- * @param $pofile
- *   A PO file with translations, or an archive of PO files
- *   (accepted extensions: .tar, .gz, .tgz, .bz2, .xz, .7z, .zip).
+ * @param $uid
+ *   ID of the user that has uploaded the file.
  *
  * @param $lng
  *   Language of translations.
  *
- * @param $uid
- *   ID of the user that has uploaded the file.
+ * @param $path
+ *   A directory with PO files to be used for import.
  *
  * @return
  *   Array of notification messages; each notification message
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function btr_import_translations($pofile, $lng, $uid) {
+function import($uid, $lng, $path) {
   // Switch to the user that has uploaded the file.
   global $user;
   $original_user = $user;
@@ -41,24 +50,29 @@ function btr_import_translations($pofile, $lng, $uid) {
   // Get the mail of the user.
   $umail = $user->init;
 
-  // Parse the given PO file.
-  $data_path = drupal_get_path('module', 'btrCore') . '/data';
-  include_once($data_path . '/gettext/POParser.php');
-  $parser = new POParser;
-  $entries = $parser->parse($pofile);
+  // Get a list of all PO files on the path.
+  $files = file_scan_directory($path, '/.*\.po$/');
 
-  // Process each gettext entry.
-  foreach ($entries as $entry) {
-    // Get the string sguid.
-    $sguid = _btr_import_get_sguid($entry, $uid);
-    if ($sguid === NULL)  continue;
+  // Import the PO files.
+  module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
+  foreach ($files as $file) {
+    // Parse the PO file.
+    $parser = new \BTranslator\POParser;
+    $entries = $parser->parse($file->uri);
 
-    // Get the translation.
-    $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
-    if (trim($translation) === '')  continue;
+    // Process each gettext entry.
+    foreach ($entries as $entry) {
+      // Get the string sguid.
+      $sguid = _get_sguid($entry, $uid);
+      if ($sguid === NULL)  continue;
 
-    // Add the translation for this string.
-    _btr_import_add_translation($sguid, $lng, $translation, $umail);
+      // Get the translation.
+      $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
+      if (trim($translation) === '')  continue;
+
+      // Add the translation for this string.
+      _add_translation($sguid, $lng, $translation, $umail);
+    }
   }
 
   // Switch back to the original user.
@@ -74,7 +88,7 @@ function btr_import_translations($pofile, $lng, $uid) {
  * it. The same for some other entries like 'translator-credits' etc.
  * In such cases return NULL.
  */
-function _btr_import_get_sguid($entry, $uid) {
+function _get_sguid($entry, $uid) {
   // Get the string.
   $string = $entry['msgid'];
   if (isset($entry['msgid_plural'])) {
@@ -114,7 +128,7 @@ function _btr_import_get_sguid($entry, $uid) {
  * If it exists, just add a vote for the translation and set the
  * author, if the translation has no author.
  */
-function _btr_import_add_translation($sguid, $lng, $translation, $umail) {
+function _add_translation($sguid, $lng, $translation, $umail) {
   $tguid = sha1($translation . $lng . $sguid);
 
   // Check whether this translation exists.
@@ -130,7 +144,7 @@ function _btr_import_add_translation($sguid, $lng, $translation, $umail) {
     // Add a vote for the translation.
     btr_add_vote($tguid);
     // Update the author of the translations.
-    if ($result->umail == 'admin@example.com') {
+    if (empty($result->umail) or $result->umail == 'admin@example.com') {
       btr_update('btr_translations')
         ->fields(array(
             'umail' => $umail,

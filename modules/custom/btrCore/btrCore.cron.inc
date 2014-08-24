@@ -322,13 +322,9 @@ function btrCore_import_translations($params) {
   file_unmanaged_copy($file->uri, $tmpdir);
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
-  // Get a list of all PO files on the temp dir.
-  $files = file_scan_directory($tmpdir, '/.*\.po$/');
-
   // Import the PO files.
-  foreach ($files as $uri => $f) {
-    btr_import_translations($uri, $lng, $account->uid);
-  }
+  module_load_include('inc', 'btrCore', 'data/lib/translations/import');
+  BTranslator\Data\Translations\import($account->uid, $lng, $tmpdir);
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');

@@ -44,6 +44,7 @@ If --project='-' then only a list of 'origin' is outputed.
       'path' => 'The directory of the POT files of the project (absolute path or relative to DRUPAL_ROOT).',
     ),
     'options' => array(
+      'user'  => 'The username of the user that is importing templates.',
     ),
     'examples' => array(
       "drush btrp-impot KDE kturtle \\      \n      \$(pwd)/kturtle/" => 'Import kturtle into the DB.',
@@ -63,11 +64,29 @@ If --project='-' then only a list of 'origin' is outputed.
       'path' => 'The directory of the PO files of the project (absolute path or relative to DRUPAL_ROOT).',
     ),
     'options' => array(
+      'user'  => 'The username of the user that is importing translations.',
     ),
     'examples' => array(
       "drush btrp-impo \\\n   KDE kturtle fr \$(pwd)/kturtle_fr/" => 'Import the French translation of kturtle into the DB.',
     ),
     'aliases' => array('btrp-impo'),
+  );
+
+  // The command 'btr-project-import-votes'
+  $items['btr-project-import-votes'] = array(
+    'description' => "Bulk import of translations and votes from PO files.
+",
+    'arguments' => array(
+      'lng'     => 'The language of translation (de, fr, sq, en_GB, etc.)',
+      'path' => 'The directory of the PO files (absolute path or relative to DRUPAL_ROOT).',
+    ),
+    'options' => array(
+      'user'  => 'The username of the user who has made the translations.',
+    ),
+    'examples' => array(
+      "drush btrp-vote --user=user1 fr \$(pwd)/kturtle_fr/" => 'Vote as user1 all the given French translations.',
+    ),
+    'aliases' => array('btrp-vote'),
   );
 
   // The command 'btr-project-erase'
@@ -180,8 +199,8 @@ function drush_btranslator_btr_project_import_templates($origin, $project, $path
  * Command callback for btr-project-import-translations.
  */
 function drush_btranslator_btr_project_import_translations($origin, $project, $lng, $path) {
-  module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
   try {
+    module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
     $errors = BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path, $GLOBALS['user']->uid);
     foreach ($errors as $error)  drush_log($error, 'error');
   }
@@ -192,6 +211,17 @@ function drush_btranslator_btr_project_import_translations($origin, $project, $l
     drush_log($trace, 'error');
   }
 }
+
+/**
+ * Command callback for btr-project-import-votes.
+ */
+function drush_btranslator_btr_project_import_votes($lng, $path) {
+  global $user;
+  module_load_include('inc', 'btrCore', 'data/lib/translations/import');
+  BTranslator\Data\Translations\import($user->uid, $lng, $path);
+}
+
+
 
 /**
  * Command callback for btr-project-erase.
