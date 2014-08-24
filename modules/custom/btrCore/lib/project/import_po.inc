@@ -6,7 +6,7 @@
 
 namespace BTranslator\Data\Project;
 
-module_load_include('inc', 'btrCore', 'data/lib/query');
+module_load_include('inc', 'btrCore', 'lib/query');
 
 
 /**
@@ -31,7 +31,7 @@ module_load_include('inc', 'btrCore', 'data/lib/query');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function import_po_files($origin, $project, $lng, $path, $uid = 0) {
+function import_po($origin, $project, $lng, $path, $uid = 0) {
   // Switch to the given user.
   global $user;
   $original_user = $user;
@@ -90,7 +90,7 @@ function import_po_files($origin, $project, $lng, $path, $uid = 0) {
  */
 function _process_po_file($potid, $tplname, $lng, $file, $filename) {
   // Parse the PO file.
-  module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
+  module_load_include('php', 'btrCore', 'lib/gettext/POParser');
   $parser = new \BTranslator\POParser;
   $entries = $parser->parse($file);
 

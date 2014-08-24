@@ -109,8 +109,8 @@ function _btrServices_project_list($params) {
   }
 
   // Get the project list.
-  module_load_include('inc', 'btrCore', 'data/lib/project/list');
-  $project_list = BTranslator\Data\Project\project_list($origin, $project);
+  module_load_include('inc', 'btrCore', 'lib/project/list');
+  $project_list = BTranslator\Data\Project\list($origin, $project);
 
   // Output it as json.
   drupal_json_output($project_list);

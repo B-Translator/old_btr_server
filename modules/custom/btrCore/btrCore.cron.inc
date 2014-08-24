@@ -252,12 +252,12 @@ function btrCore_import_project($params) {
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
   // Import the project.
-  module_load_include('inc', 'btrCore', 'data/lib/project/import_pot');
-  BTranslator\Data\Project\import($origin, $project, $tmpdir, $account->uid);
+  module_load_include('inc', 'btrCore', 'lib/project/import_pot');
+  BTranslator\Data\Project\import_pot($origin, $project, $tmpdir, $account->uid);
 
   // If there are any PO files, import translations from them.
-  module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
-  BTranslator\Data\Project\import_po_files($origin, $project, $lng, $tmpdir, $account->uid);
+  module_load_include('inc', 'btrCore', 'lib/project/import_po');
+  BTranslator\Data\Project\import_po($origin, $project, $lng, $tmpdir, $account->uid);
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');
@@ -323,7 +323,7 @@ function btrCore_import_translations($params) {
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
   // Import the PO files.
-  module_load_include('inc', 'btrCore', 'data/lib/translations/import');
+  module_load_include('inc', 'btrCore', 'lib/translations/import');
   BTranslator\Data\Translations\import($account->uid, $lng, $tmpdir);
 
   // Get the base_url of the site.

@@ -178,8 +178,8 @@ function drush_btranslator_btr_project_list() {
   $origin = drush_get_option('origin');
   $project = drush_get_option('project');
 
-  module_load_include('inc', 'btrCore', 'data/lib/project/list');
-  $project_list = BTranslator\Data\Project\project_list($origin, $project);
+  module_load_include('inc', 'btrCore', 'lib/project/ls');
+  $project_list = BTranslator\Data\Project\ls($origin, $project);
 
   foreach ($project_list as $project) {
     drush_print($project);
@@ -191,8 +191,8 @@ function drush_btranslator_btr_project_list() {
  */
 function drush_btranslator_btr_project_import_templates($origin, $project, $path) {
   global $user;
-  module_load_include('inc', 'btrCore', 'data/lib/project/import_pot');
-  BTranslator\Data\Project\import($origin, $project, $path, $user->uid);
+  module_load_include('inc', 'btrCore', 'lib/project/import_pot');
+  BTranslator\Data\Project\import_pot($origin, $project, $path, $user->uid);
 }
 
 /**
@@ -200,8 +200,8 @@ function drush_btranslator_btr_project_import_templates($origin, $project, $path
  */
 function drush_btranslator_btr_project_import_translations($origin, $project, $lng, $path) {
   try {
-    module_load_include('inc', 'btrCore', 'data/lib/project/import_po');
-    $errors = BTranslator\Data\Project\import_po_files($origin, $project, $lng, $path, $GLOBALS['user']->uid);
+    module_load_include('inc', 'btrCore', 'lib/project/import_po');
+    $errors = BTranslator\Data\Project\import_po($origin, $project, $lng, $path, $GLOBALS['user']->uid);
     foreach ($errors as $error)  drush_log($error, 'error');
   }
   catch (Exception $e) {
@@ -217,7 +217,7 @@ function drush_btranslator_btr_project_import_translations($origin, $project, $l
  */
 function drush_btranslator_btr_project_import_votes($lng, $path) {
   global $user;
-  module_load_include('inc', 'btrCore', 'data/lib/translations/import');
+  module_load_include('inc', 'btrCore', 'lib/translations/import');
   BTranslator\Data\Translations\import($user->uid, $lng, $path);
 }
 
@@ -232,7 +232,7 @@ function drush_btranslator_btr_project_erase() {
   $purge = drush_get_option('purge');
   $purge = ($purge == 'false' ? FALSE : TRUE);
 
-  module_load_include('inc', 'btrCore', 'data/lib/project/erase');
+  module_load_include('inc', 'btrCore', 'lib/project/erase');
   BTranslator\Data\Project\erase($origin, $project, $purge);
 }
 

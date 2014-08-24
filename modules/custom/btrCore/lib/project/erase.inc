@@ -6,7 +6,7 @@
 
 namespace BTranslator\Data\Project;
 
-module_load_include('inc', 'btrCore', 'data/lib/query');
+module_load_include('inc', 'btrCore', 'lib/query');
 
 
 /**

@@ -6,7 +6,7 @@
 
 namespace BTranslator\Data\Project;
 
-module_load_include('inc', 'btrCore', 'data/lib/query');
+module_load_include('inc', 'btrCore', 'lib/query');
 
 /**
  * Return a list of all the imported projects, filtered by origin/project.
@@ -21,7 +21,7 @@ module_load_include('inc', 'btrCore', 'data/lib/query');
  * @param $project
  *   The pattern for matching the project.
  */
-function project_list($origin =NULL, $project =NULL) {
+function ls($origin =NULL, $project =NULL) {
   // Start building the query.
   $query = btr_select('btr_projects', 'p')
     ->fields('p', array('origin'))

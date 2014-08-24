@@ -6,7 +6,7 @@
 
 namespace BTranslator\Data\Project;
 
-module_load_include('inc', 'btrCore', 'data/lib/query');
+module_load_include('inc', 'btrCore', 'lib/query');
 require_once(dirname(__FILE__) . '/erase.inc');
 
 /**
@@ -26,7 +26,7 @@ require_once(dirname(__FILE__) . '/erase.inc');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function import($origin, $project, $path, $uid = 0) {
+function import_pot($origin, $project, $path, $uid = 0) {
   // Switch to the given user.
   global $user;
   $original_user = $user;
@@ -88,7 +88,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
     ->execute();
 
   // Parse the POT file.
-  module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
+  module_load_include('php', 'btrCore', 'lib/gettext/POParser');
   $parser = new \BTranslator\POParser;
   $entries = $parser->parse($file);
 

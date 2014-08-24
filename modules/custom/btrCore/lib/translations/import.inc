@@ -6,7 +6,7 @@
 
 namespace BTranslator\Data\Translations;
 
-module_load_include('inc', 'btrCore', 'data/lib/query');
+module_load_include('inc', 'btrCore', 'lib/query');
 module_load_include('inc', 'btrCore', 'includes/votes_and_translations');
 
 /**
@@ -54,7 +54,7 @@ function import($uid, $lng, $path) {
   $files = file_scan_directory($path, '/.*\.po$/');
 
   // Import the PO files.
-  module_load_include('php', 'btrCore', '/data/lib/gettext/POParser');
+  module_load_include('php', 'btrCore', 'lib/gettext/POParser');
   foreach ($files as $file) {
     // Parse the PO file.
     $parser = new \BTranslator\POParser;
