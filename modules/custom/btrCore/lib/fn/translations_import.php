@@ -1,5 +1,6 @@
 <?php
 namespace BTranslator;
+use \btr;
 
 /**
  * @file
@@ -135,11 +136,11 @@ function _add_translation($sguid, $lng, $translation, $umail) {
 
   if (!$result) {
     // Add the translation for this string.
-    btr_add_translation($sguid, $lng, $translation);
+    btr::translation_add($sguid, $lng, $translation);
   }
   else {
     // Add a vote for the translation.
-    btr_add_vote($tguid);
+    btr::vote_add($tguid);
     // Update the author of the translations.
     if (empty($result->umail) or $result->umail == 'admin@example.com') {
       btr_update('btr_translations')

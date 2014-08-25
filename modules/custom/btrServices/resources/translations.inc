@@ -477,7 +477,7 @@ function _btrServices_translations_add($params) {
     return services_error('Language missing or not supported.', 406);
   }
 
-  list($tguid, $messages) = btr_add_translation($sguid, $lng, $translation);
+  list($tguid, $messages) = btr::translation_add($sguid, $lng, $translation);
   return array(
     'tguid' => $tguid,
     'messages' => $messages
@@ -504,7 +504,7 @@ function _btrServices_translations_add($params) {
  */
 function _btrServices_translations_vote($params) {
   $tguid = $params['tguid'];
-  list($vid, $messages) = btr_add_vote($tguid);
+  list($vid, $messages) = btr::vote_add($tguid);
   return array(
     'vid' => $vid,
     'messages' => $messages
@@ -528,7 +528,7 @@ function _btrServices_translations_vote($params) {
  */
 function _btrServices_translations_del($params) {
   $tguid = $params['tguid'];
-  $messages = btr_del_translation($tguid);
+  $messages = btr::translation_del($tguid);
   return array(
     'messages' => $messages
   );
@@ -551,7 +551,7 @@ function _btrServices_translations_del($params) {
  */
 function _btrServices_translations_del_vote($params) {
   $tguid = $params['tguid'];
-  $messages = btr_del_vote($tguid);
+  $messages = btr::vote_del($tguid);
   return array(
     'messages' => $messages
   );

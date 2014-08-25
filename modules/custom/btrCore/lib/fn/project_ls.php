@@ -3,7 +3,7 @@ namespace BTranslator;
 
 /**
  * @file
- * Definition of function list() which returns a list of projects.
+ * Definition of function project_ls() which returns a list of projects.
  */
 
 /**
