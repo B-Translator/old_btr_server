@@ -1,13 +1,10 @@
 <?php
+namespace BTranslator;
+
 /**
  * @file
  * Functions for importing translation files of a project.
  */
-
-namespace BTranslator\Data\Project;
-
-module_load_include('inc', 'btrCore', 'lib/query');
-
 
 /**
  * Import translation (PO) files of a project.
@@ -31,7 +28,7 @@ module_load_include('inc', 'btrCore', 'lib/query');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function import_po($origin, $project, $lng, $path, $uid = 0) {
+function project_import_po($origin, $project, $lng, $path, $uid = 0) {
   // Switch to the given user.
   global $user;
   $original_user = $user;

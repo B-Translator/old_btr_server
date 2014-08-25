@@ -1,13 +1,10 @@
 <?php
+namespace BTranslator;
+
 /**
  * @file
  * Functions for importing translation projects.
  */
-
-namespace BTranslator\Data\Project;
-
-module_load_include('inc', 'btrCore', 'lib/query');
-require_once(dirname(__FILE__) . '/erase.inc');
 
 /**
  * Import a new project from POT files.
@@ -26,7 +23,7 @@ require_once(dirname(__FILE__) . '/erase.inc');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function import_pot($origin, $project, $path, $uid = 0) {
+function project_import_pot($origin, $project, $path, $uid = 0) {
   // Switch to the given user.
   global $user;
   $original_user = $user;
@@ -35,7 +32,9 @@ function import_pot($origin, $project, $path, $uid = 0) {
   $user = user_load($uid);
 
   // Erase the project if it exists.
-  erase($origin, $project, $purge = TRUE);
+  include_once(dirname(__FILE__) . '/project_erase.php');
+  project_erase($origin, $project, $purge = TRUE);
+  // \btr::project_erase($origin, $project, $purge = TRUE);
 
   // Create a project.
   $pguid = sha1($origin . $project);

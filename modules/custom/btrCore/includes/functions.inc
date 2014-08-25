@@ -5,6 +5,7 @@
  */
 
 module_load_include('inc', 'btrCore', 'lib/query');
+module_load_include('php', 'btrCore', 'lib/btr');
 
 include_once dirname(__FILE__) . '/get_strings.inc';
 include_once dirname(__FILE__) . '/hook_user.inc';

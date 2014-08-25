@@ -32,8 +32,7 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
   }
 
   // Get the project list.
-  module_load_include('inc', 'btrCore', 'lib/project/ls');
-  $project_list = BTranslator\Data\Project\ls($origin, $project);
+  $project_list = btr::project_ls($origin, $project);
 
   // Output the result.
   if (strtoupper($format) == 'JSON') {

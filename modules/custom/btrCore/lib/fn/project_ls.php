@@ -1,12 +1,10 @@
 <?php
+namespace BTranslator;
+
 /**
  * @file
  * Definition of function list() which returns a list of projects.
  */
-
-namespace BTranslator\Data\Project;
-
-module_load_include('inc', 'btrCore', 'lib/query');
 
 /**
  * Return a list of all the imported projects, filtered by origin/project.
@@ -21,7 +19,7 @@ module_load_include('inc', 'btrCore', 'lib/query');
  * @param $project
  *   The pattern for matching the project.
  */
-function ls($origin =NULL, $project =NULL) {
+function project_ls($origin =NULL, $project =NULL) {
   // Start building the query.
   $query = btr_select('btr_projects', 'p')
     ->fields('p', array('origin'))

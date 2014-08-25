@@ -1,13 +1,10 @@
 <?php
+namespace BTranslator;
+
 /**
  * @file
  * Definition of function erase() which is used for deleting projects.
  */
-
-namespace BTranslator\Data\Project;
-
-module_load_include('inc', 'btrCore', 'lib/query');
-
 
 /**
  * Delete everything related to the given origin and project.
@@ -27,7 +24,7 @@ module_load_include('inc', 'btrCore', 'lib/query');
  * @param $purge
  *   If true, then snapshots and diffs are deleted as well.
  */
-function erase($origin =NULL, $project =NULL, $purge =TRUE) {
+function project_erase($origin =NULL, $project =NULL, $purge =TRUE) {
   // Get a list of matching projects.
   $pguid_list = _get_projects($origin, $project);
   if (!$pguid_list)  return;

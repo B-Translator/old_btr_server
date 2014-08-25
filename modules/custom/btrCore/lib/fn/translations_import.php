@@ -1,13 +1,10 @@
 <?php
+namespace BTranslator;
+
 /**
  * @file
  * Importing translations from PO files.
  */
-
-namespace BTranslator\Data\Translations;
-
-module_load_include('inc', 'btrCore', 'lib/query');
-module_load_include('inc', 'btrCore', 'includes/votes_and_translations');
 
 /**
  * Importing translations from PO files.
@@ -39,7 +36,7 @@ module_load_include('inc', 'btrCore', 'includes/votes_and_translations');
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function import($uid, $lng, $path) {
+function translations_import($uid, $lng, $path) {
   // Switch to the user that has uploaded the file.
   global $user;
   $original_user = $user;
