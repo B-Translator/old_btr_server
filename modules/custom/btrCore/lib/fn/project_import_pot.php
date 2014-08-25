@@ -1,5 +1,6 @@
 <?php
 namespace BTranslator;
+use \btr;
 
 /**
  * @file
@@ -32,9 +33,7 @@ function project_import_pot($origin, $project, $path, $uid = 0) {
   $user = user_load($uid);
 
   // Erase the project if it exists.
-  include_once(dirname(__FILE__) . '/project_erase.php');
-  project_erase($origin, $project, $purge = TRUE);
-  // \btr::project_erase($origin, $project, $purge = TRUE);
+  btr::project_erase($origin, $project, $purge = TRUE);
 
   // Create a project.
   $pguid = sha1($origin . $project);

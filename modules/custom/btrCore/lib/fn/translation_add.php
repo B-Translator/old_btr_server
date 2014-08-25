@@ -1,5 +1,6 @@
 <?php
 namespace BTranslator;
+use \btr;
 
 /**
  * Add a new translation to a source string.
@@ -88,7 +89,7 @@ function translation_add($sguid, $lng, $translation) {
   }
 
   // Add also a vote for the new translation.
-  list($vid, $messages) = \btr::vote_add($tguid);
+  list($vid, $messages) = btr::vote_add($tguid);
 
   // Notify previous voters of this string that a new translation has been
   // suggested. Maybe they would like to review it and change their vote.
