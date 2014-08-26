@@ -1,11 +1,13 @@
 <?php
-namespace BTranslator;
-use \btr;
-
 /**
  * @file
  * Functions for importing translation projects.
  */
+
+namespace BTranslator;
+use \btr;
+
+module_load_include('php', 'btrCore', 'lib/gettext/POParser');
 
 /**
  * Import a new project from POT files.
@@ -86,8 +88,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
     ->execute();
 
   // Parse the POT file.
-  module_load_include('php', 'btrCore', 'lib/gettext/POParser');
-  $parser = new \BTranslator\POParser;
+  $parser = new POParser;
   $entries = $parser->parse($file);
 
   // Process each gettext entry.

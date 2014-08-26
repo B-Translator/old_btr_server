@@ -1,11 +1,11 @@
 <?php
-namespace BTranslator;
-use \btr;
-
 /**
  * @file
  * Importing translations from PO files.
  */
+
+namespace BTranslator;
+use \btr;
 
 /**
  * Importing translations from PO files.
@@ -55,7 +55,7 @@ function translations_import($uid, $lng, $path) {
   module_load_include('php', 'btrCore', 'lib/gettext/POParser');
   foreach ($files as $file) {
     // Parse the PO file.
-    $parser = new \BTranslator\POParser;
+    $parser = new POParser;
     $entries = $parser->parse($file->uri);
 
     // Process each gettext entry.

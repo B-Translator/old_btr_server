@@ -1,10 +1,10 @@
 <?php
-namespace BTranslator;
-
 /**
  * @file
- * Definition of function erase() which is used for deleting projects.
+ * Definition of function project_erase() which is used for deleting projects.
  */
+
+namespace BTranslator;
 
 /**
  * Delete everything related to the given origin and project.

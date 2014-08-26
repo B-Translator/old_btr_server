@@ -1,10 +1,12 @@
 <?php
-namespace BTranslator;
-
 /**
  * @file
  * Functions for importing translation files of a project.
  */
+
+namespace BTranslator;
+
+module_load_include('php', 'btrCore', 'lib/gettext/POParser');
 
 /**
  * Import translation (PO) files of a project.
@@ -87,8 +89,7 @@ function project_import_po($origin, $project, $lng, $path, $uid = 0) {
  */
 function _process_po_file($potid, $tplname, $lng, $file, $filename) {
   // Parse the PO file.
-  module_load_include('php', 'btrCore', 'lib/gettext/POParser');
-  $parser = new \BTranslator\POParser;
+  $parser = new POParser;
   $entries = $parser->parse($file);
 
   // Get headers and comments.

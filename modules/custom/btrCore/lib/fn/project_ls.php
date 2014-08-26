@@ -1,10 +1,10 @@
 <?php
-namespace BTranslator;
-
 /**
  * @file
  * Definition of function project_ls() which returns a list of projects.
  */
+
+namespace BTranslator;
 
 /**
  * Return a list of all the imported projects, filtered by origin/project.
