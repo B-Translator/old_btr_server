@@ -41,3 +41,8 @@ function btr_delete($table, array $options =array()) {
   $db = _btr_get_db_connection($options);
   return $db->delete($table, $options);
 }
+
+function btr_query_temporary($query, array $args =array(), array $options =array()) {
+  $db = _btr_get_db_connection($options);
+  return $db->queryTemporary($query, $args, $options);
+}
