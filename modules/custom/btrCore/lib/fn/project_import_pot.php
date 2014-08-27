@@ -35,7 +35,7 @@ function project_import_pot($origin, $project, $path, $uid = 0) {
   $user = user_load($uid);
 
   // Erase the project if it exists.
-  btr::project_erase($origin, $project, $purge = TRUE);
+  btr::project_del($origin, $project, $purge = TRUE);
 
   // Create a project.
   $pguid = sha1($origin . $project);

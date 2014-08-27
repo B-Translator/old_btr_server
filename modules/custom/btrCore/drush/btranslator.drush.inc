@@ -89,8 +89,8 @@ If --project='-' then only a list of 'origin' is outputed.
     'aliases' => array('btrp-vote'),
   );
 
-  // The command 'btr-project-erase'
-  $items['btr-project-erase'] = array(
+  // The command 'btr-project-del'
+  $items['btr-project-del'] = array(
     'description' => "Delete everything related to the given origin and project
 (but not the strings, translations, etc.)
 
@@ -197,7 +197,7 @@ function btranslator_drush_help($section) {
       return dt("Import the POT files of a project into the B-Translator DB.");
     case 'drush:btr-project-import-translations':
       return dt("Import the PO files of a project/language into the DB.");
-    case 'drush:btr-project-erase':
+    case 'drush:btr-project-del':
       return dt("Erase a project from the DB.");
     case 'drush:btr-project-export':
       return dt("Export PO files of a project from the DB.");
@@ -253,15 +253,15 @@ function drush_btranslator_btr_project_import_votes($lng, $path) {
 }
 
 /**
- * Command callback for btr-project-erase.
+ * Command callback for btr-project-del.
  */
-function drush_btranslator_btr_project_erase() {
+function drush_btranslator_btr_project_del() {
   $origin = drush_get_option('origin');
   $project = drush_get_option('project');
   $purge = drush_get_option('purge');
   $purge = ($purge == 'false' ? FALSE : TRUE);
 
-  btr::project_erase($origin, $project, $purge);
+  btr::project_del($origin, $project, $purge);
 }
 
 /**
