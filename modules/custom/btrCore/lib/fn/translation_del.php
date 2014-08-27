@@ -7,19 +7,35 @@ namespace BTranslator;
  * @param $tguid
  *   ID of the translation.
  *
+ * @param $notify
+ *   Notify the author and voters of the deleted translation.
+ *
  * @return
  *   Array of notification messages; each notification message
  *   is an array of a message and a type, where type can be
  *   one of 'status', 'warning', 'error'
  */
-function translation_del($tguid) {
+function translation_del($tguid, $notify = TRUE) {
   // Get the mail and lng of the user.
   $user = user_load($GLOBALS['user']->uid);
   $umail = $user->init;    // email used for registration
   $ulng = $user->translation_lng;
 
   // Before deleting, get the author and voters (for notifications).
-  list($author, $voters) = _get_author_and_voters($tguid);
+  $author = btr_query(
+    'SELECT u.uid, u.name, u.umail
+     FROM {btr_translations} t
+     LEFT JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+     WHERE t.tguid = :tguid',
+    array(':tguid' => $tguid))
+    ->fetchObject();
+  $voters = btr_query(
+    'SELECT u.uid, u.name, u.umail
+     FROM {btr_votes} v
+     LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+     WHERE v.tguid = :tguid',
+    array(':tguid' => $tguid))
+    ->fetchAll();
 
   // Check that the current user has the right to delete translations.
   $is_own = ($umail == $author->umail);
@@ -50,37 +66,12 @@ function translation_del($tguid) {
 
   // Notify the author of a translation and its voters
   // that it has been deleted.
-  _notify_voters_on_translation_del($tguid, $author, $voters);
+  if ($notify) {
+    _notify_voters_on_translation_del($tguid, $author, $voters);
+  }
 
   return array();
 }
-
-/**
- * Before deleting a translation, get the author and voters (for notifications).
- */
-function _get_author_and_voters($tguid) {
-  $get_author =
-    "SELECT u.uid, u.name, u.umail
-     FROM {btr_translations} t
-     LEFT JOIN {btr_users} u
-         ON (u.umail = t.umail AND u.ulng = t.ulng)
-     WHERE t.tguid = :tguid";
-
-  $get_voters =
-    "SELECT u.uid, u.name, u.umail
-     FROM {btr_votes} v
-     LEFT JOIN {btr_users} u
-         ON (u.umail = v.umail AND u.ulng = v.ulng)
-     WHERE v.tguid = :tguid";
-
-  $args = array(':tguid' => $tguid);
-
-  $author = btr_query($get_author, $args)->fetchObject();
-  $voters = btr_query($get_voters, $args)->fetchAll();
-
-  return array($author, $voters);
-}
-
 
 /**
  * Notify the author of a translation and its voters
@@ -88,9 +79,9 @@ function _get_author_and_voters($tguid) {
  */
 function _notify_voters_on_translation_del($tguid, $author, $voters) {
   // get the sguid, string and translation
-  $sql = 'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid';
-  $args = array(':tguid' => $tguid);
-  $sguid = btr_query($sql, $args)->fetchField();
+  $sguid = btr_query(
+    'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
+    array(':tguid' => $tguid))->fetchField();
   $string = btr_get_string($sguid);
   $translation = btr_get_translation($tguid);
 

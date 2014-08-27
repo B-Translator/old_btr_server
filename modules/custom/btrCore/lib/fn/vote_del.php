@@ -28,9 +28,10 @@ function vote_del($tguid) {
   $ulng = $user->translation_lng;
 
   // Fetch the translation details from the DB.
-  $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
-  $args = array(':tguid' => $tguid);
-  $trans = btr_query($sql, $args)->fetchObject();
+  $trans = btr_query(
+    'SELECT * FROM {btr_translations} WHERE tguid = :tguid',
+    array(':tguid' => $tguid))
+    ->fetchObject();
 
   // If there is no such translation, return NULL.
   if (empty($trans)) {
@@ -44,4 +45,3 @@ function vote_del($tguid) {
 
   return array();
 }
-

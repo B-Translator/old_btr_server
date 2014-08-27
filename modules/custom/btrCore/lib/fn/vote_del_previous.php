@@ -40,13 +40,21 @@ function _vote_del_previous($tguid, $umail, $sguid, $lng) {
   else { // ($voting_mode == 'single')
     // Get the other sibling translations (translations of the same
     // string and the same language) which the user has voted.
-    $sql = '
-      SELECT DISTINCT t.tguid FROM {btr_translations} t
-      LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
-      WHERE t.sguid = :sguid AND t.lng = :lng AND v.umail = :umail AND v.ulng = :ulng
-    ';
-    $params = array(':sguid' => $sguid, ':lng' => $lng, ':umail' => $umail, ':ulng' => $lng);
-    $arr_tguid = btr_query($sql, $params)->fetchCol();
+    $arr_tguid = btr_query(
+      'SELECT DISTINCT t.tguid
+       FROM {btr_translations} t
+       LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
+       WHERE t.sguid = :sguid
+         AND t.lng = :lng
+         AND v.umail = :umail
+         AND v.ulng = :ulng',
+       array(
+        ':sguid' => $sguid,
+        ':lng' => $lng,
+        ':umail' => $umail,
+        ':ulng' => $lng,
+      ))
+      ->fetchCol();
   }
 
   if (empty($arr_tguid))  return 0;
