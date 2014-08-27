@@ -89,8 +89,8 @@ If --project='-' then only a list of 'origin' is outputed.
     'aliases' => array('btrp-vote'),
   );
 
-  // The command 'btr-project-del'
-  $items['btr-project-del'] = array(
+  // The command 'btr-project-delete'
+  $items['btr-project-delete'] = array(
     'description' => "Delete everything related to the given origin and project
 (but not the strings, translations, etc.)
 
@@ -103,12 +103,13 @@ of the given name (from any origin) will be deleted.
     'options' => array(
       'origin' => 'The origin of the project to be deleted.',
       'project' => 'The name of the project to be deleted.',
-      'purge' => 'If true, then snapshots and diffs are deleted as well.',
+      'erase' => 'If true, then snapshots and diffs are deleted as well.',
+      'purge' => 'If true, then dangling strings are deleted as well.',
     ),
     'examples' => array(
-      "drush btrp-erase --origin=KDE --project=kturtle" => 'Erase KDE/kturtle from the DB.',
+      "drush btrp-del --origin=KDE --project=kturtle" => 'Delete KDE/kturtle from the DB.',
     ),
-    'aliases' => array('btrp-erase'),
+    'aliases' => array('btrp-del'),
     //'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_LOGIN,
   );
 
@@ -197,7 +198,7 @@ function btranslator_drush_help($section) {
       return dt("Import the POT files of a project into the B-Translator DB.");
     case 'drush:btr-project-import-translations':
       return dt("Import the PO files of a project/language into the DB.");
-    case 'drush:btr-project-del':
+    case 'drush:btr-project-delete':
       return dt("Erase a project from the DB.");
     case 'drush:btr-project-export':
       return dt("Export PO files of a project from the DB.");
@@ -253,15 +254,19 @@ function drush_btranslator_btr_project_import_votes($lng, $path) {
 }
 
 /**
- * Command callback for btr-project-del.
+ * Command callback for btr-project-delete.
  */
-function drush_btranslator_btr_project_del() {
+function drush_btranslator_btr_project_delete() {
   $origin = drush_get_option('origin');
   $project = drush_get_option('project');
+
+  $erase = drush_get_option('erase');
+  $erase = ($erase == 'false' ? FALSE : TRUE);
+
   $purge = drush_get_option('purge');
   $purge = ($purge == 'false' ? FALSE : TRUE);
 
-  btr::project_del($origin, $project, $purge);
+  btr::project_del($origin, $project, $erase, $purge);
 }
 
 /**

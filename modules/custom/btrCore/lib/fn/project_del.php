@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Delete everything related to the given origin and project.
@@ -23,8 +24,12 @@ namespace BTranslator;
  *
  * @param $erase
  *   If true, then snapshots and diffs are deleted as well.
+ *
+ * @param $purge
+ *   If true, delete as well any dangling strings that don't belong
+ *   to any project (and their translations that have no votes).
  */
-function project_del($origin = NULL, $project = NULL, $erase = TRUE) {
+function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TRUE) {
   // The parameters should not be both NULL.
   if ($origin === NULL and $project === NULL)  return;
 
@@ -50,17 +55,22 @@ function project_del($origin = NULL, $project = NULL, $erase = TRUE) {
     _delete_template($potid);
   }
 
+  // Delete the diffs and snapshots of each project.
   if ($erase) {
-    // Delete the diffs and snapshots of each project.
     foreach ($pguid_list as $pguid) {
       btr_delete('btr_diffs')->condition('pguid', $pguid)->execute();
       btr_delete('btr_snapshots')->condition('pguid', $pguid)->execute();
     }
+  }
 
-    // Delete the projects themselves.
-    btr_delete('btr_projects')
-      ->condition('pguid', $pguid_list, 'IN')
-      ->execute();
+  // Delete the projects themselves.
+  btr_delete('btr_projects')
+    ->condition('pguid', $pguid_list, 'IN')
+    ->execute();
+
+  // Delete any dangling strings.
+  if ($purge) {
+    btr::string_cleanup();
   }
 }
 
