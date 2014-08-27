@@ -251,11 +251,11 @@ function btrCore_import_project($params) {
   file_unmanaged_copy($file->uri, $tmpdir);
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
-  // Import the project.
-  btr::project_import_pot($origin, $project, $tmpdir, $account->uid);
+  // Create the project.
+  btr::project_add($origin, $project, $tmpdir, $account->uid);
 
   // If there are any PO files, import translations from them.
-  btr::project_import_po($origin, $project, $lng, $tmpdir, $account->uid);
+  btr::project_import($origin, $project, $lng, $tmpdir, $account->uid);
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Functions for importing translation projects.
+ * Functions for creating translation projects.
  */
 
 namespace BTranslator;
@@ -10,7 +10,7 @@ use \btr;
 module_load_include('php', 'btrCore', 'lib/gettext/POParser');
 
 /**
- * Import a new project from POT files.
+ * Create a new project from POT files.
  *
  * If such a project already exists, it is erased first.
  *
@@ -26,7 +26,7 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function project_import_pot($origin, $project, $path, $uid = 0) {
+function project_add($origin, $project, $path, $uid = 0) {
   // Switch to the given user.
   global $user;
   $original_user = $user;
@@ -35,7 +35,7 @@ function project_import_pot($origin, $project, $path, $uid = 0) {
   $user = user_load($uid);
 
   // Erase the project if it exists.
-  btr::project_del($origin, $project, $purge = TRUE);
+  btr::project_del($origin, $project, $erase = TRUE);
 
   // Create a project.
   $pguid = sha1($origin . $project);

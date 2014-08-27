@@ -34,8 +34,8 @@ If --project='-' then only a list of 'origin' is outputed.
     //'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_LOGIN,
   );
 
-  // The command 'btr-project-import-templates'
-  $items['btr-project-import-templates'] = array(
+  // The command 'btr-project-add'
+  $items['btr-project-add'] = array(
     'description' => "Import the POT files of a project into the B-Translator DB.
 ",
     'arguments' => array(
@@ -47,14 +47,13 @@ If --project='-' then only a list of 'origin' is outputed.
       'user'  => 'The username of the user that is importing templates.',
     ),
     'examples' => array(
-      "drush btrp-impot KDE kturtle \\      \n      \$(pwd)/kturtle/" => 'Import kturtle into the DB.',
+      "drush btrp-add KDE kturtle \\      \n      \$(pwd)/kturtle/" => 'Import kturtle into the DB.',
     ),
-    'aliases' => array('btrp-impot'),
-    //'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_LOGIN,
+    'aliases' => array('btrp-add'),
   );
 
-  // The command 'btr-project-import-translations'
-  $items['btr-project-import-translations'] = array(
+  // The command 'btr-project-import'
+  $items['btr-project-import'] = array(
     'description' => "Import the translation (PO) files of a project/language into the DB.
 ",
     'arguments' => array(
@@ -67,9 +66,9 @@ If --project='-' then only a list of 'origin' is outputed.
       'user'  => 'The username of the user that is importing translations.',
     ),
     'examples' => array(
-      "drush btrp-impo \\\n   KDE kturtle fr \$(pwd)/kturtle_fr/" => 'Import the French translation of kturtle into the DB.',
+      "drush btrp-import \\\n   KDE kturtle fr \$(pwd)/kturtle_fr/" => 'Import the French translation of kturtle into the DB.',
     ),
-    'aliases' => array('btrp-impo'),
+    'aliases' => array('btrp-import'),
   );
 
   // The command 'btr-project-import-votes'
@@ -194,9 +193,9 @@ function btranslator_drush_help($section) {
   switch ($section) {
     case 'drush:btr-project-list':
       return dt("List imported projects, filtered by origin/project.");
-    case 'drush:btr-project-import-templates':
+    case 'drush:btr-project-add':
       return dt("Import the POT files of a project into the B-Translator DB.");
-    case 'drush:btr-project-import-translations':
+    case 'drush:btr-project-import':
       return dt("Import the PO files of a project/language into the DB.");
     case 'drush:btr-project-delete':
       return dt("Erase a project from the DB.");
@@ -224,18 +223,18 @@ function drush_btranslator_btr_project_list() {
 }
 
 /**
- * Command callback for btr-project-import-templates.
+ * Command callback for btr-project-add.
  */
-function drush_btranslator_btr_project_import_templates($origin, $project, $path) {
-  btr::project_import_pot($origin, $project, $path, $GLOBALS['user']->uid);
+function drush_btranslator_btr_project_add($origin, $project, $path) {
+  btr::project_add($origin, $project, $path, $GLOBALS['user']->uid);
 }
 
 /**
- * Command callback for btr-project-import-translations.
+ * Command callback for btr-project-import.
  */
-function drush_btranslator_btr_project_import_translations($origin, $project, $lng, $path) {
+function drush_btranslator_btr_project_import($origin, $project, $lng, $path) {
   try {
-    $errors = btr::project_import_po($origin, $project, $lng, $path, $GLOBALS['user']->uid);
+    $errors = btr::project_import($origin, $project, $lng, $path, $GLOBALS['user']->uid);
     foreach ($errors as $error)  drush_log($error, 'error');
   }
   catch (Exception $e) {

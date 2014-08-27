@@ -30,7 +30,7 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function project_import_po($origin, $project, $lng, $path, $uid = 0) {
+function project_import($origin, $project, $lng, $path, $uid = 0) {
   // Switch to the given user.
   global $user;
   $original_user = $user;
