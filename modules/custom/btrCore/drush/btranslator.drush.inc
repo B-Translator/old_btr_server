@@ -7,9 +7,9 @@
 require_once(dirname(__FILE__) . '/btr-project-list.inc');
 require_once(dirname(__FILE__) . '/btr-project-add.inc');
 require_once(dirname(__FILE__) . '/btr-project-import.inc');
-require_once(dirname(__FILE__) . '/btr-project-import-votes.inc');
 require_once(dirname(__FILE__) . '/btr-project-delete.inc');
 require_once(dirname(__FILE__) . '/btr-project-export.inc');
+require_once(dirname(__FILE__) . '/btr-vote-import.inc');
 
 /**
  * Implementation of hook_drush_command().
@@ -22,9 +22,9 @@ function btranslator_drush_command() {
     'btr-project-list' => _btr_project_list_drush_command(),
     'btr-project-add' => _btr_project_add_drush_command(),
     'btr-project-import' => _btr_project_import_drush_command(),
-    'btr-project-import-votes' => _btr_project_import_votes_drush_command(),
     'btr-project-delete' => _btr_project_delete_drush_command(),
     'btr-project-export' => _btr_project_export_drush_command(),
+    'btr-vote-import' => _btr_vote_import_drush_command(),
   );
 
   // These will appear in the list of topics when `drush topic` is executed.
@@ -57,12 +57,12 @@ function btranslator_drush_help($section) {
       return _btr_project_add_drush_help();
     case 'drush:btr-project-import':
       return _btr_project_import_drush_help();
-    case 'drush:btr-project-import-votes':
-      return _btr_project_import_votes_drush_help();
-    case 'drush:btr-project-delete':
-      return _btr_project_delete_drush_help();
     case 'drush:btr-project-export':
       return _btr_project_export_drush_help();
+    case 'drush:btr-project-delete':
+      return _btr_project_delete_drush_help();
+    case 'drush:btr-vote-import':
+      return _btr_vote_import_drush_help();
     case 'meta:btranslator:title':
       return dt("B-Translator Commands");
     case 'meta:btranslator:summary':

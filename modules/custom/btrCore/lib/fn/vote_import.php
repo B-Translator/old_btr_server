@@ -8,7 +8,7 @@ namespace BTranslator;
 use \btr;
 
 /**
- * Importing translations from PO files.
+ * Import translations and votes from PO files.
  *
  * It is like a bulk translation and voting service. For any
  * translation in the PO files, it will be added as a suggestion if
@@ -37,7 +37,7 @@ use \btr;
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function translations_import($uid, $lng, $path) {
+function vote_import($uid, $lng, $path) {
   // Switch to the user that has uploaded the file.
   global $user;
   $original_user = $user;

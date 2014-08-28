@@ -321,7 +321,7 @@ function btrCore_import_translations($params) {
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
   // Import the PO files.
-  btr::translations_import($account->uid, $lng, $tmpdir);
+  btr::vote_import($account->uid, $lng, $tmpdir);
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');

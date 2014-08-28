@@ -196,11 +196,11 @@ function _btrServices_translations() {
     'access arguments' => array('btranslator-vote'),
   );
 
-  // Import translations from PO files.
+  // Import translations and votes from PO files.
   $translations['actions']['import'] = array(
-    'help' => 'Import translations from PO files.',
+    'help' => 'Import translations and votes from PO files.',
     'file' => $file,
-    'callback' => '_btrServices_translations_import',
+    'callback' => '_btrServices_vote_import',
     'args' => array(
       array(
         'name' => 'params',
@@ -634,7 +634,7 @@ function _btrServices_translations_submit($params) {
 }
 
 /**
- * Bulk import of translations from PO files.
+ * Bulk import of translations and votes from PO files.
  *
  * @param $params
  *   Associative array of the POST data, which contains:
@@ -648,7 +648,7 @@ function _btrServices_translations_submit($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btrServices_translations_import($params) {
+function _btrServices_vote_import($params) {
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
     $msg = t('You do not have enough rights for submitting translations!');

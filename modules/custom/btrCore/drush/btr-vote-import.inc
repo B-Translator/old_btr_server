@@ -1,8 +1,8 @@
 <?php
 /**
- * Description of the command 'btr-project-import-votes'.
+ * Description of the command 'btr-vote-import'.
  */
-function _btr_project_import_votes_drush_command() {
+function _btr_vote_import_drush_command() {
   return array(
     'description' => "Bulk import of translations and votes from PO files.
 ",
@@ -16,20 +16,20 @@ function _btr_project_import_votes_drush_command() {
     'examples' => array(
       "drush btrp-vote --user=user1 fr \$(pwd)/kturtle_fr/" => 'Vote as user1 all the given French translations.',
     ),
-    'aliases' => array('btrp-vote'),
+    'aliases' => array('btr-vote'),
   );
 }
 
 /**
- * Help text for the command 'btr-project-import-votes'.
+ * Help text for the command 'btr-vote-import'.
  */
-function _btr_project_import_votes_drush_help() {
-  return dt('Import votes from PO files.');
+function _btr_vote_import_drush_help() {
+  return dt('Import translations and votes from PO files.');
 }
 
 /**
- * Callback function for the command 'btr-project-import-votes'.
+ * Callback function for the command 'btr-vote-import'.
  */
-function drush_btranslator_btr_project_import_votes($lng, $path) {
-  btr::translations_import($GLOBALS['user']->uid, $lng, $path);
+function drush_btranslator_btr_vote_import($lng, $path) {
+  btr::vote_import($GLOBALS['user']->uid, $lng, $path);
 }
