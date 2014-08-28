@@ -4,8 +4,7 @@
  */
 function _btr_project_import_drush_command() {
   return array(
-    'description' => "Import the translation (PO) files of a project/language into the DB.
-",
+    'description' => "Import the PO files of a project/language into the DB.",
     'arguments' => array(
       'origin'  => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
       'project' => 'The name of the project.',

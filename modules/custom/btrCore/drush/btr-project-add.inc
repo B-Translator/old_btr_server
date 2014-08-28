@@ -4,8 +4,7 @@
  */
 function _btr_project_add_drush_command() {
   return array(
-    'description' => "Import the POT files of a project into the B-Translator DB.
-",
+    'description' => "Import the POT files of a project into the B-Translator DB.",
     'arguments' => array(
       'origin' => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
       'project' => 'The name of the project that is being imported.',

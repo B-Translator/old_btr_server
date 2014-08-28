@@ -11,7 +11,7 @@ use \btr;
  * Delete everything related to the given origin and project.
  *
  * It will delete templates, locations, files, snapshots, diffs
- * and the projects itself (but not the strings, translations, etc.)
+ * and the projects itself.
  * If no project is given, then all the projects of the given origin
  * will be deleted. If the origin is NULL, then all the projects
  * of the given name (from any origin) will be deleted.
@@ -23,11 +23,11 @@ use \btr;
  *   The name of the project to be deleted.
  *
  * @param $erase
- *   If true, then snapshots and diffs are deleted as well.
+ *   Delete as well snapshots and diffs.
  *
  * @param $purge
- *   If true, delete as well any dangling strings that don't belong
- *   to any project (and their translations that have no votes).
+ *   Delete as well any dangling strings that don't belong to any
+ *   project (and their translations that have no votes).
  */
 function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TRUE) {
   // The parameters should not be both NULL.

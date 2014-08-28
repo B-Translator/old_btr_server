@@ -4,11 +4,7 @@
  */
 function _btr_project_list_drush_command() {
   return array(
-    'description' => "List imported projects, filtered by origin/project.
-
-Options origin and project can contain '%' (for LIKE matches).
-If --project='-' then only a list of 'origin' is outputed.
-",
+    'description' => "List imported projects, filtered by origin/project.",
     'arguments' => array(
     ),
     'options' => array(
@@ -27,7 +23,11 @@ If --project='-' then only a list of 'origin' is outputed.
  * Help text for the command 'btr-project-list'.
  */
 function _btr_project_list_drush_help() {
-  return dt("List imported projects, filtered by origin/project.");
+  return dt("List imported projects, filtered by origin/project.
+
+Options origin and project can contain '%' (for LIKE matches).
+If --project='-' then only a list of 'origin' is outputed.
+");
 }
 
 /**

@@ -4,13 +4,7 @@
  */
 function _btr_project_delete_drush_command() {
   return array(
-    'description' => "Delete everything related to the given origin and project
-(but not the strings, translations, etc.)
-
-If no project is given, then all the projects of the given origin
-will be deleted. If the origin is NULL, then all the projects
-of the given name (from any origin) will be deleted.
-",
+    'description' => "Delete a project from the DB.",
     'arguments' => array(
     ),
     'options' => array(
@@ -30,7 +24,11 @@ of the given name (from any origin) will be deleted.
  * Help text for the command 'btr-project-delete'.
  */
 function _btr_project_delete_drush_help() {
-  return dt("Delete a project from the DB.");
+  return "Delete everything related to the given origin and project.
+
+If no project is given, then all the projects of the given origin
+will be deleted. If the origin is NULL, then all the projects
+of the given name (from any origin) will be deleted.";
 }
 
 /**

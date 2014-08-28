@@ -4,22 +4,7 @@
  */
 function _btr_project_export_drush_command() {
   return array(
-    'description' => "Export the PO files of a project from the DB.
-
-The export mode 'most_voted' (which is the default one) exports the
-most voted translations and suggestions.
-
-The export mode 'preferred' gives priority to translations that are
-voted by a certain user or a group of users. It requires an additional
-option (preferred_voters) to specify the user (or a list of users)
-whose translations are preferred. If a string has no translation that
-is voted by any of the preferred users, then the most voted
-translation is exported.
-
-The export mode 'original' exports the translations of the original
-file that was imported (useful for making an initial snapshot of the
-project).
-",
+    'description' => "Export the PO files of a project from the DB.",
     'arguments' => array(
       'origin' => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
       'project' => 'The name of the project that is being exported.',
@@ -44,7 +29,21 @@ project).
  * Help text for the command 'btr-project-export'.
  */
 function _btr_project_export_drush_help() {
-  return dt("Export PO files of a project from the DB.");
+  return "Export the PO files of a project from the DB.
+
+The export mode 'most_voted' (which is the default one) exports the
+most voted translations and suggestions.
+
+The export mode 'preferred' gives priority to translations that are
+voted by a certain user or a group of users. It requires an additional
+option (preferred_voters) to specify the user (or a list of users)
+whose translations are preferred. If a string has no translation that
+is voted by any of the preferred users, then the most voted
+translation is exported.
+
+The export mode 'original' exports the translations of the original
+file that was imported (useful for making an initial snapshot of the
+project).";
 }
 
 /**

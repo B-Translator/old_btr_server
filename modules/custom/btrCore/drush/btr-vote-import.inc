@@ -4,8 +4,7 @@
  */
 function _btr_vote_import_drush_command() {
   return array(
-    'description' => "Bulk import of translations and votes from PO files.
-",
+    'description' => "Bulk import of translations and votes from PO files.",
     'arguments' => array(
       'lng'     => 'The language of translation (de, fr, sq, en_GB, etc.)',
       'path' => 'The directory of the PO files (absolute path or relative to DRUPAL_ROOT).',
@@ -24,7 +23,7 @@ function _btr_vote_import_drush_command() {
  * Help text for the command 'btr-vote-import'.
  */
 function _btr_vote_import_drush_help() {
-  return dt('Import translations and votes from PO files.');
+  return dt('Bulk import of translations and votes from PO files.');
 }
 
 /**
