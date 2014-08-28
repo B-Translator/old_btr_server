@@ -42,7 +42,7 @@ class POWriter {
 
   protected function write_headers($headers, $comments) {
     if (!empty($comments)) {
-      $comment_lines = explode("\n", $comments);
+      $comment_lines = preg_split('~\R~', $comments);
       foreach ($comment_lines as $comment) {
         $this->w_line('# ' . $comment);
       }
@@ -50,7 +50,7 @@ class POWriter {
 
     $this->w_line('msgid ""');
     $this->w_line('msgstr ""');
-    $arr_headers = explode('\n', $headers);
+    $arr_headers = preg_split('~\R~', $headers);
     foreach ($arr_headers as $header) {
       if ($header=='')  continue;
       $this->w_line($this->encode($header . "\n"));
@@ -75,6 +75,7 @@ class POWriter {
     if (isset($entry->flags)) {
       $flags = explode(' ', $entry->flags);
       foreach ($flags as $flag) {
+	if (empty($flag))  continue;
         $this->w_line('#, ' . $flag);
       }
     }
@@ -122,7 +123,7 @@ class POWriter {
   }
 
   protected function write_msgx($prefix, $type, $content) {
-    $lines = preg_split('~(*BSR_ANYCRLF)\R|\\\\n~', $content);
+    $lines = preg_split('~\R~', $content);
     if (count($lines) == 1) {
       $this->w_line($prefix . $type . ' ' . $this->encode($lines[0]));
     }
@@ -143,19 +144,6 @@ class POWriter {
    * and surround it by double quotes.
    */
   private function encode($str) {
-    $str1 = '"' . addcslashes($str, "\v\t\n\r\f\"\\") . '"';
-    return $str1;
-
-    // Another solution would be:
-    // $str1 = json_encode($str, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    //
-    // However the constants JSON_UNESCAPED_UNICODE and JSON_UNESCAPED_SLASHES
-    // are not defined on PHP < 5.4
-    // For PHP 5.3 this could be another solution:
-    //
-    // $str1 = mb_encode_numericentity($str, array (0x80, 0xffff, 0, 0xffff), 'UTF-8');
-    // $str1 = json_encode($str1);
-    // $str1 = mb_decode_numericentity($str1, array (0x80, 0xffff, 0, 0xffff), 'UTF-8');
-    // $str1 = str_replace("\\/","/", $str1);
+    return json_encode($str, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
   }
 }

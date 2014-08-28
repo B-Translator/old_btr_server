@@ -96,7 +96,7 @@ function _process_po_file($potid, $tplname, $lng, $file, $filename) {
   $headers = $comments = NULL;
   if ($entries[0]['msgid'] == '') {
     $headers = $entries[0]['msgstr'];
-    $comments = isset($entries[0]['translator-comments']) ? $entries[0]['translator-comments'] : '';
+    $comments = $entries[0]['translator-comments'];
   }
 
   // Add a file and get its id.
@@ -183,12 +183,12 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
 function _get_string_sguid($entry) {
   // Get the string.
   $string = $entry['msgid'];
-  if (isset($entry['msgid_plural'])) {
+  if ($entry['msgid_plural'] !== NULL) {
     $string .= "\0" . $entry['msgid_plural'];
   }
 
   // Get the context.
-  $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
+  $context = $entry['msgctxt'];
 
   // Get the $sguid of this string.
   $sguid = sha1($string . $context);

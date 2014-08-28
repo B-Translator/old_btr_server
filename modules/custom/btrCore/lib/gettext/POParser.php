@@ -18,6 +18,7 @@
  */
 
 namespace BTranslator;
+use \Exception;
 
 class POParser {
   private $_filename;
@@ -55,60 +56,26 @@ class POParser {
    * @see http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files
    */
 
-  protected function _dequote($str) {
-    return substr($str, 1, -1);
+  protected function decode($str) {
+    return json_decode($str);
   }
 
   /**
    * Return the string between the quotes, after the first space.
    * For example: msgid "...value_of_msgid..."
    */
-  protected function _get_value($line) {
-    return $this->_dequote(substr($line, strpos($line, ' ') + 1));
-  }
-
-  /**
-   * Get the headers of the PO file (from the msgstr of the first (empty) entry)
-   * and return them as an array.
-   */
-  public function parse_headers($str_headers) {
-    $headers = array(
-      'Project-Id-Version'            => '',
-      'Report-Msgid-Bugs-To'          => '',
-      'POT-Creation-Date'             => '',
-      'PO-Revision-Date'              => '',
-      'Last-Translator'               => '',
-      'Language-Team'                 => '',
-      'Content-Type'                  => '',
-      'Content-Transfer-Encoding'     => '',
-      'Plural-Forms'                  => '',
-    );
-
-    $lines = explode('\n', $str_headers);
-    for ($i=0, $n=count($lines); $i < $n; $i++) {
-      $line = $lines[$i];
-
-      $colonIndex = strpos($line, ':');
-      if ($colonIndex === FALSE)  continue;
-
-      $headerName = substr($line, 0, $colonIndex);
-      if (!isset($headers[$headerName]))  continue;
-
-      // skip the white space after the colon
-      $headers[$headerName] = substr($line, $colonIndex + 1);
-    }
-
-    return $headers;
+  protected function get_string($line) {
+    return $this->decode(substr($line, strpos($line, ' ') + 1));
   }
 
   public function parse($filename) {
     // basic file verification
     if (!is_file($filename)) {
-      throw new \Exception('The specified file does not exist.');
+      throw new Exception('The specified file does not exist.');
     }
     $ext = substr($filename, strrpos($filename, '.'));
     if ($ext != '.po' and $ext != '.pot') {
-      throw new \Exception('The specified file is not a PO/POT file.');
+      throw new Exception('The specified file is not a PO/POT file.');
     }
 
     // read file as an array of lines
@@ -120,7 +87,19 @@ class POParser {
     $block = '';
 
     $entries = array();
-    $entry = array();
+    $entry = array(
+      'translator-comments' => NULL,
+      'extracted-comments' => NULL,
+      'references' => array(),
+      'flags' => array(),
+      'previous-msgctxt' => NULL,
+      'previous-msgid' => NULL,
+      'previous-msgid_plural' => NULL,
+      'msgctxt' => NULL,
+      'msgid' => NULL,
+      'msgid_plural' => NULL,
+      'msgstr' => NULL,
+    );
     for ($i=0, $n = count($lines); $i < $n; $i++) {
       $line = $lines[$i];
 
@@ -128,7 +107,19 @@ class POParser {
       if (trim($line) == '') {
         if ($block == 'msgstr') {
           $entries[] = $entry;
-          $entry = array();
+          $entry = array(
+            'translator-comments' => NULL,
+            'extracted-comments' => NULL,
+            'references' => array(),
+            'flags' => array(),
+            'previous-msgctxt' => NULL,
+            'previous-msgid' => NULL,
+            'previous-msgid_plural' => NULL,
+            'msgctxt' => NULL,
+            'msgid' => NULL,
+            'msgid_plural' => NULL,
+            'msgstr' => NULL,
+          );
           $block = '';
         }
         continue;
@@ -136,7 +127,7 @@ class POParser {
 
       // translator comments
       if (strpos($line, '# ') === 0) {
-        if (!isset($entry['translator-comments'])) {
+        if (empty($entry['translator-comments'])) {
           $entry['translator-comments'] = substr($line, 2);
         }
         else {
@@ -147,7 +138,7 @@ class POParser {
 
       // extracted comments
       if (strpos($line, '#. ') === 0) {
-        if (!isset($entry['extracted-comments'])) {
+        if (empty($entry['extracted-comments'])) {
           $entry['extracted-comments'] = substr($line, 3);
         }
         else {
@@ -158,7 +149,7 @@ class POParser {
 
       // references
       if (strpos($line, '#: ') === 0) {
-        if (!isset($entry['references'])) {
+        if (empty($entry['references'])) {
           $entry['references'] = array();
         }
         $entry['references'][] = substr($line, 3);
@@ -167,7 +158,7 @@ class POParser {
 
       // flags
       if (strpos($line, '#, ') === 0) {
-        if (!isset($entry['flags'])) {
+        if (empty($entry['flags'])) {
           $entry['flags'] = array();
         }
         $entry['flags'][] = substr($line, 3);
@@ -180,28 +171,28 @@ class POParser {
 
         // previous msgctxt
         if (strpos($comment, 'msgctxt ') === 0) {
-          $entry['previous-msgctxt'] = $this->_get_value($comment);
+          $entry['previous-msgctxt'] = $this->get_string($comment);
           $block = 'previous-msgctxt';
           continue;
         }
 
         // previous msgid
         if (strpos($comment, 'msgid ') === 0) {
-          $entry['previous-msgid'] = $this->_get_value($comment);
+          $entry['previous-msgid'] = $this->get_string($comment);
           $block = 'previous-msgid';
           continue;
         }
 
         // previous msgid_plural
         if (strpos($comment, 'msgid_plural ') === 0) {
-          $entry['previous-msgid_plural'] = $this->_get_value($comment);
+          $entry['previous-msgid_plural'] = $this->get_string($comment);
           $block = 'previous-msgid_plural';
           continue;
         }
 
         // multi-line previous-msgctxt or previous-msgid or previous-msgid_plural
         if ($comment[0] == '"') {
-          $entry[$block] .= $this->_dequote($comment);
+          $entry[$block] .= $this->decode($comment);
           continue;
         }
 
@@ -210,38 +201,38 @@ class POParser {
 
       // msgctxt
       if (strpos($line, 'msgctxt ') === 0) {
-        $entry['msgctxt'] = $this->_get_value($line);
+        $entry['msgctxt'] = $this->get_string($line);
         $block = 'msgctxt';
         continue;
       }
 
       // msgid
       if (strpos($line, 'msgid ') === 0) {
-        $entry['msgid'] = $this->_get_value($line);
+        $entry['msgid'] = $this->get_string($line);
         $block = 'msgid';
         continue;
       }
 
       // msgid_plural
       if (strpos($line, 'msgid_plural ') === 0) {
-        $entry['msgid_plural'] = $this->_get_value($line);
+        $entry['msgid_plural'] = $this->get_string($line);
         $block = 'msgid_plural';
         continue;
       }
 
       // msgstr (no plural forms)
       if (strpos($line, 'msgstr ') === 0) {
-        $entry['msgstr'] = $this->_get_value($line);
+        $entry['msgstr'] = $this->get_string($line);
         $block = 'msgstr';
         continue;
       }
 
       // msgstr (plural forms)
       if (strpos($line, 'msgstr[') === 0) {
-        if (!isset($entry['msgstr'])) {
+        if (empty($entry['msgstr'])) {
           $entry['msgstr'] = array();
         }
-        $entry['msgstr'][] = $this->_get_value($line);
+        $entry['msgstr'][] = $this->get_string($line);
         $block = 'msgstr';
         continue;
       }
@@ -250,19 +241,19 @@ class POParser {
       if ($line[0] === '"') {
         // multi-line msgid or msgid_plural
         if ($block == 'msgctxt' or $block == 'msgid' or $block == 'msgid_plural') {
-          $entry[$block] .= $this->_dequote($line);
+          $entry[$block] .= $this->decode($line);
           continue;
         }
 
         // multi-line msgstr
         if ($block == 'msgstr') {
           if (!is_array($entry['msgstr'])) {
-            $entry['msgstr'] .= $this->_dequote($line);
+            $entry['msgstr'] .= $this->decode($line);
             continue;
           }
           else {
             $last = count($entry['msgstr']) - 1;
-            $entry['msgstr'][$last] .= $this->_dequote($line);
+            $entry['msgstr'][$last] .= $this->decode($line);
             continue;
           }
         }

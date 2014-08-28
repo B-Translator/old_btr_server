@@ -115,7 +115,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
 function _add_string($entry) {
   // Get the string.
   $string = $entry['msgid'];
-  if (isset($entry['msgid_plural'])) {
+  if ($entry['msgid_plural'] !== NULL) {
     $string .= "\0" . $entry['msgid_plural'];
   }
 
@@ -125,7 +125,7 @@ function _add_string($entry) {
   if (preg_match('/.*translator.*credit.*/', $string))  return NULL;
 
   // Get the context.
-  $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
+  $context = $entry['msgctxt'];
 
   // Get the $sguid of this string.
   $sguid = sha1($string . $context);
@@ -161,15 +161,6 @@ function _add_string($entry) {
  * Insert a new record on the locations table
  */
 function _insert_location($potid, $sguid, $entry) {
-  $entry += array(
-    'translator-comments' => NULL,
-    'extracted-comments' => NULL,
-    'references' => array(),
-    'flags' => array(),
-    'previous-msgctxt' => NULL,
-    'previous-msgid' => NULL,
-    'previous-msgid_plural' => NULL,
-  );
   btr_insert('btr_locations')
     ->fields(array(
         'sguid' => $sguid,
