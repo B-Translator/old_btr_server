@@ -29,8 +29,14 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *
  * @param $uid
  *   ID of the user that has requested the import.
+ *
+ * @param $quiet
+ *   Don't print progress output (default FALSE).
  */
-function project_import($origin, $project, $lng, $path, $uid = 0) {
+function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE) {
+  // Print progress output.
+  $quiet || print "project_import: $origin/$project/$lng: $path\n";
+
   // Switch to the given user.
   global $user;
   $original_user = $user;
@@ -58,6 +64,9 @@ function project_import($origin, $project, $lng, $path, $uid = 0) {
     // Get the filename relative to the path, and the name of the template.
     $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.po?$#', '', $filename);
+
+    // Print progress output.
+    $quiet || print "import_po_file: $filename\n";
 
     // Get the template id.
     $query = 'SELECT potid FROM {btr_templates}

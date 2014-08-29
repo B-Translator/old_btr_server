@@ -25,8 +25,14 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *
  * @param $uid
  *   ID of the user that has requested the import.
+ *
+ * @param $quiet
+ *   Don't print progress output (default FALSE).
  */
-function project_add($origin, $project, $path, $uid = 0) {
+function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
+  // Print progress output.
+  $quiet || print "project_add: $origin/$project: $path\n";
+
   // Switch to the given user.
   global $user;
   $original_user = $user;
@@ -61,6 +67,9 @@ function project_add($origin, $project, $path, $uid = 0) {
     // Get the filename relative to the path, and the name of the template.
     $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.pot?$#', '', $filename);
+
+    // Print progress output.
+    $quiet || print "import_pot_file: $filename\n";
 
     // Process the POT file.
     _process_pot_file($pguid, $tplname, $file->uri, $filename);
