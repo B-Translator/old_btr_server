@@ -9,6 +9,10 @@ require_once(dirname(__FILE__) . '/btr-project-add.inc');
 require_once(dirname(__FILE__) . '/btr-project-import.inc');
 require_once(dirname(__FILE__) . '/btr-project-delete.inc');
 require_once(dirname(__FILE__) . '/btr-project-export.inc');
+require_once(dirname(__FILE__) . '/btr-project-diff.inc');
+require_once(dirname(__FILE__) . '/btr-project-diff-ls.inc');
+require_once(dirname(__FILE__) . '/btr-project-diff-get.inc');
+require_once(dirname(__FILE__) . '/btr-project-snapshot.inc');
 require_once(dirname(__FILE__) . '/btr-vote-import.inc');
 
 /**
@@ -24,6 +28,10 @@ function btranslator_drush_command() {
     'btr-project-import' => _btr_project_import_drush_command(),
     'btr-project-delete' => _btr_project_delete_drush_command(),
     'btr-project-export' => _btr_project_export_drush_command(),
+    'btr-project-diff' => _btr_project_diff_drush_command(),
+    'btr-project-diff-ls' => _btr_project_diff_ls_drush_command(),
+    'btr-project-diff-get' => _btr_project_diff_get_drush_command(),
+    'btr-project-snapshot' => _btr_project_snapshot_drush_command(),
     'btr-vote-import' => _btr_vote_import_drush_command(),
   );
 
@@ -61,6 +69,14 @@ function btranslator_drush_help($section) {
       return _btr_project_export_drush_help();
     case 'drush:btr-project-delete':
       return _btr_project_delete_drush_help();
+    case 'drush:btr-project-diff':
+      return _btr_project_diff_drush_help();
+    case 'drush:btr-project-diff-ls':
+      return _btr_project_diff_ls_drush_help();
+    case 'drush:btr-project-diff-get':
+      return _btr_project_diff_get_drush_help();
+    case 'drush:btr-project-snapshot':
+      return _btr_project_snapshot_drush_help();
     case 'drush:btr-vote-import':
       return _btr_vote_import_drush_help();
     case 'meta:btranslator:title':
