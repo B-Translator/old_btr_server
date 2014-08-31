@@ -30,8 +30,12 @@ function _btr_project_diff_ls_drush_help() {
  * Callback function for the command 'btr-project-diff-ls'.
  */
 function drush_btranslator_btr_project_diff_ls($origin, $project, $lng) {
+  $arr_diffs = array();
   $diff_list = btr::project_diff_list($origin, $project, $lng);
   foreach ($diff_list as $diff) {
-    print "$diff->nr \t $diff->time \t $diff->comment \n";
+    // Separate fields by TAB.
+    $arr_diffs[] = implode("\t", array($diff->nr, $diff->time, $diff->comment));
   }
+  $output = implode("\n", $arr_diffs) . "\n";
+  print $output;
 }

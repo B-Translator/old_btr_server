@@ -277,11 +277,17 @@ function btrCore_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL)
 
   $path = drupal_get_path('module', 'btrCore') . '/data/export';
   if (empty($nr)) {
-    $output = shell_exec("$path/db_diff.php list $origin $project $lng");
+    $arr_diffs = array();
+    $diff_list = btr::project_diff_list($origin, $project, $lng);
+    foreach ($diff_list as $diff) {
+      // Separate fields by TAB.
+      $arr_diffs[] = implode("\t", array($diff->nr, $diff->time, $diff->comment));
+    }
+    $output = implode("\n", $arr_diffs) . "\n";
   }
   else {
     $fmt = ($format == 'ediff' ? 'ediff' : 'diff');
-    $output = shell_exec("$path/db_diff.php get $origin $project $lng $nr $fmt");
+    $output = btr::project_diff_get($origin, $project, $lng, $nr, $fmt);
   }
   print $output;
 
@@ -327,4 +333,3 @@ function btrCore_get_exported_file($filename =NULL) {
   // Stop execution.
   exit(0);
 }
-

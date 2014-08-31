@@ -161,39 +161,3 @@ function btr_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='
   // Stop execution.
   exit(0);
 }
-
-/**
- * Return the diff/ediff of the PO files for a given origin/project/lng/nr.
- * It gets the parameters: origin/project/lng[/nr[/ediff]].
- * If the parameter 'nr' is '-', it returns the latest most-voted suggestions
- * since the last snapshot.
- * If the parameter 'nr' is missing, it returns a list of the saved diffs instead.
- */
-function btr_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-  $lng = check_plain($lng);
-  $nr = check_plain($nr);
-  $format = check_plain($format);
-
-  $fmt = ($format == 'ediff' ? 'ediff' : 'diff');
-
-  set_time_limit(0);
-
-  $path = drupal_get_path('module', 'btrCore') . '/data/export';
-  if (empty($nr)) {
-    $output = shell_exec("$path/db_diff.php list $origin $project $lng");
-  }
-  elseif ($nr == '-') {
-    shell_exec("$path/export/make_diff.sh $origin $project $lng");
-    $fname = "$path/export/$origin-$project-$lng";
-    $output = file_get_contents($fname . ".$fmt");
-    shell_exec("rm $fname.tgz $fname.diff $fname.ediff");
-  }
-  else {
-    $output = shell_exec("$path/db_diff.php get $origin $project $lng $nr $fmt");
-  }
-  print $output;
-
-  exit();
-}

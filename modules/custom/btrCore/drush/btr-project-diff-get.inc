@@ -39,8 +39,6 @@ function drush_btranslator_btr_project_diff_get($origin, $project, $lng, $nr) {
   $format = ($format == 'ediff' ? 'ediff' : 'diff');
   $file = drush_get_option('output', NULL);
 
-  print "$origin, $project, $lng, $nr, $format, $file \n";
-
   // Get the diff.
   $diff = btr::project_diff_get($origin, $project, $lng, $nr, $format);
 
