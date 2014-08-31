@@ -36,24 +36,6 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
-  // Return a list of the templates (names of POT files) for a project.
-  $items['translations/project/templates'] = array(
-    'type'            => MENU_CALLBACK,
-    'title'           => 'Project Templates',
-    'page callback'   => 'btrCore_project_templates',
-    'file'            => 'includes/project_callback.inc',
-    'access callback' => TRUE,
-  );
-
-  // Return as plain-text the PO file for a given origin/project/lng.
-  $items['translations/project/export'] = array(
-    'type'            => MENU_CALLBACK,
-    'title'           => 'Project Export',
-    'page callback'   => 'btrCore_project_export',
-    'file'            => 'includes/project_callback.inc',
-    'access callback' => TRUE,
-  );
-
   // Return as an archive the PO files for a given origin/project/lng.
   // Usefull for projects that have many POT files, like LibreOffice, Mozilla, etc.
   $items['translations/project/export_tgz'] = array(
