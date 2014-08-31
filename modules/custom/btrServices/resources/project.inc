@@ -169,7 +169,7 @@ function _btrServices_project_export($params) {
     $params['export_mode'] = 'most_voted';
   }
 
-  $messages = btr_project_export(
+  $messages = btrCore_schedule_project_export(
     check_plain($params['origin']),
     check_plain($params['project']),
     check_plain($params['export_mode']),

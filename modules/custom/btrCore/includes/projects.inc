@@ -42,7 +42,7 @@
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function btr_project_export($origin, $project =NULL, $export_mode =NULL, $friends =NULL) {
+function btrCore_schedule_project_export($origin, $project =NULL, $export_mode =NULL, $friends =NULL) {
 
   // Check the project.
   if (empty($project) and !user_access('btranslator-export')) {
