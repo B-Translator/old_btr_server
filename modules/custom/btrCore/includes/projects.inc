@@ -108,7 +108,7 @@ function btr_project_export($origin, $project =NULL, $export_mode =NULL, $friend
     'origin' => $origin,
     'project' => empty($project) ? 'all' : $project,
     'export_mode' => $export_mode,
-    'voters' => implode(',', $arr_voters),
+    'preferred_voters' => $arr_voters,
   );
   btr_queue('export_project', array($queue_params));
 

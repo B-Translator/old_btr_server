@@ -174,44 +174,41 @@ function btrCore_export_project($export_params) {
   // Allow the export script to run until completion.
   set_time_limit(0);
 
+  // Get the parameters of export.
   $lng = $export_params->lng;
   $origin = $export_params->origin;
   $project = $export_params->project;
   $export_mode = $export_params->export_mode;
-  $voters = $export_params->voters;
+  $preferred_voters = $export_params->preferred_voters;
   $account = user_load($export_params->uid);
 
-  // Get the full path of the export file.
+  // Get the full path of the export files.
   $export_dir = variable_get('btr_export_path', '/var/www/exports');
   $username = strtr(strtolower($account->name), ' ', '_');
   $filename = "$username.$origin-$project-$lng";
-  $exports_url = url('translations/exports', array('absolute' => TRUE));
-  $export_url_tgz = $exports_url . '/' . $filename . '.tgz';
-  $export_url_diff = $exports_url . '/' . $filename . '.diff';
-  $export_url_ediff = $exports_url . '/' . $filename . '.ediff';
-  exec("rm -f $export_dir/$filename.tgz $export_dir/$filename.diff $export_dir/$filename.ediff");
+  $file_diff = "$export_dir/$filename.diff";
+  $file_ediff = "$export_dir/$filename.ediff";
+  $file_tgz = "$export_dir/$filename.tgz";
 
-  // Run the export script (with lowered priority).
-  $make_diff_sh = drupal_get_path('module', 'btrCore') . '/data/export/make_diff.sh';
-  $export_cmd = "nice $make_diff_sh $origin $project $lng $export_dir $filename";
-  $export_cmd = "export QUIET=true; $export_cmd";
-  if ($export_mode == 'preferred_by_me' or $export_mode == 'preferred_by_my_friends') {
-    $export_cmd = "export PO_EXPORT_MODE='preferred' ; export PO_EXPORT_VOTERS='$voters' ; $export_cmd";
-  }
-  exec($export_cmd);
+  // Get the latest translations and diffs with the last snapshot.
+  exec("rm -f $file_diff $file_ediff $file_tgz");
+  btr::project_diff($origin, $project, $lng,
+    $file_diff, $file_ediff, $file_tgz,
+    $export_mode, $preferred_voters);
 
   // Notify the user that the export is done.
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
+  $exports_url = url('translations/exports', array('absolute' => TRUE));
   $params = array(
     'type' => 'notify-that-export-is-done',
     'uid' => $account->uid,
     'project' => $origin . '/' . $project,
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
-    'export_url_tgz' => $export_url_tgz,
-    'export_url_diff' => $export_url_diff,
-    'export_url_ediff' => $export_url_ediff,
+    'export_url_tgz' => "$exports_url/$filename.tgz",
+    'export_url_diff' => "$exports_url/$filename.diff",
+    'export_url_ediff' => "$exports_url/$filename.ediff",
   );
   $queue->createItem((object)$params);
 

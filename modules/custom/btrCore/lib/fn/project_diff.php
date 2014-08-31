@@ -28,13 +28,22 @@ use \btr;
  *
  * @param $export_file
  *   The file where to output the latest export (in format tgz).
+ *
+ * @param $export_mode
+ *   Can be 'most_voted' (default), or 'preferred', or 'original'.
+ *
+ * @param $preferred_voters
+ *   Array of email addresses of users whose translations are preferred.
  */
 function project_diff($origin, $project, $lng,
-  $file_diff, $file_ediff, $export_file = NULL)
+  $file_diff, $file_ediff, $export_file = NULL,
+  $export_mode = 'most_voted', $preferred_voters = NULL)
 {
-  // Export the latest most_voted translations of the project.
+  // Export the latest translations of the project.
   $export_dir = exec('mktemp -d');
-  btr::project_export($origin, $project, $lng, $export_dir, $GLOBALS['user']->uid, TRUE);
+  btr::project_export($origin, $project, $lng, $export_dir,
+    $GLOBALS['user']->uid, $quiet = TRUE,
+    $export_mode, $preferred_voters);
 
   // Archive exported files in format tgz.
   if ($export_file !== NULL) {
