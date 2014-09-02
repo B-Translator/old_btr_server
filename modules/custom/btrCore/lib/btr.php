@@ -5,50 +5,132 @@
  * If the function btr::some_function_name() is called, this class
  * will convert it into a call to the function
  * 'BTranslator\some_function_name()'. If such a function is not
- * declared then it will try to load first the file
- * 'fn/some_function_name.php' and then call it. But if such a file
- * does not exist, then the files 'fn/some_function.php' and
- * 'fn/some.php' will be tried.
+ * declared then it will try to load these files (in this order):
+ *   - fn/some_function_name.php
+ *   - fn/some_function.php
+ *   - fn/some.php
+ *   - fn/some/function_name.php
+ *   - fn/some/function.php
+ *   - fn/some/function/name.php
+ * The first file that is found will be loaded (with require_once()).
  *
- * For the big functions it makes more sense to declare each one of
- * them in a separate file,and for the small functions it makes more
- * sense to declare several of them in the same file (which is named
- * as the common prefix of these files).
+ * For the big functions it makes more sense to declare each one of them in a
+ * separate file, and for the small functions it makes more sense to declare
+ * several of them in the same file (which is named as the common prefix of
+ * these files). If there is a big number of functions, it can be more
+ * suitable to organize them in subdirectories.
  *
  * See: http://stackoverflow.com/questions/4737199/autoloader-for-functions
  */
 class btr {
+  /**
+   * Make it TRUE to output debug info on '/tmp/btr.log'.
+   */
+  const DEBUG = FALSE;
+
+  /**
+   * The namespace of the functions.
+   */
+  const NS = 'BTranslator';
+
+  /**
+   * Relative directory where the functions are located.
+   */
+  const FN = 'fn';
+
   private function __construct() {}
   private function __wakeup() {}
   private function __clone() {}
 
+  /**
+   * Return the full name (with namespace) of the function to be called.
+   */
   protected static function function_name($function) {
-    return 'BTranslator\\' . $function;
-  }
-
-  protected static function file($fname) {
-    return dirname(__FILE__) . '/fn/' . $fname . '.php';
+    return self::NS . '\\' . $function;
   }
 
   /**
-   * If a function does not exist, try to load it.
+   * Return the full path of the file to be loaded (with require_once).
+   */
+  protected static function file($fname) {
+    return dirname(__FILE__) . '/' . self::FN . '/' . $fname . '.php';
+  }
+
+  /**
+   * If a function does not exist, try to load it from the proper file.
    */
   public static function __callStatic($function, $args) {
     $btr_function = self::function_name($function);
     if (!function_exists($btr_function)) {
-      $fname = $function;
-      while (!file_exists(self::file($fname)) and preg_match('/_/', $fname)) {
-        $fname = preg_replace('/_[^_]*$/', '', $fname);
-      }
-      if (file_exists(self::file($fname))) {
-        require_once(self::file($fname));
-      }
-      else {
+      // Try to load the file that contains the function.
+      if (!self::load_search_dirs($function) or !function_exists($btr_function)) {
         $dir = dirname(self::file($fname));
         $dir = str_replace(DRUPAL_ROOT, '', $dir);
-        throw new Exception("Function $btr_function cannot be found on $dir");
+        throw new Exception("Function $btr_function could not be found on $dir");
       }
     }
     return call_user_func_array($btr_function, $args);
+  }
+
+  /**
+   * Try to load files from subdirectories
+   * (by replacing '_' with '/' in the function name).
+   */
+  protected static function load_search_dirs($fname) {
+    do {
+      self::debug($fname);
+      if (file_exists(self::file($fname))) {
+	require_once(self::file($fname));
+	return TRUE;
+      }
+      if (self::load_search_files($fname)) {
+	return TRUE;
+      }
+      $fname1 = $fname;
+      $fname = preg_replace('#_#', '/', $fname, 1);
+    } while ($fname != $fname1);
+
+    return FALSE;
+  }
+
+  /**
+   * Try to load files from different file names
+   * (by removing the part after the last undescore in the functin name).
+   */
+  protected static function load_search_files($fname) {
+    $fname1 = $fname;
+    $fname = preg_replace('/_[^_]*$/', '', $fname);
+    while ($fname != $fname1) {
+      self::debug($fname);
+      if (file_exists(self::file($fname))) {
+	require_once(self::file($fname));
+	return TRUE;
+      }
+      $fname1 = $fname;
+      $fname = preg_replace('/_[^_]*$/', '', $fname);
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * Debug the order in which the files are tried to be loaded.
+   */
+  public static function debug($fname) {
+    if (!self::DEBUG) {
+      return;
+    }
+    $file = self::file($fname);
+    $file = str_replace(DRUPAL_ROOT, '', $file);
+    self::log($file, 'Autoload');
+  }
+
+  /**
+   * Output the given parameter to a log file (useful for debugging).
+   */
+  public static function log($var, $comment ='') {
+    $file = '/tmp/btr.log';
+    $content = "\n==> $comment: " . print_r($var, true);
+    file_put_contents($file, $content, FILE_APPEND);
   }
 }
