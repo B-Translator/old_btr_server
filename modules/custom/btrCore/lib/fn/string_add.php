@@ -1,5 +1,14 @@
 <?php
 /**
+ * @file
+ * Definition of function string_add() and string_del().
+ */
+
+namespace BTranslator;
+use \btr;
+use \DrupalQueue;
+
+/**
  * Add a new string to a project (useful for vocabularies).
  *
  * @param $params
@@ -20,14 +29,15 @@
  * @return
  *   The sguid of the new string, or NULL if such a string already exists.
  */
-function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NULL, $notify =FALSE) {
+function string_add($origin, $project, $tplname = NULL, $string, $context = NULL, $notify = FALSE) {
   if ($context === NULL)  $context = '';
   $sguid = sha1($string . $context);
 
   // Check whether this string already exists or not.
-  $query = "SELECT sguid FROM {btr_strings} WHERE sguid = :sguid";
-  $args = array(':sguid' => $sguid);
-  $field = btr_query($query, $args)->fetchField();
+  $field = btr_query(
+    'SELECT sguid FROM {btr_strings} WHERE sguid = :sguid',
+    array(':sguid' => $sguid)
+  )->fetchField();
   if (empty($field)) {
     // Insert a new string.
     btr_insert('btr_strings')
@@ -44,22 +54,24 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
 
   // Get the template id.
   if (empty($tplname))  $tplname = $project;
-  $query = "SELECT potid FROM {btr_templates}
-            WHERE pguid = :pguid AND tplname = :tplname";
-  $args = array(
-    ':pguid' => sha1($origin . $project),
-    ':tplname' => $tplname,
-  );
-  $potid = btr_query($query, $args)->fetchField();
+  $potid = btr_query(
+    'SELECT potid FROM {btr_templates}
+     WHERE pguid = :pguid AND tplname = :tplname',
+    array(
+      ':pguid' => sha1($origin . $project),
+      ':tplname' => $tplname,
+    ))
+    ->fetchField();
 
   // Check that the location does not already exist.
-  $query = "SELECT lid FROM {btr_locations}
-            WHERE sguid = :sguid AND potid = :potid";
-  $args = array(
-    ':sguid' => $sguid,
-    ':potid' => $potid,
-  );
-  $lid = btr_query($query, $args)->fetchField();
+  $lid = btr_query(
+    'SELECT lid FROM {btr_locations}
+     WHERE sguid = :sguid AND potid = :potid',
+    array(
+      ':sguid' => $sguid,
+      ':potid' => $potid,
+    ))
+    ->fetchField();
   if (!empty($lid)) {
     return NULL;
   }
@@ -82,16 +94,6 @@ function btr_add_string($origin, $project, $tplname =NULL, $string, $context =NU
 
 
 /**
- * Delete the string with the given id.
- */
-function btr_del_string($sguid) {
-  btr_delete('btr_strings')->condition('sguid', $sguid)->execute();
-  btr_delete('btr_locations')->condition('sguid', $sguid)->execute();
-  btr_delete('btr_translations')->condition('sguid', $sguid)->execute();
-}
-
-
-/**
  * Notify translators about the new string that was added.
  */
 function _btr_new_string_notification($project, $string, $sguid) {
@@ -99,19 +101,22 @@ function _btr_new_string_notification($project, $string, $sguid) {
   $lng = preg_replace('/^.*_/', '', $project);
 
   // Get all the translators for this language.
-  $query = "
-    SELECT t1.uid FROM users_roles t1
-    INNER JOIN role t2 ON (t2.rid = t1.rid)
-    LEFT JOIN field_data_field_translation_lng t3 ON (t3.entity_id = t1.uid)
-    WHERE t2.name = 'translator'
-      AND t3.field_translation_lng_value = :lng";
-  $uids = db_query($query, array(':lng' => $lng))->fetchCol();
+  $uids = db_query(
+    "SELECT t1.uid FROM {users_roles} t1
+     INNER JOIN {role} t2 ON (t2.rid = t1.rid)
+     LEFT JOIN {field_data_field_translation_lng} t3 ON (t3.entity_id = t1.uid)
+     WHERE t2.name = 'translator'
+       AND t3.field_translation_lng_value = :lng",
+    array(
+      ':lng' => $lng,
+    ))
+    ->fetchCol();
   $translators = user_load_multiple($uids);
 
   // Notify the translators about the new term.
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($translators as $translator) {
+  foreach ($translators as $key => $translator) {
     $notification_params = array(
       'type' => 'notify-translator-on-new-term',
       'uid' => $translator->uid,

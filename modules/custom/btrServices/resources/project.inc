@@ -203,7 +203,7 @@ function _btrServices_project_add_string($params) {
     'context' => NULL,
     'notify' => NULL,
   );
-  $sguid = btr_add_string(
+  $sguid = btr::string_add(
     check_plain($params['origin']),
     check_plain($params['project']),
     check_plain($params['tplname']),
@@ -224,7 +224,7 @@ function _btrServices_project_add_string($params) {
  */
 function _btrServices_project_del_string($params) {
   $sguid = check_plain($params['sguid']);
-  btr_del_string($sguid);
+  btr::string_del($sguid);
 }
 
 /**
