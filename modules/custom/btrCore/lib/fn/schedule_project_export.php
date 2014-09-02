@@ -1,8 +1,11 @@
 <?php
 /**
  * @file
- * Functions for exporting projects.
+ * Function: schedule_project_export()
  */
+
+namespace BTranslator;
+use \btr;
 
 /**
  * Schedule a project for export. When the request
@@ -37,7 +40,9 @@
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function btrCore_schedule_project_export($origin, $project, $lng, $export_mode = NULL, $preferred_voters = NULL) {
+function schedule_project_export($origin, $project, $lng,
+  $export_mode = NULL, $preferred_voters = NULL)
+{
   // Make sure that the given origin and project do exist.
   if (!btr::utils_project_exists($origin, $project)) {
     $msg = t("The project '!project' does not exist.",
@@ -46,6 +51,9 @@ function btrCore_schedule_project_export($origin, $project, $lng, $export_mode =
   }
 
   // Check the export_mode.
+  if (empty($params['export_mode'])) {
+    $params['export_mode'] = 'most_voted';
+  }
   if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
     $msg = t("Unknown export mode '!export_mode'.",
              array('!export_mode' => $export_mode));

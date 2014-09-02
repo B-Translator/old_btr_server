@@ -15,4 +15,3 @@ include_once dirname(__FILE__) . '/statistics.inc';
 include_once dirname(__FILE__) . '/search.inc';
 include_once dirname(__FILE__) . '/misc.inc';
 include_once dirname(__FILE__) . '/languages.inc';
-include_once dirname(__FILE__) . '/projects.inc';
