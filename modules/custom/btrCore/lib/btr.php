@@ -17,7 +17,7 @@
  * For the big functions it makes more sense to declare each one of them in a
  * separate file, and for the small functions it makes more sense to declare
  * several of them in the same file (which is named as the common prefix of
- * these files). If there is a big number of functions, it can be more
+ * these functions). If there is a big number of functions, it can be more
  * suitable to organize them in subdirectories.
  *
  * See: http://stackoverflow.com/questions/4737199/autoloader-for-functions
@@ -80,11 +80,11 @@ class btr {
     do {
       self::debug($fname);
       if (file_exists(self::file($fname))) {
-	require_once(self::file($fname));
-	return TRUE;
+        require_once(self::file($fname));
+        return TRUE;
       }
       if (self::load_search_files($fname)) {
-	return TRUE;
+        return TRUE;
       }
       $fname1 = $fname;
       $fname = preg_replace('#_#', '/', $fname, 1);
@@ -95,7 +95,7 @@ class btr {
 
   /**
    * Try to load files from different file names
-   * (by removing the part after the last undescore in the functin name).
+   * (by removing the part after the last undescore in the function name).
    */
   protected static function load_search_files($fname) {
     $fname1 = $fname;
@@ -103,8 +103,8 @@ class btr {
     while ($fname != $fname1) {
       self::debug($fname);
       if (file_exists(self::file($fname))) {
-	require_once(self::file($fname));
-	return TRUE;
+        require_once(self::file($fname));
+        return TRUE;
       }
       $fname1 = $fname;
       $fname = preg_replace('/_[^_]*$/', '', $fname);
@@ -116,7 +116,7 @@ class btr {
   /**
    * Debug the order in which the files are tried to be loaded.
    */
-  public static function debug($fname) {
+  protected static function debug($fname) {
     if (!self::DEBUG) {
       return;
     }
