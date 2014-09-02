@@ -37,14 +37,16 @@ class btr {
     $btr_function = self::function_name($function);
     if (!function_exists($btr_function)) {
       $fname = $function;
-      while (!file_exists(self::file($fname))) {
-	$fname = preg_replace('/_[^_]*$/', '', $fname);
+      while (!file_exists(self::file($fname)) and preg_match('/_/', $fname)) {
+        $fname = preg_replace('/_[^_]*$/', '', $fname);
       }
       if (file_exists(self::file($fname))) {
-	require_once(self::file($fname));
+        require_once(self::file($fname));
       }
       else {
-	// Output an error message.
+        $dir = dirname(self::file($fname));
+        $dir = str_replace(DRUPAL_ROOT, '', $dir);
+        throw new Exception("Function $btr_function cannot be found on $dir");
       }
     }
     return call_user_func_array($btr_function, $args);
