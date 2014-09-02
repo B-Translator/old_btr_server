@@ -47,7 +47,7 @@ function vote_add($tguid) {
   }
 
   // Clean any previous vote.
-  include_once(dirname(__FILE__) . '/vote_del_previous.php');
+  include_once(dirname(__FILE__) . '/del_previous.php');
   $nr = _vote_del_previous($tguid, $umail, $trans->sguid, $trans->lng);
 
   // Add the vote.
