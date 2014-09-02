@@ -260,28 +260,11 @@ function _btrServices_project_del_string($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_project_import($params) {
-  // Check access permissions.
-  if (!user_access('btranslator-import')) {
-    $msg = t('You do not have enough rights for importing projects!');
-    return array('messages' => array(array($msg, 'error')));
-  }
-
-  // Get the parameters.
+  // Get the uploaded file.
   if (!isset($_FILES['file'])) {
     return services_error('No file uploaded.', 406);
   }
   $uploaded_file = $_FILES['file'];
-  $origin = check_plain($params['origin']);
-  $project = check_plain($params['project']);
-
-  // Check that the given project does not belong to another user.
-  $query = "SELECT uid FROM {btr_projects} WHERE pguid = :pguid";
-  $args = array(':pguid' => sha1($origin . $project));
-  $uid = btr_query($query, $args)->fetchField();
-  if ($uid && ($uid != $GLOBALS['user']->uid)) {
-    $msg = t("There is already a project '!project' created by another user! Please choose another project name.", array('!project' => "$origin/$project"));
-    return array('messages' => array(array($msg, 'error')));
-  }
 
   // Check that a file is uploaded.
   if (!$uploaded_file['tmp_name']) {
@@ -293,61 +276,15 @@ function _btrServices_project_import($params) {
     return services_error('Error ' . $uploaded_file['error'] . 'happened during file upload.', 406);
   }
 
-  // Check the extension of the uploaded file.
-  $extensions = 'pot po tar gz tgz bz2 xz 7z zip';
-  $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
-  if (!preg_match($regex, $uploaded_file['name'])) {
-    $msg = t('Only files with the following extensions are allowed: %files-allowed.',
-           array('%files-allowed' => $extensions));
-    return array('messages' => array(array($msg, 'error')));
-  }
-
-  // Move the uploaded file to 'private://' (/var/www/uploads/).
-  $file_uri = 'private://' . $uploaded_file['name'];
-  if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
-    $msg = array(t('Failed to move uploaded file.'), 'error');
-    return array('messages' => array($msg));
-  }
-
-  // Save the file data to the DB.
-  $file = new stdClass();
-  $file->uid = $GLOBALS['user']->uid;
-  $file->status = FILE_STATUS_PERMANENT;
-  $file->filename = trim(drupal_basename($uploaded_file['name']), '.');
-  $file->uri = $file_uri;
-  $file->filemime = file_get_mimetype($file->filename);
-  $file->filesize = $uploaded_file['size'];
-  try {
-    $file = file_save($file);
-    $messages = array();
-  }
-  catch (Exception $e) {
-    $msg = array($e->getMessage(), 'error');
-    return array('messages' => array($msg));
-  }
-
-  // Schedule the import.
-  $queue_params = array(
-    'uid' => $GLOBALS['user']->uid,
-    'fid' => $file->fid,
-    'origin' => $origin,
-    'project' => $project,
+  // Schedule the project import.
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
   );
-  btr_queue('import_project', array($queue_params));
-
-  // Schedule a notification to the admin.
-  // TODO: Send this notification to the project admin.
-  $notify_admin = variable_get('btr_import_notify_admin', TRUE);
-  if ($notify_admin) {
-    $queue_params['type'] = 'notify-admin-on-import-request';
-    $queue_params['recipient'] = user_load(1)->mail;
-    $queue_params['username'] = $GLOBALS['user']->name;
-    $queue_params['filename'] = $file->filename;
-    btr_queue_notifications(array($params));
-  }
-
-  // Return a notification message.
-  $msg = t("Import of the project '!project' is scheduled. You will be notified by email when it is done.",
-         array('!project' => $origin . '/' . $project));
-  return array('messages' => array(array($msg, 'status')));
+  $messages = btr::schedule_project_import(
+    check_plain($params['origin']),
+    check_plain($params['project']),
+    $uploaded_file
+  );
+  return array('messages' => $messages);
 }
