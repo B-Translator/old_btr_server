@@ -49,22 +49,22 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
 }
 
 /**
- * Callback function for the menu 'translations/project/export_tgz'
+ * Callback function for the menu 'translations/project/export'
  *
- * Return an archive of PO files for a given origin/project/lng
- * (usefull for projects that have many POT files).  Does not allow
- * concurrent exports because they may affect the performance of the
- * server.  Parameters are received from the request (either GET or
+ * Return an archive of PO files for a given origin/project/lng.
+ *
+ * Does not allow concurrent exports because they may affect the performance
+ * of the server.  Parameters are received from the request (either GET or
  * POST). They are:
  *
  *  - origin
- *      Origin of the project (ubuntu, GNOME, KDE, etc.)
+ *      Origin of the project.
  *
  *  - project
- *      The name of the project to be exported.
+ *      The name of the project.
  *
  *  - lng
- *      Translation to be exported (de, fr, sq, en_GB, etc.)
+ *      Translation to be exported.
  *
  *  - export_mode
  *      Mode of export: most_voted | preferred | original
@@ -82,18 +82,18 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
  *      preferred.
  *
  * - preferred_voters
- *      Comma separated list of email addresses of preferred voters.
+ *      Comma separated list of usernames of the preferred voters.
  *
  * Examples:
- *   curl -k 'https://dev.btr.example.org/translations/project/export_tgz?origin=test&project=kturtle&lng=sq' > test1.tgz
- *   curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+ *   curl -k 'https://dev.btr.example.org/translations/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+ *   curl -k https://dev.l10n.org.al/translations/project/export \
  *        -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
- *   curl -k https://dev.l10n.org.al/translations/project/export_tgz \
+ *   curl -k https://dev.l10n.org.al/translations/project/export \
  *        -d origin=test -d project=kturtle -d lng=sq \
- *        -d preferred_voters=email1@example.com,email2@example.com \
- *        -d export_mode=preferred > test1.tgz
+ *        -d export_mode=preferred \
+ *        -d preferred_voters=user1,user2 > test1.tgz
  */
-function btrCore_project_export_tgz() {
+function btrCore_project_export() {
 
   // Try to avoid concurrent exports because they
   // may affect the performance of the server.
@@ -108,30 +108,60 @@ function btrCore_project_export_tgz() {
   $lng = check_plain($_REQUEST['lng']);
   $export_mode = check_plain($_REQUEST['export_mode']);
   $preferred_voters = check_plain($_REQUEST['preferred_voters']);
-  if ($project == 'all') {
-    print t("Error: Exporting all the projects is not allowed. Please specify a project.");
+
+  // Make sure that the given origin and project do exist.
+  if (!btr::utils_project_exists($origin, $project)) {
+    print t("The project '!project' does not exist.",
+      array('!project' => "$origin/$project"));
     drupal_exit();
   }
 
-  // Export files in a tgz archive.
-  set_time_limit(120);
-  $path = drupal_get_path('module', 'btrCore') . '/data/export';
-  $export_cmd = "$path/export_tgz.sh $origin $project $lng";
-  if ($export_mode == 'preferred_by_me'
-      or $export_mode == 'preferred_by_my_friends') {
-    $export_cmd = "export PO_EXPORT_MODE='preferred' ; export PO_EXPORT_VOTERS='$voters' ; $export_cmd";
+  // Check the export_mode.
+  if (empty($export_mode))  $export_mode = 'most_voted';
+  if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
+    print t("Unknown export mode '!export_mode'.",
+      array('!export_mode' => $export_mode));
+    drupal_exit();
   }
-  $tgz_file = exec($export_cmd);
+
+  // Get and check the list of preferred voters.
+  if ($export_mode == 'preferred') {
+    if (empty($preferred_voters)) {
+      print t("For mode 'preferred' parameter 'preferred_voters' should not be empty.") . "\n";
+      drupal_exit();
+    }
+    list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
+    if (!empty($error_messages)) {
+      foreach ($error_messages as $msg) {
+        print $msg[0] . "\n";
+      }
+      drupal_exit();
+    }
+  }
+
+  // Export translations of the project.
+  set_time_limit(0);
+  $export_dir = exec('mktemp -d');
+  btr::project_export($origin, $project, $lng, $export_dir,
+    $GLOBALS['user']->uid, $quiet = TRUE,
+    $export_mode, $arr_emails);
+  $file_tgz = tempnam('/tmp', 'export_') . '.tgz';
+  exec("tar -cz -f $file_tgz -C $export_dir .");
 
   // Send the headers.
-  header('Content-Type: application/octet-stream');
-  header('Content-Disposition: attachment; filename="' . basename($tgz_file) . '"');
+  $filename = "$origin-$project-$lng.tgz";
+  header('Content-Type: application/x-compressed');
+  header('Content-Disposition: attachment; filename="' . $filename . '"');
   header('Content-Transfer-Encoding: binary');
-  header("Content-Length: " . filesize($tgz_file));
+  header("Content-Length: " . filesize($file_tgz));
 
   // Open the file in a binary mode and dump it to the browser.
-  $fp = fopen($tgz_file, 'rb');
+  $fp = fopen($file_tgz, 'rb');
   fpassthru($fp);
+
+  // Cleanup temporary files.
+  unlink($file_tgz);
+  exec("rm -rf $export_dir");
 
   // Stop execution.
   lock_release('export_project');
@@ -206,7 +236,10 @@ function btrCore_get_exported_file($filename =NULL) {
   }
 
   // Send the headers.
-  header('Content-Type: application/octet-stream');
+  $content_type = ( substr($filename, -4) == '.tgz'
+                  ? 'application/x-compressed'
+                  : 'application/octet-stream' );
+  header('Content-Type: ' . $content_type);
   header('Content-Disposition: attachment; filename="' . $filename . '"');
   header('Content-Transfer-Encoding: binary');
   header("Content-Length: " . filesize($export_file));

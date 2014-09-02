@@ -69,7 +69,7 @@ function project_export($origin, $project, $lng, $path, $uid = 0,
   if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
     $export_mode = 'most_voted';
   }
-  if ($export_mode == 'preferred' and !is_array($preferred_voters)) {
+  if ($export_mode == 'preferred' and $preferred_voters === NULL) {
     $preferred_voters = array($user->init);
   }
 

@@ -14,9 +14,8 @@ function _btr_project_export_drush_command() {
     'options' => array(
       'user' => 'The username of the user who has requested the export.',
       'quiet' => 'Don\'t print progress output.',
-      'export_mode' => "'most_voted' (default) or 'preferred' or 'original'",
-      'preferred_users' => 'Comma separated list of emails of the preferred_users.',
-      'preferred_users_list' => 'File with the emails of the preferred users, one per line.'
+      'export-mode' => "'most_voted' (default) or 'preferred' or 'original'",
+      'preferred-voters' => 'Comma separated list of the preferred users.',
     ),
     'examples' => array(
       "drush btrp-export KDE kdeedu sq $(pwd)/kdeedu/" => 'Export KDE/kdeedu/sq into kdeedu/.',
@@ -50,31 +49,35 @@ project).";
  * Callback function for the command 'btr-project-export'.
  */
 function drush_btranslator_btr_project_export($origin, $project, $lng, $path) {
-  $export_mode = drush_get_option('export_mode', 'most_voted');
+  $export_mode = drush_get_option('export-mode', 'most_voted');
+
+  // Make sure that the given origin and project do exist.
+  if (!btr::utils_project_exists($origin, $project)) {
+    drush_log(t("The project '!project' does not exist.",
+        array('!project' => "$origin/$project")), 'error');
+    drupal_exit();
+  }
+
+  // Check the export_mode.
+  if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
+    drush_log(t("Unknown export mode '!export_mode'.",
+        array('!export_mode' => $export_mode)), 'error');
+    drupal_exit();
+  }
 
   // Get the preferred users.
   if ($export_mode == 'preferred') {
-    $preferred_users = drush_get_option('preferred_users', NULL);
-    if ($preferred_users !== NULL) {
-      $users = explode(',', $preferred_users);
-    }
-    else {
-      $preferred_users_list = drush_get_option('preferred_users_list', NULL);
-      if ($preferred_users_list !== NULL) {
-        $users = file($preferred_users_list);
+    $preferred_voters = drush_get_option('preferred-voters', NULL);
+    list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
+    if (!empty($error_messages)) {
+      foreach ($error_messages as $msg) {
+        drush_log($msg[0], $msg[1]);
       }
-    }
-    $arr_users = array();
-    if (is_array($users)) {
-      foreach ($users as $user) {
-        $user = trim($user);
-        if ($user == '')  continue;
-        $arr_users[] = $user;
-      }
+      drupal_exit();
     }
   }
 
   // Export the project.
   btr::project_export($origin, $project, $lng, $path,
-    $GLOBALS['user']->uid, FALSE, $export_mode, $arr_users);
+    $GLOBALS['user']->uid, FALSE, $export_mode, $arr_emails);
 }

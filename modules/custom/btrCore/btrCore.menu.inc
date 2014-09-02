@@ -36,12 +36,11 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
-  // Return as an archive the PO files for a given origin/project/lng.
-  // Usefull for projects that have many POT files, like LibreOffice, Mozilla, etc.
-  $items['translations/project/export_tgz'] = array(
+  // Return an archive of the PO files for a given origin/project/lng.
+  $items['translations/project/export'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
-    'page callback'   => 'btrCore_project_export_tgz',
+    'page callback'   => 'btrCore_project_export',
     'file'            => 'includes/project_callback.inc',
     'access callback' => TRUE,
   );

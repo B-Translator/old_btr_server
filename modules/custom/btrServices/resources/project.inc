@@ -128,28 +128,22 @@ function _btrServices_project_list($params) {
  *   - origin
  *       The origin of the project.
  *   - project
- *       The name of the project. If not given, then all the projects
- *       of the 'origin' will be exported, however only those with
- *       export access rights (usually translators) can do this.
- *       Contributors can export only a single project at a time.
+ *       The name of the project.
+ *   - lng
+ *       Translation to be exported.
  *   - export_mode
  *       The export mode that should be used. It can be one of:
- *       (most_voted | preferred_by_me | preferred_by_my_friends).
- *       Normal users can use only the default mode: most_voted.
- *       However those with export access rights (usually translators)
- *       can choose another export mode.
- *        - When the mode most_voted is used, then the translations
- *          with the highest number of votes are exported.
- *        - When the mode preferred_by_me is used, then the translations
- *          voted by the user take precedence over the other translations
- *          despite the number of votes.
- *        - When the mode preferred_by_my_friends is used, then the
- *          translations voted by any friends of the user take precedence.
- *          Friends are the users that are listed on the parameter
- *          'friends' (see below).
- *   - friends
+ *       (original | most_voted | preferred).
+ *        - The mode 'original' exports the translations of the
+ *          original files that were imported.
+ *        - The mode 'most_voted' exports the translations with the
+ *          highest number of votes.
+ *        - The mode 'preferred' gives precedence to the translations
+ *          voted by a user or a list of users, despite the number of
+ *          votes.
+ *   - preferred_voters
  *       Comma separated list of usernames. Used only when export_mode
- *       is preferred_by_my_friends.
+ *       is 'preferred'.
  *
  * @return
  *   Associative array containing:
@@ -162,8 +156,9 @@ function _btrServices_project_export($params) {
   $params += array(
     'origin' => NULL,
     'project' => NULL,
+    'lng' => NULL,
     'export_mode' => NULL,
-    'friends' => NULL,
+    'preferred_voters' => NULL,
   );
   if (empty($params['export_mode'])) {
     $params['export_mode'] = 'most_voted';
@@ -172,8 +167,9 @@ function _btrServices_project_export($params) {
   $messages = btrCore_schedule_project_export(
     check_plain($params['origin']),
     check_plain($params['project']),
+    check_plain($params['lng']),
     check_plain($params['export_mode']),
-    check_plain($params['friends'])
+    check_plain($params['preferred_voters'])
   );
 
   return array('messages' => $messages);

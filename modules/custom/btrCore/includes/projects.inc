@@ -12,103 +12,66 @@
  *   The origin of the project.
  *
  * @param $project
- *   The name of the project. If not given, then all the projects
- *   of the 'origin' will be exported, however only those with
- *   export access rights (usually translators) can do this.
- *   Contributors can export only a single project at a time.
+ *   The name of the project.
+ *
+ * @param $lng
+ *   Translation to be exported.
  *
  * @param $export_mode
  *   The export mode that should be used. It can be one of:
- *   (most_voted | preferred_by_me | preferred_by_my_friends).
- *   Normal users can use only the default mode: most_voted.
- *   However those with export access rights (usually translators)
- *   can choose another export mode.
- *    - When the mode most_voted is used, then the translations
- *      with the highest number of votes are exported.
- *    - When the mode preferred_by_me is used, then the translations
- *      voted by the user take precedence over the other translations
- *      despite the number of votes.
- *    - When the mode preferred_by_my_friends is used, then the
- *      translations voted by any friends of the user take precedence.
- *      Friends are the users that are listed on the parameter
- *      'friends' (see below).
+ *   (original | most_voted | preferred).
+ *     - The mode 'original' exports the translations of the
+ *       original files that were imported.
+ *     - The mode 'most_voted' exports the translations with the
+ *       highest number of votes.
+ *     - The mode 'preferred' gives precedence to the translations
+ *       voted by a user or a list of users, despite the number of
+ *       votes.
  *
- * @param $friends
+ * @param preferred_voters
  *   Comma separated list of usernames. Used only when export_mode
- *   is preferred_by_my_friends.
+ *   is 'preferred'.
  *
  * @return
  *   Array of notification messages; each notification message
  *   is an array of a message and a type, where type can be one of
  *   'status', 'warning', 'error'.
  */
-function btrCore_schedule_project_export($origin, $project =NULL, $export_mode =NULL, $friends =NULL) {
-
-  // Check the project.
-  if (empty($project) and !user_access('btranslator-export')) {
-    $msg = t("A project is required but is missing.");
-    return array(array($msg, 'error'));
-  }
-
+function btrCore_schedule_project_export($origin, $project, $lng, $export_mode = NULL, $preferred_voters = NULL) {
   // Make sure that the given origin and project do exist.
-  if (empty($project)) {
-    $query = "SELECT DISTINCT origin FROM {btr_projects} WHERE BINARY origin = :origin";
-    $params = array(':origin' => $origin);
-  }
-  else {
-    $query = "SELECT project FROM {btr_projects} WHERE BINARY origin = :origin AND BINARY project = :project";
-    $params = array(':origin' => $origin, ':project' => $project);
-  }
-  $result = btr_query($query, $params)->fetchField();
-  if (!$result) {
+  if (!btr::utils_project_exists($origin, $project)) {
     $msg = t("The project '!project' does not exist.",
            array('!project' => "$origin/$project"));
     return array(array($msg, 'error'));
   }
 
   // Check the export_mode.
-  if (!in_array($export_mode,
-      array('most_voted', 'preferred_by_me', 'preferred_by_my_friends')))
-    {
-      $msg = t("Unknown export mode '!export_mode'.",
+  if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
+    $msg = t("Unknown export mode '!export_mode'.",
              array('!export_mode' => $export_mode));
-      return array(array($msg, 'error'));
-    }
-  if ($export_mode != 'most_voted' and !user_access('btranslator-export')) {
-    $msg = t("You don't have access for advanced modes of export.");
-    return array('messages' => array($msg, 'error'));
+    return array(array($msg, 'error'));
   }
 
-  // Get and check the list of friends.
-  if ($export_mode == 'preferred_by_my_friends') {
-    $arr_friends = preg_split('/\s*,\s*/', trim($friends));
-    $messages = array();
-    foreach ($arr_friends as $username) {
-      if (!user_load_by_name($username)) {
-        $msg = t("The user '!username' does not exist.",
-               array('!username' => $username));
-        $messages[] = array($msg, 'error');
-      }
-      if (!empty($messages))  return $messages;
+  // Get and check the list of preferred voters.
+  if ($export_mode == 'preferred') {
+    list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
+    if (!empty($error_messages)) {
+      return $error_messages;
     }
-  }
-
-  // Get a list of preferred users (identified by their emails).
-  $user = user_load($GLOBALS['user']->uid);
-  $arr_voters[] = $user->init;
-  foreach ($arr_friends as $username) {
-    $account = user_load_by_name($username);
-    $arr_voters[] = $account->init;
+    if (empty($arr_emails)) {
+      $account = user_load($GLOBALS['user']->uid);
+      $arr_emails = array($account->init);
+    }
   }
 
   // Schedule the project export.
   $queue_params = array(
-    'uid' => $user->uid,
-    'lng' => $user->translation_lng,
     'origin' => $origin,
-    'project' => empty($project) ? 'all' : $project,
+    'project' => $project,
+    'lng' => $lng,
+    'uid' => $GLOBALS['user']->uid,
     'export_mode' => $export_mode,
-    'preferred_voters' => $arr_voters,
+    'preferred_voters' => $arr_emails,
   );
   btr_queue('export_project', array($queue_params));
 
@@ -125,39 +88,4 @@ function btrCore_schedule_project_export($origin, $project =NULL, $export_mode =
   $msg = t("Export of '!project' is scheduled. You will be notified by email when it is done.",
          array('!project' => "$origin/$project"));
   return array(array($msg, 'status'));
-}
-
-/**
- * Return an archive of PO files for a given origin/project/lng
- * (usefull for projects that have many POT files.)
- * If project=='all', then all the projects of the given origin
- * will be exported (it usually takes a very long time).
- */
-function btr_project_export_tgz($origin ='LibreOffice', $project ='all', $lng ='fr') {
-
-  print "For performance reasons, export_tgz is currently disabled.";
-  exit(0);
-
-  $origin = check_plain($origin);
-  $project = check_plain($project);
-  $lng = check_plain($lng);
-
-  set_time_limit(0);
-
-  // Export files in a tgz archive.
-  $path = drupal_get_path('module', 'btrCore') . '/data/export';
-  $tgz_file = exec("$path/export_tgz.sh $origin $project $lng");
-
-  // Send the headers.
-  header('Content-Type: application/octet-stream');
-  header('Content-Disposition: attachment; filename="' . basename($tgz_file) . '"');
-  header('Content-Transfer-Encoding: binary');
-  header("Content-Length: " . filesize($tgz_file));
-
-  // Open the file in a binary mode and dump it to the browser.
-  $fp = fopen($tgz_file, 'rb');
-  fpassthru($fp);
-
-  // Stop execution.
-  exit(0);
 }
