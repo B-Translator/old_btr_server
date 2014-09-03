@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 module_load_include('php', 'btrCore', 'lib/gettext/POParser');
 
@@ -50,8 +51,8 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
   // Check that the project exists.
   $query = "SELECT pguid FROM {btr_projects} WHERE pguid = '$pguid'";
   if (!btr_query($query)->fetchField()) {
-    $errors[] = t("The project '!origin/!project' does not exist.",
-                array('!origin' => $origin, '!project' => $project));
+    $errors[] = t("The project '!project' does not exist.",
+                array('!project' => $origin . '/' . $project));
     return $errors;
   }
 
@@ -84,6 +85,9 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
     // Process this PO file.
     _process_po_file($potid, $tplname, $lng, $file->uri, $filename);
   }
+
+  // Make initial snapshots after importing PO files.
+  _make_snapshots($origin, $project, $lng, $path);
 
   // Switch back to the original user.
   $user = $original_user;
@@ -237,4 +241,38 @@ function _add_translation($sguid, $lng, $translation) {
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
+}
+
+/**
+ * Make initial snapshots after importing PO files.
+ *
+ * The first snapshot contains the original files that are imported.
+ *
+ * The second snapshot contains the export of the original files, and
+ * it will produce and store the first diff. This initial diff
+ * actually contains the differences that come as a result of
+ * formating changes between the original format and the exported
+ * format. It also contains the entries that are skipped during the
+ * import.
+ *
+ * Another snapshot is done as well, with the most_voted translations.
+ * The diff that will be generated (if any), will contain all the
+ * previous suggestions (before the import).
+ */
+function _make_snapshots($origin, $project, $lng, $path) {
+  // Store the imported files into the DB as an initial snapshot.
+  $snapshot_file = tempnam('/tmp', 'snapshot_file_') . '.tgz';
+  exec("tar -cz -f $snapshot_file -C $path .");
+  btr::project_snapshot_save($origin, $project, $lng, $snapshot_file);
+  unlink($snapshot_file);
+
+  // Make a second snapshot, which will generate a diff
+  // with the initial snapshot, and save it into the DB.
+  $diff_comment = 'Import diff. Contains formating changes, any skiped entries, etc.';
+  btr::project_snapshot($origin, $project, $lng, $diff_comment, $export_mode = 'original');
+
+  // Make another snapshot, which will contain all the previous
+  // suggestions (before the import), in a single diff.
+  $diff_comment = 'Initial diff after import. Contains all the previous suggestions (before the last import).';
+  btr::project_snapshot($origin, $project, $lng, $diff_comment, $export_mode = 'most_voted');
 }

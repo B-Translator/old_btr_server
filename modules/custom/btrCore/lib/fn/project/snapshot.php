@@ -24,14 +24,24 @@ use \btr;
  *
  * @param $comment
  *   A comment for the new snapshot.
+ *
+ * @param $export_mode
+ *   Can be 'most_voted' (default), or 'preferred', or 'original'.
+ *
+ * @param $preferred_voters
+ *   Array of email addresses of users whose translations are preferred.
  */
-function project_snapshot($origin, $project, $lng, $comment = NULL) {
+function project_snapshot($origin, $project, $lng, $comment = NULL,
+  $export_mode = 'most_voted', $preferred_voters = NULL)
+{
   // Export the latest most voted translations
   // and make the diffs with the last snapshot.
   $export_file = tempnam('/tmp', 'export_file_') . '.tgz';
   $file_diff = tempnam('/tmp', 'file_diff_') . '.diff';
   $file_ediff = tempnam('/tmp', 'file_ediff_') . '.ediff';
-  btr::project_diff($origin, $project, $lng, $file_diff, $file_ediff, $export_file);
+  btr::project_diff($origin, $project, $lng,
+    $file_diff, $file_ediff, $export_file,
+    $export_mode, $preferred_voters);
 
   // If not empty, save the diffs and the new snapshot.
   if (filesize($file_diff) != 0 or filesize($file_ediff) != 0) {
