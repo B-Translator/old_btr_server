@@ -332,8 +332,8 @@ function _btrServices_translations_search($params) {
   $_GET['page'] = isset($params['page']) ? (int)trim($params['page']) : 0;
 
   // Build the filter and the query, and then get the strings.
-  $filter = btr_build_search_filter($params);
-  $query = btr_build_search_query($filter);
+  $filter = btr::search_build_filter($params);
+  $query = btr::search_build_query($filter);
   $strings = ($query===NULL ? array() : btr_get_query_strings($query, $lng));
 
   // The PagerDefault of Drupal7 defines the pager variables
