@@ -123,7 +123,7 @@ function _btr_report_statistics($params) {
     return services_error('Language missing or not supported.', 406);
   }
 
-  return btr_statistics($lng);
+  return btr::report_statistics($lng);
 }
 
 /**
@@ -133,7 +133,7 @@ function _btr_report_statistics($params) {
  *   Parameters of the report, comming from the POST request.
  *   It contains these fields (variables):
  *   - lng: language of translations
- *   - period: period of report (last day|week|month|year)
+ *   - period: period of report: day | week | month | year
  *   - size: number of results (top contributers), between 5 and 20
  *
  * @return
@@ -146,6 +146,12 @@ function _btr_report_statistics($params) {
  *     -d '{"lng": "sq", "period": "week", "size": 10}'
  */
 function _btr_report_topcontrib($params) {
+  $params += array(
+    'lng' => NULL,
+    'period' => NULL,
+    'size' => NULL,
+  );
+
   // get parameters and validate them
   $lng = $params['lng'];
   $arr_langs = array_keys(btr_get_languages());
@@ -156,9 +162,6 @@ function _btr_report_topcontrib($params) {
   if (!in_array($period, array('day', 'week', 'month', 'year'))) {
     return services_error('Period missing or not supported.', 406);
   }
-  $size = (int) $params['size'];
-  if ($size < 5)  $size = 5;
-  if ($size > 20) $size = 20;
 
-  return btr_stat_topcontrib($lng, $period, $size);
+  return btr::report_topcontrib($lng, $period, $params['size']);
 }

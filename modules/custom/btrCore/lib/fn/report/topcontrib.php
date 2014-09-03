@@ -1,22 +1,29 @@
 <?php
+/**
+ * @file
+ * Function: report_topcontrib()
+ */
+
+namespace BTranslator;
 
 /**
- * Return a list of top contributing users
- * from the given date until now.
- * This is used for example on the block topcontrib.
+ * Return a list of top contributing users from the last period.
  *
  * @param $lng
- *     Language of contributions (for example sq).
+ *     Language of contributions.
+ *
  * @param $period
- *     Period of report (last day|week|month|year).
+ *     Period of report: day | week | month | year.
+ *
  * @param $size
  *     Number of top users to return.
+ *
  * @return
  *     Array of users, where each user is an object
  *     with these attributes:
  *         uid, name, umail, score, translations, votes
  */
-function btr_stat_topcontrib($lng ='fr', $period ='week', $size =5) {
+function report_topcontrib($lng = 'fr', $period = 'week', $size = 5) {
 
   // validate parameters
   if (!in_array($lng, array_keys(btr_get_languages()))) {
@@ -30,7 +37,7 @@ function btr_stat_topcontrib($lng ='fr', $period ='week', $size =5) {
   if ($size > 20) $size = 20;
 
   // Return cache if possible.
-  $cache = cache_get("btr_stat_topcontrib:$lng:$period:$size", 'cache_btr');
+  $cache = cache_get("report_topcontrib:$lng:$period:$size", 'cache_btr');
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     return $cache->data;
   }
@@ -69,49 +76,7 @@ function btr_stat_topcontrib($lng ='fr', $period ='week', $size =5) {
   $topcontrib = btr_query_range($sql_get_topcontrib, 0, $size, $args)->fetchAll();
 
   // Cache for 12 hours.
-  cache_set("btr_stat_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btr', time() + 12*60*60);
+  cache_set("report_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btr', time() + 12*60*60);
 
   return $topcontrib;
 }
-
-
-/**
- * Return an array of the statistics (number of votes
- * and translations) for the last week, month and year.
- */
-function btr_statistics($lng) {
-
-  $cache = cache_get("btr_statistics:$lng", 'cache_btr');
-  // Return cache if possible.
-  if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
-    return $cache->data;
-  }
-
-  $sql_count_translations = "SELECT count(*) as cnt FROM {btr_translations}
-                             WHERE ulng = :lng AND time >= :from_date
-                               AND umail NOT IN ('admin@example.com', 'admin@btranslator.org', '')";
-  $sql_count_votes = "SELECT count(*) as cnt FROM {btr_votes}
-                      WHERE ulng = :lng AND time >= :from_date";
-
-  $stats = array();
-
-  foreach (array('week', 'month', 'year') as $period) {
-    $from_date = date('Y-m-d', strtotime("-1 $period"));
-    $args = array(':lng' => $lng, ':from_date' => $from_date);
-    $nr_votes = btr_query($sql_count_votes, $args)->fetchField();
-    $nr_translations = btr_query($sql_count_translations, $args)->fetchField();
-
-    $stats[$period] = array(
-      'period' => $period,
-      'from_date' => $from_date,
-      'nr_votes' => $nr_votes,
-      'nr_translations' => $nr_translations,
-    );
-  }
-
-  // Cache for 12 hours.
-  cache_set("btr_statistics:$lng", $stats, 'cache_btr', time() + 12*60*60);
-
-  return $stats;
-}
-
