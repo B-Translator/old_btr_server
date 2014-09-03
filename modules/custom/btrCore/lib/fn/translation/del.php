@@ -1,5 +1,11 @@
 <?php
+/**
+ * @file
+ * Function: translation_del()
+ */
+
 namespace BTranslator;
+use \btr;
 
 /**
  * Delete the translation with the given id and any related votes.
@@ -82,8 +88,8 @@ function _notify_voters_on_translation_del($tguid, $author, $voters) {
   $sguid = btr_query(
     'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
     array(':tguid' => $tguid))->fetchField();
-  $string = btr_get_string($sguid);
-  $translation = btr_get_translation($tguid);
+  $string = btr::string_get($sguid);
+  $translation = btr::translation_get($tguid);
 
   $notifications = array();
 

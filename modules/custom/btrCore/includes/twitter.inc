@@ -26,7 +26,7 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   $i = 0;
   do {
     list($sguid, $messages) = btr_get_random_sguid('translated', $lng, array($scope));
-    list($string, $translations) = btr_get_string_and_translations($sguid, $lng);
+    list($string, $translations) = btr::string_get_translations($sguid, $lng);
     $i++;
   } while (strlen($string) > 50 and $i < 10);
 

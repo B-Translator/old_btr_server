@@ -57,7 +57,7 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   $query->orderBy('s.string');
 
   // Get the strings and their translations.
-  $strings = btr_get_query_strings($query, $lng);
+  $strings = btr::string_details($query, $lng);
   //print '<xmp>';  print_r($strings);  print '</xmp>';  exit();
 
   // Simplify the structure of the result.

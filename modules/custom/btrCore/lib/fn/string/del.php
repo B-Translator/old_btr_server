@@ -5,7 +5,6 @@
  */
 
 namespace BTranslator;
-use \btr;
 
 /**
  * Delete the string with the given id.

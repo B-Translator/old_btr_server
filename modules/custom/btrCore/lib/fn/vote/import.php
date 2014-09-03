@@ -105,7 +105,7 @@ function _get_sguid($entry, $uid) {
   $sguid = sha1($string . $context);
 
   // Make sure that such a string is stored in the DB.
-  if (!btr_get_string($sguid)) {
+  if (!btr::string_get($sguid)) {
     btr_insert('btr_strings')
       ->fields(array(
           'string' => $string,

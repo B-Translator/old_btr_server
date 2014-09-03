@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Definition of function string_add() and string_del().
+ * Definition of function string_add().
  */
 
 namespace BTranslator;

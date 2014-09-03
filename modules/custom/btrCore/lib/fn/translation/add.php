@@ -45,14 +45,14 @@ function translation_add($sguid, $lng, $translation) {
   }
 
   // Make spacing and newlines the same in translation as in the source.
-  $string = btr_get_string($sguid);
+  $string = btr::string_get($sguid);
   $matches = array();
   preg_match("/^(\s*).*\S(\s*)\$/s", $string, $matches);
   $translation = $matches[1] . trim($translation) . $matches[2];
 
   // Look for an existing translation, if any.
   $tguid = sha1($translation . $lng . $sguid);
-  $existing = btr_get_translation($tguid);
+  $existing = btr::translation_get($tguid);
 
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  {
@@ -197,8 +197,8 @@ function _notify_voters_on_translation_change($voters, $sguid, $old_translation,
 
   if (empty($voters))  return;
 
-  $string = btr_get_string($sguid);
-  $new_translation = btr_get_translation($tguid);
+  $string = btr::string_get($sguid);
+  $new_translation = btr::translation_get($tguid);
 
   $notifications = array();
   foreach ($voters as $uid => $voter) {

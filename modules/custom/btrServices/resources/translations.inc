@@ -334,7 +334,7 @@ function _btrServices_translations_search($params) {
   // Build the filter and the query, and then get the strings.
   $filter = btr::search_build_filter($params);
   $query = btr::search_build_query($filter);
-  $strings = ($query===NULL ? array() : btr_get_query_strings($query, $lng));
+  $strings = ($query===NULL ? array() : btr::string_details($query, $lng));
 
   // The PagerDefault of Drupal7 defines the pager variables
   // as global variables (these variables are later used by theme_pager).
@@ -435,7 +435,7 @@ function _btrServices_translations_get($params) {
     list($sguid, $messages) = btr_get_random_sguid($sguid, $lng);
   }
 
-  $strings = btr_get_strings(array($sguid), $lng);
+  $strings = btr::string_load(array($sguid), $lng);
   $string = empty($strings) ? NULL : $strings[0];
 
   return array(
