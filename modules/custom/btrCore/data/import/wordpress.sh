@@ -1,10 +1,11 @@
 #!/bin/bash
+### Import WordPress projects and translations.
+
+### go to the script directory
+cd $(dirname $0)
 
 ### get $data_root and $languages
 . ../config.sh
-
-### include function make-snapshot
-. make-snapshot.sh
 
 origin=WordPress
 for lng in $languages
@@ -19,22 +20,7 @@ do
 	continue;
     fi
 
-    ### make last snapshots before re-import
-    make-last-snapshot $origin $project $lng
-
-
-    ### import the POT and PO files
-    po_files=$(find $po_dir -name '*\.po')
-    for po_file in $po_files
-    do
-	pot_file=$po_file
-	pot_name=${pot_file#*/$project/}
-	pot_name=${pot_name%.po}
-	#echo $origin $project $pot_name $lng $po_file;  continue;  ## debug
-	./pot_import.php $origin $project $pot_name $pot_file
-	./po_import.php $origin $project $pot_name $lng $po_file
-    done
-
-    ## make initial snapshot after (re)import
-    make-snapshot $origin $project $lng $po_files
+    ### import the project
+    $drush btrp-add $origin $project $po_dir
+    $drush btrp-import $origin $project $lng $po_dir
 done
