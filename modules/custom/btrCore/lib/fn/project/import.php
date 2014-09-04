@@ -261,7 +261,7 @@ function _add_translation($sguid, $lng, $translation) {
  */
 function _make_snapshots($origin, $project, $lng, $path) {
   // Store the imported files into the DB as an initial snapshot.
-  $snapshot_file = tempnam('/tmp', 'snapshot_file_') . '.tgz';
+  $snapshot_file = tempnam('/tmp', 'snapshot_file_');
   exec("tar -cz -f $snapshot_file -C $path .");
   btr::project_snapshot_save($origin, $project, $lng, $snapshot_file);
   unlink($snapshot_file);

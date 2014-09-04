@@ -36,9 +36,9 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
 {
   // Export the latest most voted translations
   // and make the diffs with the last snapshot.
-  $export_file = tempnam('/tmp', 'export_file_') . '.tgz';
-  $file_diff = tempnam('/tmp', 'file_diff_') . '.diff';
-  $file_ediff = tempnam('/tmp', 'file_ediff_') . '.ediff';
+  $export_file = tempnam('/tmp', 'export_file_');
+  $file_diff = tempnam('/tmp', 'file_diff_');
+  $file_ediff = tempnam('/tmp', 'file_ediff_');
   btr::project_diff($origin, $project, $lng,
     $file_diff, $file_ediff, $export_file,
     $export_mode, $preferred_voters);
@@ -50,7 +50,9 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
   }
 
   // Cleanup.
-  exec("rm $export_file $file_diff $file_ediff");
+  unlink($export_file);
+  unlink($file_diff);
+  unlink($file_ediff);
 }
 
 /**
@@ -110,6 +112,9 @@ function project_snapshot_get($origin, $project, $lng, $file) {
  *   The file that has the snapshot (format tgz).
  */
 function project_snapshot_save($origin, $project, $lng, $file) {
+  // Make sure that file does exist.
+  if (!file_exists($file))  return;
+
   // Remove the old one first, if it exists.
   btr_delete('btr_snapshots')
     ->condition('pguid', sha1($origin . $project))

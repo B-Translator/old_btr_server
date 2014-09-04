@@ -41,12 +41,12 @@ function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
 
   // Get the names of the diff files.
   if ($format == 'ediff') {
-    $file_diff = tempnam('/tmp', 'file_diff_') . '.diff';
+    $file_diff = tempnam('/tmp', 'file_diff_');
     $file_ediff = $file;
   }
   else {
     $file_diff = $file;
-    $file_ediff = tempnam('/tmp', 'file_ediff_') . '.ediff';
+    $file_ediff = tempnam('/tmp', 'file_ediff_');
   }
 
   // Make the diff.
@@ -55,9 +55,9 @@ function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
 
   // Cleanup.
   if ($format == 'ediff') {
-    exec("rm $file_diff");
+    unlink($file_diff);
   }
   else {
-    exec("rm $file_ediff");
+    unlink($file_ediff);
   }
 }

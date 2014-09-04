@@ -51,7 +51,7 @@ function project_diff($origin, $project, $lng,
   }
 
   // Get the last snapshot.
-  $snapshot_file = tempnam('/tmp', 'snapshot_file_') . '.tgz';
+  $snapshot_file = tempnam('/tmp', 'snapshot_file_');
   btr::project_snapshot_get($origin, $project, $lng, $snapshot_file);
   $snapshot_dir = exec('mktemp -d');
   exec("tar -xz -f $snapshot_file -C $snapshot_dir");
@@ -64,7 +64,7 @@ function project_diff($origin, $project, $lng,
   // Cleanup the export and snapshot dirs.
   exec("rm -rf $export_dir");
   exec("rm -rf $snapshot_dir");
-  exec("rm $snapshot_file");
+  exec("rm -f $snapshot_file");
 }
 
 /**

@@ -145,7 +145,7 @@ function btrCore_project_export() {
   btr::project_export($origin, $project, $lng, $export_dir,
     $GLOBALS['user']->uid, $quiet = TRUE,
     $export_mode, $arr_emails);
-  $file_tgz = tempnam('/tmp', 'export_') . '.tgz';
+  $file_tgz = tempnam('/tmp', 'export_');
   exec("tar -cz -f $file_tgz -C $export_dir .");
 
   // Send the headers.
