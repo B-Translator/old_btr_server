@@ -145,13 +145,22 @@ function _add_string($entry) {
     ->condition('sguid', $sguid)
     ->execute();
 
+  // The DB fields of the string and context are VARCHAR(1000),
+  // check that they do not exceed this length.
+  if (strlen($string) > 1000 or strlen($context) > 1000) {
+    print $context . "\n";
+    print $string . "\n";
+    print "***Warning*** The string or its context is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
+    return NULL;
+  }
+
   // If no record was affected, it means that such a string
   // does not exist, so insert a new string.
   if (!$count) {
     btr_insert('btr_strings')
       ->fields(array(
           'string' => $string,
-          'context' => _cut($context, 1000),
+          'context' => $context,
           'sguid' => sha1($string . $context),
           'uid' => $GLOBALS['user']->uid,
           'time' => date('Y-m-d H:i:s', REQUEST_TIME),

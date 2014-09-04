@@ -95,7 +95,7 @@ DROP TABLE IF EXISTS `btr_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `btr_strings` (
-  `string` text COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
+  `string` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT 'The string to be translated: "$msgid"."\\0"."$msgid_plural"',
   `context` varchar(1000) COLLATE utf8_bin DEFAULT NULL COMMENT 'The string context (msgctxt of the PO entry).',
   `sguid` char(40) CHARACTER SET ascii NOT NULL DEFAULT '' COMMENT 'Globally Unique ID of the string, generated as a hash of the string and context: SHA1(CONCAT(string,context)) ',
   `uid` int(11) DEFAULT NULL COMMENT 'ID of the user that inserted this string on the DB.',
