@@ -4,11 +4,11 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### get the drush alias from the first argument
+### set the drush alias
 drush_alias=${1:-@btr_dev}
+drush="drush $drush_alias"
 
 ### set some variables
-drush="drush $drush_alias"
 drupal_dir=$($drush dd)
 l10n_dir=$drupal_dir/profiles/btr_server/l10n
 origin=Drupal

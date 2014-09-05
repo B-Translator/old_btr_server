@@ -26,8 +26,9 @@ lng=$3
 nr=$4
 echo "$0 $origin $project $lng $nr"
 
-#base_url="https://$lng.btranslator.org/"
 base_url="https://dev.btranslator.org/"
+#base_url="https://$lng.btranslator.org/"
+#base_url="https://dev.btr.example.org/"
 diff_url="$base_url/translations/project/diff"
 wget="wget -q --no-check-certificate"
 
@@ -47,4 +48,3 @@ else
     echo $wget -O $fname_ediff $diff_url/$origin/$project/$lng/$nr/ediff
     $wget -O $fname_ediff $diff_url/$origin/$project/$lng/$nr/ediff
 fi
-
