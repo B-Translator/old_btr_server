@@ -13,13 +13,12 @@ drush_alias=${1:-@btr_dev}
 drush="drush $drush_alias"
 origin=misc
 project=pingus
-path=$(pwd)/pingus
 
 ### create the project
-$drush btrp-add $origin $project $path/fr
+$drush btrp-add $origin $project $(pwd)/pingus/pingus-fr.po
 
 ### import the PO files of each language
-for lng in $(ls $path)
+for lng in fr sq
 do
-    $drush btrp-import $origin $project $lng $path/$lng
+    $drush btrp-import $origin $project $lng $(pwd)/pingus/pingus-$lng.po
 done
