@@ -20,9 +20,6 @@ else
 fi
 #echo $pot_files;  exit;  ## debug
 
-### create a temporary directory
-tmpdir=$(mktemp -d)
-
 ### import the POT/PO files
 origin=GNOME
 for pot_file in $pot_files
@@ -33,9 +30,7 @@ do
     echo -e "\n==========> $origin $project"  #; continue;  ## debug
 
     ### import the POT file
-    rm -f $tmpdir/*
-    cp $pot_file $tmpdir/$project.po
-    $drush btrp-add $origin $project $tmpdir
+    $drush btrp-add $origin $project $pot_file
 
     ### import the PO file of each language
     for lng in $languages
@@ -47,13 +42,8 @@ do
 	echo -e "\n----------> $po_file"  #; continue;  ## debug
 
 	### import the PO file
-	rm -f $tmpdir/*
-	cp $po_file $tmpdir/$project.po
-	$drush btrp-import $origin $project $lng $tmpdir
+	$drush btrp-import $origin $project $lng $po_file
     done
 
     #exit 0  ## debug
 done
-
-### cleanup the temp dir
-rm -rf $tmpdir/

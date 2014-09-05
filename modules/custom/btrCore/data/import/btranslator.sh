@@ -14,21 +14,12 @@ l10n_dir=$drupal_dir/profiles/btr_server/l10n
 origin=Drupal
 project=btranslator
 
-### create a temporary directory
-tmpdir=$(mktemp -d)
-
 ### import the POT file
-cp $l10n_dir/btrserver.pot $tmpdir/
-$drush btrp-add $origin $project $tmpdir
+$drush btrp-add $origin $project $l10n_dir/btrserver.pot
 
 ### import the PO file of each language
 languages="sq"
 for lng in $languages
 do
-    rm -f $tmpdir/*
-    cp $l10n_dir/btrserver.$lng.po $tmpdir/btrserver.po
-    $drush btrp-import $origin $project $lng $tmpdir
+    $drush btrp-import $origin $project $lng $l10n_dir/btrserver.$lng.po
 done
-
-### cleanup the temp dir
-rm -rf $tmpdir/

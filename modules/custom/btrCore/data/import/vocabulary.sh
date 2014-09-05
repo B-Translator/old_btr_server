@@ -8,9 +8,6 @@ cd $(dirname $0)
 drush_alias=${1:-@btr_dev}
 drush="drush $drush_alias"
 
-### create a temporary directory
-tmpdir=$(mktemp -d)
-
 origin='vocabulary'
 for file in $(ls vocabulary/*.po)
 do
@@ -19,14 +16,7 @@ do
     project=${filename%.po}
     lng=${project##*_}
 
-    ### copy the PO file to tmpdir
-    rm -f $tmpdir/*
-    cp $file $tmpdir/
-
     ### create a project and import translations
-    $drush btrp-add $origin $project $tmpdir
-    $drush btrp-import $origin $project $lng $tmpdir
+    $drush btrp-add $origin $project $(pwd)/$file
+    $drush btrp-import $origin $project $lng $(pwd)/$file
 done
-
-### cleanup the temp dir
-rm -rf $tmpdir/
