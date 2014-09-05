@@ -1,10 +1,11 @@
 #!/bin/bash
+### Import ubuntu projects and translations.
 
-### get $data_root and $languages
+### go to the script directory
+cd $(dirname $0)
+
+### get config vars
 . ../config.sh
-
-### include function make-snapshot
-. make-snapshot.sh
 
 ### get the list of projects to be imported
 pot_dir="$data_root/ubuntu/fr/LC_MESSAGES"
@@ -12,16 +13,15 @@ if [ $# -gt 0 ]
 then
     projects="$@"
 else
-    for file in $(ls $pot_dir/*.po)
-    do
-	file=$(basename $file)
-	project=${file%%.po}
-	projects="$projects $project"
-    done
+    projects=$(ls $pot_dir/ | grep '.po' | sed -e 's/\.po$//')
 fi
 #echo $projects;  exit;  ## debug
 
+### create a temporary directory
+tmpdir=$(mktemp -d)
+
 ### import the POT/PO files
+origin=ubuntu
 for project in $projects
 do
     echo -e "\n==========> ubuntu $project"  #; continue;  ## debug
@@ -32,15 +32,10 @@ do
 	continue;
     fi
 
-    ### make last snapshots before re-import
-    for lng in $languages
-    do
-	make-last-snapshot ubuntu $project $lng
-    done
-
     ### import the POT file
-    pot_name=$project
-    ./pot_import.php ubuntu $project $pot_name $pot_file
+    rm -f $tmpdir/*
+    cp $pot_file $tmpdir/
+    $drush btrp-add $origin $project $tmpdir
 
     ### import the PO file of each language
     for lng in $languages
@@ -51,11 +46,13 @@ do
 	echo -e "\n----------> $po_file"  #; continue;  ## debug
 
 	### import the PO file
-	./po_import.php ubuntu $project $pot_name $lng $po_file
-
-	## make initial snapshot after (re)import
-	make-snapshot ubuntu $project $lng $po_file
+	rm -f $tmpdir/*
+	cp $po_file $tmpdir/
+	$drush btrp-import $origin $project $lng $tmpdir
     done
 
     #exit 0  ## debug
 done
+
+### cleanup the temp dir
+rm -rf $tmpdir/

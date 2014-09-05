@@ -1,30 +1,34 @@
-#!/bin/bash
+#!/bin/bash -x
+### Import B-Translator translations.
 
 ### go to the script directory
 cd $(dirname $0)
 
+### get the drush alias from the first argument
+drush_alias=${1:-@btr_dev}
+
+### set some variables
+drush="drush $drush_alias"
+drupal_dir=$($drush dd)
+l10n_dir=$drupal_dir/profiles/btr_server/l10n
 origin=Drupal
 project=btranslator
-lng=sq
 
-#drupal_dir=$(drush dd)
-drupal_dir=/var/www/btr
-btrserver_pot=$drupal_dir/profiles/btr_server/l10n/btrserver.pot
-btrserver_po=$drupal_dir/profiles/btr_server/l10n/btrserver.$lng.po
+### create a temporary directory
+tmpdir=$(mktemp -d)
 
-### include snapshot functions
-. make-snapshot.sh
+### import the POT file
+cp $l10n_dir/btrserver.pot $tmpdir/
+$drush btrp-add $origin $project $tmpdir
 
-### make last snapshots before re-import
-make-last-snapshot $origin $project $lng
+### import the PO file of each language
+languages="sq"
+for lng in $languages
+do
+    rm -f $tmpdir/*
+    cp $l10n_dir/btrserver.$lng.po $tmpdir/btrserver.po
+    $drush btrp-import $origin $project $lng $tmpdir
+done
 
-### import the templates
-potpl=$project
-./pot_import.php $origin $project $potpl $btrserver_pot
-
-### import the PO files
-./po_import.php $origin $project $potpl $lng $btrserver_po
-
-## make initial snapshots after (re)import
-make-snapshot $origin $project $lng $btrserver_po
-
+### cleanup the temp dir
+rm -rf $tmpdir/

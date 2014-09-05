@@ -4,44 +4,31 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### get $data_root
+### create a temporary directory
+tmpdir=$(mktemp -d)
+
+### get config vars
 . ../config.sh
 
-### include snapshot functions
-. make-snapshot.sh
-
+### set some variables
 origin=KDE
 project=doc_kdeedu_kturtle
 languages="fr sq"
 
-### make last snapshots before re-import
-for lng in $languages
-do
-    make-last-snapshot $origin $project $lng
-done
-
-### import the templates
-pot_files=$(ls $data_root/$origin/fr/docmessages/kdeedu/kturtle*)
-for pot_file in $pot_files
-do
-    pot_name=${pot_file#*/fr/}
-    pot_name=${pot_name%.po}
-    ./pot_import.php $origin $project $pot_name $pot_file
-done
+### create the project
+rm -f $tmpdir/*
+cp $data_root/$origin/fr/docmessages/kdeedu/kturtle* $tmpdir/
+echo -e "\n==========> $origin $project"
+$drush btrp-add $origin $project $tmpdir
 
 ### import the PO files of each language
 for lng in $languages
 do
-    po_files=$(ls $data_root/$origin/$lng/docmessages/kdeedu/kturtle*)
-    for po_file in $po_files
-    do
-	pot_name=${po_file#*/$lng/}
-	pot_name=${pot_name%.po}
-	#echo $origin $project $pot_name $lng $po_file;  continue;  ## debug
-	./po_import.php $origin $project $pot_name $lng $po_file
-    done
-
-    ## make initial snapshot after (re)import
-    make-snapshot $origin $project $lng $po_files
+    echo -e "\n----------> $origin $project $lng"  # ;  continue;  ## debug
+    rm -f $tmpdir/*
+    cp $data_root/$origin/$lng/docmessages/kdeedu/kturtle* $tmpdir/
+    $drush btrp-import $origin $project $lng $tmpdir
 done
 
+### cleanup the temp dir
+rm -rf $tmpdir/

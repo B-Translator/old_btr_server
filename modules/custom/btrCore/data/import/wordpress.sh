@@ -4,7 +4,7 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### get $data_root and $languages
+### get config vars
 . ../config.sh
 
 origin=WordPress
