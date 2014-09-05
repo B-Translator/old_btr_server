@@ -1,16 +1,20 @@
 #!/bin/bash
-### importing translation files of Drupal
+## Import Drupal projects and translations.
 
-### get $data_root and $languages
+### go to the script directory
+cd $(dirname $0)
+
+### get config vars
 . ../config.sh
 
-### include function make-snapshot
-. make-snapshot.sh
+### create a temporary directory
+tmpdir=$(mktemp -d)
 
-languages="sq" ### for the time being import only the Albanian translations
+### set some variables
 origin=Drupal
 po_dir=$data_root/Drupal
 
+languages="sq" ### for the time being import only the Albanian translations
 for lng in $languages
 do
     echo -e "\n==========> $origin $lng "
@@ -22,17 +26,13 @@ do
 	project=${filename%%-*.$lng.po}
 	echo -e "\n----------> $origin $project $lng "  # ;  continue;  ## debug
 
-        ### make last snapshots before re-import
-        make-last-snapshot $origin $project $lng
-
 	### import the template and the translation files
-	pot_name=$project
-	pot_file=$po_file
-	#echo import $origin $project $pot_name $lng $po_file;  continue;  ## debug
-	./pot_import.php $origin $project $pot_name $pot_file
-	./po_import.php $origin $project $pot_name $lng $po_file
-
-        ## make initial snapshot after (re)import
-	make-snapshot $origin $project $lng $po_file
+	rm -f $tmpdir/*
+	cp $po_file $tmpdir/$project.po
+        $drush btrp-add $origin $project $tmpdir
+	$drush btrp-import $origin $project $lng $tmpdir
     done
 done
+
+### cleanup the temp dir
+rm -rf $tmpdir/
