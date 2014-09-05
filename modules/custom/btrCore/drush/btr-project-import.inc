@@ -32,14 +32,5 @@ function _btr_project_import_drush_help() {
  * Callback function for the command 'btr-project-import'.
  */
 function drush_btranslator_btr_project_import($origin, $project, $lng, $path) {
-  try {
-    $errors = btr::project_import($origin, $project, $lng, $path, $GLOBALS['user']->uid);
-    foreach ($errors as $error)  drush_log($error, 'error');
-  }
-  catch (Exception $e) {
-    $trace = $e->getTraceAsString();
-    $trace = preg_replace('/^#0 .*/', '', $trace);
-    $trace = str_replace(DRUPAL_ROOT.'/', '', $trace);
-    drush_log($trace, 'error');
-  }
+  btr::project_import($origin, $project, $lng, $path, $GLOBALS['user']->uid);
 }

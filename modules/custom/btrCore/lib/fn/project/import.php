@@ -27,6 +27,7 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *
  * @param $path
  *   The directory where the translation (PO) files are located.
+ *   It can also be the full path to a single PO file.
  *
  * @param $uid
  *   ID of the user that has requested the import.
@@ -35,8 +36,11 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *   Don't print progress output (default FALSE).
  */
 function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE) {
+  // Define the constant QUIET inside the namespace.
+  define('BTranslator\QUIET', $quiet);
+
   // Print progress output.
-  $quiet || print "project_import: $origin/$project/$lng: $path\n";
+  QUIET || print "project_import: $origin/$project/$lng: $path\n";
 
   // Switch to the given user.
   global $user;
@@ -45,46 +49,18 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
   drupal_save_session(FALSE);
   $user = user_load($uid);
 
-  // Calculate the project ID.
-  $pguid = sha1($origin . $project);
-
   // Check that the project exists.
-  $query = "SELECT pguid FROM {btr_projects} WHERE pguid = '$pguid'";
-  if (!btr_query($query)->fetchField()) {
-    $errors[] = t("The project '!project' does not exist.",
-                array('!project' => $origin . '/' . $project));
-    return $errors;
+  $pguid = btr_query(
+    'SELECT pguid FROM {btr_projects} WHERE pguid = :pguid',
+    array(':pguid' => sha1($origin . $project))
+  )->fetchField();
+  if (!$pguid) {
+    QUIET || print "***Error*** The project '$origin/$project' does not exist.\n";
+    return;
   }
 
-  // Get a list of all PO files on the given directory.
-  $files = file_scan_directory($path, '/.*\.po$/');
-
-  // Process each PO file.
-  $errors = array();
-  foreach ($files as $file) {
-    // Get the filename relative to the path, and the name of the template.
-    $filename = preg_replace("#^$path/#", '', $file->uri);
-    $tplname = preg_replace('#\.po?$#', '', $filename);
-
-    // Print progress output.
-    $quiet || print "import_po_file: $filename\n";
-
-    // Get the template id.
-    $query = 'SELECT potid FROM {btr_templates}
-              WHERE pguid = :pguid AND tplname = :tplname ';
-    $args = array(':pguid' => $pguid, ':tplname' => $tplname);
-    $potid = btr_query($query, $args)->fetchField();
-
-    // Check that the template exists.
-    if (!$potid) {
-      $errors[] = t("The template '!tplname' does not exist.",
-                  array('!tplname' => $tplname));
-      continue;
-    }
-
-    // Process this PO file.
-    _process_po_file($potid, $tplname, $lng, $file->uri, $filename);
-  }
+  // Import the given PO files.
+  _import_po_files($origin, $project, $lng, $path);
 
   // Make initial snapshots after importing PO files.
   _make_snapshots($origin, $project, $lng, $path);
@@ -92,15 +68,59 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
   // Switch back to the original user.
   $user = $original_user;
   drupal_save_session($old_state);
+}
 
-  return $errors;
+/**
+ * Import the given PO files.
+ */
+function _import_po_files($origin, $project, $lng, $path) {
+  // If the given $path is a single file, just process that one and stop.
+  if (is_file($path)) {
+    $filename = basename($path);
+    $tplname = $project;
+    _process_po_file($origin, $project, $tplname, $lng, $path, $filename);
+
+    // Done.
+    return;
+  }
+
+  // Otherwise, when $path is a directory, process each file in it.
+
+  // Get a list of all PO files on the given directory.
+  $files = file_scan_directory($path, '/.*\.po$/');
+
+  // Process each PO file.
+  foreach ($files as $file) {
+    $filename = preg_replace("#^$path/#", '', $file->uri);
+    $tplname = preg_replace('#\.po?$#', '', $filename);
+    _process_po_file($origin, $project, $tplname, $lng, $file->uri, $filename);
+  }
 }
 
 /**
  * Create a new template, parse the POT file, insert the locations
  * and insert the strings.
  */
-function _process_po_file($potid, $tplname, $lng, $file, $filename) {
+function _process_po_file($origin, $project, $tplname, $lng, $file, $filename) {
+  // Print progress output.
+  QUIET || print "import_po_file: $filename\n";
+
+  // Get the template id.
+  $potid = btr_query(
+    'SELECT potid FROM {btr_templates}
+       WHERE pguid = :pguid AND tplname = :tplname ',
+    array(
+      ':pguid' => sha1($origin . $project),
+      ':tplname' => $tplname,
+    ))
+    ->fetchField();
+
+  // Check that the template exists.
+  if (!$potid) {
+    QUIET ||  print "***Warning*** The template '$tplname' does not exist.\n";
+    return;
+  }
+
   // Parse the PO file.
   $parser = new POParser;
   $entries = $parser->parse($file);
@@ -114,7 +134,7 @@ function _process_po_file($potid, $tplname, $lng, $file, $filename) {
 
   // Add a file and get its id.
   $fid = _add_file($file, $filename, $potid, $lng, $headers, $comments);
-  if ($fid === NULL)  continue;
+  if ($fid === NULL)  return;
 
   // Process each gettext entry.
   foreach ($entries as $entry) {
@@ -132,33 +152,33 @@ function _process_po_file($potid, $tplname, $lng, $file, $filename) {
 
 /**
  * Insert a file in the DB, if it does not already exist.
- * Return the file id and a list of messages.
+ * Return the file id.
  */
 function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
-  $messages = array();
-
   // Get the sha1 hash of the file.
   $hash = sha1_file($file);
 
   // Check whether the file already exists.
-  $query = "SELECT potid, lng FROM {btr_files} WHERE hash = :hash";
-  $row = btr_query($query, array(':hash' => $hash))->fetchAssoc();
+  $row = btr_query(
+    'SELECT potid, lng FROM {btr_files} WHERE hash = :hash',
+    array(':hash' => $hash)
+  )->fetchAssoc();
 
   // If file already exists.
   if (isset($row['potid'])) {
     if ($row['potid']==$potid and $row['lng']==$lng) {
-      $msg = t('Already imported, skipping: !filename',
-             array('!filename' => $filename));
-      $messages = array(array($msg, 'error'));
-      return array(NULL, $messages);
+      QUIET || print "***Warning*** Already imported, skipping: $filename\n";
+      return NULL;
     }
     else {
       // file already imported for some other template or language
-      $sql = "SELECT p.origin, p.project, t.tplname
-              FROM {btr_templates} t
-              LEFT JOIN {btr_projects} p ON (t.pguid = p.pguid)
-              WHERE t.potid = :potid";
-      $row1 = btr_query($sql, array(':potid' => $row['potid']))->fetchAssoc();
+      $row1 = btr_query(
+        'SELECT p.origin, p.project, t.tplname
+         FROM {btr_templates} t
+         LEFT JOIN {btr_projects} p ON (t.pguid = p.pguid)
+         WHERE t.potid = :potid',
+        array(':potid' => $row['potid'])
+      )->fetchAssoc();
       $msg = t("File '!filename' has already been imported for '!origin/!project' and language '!lng' as '!tplname'.",
              array(
                '!filename' => $filename,
@@ -167,7 +187,7 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
                '!lng' => $row['lng'],
                '!tplname' => $row1['tplname'],
              ));
-      $messages[] = array($msg, 'warning');
+      QUIET || print "***Warning*** $msg\n";
     }
   }
 
@@ -186,7 +206,7 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
       ))
     ->execute();
 
-  return array($fid, $messages);
+  return $fid;
 }
 
 /**
@@ -224,7 +244,7 @@ function _add_translation($sguid, $lng, $translation) {
   // check that translation does not exceed this length.
   if (strlen($translation) > 1000) {
     print $translation . "\n";
-    print "***Warning*** Translation is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
+    QUIET || print "***Warning*** Translation is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
     return;
   }
 
@@ -270,7 +290,14 @@ function _add_translation($sguid, $lng, $translation) {
 function _make_snapshots($origin, $project, $lng, $path) {
   // Store the imported files into the DB as an initial snapshot.
   $snapshot_file = tempnam('/tmp', 'snapshot_file_');
-  exec("tar -cz -f $snapshot_file -C $path .");
+  if (is_file($path)) {
+    $dir = dirname($path);
+    $filename = basename($path);
+    exec("tar -cz -f $snapshot_file -C $dir $filename");
+  }
+  else {
+    exec("tar -cz -f $snapshot_file -C $path .");
+  }
   btr::project_snapshot_save($origin, $project, $lng, $snapshot_file);
   unlink($snapshot_file);
 

@@ -22,6 +22,7 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *
  * @param $path
  *   The directory where the template (POT) files are located.
+ *   It can also be the full path to a single POT/PO file.
  *
  * @param $uid
  *   ID of the user that has requested the import.
@@ -30,8 +31,11 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *   Don't print progress output (default FALSE).
  */
 function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
+  // Define the constant QUIET inside the namespace.
+  define('BTranslator\QUIET', $quiet);
+
   // Print progress output.
-  $quiet || print "project_add: $origin/$project: $path\n";
+  QUIET || print "project_add: $origin/$project: $path\n";
 
   // Switch to the given user.
   global $user;
@@ -55,6 +59,32 @@ function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
       ))
     ->execute();
 
+  // Import the given POT/PO files.
+  _import_pot_files($origin, $project, $path);
+
+  // Switch back to the original user.
+  $user = $original_user;
+  drupal_save_session($old_state);
+}
+
+/**
+ * Import the given POT/PO files.
+ */
+function _import_pot_files($origin, $project, $path) {
+  $pguid = sha1($origin . $project);
+
+  // If the given $path is a single file, just process that one and stop.
+  if (is_file($path)) {
+    $filename = basename($path);
+    $tplname = $project;
+    _process_pot_file($pguid, $tplname, $path, $filename);
+
+    // Done.
+    return;
+  }
+
+  // Otherwise, when $path is a directory, process each file in it.
+
   // Get a list of all template (POT) files on the given directory.
   $files = file_scan_directory($path, '/.*\.pot$/');
   if (empty($files)) {
@@ -64,20 +94,10 @@ function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
 
   // Process each POT file.
   foreach ($files as $file) {
-    // Get the filename relative to the path, and the name of the template.
     $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.pot?$#', '', $filename);
-
-    // Print progress output.
-    $quiet || print "import_pot_file: $filename\n";
-
-    // Process the POT file.
     _process_pot_file($pguid, $tplname, $file->uri, $filename);
   }
-
-  // Switch back to the original user.
-  $user = $original_user;
-  drupal_save_session($old_state);
 }
 
 /**
@@ -85,6 +105,9 @@ function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
  * and insert the strings.
  */
 function _process_pot_file($pguid, $tplname, $file, $filename) {
+  // Print progress output.
+  QUIET || print "import_pot_file: $filename\n";
+
   // Create a new template.
   $potid = btr_insert('btr_templates')
     ->fields(array(
