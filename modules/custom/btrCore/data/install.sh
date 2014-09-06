@@ -3,17 +3,9 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### store database settings on db/settings.php
-drush php-script db/get-db-settings.php > db/settings.php
-
 ### create the DB tables
 mysql=$(drush sql-connect)
 $mysql < db/btr_schema.sql
-
-### for the time being, data are on the same database with Drupal
-dbname=$(drush sql-connect | tr ' ' "\n" | grep -e '--database=' | cut -d= -f2)
-export BTR=$dbname
-export BTR_DATA=$dbname
 
 ### import the vocabulary projects
 import/vocabulary.sh
@@ -26,7 +18,7 @@ test/update.sh
 ### Importing all the data can take a lot of time (many hours,
 ### maybe days), so it is a good idea to run the update script
 ### like this:
-###   nohup ./update.sh &
+###   nohup nice ./update.sh &
 ### Then you can check the progress at any time by:
 ###   tail -f nohup.out
 
@@ -40,11 +32,9 @@ and then run
 Importing all the data can take a lot of time (many hours,
 maybe days), so it is a good idea to run the update script
 like this:
-    nohup $dir/update.sh &
+    nohup nice $dir/update.sh &
 
 Then you can check the progress at any time by:
     tail -f nohup.out
 
 "
-
-
