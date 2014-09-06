@@ -7,8 +7,7 @@
 cd $(dirname $0)
 
 ### set the drush alias
-drush_alias=${1:-@btr_dev}
-drush="drush $drush_alias"
+drush="drush $1"
 
 ### set some variables
 origin=misc

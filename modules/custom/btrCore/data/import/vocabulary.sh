@@ -5,8 +5,7 @@
 cd $(dirname $0)
 
 ### get the drush alias from the first argument
-drush_alias=${1:-@btr_dev}
-drush="drush $drush_alias"
+drush="drush $1"
 
 origin='vocabulary'
 for file in $(ls vocabulary/*.po)
