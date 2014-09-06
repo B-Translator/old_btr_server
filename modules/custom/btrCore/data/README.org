@@ -1,14 +1,22 @@
+#+OPTIONS: num:nil toc:t ^:nil f:nil TeX:nil LaTeX:nil
+#+STYLE: <link href="org-info.css" rel="stylesheet" type="text/css"/>
+
+#+AUTHOR: Dashamir Hoxha
+#+EMAIL: dashohoxha@gmail.com
+
+#+TITLE: Translation Workflow With B-Translator
+
 
 * Translation files
 
   The translation files that are imported into the DB are retrieved
   from the repository of the corresponding projects. This is done by
-  the scripts in the directory ~get/~, which checkout (or update)
+  the scripts in the directory [[https://github.com/B-Translator/btr_server/tree/master/modules/custom/btrCore/data/get][get/]], which checkout (or update)
   these files from each projects' repository.
 
   The way of getting these files is slightly different for different
   projects. However almost all of them are placed in the directory
-  =$data_root=, which is defined in ~config.sh~. Besides =$data_root=,
+  =$data_root=, which is defined in [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/config.sh][config.sh]]. Besides =$data_root=,
   ~config.sh~ defines also the variable =$languages=, which is a list
   of the codes of the languages that are supported by the system.
 
@@ -65,7 +73,7 @@
 
 ** Import scripts
 
-   The scripts in the directory ~import/~ are used to import projects
+   The scripts in the directory [[https://github.com/B-Translator/btr_server/tree/master/modules/custom/btrCore/data/import][import/]] are used to import projects
    from a certain origin. For example ~kde.sh~ imports (or updates)
    all the KDE projects, ~office.sh~ imports/updates all the
    LibreOffice projects, and so on.
@@ -79,7 +87,7 @@
 
 ** Example script
 
-   This is a simple script for importing the =Pingus= project:
+   [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/import/pingus.sh][This]] is a simple script for importing the =Pingus= project:
    #+BEGIN_EXAMPLE
    #!/bin/bash -x
 
@@ -159,12 +167,12 @@
   translation that is voted by any of the preferred users, then the
   most voted translation is exported.
 
-  The formatting of the exported file is not exactly the same as the
-  imported file. So, these exported files cannot be used directly to
-  be commited to the project repository. Instead they should be merged
-  somehow with the existing PO files of the project. This merge can be
-  simply done by ~msgmerge~, or by tools like ~lokalize~ that
-  facilitate merging of PO files.
+  *NOTE:* The formatting of the exported file is not exactly the same
+  as the imported file. So, these exported files cannot be used
+  directly to be commited to the project repository. Instead they
+  should be merged somehow with the existing PO files of the
+  project. This merge can be simply done by ~msgmerge~, or by tools
+  like ~lokalize~ that facilitate merging of PO files.
 
 * Snapshots and diffs
 
@@ -235,30 +243,28 @@
    - btr-project-diff (btrp-diff) :: Find differencies between the
         last snapshot and the current state of the project.
 
-   To get more details about the arguments etc. use =drush help
-   command=.
+   To get more details about the arguments etc. use =drush help command=.
 
 ** Getting diffs from the web (wget_diff.sh)
 
-   A script like this can be used by the translators to get the diffs of the
+   A script [[https://github.com/B-Translator/btr_server/blob/master/modules/custom/btrCore/data/utils/wget-diffs.sh][like this]] can be used by the translators to get the diffs of the
    projects from the server, through the REST API.
 
-     #+BEGIN_EXAMPLE
-     $ utils/wget-diffs.sh
+   #+BEGIN_EXAMPLE
+   $ utils/wget-diffs.sh
 
-     Usage: utils/wget-diffs.sh origin project lng [nr]
+   Usage: utils/wget-diffs.sh origin project lng [nr]
 
-	 Get the diffs of a project using wget and the REST API.
-	 If 'nr' is missing, then the list of diffs will be retrieved instead.
-	 If 'nr' is '-', then the latest diffs (since the last snapshot)
-	 will be computed and returned (it will take longer to execute, since
-	 the diffs are calculated on the fly).
+       Get the diffs of a project using wget and the REST API.
+       If 'nr' is missing, then the list of diffs will be retrieved instead.
+       If 'nr' is '-', then the latest diffs (since the last snapshot)
+       will be computed and returned (it will take longer to execute, since
+       the diffs are calculated on the fly).
 
-     Examples:
-	 utils/wget-diffs.sh KDE kdelibs sq
-	 utils/wget-diffs.sh KDE kdelibs sq 1
-	 utils/wget-diffs.sh KDE kdelibs sq 2
-	 utils/wget-diffs.sh KDE kdelibs sq -
+   Examples:
+       utils/wget-diffs.sh KDE kdelibs sq
+       utils/wget-diffs.sh KDE kdelibs sq 1
+       utils/wget-diffs.sh KDE kdelibs sq 2
+       utils/wget-diffs.sh KDE kdelibs sq -
 
-     #+END_EXAMPLE
-
+   #+END_EXAMPLE
