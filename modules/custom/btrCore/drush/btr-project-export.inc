@@ -42,7 +42,8 @@ translation is exported.
 
 The export mode 'original' exports the translations of the original
 file that was imported (useful for making an initial snapshot of the
-project).";
+project).
+";
 }
 
 /**

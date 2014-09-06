@@ -4,7 +4,7 @@
  */
 function _btr_project_import_drush_command() {
   return array(
-    'description' => "Import the PO files of a project/language into the DB.",
+    'description' => "Import the PO files of an origin/project/lng into the DB.",
     'arguments' => array(
       'origin'  => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
       'project' => 'The name of the project.',
@@ -25,7 +25,12 @@ function _btr_project_import_drush_command() {
  * Help text for the command 'btr-project-import'.
  */
 function _btr_project_import_drush_help() {
-  return dt("Import the PO files of a project/language into the DB.");
+  return dt("Import the PO files of an origin/project/lng into the DB.
+
+Templates of the project (POT files) must have been imported first.
+If the corresponding template for a file does not exist, it will not
+be imported.
+");
 }
 
 /**

@@ -4,17 +4,17 @@
  */
 function _btr_project_add_drush_command() {
   return array(
-    'description' => "Import the POT files of a project into the B-Translator DB.",
+    'description' => "Create a project and import its POT files into the DB.",
     'arguments' => array(
       'origin' => 'The origin of the project (ubuntu, GNOME, KDE, etc.)',
       'project' => 'The name of the project that is being imported.',
-      'path' => 'The directory of the POT files of the project (absolute path or relative to DRUPAL_ROOT).',
+      'path' => 'The directory of the POT files of the project (absolute path or relative to DRUPAL_ROOT). It can also be a single POT/PO file.',
     ),
     'options' => array(
       'user'  => 'The username of the user that is importing templates.',
     ),
     'examples' => array(
-      "drush btrp-add KDE kturtle \\      \n      \$(pwd)/kturtle/" => 'Import kturtle into the DB.',
+      "drush btrp-add KDE kturtle \$(pwd)/kturtle/" => '',
     ),
     'aliases' => array('btrp-add'),
   );
@@ -24,7 +24,11 @@ function _btr_project_add_drush_command() {
  * Help text for the command 'btr-project-add'.
  */
 function _btr_project_add_drush_help() {
-  return dt("Import the POT files of a project into the B-Translator DB.");
+  return dt("Create a project and import its POT files into the DB.
+
+If such a project already exists (the same origine and project)
+it will be deleted first (related data will be erased as well).
+");
 }
 
 /**

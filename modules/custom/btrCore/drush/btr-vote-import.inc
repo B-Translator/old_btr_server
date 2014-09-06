@@ -23,12 +23,33 @@ function _btr_vote_import_drush_command() {
  * Help text for the command 'btr-vote-import'.
  */
 function _btr_vote_import_drush_help() {
-  return dt('Bulk import of translations and votes from PO files.');
+  return dt('Bulk import of translations and votes from PO files.
+
+The option --user is required because it declares the author of
+translations.
+
+It is like a bulk translation and voting service. For any translation
+in the PO files, it will be added as a suggestion if such a
+translation does not exist, or it will just be voted if such a
+translation already exists. In case that the translation already
+exists but its author is not known, then the given user will be
+recorded as the author of the translation.
+
+This can be useful if translators prefer to work off-line with PO
+files. They can export the PO files of a project, work on them with
+desktop tools (like Lokalize) to translate or correct exported
+translations, then import back the correct translations.
+');
 }
 
 /**
  * Callback function for the command 'btr-vote-import'.
  */
 function drush_btranslator_btr_vote_import($lng, $path) {
-  btr::vote_import($GLOBALS['user']->uid, $lng, $path);
+  global $user;
+  if (!$user->uid) {
+    drush_log(t('You must specify a user with the option --user.'), 'error');
+    drupal_exit();
+  }
+  btr::vote_import($user->uid, $lng, $path);
 }

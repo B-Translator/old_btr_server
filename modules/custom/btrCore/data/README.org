@@ -7,18 +7,18 @@
   these files from each projects' repository.
 
   The way of getting these files is slightly different for different
-  projects. However all of them are placed in the directory
+  projects. However almost all of them are placed in the directory
   =$data_root=, which is defined in ~config.sh~. Besides =$data_root=,
   ~config.sh~ defines also the variable =$languages=, which is a list
   of the codes of the languages that are supported by the system.
 
   Projects on the =$data_root= are also grouped (categorized) by
-  origin.  For example all the GNOME projects are placed on the same
+  origin. For example all the GNOME projects are placed on the same
   directory, all the KDE projects on another directory, and so on.
   Under the 'origin' directory, there is a subdirectory for each
   language, and under it usually there is a subdirectory for each
-  project, containing all the translation files of the project, in
-  any structure that is suitable for the project.
+  project, containing all the translation files of the project, in any
+  structure that is suitable for the project.
 
   Some projects have just a single translation (PO) file (for example
   those of GNOME or ubuntu), some others have several translation
@@ -30,239 +30,151 @@
   Toolkit).
 
 
-* Importing
+* Importing projects
 
-  Translation files are imported into the database by the scripts in
-  the directory ~import/~.
+  Translation projects are imported in two steps: the first step is to
+  create a project and import its template (POT) files, and the second
+  step is to import the translation (PO) files for each language. A
+  POT file usually has a corresponding PO file for each language.
 
-  Importing is done in two steps: the first step is to import the
-  template (POT) files of the project, and the second step is to
-  import the translation (PO) files for each language.  A POT file
-  usually has a corresponding PO file for each language.
+** Drush commands
 
-  The template (POT) files contain the translatable strings of the
-  project, with empty translations (this is why they are called
-  templates). The translation (PO) files contain the same strings
-  as the POT files, but with the corresponding translations for a
-  certain language. In the import scripts, usually the French (fr)
-  translation files are used as template files.
+   Drush commands that are used for importing projects are:
 
-** Importing template files (pot_import.php)
+   - btr-project-add (btrp-add) :: Create a project and import its POT
+        files into the DB. If such a project already exists (the same
+        origine and project), it will be deleted first (related data
+        will be erased as well).
 
-   Template files are imported by ~pot_import.php~, which is called
-   like this:
-       #+BEGIN_EXAMPLE
-       $ ./pot_import.php
+   - btr-project-import (btrp-import) :: Import the PO files of an
+        origin/project/lng into the DB. Templates of the project (POT
+        files) must have been imported first. If the corresponding
+        template for a file does not exist, it will not be imported.
 
-       Usage: ./pot_import.php origin project tplname file.pot
-	 origin   -- The origin of the project (ubuntu, GNOME, KDE, LibreOffice, etc.)
-	 project  -- The name of the project that is being imported.
-	 tplname  -- The name of the PO template.
-	 file.pot -- The POT file of the project.
+   There are also commands for getting a list of projects and for
+   deleting a project:
 
-       Examples:
-	 ./pot_import.php KDE kdeedu kturtle test/kturtle.pot
-	 ./pot_import.php KDE kdeedu kturtle test/kturtle_fr.po
+   - btr-project-ls (btrp-ls) :: List imported projects, filtered by
+        origin/project.
 
-       #+END_EXAMPLE
+   - btr-project-del (btrp-del) :: Delete everything related to the
+        given origin and project.
 
-   ~pot_import.php~ creates a new template and a new project (if
-   needed).  If the given _origin+project_ already exists, then the
-   existing project is used.  However, if the given template already
-   exists (for this project), then it is deleted first (along with the
-   locations and files related to it), and then recreated.
-
-   Along with the template, locations that are contained in this
-   template are created as well. The string corresponding to each
-   location is created only if it does not already exist. Otherwise
-   the existing string is referenced instead (and the reference count
-   of the string is incremented).
-
-** Importing translation files (po_import.php)
-
-   Translation files are imported by ~po_import.php~, which is called
-   like this:
-       #+BEGIN_EXAMPLE
-       $ ./po_import.php
-
-       Usage: ./po_import.php origin project tplname lng file.po
-	 origin  -- The origin of the project (ubuntu, GNOME, KDE, LibreOffice, etc.)
-	 project -- The name of the project.
-	 tplname -- The name of the PO template.
-	 lng     -- The language of translation (de, fr, sq, en_GB, etc.).
-	 file.po -- The PO file to be imported.
-
-       Example:
-	 ./po_import.php KDE kdeedu kturtle fr test/kturtle.po
-
-       #+END_EXAMPLE
-
-   ~po_import.php~ imports a new PO (translation) file.  It assumes
-   that the POT file of the project has already been imported,
-   otherwise it will quit without doing anything.  If the file has
-   been already imported, then it is skiped.
-
-   For each file, all the information that is needed for exporting it
-   is stored, like the file name and path, the headers of the file,
-   the content of the file, etc.
-
-   Along with the file, it also inserts the translations for the
-   corresponding strings, when such translations do not exist.
-
-
-** Import example (pingus.sh)
-
-   The most simple example of importing a project is ~pingus.sh~. The
-   other scripts import many projects from the same origin at once,
-   and have logic about getting the project name, finding the files,
-   etc. Also, they may have several (or many) template files for each
-   project, which makes the logic even more complex.
-
-   The basic import code of ~pingus.sh~ is this:
-     #+BEGIN_EXAMPLE
-     ### make last snapshots before re-import
-     make-last-snapshot $origin $project fr
-     make-last-snapshot $origin $project sq
-
-     ### import the template
-     potemplate=pingus
-     ./pot_import.php $origin $project $potemplate $po_dir/pingus-fr.po
-
-     ### import the PO files
-     ./po_import.php $origin $project $potemplate fr $po_dir/pingus-fr.po
-     ./po_import.php $origin $project $potemplate sq $po_dir/pingus-sq.po
-
-     ## make initial snapshots after (re)import
-     make-snapshot $origin $project fr $po_dir/pingus-fr.po
-     make-snapshot $origin $project sq $po_dir/pingus-sq.po
-     #+END_EXAMPLE
-
-   The main import code is: importing first the template, and then
-   importing the translation file for each language. However, before
-   the import we /make a last snapshot/ of the existing project, and
-   after the import we also /make a snapshot/. These two functions,
-   =make-last-snapshot= and =make-snapshot= are defined on
-   ~make-snapshot.sh~, which is included in ~pingus.sh~. They will be
-   discussed in more details in the section about the snapshots and
-   diffs.
-
+   To get more details about the arguments etc. use =drush help
+   command=.
 
 ** Import scripts
 
-   The other scripts in the directory import are used to import
-   projects from a certain origin. For example ~kde.sh~ imports (or
-   re-imports) all the KDE projects, ~office.sh~ imports/re-imports
-   all the LibreOffice projects, and so on.
+   The scripts in the directory ~import/~ are used to import projects
+   from a certain origin. For example ~kde.sh~ imports (or updates)
+   all the KDE projects, ~office.sh~ imports/updates all the
+   LibreOffice projects, and so on.
 
    If a list of projects is passed on the command-line to these
    scripts, then only the specified projects will be imported (instead
-   of all the projects.)
+   of all the projects).
+
+   In the import scripts, usually the French (fr) translation files
+   are used as template files.
+
+** Example script
+
+   This is a simple script for importing the =Pingus= project:
+   #+BEGIN_EXAMPLE
+   #!/bin/bash -x
+
+   ### go to the script directory
+   cd $(dirname $0)
+
+   ### set the drush alias
+   drush_alias=${1:-@btr_dev}
+   drush="drush $drush_alias"
+
+   ### set some variables
+   origin=Test
+   project=Pingus
+   dir=$(pwd)/pingus
+
+   ### create the project
+   $drush btrp-add $origin $project $dir/pingus-fr.po
+
+   ### import the PO files of each language
+   for lng in fr sq
+   do
+       $drush btrp-import $origin $project $lng $dir/pingus-$lng.po
+   done
+   #+END_EXAMPLE
+
+   In this case the project has only a single translation file
+   (.po). If the project has more then one translation files, then the
+   directory of these translation files will be passed as an argument
+   to the commands =drush btrp-add= and =drush btrp-import=, instead
+   of the translation file.
+
+* Bulk import of translations and votes
+
+  If translators prefer to work off-line with PO files, they can
+  export the PO files of a project, work on them with desktop tools
+  (like Lokalize) to translate or correct exported translations, then
+  import back the correct translations.
+
+  This can be done with the drush command =btr-vote-import
+  (btr-vote)= like this:
+  #+BEGIN_EXAMPLE
+  drush btrp-vote --user=user1 fr $(pwd)/kturtle_fr/
+  #+END_EXAMPLE
+
+  The option =--user= is required because it declares the author of
+  translations.
+
+  This is like a bulk translation and voting service. For any
+  translation in the PO files, it will be added as a suggestion if
+  such a translation does not exist, or it will just be voted if such
+  a translation already exists. In case that the translation already
+  exists but its author is not known, then the given user will be
+  recorded as the author of the translation.
 
 
 * Exporting
 
-  As we have seen, besides the strings and translations, the import of
-  PO files saves also the structure of these files and all the
-  relevant data that are needed to export them again from the DB.
+  Translations can be exported with the drush command
+  =btr-project-export (btrp-export)=. For example:
+  #+BEGIN_EXAMPLE
+  drush btrp-export KDE kdeedu sq $(pwd)/kdeedu-sq/
+  drush btrp-export KDE kdeedu sq $(pwd)/kdeedu-sq/ \
+                    --export-mode=preferred --preferred-voters=user1,user2
+  #+END_EXAMPLE
 
-  Export scripts are in the directory ~export/~.
+  The last argument is a directory where the PO files will be
+  exported. As always with drush, it should be an absolute path or
+  relative to Drupal root.
 
-** Exporting PO files (po_export.php)
+  The export mode =most_voted= (which is the default one) exports the
+  most voted translations and suggestions.
 
-   The script ~po_export.php~ is used to export a single PO file. It
-   is used like this:
-     #+BEGIN_EXAMPLE
-     $ ./po_export.php
+  The export mode =preferred= gives priority to translations that are
+  voted by a certain user or a group of users. It requires an
+  additional option (=preferred_voters=) to specify the user (or a
+  list of users) whose translations are preferred. If a string has no
+  translation that is voted by any of the preferred users, then the
+  most voted translation is exported.
 
-     Usage: ./po_export.php origin project tplname lng [file.po [export_mode]]
-       origin      -- the origin of the project (ubuntu, GNOME, KDE, etc.)
-       project     -- the name of the project to be exported
-       tplname     -- The name of the PO template.
-       lng         -- translation to be exported (de, fr, sq, en_GB, etc.)
-       file.po     -- output file (stdout if not given)
-       export_mode -- 'most_voted' (default) or 'original'
-
-     The export mode 'most_voted' (which is the default one) exports the
-     most voted translations and suggestions.
-     The export mode 'original' exports the translations of the original
-     file that was imported (useful for making an initial snapshot of
-     the project).
-     If the export mode is not given as an argument, then the env variable
-     PO_EXPORT_MODE will be tried.
-
-     Examples:
-       ./po_export.php KDE kdeedu kturtle fr > test/kturtle_fr.po
-       ./po_export.php KDE kdeedu kturtle fr test/kturtle_fr.po original
-
-     #+END_EXAMPLE
-
-   The PO file to be exported is identified by ={origin, project,
-   tplname, lng}=.
-
-   If the export mode is /original/, then the same translations that
-   were imported are exported again. This is useful for making initial
-   snapshots and diffs, which we will discuss later. However it should
-   be noted that the exported file is not exctly the same as the
-   imported file.  One reason is that the formating can be different,
-   although the strings and translations are the same. Another reason
-   is that during import some entries are skiped. like
-   'translator-credits' etc.
-
-   If the export mode is /most_voted/, and some of the translations
-   have been voted, then the most voted translation is exported
-   instead. This is how the input/feedback of the reviewers is
-   transfered into the PO files. But since the formatting of the
-   exported file is not exactly the same as the imported file, this
-   exported file cannot be used directly to be commited to the project
-   repository. Instead it is merged somehow with the existing PO file
-   of the project. This merge can be simply done by ~msgmerge~, or by
-   tools like ~lokalize~ that facilitate merging of PO files. Another
-   option is to get the differencies between the exported file and the
-   original file and to apply them to the current PO file.
-
-** Exporting projects (export.sh)
-
-   To export all the PO files of a project, the script ~export.sh~ is
-   used:
-     #+BEGIN_EXAMPLE
-     $ ./export.sh
-     Usage: ./export.sh origin project lng output_dir
-     #+END_EXAMPLE
-
-   If ~project==all~, then all the projects of the given origin will be
-   exported. It the environments variable QUIET is defined, then it
-   will be less verbose (will not output much progress/debug info).
-
-   The exported files are saved under the directory ~output_dir~.
-   Their path under the ~output_dir~ is the same as the path of the
-   imported files. This is useful for making diffs with the original
-   files of the project.
-
-** Exporting projects in tgz format (export_tgz.sh)
-
-   This script is usually called from the web (through the REST API)
-   to export all the PO files of a project, in .tgz format.
-     #+BEGIN_EXAMPLE
-     $ ./export_tgz.sh
-     Usage: ./export_tgz.sh origin project lng [output_dir]
-     #+END_EXAMPLE
-
-   If project==all, then all the projects of the given origin will be
-   exported. If the ~output_dir~ is not given, then the ~/tmp~
-   directory will be used.
-
-   It outputs the path of the created archive.
-
+  The formatting of the exported file is not exactly the same as the
+  imported file. So, these exported files cannot be used directly to
+  be commited to the project repository. Instead they should be merged
+  somehow with the existing PO files of the project. This merge can be
+  simply done by ~msgmerge~, or by tools like ~lokalize~ that
+  facilitate merging of PO files.
 
 * Snapshots and diffs
 
   A /snapshot/ is an export from the DB of the current PO files of a
-  project-language. This export (which is a .tgz archive) is stored in
-  the DB. A project has a snapshot for each language. Snapshots are
+  project-language. This export is stored in the DB as a TGZ
+  archive. A project has a snapshot for each language. Snapshots are
   useful for generating the /diffs/.
 
   A /diff/ is the difference between the snapshot and the previous
-  snapshot.  The diffs are stored in the DB as well. They are
+  snapshot. The diffs are stored in the DB as well. They are
   sequentially numbered and keep the history of changes.
 
   There are two types of diffs that are generated and stored. One is
@@ -270,204 +182,71 @@
   (generated by pology
   [[http://websvn.kde.org/trunk/l10n-support/pology/]])
 
-  Diffs ensure that translators get only the latest feedback (since
-  the last snapshot), without having to review again the suggestions
-  made previously. So, they make easier the work of the translators.
+  Diffs allow translators to get only the latest feedback (since the
+  last snapshot), without having to review again the suggestions made
+  previously. So, they make easier the work of the translators.
   However the previous diffs are saved in the DB as well, in order to
   have a full history of the suggested translations over the time.
 
-
-** Keeping diffs in the DB (db_diff.php)
-
-   The script ~db_diff.php~ is used to /add/, /list/ or /get/ the diffs
-   from the DB. It is just an interface to the DB.
-
-     #+BEGIN_EXAMPLE
-     $ ./db_diff.php
-
-     Usage: ./db_diff.php add  origin project lng file.diff file.ediff [comment [user_id]]
-	    ./db_diff.php list origin project lng
-	    ./db_diff.php get  origin project lng number (diff|ediff) [file]
-
-       origin     -- the origin of the project (ubuntu, GNOME, KDE, etc.)
-       project    -- the name of the project to be exported
-       lng        -- language of translation (de, fr, sq, en_GB, etc.)
-       file.diff  -- file in `diff -u` format
-       file.ediff -- file in ediff (embedded diff) format
-       comment    -- optional comment about the ediff file that is being added
-       user_id    -- optional (drupal) uid of the user that is adding the ediff
-       number     -- the number of ediff that is being retrieved
-
-     Examples:
-       ./db_diff.php add LibreOffice sw fr LibreOffice-sw-fr.diff LibreOffice-sw-fr.ediff
-       ./db_diff.php list LibreOffice sw fr
-       ./db_diff.php get LibreOffice sw fr 5 diff > LibO/fr/sw_5.diff
-       ./db_diff.php get LibreOffice sw fr 5 ediff > LibO/fr/sw_5.ediff
-
-     #+END_EXAMPLE
-
-   This script is usually called from other scripts (not directly from
-   the command line).
-
-
-** Keeping snapshots in the DB (db_snapshot.php)
-
-   The script ~db_snapshot.php~ is used as a DB interface for the snapshots.
-
-     #+BEGIN_EXAMPLE
-     $ ./db_snapshot.php
-
-     Usage: ./db_snapshot.php (init|update|get) origin project lng file.tgz
-
-       origin   -- the origin of the project (ubuntu, GNOME, KDE, etc.)
-       project  -- the name of the project to be exported
-       lng      -- language of translation (de, fr, sq, en_GB, etc.)
-       file.tgz -- tgz archive of the snapshot of the project
-
-     The operation 'init' is used to insert into the DB the snapshot
-     for the first time. The operation 'update' to update it, and
-     'get' to retrive it from the DB.
-
-     Examples:
-       ./db_snapshot.php init   LibreOffice sw fr LibreOffice-sw-fr.tgz
-       ./db_snapshot.php update LibreOffice sw fr LibreOffice-sw-fr.tgz
-       ./db_snapshot.php get    LibreOffice sw fr LibreOffice-sw-fr.tgz
-
-     #+END_EXAMPLE
-
-   The operation ~init~ will first delete a snapshot, if it already
-   exists in the DB. This script is usually called from other scripts
-   (not directly from the command line).
-
-** Making a diff (make_diff.sh)
-
-   This script compares the current translation files of an ~{origin,
-   project, lng}~ with the last snapshot.
-
-     #+BEGIN_EXAMPLE
-     $ ./make_diff.sh
-
-     Usage: ./make_diff.sh origin project lng
-
-     Export the current state of translation files of a project-language
-     and make a diff with the last snapshot.
-
-     #+END_EXAMPLE
-
-   It does these:
-   1. Export the current files for the given ~{origin, project, lng}~
-      (by calling =export.sh=)
-   2. Get the (last) snapshot for ~{origin, project, lng}~
-   3. Make the difference between them with =diff -rubB= and with =pology=
-
-   When it is done, it leaves in its own directory the files
-   ~origin-project-lng.tgz~ (which contains the exported files),
-   ~origin-project-lng.diff~ and ~origin-project-lng.ediff~.
-
-  It outputs some debug information as well, but if the =QUIET=
-  environment variable is define, this output is suppressed.
-
-
-** Making a snapshot (make_snapshot.sh)
-
-     #+BEGIN_EXAMPLE
-     $ ./make_snapshot.sh
-
-     Usage: ./make_snapshot.sh origin project lng [diff_comment]
-
-     Make the diff with the last snapshot and store it in DB.
-     Save in DB the current snapshot.
-
-     #+END_EXAMPLE
-
-   This script just calls =make_diff.sh= and stores in DB the files
-   ~origin-project-lng.diff~ and ~origin-project-lng.ediff~, if they
-   are not empty. It also updates the snapshot of ~{origin, project,
-   lng}~ with the file ~origin-project-lng.tgz~. Finally it cleans all
-   the three files generated by =make_diff.sh=.
-
-   =make_diff.sh= is separated from =make_snapshot.sh= because it
-   needs to be used also by the REST API
-   =translations/project/diff/origin/project/lng/-= to generate the
-   changes (diffs) since the last snapshot.
-
-
-** Lifecycle of the diffs and snapshots
+** Lifecycle of the snapshots and diffs
 
    When a project is imported, an initial snapshot is created and
    stored in the DB as well. This initial snapshot contains the
-   original files that were used for the import. It is done like this:
-   #+BEGIN_EXAMPLE
-   ### store the tgz file into the DB as a snapshot
-   ../export/db_snapshot.php init $origin $project $lng $snapshot_tgz
-   #+END_EXAMPLE
+   original files that were used for the import. No diff is made
+   because there is nothing to compare with.
 
    Immediately after the initial snapshot, another snapshot is done,
-   by exporting files in the /original/ mode.
-   #+BEGIN_EXAMPLE
-   ### make a second snapshot, which will generate a diff
-   ### with the initial snapshot, and will save it into the DB
-   export PO_EXPORT_MODE='original'   ## set the export mode for po_export.php
-   diff_comment="Import diff. Contains formating changes, any skiped entries, etc."
-   ../export/make_snapshot.sh $origin $project $lng "$diff_comment"
-   #+END_EXAMPLE
-   This snapshot will also generate a diff, which contains the
-   differences that come as a result of formating changes between the
-   original format and the exported format. It also contains the
-   entries that are skipped during the import.
+   by exporting files in the =original= mode. This snapshot will
+   generate a diff, which contains the differences that come as a
+   result of formating changes between the original PO format and the
+   exported PO format. It also contains the entries that are skipped
+   during the import. In general this diff (the first diff) contains
+   changes that are not interesting for the translator.
 
-   Whenever a translator checks the latest diff, he should also make a
-   snapshot, which will also generate the diff with the previous
-   snapshot (and store it on the DB). As a result, the translations
-   that have been already suggested to him will not be suggested
-   again.
+   Then another snapshot is made, using the =most_voted= mode of
+   export, which will generate a diff that contains all the feedback
+   and suggestions made before the import. If the import is actually
+   an update (re-import) of the project, this diff contains the
+   suggestions that the translator has probably rejected previously,
+   and making this snapshot ensures that they are not suggested again
+   to him.
 
-   When the time comes to re-import a project, a last snapshot is made
-   automatically before the import, in order to store as a diff any
-   latest (unchecked) suggestions.
-   #+BEGIN_EXAMPLE
-   ### make a last snapshot before the import (useful in the case of re-import)
-   export PO_EXPORT_MODE='most_voted'   ## set the export mode for po_export.php
-   diff_comment="Contains the latest suggestions before import."
-   ../export/make_snapshot.sh $origin $project $lng "$diff_comment"
-   #+END_EXAMPLE
+   This logic of the initial snapshots and diffs is implemented
+   automatically during the import of the project.
 
-   Then an initial snapshot is made again with the original files,
-   using ~db_snapshot.php init ...~ (which will not generate any
-   diff).  After it, a snapshot using the ~original~ mode of export is
-   made again, which will generate again any formating changes and
-   save them as a diff.
+   Then, whenever a translator checks the latest diff, it is a good
+   idea to make a snapshot as well, which will generate the diff with
+   the previous snapshot (and store it on the DB). As a result, the
+   translations that have been already suggested to him will not be
+   suggested again.
 
-   However, in the case of re-import, another snapshot is needed,
-   using the ~most_voted~ mode of export, which will generate a diff
-   that contains all the feedback and suggestions made before the
-   re-import.
-   #+BEGIN_EXAMPLE
-   ### make another snapshot, which will contain all the previous suggestions
-   ### (before the import), in a single diff
-   export PO_EXPORT_MODE='most_voted'   ## set the export mode for po_export.php
-   diff_comment="Initial diff after import. Contains all the previous suggestions (before the last import)."
-   ../export/make_snapshot.sh $origin $project $lng "$diff_comment"
-   #+END_EXAMPLE
-   Usually this diff contains the suggestions that the translator has
-   already rejected, and making this snapshot ensures that they are
-   not suggested again to him.
+** Drush commands for snapshots and diffs
 
-   This logic of the initial snapshots and diffs is applied by calling
-   the functions =make-last-snapshot()= and =make-snapshot()=, which
-   are defined on the file ~import/make-snapshot.sh~. They are
-   included and called automatically by the import scripts, before and
-   after each import.
+   - btr-project-snapshot (btrp-snapshot) :: Make a snapshot of the PO
+        files for the given origin/project/lng.  Also generates the
+        diffs with the previous snapshot and saves them in DB.
+
+   - btr-project-diff-ls (btrp-diff-ls) :: Show a list of diffs for
+        the given origin/project/lng.
+
+   - btr-project-diff-get (btrp-diff-get) :: Get the content of the
+        specified diff.
+
+   - btr-project-diff (btrp-diff) :: Find differencies between the
+        last snapshot and the current state of the project.
+
+   To get more details about the arguments etc. use =drush help
+   command=.
 
 ** Getting diffs from the web (wget_diff.sh)
 
-   This script can be used by the translators to get the diffs of the
+   A script like this can be used by the translators to get the diffs of the
    projects from the server, through the REST API.
 
      #+BEGIN_EXAMPLE
-     $ ./wget-diffs.sh
+     $ utils/wget-diffs.sh
 
-     Usage: ./wget-diffs.sh origin project lng [nr]
+     Usage: utils/wget-diffs.sh origin project lng [nr]
 
 	 Get the diffs of a project using wget and the REST API.
 	 If 'nr' is missing, then the list of diffs will be retrieved instead.
@@ -476,35 +255,10 @@
 	 the diffs are calculated on the fly).
 
      Examples:
-	 ./wget-diffs.sh KDE kdelibs sq
-	 ./wget-diffs.sh KDE kdelibs sq 1
-	 ./wget-diffs.sh KDE kdelibs sq 2
-	 ./wget-diffs.sh KDE kdelibs sq -
+	 utils/wget-diffs.sh KDE kdelibs sq
+	 utils/wget-diffs.sh KDE kdelibs sq 1
+	 utils/wget-diffs.sh KDE kdelibs sq 2
+	 utils/wget-diffs.sh KDE kdelibs sq -
 
      #+END_EXAMPLE
-
-
-* Misc
-
-** Connecting to the DB
-
-   The files ~*.db.php~ contain DB clases that encapsulate the
-   interaction of import/export scripts with the database of the
-   application. All of them extend ~db/class.DB.php~, which creates a
-   connection to the database. The paramaters of the DB connection are
-   included from ~db/settings.php~, which is generated automatically
-   during installation.
-
-** Working with PO files
-
-   ~gettext/POParser.php~ is a parser used to extract the data from a
-   PO/POT file, in order to import them into the DB . It is taken from:
-   http://code.google.com/p/php-po-parser/issues/detail?id=2 It makes
-   no validity checks, but this is OK, since the PO files that are
-   imported are supposed to be valid. (Anyway, if needed, PO files can
-   be checked with msgfmt before being imported).
-
-   ~gettext/POWriter.php~ is used during export to generate a PO file
-   from the projects, locations, strings and translatins that are
-   stored in the DB.
 

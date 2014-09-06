@@ -4,7 +4,7 @@
  */
 function _btr_project_snapshot_drush_command() {
   return array(
-    'description' => "Make a snapshot of the project.",
+    'description' => "Make a snapshot of the given origin/project/lng.",
     'arguments' => array(
       'origin' => 'The origin of the project.',
       'project' => 'The name of the project',
@@ -14,7 +14,7 @@ function _btr_project_snapshot_drush_command() {
     'options' => array(
     ),
     'examples' => array(
-      'drush btrp-snapshot KDE kdeedu sq "Merging upstream before the new release."' => '',
+      'drush btrp-snapshot KDE kdeedu sq "Comment"' => '',
     ),
     'aliases' => array('btrp-snapshot'),
   );
@@ -24,10 +24,8 @@ function _btr_project_snapshot_drush_command() {
  * Help text for the command 'btr-project-snapshot'.
  */
 function _btr_project_snapshot_drush_help() {
-  return dt("Find differencies with the last snapshot.
-
-The format 'diff' is generated with the normal diff utility.
-The format 'ediff' is generated with 'pology/poediff'.
+  return dt("Make a snapshot of the PO files for the given origin/project/lng.
+Also generates the diffs with the previous snapshot and saves them in DB.
 ");
 }
 
