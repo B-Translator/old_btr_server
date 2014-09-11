@@ -10,8 +10,8 @@ then
 fi
 
 ### install dirs of the btr_server and btr_client
-btr=/var/www/code/btr_server/install
-bcl=/var/www/code/btr_client/install
+btr=/usr/local/src/btr_server/install
+bcl=/usr/local/src/btr_client/install
 
 ### configure domains
 $btr/config/domain.sh

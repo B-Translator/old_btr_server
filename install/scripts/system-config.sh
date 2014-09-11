@@ -4,7 +4,7 @@
 cd $(dirname $0)
 
 ### copy overlay files over to the system
-cp -TdR $code_dir/btr_server/install/overlay/ /
+cp -TdR $code_dir/install/overlay/ /
 
 ### put the cache on RAM (to improve efficiency)
 sed -i /etc/fstab \
@@ -24,7 +24,7 @@ mkdir -p /var/run/memcached/
 chown nobody /var/run/memcached/
 
 ### change the prompt to display the chroot name, the git branch etc
-echo 'btr' > /etc/debian_chroot
+echo $target > /etc/debian_chroot
 sed -i /root/.bashrc \
     -e '/^#force_color_prompt=/c force_color_prompt=yes' \
     -e '/^# get the git branch/,+4 d'

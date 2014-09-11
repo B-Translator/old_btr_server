@@ -10,7 +10,7 @@ export drupal_dir=/var/www/btr
 export drush="drush --root=$drupal_dir"
 
 ### go to the directory of scripts
-cd $code_dir/btr_server/install/scripts/
+cd $code_dir/install/scripts/
 
 ### additional packages and software
 ./packages-and-software.sh
@@ -31,4 +31,4 @@ cd $code_dir/btr_server/install/scripts/
 ./system-config.sh
 
 ### btranslator configuration
-$code_dir/btr_server/install/config.sh
+$code_dir/install/config.sh

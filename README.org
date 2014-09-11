@@ -12,9 +12,9 @@ This is a Drupal installation profile for B-Translator Server.
   cd /var/chroot/
   git clone https://github.com/B-Translator/btr_client.git
   git clone https://github.com/B-Translator/btr_server.git
-  cp btr_server/install/settings.sh btr.sh
-  vim btr.sh
-  nohup nice btr_server/install/chroot.sh btr.sh &
+  cp btr_server/install/settings.sh btr_server/config.sh
+  vim btr_server/config.sh
+  nohup time nice btr_server/{install/chroot.sh,config.sh} &
   tail -f nohup.out
   less -r nohup.out
   #+END_EXAMPLE
@@ -28,8 +28,22 @@ This is a Drupal installation profile for B-Translator Server.
   ~/etc/init.d/chroot-btr~, which can be used to start and stop the
   services inside the chroot:
   #+BEGIN_EXAMPLE
-  service chroot-btr start
-  service chroot-btr stop
+  /etc/init.d/chroot-btr start
+  /etc/init.d/chroot-btr stop
+  #+END_EXAMPLE
+
+* Installation in a docker container
+
+  This is almost the same as the installation above, except that
+  instead of ~install/chroot.sh~ you call ~install/docker.sh~:
+  #+BEGIN_EXAMPLE
+  nohup time nice btr_server/{install/docker.sh,config.sh} &
+  #+END_EXAMPLE
+
+  Then to start and stop B-Translator you do:
+  #+BEGIN_EXAMPLE
+  docker.io start btr
+  docker.io stop btr
   #+END_EXAMPLE
 
 

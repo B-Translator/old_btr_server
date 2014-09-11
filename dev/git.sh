@@ -8,7 +8,7 @@ options=${@:-status --short}
 gitrepos="
     /var/www/bcl*/profiles/btr_client
     /var/www/btr*/profiles/btr_server
-    /var/www/code/btr_*
+    /usr/local/src/btr_*
 "
 for repo in $gitrepos
 do

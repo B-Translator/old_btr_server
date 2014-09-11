@@ -20,8 +20,8 @@ mv /var/www/{bcl,bcl-bak}
 ### reinstall
 export drupal_dir=/var/www/btr
 export drush="drush --root=$drupal_dir"
-export code_dir=/var/www/code
-cd $code_dir/btr_server/install/scripts/
+export code_dir=/usr/local/src/btr_server
+cd $code_dir/install/scripts/
 ./drupal-make-and-install.sh
 ./separate-translation-data.sh
 ./drupal-config.sh
@@ -30,7 +30,7 @@ cd $code_dir/btr_server/install/scripts/
 ./install-btr-client.sh
 
 ### btranslator configuration
-$code_dir/btr_server/install/config.sh
+$code_dir/install/config.sh
 
 ### restart mysql
 /etc/init.d/mysql restart

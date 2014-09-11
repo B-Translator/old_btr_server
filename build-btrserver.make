@@ -11,5 +11,5 @@ includes[drupal] = drupal-org-core.make
 ;------------------------------
 projects[btr_server][type] = profile
 projects[btr_server][download][type] = git
-projects[btr_server][download][url] = /var/www/code/btr_server
+projects[btr_server][download][url] = /usr/local/src/btr_server
 projects[btr_server][download][branch] = master

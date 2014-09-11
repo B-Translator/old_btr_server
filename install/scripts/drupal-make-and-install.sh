@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 ### make sure that we have the right git branch on the make file
-makefile="$code_dir/btr_server/build-btrserver.make"
+makefile="$code_dir/build-btrserver.make"
 sed -i $makefile \
     -e "/btr_server..download..branch/ c projects[btr_server][download][branch] = $btr_git_branch"
 
@@ -24,7 +24,7 @@ cp additional-providers/hybridauth-github/Providers/GitHub.php \
 ### reinstall the whole application).
 cd $drupal_dir/profiles/
 mv btr_server btr_server-bak
-cp -a $code_dir/btr_server .
+cp -a $code_dir .
 ### copy contrib libraries and modules
 cp -a btr_server-bak/libraries/ btr_server/
 cp -a btr_server-bak/modules/contrib/ btr_server/modules/

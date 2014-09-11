@@ -83,7 +83,7 @@ projects[l10n_update] = 1.0
 
 ;;; Performance
 projects[boost] = 1.0
-projects[memcache] = 1.0
+projects[memcache] = 1.2
 
 ;--------------------
 ; Sending Emails
