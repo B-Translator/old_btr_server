@@ -11,13 +11,12 @@
  */
 function btr_server_install() {
 
-  // Get a connection to the btr_db. All the queries
-  // of the l10n_feedback module will use this connection.
+  // Define the database of B-Translator.
   if (isset($GLOBALS['databases']['btr_db']['default'])) {
-    $GLOBALS['btr_db'] = Database::getConnection('default', 'btr_db');
+    define('BTR_DB', 'btr_db');
   }
   else {
-    $GLOBALS['btr_db'] = Database::getConnection('default', 'default');
+    define('BTR_DB', 'default');
   }
 
   include_once DRUPAL_ROOT . '/profiles/standard/standard.install';

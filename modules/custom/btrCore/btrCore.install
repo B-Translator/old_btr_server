@@ -27,11 +27,6 @@ function btrCore_disable() {
 function btrCore_install() {
   // create custom fields for user preferencies
   btrCore_create_userprofile_fields();
-
-  // import some test PO files
-  $path = drupal_get_path('module', 'btrCore');
-  $output = shell_exec($path . '/data/install.sh');
-  drupal_set_message("<xmp>$output</xmp>");
 }
 
 /**
