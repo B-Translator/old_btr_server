@@ -59,7 +59,7 @@ fi
 ### make sure that we are using the right version of install scripts
 current_dir=$(pwd)
 cd $source_dir/
-git checkout $btr_git_branch && git pull origin $btr_git_branch
+git checkout $git_branch && git pull origin $git_branch
 cd $current_dir
 ### make sure that we are using the right branch of btr_client
 cd $bcl_source_dir

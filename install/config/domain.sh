@@ -24,16 +24,16 @@ then
     bcl_domain=${input:-$bcl_domain}
 fi
 
-if [ -z "${btr_domain+xxx}" -o "$btr_domain" = '' ]
+if [ -z "${domain+xxx}" -o "$domain" = '' ]
 then
-    btr_domain='btr.example.org'
-    read -p "Enter the domain name for btr_server [$btr_domain]: " input
-    btr_domain=${input:-$btr_domain}
+    domain='btr.example.org'
+    read -p "Enter the domain name for btr_server [$domain]: " input
+    domain=${input:-$domain}
 fi
 
 echo $bcl_domain > /etc/hostname
 sed -i /etc/hosts \
-    -e "/ localhost/c 127.0.0.1 $bcl_domain $btr_domain localhost"
+    -e "/ localhost/c 127.0.0.1 $bcl_domain $domain localhost"
 
 ### change config files for the client
 for file in $(ls /etc/nginx/sites-available/bcl*)
@@ -54,15 +54,15 @@ done
 ### change config files for the server
 for file in $(ls /etc/nginx/sites-available/btr*)
 do
-    sed -i $file -e "s/server_name .*\$/server_name $btr_domain;/"
+    sed -i $file -e "s/server_name .*\$/server_name $domain;/"
 done
 for file in $(ls /etc/apache2/sites-available/btr*)
 do
     sed -i $file \
-        -e "s#ServerName .*\$#ServerName $btr_domain#" \
-        -e "s#RedirectPermanent .*\$#RedirectPermanent / https://$btr_domain/#"
+        -e "s#ServerName .*\$#ServerName $domain#" \
+        -e "s#RedirectPermanent .*\$#RedirectPermanent / https://$domain/#"
 done
 for file in $(ls /var/www/btr*/sites/default/settings.php)
 do
-    sed -i $file -e "/^\\\$base_url/c \$base_url = \"https://$btr_domain\";"
+    sed -i $file -e "/^\\\$base_url/c \$base_url = \"https://$domain\";"
 done

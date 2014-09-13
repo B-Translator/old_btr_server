@@ -6,19 +6,19 @@ suite='trusty'
 apt_mirror='http://archive.ubuntu.com/ubuntu'
 
 ### Git branch that will be used.
-btr_git_branch='master'
+git_branch='master'
 
 ### Source of the client.
 bcl_source_dir='/var/chroot/btr_client'
 bcl_git_branch='master'
 
 ### Domain of the website.
+domain='btr.example.org'
 bcl_domain='example.org'
-btr_domain='btr.example.org'
 
 ### Drupal 'admin' password.
 bcl_admin_passwd='admin'
-btr_admin_passwd='admin'
+admin_passwd='admin'
 
 ### Emails from the server are sent through the SMTP
 ### of a GMAIL account. Give the full email
