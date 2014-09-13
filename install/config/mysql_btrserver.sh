@@ -50,7 +50,3 @@ do
 	-e "/^\\\$databases = array/,+10  s/'password' => .*/'password' => '$mysql_passwd_btr',/" \
 	-e "/^\\\$databases\\['btr_db/,+5  s/'password' => .*/'password' => '$mysql_passwd_btr_data',/"
 done
-
-### modify also the connection settings on /var/www/data
-sed -i /var/www/data/db/settings.php \
-    -e "/^\\\$dbpass/ s/= .*/= '$mysql_passwd_btr_data';/"

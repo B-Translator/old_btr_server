@@ -30,18 +30,7 @@ done
 rm -f /var/www/data
 ln -s $drupal_dir/profiles/btr_server/modules/custom/btrCore/data /var/www/data
 
-### modify also the DB settings on /var/www/data/db/
-cat <<EOF > /var/www/data/db/settings.php
-<?php
-\$dbdriver = 'mysql';
-\$dbhost   = 'localhost';
-\$dbname   = '$db_name';
-\$dbuser   = '$db_user';
-\$dbpass   = '$db_pass';
-?>
-EOF
-
-# modify Drupal settings
+### modify Drupal settings
 drupal_settings=$drupal_dir/sites/default/settings.php
 sed -e '/===== APPENDED BY INSTALLATION SCRIPTS =====/,$ d' -i $drupal_settings
 cat << EOF >> $drupal_settings

@@ -29,8 +29,6 @@ cp -a $code_dir .
 cp -a btr_server-bak/libraries/ btr_server/
 cp -a btr_server-bak/modules/contrib/ btr_server/modules/
 cp -a btr_server-bak/themes/contrib/ btr_server/themes/
-### copy db connection file
-cp {btr_server-bak,btr_server}/modules/custom/btrCore/data/db/settings.php
 ### cleanup
 rm -rf btr_server-bak/
 
