@@ -95,9 +95,10 @@ test "$($docker ps | grep -w $target)" && $docker stop $target
 test "$($docker ps -a | grep -w $target)" && $docker rm $target
 test "$($docker ps | grep -w $container)" && $docker stop $container
 test "$($docker ps -a | grep -w $container)" && $docker rm $container
-$docker run --name=$container ubuntu:14.04 \
-    -v $source_dir:$code_dir -v $bcl_code_dir:/usr/local/src/btr_client \
-    $code_dir/install/install-container.sh $code_dir/options.sh
+$docker run --name=$container \
+    -v $source_dir:$code_dir \
+    -v $bcl_source_dir:/usr/local/src/btr_client \
+    ubuntu:14.04 $code_dir/install/install-container.sh $code_dir/options.sh
 
 ### save the new image
 image=$container
