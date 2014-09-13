@@ -61,6 +61,10 @@ current_dir=$(pwd)
 cd $source_dir/
 git checkout $btr_git_branch && git pull origin $btr_git_branch
 cd $current_dir
+### make sure that we are using the right branch of btr_client
+cd $bcl_source_dir
+git checkout $bcl_git_branch && git pull origin $bcl_git_branch
+cd $current_dir
 
 ### install debootstrap dchroot
 apt-get install -y debootstrap dchroot
@@ -82,10 +86,13 @@ chroot $target apt-get -y install ubuntu-minimal
 
 ### copy the local git repository to the target dir
 project=$(basename $(ls $source_dir/*.info | sed -e 's/\.info$//'))
-export code_dir=/usr/local/src/$project
 mkdir -p $target/usr/local/src/
 cp -a $source_dir $target/usr/local/src/
 mv $target/usr/local/src/{$(basename $source_dir),$project}
+export code_dir=/usr/local/src/$project
+### copy the source of btr_client to the target dir
+cp -a $bcl_source_dir $target/usr/local/src/
+mv $target/usr/local/src/{$(basename $bcl_source_dir),btr_client}
 
 ### run install/config scripts
 chroot $target $code_dir/install/install-and-config.sh

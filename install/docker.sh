@@ -75,6 +75,10 @@ cd $source_dir/
 source_dir=$(pwd)
 git checkout $btr_git_branch && git pull origin $btr_git_branch
 cd $current_dir
+### make sure that we are using the right branch of btr_client
+cd $bcl_source_dir
+git checkout $bcl_git_branch && git pull origin $bcl_git_branch
+cd $current_dir
 
 ### make sure that docker is installed
 docker=docker.io
@@ -91,7 +95,8 @@ test "$($docker ps | grep -w $target)" && $docker stop $target
 test "$($docker ps -a | grep -w $target)" && $docker rm $target
 test "$($docker ps | grep -w $container)" && $docker stop $container
 test "$($docker ps -a | grep -w $container)" && $docker rm $container
-$docker run --name=$container -v $source_dir:$code_dir ubuntu:14.04 \
+$docker run --name=$container ubuntu:14.04 \
+    -v $source_dir:$code_dir -v $bcl_code_dir:/usr/local/src/btr_client \
     $code_dir/install/install-container.sh $code_dir/options.sh
 
 ### save the new image

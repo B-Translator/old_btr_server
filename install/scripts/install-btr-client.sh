@@ -13,3 +13,6 @@ cd $code_dir/install/scripts/
 
 ### additional configurations related to drupal
 ./drupal-config.sh
+
+### change back $code_dir to btr_server
+export code_dir=/usr/local/src/btr_server

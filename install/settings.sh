@@ -5,9 +5,12 @@ arch='i386'
 suite='trusty'
 apt_mirror='http://archive.ubuntu.com/ubuntu'
 
-### Git branches that will be used.
-bcl_git_branch='master'
+### Git branch that will be used.
 btr_git_branch='master'
+
+### Source of the client.
+bcl_source_dir='/var/chroot/btr_client'
+bcl_git_branch='master'
 
 ### Domain of the website.
 bcl_domain='example.org'
