@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/bash -x
 ### Switch between apache2 and (nginx + php5-fpm + memcached).
 
 case $1 in
-    en | enable )
+    apache2 )
         supervisorctl stop nginx
         supervisorctl stop php5-fpm
 
@@ -26,7 +26,7 @@ case $1 in
         supervisorctl start apache2
         ;;
 
-    dis | disable )
+    nginx )
         supervisorctl stop apache2
 
         mv /etc/supervisor/conf.d/apache2.conf{,.disabled}
@@ -47,6 +47,6 @@ case $1 in
         supervisorctl start nginx
         ;;
     *)
-        echo " * Usage: $0 {enable | disable}"
+        echo " * Usage: $0 {apache2 | nginx}"
         ;;
 esac

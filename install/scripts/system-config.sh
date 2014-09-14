@@ -92,9 +92,9 @@ echo 'php_admin_value[max_execution_time] = 90' >> /etc/php5/fpm/pool.d/www.conf
 ### generates the file /etc/defaults/locale
 update-locale
 
-### replace nginx with apache2
-dev_scripts=$drupal_dir/profiles/btr_server/dev
-$dev_scripts/apache2.sh start
+### enable apache2 as a webserver
+dev_scripts="$drupal_dir/profiles/btr_server/dev"
+$dev_scripts/webserver.sh apache2
 
 ### link to api-examples
 ln -s /var/www/btr_dev/profiles/btr_server/modules/custom/btrServices/examples/ /var/www/api-examples
