@@ -2,133 +2,179 @@
 #+OPTIONS:  num:nil toc:t ^:nil f:nil TeX:nil LaTeX:nil
 #+STYLE: <link href="css/org.css" rel="stylesheet" type="text/css"/>
 
-Development Setup of B-Translator Server
-
-[[http://info.btranslator.org][B-Translator]] helps to get feedback about /l10n/ (translations of the
-programs). It tries to collect very small translation contributions
-from a wide crowd of people and to dilute them into something useful.
-It is developed as a Drupal7 profile and the [[https://github.com/B-Translator/btr_server][code]] is hosted on GitHub.
-Here I describe the development setup and process that I use for this
-project. Most of the the tips are project specific, however some of
-them can be used on any Drupal project.
+Development Tools, Tips and Tricks
 
 * Installation
 
-  Installation for development is the same as the installation for a
-  production server, inside a chroot. The steps are like this:
+  If you need to install frequently (for example for testing), a
+  script like this can be useful:
   #+BEGIN_EXAMPLE
-  mkdir /var/chroot
-  cd /var/chroot/
-  git clone https://github.com/B-Translator/btr_server.git
-  nohup nice btr_server/install/install.sh btr &
-  tail -f nohup.out
-  chroot btr/ /tmp/install/config.sh
-  chroot btr/ rm -rf /tmp/install
-  reboot  ## it is advisable to reboot the host after this installation
+  #!/bin/bash -x
+
+  source=dbox
+  installer=chroot
+  git_branch=master
+  nohup_out="nohup-$source-$git_branch-$installer.out"
+
+  rm -f $nohup_out
+  nohup time nice $source/install/{$installer.sh,settings.sh} cfg.sh \
+      --git_branch=$git_branch --reboot=true > $nohup_out &
+  sleep 1
+  tail -f $nohup_out
   #+END_EXAMPLE
 
-
-* Changing the webserver
-
-  The webserver that is used for production is NGINX because it is
-  more responsive in high load, has build in cache, etc. The
-  configuration of NGINX is also tweaked for production (has DoS
-  protection, short timeout, etc.) For development Apache2 can be more
-  suitable. It can be started and stopped like this:
+  The file ~cfg.sh~ overrides the default config settings (for example
+  passwords):
   #+BEGIN_EXAMPLE
-  chroot /var/chroot/btr/
-  /var/www/btr/profiles/btr_server/dev/apache2.sh start
-  /var/www/btr/profiles/btr_server/dev/apache2.sh stop
+  apt_mirror='http://us-east-1.ec2.archive.ubuntu.com/ubuntu/'
+  gmail_account='test@example.org'
+  gmail_passwd=3omRoxtho
+  development='true'
   #+END_EXAMPLE
 
-  *Important:* When /apache2/ is started, the services /nginx/,
-  /memcached/ and /php5-fpm/ are stopped. Don't forget to modify the
-  init script ~/etc/init.d/chroot-btr~ like this:
-  #+BEGIN_EXAMPLE
-  #CHROOT_SERVICES="cron php5-fpm memcached mysql nginx"
-  CHROOT_SERVICES="cron mysql apache2"
-  #+END_EXAMPLE
-  The script =apache2.sh= cannot make this modification automatically
-  because it runs inside the chroot, and the init script is outside
-  the chroot (on the host system). So it has to be done manually.
+  You can also override configuration settings from the command line.
 
-  I also add something like this on */etc/hosts*, so that I can access
-  it on the browser with a domain name:
-  #+BEGIN_EXAMPLE
-  127.0.0.1  btr.example.org dev.btr.example.org
-  #+END_EXAMPLE
-  This modification has to be done manually as well.
+  *Note:* The order of giving the settings is important. The last one
+  overrides the previous settings.
 
 
-* Re-installing the application
+* How to access the shell
 
-  It can be done with the script =dev/install.sh=:
+  When things are still in development and testing we need to access
+  the shell of the installed system in order to check log files,
+  debug, play with changing configurations, etc.
+
+  When the installation is done on a chroot directory, then you simply
+  switch to it with the command =chroot=:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  /var/www/btr/profiles/btr_server/dev/reinstall.sh
   #+END_EXAMPLE
-  It will rebuild the Drupal directory with *drush make* and install
-  the btr_server profile with *drush site-install*, and then do all
-  the rest of configurations just like they are done during
-  installation.
 
-  Normally there is no need to reinstall the application, unless we
-  want to test the installation profile and the installation scripts.
+  When the installation is done in a docker container, you have to install
+  first the commands =nsenter= and =docker-enter= like this:
+  #+BEGIN_EXAMPLE
+  docker run -v /usr/local/bin:/target jpetazzo/nsenter
+  #+END_EXAMPLE
 
-  Another kind of re-installation, which touches only the database of
-  Drupal (btr) and nothing else, can be done with the script
-  =dev/install.sh=:
+  Then you can access the shell of a running container like this:
+  #+BEGIN_EXAMPLE
+  docker-enter btr
+  #+END_EXAMPLE
+
+  See also this article:
+  http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/
+
+
+* Install sshd
+
+  In order to access the server remotely through drush, ssh-client,
+  etc. you can install *sshd* with the script ~dev/install-sshd.sh~,
+  like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  /var/www/btr/profiles/btr_server/dev/reinstall-db.sh
+  cd /usr/local/src/btr_server/
+  dev/install-sshd.sh
   #+END_EXAMPLE
 
-  It is useful for testing the features. Usually, when features are
-  un-installed, things are not undone properly. In order to leave out
-  a feature, it should not be installed since the beginning. So, it is
-  important to test different combinations of them to see which one
-  works better for us.
+  By default it will install and run a sshd that listens on the port *2201*,
+  but you can also give it the port number as an argument:
+  #+BEGIN_EXAMPLE
+  dev/install-sshd.sh 2211
+  #+END_EXAMPLE
 
 
-* Making a clone for development
+* Change the webserver
 
-  Inside the chroot I make a clone for development like this:
+  There are two webservers installed, apache2 and nginx (with php5-fpm
+  and memcached). For development Apache2 can be more suitable, while
+  for production NGINX is supposed to be more responsive in high load.
+  It also has built-in cache and its configuration is tweaked for DoS
+  protection, short timeout, etc.
+
+  We can choose one of them like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  cd /var/www/btr/profiles/btr_server/
-  dev/clone.sh dev
+  cd /usr/local/src/btr_server/
+  dev/webserver.sh apache2
+  dev/webserver.sh nginx
   #+END_EXAMPLE
 
-  It creates a new application with root */var/www/btr_dev/* and with
-  DB named *btr_dev*. It also creates the drush alias *@btr_dev*, and
-  modifies the configuration of the webserver so that the cloned
-  application can be accessed at *dev.btr.example.org*.
+
+* Making clones of the application
+
+  Clones of the main site can be used for development and testing. 
+
+  Inside the chroot you can make a clone for development like this:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /usr/local/src/btr_server/
+  dev/clone.sh btr btr_dev1
+  dev/clone.sh btr_dev1 btr_test1
+  #+END_EXAMPLE
+
+  It creates a new application with root */var/www/btr_dev1/* and with
+  DB named *btr_dev1*. It also creates the drush alias *@btr_dev1*,
+  and modifies the configuration of the webserver so that the cloned
+  application can be accessed at *dev1.example.org*.
 
   *Caution:* The root directory and the DB of the clone will be
   erased, if they exist.
 
   Other clones like this can be created for testing etc. To cleanup
-  (remove/erase) a clone, we can use *clone_rm.sh* like this:
+  (remove/erase) a clone, you can use *clone_rm.sh* like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  cd /var/www/btr/profiles/btr_server/
-  dev/clone_rm.sh dev
+  cd /usr/local/src/btr_server/
+  dev/clone_rm.sh btr_dev1
+  dev/clone_rm.sh btr_test1
   #+END_EXAMPLE
 
-  By the way, we can also modify a little bit the configuration of a
+  By the way, you can also modify a little bit the configuration of a
   development copy of the application (in order to help us not confuse
-  a development copy with a live or testing one), with the script =dev/config.php=:
+  a development copy with a live or testing one), with the script
+  =dev/config.php=:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  cd /var/www/
-  drush @btr php-script btr/profiles/btr_server/config.php dev1
-  drush @btr_dev php-script btr/profiles/btr_server/config.php dev2
+  cd /usr/local/src/btr_server/
+  drush @btr_dev php-script dev/config.php dev2
   #+END_EXAMPLE
 
   It will set site_name to 'B-Translator (dev1)', will make site email
   something like 'user+dev1@gmail.com', will enable email re-routing,
-  display the /devel/ menu on the footer region, etc. It is not
-  required, but sometimes may be useful.
+  display the /devel/ menu on the footer region, etc. Sometimes it may
+  be useful.
+
+
+* Re-installing the application
+
+  It can be done with the script =dev/reinstall.sh=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /usr/local/src/btr_server/
+  nohup nice dev/reinstall.sh settings.sh &
+  tail -f nohup.out
+  #+END_EXAMPLE
+  It will rebuild the Drupal directory with *drush make* and install
+  the btr_server profile with *drush site-install*, and then do all the
+  rest of configurations just like they are done during installation.
+
+  Normally there is no need to reinstall the application, unless we
+  want to test the installation profile and the installation scripts.
+
+  Another kind of re-installation, which touches only the database of
+  Drupal and nothing else, can be done with the script
+  =dev/reinstall-db.sh=:
+  #+BEGIN_EXAMPLE
+  chroot /var/chroot/btr/
+  cd /usr/local/src/btr_server/
+  nohup nice dev/reinstall-db.sh @btr_dev &
+  tail -f nohup.out
+  #+END_EXAMPLE
+
+  It is useful for testing the installation of custom modules, feature
+  modules, etc. The argument *@btr_dev* is the alias of the site that
+  should be reinstalled.
+
 
 * Making a backup of the application
 
@@ -145,33 +191,30 @@ them can be used on any Drupal project.
   done like this:
   #+BEGIN_EXAMPLE
   chroot /var/chroot/btr/
-  cd /var/www/
-  ln -s btr_dev/profiles/btr_server/ .
-
-  btr_server/dev/snapshot.sh make
-  btr_server/dev/snapshot.sh make @btr_dev
+  cd /usr/local/src/btr_server/
+  dev/snapshot.sh make @btr
+  dev/snapshot.sh make @btr_dev
   #+END_EXAMPLE
-  These will create the files ~snapshot-btr-20130602.tgz~
-  and ~snapshot-btr_dev-20130602.tgz~. They can be restored
-  like this:
+  These will create the files ~snapshot-btr-20140914.tgz~ and
+  ~snapshot-btr_dev-20140914.tgz~. They can be restored like this:
   #+BEGIN_EXAMPLE
-  btr_server/dev/snapshot.sh restore --file=snapshot-btr-20130602.tgz
-  btr_server/dev/snapshot.sh restore --file=snapshot-btr_dev-20130602.tgz
-  btr_server/dev/snapshot.sh restore @btr_dev --file=snapshot-btr-20130602.tgz
-  btr_server/dev/snapshot.sh restore @btr_dev --file=snapshot-btr_dev-20130602.tgz
+  dev/snapshot.sh restore @btr --file=snapshot-btr-20140914.tgz
+  dev/snapshot.sh restore @btr --file=snapshot-btr_dev-20140914.tgz
+  dev/snapshot.sh restore @btr_dev --file=snapshot-btr-20140914.tgz
+  dev/snapshot.sh restore @btr_dev --file=snapshot-btr_dev-20140914.tgz
   #+END_EXAMPLE
-  As you may notice, a snapshot of @btr_dev can also be restored on the
+  As you may notice, a snapshot of *@btr_dev* can also be restored on the
   main application, and the other way around.
 
   However, in many cases a backup/restore of the database is all that
   is needed, and it is more efficient. It can be done with *drush
   sql-dump* and *drush sql-query* like this:
   #+BEGIN_EXAMPLE
-  drush sql-dump > btr.sql
+  drush sql-dump @btr > btr.sql
   drush sql-dump @btr_dev > btr_dev.sql
 
-  drush sql-query --file=$(pwd)/btr.sql
-  drush sql-query --file=$(pwd)/btr_dev.sql
+  drush @btr sql-query --file=$(pwd)/btr.sql
+  drush @btr sql-query --file=$(pwd)/btr_dev.sql
 
   drush @btr_dev sql-query --file=$(pwd)/btr.sql
   drush @btr_dev sql-query --file=$(pwd)/btr_dev.sql
@@ -181,34 +224,32 @@ them can be used on any Drupal project.
 * Accessing the code of the application from outside chroot
 
   In order to access easily the code of the application from outside
-  chroot, I create a symbolic link like this:
+  chroot, you can create a symbolic link like this:
   #+BEGIN_EXAMPLE
   cd /var/chroot/
   ln -s btr/var/www/btr_dev/profiles/btr_server/ \
-        dev
+        btr_dev
   #+END_EXAMPLE
 
-  Now I can go to */var/chroot/dev/* and start /emacs/ or any other
-  tools. This way I don't have to install /emacs/ or any other
+  Now you can go to */var/chroot/dev/* and start /emacs/ or any other
+  tools. This way you don't have to install /emacs/ or any other
   development tools inside the /chroot/ and can use the best of
-  development tools that my host environment can offer me.
+  development tools that your host system can offer.
 
 
-* Pushing commits to github
+* Pushing commits
 
-  The copy of the application on
-  =/var/www/btr_dev/profiles/btr_server/= (as well as the one
-  on =/var/www/btr/profiles/btr_server/=) are actually clones
-  of the git repository at https://github.com/B-Translator/btr_server
-  so we can *pull* from it and *push* to it. Pulling (to get
-  up-to-date) can be done by everybody, however pushing requires a
-  username and password (the ones that are used to access the account
-  at GitHub).
+  The copy of the application on =/var/www/btr_dev/profiles/btr_server/=
+  (as well as the one on =/var/www/btr/profiles/btr_server/=) are actually
+  clones of the git repository of the project on GitHub, so we can
+  *pull* from it and *push* to it. Pulling (to get up-to-date) can be
+  done by everybody, however pushing requires a username and password
+  (the ones that are used to access the account at GitHub).
 
 
 * The commit workflow
 
-  For small or straight-forward changes I can also work directly on
+  For small or straight-forward changes you can also work directly on
   the *master* branch, then *commit*, and then *push* to github.
 
   However I usually use a bit more complicated workflow. First I
@@ -217,7 +258,7 @@ them can be used on any Drupal project.
   commit(s) to github.
   #+BEGIN_EXAMPLE
   git checkout -d dev     ### create a branch and switch to it
-  [work-commit-work-comit]
+  [work...commit...work...comit]
   git checkout master     ### switch back to master
   git pull                ### get any latest commits from github
   git merge dev [--squash]
@@ -225,12 +266,12 @@ them can be used on any Drupal project.
   git branch -D dev       ### erase the branch
   #+END_EXAMPLE
 
-  Usually there are no commits comming from github, since I am
-  the only developper (unless I have worked and commited from some
-  other location). So, when I merge without *--squash* this usually
-  results in *fast-forward* merge, which means that all the
-  commits that I have done on the branch *dev* are automatically
-  transferred to the branch *master*.
+  Usually there are no commits comming from github, since I am the
+  only developper (unless I have worked and commited from some other
+  location). So, when I merge without *--squash* this usually results
+  in *fast-forward* merge, which means that all the commits that I
+  have done on the branch *dev* are automatically transferred to the
+  branch *master*.
 
   However sometimes there may be /dirty commits/ on the *dev* branch,
   which means that there may be incomplete commits, or commits that
@@ -241,60 +282,16 @@ them can be used on any Drupal project.
   (uncommitted). Then I can redo the commits on a cleaner or more
   logical way. Afterwards the *dev* branch will be deleted and the old
   commits will be lost.
-
-
-* Making a local git clone of the dev application
-
-  Sometimes it is not easy or suitable to test modifications on the
-  *@btr_dev* application (~/var/www/btr_dev~). For example this is the
-  case when I have to test install/uninstall, enable/disable modules,
-  features, etc. In this case I test them on the main application
-  instance (~/var/www/btr~). Since both applications are clones of the
-  [[https://github.com/B-Translator/btr_server][GitHub repository]] it is easy to push commits from /btr_dev/ to
-  /github/ and to pull them from /github/ to /btr/.
-
-  However, sometimes it is better to test modifications and make sure
-  that they work, before pushing them to /github/. This can be done if
-  the code on /btr/ is a git clone of the code on /btr_dev/ (instead
-  of being a clone from /github/).
-
-  The script =dev/git-clone-dev.sh= makes just this. It replaces the
-  code of /btr/ with a git clone of the *dev branch* from
-  /btr_dev/. Then the workflow is like this:
-  1. Work and commit on the branch *dev* of *btr_dev*
-  2. Pull on *btr* and test.
-  3. Repeat steps *1* and *2* until the modification that we are
-     making is OK.
-  4. Push changes upwards to github, like this:
-     #+BEGIN_EXAMPLE
-     cd /var/www/btr_dev/profiles/btr_server
-     git checkout master
-     git merge dev [--squash]
-     git push
-     git branch -D dev
-     git checkout -b dev
-     #+END_EXAMPLE
-     So, after merging to *master* and pushing to /github/, we delete
-     the branch *dev* and create a new one.
-  5. Make a git pull on *btr* and sync it with *btr_dev*
-     #+BEGIN_EXAMPLE
-     cd /var/www/btr/profiles/btr_server
-     git pull
-     #+END_EXAMPLE
-
+  
 
 * Working with a dev-test-live workflow
 
-  All the work that is described on the sections above is about
-  development and local testing that is done on a working copy
-  (sandbox) of a /chroot/ installation. This is usually installed on
-  my personal machine (that I use for development).
-
-  At some point, all the modifications have to be transferred to a
-  public server, where the application is in "production", performing
-  "live". On that public server there is the same /chroot/ environment
-  as in the development server. The synchronization of the application
-  can be done via git push and pull.
+  At some point, all the modifications on the local copy of the
+  application (sandbox) have to be transferred to a public server,
+  where the application is in "production", performing "live". On that
+  public server there is the same /chroot/ environment as in the
+  development server. The synchronization of the application can be
+  done via git push and pull.
 
   However *drush rsync* and *drush sql-sync* offer another option for
   synchronization. For more details see:
@@ -313,17 +310,14 @@ them can be used on any Drupal project.
 
   $aliases['live'] = array (
     'root' => '/var/www/btr',
-    'uri' => 'http://l10n.org.al',
+    'uri' => 'http://example.org',
 
-    'remote-host' => 'l10n.org.al',
+    'remote-host' => 'example.org',
     'remote-user' => 'root',
     'ssh-options' => '-p 2201 -i /root/.ssh/id_rsa',
 
     'path-aliases' => array (
       '%profile' => 'profiles/btr_server',
-      '%data' => '/var/www/data',
-      '%pofiles' => '/var/www/PO_files',
-      '%exports' => '/var/www/exports',
       '%downloads' => '/var/www/downloads',
     ),
 
@@ -340,8 +334,8 @@ them can be used on any Drupal project.
   $aliases['test'] = array (
     'parent' => '@live',
     'root' => '/var/www/btr',
-    'uri' => 'http://www2.l10n.org.al',
-    'remote-host' => 'www2.l10n.org.al',
+    'uri' => 'http://test.example.org',
+    'remote-host' => 'test.example.org',
 
     'command-specific' => array (
       'sql-sync' => array (
@@ -358,22 +352,22 @@ them can be used on any Drupal project.
   is almost identical to the live/production one, however it is not
   for public use. The idea is to test there first any updates/upgrades
   of the application, in order to make sure that they don't break any
-  things, before applying them to the real live application. In my case
-  it is placed on a different server, however it can also be placed on
-  the same server as the live application (just make a clone of the main
-  application with =dev/clone.sh test=).
+  things, before applying them to the real live application. In my
+  case it is placed on a different server, however it can also be
+  placed on the same server as the live application (just make a clone
+  of the main application with =dev/clone.sh btr btr_test=).
 
   When everything is set up correctly, the synchronization can be done
   as simply as this:
   #+BEGIN_EXAMPLE
   drush rsync @live @test
   drush sql-sync @live @test
-  drush rsync @live @dev
-  drush sql-sync @live @dev
+  drush rsync @live @btr_dev
+  drush sql-sync @live @btr_dev
   #+END_EXAMPLE
 
   *Note:* Synchronizing this way from *@test* to *@live* or from
-  *@dev* to *@live*, usually is a HUGE mistake, but the /simulate/
+  *@btr_dev* to *@live*, usually is a HUGE mistake, but the /simulate/
   option on the config file will make sure that it fails.
 
   For drush commands to work remotely, *ssh* daemon has to be running
