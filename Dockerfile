@@ -1,5 +1,5 @@
 ### This file can be used to build a docker image like this:
-###   `docker build --tag=btr_server`
+###   `docker build --tag=btr_server .`
 ### It can also be used for automated builds in Docker Hub
 ### (see https://docs.docker.com/userguide/dockerrepos/#automated-builds)
 
