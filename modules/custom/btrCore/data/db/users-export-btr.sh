@@ -1,21 +1,15 @@
 #!/bin/bash
-### Export user tables of btr and btr_data.
-
-### mysqldump default options
-mysqldump="mysqldump --defaults-file=/etc/mysql/debian.cnf"
-
-### get database names
-BTR=${BTR:-btr}
-DATA=${BTR_DATA:-btr_data}
+### Export table of users and all related tables.
 
 ### get the dump file name
 date=$(date +%Y%m%d)
-dump_file=users-$date.sql
+dump_file=$(pwd)/users-btr-$date.sql
 
-### dump all the users of 'btr_data'
-$mysqldump --databases $DATA --tables btr_users > $dump_file
+### specify the site to be backed-up by setting its alias
+alias=${1:-@btr}
+drush="drush $alias"
 
-### dump all the drupal users of 'btr'
+### list of tables related to users
 table_list="
     users
     users_roles
@@ -32,7 +26,8 @@ table_list="
     field_revision_field_preferred_projects
     field_revision_field_translations_per_day
 "
-$mysqldump --databases $BTR --tables $table_list >> $dump_file
+table_list=$(echo $table_list | tr ' ' ,)
 
-### compress the export file
-gzip $dump_file
+### dump all the users
+$drush sql-dump --database=default --tables-list=$table_list --result-file=$dump_file --gzip
+
