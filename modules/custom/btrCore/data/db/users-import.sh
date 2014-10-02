@@ -8,7 +8,7 @@ function usage {
 }
 
 ### get the arguments
-if [ $# -ne 2 ]; then usage; fi
+if [ $# -lt 2 ]; then usage; fi
 alias=$1
 file_gz=$2
 db_key=${3:-default}
