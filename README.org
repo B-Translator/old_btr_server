@@ -32,6 +32,15 @@ This is a Drupal installation profile for B-Translator Server.
   /etc/init.d/chroot-btr stop
   #+END_EXAMPLE
 
+  *Note:* For the server installation you have to update manually the
+  function =btr_get_sites()= on
+  ~modules/custom/btrCore/includes/sites.inc~ whenever a new client is
+  registered or the domain of a client is changed:
+  #+BEGIN_EXAMPLE
+  cd /var/www/btr/profiles/btr_server/
+  vim modules/custom/btrCore/includes/sites.inc
+  #+END_EXAMPLE
+  This is something that has not been automated yet.
 
 * Installation in a docker container
 
