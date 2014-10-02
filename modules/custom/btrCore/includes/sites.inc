@@ -24,10 +24,10 @@ function btr_get_base_url($lng) {
 function btr_get_sites() {
   return array(
     'fr' => array(
-      'base_url' => 'https://example.org',
+      //'base_url' => 'https://example.org',
     ),
     'sq' => array(
-      'base_url' => 'https://example.org',
+      'base_url' => 'https://l10n.org.al',
     ),
   );
 }
