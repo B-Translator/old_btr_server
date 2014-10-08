@@ -31,38 +31,50 @@ then
     domain=${input:-$domain}
 fi
 
+### get the current domains
+old_bcl_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f2)
+old_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
+
+### change /etc/hostname and /etc/hosts.conf
 echo $bcl_domain > /etc/hostname
-sed -i /etc/hosts \
-    -e "/ localhost/c 127.0.0.1 $bcl_domain $domain localhost"
+sed -i /etc/hosts.conf \
+    -e "1c 127.0.0.1 $bcl_domain $domain"
+/etc/hosts_update.sh
 
 ### change config files for the client
 for file in $(ls /etc/nginx/sites-available/bcl*)
 do
-    sed -i $file -e "s/server_name .*\$/server_name $bcl_domain;/"
+    sed -i $file -e "/server_name/ s/$old_bcl_domain/$bcl_domain/"
 done
 for file in $(ls /etc/apache2/sites-available/bcl*)
 do
     sed -i $file \
-        -e "s#ServerName .*\$#ServerName $bcl_domain#" \
-        -e "s#RedirectPermanent .*\$#RedirectPermanent / https://$bcl_domain/#"
+        -e "/ServerName/ s/$old_bcl_domain/$old_domain/" \
+        -e "/RedirectPermanent/ s/$old_bcl_domain/$bcl_domain/"
 done
 for file in $(ls /var/www/bcl*/sites/default/settings.php)
 do
-    sed -i $file -e "/^\\\$base_url/c \$base_url = \"https://$bcl_domain\";"
+    sed -i $file -e "/^\\\$base_url/ s/$old_bcl_domain/$bcl_domain/"
 done
 
 ### change config files for the server
 for file in $(ls /etc/nginx/sites-available/btr*)
 do
-    sed -i $file -e "s/server_name .*\$/server_name $domain;/"
+    sed -i $file -e "/server_name/ s/$old_domain/$domain/"
 done
 for file in $(ls /etc/apache2/sites-available/btr*)
 do
     sed -i $file \
-        -e "s#ServerName .*\$#ServerName $domain#" \
-        -e "s#RedirectPermanent .*\$#RedirectPermanent / https://$domain/#"
+        -e "/ServerName/ s/$old_domain/$domain/" \
+        -e "/RedirectPermanent/ s/$old_domain/$domain/"
 done
 for file in $(ls /var/www/btr*/sites/default/settings.php)
 do
-    sed -i $file -e "/^\\\$base_url/c \$base_url = \"https://$domain\";"
+    sed -i $file -e "/^\\\$base_url/ s/$old_domain/$domain/"
 done
+
+### update uri on drush aliases
+sed -i /etc/drush/local_bcl.aliases.drushrc.php \
+    -e "/'uri'/ s/$old_bcl_domain/$bcl_domain/"
+sed -i /etc/drush/local_btr.aliases.drushrc.php \
+    -e "/'uri'/ s/$old_domain/$domain/"

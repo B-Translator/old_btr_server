@@ -1,10 +1,5 @@
 #!/bin/bash -x
 
-### set a temporary hostname
-sed -i /etc/hosts \
-    -e "/^127.0.0.1/c 127.0.0.1 btr.example.org localhost"
-hostname btr.example.org
-
 ### go to the directory of scripts
 cd $code_dir/install/scripts/
 
