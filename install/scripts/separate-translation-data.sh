@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 ### Create another database for the translation data
 ### and copy to it the relevant tables (of module btrCore).
 

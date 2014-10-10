@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 ### make sure that we have the code of btr_client
 if ! test -d /usr/local/src/btr_client
