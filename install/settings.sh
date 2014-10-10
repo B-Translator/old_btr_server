@@ -32,7 +32,7 @@ gmail_passwd=
 languages='fr de it sq'
 
 ### Translation language of B-Translator Client.
-bcl_translation_lng='sq'
+translation_lng='sq'
 
 ### Mysql passwords. Leave it as 'random'
 ### to generate a new one randomly
