@@ -50,7 +50,7 @@ done
 for file in $(ls /etc/apache2/sites-available/bcl*)
 do
     sed -i $file \
-        -e "/ServerName/ s/$old_bcl_domain/$old_domain/" \
+        -e "/ServerName/ s/$old_bcl_domain/$bcl_domain/" \
         -e "/RedirectPermanent/ s/$old_bcl_domain/$bcl_domain/"
 done
 for file in $(ls /var/www/bcl*/sites/default/settings.php)
