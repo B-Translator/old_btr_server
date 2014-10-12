@@ -12,7 +12,14 @@ if [ -z "${gmail_account+xxx}" -o "$gmail_account" = '' ]
 then
     gmail_account='MyEmailAddress@gmail.com'
     read -p "Enter the gmail address [$gmail_account]: " input
-    gmail_account=${input:-$gmail_account}
+    gmail_account=$input
+fi
+
+if [ "$gmail_account" = '' ]
+then
+    echo "Skipping configuration of gmail account."
+    echo -e "You can do it later by calling:\n    $0"
+    exit 0
 fi
 
 if [ -z "${gmail_passwd+xxx}" -o "$gmail_passwd" = '' ]
@@ -47,6 +54,3 @@ drush --yes @local_bcl php-script $(dirname $0)/gmailsmtp.php  \
     "$gmail_account" "$gmail_passwd"
 drush --yes @local_btr php-script $(dirname $0)/gmailsmtp.php  \
     "$gmail_account" "$gmail_passwd"
-
-### drush may create css/js files with wrong(root) permissions
-chown www-data: -R /var/www/btr*/sites/default/files/{css,js}

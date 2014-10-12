@@ -4,18 +4,13 @@
 apt-get update
 apt-get -y upgrade
 
-### install localization
-apt-get -y install language-pack-en
-update-locale
-
 ### install other needed packages
-apt-get -y install aptitude tasksel vim nano psmisc cron supervisor
+apt-get -y install aptitude tasksel vim nano psmisc cron
 apt-get -y install mysql-server ssmtp memcached php5-memcached \
          php5-mysql php5-gd php-db php5-dev php-pear php5-curl php-apc \
          make ssl-cert gawk unzip wget curl diffutils phpmyadmin git ruby \
          mercurial subversion translate-toolkit dtrx
 apt-get -y install screen logwatch
-initctl reload-configuration
 
 ### install hub: http://hub.github.com/
 curl http://hub.github.com/standalone -sLo /bin/hub
@@ -27,24 +22,18 @@ apt-get -y install ruby-dev
 gem install t
 
 ### phpmyadmin will install apache2 and start it
-### so we should stop and disable it
+### so we should stop it
 /etc/init.d/apache2 stop
-update-rc.d apache2 disable
 
 ### install nginx and php5-fpm
 apt-get -y install nginx nginx-common nginx-full php5-fpm
-
-### There is some problem with php-pear in 14.04
-### See: http://askubuntu.com/questions/451953/php-pear-is-not-working-after-upgrading-to-ubuntu-14-04
-### and: https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1310552
-### I am using below a workaround described there.
+/etc/init.d/nginx stop
+update-rc.d nginx disable
+/etc/init.d/php5-fpm stop
+update-rc.d php5-fpm disable
 
 ### install uploadprogress bar (from PECL) (requested by Drupal 7)
 pecl install uploadprogress
-
-gunzip /build/buildd/php5-*/pear-build-download/uploadprogress-*
-pear upgrade /build/buildd/php5-*/pear-build-download/uploadprogress-*
-
 mkdir -p /etc/php5/conf.d/
 echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 
@@ -52,10 +41,6 @@ echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 pear channel-discover pear.drush.org
 pear install pear.drush.org/drush-6.2.0.0
 
-gunzip /build/buildd/php5-*/pear-build-download/drush-*
-pear upgrade /build/buildd/php5-*/pear-build-download/drush-*
-
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
 svn checkout -r 1387659 svn://anonsvn.kde.org/home/kde/trunk/l10n-support/pology /usr/local/lib/pology
-

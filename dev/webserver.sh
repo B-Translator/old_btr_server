@@ -3,13 +3,14 @@
 
 case $1 in
     apache2 )
-        supervisorctl stop nginx
-        supervisorctl stop php5-fpm
+        /etc/init.d/nginx stop
+        /etc/init.d/php5-fpm stop
 
         drush @local_bcl -y dis memcache
         drush @local_btr -y dis memcache
-        supervisorctl stop memcached
-        for file in $(ls /var/www/btr*/sites/default/settings.php)
+        /etc/init.d/memcached stop
+        for file in $(ls /var/www/btr*/sites/default/settings.php) \
+                    $(ls /var/www/bcl*/sites/default/settings.php)
         do
             sed -i $file -e "/comment memcache config/ d"
             sed -i $file \
@@ -17,34 +18,32 @@ case $1 in
                 -e "/'memcache_key_prefix'/a comment memcache config */"
         done
 
-        mv /etc/supervisor/conf.d/nginx.conf{,.disabled}
-        mv /etc/supervisor/conf.d/php5-fpm.conf{,.disabled}
-        mv /etc/supervisor/conf.d/memcached.conf{,.disabled}
-        mv /etc/supervisor/conf.d/apache2.conf{.disabled,}
-        supervisorctl reload
+        update-rc.d nginx disable
+        update-rc.d php5-fpm disable
+        update-rc.d memcached disable
 
-        supervisorctl start apache2
+        update-rc.d apache2 enable
+        /etc/init.d/apache2 start
         ;;
 
     nginx )
-        supervisorctl stop apache2
+        /etc/init.d/apache2 stop
 
-        mv /etc/supervisor/conf.d/apache2.conf{,.disabled}
-        mv /etc/supervisor/conf.d/nginx.conf{.disabled,}
-        mv /etc/supervisor/conf.d/php5-fpm.conf{.disabled,}
-        mv /etc/supervisor/conf.d/memcached.conf{.disabled,}
-        supervisorctl reload
+        update-rc.d apache2 disable
+        update-rc.d nginx enable
+        update-rc.d php5-fpm enable
+        update-rc.d memcached enable
 
         for file in $(ls /var/www/btr*/sites/default/settings.php)
         do
             sed -i $file -e "/comment memcache config/ d"
         done
-        supervisorctl start memcached
+        /etc/init.d/memcached start
         drush @local_bcl -y en memcache
         drush @local_btr -y en memcache
 
-        supervisorctl start php5-fpm
-        supervisorctl start nginx
+        /etc/init.d/php5-fpm start
+        /etc/init.d/nginx start
         ;;
     *)
         echo " * Usage: $0 {apache2 | nginx}"
