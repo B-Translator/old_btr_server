@@ -3,74 +3,40 @@ This is a Drupal installation profile for B-Translator Server.
 
 * Installation
 
-  The recommended way of installation for a production server is to
-  install it inside a chroot, in /trusty/ (ubuntu 14.04). Assuming
-  that we have already installed a minimal ubuntu server 14.04
-  (trusty), btr_server can be installed in it like this:
+  Installation is done inside a Docker container.
+
+  + Modify and customize the settings:
+    #+BEGIN_EXAMPLE
+    cp btr_server/install/settings.sh cfg.sh
+    vim cfg.sh
+    #+END_EXAMPLE
+
+  + Build a Docker image:
+    #+BEGIN_EXAMPLE
+    btr_server/docker-build.sh cfg.sh --git_branch=master
+    less -r nohup-btr_server-master.out
+    #+END_EXAMPLE
+    This will create a docker image, named =btr_server:master= with a
+    minimal ubuntu system and everything that is needed for the normal
+    work of the system.
+
+  + Create a Docker container like this:
+    #+BEGIN_EXAMPLE
+    docker images
+    docker run -d --name=btr_server --hostname=example.org \
+	       -p 80:80 -p 443:443 btr_server:master
+    #+END_EXAMPLE
+    Then you can stop and start the container with =docker stop btr_server=
+    and =docker start btr_server=.
+
+  If it is installed on a local machine (for testing or development),
+  add the domain name =example.org= on ~/etc/hosts~:
   #+BEGIN_EXAMPLE
-  mkdir /var/chroot
-  cd /var/chroot/
-  git clone https://github.com/B-Translator/btr_client.git
-  git clone https://github.com/B-Translator/btr_server.git
-  cp btr_server/install/settings.sh btr_server/config.sh
-  vim btr_server/config.sh
-  nohup time nice btr_server/{install/chroot.sh,config.sh} &
-  tail -f nohup.out
-  less -r nohup.out
+  127.0.0.1 example.org
   #+END_EXAMPLE
-
-  This will install in ~/var/chroot/~ a minimal ubuntu system,
-  B-Translator Server, B-Translator Client, and everything that is
-  needed for the normal work of the system. It will also make the
-  neccessary common configurations of the system.
-
-  The installation script will create as well the init script
-  ~/etc/init.d/chroot-btr~, which can be used to start and stop the
-  services inside the chroot:
-  #+BEGIN_EXAMPLE
-  /etc/init.d/chroot-btr start
-  /etc/init.d/chroot-btr stop
-  #+END_EXAMPLE
-
-  *Note:* For the server installation you have to update manually the
-  function =btr_get_sites()= on
-  ~modules/custom/btrCore/includes/sites.inc~ whenever a new client is
-  registered or the domain of a client is changed:
-  #+BEGIN_EXAMPLE
-  cd /var/www/btr/profiles/btr_server/
-  vim modules/custom/btrCore/includes/sites.inc
-  #+END_EXAMPLE
-  This is something that has not been automated yet.
-
-* Installation in a docker container
-
-  This is almost the same as the installation above, except that
-  instead of ~install/chroot.sh~ you call ~install/docker.sh~:
-  #+BEGIN_EXAMPLE
-  nohup time nice btr_server/{install/docker.sh,config.sh} &
-  #+END_EXAMPLE
-
-  Then to start and stop B-Translator you do:
-  #+BEGIN_EXAMPLE
-  docker.io start btr
-  docker.io stop btr
-  #+END_EXAMPLE
-
-  Compared to the installation with chroot, docker has the advantage
-  that it is platform independent (the host system does not have to be
-  Ubuntu or Debian).
-
-
-* Building with docker
-
-  Another way is to use the command =docker build= to build an image
-  and then =docker run= to create a container from this image:
-  #+BEGIN_EXAMPLE
-  vim btr_server/install/settings.sh
-  docker.io build --tag=btr_server btr_server/
-  docker.io run -d --name=btr --hostname=btr.example.org \
-                -p 80:80 -p 443:443 btr_server
-  #+END_EXAMPLE
+  This way it can be accessed by typing =https://example.org=
+  on the browser location (not =https://127.0.0.1= or
+  =https://localhost=).
 
 
 * What is B-Translator
