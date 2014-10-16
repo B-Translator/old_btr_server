@@ -98,3 +98,25 @@ $dev_scripts/webserver.sh apache2
 
 ### link to api-examples
 ln -s /var/www/btr_dev/profiles/btr_server/modules/custom/btrServices/examples/ /var/www/api-examples
+
+### customize the configuration of sshd
+sed -i /etc/ssh/sshd_config \
+    -e 's/^Port/#Port/' \
+    -e 's/^PasswordAuthentication/#PasswordAuthentication/' \
+    -e 's/^X11Forwarding/#X11Forwarding/'
+
+sed -i /etc/ssh/sshd_config \
+    -e '/^### custom config/,$ d'
+
+sshd_port=${sshd_port:-2201}
+cat <<EOF >> /etc/ssh/sshd_config
+### custom config
+Port $sshd_port
+PasswordAuthentication no
+X11Forwarding no
+EOF
+
+### generate public/private keys for ssh
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ''
