@@ -115,8 +115,3 @@ Port $sshd_port
 PasswordAuthentication no
 X11Forwarding no
 EOF
-
-### generate public/private keys for ssh
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ''

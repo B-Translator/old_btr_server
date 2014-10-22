@@ -31,6 +31,7 @@ $btr/config/drupalpass.sh
 
 ### configurations for oauth2 login
 $btr/config/oauth2_login.sh @bcl @btr
+$bcl/config/ssh_keys.sh
 
 ### make clones btr_dev and bcl_dev
 if [ "$development" = 'true' ]
