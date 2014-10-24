@@ -3,5 +3,5 @@ data_root="/data/PO_files"
 languages="fr de it sq"
 
 ### use drush alias to connect to the propper site
-site='btr_dev'
+site='btr'
 drush="drush @$site"
