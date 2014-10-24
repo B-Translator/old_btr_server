@@ -100,6 +100,13 @@ function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $com
     ))
     ->fetchField();
 
+  // The DB fields of diff and ediff are MEDIUMTEXT (16777216 bytes),
+  // check that the files do not exceed this length.
+  if (filesize($file_diff) > 16777216 or filesize($file_ediff) > 16777216) {
+    print "***Warning*** Diff files are too large to be stored in the DB (longer than mediumtext); skipped.\n";
+    return;
+  }
+
   // Insert a new record of diffs for this project.
   btr_insert('btr_diffs')
     ->fields(array(
