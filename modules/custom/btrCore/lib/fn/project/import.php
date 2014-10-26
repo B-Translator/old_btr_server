@@ -191,6 +191,13 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
     }
   }
 
+  // The DB field of content is MEDIUMTEXT (16777216 bytes),
+  // check that the file does not exceed this length.
+  if (filesize($file) > 16777216) {
+    print "***Warning*** File is too large to be stored in the DB (longer than MEDIUMTEXT); skipped.\n";
+    return NULL;
+  }
+
   // Insert the file.
   $fid = btr_insert('btr_files')
     ->fields(array(

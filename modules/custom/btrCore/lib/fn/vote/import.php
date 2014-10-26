@@ -101,6 +101,15 @@ function _get_sguid($entry, $uid) {
   // Get the context.
   $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
 
+  // The DB fields of the string and context are VARCHAR(1000),
+  // check that they do not exceed this length.
+  if (strlen($string) > 1000 or strlen($context) > 1000) {
+    print $context . "\n";
+    print $string . "\n";
+    print "***Warning*** The string or its context is too long to be stored in the DB (more than 1000 chars); skipped.\n";
+    return NULL;
+  }
+
   // Get the $sguid of this string.
   $sguid = sha1($string . $context);
 

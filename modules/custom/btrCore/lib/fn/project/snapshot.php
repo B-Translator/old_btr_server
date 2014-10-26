@@ -115,6 +115,13 @@ function project_snapshot_save($origin, $project, $lng, $file) {
   // Make sure that file does exist.
   if (!file_exists($file))  return;
 
+  // The DB field of snapshot is MEDIUMBLOB (16777216 bytes),
+  // check that the file does not exceed this length.
+  if (filesize($file) > 16777216) {
+    print "***Warning*** Snapshot file is too large to be stored in the DB (longer than MEDIUMBLOB); skipped.\n";
+    return;
+  }
+
   // Remove the old one first, if it exists.
   btr_delete('btr_snapshots')
     ->condition('pguid', sha1($origin . $project))
