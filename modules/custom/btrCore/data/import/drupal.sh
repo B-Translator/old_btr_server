@@ -11,7 +11,7 @@ cd $(dirname $0)
 origin=Drupal
 po_dir=$data_root/Drupal
 
-languages="sq" ### for the time being import only the Albanian translations
+### import PO files of each language
 for lng in $languages
 do
     echo -e "\n==========> $origin $lng "
