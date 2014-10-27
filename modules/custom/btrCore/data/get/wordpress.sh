@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "===== GETTING WordPress ====="
-
+cd $(dirname $0)
 . ./inc.sh
 change_dir WordPress
 

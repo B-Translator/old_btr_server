@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "===== GETTING FirefoxOS ====="
-
+cd $(dirname $0)
 . ./inc.sh
 change_dir FirefoxOS/Gaia
 

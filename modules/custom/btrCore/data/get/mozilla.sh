@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "===== GETTING Mozilla ====="
-
+cd $(dirname $0)
 . ./inc.sh
 change_dir Mozilla
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "===== GETTING GNOME ====="
-
+cd $(dirname $0)
 . ./inc.sh
 change_dir GNOME
 
