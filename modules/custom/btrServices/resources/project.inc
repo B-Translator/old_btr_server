@@ -42,7 +42,7 @@ function _btrServices_project() {
     'callback' => '_btrServices_project_add_string',
     'args' => array($params),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-import'),
+    'access arguments' => array('btranslator-suggest'),
   );
 
   // Delete a string from a project (useful for vocabularies).
