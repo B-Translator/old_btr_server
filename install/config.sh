@@ -36,8 +36,11 @@ $btr/config/oauth2_login.sh @bcl @btr
 $bcl/config/languages.sh
 $btr/config/languages.sh
 
+### update sites.inc
+$btr/config/update_sites.sh $translation_lng https://$bcl_domain
+
 ### regenerate ssh keys
-$bcl/config/ssh_keys.sh
+$btr/config/ssh_keys.sh
 
 ### make clones btr_dev and bcl_dev
 if [ "$development" = 'true' ]
