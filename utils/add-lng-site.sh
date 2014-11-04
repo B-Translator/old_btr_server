@@ -53,7 +53,7 @@ docker exec btr \
 #       php-script --script-path=/usr/local/src/btr_client/install/config \
 #       oauth2_login.php "$server_url" "$client_id" "$client_secret" "$skip_ssl"
 # docker exec -it $lng \
-#     drush $bcl_alias cc all
+#     drush @bcl cc all
 
 ### save oauth2 variables on settings.sh
 docker exec $lng \
