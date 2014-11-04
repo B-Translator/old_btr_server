@@ -1,9 +1,6 @@
 
-### Git branch that will be used.
+### Git branches that will be used.
 git_branch='master'
-
-### Source of the client.
-bcl_source_dir='/var/chroot/btr_client'
 bcl_git_branch='master'
 
 ### Domain of the website.
@@ -11,8 +8,8 @@ domain='btr.example.org'
 bcl_domain='example.org'
 
 ### Drupal 'admin' password.
-bcl_admin_passwd='admin'
 admin_passwd='admin'
+bcl_admin_passwd='admin'
 
 ### Emails from the server are sent through the SMTP
 ### of a GMAIL account. Give the full email
