@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 ### get config settings from a file
 if [ "$1" != '' ]
@@ -31,6 +31,12 @@ $btr/config/drupalpass.sh
 
 ### configurations for oauth2 login
 $btr/config/oauth2_login.sh @bcl @btr
+
+### configure languages
+$bcl/config/languages.sh
+$btr/config/languages.sh
+
+### regenerate ssh keys
 $bcl/config/ssh_keys.sh
 
 ### make clones btr_dev and bcl_dev
