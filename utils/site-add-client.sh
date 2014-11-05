@@ -100,11 +100,11 @@ chmod 600 $file_rsa
 
 ### add on wsproxy apache2 config files for the new site
 cd /data/wsproxy/config/etc/apache2/sites-available/
-for file in $(ls sq*.conf)
+for file in $(ls xmp*.conf)
 do
-    file1=${file/#sq/$lng}
+    file1=${file/#xmp/$lng}
     cp $file $file1
-    sed -i $file1 -e "s/sq\.btranslator\.org/$lng.btranslator.org/g"
+    sed -i $file1 -e "s/example\.org/$lng.btranslator.org/g"
 done 
 cd ../sites-enabled/
 ln -s ../sites-available/$lng*.conf .
