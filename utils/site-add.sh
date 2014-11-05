@@ -102,22 +102,15 @@ EOF
 /data/wsproxy/restart.sh
 
 
-############### modify the configuration of btr #####################
+####################### import translations #########################
 
-# ### update languages.inc
+docker exec $container \
+    /var/www/data/import.sh
+
+
+############ update list of languages at languages.inc ##############
+
 # docker exec -it $container \
 #     vim /var/www/btr/profiles/btr_server/modules/custom/btrCore/includes/languages.inc 
 # docker exec $container \
 #     drush @btr cc all
-
-
-# ### get and import the translations of the new language
-# docker-enter $container
-# cd /var/www/data/
-# cp config.sh config.sh.bak
-# sed -i config.sh -e "/^languages=/ c languages='$lng'"  
-# ./get.sh
-# ./import.sh
-# rm config.sh
-# mv config.sh.bak config.sh
-

@@ -16,4 +16,4 @@ base_url=$2
 ### modify sites.inc
 btr_server=/var/www/btr/profiles/btr_server
 sed -i $btr_server/modules/custom/btrCore/includes/sites.inc \
-    -e "/'$lng'/,+2 s#.*base_url.*#      'base_url' => 'https://$base_url',#"
+    -e "/'$lng'/,+2 s#.*base_url.*#      'base_url' => '$base_url',#"
