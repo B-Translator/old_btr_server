@@ -19,6 +19,20 @@ function btr_get_languages() {
   // Do not remove 'fr', because sometimes French translations
   // are used instead of template files (when they are missing).
   $arr_langs = array(
+    'sq' => array(
+      'code' => 'sq',
+      'name' => 'Albanian',
+      'encoding' => 'latin1',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'bg' => array(
+      'code' => 'bg',
+      'name' => 'Bulgarian',
+      'encoding' => 'ISO-8859-5',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
     'fr' => array(
       'code' => 'fr',
       'name' => 'French',
@@ -26,9 +40,23 @@ function btr_get_languages() {
       'direction' => LANGUAGE_LTR,
       'plurals' => 2,
     ),
-    'sq' => array(
-      'code' => 'sq',
-      'name' => 'Albanian',
+    'de' => array(
+      'code' => 'de',
+      'name' => 'German',
+      'encoding' => 'latin1',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'it' => array(
+      'code' => 'it',
+      'name' => 'Italian',
+      'encoding' => 'latin1',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'es' => array(
+      'code' => 'es',
+      'name' => 'Spanish',
       'encoding' => 'latin1',
       'direction' => LANGUAGE_LTR,
       'plurals' => 2,
