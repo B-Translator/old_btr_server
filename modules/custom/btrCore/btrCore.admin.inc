@@ -17,6 +17,14 @@ function btrCore_config() {
     '#title' => t('B-Translator Configuration'),
   );
 
+  // btr_languages
+  $form['config']['btr_languages'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Translation Languages'),
+    '#default_value' => variable_get('btr_languages', 'fr'),
+    '#description'   => t('The list of translation languages supported by the server. Enter a space separated list of language codes.'),
+  );
+
   // btr_voting_mode
   $voting_mode_options = array(
     'single'   => t('Single'),
@@ -35,10 +43,6 @@ function btrCore_config() {
     '#type'  => 'fieldset',
     '#title' => t('B-Translator Defaults'),
   );
-
-  // get a list of available languages
-  $languages = btr_get_languages();
-  foreach ($languages as $code => $lang)  $lang_options[$code] = $lang['name'];
 
   // btr_preferred_projects
   $preferred_projects_description = t("Select the projects that will be used for review and translations. Only strings from these projects will be presented to the users. <br/> You can enter projects in the form <em>origin/project</em>, for example: <em>KDE/kdeedu</em>, <em>Mozilla/browser</em>, etc. Or you can include all the projects from a certain origin, like this: <em>KDE</em>, <em>LibreOffice</em>, etc. <br/> Enter each project on a separate line. See a list of the imported projects <a href='@project-list' target='_blank'>here</a>.<br/> <strong>Note</strong>: The user can override the preferred projects on his profile/settings. If the user does not select any preferred projects on his profile, then the projects listed here will be used. If this list is empty, then all the imported projects will be used.",
@@ -76,5 +80,21 @@ function btrCore_config() {
     '#default_value' => variable_get('btr_import_notify_admin', TRUE),
   );
 
-  return system_settings_form($form);
-}  //  End of btrCore_config().
+  $form = system_settings_form($form);
+  $form['#submit'][] = 'btrCore_config_set_languages';
+  return $form;
+}
+
+/**
+ * Update cached values of languages.
+ */
+function btrCore_config_set_languages() {
+  // Update 'allowed_values' of 'field_translation_lng'.
+  $info = field_info_field('field_translation_lng');
+  $info['settings']['allowed_values'] = btr::languages_get_list();
+  field_update_field($info);
+
+  // Update the cached value of btrClient_languages.
+  cache_clear_all('btrClient_languages', 'cache_btrClient');
+  $languages = btrClient_get_languages();
+}

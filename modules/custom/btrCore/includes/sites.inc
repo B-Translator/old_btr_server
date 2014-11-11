@@ -27,7 +27,7 @@ function btr_get_sites() {
       //'base_url' => 'https://example.org',
     ),
     'sq' => array(
-      'base_url' => 'https://l10n.org.al',
+      'base_url' => 'https://example.org',
     ),
   );
 }

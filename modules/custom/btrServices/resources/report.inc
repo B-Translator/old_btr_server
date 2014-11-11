@@ -118,8 +118,7 @@ function _btr_report_retrieve($report, $params) {
 function _btr_report_statistics($params) {
   // get parameters and validate them
   $lng = $params['lng'];
-  $arr_langs = array_keys(btr_get_languages());
-  if (!in_array($lng, $arr_langs)) {
+  if (!in_array($lng, btr::languages_get())) {
     return services_error('Language missing or not supported.', 406);
   }
 
@@ -154,8 +153,7 @@ function _btr_report_topcontrib($params) {
 
   // get parameters and validate them
   $lng = $params['lng'];
-  $arr_langs = array_keys(btr_get_languages());
-  if (!in_array($lng, $arr_langs)) {
+  if (!in_array($lng, btr::languages_get())) {
     return services_error('Language missing or not supported.', 406);
   }
   $period = $params['period'];

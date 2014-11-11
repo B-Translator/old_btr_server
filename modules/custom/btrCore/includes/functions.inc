@@ -10,4 +10,3 @@ module_load_include('php', 'btrCore', 'lib/btr');
 include_once dirname(__FILE__) . '/hook_user.inc';
 include_once dirname(__FILE__) . '/get_sguid.inc';
 include_once dirname(__FILE__) . '/misc.inc';
-include_once dirname(__FILE__) . '/languages.inc';

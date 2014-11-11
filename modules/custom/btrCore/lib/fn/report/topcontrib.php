@@ -26,7 +26,7 @@ namespace BTranslator;
 function report_topcontrib($lng = 'fr', $period = 'week', $size = 5) {
 
   // validate parameters
-  if (!in_array($lng, array_keys(btr_get_languages()))) {
+  if (!in_array($lng, btr::languages_get())) {
     $lng = 'fr';
   }
   if (!in_array($period, array('day', 'week', 'month', 'year'))) {

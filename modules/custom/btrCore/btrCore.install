@@ -38,6 +38,7 @@ function btrCore_uninstall() {
 
   // delete variables that were used for this module
   $variables = array(
+    'btr_languages',
     'btr_voting_mode',
     'btr_preferred_projects',
     'btr_export_path',
@@ -647,4 +648,3 @@ function btrCore_schema() {
 
   return $schema;
 }
-

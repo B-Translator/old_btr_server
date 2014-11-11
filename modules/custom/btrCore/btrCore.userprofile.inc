@@ -36,20 +36,13 @@ function btrCore_delete_userprofile_fields() {
  */
 function btrCore_create_userprofile_fields() {
 
-  // get a list of languages to be used in selection options
-  $languages = array();
-  $arr_langs = btr_get_languages();
-  foreach ($arr_langs as $lng => $language) {
-    $languages[$lng] = $language['name'];
-  }
-
   // create a field and instance for 'field_translation_lng'
   field_create_field(
     array(
       'field_name' => 'field_translation_lng',
       'type' => 'list_text',
       'cardinality' => 1,
-      'settings' => array('allowed_values' => $languages),
+      'settings' => array('allowed_values' => btr::languages_get_list()),
       'entity_types' => array('user'),
     ));
   field_create_instance(

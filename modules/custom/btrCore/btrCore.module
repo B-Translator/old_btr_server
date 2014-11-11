@@ -203,18 +203,12 @@ function btrCore_hybridauth_registration_form($data) {
  * Implements hook_form_FORM_ID_alter().
  */
 function btrCore_form_hybridauth_additional_info_form_alter(&$form, &$form_state, $form_id) {
-  // Get a list of available languages.
-  $languages = btr_get_languages();
-  foreach ($languages as $code => $lang) {
-    $lang_options[$code] = $lang['name'];
-  }
-
   // Field translation_lng.
   $form['fset']['translation_lng'] = array(
     '#type' => 'select',
     '#title' => t('Translation Language'),
     '#description' => t('The language of translations. You will help with the translations of this language (review existing translations or submit new ones).'),
-    '#options' => $lang_options,
+    '#options' => btr::languages_get_list(),
   );
 
   // $form['#validate'][] = 'btrCore_form_hybridauth_additional_info_form_validate';
