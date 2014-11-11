@@ -108,9 +108,11 @@ docker exec $container \
     /var/www/data/import.sh
 
 
-############ update list of languages at languages.inc ##############
+######################### clean up ##################################
 
-# docker exec -it $container \
-#     vim /var/www/btr/profiles/btr_server/modules/custom/btrCore/includes/languages.inc 
-# docker exec $container \
-#     drush @btr cc all
+docker exec $container \
+    killall mysqld
+docker exec $container \
+    drush @local_btr --yes cc all
+docker exec $container \
+    drush @local_bcl --yes cc all
