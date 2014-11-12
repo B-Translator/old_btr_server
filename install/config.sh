@@ -15,7 +15,7 @@ bcl=/usr/local/src/btr_client/install
 
 ### remove dev sites
 test -d /var/www/btr_dev && $btr/../dev/clone_rm.sh btr_dev
-test -d /var/www/bcl_dev && $btr/../dev/clone_rm.sh bcl_dev
+test -d /var/www/bcl_dev && $bcl/../dev/clone_rm.sh bcl_dev
 
 ### configure domains
 $btr/config/domain.sh
