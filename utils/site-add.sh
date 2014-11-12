@@ -104,8 +104,8 @@ EOF
 
 ####################### import translations #########################
 
-docker exec $container \
-    /var/www/data/import.sh
+# docker exec $container \
+#     /var/www/data/import.sh
 
 
 ######################### clean up ##################################
