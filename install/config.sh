@@ -13,6 +13,10 @@ fi
 btr=/usr/local/src/btr_server/install
 bcl=/usr/local/src/btr_client/install
 
+### remove dev sites
+test -d /var/www/btr_dev && $btr/../dev/clone_rm.sh btr_dev
+test -d /var/www/bcl_dev && $btr/../dev/clone_rm.sh bcl_dev
+
 ### configure domains
 $btr/config/domain.sh
 
@@ -35,6 +39,8 @@ $btr/config/oauth2_login.sh @bcl @btr
 ### configure languages
 $bcl/config/translation_lng.sh
 $btr/config/languages.sh
+
+exit 0
 
 ### update sites.inc
 $btr/config/update_sites.sh $translation_lng https://$bcl_domain
