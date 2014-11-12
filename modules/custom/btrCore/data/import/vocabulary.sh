@@ -1,11 +1,11 @@
-#!/bin/bash -x
+#!/bin/bash 
 ### Import the vocabulary projects.
 
 ### go to the script directory
 cd $(dirname $0)
 
-### get the drush alias from the first argument
-drush="drush $1"
+### get config vars
+. ../config.sh
 
 origin='vocabulary'
 for file in $(ls vocabulary/*.po)
@@ -15,6 +15,13 @@ do
     project=${filename%.po}
     lng=${project##*_}
 
+    if test $($drush btrp-ls --origin=$origin --project=$project)
+    then
+        echo "Project $origin/$project already exists; skipping."
+        continue
+    fi
+
+    echo "Importing $origin/$project."
     ### create a project and import translations
     $drush btrp-add $origin $project $(pwd)/$file
     $drush btrp-import $origin $project $lng $(pwd)/$file
