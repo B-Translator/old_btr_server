@@ -1,10 +1,6 @@
 #!/bin/bash
 ### set passwords for the mysql users btr and btr_data
 
-### make sure that mysqld is running
-source $(dirname $0)/set_mysql_passwd.sh
-$(dirname $0)/mysqld.sh start
-
 ### get a new password for the mysql user 'btr'
 if [ "$mysql_passwd_btr" = 'random' ]
 then
@@ -40,6 +36,7 @@ then
 fi
 
 ### set passwords
+source $(dirname $0)/set_mysql_passwd.sh
 set_mysql_passwd btr $mysql_passwd_btr
 set_mysql_passwd btr_data $mysql_passwd_btr_data
 

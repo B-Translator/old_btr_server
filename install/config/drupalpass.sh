@@ -15,8 +15,4 @@ then
 fi
 
 ### set the password
-$(dirname $0)/mysqld.sh start
 drush @btr user-password admin --password="$admin_passwd"
-
-### drush may create css/js files with wrong(root) permissions
-chown www-data: -R /var/www/btr*/sites/default/files/{css,js}

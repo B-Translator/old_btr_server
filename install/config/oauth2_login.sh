@@ -24,7 +24,6 @@ skip_ssl=1
 
 ### register an oauth2 client on btr_server
 btr=/usr/local/src/btr_server/install/config
-$btr/mysqld.sh start
 drush --yes $btr_alias \
     php-script --script-path=$btr register_oauth2_client.php  \
     "$client_id" "$client_secret" "$redirect_url"
@@ -32,7 +31,6 @@ drush $btr_alias cc all
 
 ### setup oauth2 login on btr_client
 bcl=/usr/local/src/btr_client/install/config
-#$bcl/mysqld.sh start
 drush --yes $bcl_alias \
     php-script --script-path=$bcl oauth2_login.php  \
     "$server_url" "$client_id" "$client_secret" "$skip_ssl"
@@ -51,6 +49,3 @@ drush --yes $btr_alias \
     php-script --script-path=$btr oauth2_login.php  \
     "$server_url" "$client_id" "$client_secret" "$skip_ssl"
 drush $btr_alias cc all
-
-### drush may create css/js files with wrong(root) permissions
-chown www-data: -R /var/www/{btr,bcl}*/sites/default/files/{css,js}

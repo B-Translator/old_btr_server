@@ -17,7 +17,7 @@ base_url=$2
 btr_server=/var/www/btr/profiles/btr_server
 sed -i $btr_server/modules/custom/btrCore/includes/sites.inc \
     -e "/return array/,/}/ d"
-sed << EOF $btr_server/modules/custom/btrCore/includes/sites.inc \
+sed << EOF >> $btr_server/modules/custom/btrCore/includes/sites.inc \
   return array(
     '$lng' => array(
       'base_url' => '$base_url',

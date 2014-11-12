@@ -51,7 +51,4 @@ then
 fi
 
 ### drush may create some css/js files with wrong permissions
-chown www-data: -R /var/www/{btr,bcl}*/sites/default/files/{css,js}
-
-### stop mysql
-$btr/config/mysqld.sh stop
+$btr/config/fix_file_permissions.sh
