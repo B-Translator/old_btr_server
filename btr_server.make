@@ -79,11 +79,11 @@ projects[uuid] = 1.0-alpha6
 projects[module_filter] = 1.8
 projects[drush_language] = 1.2
 projects[delete_all] = 1.1
-projects[l10n_update] = 1.0
+projects[l10n_update] = 1.1
 
 ;;; Performance
 projects[boost] = 1.0
-projects[memcache] = 1.2
+projects[memcache] = 1.3
 
 ;--------------------
 ; Sending Emails
@@ -91,7 +91,7 @@ projects[memcache] = 1.2
 
 projects[mailsystem] = 2.34
 projects[mimemail] = 1.0-beta3
-projects[reroute_email] = 1.1
+projects[reroute_email] = 1.2
 
 ;projects[phpmailer] = 3.x-dev
 projects[phpmailer][download][revision] = 8f7c632
