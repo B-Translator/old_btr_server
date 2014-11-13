@@ -4,7 +4,7 @@
 ### get a password for the Drupal user 'admin'
 if [ -z "${admin_passwd+xxx}" -o "$admin_passwd" = '' ]
 then
-    base_url=$(drush @bcl eval 'print $GLOBALS["base_url"]')
+    base_url=$(drush @btr eval 'print $GLOBALS["base_url"]')
     echo
     echo "===> Password for Drupal 'admin' on $base_url."
     echo

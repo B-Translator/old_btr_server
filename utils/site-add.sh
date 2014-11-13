@@ -73,6 +73,18 @@ chmod 600 $file_rsa
 #gdrive upload -f $file_rsa
 
 
+################### clean up and restart ############################
+
+docker exec $container \
+    killall mysqld
+docker exec $container \
+    drush @local_btr --yes cc all
+docker exec $container \
+    drush @local_bcl --yes cc all
+
+docker restart $container
+
+
 ######## update the configuration of wsproxy and restart it #########
 
 ### add on wsproxy apache2 config files for the new site
@@ -106,13 +118,3 @@ EOF
 
 # docker exec $container \
 #     /var/www/data/import.sh
-
-
-######################### clean up ##################################
-
-docker exec $container \
-    killall mysqld
-docker exec $container \
-    drush @local_btr --yes cc all
-docker exec $container \
-    drush @local_bcl --yes cc all
