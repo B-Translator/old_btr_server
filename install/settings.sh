@@ -4,8 +4,8 @@ git_branch='master'
 bcl_git_branch='master'
 
 ### Domain of the website.
-domain='btr.example.org'
-bcl_domain='example.org'
+domain='btr-fr.example.org'
+bcl_domain='fr.example.org'
 
 ### Drupal 'admin' password.
 admin_passwd='admin'
@@ -15,7 +15,7 @@ bcl_admin_passwd='admin'
 ### of a GMAIL account. Give the full email
 ### of the gmail account, and the password.
 gmail_account='MyEmailAddress@gmail.com'
-gmail_passwd=
+gmail_passwd='gmailpassword'
 
 ### Translation languages supported by the B-Translator Server.
 ### Do not remove 'fr', because sometimes French translations
@@ -23,7 +23,7 @@ gmail_passwd=
 languages='fr de it sq'
 
 ### Translation language of B-Translator Client.
-translation_lng='sq'
+translation_lng='fr'
 
 ### Mysql passwords. Leave it as 'random'
 ### to generate a new one randomly
