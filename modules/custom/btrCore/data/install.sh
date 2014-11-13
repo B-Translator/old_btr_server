@@ -8,7 +8,7 @@ mysql=$(drush sql-connect)
 $mysql < db/btr_schema.sql
 
 ### import the vocabulary projects
-import/vocabulary.sh
+import/vocabulary.sh --root=/var/www/btr
 
 ### import some PO files, just for testing/development
 test/update.sh

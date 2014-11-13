@@ -3,8 +3,8 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### set drush alias
-drush="drush $1"
+### set drush root
+drush="drush --root=/var/www/btr"
 
 ### set some variables
 origin=test

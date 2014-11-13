@@ -4,8 +4,8 @@
 ### go to the script directory
 cd $(dirname $0)
 
-### get config vars
-. ../config.sh
+### set drush site
+drush="drush $1"
 
 origin='vocabulary'
 for file in $(ls vocabulary/*.po)
