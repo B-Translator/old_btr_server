@@ -121,7 +121,7 @@ function btrCore_create_userprofile_fields() {
       'type' => 'list_text',
       'cardinality' => 2,
       'entity_types' => array('user'),
-      'settings' => array('allowed_values' => $languages),
+      'settings' => array('allowed_values' =>  btr::languages_get_list()),
     ));
   field_create_instance(
     array(

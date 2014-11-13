@@ -94,6 +94,11 @@ function btrCore_config_set_languages() {
   $info['settings']['allowed_values'] = btr::languages_get_list();
   field_update_field($info);
 
+  // Update 'allowed_values' of 'field_auxiliary_languages'.
+  $info = field_info_field('field_auxiliary_languages');
+  $info['settings']['allowed_values'] = btr::languages_get_list();
+  field_update_field($info);
+
   // Update the cached value of btrClient_languages.
   cache_clear_all('btrClient_languages', 'cache_btrClient');
   $languages = btrClient_get_languages();
