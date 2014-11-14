@@ -37,7 +37,7 @@ $btr/config/drupalpass.sh
 $btr/config/oauth2_login.sh @bcl @btr
 
 ### configure languages
-$bcl/config/translation_lng.sh
+#$bcl/config/translation_lng.sh
 $btr/config/languages.sh
 
 ### update sites.inc

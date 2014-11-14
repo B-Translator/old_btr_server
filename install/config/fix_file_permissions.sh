@@ -4,5 +4,5 @@
 
 for dir in /var/www/{btr,bcl}*/sites/default/files/{css,js}
 do
-    chown www-data: -R $dir
+    test -d $dir && chown www-data: -R $dir
 done

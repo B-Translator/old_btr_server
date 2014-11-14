@@ -29,3 +29,4 @@ export drush="drush --root=$drupal_dir"
 
 ### btranslator configuration
 $code_dir/install/config.sh
+exit 0
