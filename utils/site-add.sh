@@ -62,7 +62,7 @@ docker exec $container \
 docker exec $container dev/clone_rm.sh btr_dev
 docker exec $container ../btr_client/dev/clone_rm.sh bcl_dev
 docker exec $container install/{config.sh,settings.sh}
-
+docker exec $container bash -c "translation_lng=$lng /usr/local/src/btr_client/install/config/translation_lng.sh"
 
 ############### get the ssh key of the container ####################
 
@@ -112,6 +112,7 @@ EOF
 
 ### restart wsproxy
 /data/wsproxy/restart.sh
+docker exec wsproxy /etc/init.d/apache2 restart
 
 
 ####################### import translations #########################
