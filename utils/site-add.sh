@@ -39,7 +39,7 @@ docker create --name=$container \
     -v /data/containers/$container:/data \
     -v /data/PO_files:/data/PO_files:ro \
     -p $ssh_port:2201 \
-    btranslator/btr_server:v2.2
+    btranslator/btr_server:v2.3
 docker start $container
 
 ### update drupal and the code of the application
