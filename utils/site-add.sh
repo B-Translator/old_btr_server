@@ -59,8 +59,6 @@ docker exec $container \
         -e "/^gmail_passwd=/ c gmail_passwd='$gmail_passwd'" \
         -e "/^languages=/ c languages='$languages'" \
         -e "/^translation_lng=/ c translation_lng='$lng'"
-docker exec $container dev/clone_rm.sh btr_dev
-docker exec $container ../btr_client/dev/clone_rm.sh bcl_dev
 docker exec $container install/{config.sh,settings.sh}
 docker exec $container bash -c "translation_lng=$lng /usr/local/src/btr_client/install/config/translation_lng.sh"
 
