@@ -70,7 +70,6 @@ function languages_get_details() {
       $lng_details[$lng] = array(
         'code' => $lng,
         'name' => "Unknown ($lng)",
-        'encoding' => 'latin1',
         'direction' => LANGUAGE_LTR,
         'plurals' => 2,
       );
