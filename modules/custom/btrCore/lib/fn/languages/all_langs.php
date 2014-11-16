@@ -47,4 +47,11 @@ $all_langs = array(
     'direction' => LANGUAGE_LTR,
     'plurals' => 2,
   ),
+  'fi' => array(
+    'code' => 'fi',
+    'name' => 'Finnish',
+    'encoding' => 'ISO-8859-15',
+    'direction' => LANGUAGE_LTR,
+    'plurals' => 2,
+  ),
 );
