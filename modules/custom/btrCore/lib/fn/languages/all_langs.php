@@ -47,4 +47,10 @@ $all_langs = array(
     'direction' => LANGUAGE_LTR,
     'plurals' => 2,
   ),
+  'tr' => array(
+    'code' => 'tr',
+    'name' => 'Turkish',
+    'direction' => LANGUAGE_LTR,
+    'plurals' => 2,
+  ),
 );
