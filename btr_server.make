@@ -40,7 +40,7 @@ projects[devel] = 1.5
 projects[diff] = 3.2
 
 ;;; Extensions
-projects[ctools] = 1.4
+projects[ctools] = 1.5
 projects[libraries] = 2.2
 projects[entity] = 1.5
 projects[xautoload] = 4.5
