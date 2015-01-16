@@ -45,12 +45,12 @@ projects[libraries] = 2.2
 projects[entity] = 1.5
 projects[xautoload] = 4.5
 projects[token] = 1.5
-projects[rules] = 2.7
+projects[rules] = 2.8
 projects[pathauto] = 1.2
 projects[subpathauto] = 1.3
 
 ;;; User interface
-projects[context] = 3.3
+projects[context] = 3.6
 projects[views] = 3.8
 projects[boxes] = 1.2
 projects[edit_profile] = 1.0-beta2
@@ -62,7 +62,7 @@ libraries[tinymce][download][type] = get
 libraries[tinymce][download][url] = https://github.com/tinymce/tinymce/archive/4.1.6.zip
 
 ;;; Security
-projects[captcha] = 1.1
+projects[captcha] = 1.2
 projects[recaptcha] = 1.11
 projects[honeypot] = 1.17
 projects[user_restrictions] = 1.0
@@ -83,7 +83,7 @@ projects[l10n_update] = 1.1
 
 ;;; Performance
 projects[boost] = 1.0
-projects[memcache] = 1.3
+projects[memcache] = 1.4
 
 ;--------------------
 ; Sending Emails
