@@ -56,6 +56,7 @@ projects[boxes] = 1.2
 projects[edit_profile] = 1.0-beta2
 
 projects[wysiwyg] = 2.2
+projects[nocurrent_pass] = 1.0
 
 libraries[tinymce][directory_name] = tinymce
 libraries[tinymce][download][type] = get

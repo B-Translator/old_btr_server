@@ -64,6 +64,7 @@ dependencies[] = boxes
 dependencies[] = edit_profile
 dependencies[] = color
 dependencies[] = jquery_update
+dependencies[] = nocurrent_pass
 
 ;;; Features
 dependencies[] = strongarm
