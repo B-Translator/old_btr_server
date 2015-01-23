@@ -225,6 +225,7 @@ function _btrServices_project_add_string($params) {
 function _btrServices_project_del_string($params) {
   $sguid = check_plain($params['sguid']);
   btr::string_del($sguid);
+  return null;
 }
 
 /**
