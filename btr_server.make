@@ -12,7 +12,7 @@ defaults[projects][subdir] = contrib
 ;--------------------
 
 projects[bootstrap] = 2.2
-projects[jquery_update] = 2.4
+projects[jquery_update] = 2.5
 
 libraries[bootstrap][directory_name] = bootstrap
 libraries[bootstrap][download][type] = get
@@ -84,7 +84,7 @@ projects[l10n_update] = 1.1
 
 ;;; Performance
 projects[boost] = 1.0
-projects[memcache] = 1.4
+projects[memcache] = 1.5
 
 ;--------------------
 ; Sending Emails
