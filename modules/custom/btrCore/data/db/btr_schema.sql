@@ -203,3 +203,11 @@ CREATE TABLE `btr_users` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users that contribute translations/suggestions/votes.';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `btr_mv_ict_sq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `btr_mv_ict_sq` (
+  `string` varchar(1000) COLLATE utf8_bin NOT NULL,
+  KEY `string` (`string`(100))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Strings of vocabulary/ICT_sq; used to speed-up autocompletion.';
+/*!40101 SET character_set_client = @saved_cs_client */;

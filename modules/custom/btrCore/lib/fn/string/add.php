@@ -84,6 +84,14 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
       ))
     ->execute();
 
+  // Insert the string to the materialized view.
+  if ($origin=='vocabulary' and $project=='ICT_sq') {
+    $table = 'btr_mv_' . strtolower($project);
+    btr_insert($table)
+      ->fields(array('string' => $string))
+      ->execute();
+  }
+
   // Notify translators about the new string.
   if ($notify) {
     _btr_new_string_notification($project, $string, $sguid);

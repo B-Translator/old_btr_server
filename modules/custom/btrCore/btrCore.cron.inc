@@ -58,6 +58,7 @@ function btrCore_cron_nightly() {
   btrCore_delete_old_export_files();
   btrCore_cleanup_fake_users();
   btrCore_send_strings_for_review();
+  btrCore_update_mysql_materialized_views();
 }
 
 /**
@@ -353,4 +354,23 @@ function btrCore_import_translations($params) {
 
   // This import is done, allow any other imports to run.
   lock_release('import_translations');
+}
+
+/**
+ * Update MySQL materialized views.
+ */
+function btrCore_update_mysql_materialized_views() {
+
+  // Materialized view {btr_mv_ict_sq} is used to speed-up
+  // term autocompletion of Fjalori ICT.
+  btr_query("TRUNCATE {btr_mv_ict_sq}");
+  btr_query("INSERT INTO {btr_mv_ict_sq}
+    SELECT DISTINCT s.string FROM {btr_strings} s
+    JOIN {btr_locations} l ON (l.sguid = s.sguid)
+    JOIN {btr_templates} t ON (t.potid = l.potid)
+    JOIN {btr_projects}  p ON (p.pguid = t.pguid)
+    WHERE p.project = 'ICT_sq'
+      AND p.origin = 'vocabulary'
+    ORDER BY s.string"
+  );
 }

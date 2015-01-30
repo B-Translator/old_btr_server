@@ -115,27 +115,37 @@ function btrCore_string_autocomplete($origin = '*', $project = '*', $string = ''
   $origin = empty($origin) ? '*' : $origin;
   $project = empty($project) ? '*' : $project;
 
-  // Get the query arguments and the condition for joining with project.
-  $query_args = array(':string' => $string . '%');
-  $project_join_condition = 'p.pguid = t.pguid';
-  if ($project != '*') {
-    $query_args[':project'] = $project;
-    $project_join_condition .= ' AND p.project = :project';
+  // Get the query.
+  if ($origin == 'vocabulary') {
+    $table = 'btr_mv_' . strtolower(check_plain($project)).
+    $query = "SELECT string FROM {btr_mv_ict_sq}
+              WHERE string LIKE :string
+              ORDER BY string ASC";
+    $query_args = array(':string' => $string . '%');
   }
-  if ($origin != '*') {
-    $query_args[':origin'] = $origin;
-    $project_join_condition .= ' AND p.origin = :origin';
-  }
+  else {
+    // Get the query arguments and the condition for joining with project.
+    $query_args = array(':string' => $string . '%');
+    $project_join_condition = 'p.pguid = t.pguid';
+    if ($project != '*') {
+      $query_args[':project'] = $project;
+      $project_join_condition .= ' AND p.project = :project';
+    }
+    if ($origin != '*') {
+      $query_args[':origin'] = $origin;
+      $project_join_condition .= ' AND p.origin = :origin';
+    }
 
-  // Build the query.
-  $query = "SELECT DISTINCT s.string FROM {btr_strings} s ";
-  if ($origin != '*' or $project != '*') {
-    $query .= "JOIN {btr_locations} l ON (l.sguid = s.sguid)
+    // Build the query.
+    $query = "SELECT DISTINCT s.string FROM {btr_strings} s ";
+    if ($origin != '*' or $project != '*') {
+      $query .= "JOIN {btr_locations} l ON (l.sguid = s.sguid)
                JOIN {btr_templates} t ON (t.potid = l.potid)
                JOIN {btr_projects}  p ON ($project_join_condition) ";
-  }
-  $query .= "WHERE s.string LIKE :string
+    }
+    $query .= "WHERE s.string LIKE :string
              ORDER BY s.string ASC";
+  }
 
   // Run the query and get the results.
   $result = btr_query_range($query, 0, 10, $query_args);
