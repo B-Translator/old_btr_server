@@ -184,12 +184,49 @@ function _btrCore_get_btr_permissions() {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter() for user_profile_form.
  */
 function btrCore_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // remove the field 'field_data_sequential' from the form
   // it is for internal usage only
   $form['field_data_sequential']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for user_register_form.
+ */
+function btrCore_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+  if (!isset($_GET['app']))  return;
+
+  // Hide some fields for the given application,
+  // they will be set to prededined values.
+  switch ($_GET['app']) {
+    case 'fjalori.fs.al':
+      $form['field_translation_lng']['#access'] = FALSE;
+      $form['field_preferred_projects']['#access'] = FALSE;
+      $form['field_order_of_strings']['#access'] = FALSE;
+      $form['field_auxiliary_languages']['#access'] = FALSE;
+      $form['field_translations_per_day']['#access'] = FALSE;
+      $form['field_feedback_channels']['#access'] = FALSE;
+      break;
+  }
+  // Register a validation callback function.
+  $form['#validate'][] = 'btrCore_user_register_validate';
+}
+
+/**
+ * Validation function for user_register_form.
+ */
+function btrCore_user_register_validate($form, &$form_state) {
+  if (!isset($_GET['app']))  return;
+
+  // Set predefined values for the given application.
+  $values = &$form_state['values'];
+  switch ($_GET['app']) {
+    case 'fjalori.fs.al':
+      $values['field_translation_lng']['und'][0]['value'] = 'sq';
+      $values['field_preferred_projects']['und'][0]['value'] = 'vocabulary/ICT_sq';
+  }
 }
 
 /**
