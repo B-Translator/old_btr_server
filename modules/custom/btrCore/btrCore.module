@@ -196,21 +196,26 @@ function btrCore_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
  * Implements hook_form_FORM_ID_alter() for user_register_form.
  */
 function btrCore_form_user_register_form_alter(&$form, &$form_state, $form_id) {
-  if (!isset($_GET['app']))  return;
+  if (!isset($_GET['lng']) and !isset($_GET['proj']))  return;
 
-  // Hide some fields for the given application,
-  // they will be set to prededined values.
-  switch ($_GET['app']) {
-    case 'fjalori.fs.al':
+  // Hide the language field if the language is set in the url.
+  if (isset($_GET['lng'])) {
       $form['field_translation_lng']['#access'] = FALSE;
-      $form['field_preferred_projects']['#access'] = FALSE;
-      $form['field_order_of_strings']['#access'] = FALSE;
-      $form['field_auxiliary_languages']['#access'] = FALSE;
-      $form['field_translations_per_day']['#access'] = FALSE;
-      $form['field_feedback_channels']['#access'] = FALSE;
-      break;
   }
-  // Register a validation callback function.
+
+  // Hide the project field if the preferred projects are set in the url.
+  if (isset($_GET['proj'])) {
+      $form['field_preferred_projects']['#access'] = FALSE;
+  }
+
+  // The default values will be used for the following fields.
+  $form['field_order_of_strings']['#access'] = FALSE;
+  $form['field_auxiliary_languages']['#access'] = FALSE;
+  $form['field_translations_per_day']['#access'] = FALSE;
+  $form['field_feedback_channels']['#access'] = FALSE;
+
+  // Register a validation callback function,
+  // where we can set the values for language and projects.
   $form['#validate'][] = 'btrCore_user_register_validate';
 }
 
@@ -218,14 +223,16 @@ function btrCore_form_user_register_form_alter(&$form, &$form_state, $form_id) {
  * Validation function for user_register_form.
  */
 function btrCore_user_register_validate($form, &$form_state) {
-  if (!isset($_GET['app']))  return;
-
-  // Set predefined values for the given application.
   $values = &$form_state['values'];
-  switch ($_GET['app']) {
-    case 'fjalori.fs.al':
-      $values['field_translation_lng']['und'][0]['value'] = 'sq';
-      $values['field_preferred_projects']['und'][0]['value'] = 'vocabulary/ICT_sq';
+
+  // Set the value for the language field.
+  if (isset($_GET['lng'])) {
+      $values['field_translation_lng']['und'][0]['value'] = $_GET['lng'];
+  }
+
+  // Set the value for the preferred projects.
+  if (isset($_GET['proj'])) {
+    $values['field_preferred_projects']['und'][0]['value'] = $_GET['proj'];
   }
 }
 
@@ -233,15 +240,12 @@ function btrCore_user_register_validate($form, &$form_state) {
  * Implements hook_hybridauth_registration_form().
  */
 function btrCore_hybridauth_registration_form($data) {
-  // If we know the app that is asking for user registration,
-  // then don't ask user for additional info because it can be set automatically.
-  $app = str_replace('user/register?app=', '', $_GET['destination']);
-  if ($app == 'fjalori.fs.al') {
-    return FALSE;
-  }
-  else {
-    return !isset($data['translation_lng']);
-  }
+  if (isset($data['translation_lng']))  return FALSE;
+
+  $destination = drupal_parse_url($_GET['destination']);
+  if (isset($destination['query']['lng']))  return FALSE;
+
+  return TRUE;
 }
 
 /**
@@ -273,15 +277,20 @@ function btrCore_form_hybridauth_additional_info_form_submit($form, &$form_state
  * Implements hook_hybridauth_userinfo_alter().
  */
 function btrCore_hybridauth_userinfo_alter(&$userinfo, $data) {
-  $app = str_replace('user/register?app=', '', $_GET['destination']);
-  if ($app == 'fjalori.fs.al') {
-    $userinfo['translation_lng'] = 'sq';
-    $userinfo['preferred_projects'] = array('vocabulary/ICT_sq');
+  $destination = drupal_parse_url($_GET['destination']);
+
+  // Set the translation_lng on the user profile.
+  if (isset($destination['query']['lng'])) {
+    $userinfo['translation_lng'] = $destination['query']['lng'];
   }
-  else {
-    if (array_key_exists('translation_lng', $data)) {
-      $userinfo['translation_lng'] = $data['translation_lng'];
-    }
+  elseif (isset($data['translation_lng'])) {
+    $userinfo['translation_lng'] = $data['translation_lng'];
+  }
+
+  // Set the preferred_projects on the user profile.
+  if (isset($destination['query']['proj'])) {
+    $arr_projects = explode(',', $destination['query']['proj']));
+    $userinfo['preferred_projects'] = $arr_projects;
   }
 }
 
