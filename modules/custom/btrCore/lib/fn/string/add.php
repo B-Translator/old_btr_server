@@ -92,7 +92,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
       ->execute();
   }
 
-  // Notify translators about the new string.
+  // Notify users about the new string.
   if ($notify) {
     _btr_new_string_notification($project, $string, $sguid);
   }
@@ -102,34 +102,32 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
 
 
 /**
- * Notify translators about the new string that was added.
+ * Notify users about the new string that was added.
  */
 function _btr_new_string_notification($project, $string, $sguid) {
-  // Get the language of the project.
-  $lng = preg_replace('/^.*_/', '', $project);
-
-  // Get all the translators for this language.
+  // Get all the users interested on this project.
   $uids = db_query(
-    "SELECT t1.uid FROM {users_roles} t1
-     INNER JOIN {role} t2 ON (t2.rid = t1.rid)
-     LEFT JOIN {field_data_field_translation_lng} t3 ON (t3.entity_id = t1.uid)
-     WHERE t2.name = 'translator'
-       AND t3.field_translation_lng_value = :lng",
+    "SELECT DISTINCT p.entity_id
+     FROM {field_data_field_preferred_projects} p
+     INNER JOIN {field_data_field_feedback_channels} f
+             ON (p.entity_id = f.entity_id)
+     WHERE field_preferred_projects_value = :project
+       AND field_feedback_channels_value = 'email'",
     array(
-      ':lng' => $lng,
+      ':project' => "vocabulary/$project",
     ))
     ->fetchCol();
-  $translators = user_load_multiple($uids);
+  $users = user_load_multiple($uids);
 
-  // Notify the translators about the new term.
+  // Notify the users about the new term.
   $queue = DrupalQueue::get('notifications');
   $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($translators as $key => $translator) {
+  foreach ($users as $key => $user) {
     $notification_params = array(
-      'type' => 'notify-translator-on-new-term',
-      'uid' => $translator->uid,
-      'username' => $translator->name,
-      'recipient' => $translator->name . ' <' . $translator->mail . '>',
+      'type' => 'notify-on-new-vocabulary-term',
+      'uid' => $user->uid,
+      'username' => $user->name,
+      'recipient' => $user->name . ' <' . $user->mail . '>',
       'project' => $project,
       'string' => $string,
       'sguid' => $sguid,

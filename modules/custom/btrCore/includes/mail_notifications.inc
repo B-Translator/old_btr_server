@@ -145,10 +145,11 @@ function _btrCore_build_notification_email($params) {
       break;
 
     // Notify translators that a new term has been added to the vocabulary.
-    case 'notify-translator-on-new-term':
+    case 'notify-on-new-vocabulary-term':
+      $app_url = btr_get_app_url($params->project);
       $subject = t("[!prefix] New term: !string",
                  array(
-                   '!prefix' => $subject_prefix,
+                   '!prefix' => $params->project,
                    '!string' => $params->string,
                  ));
       $body = array(
@@ -157,32 +158,17 @@ function _btrCore_build_notification_email($params) {
            A new term has been added to the vocabulary !project
            by !author: !string
 
-           You can review its translation at this link:
+           Check it out at this link:
            !url
 
            Thanks
-
-           ----------
-
-           - You can add a new term at:
-             !url_add_term
-
-           - You can see all the vocabulary terms at:
-             !url_vocabulary
-
           ",
           array(
             '!username' => $params->username,
             '!project' => $params->project,
             '!author' => $params->author,
             '!string' => $params->string,
-            '!url' => $url,
-            '!url_add_term' => $base_url . url('translations/addterm'),
-            '!url_vocabulary' => $base_url . url('translations/search', array(
-                                 'query' => array(
-                                   'project' => 'vocabulary',
-                                   'lng' => $lng,
-                                 ))),
+            '!url' => $app_url . '/#' . $params->string,
           )),
       );
       break;

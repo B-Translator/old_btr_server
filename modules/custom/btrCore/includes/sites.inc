@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * Return the url of the mobile application for the given project.
+ */
+function btr_get_app_url($project) {
+  switch ($project) {
+    case 'ICT_sq':
+      $app_url = 'http://fjalori.fs.al';
+      break;
+    default:
+      $app_url = $GLOBALS['base_url'];
+      break;
+  }
+  return $app_url;
+}
+
+/**
  * Return the base_url of a client site,
  * or the base_url of the server
  * if the url of that site is not defined.
