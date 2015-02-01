@@ -252,6 +252,12 @@ function btrCore_hybridauth_registration_form($data) {
  * Implements hook_form_FORM_ID_alter().
  */
 function btrCore_form_hybridauth_additional_info_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($_GET['lng']))  return;
+  if (isset($_GET['destination'])) {
+    $destination = drupal_parse_url($_GET['destination']);
+    if (isset($destination['query']['lng']))  return;
+  }
+
   // Field translation_lng.
   $form['fset']['translation_lng'] = array(
     '#type' => 'select',
@@ -289,7 +295,7 @@ function btrCore_hybridauth_userinfo_alter(&$userinfo, $data) {
 
   // Set the preferred_projects on the user profile.
   if (isset($destination['query']['proj'])) {
-    $arr_projects = explode(',', $destination['query']['proj']));
+    $arr_projects = explode(',', $destination['query']['proj']);
     $userinfo['preferred_projects'] = $arr_projects;
   }
 }
