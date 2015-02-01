@@ -155,11 +155,8 @@ function _btrCore_build_notification_email($params) {
       $body = array(
         t("Greetings !username,
 
-           A new term has been added to the vocabulary !project
-           by !author: !string
-
-           Check it out at this link:
-           !url
+           A new term has been added to the vocabulary !project by !author.
+           Check it out at the mobile app: !url
 
            Thanks
           ",
