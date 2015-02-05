@@ -14,4 +14,7 @@
 ### update /etc/hosts with the content of /etc/hosts.conf
 /etc/hosts_update.sh
 
+### start the watcher of comments
+/var/www/btr/profiles/btr_server/utils/watch-comments.sh &
+
 exit 0

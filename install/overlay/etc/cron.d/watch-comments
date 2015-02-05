@@ -1,1 +1,0 @@
-10 * * * *  root  /var/www/btr/profiles/btr_server/utils/watch-comments.sh > /dev/null 2>&1
