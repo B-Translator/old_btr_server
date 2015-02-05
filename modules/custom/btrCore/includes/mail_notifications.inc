@@ -170,6 +170,33 @@ function _btrCore_build_notification_email($params) {
       );
       break;
 
+    // Notify voters that a new comment has been added.
+    case 'notify-on-new-disqus-comment':
+      $subject = t("[!prefix] !title",
+                 array(
+                   '!prefix' => $subject_prefix,
+                   '!title' => $params->title,
+                 ));
+      $body = array(
+        t("Greetings !username,
+
+           A new comment has been added to a string that you have voted.
+           !link
+
+           -----
+           !comment
+           -----
+
+           Thanks
+          ",
+          array(
+            '!username' => $params->username,
+            '!link' => $params->link,
+            '!comment' => $params->comment,
+          )),
+      );
+      break;
+
     // Notify the author of a translation, when it is deleted.
     case 'notify-author-on-translation-deletion':
       $subject = t("[!prefix] Translation deleted: !translation",
