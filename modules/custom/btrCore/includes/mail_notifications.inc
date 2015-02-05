@@ -183,7 +183,9 @@ function _btrCore_build_notification_email($params) {
            A new comment has been added to a string that you have voted.
            !link
 
+           -----
            !comment
+           -----
 
            Thanks
           ",

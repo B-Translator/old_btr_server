@@ -16,13 +16,10 @@ while ($line = fgets(STDIN)){
 }
 
 function process_comment($title, $link, $description) {
-  print " - $title \n - $link \n - $description \n\n";
-
   // Extract from the link the language and string id.
   $substr = preg_replace('|.*/translations/|', '', $link);
   $substr = preg_replace('|#comment-.*|', '', $substr);
   list($lng, $sguid) = explode('/', $substr);
-  //print "\n$lng -- $sguid \n\n";
 
   // Get a list of users who have voted for this string.
   $uids = btr_query(
@@ -32,13 +29,12 @@ function process_comment($title, $link, $description) {
      WHERE t.sguid = :sguid AND t.lng = :lng',
     array(':sguid' => $sguid, ':lng' => $lng)
   )->fetchCol();
-  print_r($uids);  return;  //debug
   if (empty($uids))  return;
   $users = user_load_multiple($uids);
 
   // Notify each user about this comment.
   foreach ($users as $user) {
-    btrCore_send_notification_by_email(array(
+    btrCore_send_notification_by_email((object) array(
         'type' => 'notify-on-new-disqus-comment',
         'uid' => $user->uid,
         'username' => $user->name,
