@@ -109,7 +109,7 @@ function _btrServices_project_list($params) {
   }
 
   // Get the project list.
-  $project_list = btr::project_list($origin, $project);
+  $project_list = btr::project_ls($origin, $project);
 
   // Output it as json.
   drupal_json_output($project_list);
