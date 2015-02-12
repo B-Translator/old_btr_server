@@ -576,7 +576,9 @@ function _btrServices_translations_submit($params) {
   $messages = array();
   $nr_votes = $nr_suggestions = $nr_deletions = 0;
   foreach ($params as $item) {
-    switch ($item['action']) {
+    $action = $item['action'];
+    if (!$action) continue;
+    switch ($action) {
     case 'add':
       $result = _btrServices_translations_add($item['params']);
       if ($result['tguid'] != NULL)  $nr_suggestions++;
@@ -606,7 +608,7 @@ function _btrServices_translations_submit($params) {
 
     default:
       $msg = t('Action !action is not supported!',
-	       array('!action' => $item['action']));
+              array('!action' => $action));
       $messages[] = array($msg, 'error');
       break;
     }
