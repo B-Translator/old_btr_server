@@ -203,6 +203,19 @@ CREATE TABLE `btr_users` (
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users that contribute translations/suggestions/votes.';
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `btr_user_project_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `btr_user_project_roles` (
+  `umail` varchar(250) NOT NULL COMMENT 'Email of the user.',
+  `ulng` varchar(5) NOT NULL COMMENT 'Translation language of the user.',
+  `pguid` char(40) CHARACTER SET ascii NOT NULL COMMENT 'Project ID.',
+  `role` varchar(20) CHARACTER SET ascii NOT NULL,
+  PRIMARY KEY (`umail`,`ulng`,`pguid`,`role`),
+  KEY `user` (`umail`,`ulng`),
+  KEY `project` (`pguid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Roles of a user in a project.';
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `btr_mv_ict_sq`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;

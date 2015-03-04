@@ -554,6 +554,43 @@ function btrCore_schema() {
     ),
   );
 
+  // Roles of a user in a project.
+  $schema['btr_user_project_roles'] = array(
+    'description' => 'Roles of a user in a project.',
+    'fields' => array(
+      'umail' => array(
+        'description' => 'The email of the user.',
+        'type' => 'varchar',
+        'length' => '250',
+        'not null' => TRUE,
+      ),
+      'ulng' => array(
+        'description' => 'The translation language of the user.',
+        'type' => 'varchar',
+        'length' => '5',
+        'not null' => TRUE,
+      ),
+      'pguid' => array(
+        'description' => 'Project ID, pguid = SHA1(CONCAT(origin,project))',
+        'type' => 'char',
+        'length' => '40',
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'role' => array(
+        'description' => 'Role.',
+        'type' => 'varchar',
+        'length' => '20',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('umail', 'ulng', 'pguid', 'role'),
+    'indexes' => array(
+      'user' => array('umail', 'ulng'),
+      'project' => array('pguid'),
+    ),
+  );
+
   // Snapshots are tgz archives of project-lng translation files.
   $schema['btr_snapshots'] = array(
     'description' => 'Snapshots are tgz archives of project-lng translation files.',

@@ -18,6 +18,7 @@ all_tables="
     btr_votes
     btr_votes_trash
     btr_users
+    btr_user_project_roles
     btr_mv_ict_sq
 "
 
