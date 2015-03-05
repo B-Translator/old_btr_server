@@ -4,6 +4,14 @@
  * Module file for btrCore.
  */
 
+// Define the database of B-Translator.
+if (isset($GLOBALS['databases']['btr_db']['default'])) {
+  define('BTR_DB', 'btr_db');
+ }
+ else {
+   define('BTR_DB', 'default');
+ }
+
 require_once(dirname(__FILE__) . '/btrCore.menu.inc');
 require_once(dirname(__FILE__) . '/btrCore.cron.inc');
 require_once(dirname(__FILE__) . '/includes/functions.inc');
@@ -104,13 +112,6 @@ function btrCore_mail($key, &$message, $params) {
  * Implements hook_init().
  */
 function btrCore_init() {
-  // Define the database of B-Translator.
-  if (isset($GLOBALS['databases']['btr_db']['default'])) {
-    define('BTR_DB', 'btr_db');
-  }
-  else {
-    define('BTR_DB', 'default');
-  }
 }
 
 /**
@@ -190,6 +191,79 @@ function btrCore_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   // remove the field 'field_data_sequential' from the form
   // it is for internal usage only
   $form['field_data_sequential']['#access'] = FALSE;
+
+  // Add fields for admin_projects and moderate_projects.
+  $form['admin'] = array(
+    '#type'  => 'fieldset',
+    '#title' => t('Fields that can be seen and modified only by an administrator'),
+    '#access' => in_array('administrator', $GLOBALS['user']->roles),
+    '#weight' => -100,   // display it on the top
+  );
+  $form['admin']['admin_projects'] = array(
+    '#type' => 'textarea',
+    '#title' => t('The list of projects that user can administrate'),
+    '#description' => t("Set the projects that the user can admin. Enter each project on a separate line, in the form <em>origin/project</em>."),
+    '#default_value' => implode("\n", $form_state['user']->admin_projects),
+  );
+  $form['admin']['moderate_projects'] = array(
+    '#type' => 'textarea',
+    '#title' => t('The list of projects that user can moderate'),
+    '#description' => t("Set the projects that the user can moderate. Enter each project on a separate line, in the form <em>origin/project</em>."),
+    '#default_value' => implode("\n", $form_state['user']->moderate_projects),
+  );
+
+  array_unshift($form['#submit'], 'btrCore_form_user_profile_submit');
+}
+
+/**
+ * Called before form_user_profile submit
+ * in order to save the extra form fields.
+ */
+function btrCore_form_user_profile_submit($form, &$form_state) {
+
+  function _btrCore_update_user_project_roles($umail, $ulng, $projects, $role) {
+    // Delete any existings records.
+    btr_query('DELETE FROM {btr_user_project_roles}
+       WHERE umail = :umail AND ulng = :ulng AND role = :role',
+      array(':umail' => $umail, ':ulng' => $ulng, ':role' => $role));
+
+    // Get the projects as an array.
+    $arr_projects = array();
+    $lines = preg_split('#\r\n|\r|\n#', $projects);
+    foreach ($lines as $line) {
+      $line = trim($line);
+      if ($line == '')  continue;
+      $arr_projects[] = $line;
+    }
+
+    // Get project pguid-s and for each of them insert a record.
+    list($condition, $args) = _btr_projects_to_where_condition($arr_projects);
+    $query = "SELECT pguid FROM {btr_projects} WHERE $condition";
+    $arr_pguid = btr_query($query, $args)->fetchCol();
+    foreach ($arr_pguid as $pguid) {
+      btr_query('INSERT INTO {btr_user_project_roles}
+                 (umail, ulng, pguid, role)
+                 VALUES (:umail, :ulng, :pguid, :role)',
+        array(
+          ':umail' => $umail,
+          ':ulng' => $ulng,
+          ':pguid' => $pguid,
+          ':role' => $role));
+    }
+  }
+
+  if (in_array('administrator', $GLOBALS['user']->roles)) {
+    $umail = $form_state['user']->init;
+    $ulng = $form_state['user']->translation_lng;
+    if (isset($form_state['values']['admin_projects'])) {
+      $projects = $form_state['values']['admin_projects'];
+      _btrCore_update_user_project_roles($umail, $ulng, $projects, 'admin');
+    }
+    if (isset($form_state['values']['moderate_projects'])) {
+      $projects = $form_state['values']['moderate_projects'];
+      _btrCore_update_user_project_roles($umail, $ulng, $projects, 'moderator');
+    }
+  }
 }
 
 /**

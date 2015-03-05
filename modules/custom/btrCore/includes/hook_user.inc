@@ -202,6 +202,24 @@ function _btrCore_user_get_fields(&$user) {
       $user->feedback_channels[] = $channel['value'];
     }
   }
+
+  // Get the projects for which the user is an admin.
+  $get_managed_projects = "
+    SELECT CONCAT(p.origin, '/', p.project) AS project
+    FROM {btr_user_project_roles} r
+    LEFT JOIN {btr_projects} p ON (p.pguid = r.pguid)
+    WHERE umail = :umail AND ulng = :ulng AND role = :role
+  ";
+  $params = array(
+    ':umail' => $user->init,
+    ':ulng' => $user->translation_lng,
+    ':role' => 'admin',
+  );
+  $user->admin_projects = btr_query($get_managed_projects, $params)->fetchCol();
+
+  // Get the projects for which the user is a moderator.
+  $params[':role'] = 'moderator';
+  $user->moderate_projects = btr_query($get_managed_projects, $params)->fetchCol();
 }
 
 /**
