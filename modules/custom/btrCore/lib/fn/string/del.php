@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Delete the string with the given id.
@@ -12,7 +13,8 @@ namespace BTranslator;
  * otherwise return TRUE.
  */
 function string_del($sguid) {
-  if (!btr::utils_user_has_project_role('admin', $sguid) and !user_access('btranslator-admin')) {
+  if (!btr::utils_user_has_project_role('admin', $sguid)
+    and !user_access('btranslator-admin')) {
     return FALSE;
   }
 
