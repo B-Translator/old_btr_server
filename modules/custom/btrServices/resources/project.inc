@@ -52,7 +52,7 @@ function _btrServices_project() {
     'callback' => '_btrServices_project_del_string',
     'args' => array($params),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-admin'),
+    'access arguments' => array('btranslator-suggest'),
   );
 
   // Import project from POT file(s).
@@ -221,11 +221,24 @@ function _btrServices_project_add_string($params) {
  *   Associative array of the POST data, which contains:
  *   - sguid
  *       ID of the string to be deleted.
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
  */
 function _btrServices_project_del_string($params) {
   $sguid = check_plain($params['sguid']);
-  btr::string_del($sguid);
-  return null;
+  if (btr::string_del($sguid)) {
+    return array('messages' => array());
+  }
+  else {
+    return array('messages' => array(
+        array('type' => 'error', 'message' => t('Insufficient permissions.')),
+      ));
+  };
 }
 
 /**

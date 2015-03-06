@@ -84,9 +84,14 @@ function translation_add($sguid, $lng, $translation) {
   // However, translators (with the 'btranslator-import' access right)
   // do not have this limitation and can suggest more than one translation
   // for the same string.
-  if (! user_access('btranslator-import')) {
-    _remove_old_translation($sguid, $lng, $umail, $tguid);
-  }
+  // The same is applied for the users with admin or moderator role in the
+  // project of the string.
+  if (!user_access('btranslator-import')
+    and !btr::utils_user_has_project_role('admin', $sguid)
+    and !btr::utils_user_has_project_role('moderator', $sguid))
+    {
+      _remove_old_translation($sguid, $lng, $umail, $tguid);
+    }
 
   // Add also a vote for the new translation.
   list($vid, $messages) = btr::vote_add($tguid);
