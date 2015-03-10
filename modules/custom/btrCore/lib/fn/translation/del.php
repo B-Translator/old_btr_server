@@ -44,11 +44,18 @@ function translation_del($tguid, $notify = TRUE) {
     ->fetchAll();
 
   // Check that the current user has the right to delete translations.
+  $sguid = btr_query(
+    'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
+    array(':tguid' => $tguid)
+  )->fetchField();
   $is_own = ($umail == $author->umail);
-  if (!$is_own and !user_access('btranslator-resolve')) {
-    $msg = t('You are not allowed to delete this translation!');
-    return array(array($msg, 'error'));
-  }
+  if (!$is_own and !user_access('btranslator-resolve')
+    and !btr::utils_user_has_project_role('admin', $sguid)
+    and !btr::utils_user_has_project_role('moderator', $sguid))
+    {
+      $msg = t('You are not allowed to delete this translation!');
+      return array(array($msg, 'error'));
+    }
 
   // Copy to the trash table the translation that will be deleted.
   $query = btr_select('btr_translations', 't')
