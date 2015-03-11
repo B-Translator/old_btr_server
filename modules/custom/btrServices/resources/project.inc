@@ -221,6 +221,10 @@ function _btrServices_project_add_string($params) {
  *   Associative array of the POST data, which contains:
  *   - sguid
  *       ID of the string to be deleted.
+ *   - project
+ *       The project from which the string will be deleted.
+ *   - origin (optional)
+ *       The origin of the project (default: 'vocabulary').
  *
  * @return
  *   Associative array containing:
@@ -231,12 +235,14 @@ function _btrServices_project_add_string($params) {
  */
 function _btrServices_project_del_string($params) {
   $sguid = check_plain($params['sguid']);
-  if (btr::string_del($sguid)) {
+  $project = check_plain($params['project']);
+  $origin = isset($params['origin']) ? check_plain($params['origin']) : 'vocabulary';
+  if (btr::string_del($sguid, $project, $origin)) {
     return array('messages' => array());
   }
   else {
     return array('messages' => array(
-        array('type' => 'error', 'message' => t('Insufficient permissions.')),
+        array(t('Insufficient permissions.'), 'error'),
       ));
   };
 }

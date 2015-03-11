@@ -85,7 +85,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
     ->execute();
 
   // Insert the string to the materialized view.
-  if ($origin=='vocabulary' and $project=='ICT_sq') {
+  if ($origin=='vocabulary') {
     $table = 'btr_mv_' . strtolower($project);
     btr_insert($table)
       ->fields(array('string' => $string))
