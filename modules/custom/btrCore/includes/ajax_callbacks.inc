@@ -117,7 +117,7 @@ function btrCore_string_autocomplete($origin = '*', $project = '*', $string = ''
 
   // Get the query.
   if ($origin == 'vocabulary') {
-    $table = 'btr_mv_' . strtolower(check_plain($project)).
+    $table = 'btr_mv_' . strtolower(check_plain($project));
     $query = "SELECT string FROM {$table}
               WHERE string LIKE :string
               ORDER BY string ASC";
