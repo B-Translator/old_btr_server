@@ -360,11 +360,12 @@ function btrCore_import_translations($params) {
  * Update MySQL materialized views.
  */
 function btrCore_update_mysql_materialized_views() {
-
   // Materialized views are used to speed-up
   // term autocompletion of vocabularies.
-  $projects = array('ICT_sq', 'huazime_sq');
-  foreach ($projects as $project) {
+  // For each vocabulary project update the mv table.
+  $project_list = btr::project_ls('vocabulary');
+  foreach ($project_list as $project) {
+    $project = str_replace('vocabulary/', '', $project);
     $table = 'btr_mv_' . strtolower($project);
     btr_query("TRUNCATE {$table}");
     btr_query("INSERT INTO {$table}

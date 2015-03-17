@@ -14,6 +14,9 @@ require_once(dirname(__FILE__) . '/btr-project-diff-ls.inc');
 require_once(dirname(__FILE__) . '/btr-project-diff-get.inc');
 require_once(dirname(__FILE__) . '/btr-project-snapshot.inc');
 require_once(dirname(__FILE__) . '/btr-vote-import.inc');
+require_once(dirname(__FILE__) . '/btr-vocabulary-add.inc');
+require_once(dirname(__FILE__) . '/btr-vocabulary-del.inc');
+require_once(dirname(__FILE__) . '/btr-vocabulary-list.inc');
 
 /**
  * Implementation of hook_drush_command().
@@ -33,6 +36,9 @@ function btranslator_drush_command() {
     'btr-project-diff-get' => _btr_project_diff_get_drush_command(),
     'btr-project-snapshot' => _btr_project_snapshot_drush_command(),
     'btr-vote-import' => _btr_vote_import_drush_command(),
+    'btr-vocabulary-add' => _btr_vocabulary_add_drush_command(),
+    'btr-vocabulary-del' => _btr_vocabulary_del_drush_command(),
+    'btr-vocabulary-list' => _btr_vocabulary_list_drush_command(),
   );
 
   // These will appear in the list of topics when `drush topic` is executed.
@@ -79,6 +85,13 @@ function btranslator_drush_help($section) {
       return _btr_project_snapshot_drush_help();
     case 'drush:btr-vote-import':
       return _btr_vote_import_drush_help();
+    case 'drush:btr-vocabulary-add':
+      return _btr_vocabulary_add_drush_help();
+    case 'drush:btr-vocabulary-del':
+      return _btr_vocabulary_del_drush_help();
+    case 'drush:btr-vocabulary-list':
+      return _btr_vocabulary_list_drush_help();
+
     case 'meta:btranslator:title':
       return dt("B-Translator Commands");
     case 'meta:btranslator:summary':
