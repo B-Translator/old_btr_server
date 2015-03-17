@@ -20,4 +20,8 @@ function vocabulary_del($name, $lng) {
   $origin = 'vocabulary';
   $project = $name . '_' . $lng;
   btr::project_del($origin, $project);
+
+  // Update mv tables.
+  $path = drupal_get_path('module', 'btrCore');
+  shell_exec($path . '/data/db/update-mv-tables.sh');
 }

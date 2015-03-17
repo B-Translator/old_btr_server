@@ -20,10 +20,14 @@ use \btr;
  *   The POT file with the initial terms.
  */
 function vocabulary_add($name, $lng, $pot_file = NULL) {
+  $path = drupal_get_path('module', 'btrCore');
   if ($pot_file === NULL) {
-    $pot_file = drupal_get_path('module', 'btrCore') . '/data/import/vocabulary/empty.po';
+    $pot_file = $path . '/data/import/vocabulary/empty.po';
   }
   $origin = 'vocabulary';
   $project = $name . '_' . $lng;
   btr::project_add($origin, $project, $pot_file);
+
+  // Update mv tables.
+  shell_exec($path . '/data/db/update-mv-tables.sh');
 }
