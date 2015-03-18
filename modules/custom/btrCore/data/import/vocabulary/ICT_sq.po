@@ -1,404 +1,511 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: 7.x-dev\n"
-"POT-Creation-Date: 2012-10-12 01:41+0200\n"
-"PO-Revision-Date: 2012-10-12 01:49+0200\n"
-"Last-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\n"
-"Language-Team: Albanian\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: sq\n"
+"Project-Id-Version: 7.x-dev\\nPOT-Creation-Date: 2012-10-12 01:41+0200\\nPO-Revision-Date: 2012-10-12 01:49+0200\\nLast-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\\nLanguage-Team: Albanian\\nMIME-Version: 1.0\\nContent-Type: text/plain; charset=UTF-8\\nContent-Transfer-Encoding: 8bit\\nPlural-Forms: nplurals=2; plural=(n != 1);\\nLanguage: sq\\n\n"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "Vocabulary"
 msgstr "Fjalorth"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "cookie"
 msgstr "gjurmues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "object"
 msgstr "send"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "entries"
 msgstr "zërat"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "configuration"
 msgstr "trajtësim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "configure"
 msgstr "trajtëso"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "document"
 msgstr "shkresë"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "options"
 msgstr "mundësitë"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "path"
 msgstr "shteg"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "shortcut"
 msgstr "shkurtore"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "bookmark"
 msgstr "faqembajtës"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "tab"
 msgstr "vesh"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "selection"
 msgstr "përzgjedhje"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "scroll"
 msgstr "lëviz"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "tab stop"
 msgstr "ndalesa tab"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "original"
 msgstr "fillestar"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "fonts"
 msgstr "shkronjat"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "frame"
 msgstr "kornizë"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "restore"
 msgstr "rikthe"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "print preview"
-msgstr "paraqitja e shtypjes"
+msgstr "dukja e shtypjes"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "computer"
-msgstr "dijepunues"
+msgstr "kompjuter"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "available"
-msgstr "i gatshëm"
+msgstr "në dispozicion"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "screenshot"
 msgstr "pamje ekrani"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "copy-paste"
 msgstr "kap-e-vendos"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "properties"
 msgstr "vetitë"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "run (a program)"
 msgstr "nis (një program)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "software"
-msgstr "softuer"
+msgstr "program"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "read-only"
 msgstr "vetëm-lexim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "read-write"
 msgstr "lexim-shkrim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "moderator"
-msgstr "moderator"
+msgstr "drejtues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "preview"
 msgstr "para-shikim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "wizard"
 msgstr "udhëzues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "uninstallation"
 msgstr "heqje"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "is not running"
 msgstr "nuk punon"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "insert"
 msgstr "fut"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "automatically"
 msgstr "vetvetiu"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "set (the value of an attribute)"
 msgstr "cakto (vlerën e një vetie)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "default"
 msgstr "paracaktuar"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "fullscreen"
 msgstr "gjithekrani"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "settings"
-msgstr "rregullimet"
+msgstr "përcaktimet"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "debug (a program)"
 msgstr "heto (një program)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "debugging"
 msgstr "hetim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "preferencies"
-msgstr "shijet"
+msgstr "preferencat"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "dimension"
 msgstr "përmasë"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "web"
 msgstr "rrjet"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "resolution (of screen)"
-msgstr "imtësia (e ekranit)"
+msgstr "rezolucioni (i ekranit)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "heading (of section)"
 msgstr "kokëzim (i pjesës)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "editor"
 msgstr "ndryshues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "ignore"
 msgstr "shpërfill"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "index"
 msgstr "tregues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "autoscrolling"
 msgstr "vetlëvizje"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "endless loop"
 msgstr "cikel i pafund"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "skip"
-msgstr "anashkalo"
+msgstr "Kaloje"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "tutorial"
 msgstr "ushtrues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "reset"
 msgstr "rifillo"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "active"
-msgstr "vepror"
+msgstr "veprues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "contact"
 msgstr "lidhu"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "character"
 msgstr "shkronja"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "alignment"
 msgstr "radhitje"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "position"
 msgstr "vendodhja"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "font family"
 msgstr "lloji i shkronjave"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "my username"
-msgstr "emri që përdor"
+msgstr "emërdorimi im"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "encrypted connection"
 msgstr "lidhje e kriptuar"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "tabs"
 msgstr "veshoret"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "context"
-msgstr "rrethana"
+msgstr "Kontekst"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "outline"
 msgstr "përvijim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "authentication"
-msgstr "identifikim"
+msgstr "vërtetësim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "mail server"
 msgstr "shërbyesi postar"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "relatively"
 msgstr "varësisht"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "background"
-msgstr "rrethina"
+msgstr "sfondi"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "merge"
 msgstr "ndërthur"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "information"
-msgstr "njohuri"
+msgstr "informacion"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "ascending"
 msgstr "përpjet"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "descending"
 msgstr "përposht"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "subject"
-msgstr "çështja"
+msgstr "tema"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "about"
-msgstr "ç'është"
+msgstr "për"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "link"
 msgstr "vegëz"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "setup"
 msgstr "themelimi"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "untitled"
 msgstr "patitull"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "alignment (left or right)"
 msgstr "rreshtimi (majtas apo djathtas)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "footnote"
-msgstr "shënim"
+msgstr "fusnotë"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "text"
 msgstr "shkrim"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "user"
 msgstr "përdorues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "indents"
 msgstr "dhëmbëzimet"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "file"
 msgstr "skedar"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "parameter"
 msgstr "parametër"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "scope"
 msgstr "shtrirja"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "boolean (logic, value)"
 msgstr "vërtetësie (llogjikë, vlerë)"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "next"
 msgstr "tjetra"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "clipboard"
 msgstr "kujtesa"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "type"
 msgstr "lloji"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "mail merge"
 msgstr "ndërthurja e letrave"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "edit"
 msgstr "tëharr"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "table cell"
 msgstr "kuti tabele"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "interactive"
 msgstr "ndërveprues"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "email"
-msgstr "postel"
+msgstr "posta elektronike"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "initials"
 msgstr "nistoret"
 
-msgctxt "vocabulary"
+msgctxt "ICT_sq"
 msgid "graphic objects"
 msgstr "sende pamore"
+
+msgctxt "ICT_sq"
+msgid "relative"
+msgstr "krahasore"
+
+msgctxt "ICT_sq"
+msgid "pattern"
+msgstr "model"
+
+msgctxt "ICT_sq"
+msgid "customize"
+msgstr "përshtat"
+
+msgctxt "ICT_sq"
+msgid "section"
+msgstr "pjesë"
+
+msgctxt "ICT_sq"
+msgid "reference"
+msgstr "përmendje"
+
+msgctxt "ICT_sq"
+msgid "iteration"
+msgstr "përsëritje"
+
+msgctxt "ICT_sq"
+msgid "theme"
+msgstr "temë"
+
+msgctxt "ICT_sq"
+msgid "gravity"
+msgstr "rëndesa"
+
+msgctxt "ICT_sq"
+msgid "pipeline"
+msgstr "tunel"
+
+msgctxt "ICT_sq"
+msgid "variable"
+msgstr "ndryshore"
+
+msgctxt "ICT_sq"
+msgid "custom"
+msgstr "përshtatur"
+
+msgctxt "ICT_sq"
+msgid "define"
+msgstr "përkufizo"
+
+msgctxt "ICT_sq"
+msgid "definition"
+msgstr "përkufizim"
+
+msgctxt "ICT_sq"
+msgid "pointer"
+msgstr "shënjues"
+
+msgctxt "ICT_sq"
+msgid "null"
+msgstr "bosh"
+
+msgctxt "ICT_sq"
+msgid "error"
+msgstr "gabim"
+
+msgctxt "ICT_sq"
+msgid "footer"
+msgstr "fundor"
+
+msgctxt "ICT_sq"
+msgid "encryption"
+msgstr "shifrim"
+
+msgctxt "ICT_sq"
+msgid "decryption"
+msgstr "deshifrim"
+
+msgctxt "ICT_sq"
+msgid "online"
+msgstr "në rrjet"
+
+msgctxt "ICT_sq"
+msgid "widget"
+msgstr "vegël"
+
+msgctxt "ICT_sq"
+msgid "disable"
+msgstr "gjymtoj"
+
+msgctxt "ICT_sq"
+msgid "enable"
+msgstr "mundësoj"
+
+msgctxt "ICT_sq"
+msgid "freelancer"
+msgstr "i vetëpunësuar"
+
+msgctxt "ICT_sq"
+msgid "cloud"
+msgstr "mjegull"
+
+msgctxt "ICT_sq"
+msgid "margin"
+msgstr "hapesira"
+
+msgctxt "ICT_sq"
+msgid "justify"
+msgstr "plotesim (i rreshtit)"
+
+msgctxt "ICT_sq"
+msgid "about us"
+msgstr "kush jemi"
+
+msgctxt "ICT_sq"
+msgid "enter (data)"
+msgstr "jep (të dhëna)"

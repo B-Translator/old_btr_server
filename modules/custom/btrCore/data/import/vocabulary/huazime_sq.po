@@ -1,0 +1,136 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 7.x-dev\\nPOT-Creation-Date: 2012-10-12 01:41+0200\\nPO-Revision-Date: 2012-10-12 01:49+0200\\nLast-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\\nLanguage-Team: Albanian\\nMIME-Version: 1.0\\nContent-Type: text/plain; charset=UTF-8\\nContent-Transfer-Encoding: 8bit\\nPlural-Forms: nplurals=2; plural=(n != 1);\\nLanguage: sq\\n\n"
+
+msgctxt "huazime_sq"
+msgid "object"
+msgstr "send"
+
+msgctxt "huazime_sq"
+msgid "konfigurim"
+msgstr "trajtësim"
+
+msgctxt "huazime_sq"
+msgid "dokument"
+msgstr "shkresë"
+
+msgctxt "huazime_sq"
+msgid "opsionet"
+msgstr "mundësitë"
+
+msgctxt "huazime_sq"
+msgid "bookmark"
+msgstr "faqembajtës"
+
+msgctxt "huazime_sq"
+msgid "seleksionim"
+msgstr "përzgjedhje"
+
+msgctxt "huazime_sq"
+msgid "origjinal"
+msgstr "fillestar"
+
+msgctxt "huazime_sq"
+msgid "automatikisht"
+msgstr "vetvetiu"
+
+msgctxt "huazime_sq"
+msgid "preferencat"
+msgstr "shijet"
+
+msgctxt "huazime_sq"
+msgid "dimension"
+msgstr "përmasë"
+
+msgctxt "huazime_sq"
+msgid "web"
+msgstr "rrjet"
+
+msgctxt "huazime_sq"
+msgid "rezolucioni (i ekranit)"
+msgstr "imtësia (e ekranit)"
+
+msgctxt "huazime_sq"
+msgid "injoroj"
+msgstr "shpërfill"
+
+msgctxt "huazime_sq"
+msgid "indeks"
+msgstr "tregues"
+
+msgctxt "huazime_sq"
+msgid "tutorial"
+msgstr "ushtrues"
+
+msgctxt "huazime_sq"
+msgid "aktive"
+msgstr "veprore"
+
+msgctxt "huazime_sq"
+msgid "inaktive"
+msgstr "joveprore"
+
+msgctxt "huazime_sq"
+msgid "pasive"
+msgstr "pësore"
+
+msgctxt "huazime_sq"
+msgid "kontakto"
+msgstr "lidhu"
+
+msgctxt "huazime_sq"
+msgid "pozicioni"
+msgstr "vendodhja"
+
+msgctxt "huazime_sq"
+msgid "fontet"
+msgstr "shkronjat"
+
+msgctxt "huazime_sq"
+msgid "relativisht"
+msgstr "varësisht"
+
+msgctxt "huazime_sq"
+msgid "informacion"
+msgstr "dijeni"
+
+msgctxt "huazime_sq"
+msgid "subjekti"
+msgstr "çështja"
+
+msgctxt "huazime_sq"
+msgid "tekst"
+msgstr "shkrim"
+
+msgctxt "huazime_sq"
+msgid "user"
+msgstr "përdorues"
+
+msgctxt "huazime_sq"
+msgid "skedar"
+msgstr "fletë"
+
+msgctxt "huazime_sq"
+msgid "parametër"
+msgstr "përcaktues"
+
+msgctxt "huazime_sq"
+msgid "interaktiv"
+msgstr "ndërveprues"
+
+msgctxt "huazime_sq"
+msgid "email"
+msgstr "posta elektronike"
+
+msgctxt "huazime_sq"
+msgid "inicialet"
+msgstr "nistoret"
+
+msgctxt "huazime_sq"
+msgid "definicion"
+msgstr "perkufizim"
+
+msgctxt "huazime_sq"
+msgid "disponoj"
+msgstr "zotëroj"
+
