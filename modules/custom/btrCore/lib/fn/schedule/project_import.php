@@ -23,7 +23,7 @@ use \stdClass, \Exception;
  *
  * If you want to create a vocabulary, use 'vocabulary' as the origin
  * of the project, and add the suffix '_lng' to the project name. Also
- * use 'msgctxt "vocabulary"' as the context of each string in the
+ * use 'msgctxt "project_name"' as the context of each string in the
  * PO/POT file.
  *
  * @param $origin
