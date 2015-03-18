@@ -21,6 +21,9 @@ function vocabulary_del($name, $lng) {
   $project = $name . '_' . $lng;
   btr::project_del($origin, $project);
 
+  // Delete the contact form.
+  db_delete('contact')->condition('category', $project)->execute();
+
   // Update mv tables.
   $path = drupal_get_path('module', 'btrCore');
   shell_exec($path . '/data/db/update-mv-tables.sh');

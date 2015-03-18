@@ -28,6 +28,14 @@ function vocabulary_add($name, $lng, $pot_file = NULL) {
   $project = $name . '_' . $lng;
   btr::project_add($origin, $project, $pot_file);
 
+  // Create a custom contact form.
+  db_delete('contact')->condition('category', $project)->execute();
+  db_insert('contact')->fields(array(
+      'category' => $project,
+      'recipients' => variable_get('site_mail'),
+      'reply' => '',
+    ))->execute();
+
   // Update mv tables.
   shell_exec($path . '/data/db/update-mv-tables.sh');
 }
