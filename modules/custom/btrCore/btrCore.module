@@ -253,6 +253,24 @@ function btrCore_form_user_profile_submit($form, &$form_state) {
           ))
         ->execute();
     }
+
+    // If a project is vocabulary, update its recipients of the contact form.
+    foreach ($arr_projects as $project) {
+      if (strpos($project, 'vocabulary/') !== FALSE) {
+        $project = str_replace('vocabulary/', '', $project);
+        $q = 'SELECT recipients FROM {contact} WHERE category = :project';
+        $recipients = db_query($q, array(':project' => $project))->fetchField();
+        $arr_recipients = explode(',', $recipients);
+        if (!in_array($umail, $arr_recipients)) $arr_recipients[] = $umail;
+        $arr_recipients = array_diff($arr_recipients, array(variable_get('site_mail')));
+        db_update('contact')
+          ->fields(array(
+              'recipients' => implode(',', $arr_recipients),
+            ))
+          ->condition('category', $project)
+          ->execute();
+      }
+    }
   }
 
   if (in_array('administrator', $GLOBALS['user']->roles)) {
