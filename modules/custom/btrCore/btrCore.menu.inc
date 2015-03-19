@@ -131,6 +131,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a RSS feed.
+  $items['translations/rss-feed'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Latest Translation Feedback',
+    'page callback'   => 'btrCore_rss_feed',
+    'file'            => 'includes/rss_feed.inc',
+    'access callback' => TRUE,
+  );
+
   // Return a random twitter.
   $items['translations/twitter'] = array(
     'type'            => MENU_CALLBACK,
@@ -185,4 +194,3 @@ function btrCore_menu_alter(&$items) {
   // Change the title of hybridauth.
   $items['user/%user/hybridauth']['title'] = t('Authentication');
 }
-
