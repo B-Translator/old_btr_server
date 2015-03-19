@@ -56,14 +56,19 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   }
 
   // Append hash tags.
-  $twitter .= " #l10n_$lng";
   if (!empty($origin))  $twitter .= " #$origin";
   if (!empty($project)) $twitter .= " #$project";
 
   // Append the url.
-  module_load_include('inc', 'btrCore', 'includes/sites');
-  $base_url = btr_get_base_url($lng);
-  $twitter .= ' ' . $base_url . "/translations/$lng/$sguid";
+  if (isset($_GET['url'])) {
+    $base_url = $_GET['url'];
+    $twitter .= ' ' . $base_url . "/#$string";
+  }
+  else {
+    module_load_include('inc', 'btrCore', 'includes/sites');
+    $base_url = btr_get_base_url($lng);
+    $twitter .= ' ' . $base_url . "/translations/$lng/$sguid";
+  }
 
   print $twitter;
   exit(0);
