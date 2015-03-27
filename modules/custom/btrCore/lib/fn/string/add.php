@@ -27,10 +27,37 @@ use \DrupalQueue;
  *       It TRUE, notify translators about the new string.
  *
  * @return
- *   The sguid of the new string, or NULL if such a string already exists.
+ *   array($sguid, $messages)
+ *   - $sguid is the ID of the new string,
+ *               or NULL if no string was added
+ *   - $messages is an array of notification messages; each notification
+ *               message is an array of a message and a type, where
+ *               type can be one of 'status', 'warning', 'error'
  */
 function string_add($origin, $project, $tplname = NULL, $string, $context = NULL, $notify = FALSE) {
-  if ($context === NULL)  $context = '';
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('You do not have enough rights for making suggestions!');
+    return array(NULL, array(array($msg, 'error')));
+  }
+
+  // Check that the string is being added to a vocabulary project.
+  if ($origin != 'vocabulary') {
+    $msg = t('Strings can be added only to a vocabulary project.');
+    return array(NULL, array(array($msg, 'error')));
+  }
+
+  // Check that the language of the project matches
+  // the translation language of the user.
+  $arr = explode('_', $project);
+  $lng = $arr[sizeof($arr) - 1];
+  $user = user_load($GLOBALS['user']->uid);
+  if ($lng != $user->translation_lng) {
+    $msg = t('You cannot add terms to this vocabulary.');
+    return array(NULL, array(array($msg, 'error')));
+  }
+
+  if ($context === NULL)  $context = $project;
   $sguid = sha1($string . $context);
 
   // Check whether this string already exists or not.
@@ -38,19 +65,22 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
     'SELECT sguid FROM {btr_strings} WHERE sguid = :sguid',
     array(':sguid' => $sguid)
   )->fetchField();
-  if (empty($field)) {
-    // Insert a new string.
-    btr_insert('btr_strings')
-      ->fields(array(
-          'string' => $string,
-          'context' => $context,
-          'sguid' => $sguid,
-          'uid' => $GLOBALS['user']->uid,
-          'time' => date('Y-m-d H:i:s', REQUEST_TIME),
-          'count' => 1,
-        ))
-      ->execute();
+  if (!empty($field)) {
+    $msg = t('This string already exists.');
+    return array(NULL, array(array($msg, 'error')));
   }
+
+  // Insert a new string.
+  btr_insert('btr_strings')
+    ->fields(array(
+        'string' => $string,
+        'context' => $context,
+        'sguid' => $sguid,
+        'uid' => $GLOBALS['user']->uid,
+        'time' => date('Y-m-d H:i:s', REQUEST_TIME),
+        'count' => 1,
+      ))
+    ->execute();
 
   // Get the template id.
   if (empty($tplname))  $tplname = $project;
@@ -73,7 +103,8 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
     ))
     ->fetchField();
   if (!empty($lid)) {
-    return NULL;
+    $msg = t('This string already exists.');
+    return array(NULL, array(array($msg, 'error')));
   }
 
   // Insert a new location.
@@ -97,7 +128,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
     _btr_new_string_notification($project, $string, $sguid);
   }
 
-  return $sguid;
+  return array($sguid, array());
 }
 
 

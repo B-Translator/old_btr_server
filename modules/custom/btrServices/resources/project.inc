@@ -192,7 +192,12 @@ function _btrServices_project_export($params) {
  *       It TRUE, notify translators about the new string.
  *
  * @return
- *   The sguid of the new string, or NULL if such a string already exists.
+ *   array($sguid, $messages)
+ *   - $sguid is the ID of the new string,
+ *               or NULL if no string was added
+ *   - $messages is an array of notification messages; each notification
+ *               message is an array of a message and a type, where
+ *               type can be one of 'status', 'warning', 'error'
  */
 function _btrServices_project_add_string($params) {
   $params += array(
@@ -203,7 +208,7 @@ function _btrServices_project_add_string($params) {
     'context' => NULL,
     'notify' => NULL,
   );
-  $sguid = btr::string_add(
+  list($sguid, $messages) = btr::string_add(
     check_plain($params['origin']),
     check_plain($params['project']),
     check_plain($params['tplname']),
@@ -211,7 +216,10 @@ function _btrServices_project_add_string($params) {
     check_plain($params['context']),
     check_plain($params['notify'])
   );
-  return array('sguid' => $sguid);
+  return array(
+    'sguid' => $sguid,
+    'messages' => $messages,
+  );
 }
 
 /**

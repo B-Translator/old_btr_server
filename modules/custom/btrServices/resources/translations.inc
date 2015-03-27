@@ -471,7 +471,7 @@ function _btrServices_translations_add($params) {
   $translation = $params['translation'];
   $lng = $params['lng'];
   if (!in_array($lng, btr::languages_get())) {
-    return services_error('Language missing or not supported.', 406);
+    return services_error(t('Language missing or not supported.'), 406);
   }
 
   list($tguid, $messages) = btr::translation_add($sguid, $lng, $translation);
