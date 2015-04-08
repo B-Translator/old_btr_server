@@ -1,0 +1,261 @@
+<?php
+
+/**
+ * Implements hook_entity_info().
+ */
+function btrTranslationProjects_entity_info() {
+  $info = array();
+
+  $info['project'] = array(
+    'label' => t('Translation Project'),
+    'base table' => 'btr_translation_projects',
+    'entity keys' => array(
+      'id' => 'id',
+    ),
+    'label callback' => 'btrTranslationProjects_label_callback',
+    'entity class' => 'ProjectEntity',
+    'controller class' => 'ProjectEntityController',
+    'access callback' => 'btrTranslationProjects_access_callback',
+    'uri callback' => 'entity_class_uri',
+    'admin ui' => array(
+      'path' => 'admin/projects',
+      'controller class' => 'EntityDefaultUIController',
+    ),
+    'fieldable' => TRUE,
+    'bundles' => array(
+      'project' => array(
+        'label' => t('Translation Project'),
+        'admin' => array(
+          'path' => 'admin/projects',
+        ),
+      ),
+    ),
+    'views controller class' => 'EntityDefaultViewsController',
+    'module' => 'btrTranslationProjects',
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_menu()
+ */
+function btrTranslationProjects_menu() {
+  $items = array();
+
+  $items['projects'] = array(
+    'title' => 'Translation Projects',
+    'page callback' => 'btrTranslationProjects_list',
+    'access arguments' => array('access content'),
+  );
+
+  $items['project/%'] = array(
+    'title' => 'Translation Project',
+    'page callback' => 'btrTranslationProjects_view',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Label callback for project entities.
+ */
+function btrTranslationProjects_label_callback($entity, $entity_type = 'project') {
+  return $entity->lng . '/' . $entity->origin . '/' . $entity->project;
+}
+
+/**
+ * Access callback for project entities.
+ */
+function btrTranslationProjects_access_callback($op, $project = NULL, $account = NULL) {
+  if ($op == 'view' || $op == 'update' || $op == 'create' || $op == 'delete') {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Callback function for our project entities test path
+ */
+function btrTranslationProjects_list() {
+  $projects = entity_load('project');
+  if (empty($projects))  return t('No projects.');
+
+  // Listing entities
+  $list = entity_view('project', $projects);
+
+  $output = array();
+  foreach ($list['project'] as $project) {
+    $output[] = drupal_render($project);
+  }
+
+  return implode($output);
+}
+
+/**
+ * Callback function for displaying the individual project page
+ */
+function btrTranslationProjects_view($id) {
+  $projects = entity_load('project', array($id));
+  $project = $projects[$id];
+
+  $label = btrTranslationProjects_label_callback($project);
+  drupal_set_title('Translation Project: ' . $label);
+  $output = entity_view('project', array($project));
+
+  return $output;
+}
+
+/**
+ * Form definition for adding / editing a project.
+ */
+function project_form($form, &$form_state, $project = NULL) {
+
+  $form['lng'] = array(
+    '#title' => t('Language of the project'),
+    '#type' => 'select',
+    '#options' => btr::languages_get_list(),
+    '#default_value' => isset($project->lng) ? $project->lng : 'fr',
+    '#required' => TRUE,
+  );
+
+  $form['origin'] = array(
+    '#title' => t('Origin of the project'),
+    '#type' => 'textfield',
+    '#default_value' => isset($project->origin) ? $project->origin : '',
+    '#required' => TRUE,
+  );
+
+  $form['project'] = array(
+    '#title' => t('Name of the project'),
+    '#type' => 'textfield',
+    '#default_value' => isset($project->project) ? $project->project : '',
+    '#required' => TRUE,
+  );
+
+  $form['description'] = array(
+    '#title' => t('Project description'),
+    '#type' => 'textarea',
+    '#default_value' => isset($project->description) ? $project->description : '',
+    '#required' => TRUE,
+  );
+
+  field_attach_form('project', $project, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => isset($project->id) ? t('Update project') : t('Save project'),
+    '#weight' => 50,
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for the project add/edit form.
+ */
+function project_form_submit($form, &$form_state) {
+  $project = entity_ui_form_submit_build_entity($form, $form_state);
+  $project->save();
+  $label = btrTranslationProjects_label_callback($project);
+  drupal_set_message(t('The project: @label has been saved.',
+      array('@label' => $label)));
+  $form_state['redirect'] = 'admin/projects';
+}
+
+/**
+ * Implements hook_entity_property_info().
+ */
+function btrTranslationProjects_entity_property_info() {
+  $info = array();
+
+  $info['project']['properties']['id'] = array(
+    'label' => t('Project ID'),
+    'description' => t('The ID of the project.'),
+    'type' => 'integer',
+    'schema field' => 'id',
+  );
+
+  $info['project']['properties']['lng'] = array(
+    'label' => t('Project language'),
+    'description' => t('Language of the project.'),
+    'type' => 'text',
+    'schema field' => 'lng',
+    'options list' => btr::languages_get_list(),
+    'required' => TRUE,
+  );
+
+  $info['project']['properties']['origin'] = array(
+    'label' => t('Project origin'),
+    'description' => t('Origin of the project.'),
+    'type' => 'text',
+    'schema field' => 'origin',
+    'required' => TRUE,
+  );
+
+  $info['project']['properties']['project'] = array(
+    'label' => t('Project name'),
+    'description' => t('Name of the project.'),
+    'type' => 'text',
+    'schema field' => 'project',
+    'required' => TRUE,
+  );
+
+  $info['project']['properties']['description'] = array(
+    'label' => t('Project description'),
+    'description' => t('Description of the project.'),
+    'type' => 'text',
+    'schema field' => 'description',
+  );
+
+  return $info;
+}
+
+/**
+ * Extending the EntityAPIController for the Project entity.
+ */
+class ProjectEntityController extends EntityAPIController {
+
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+
+    $build = parent::buildContent($entity, $view_mode, $langcode, $content);
+
+    // Our additions to the $build render array.
+    /*
+    $label = btrTranslationProjects_label_callback($entity);
+    $build['label'] = array(
+      '#type' => 'markup',
+      '#markup' => check_plain($label),
+      '#prefix' => '<div class="project-label">',
+      '#suffix' => '</div>',
+    );
+    */
+    $build['description'] = array(
+      '#type' => 'markup',
+      '#markup' => check_plain($entity->description),
+      '#prefix' => '<div class="project-description">',
+      '#suffix' => '</div>',
+    );
+
+    return $build;
+  }
+
+}
+
+/**
+ * Project entity class extending the Entity class
+ */
+class ProjectEntity extends Entity {
+
+  /**
+   * Change the default URI from default/id to project/id
+   */
+  protected function defaultUri() {
+    return array('path' => 'project/' . $this->identifier());
+  }
+
+}

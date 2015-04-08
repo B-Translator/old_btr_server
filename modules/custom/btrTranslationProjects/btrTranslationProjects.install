@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function btrTranslationProjects_schema() {
+
+  $schema = array();
+
+  $schema['btr_translation_projects'] = array(
+    'description' => 'The base table for the Project entity',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary key of the Project entity',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'lng' => array(
+        'description' => 'Language code of the project.',
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ),
+      'origin' => array(
+        'description' => 'Origin of the project.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ),
+      'project' => array(
+        'description' => 'Name of the project.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ),
+      'description' => array(
+        'description' => 'Project description.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'default' => NULL
+      ),
+    ),
+    'primary key' => array('id'),
+  );
+
+  return $schema;
+}

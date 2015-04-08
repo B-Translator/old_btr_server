@@ -1,0 +1,7 @@
+name = B-Translator Projects
+description = Details and settings of B-Translator projects.
+package = B-Translator
+
+core = 7.x
+dependencies[] = entity
+dependencies[] = btrCore
