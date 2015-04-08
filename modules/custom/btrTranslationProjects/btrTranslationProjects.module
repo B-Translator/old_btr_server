@@ -78,12 +78,57 @@ function btrTranslationProjects_access_callback($op, $project = NULL, $account =
     case 'create':
     case 'update':
     case 'delete':
-      return in_array('administrator', array_values($account->roles));
+      return in_array('administrator', $GLOBALS['user']->roles);
       break;
 
     default:
       return FALSE;
       break;
+  }
+}
+
+/**
+ * Implements hook_entity_load().
+ *
+ * Acts on entities when loaded. Gets the admins and moderators of the project
+ * from the table 'btr_user_project_roles' and sets the corresponding fields
+ * ($project->admins and $project->moderators).
+ */
+function btrTranslationProjects_entity_load($entities, $type) {
+  // Handle only the 'project' entities.
+  if ($type != 'project')  return;
+
+  foreach ($entities as $project) {
+    // Get the admins of the project.
+    $get_users = "
+      SELECT u.uid AS project
+      FROM {btr_user_project_roles} p
+      INNER JOIN {btr_users} u
+         ON (u.umail = p.umail AND u.ulng = p.ulng AND u.status = 1)
+      WHERE p.pguid = :pguid AND p.ulng = :lng AND p.role = :role
+    ";
+    $params = array(
+      ':pguid' => sha1($project->origin . $project->project),
+      ':lng' => $project->lng,
+      ':role' => 'admin',
+    );
+    $arr_uids = btr_query($get_users, $params)->fetchCol();
+    $users = user_load_multiple($arr_uids);
+    $arr_names = array();
+    foreach ($users as $user) {
+      $arr_names[] = $user->name;
+    }
+    $project->admins = implode(', ', $arr_names);
+
+    // Get the moderators of the project.
+    $params[':role'] = 'moderator';
+    $arr_uids = btr_query($get_users, $params)->fetchCol();
+    $users = user_load_multiple($arr_uids);
+    $arr_names = array();
+    foreach ($users as $user) {
+      $arr_names[] = $user->name;
+    }
+    $project->moderators = implode(', ', $arr_names);
   }
 }
 
@@ -150,7 +195,20 @@ function project_form($form, &$form_state, $project = NULL) {
     '#title' => t('Project description'),
     '#type' => 'textarea',
     '#default_value' => isset($project->description) ? $project->description : '',
-    '#required' => TRUE,
+  );
+
+  $form['admins'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Project admins'),
+    '#description' => t("Comma separated list of admin usernames."),
+    '#default_value' => isset($project->admins) ? $project->admins : ''
+  );
+
+  $form['moderators'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Project moderators'),
+    '#description' => t("Comma separated list of moderator usernames."),
+    '#default_value' => isset($project->moderators) ? $project->moderators : ''
   );
 
   field_attach_form('project', $project, $form, $form_state);
@@ -168,8 +226,65 @@ function project_form($form, &$form_state, $project = NULL) {
  * Submit handler for the project add/edit form.
  */
 function project_form_submit($form, &$form_state) {
+
+  // Get lng and pguid.
+  $values = $form_state['values'];
+  $lng = $values['lng'];
+  $pguid = sha1($values['origin'] . $values['project']);
+
+  // Delete any existings records (for this project and language).
+  btr_delete('btr_user_project_roles')
+    ->condition('pguid', $pguid)
+    ->condition('ulng', $lng)
+    ->execute();
+
+  // Insert the new admins of the project.
+  $names = $values['admins'];
+  $arr_names = preg_split('/ *, */', trim($names));
+  $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
+  $admin_emails = db_query($q, array(':arr_names' => $arr_names))->fetchCol();
+  foreach ($admin_emails as $umail) {
+      btr_insert('btr_user_project_roles')
+        ->fields(array(
+            'umail' => $umail,
+            'ulng' => $lng,
+            'pguid' => $pguid,
+            'role' => 'admin',
+          ))
+        ->execute();
+  }
+
+  // Insert the new moderators of the project.
+  $names = $values['moderators'];
+  $arr_names = preg_split('/ *, */', trim($names));
+  $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
+  $moderator_emails = db_query($q, array(':arr_names' => $arr_names))->fetchCol();
+  foreach ($moderator_emails as $umail) {
+      btr_insert('btr_user_project_roles')
+        ->fields(array(
+            'umail' => $umail,
+            'ulng' => $lng,
+            'pguid' => $pguid,
+            'role' => 'moderator',
+          ))
+        ->execute();
+  }
+
+  // If a project is vocabulary, update its recipients of the contact form.
+  if ($values['origin'] == 'vocabulary') {
+    db_update('contact')
+      ->fields(array(
+          'recipients' => implode(',', $admin_emails + $moderator_emails),
+        ))
+      ->condition('category', $values['project'])
+      ->execute();
+  }
+
+  // Save the rest of the form.
   $project = entity_ui_form_submit_build_entity($form, $form_state);
   $project->save();
+
+  // Display a notification message and redirect to the list.
   $label = btrTranslationProjects_label_callback($project);
   drupal_set_message(t('The project: @label has been saved.',
       array('@label' => $label)));
@@ -234,19 +349,29 @@ class ProjectEntityController extends EntityAPIController {
     $build = parent::buildContent($entity, $view_mode, $langcode, $content);
 
     // Our additions to the $build render array.
-    /*
     $label = btrTranslationProjects_label_callback($entity);
     $build['label'] = array(
       '#type' => 'markup',
       '#markup' => check_plain($label),
-      '#prefix' => '<div class="project-label">',
-      '#suffix' => '</div>',
+      '#prefix' => '<h2 class="project-label">',
+      '#suffix' => '</h2>',
     );
-    */
     $build['description'] = array(
       '#type' => 'markup',
-      '#markup' => check_plain($entity->description),
+      '#markup' => t('Description') . ': ' . check_plain($entity->description),
       '#prefix' => '<div class="project-description">',
+      '#suffix' => '</div>',
+    );
+    $build['admins'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Admins') . ': ' . check_plain($entity->admins),
+      '#prefix' => '<div class="project-admins">',
+      '#suffix' => '</div>',
+    );
+    $build['moderators'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Moderators') . ': ' . check_plain($entity->moderators),
+      '#prefix' => '<div class="project-moderators">',
       '#suffix' => '</div>',
     );
 
