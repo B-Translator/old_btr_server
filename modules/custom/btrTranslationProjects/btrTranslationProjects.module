@@ -71,14 +71,19 @@ function btrTranslationProjects_label_callback($entity, $entity_type = 'project'
  */
 function btrTranslationProjects_access_callback($op, $project = NULL, $account = NULL) {
   switch ($op) {
-    case 'view':
-      return TRUE;
-      break;
-
     case 'create':
-    case 'update':
     case 'delete':
       return in_array('administrator', $GLOBALS['user']->roles);
+      break;
+
+    case 'update':
+      if (in_array('administrator', $GLOBALS['user']->roles))  return TRUE;
+      if (in_array($GLOBALS['user']->name, $project->admins))  return TRUE;
+      return FALSE;
+      break;
+
+    case 'view':
+      return TRUE;
       break;
 
     default:
@@ -118,7 +123,7 @@ function btrTranslationProjects_entity_load($entities, $type) {
     foreach ($users as $user) {
       $arr_names[] = $user->name;
     }
-    $project->admins = implode(', ', $arr_names);
+    $project->admins = $arr_names;
 
     // Get the moderators of the project.
     $params[':role'] = 'moderator';
@@ -128,7 +133,7 @@ function btrTranslationProjects_entity_load($entities, $type) {
     foreach ($users as $user) {
       $arr_names[] = $user->name;
     }
-    $project->moderators = implode(', ', $arr_names);
+    $project->moderators = $arr_names;
   }
 }
 
@@ -175,6 +180,7 @@ function project_form($form, &$form_state, $project = NULL) {
     '#options' => btr::languages_get_list(),
     '#default_value' => isset($project->lng) ? $project->lng : 'fr',
     '#required' => TRUE,
+    '#access' => in_array('administrator', $GLOBALS['user']->roles),
   );
 
   $form['origin'] = array(
@@ -182,6 +188,7 @@ function project_form($form, &$form_state, $project = NULL) {
     '#type' => 'textfield',
     '#default_value' => isset($project->origin) ? $project->origin : '',
     '#required' => TRUE,
+    '#access' => in_array('administrator', $GLOBALS['user']->roles),
   );
 
   $form['project'] = array(
@@ -189,6 +196,7 @@ function project_form($form, &$form_state, $project = NULL) {
     '#type' => 'textfield',
     '#default_value' => isset($project->project) ? $project->project : '',
     '#required' => TRUE,
+    '#access' => in_array('administrator', $GLOBALS['user']->roles),
   );
 
   $form['description'] = array(
@@ -201,14 +209,15 @@ function project_form($form, &$form_state, $project = NULL) {
     '#type' => 'textfield',
     '#title' => t('Project admins'),
     '#description' => t("Comma separated list of admin usernames."),
-    '#default_value' => isset($project->admins) ? $project->admins : ''
+    '#default_value' => isset($project->admins) ? implode(', ', $project->admins) : '',
+    '#access' => in_array('administrator', $GLOBALS['user']->roles),
   );
 
   $form['moderators'] = array(
     '#type' => 'textfield',
     '#title' => t('Project moderators'),
     '#description' => t("Comma separated list of moderator usernames."),
-    '#default_value' => isset($project->moderators) ? $project->moderators : ''
+    '#default_value' => isset($project->moderators) ? implode(', ', $project->moderators) : '',
   );
 
   field_attach_form('project', $project, $form, $form_state);
@@ -226,59 +235,8 @@ function project_form($form, &$form_state, $project = NULL) {
  * Submit handler for the project add/edit form.
  */
 function project_form_submit($form, &$form_state) {
-
-  // Get lng and pguid.
-  $values = $form_state['values'];
-  $lng = $values['lng'];
-  $pguid = sha1($values['origin'] . $values['project']);
-
-  // Delete any existings records (for this project and language).
-  btr_delete('btr_user_project_roles')
-    ->condition('pguid', $pguid)
-    ->condition('ulng', $lng)
-    ->execute();
-
-  // Insert the new admins of the project.
-  $names = $values['admins'];
-  $arr_names = preg_split('/ *, */', trim($names));
-  $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
-  $admin_emails = db_query($q, array(':arr_names' => $arr_names))->fetchCol();
-  foreach ($admin_emails as $umail) {
-      btr_insert('btr_user_project_roles')
-        ->fields(array(
-            'umail' => $umail,
-            'ulng' => $lng,
-            'pguid' => $pguid,
-            'role' => 'admin',
-          ))
-        ->execute();
-  }
-
-  // Insert the new moderators of the project.
-  $names = $values['moderators'];
-  $arr_names = preg_split('/ *, */', trim($names));
-  $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
-  $moderator_emails = db_query($q, array(':arr_names' => $arr_names))->fetchCol();
-  foreach ($moderator_emails as $umail) {
-      btr_insert('btr_user_project_roles')
-        ->fields(array(
-            'umail' => $umail,
-            'ulng' => $lng,
-            'pguid' => $pguid,
-            'role' => 'moderator',
-          ))
-        ->execute();
-  }
-
-  // If a project is vocabulary, update its recipients of the contact form.
-  if ($values['origin'] == 'vocabulary') {
-    db_update('contact')
-      ->fields(array(
-          'recipients' => implode(',', $admin_emails + $moderator_emails),
-        ))
-      ->condition('category', $values['project'])
-      ->execute();
-  }
+  // Update admins and moderators.
+  _btrTranslationProjects_update_admins($form_state);
 
   // Save the rest of the form.
   $project = entity_ui_form_submit_build_entity($form, $form_state);
@@ -288,7 +246,81 @@ function project_form_submit($form, &$form_state) {
   $label = btrTranslationProjects_label_callback($project);
   drupal_set_message(t('The project: @label has been saved.',
       array('@label' => $label)));
-  $form_state['redirect'] = 'admin/projects';
+  //$form_state['redirect'] = 'admin/projects';
+}
+
+/**
+ * Update admins and moderators.
+ */
+function _btrTranslationProjects_update_admins($form_state) {
+  $values = $form_state['values'];
+  $lng = $values['lng'];
+  $pguid = sha1($values['origin'] . $values['project']);
+
+  $admins = $values['admins'];
+  $arr_admins = preg_split('/ *, */', trim($admins));
+
+  // Only a site administrator can update project admins.
+  if (in_array('administrator', $GLOBALS['user']->roles)) {
+    btr_delete('btr_user_project_roles')
+      ->condition('pguid', $pguid)
+      ->condition('ulng', $lng)
+      ->condition('role', 'admin')
+      ->execute();
+    $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
+    $param = array(':arr_names' => $arr_admins);
+    $admin_emails = db_query($q, $param)->fetchCol();
+    foreach ($admin_emails as $umail) {
+      btr_insert('btr_user_project_roles')
+        ->fields(array(
+            'umail' => $umail,
+            'ulng' => $lng,
+            'pguid' => $pguid,
+            'role' => 'admin',
+          ))
+        ->execute();
+    }
+  }
+
+  // Only a site admin or project admin can update moderators.
+  if (in_array('administrator', $GLOBALS['user']->roles)
+    or in_array($GLOBALS['user']->name, $arr_admins))
+    {
+      $moderators = $values['moderators'];
+      $arr_moderators = preg_split('/ *, */', trim($moderators));
+      $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
+      $param = array(':arr_names' => $arr_moderators);
+      $moderator_emails = db_query($q, $param)->fetchCol();
+      btr_delete('btr_user_project_roles')
+        ->condition('pguid', $pguid)
+        ->condition('ulng', $lng)
+        ->condition('role', 'moderator')
+        ->execute();
+      foreach ($moderator_emails as $umail) {
+        btr_insert('btr_user_project_roles')
+          ->fields(array(
+              'umail' => $umail,
+              'ulng' => $lng,
+              'pguid' => $pguid,
+              'role' => 'moderator',
+            ))
+          ->execute();
+      }
+    }
+
+  // If a project is vocabulary, update its recipients of the contact form.
+  if ($values['origin'] == 'vocabulary') {
+    $q = 'SELECT umail FROM {btr_user_project_roles}
+          WHERE pguid = :pguid AND ulng = :ulng';
+    $param = array(':pguid' => $pguid, ':ulng' => $lng);
+    $emails = btr_query($q, $param)->fetchCol();
+    db_update('contact')
+      ->fields(array(
+          'recipients' => implode(',', $emails),
+        ))
+      ->condition('category', $values['project'])
+      ->execute();
+  }
 }
 
 /**
