@@ -70,11 +70,20 @@ function btrTranslationProjects_label_callback($entity, $entity_type = 'project'
  * Access callback for project entities.
  */
 function btrTranslationProjects_access_callback($op, $project = NULL, $account = NULL) {
-  if ($op == 'view' || $op == 'update' || $op == 'create' || $op == 'delete') {
-    return TRUE;
-  }
-  else {
-    return FALSE;
+  switch ($op) {
+    case 'view':
+      return TRUE;
+      break;
+
+    case 'create':
+    case 'update':
+    case 'delete':
+      return in_array('administrator', array_values($account->roles));
+      break;
+
+    default:
+      return FALSE;
+      break;
   }
 }
 
