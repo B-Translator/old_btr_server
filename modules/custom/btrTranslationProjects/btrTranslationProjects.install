@@ -36,13 +36,27 @@ function btrTranslationProjects_schema() {
       ),
       'description' => array(
         'description' => 'Project description.',
-        'type' => 'text',
-        'size' => 'big',
+        'type' => 'varchar',
+        'length' => 510,
         'not null' => FALSE,
-        'default' => NULL
+        'default' => NULL,
+      ),
+      'app_url' => array(
+        'description' => 'URL of the mobile app.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => NULL,
       ),
     ),
     'primary key' => array('id'),
+    'unique keys' => array(
+      'k1' => array('lng', 'origin', 'project'),
+    ),
+    'indexes' => array(
+      'origin' => array('origin'),
+      'project' => array('project'),
+    ),
   );
 
   return $schema;

@@ -175,7 +175,7 @@ function btrTranslationProjects_view($id) {
 function project_form($form, &$form_state, $project = NULL) {
 
   $form['lng'] = array(
-    '#title' => t('Language of the project'),
+    '#title' => t('Language'),
     '#type' => 'select',
     '#options' => btr::languages_get_list(),
     '#default_value' => isset($project->lng) ? $project->lng : 'fr',
@@ -184,7 +184,7 @@ function project_form($form, &$form_state, $project = NULL) {
   );
 
   $form['origin'] = array(
-    '#title' => t('Origin of the project'),
+    '#title' => t('Origin'),
     '#type' => 'textfield',
     '#default_value' => isset($project->origin) ? $project->origin : '',
     '#required' => TRUE,
@@ -192,7 +192,7 @@ function project_form($form, &$form_state, $project = NULL) {
   );
 
   $form['project'] = array(
-    '#title' => t('Name of the project'),
+    '#title' => t('Project'),
     '#type' => 'textfield',
     '#default_value' => isset($project->project) ? $project->project : '',
     '#required' => TRUE,
@@ -200,14 +200,21 @@ function project_form($form, &$form_state, $project = NULL) {
   );
 
   $form['description'] = array(
-    '#title' => t('Project description'),
-    '#type' => 'textarea',
+    '#title' => t('Description'),
+    '#type' => 'textfield',
     '#default_value' => isset($project->description) ? $project->description : '',
+  );
+
+  $form['app_url'] = array(
+    '#title' => t('App URL'),
+    '#description' => t('URL of the mobile app'),
+    '#type' => 'textfield',
+    '#default_value' => isset($project->app_url) ? $project->app_url : '',
   );
 
   $form['admins'] = array(
     '#type' => 'textfield',
-    '#title' => t('Project admins'),
+    '#title' => t('Admins'),
     '#description' => t("Comma separated list of admin usernames."),
     '#default_value' => isset($project->admins) ? implode(', ', $project->admins) : '',
     '#access' => in_array('administrator', $GLOBALS['user']->roles),
@@ -215,7 +222,7 @@ function project_form($form, &$form_state, $project = NULL) {
 
   $form['moderators'] = array(
     '#type' => 'textfield',
-    '#title' => t('Project moderators'),
+    '#title' => t('Moderators'),
     '#description' => t("Comma separated list of moderator usernames."),
     '#default_value' => isset($project->moderators) ? implode(', ', $project->moderators) : '',
   );
@@ -368,6 +375,13 @@ function btrTranslationProjects_entity_property_info() {
     'schema field' => 'description',
   );
 
+  $info['project']['properties']['app_url'] = array(
+    'label' => t('App URL'),
+    'description' => t('URL of the mobile app.'),
+    'type' => 'text',
+    'schema field' => 'app_url',
+  );
+
   return $info;
 }
 
@@ -394,15 +408,21 @@ class ProjectEntityController extends EntityAPIController {
       '#prefix' => '<div class="project-description">',
       '#suffix' => '</div>',
     );
+    $build['app_url'] = array(
+      '#type' => 'markup',
+      '#markup' => t('App URL') . ': ' . check_plain($entity->app_url),
+      '#prefix' => '<div class="project-app-url">',
+      '#suffix' => '</div>',
+    );
     $build['admins'] = array(
       '#type' => 'markup',
-      '#markup' => t('Admins') . ': ' . check_plain($entity->admins),
+      '#markup' => t('Admins') . ': ' . implode(', ', $entity->admins),
       '#prefix' => '<div class="project-admins">',
       '#suffix' => '</div>',
     );
     $build['moderators'] = array(
       '#type' => 'markup',
-      '#markup' => t('Moderators') . ': ' . check_plain($entity->moderators),
+      '#markup' => t('Moderators') . ': ' . implode(', ', $entity->moderators),
       '#prefix' => '<div class="project-moderators">',
       '#suffix' => '</div>',
     );
