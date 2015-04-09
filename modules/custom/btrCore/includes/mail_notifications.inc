@@ -146,7 +146,7 @@ function _btrCore_build_notification_email($params) {
 
     // Notify translators that a new term has been added to the vocabulary.
     case 'notify-on-new-vocabulary-term':
-      $app_url = btr_get_app_url($params->project);
+      $app_url = btr_get_app_url($lng, 'vocabulary', $params->project);
       $subject = t("[!prefix] New term: !string",
                  array(
                    '!prefix' => $params->project,
@@ -364,6 +364,13 @@ function _btrCore_build_notification_email($params) {
     // Send by email a string to be reviewed.
     case 'string-to-be-reviewed':
       list($string, $translations) = btr::string_get_translations($params->sguid, $lng);
+      // Get the url of the string.
+      list($origin, $project) = explode('/', $params->project);
+      $app_url = btr_get_app_url($lng, $origin, $project);
+      if ($app_url and $origin=='vocabulary') {
+        $url = "$app_url?lng=$lng&proj=$project#$string";
+      }
+
       $subject = "[$subject_prefix] " . btrCore_shorten($string, 60);
       $body = array(
         t("Greetings !username,

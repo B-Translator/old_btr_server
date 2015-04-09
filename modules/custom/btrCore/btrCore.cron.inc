@@ -143,14 +143,21 @@ function btrCore_send_strings_for_review() {
   foreach ($accounts as $account) {
     if (_btrCore_dont_send_email($account))  continue;
 
+    // Get a random project from user preferences.
+    if (empty($account->preferred_projects))  continue;
+    $idx = rand(0, sizeof($account->preferred_projects) - 1);
+    $project = $account->preferred_projects[$idx];
+
     // get a sguid according to the user preferencies
     module_load_include('inc', 'btrCore', 'includes/get_sguid');
-    $sguid = _btr_sguid_get_next($account->uid);
+    $sguid = _btr_sguid_get_random($account->uid, array($project));
+    if (!$sguid)  continue;
 
     $message_params = array(
       'type' => 'string-to-be-reviewed',
       'uid' => $account->uid,
       'sguid' => $sguid,
+      'project' => $project,
       'username' => $account->name,
       'recipient' => $account->name .' <' . $account->mail . '>',
     );
