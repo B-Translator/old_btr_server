@@ -317,7 +317,6 @@ function _btrCore_build_notification_email($params) {
 
     // Notify the user that the project import is done.
     case 'notify-that-project-import-is-done':
-      $file =
       $subject = t("[!prefix] Import of project !project",
                  array(
                    '!prefix' => $subject_prefix,
@@ -340,7 +339,6 @@ function _btrCore_build_notification_email($params) {
 
     // Notify the user that the import is done.
     case 'notify-that-import-is-done':
-      $file =
       $subject = t("[!prefix] Import of !filename",
                  array(
                    '!prefix' => $subject_prefix,
@@ -359,6 +357,9 @@ function _btrCore_build_notification_email($params) {
             '!search_url' => $params->search_url,
           )),
       );
+      if ($params->messages) {
+        $body .= "\n\n" . t('Output messages:') . "\n" . $params->messages;
+      }
       break;
 
     // Send by email a string to be reviewed.

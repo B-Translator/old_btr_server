@@ -52,6 +52,7 @@ function vote_import($uid, $lng, $path) {
   $files = file_scan_directory($path, '/.*\.po$/');
 
   // Import the PO files.
+  $messages = array();
   module_load_include('php', 'btrCore', 'lib/gettext/POParser');
   foreach ($files as $file) {
     // Parse the PO file.
@@ -61,25 +62,32 @@ function vote_import($uid, $lng, $path) {
     // Process each gettext entry.
     foreach ($entries as $entry) {
       // Get the string sguid.
-      $sguid = _get_sguid($entry, $uid);
-      if ($sguid === NULL)  continue;
+      list($sguid, $msgs) = _get_sguid($entry, $uid);
+      if ($sguid === NULL) {
+        $messages = array_merge($messages, $msgs);
+        continue;
+      }
 
       // Get the translation.
       $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
       if (trim($translation) === '')  continue;
 
       // Add the translation for this string.
-      _add_translation($sguid, $lng, $translation, $umail);
+      $msgs = _add_translation($sguid, $lng, $translation, $umail);
+      $messages = array_merge($messages, $msgs);
     }
   }
 
   // Switch back to the original user.
   $user = $original_user;
   drupal_save_session($old_state);
+
+  // Return any messages that were generated during the import.
+  return $messages;
 }
 
 /**
- * Returns the sguid of the string.
+ * Returns the sguid of the string and an array of messages.
  *
  * If such a string does not exist, insert it into the DB.  However,
  * if the msgid is empty (the header entry), don't add a string for
@@ -87,6 +95,8 @@ function vote_import($uid, $lng, $path) {
  * In such cases return NULL.
  */
 function _get_sguid($entry, $uid) {
+  $messages = array();
+
   // Get the string.
   $string = $entry['msgid'];
   if (isset($entry['msgid_plural'])) {
@@ -95,8 +105,12 @@ function _get_sguid($entry, $uid) {
 
   // Don't add the header entry as a translatable string.
   // Don't add strings like 'translator-credits' etc. as translatable strings.
-  if ($string == '')  return NULL;
-  if (preg_match('/.*translator.*credit.*/', $string))  return NULL;
+  if ($string == '') {
+    return array(NULL, array());
+  }
+  if (preg_match('/.*translator.*credit.*/', $string)) {
+    return array(NULL, array());
+  }
 
   // Get the context.
   $context = isset($entry['msgctxt']) ? $entry['msgctxt'] : '';
@@ -104,10 +118,9 @@ function _get_sguid($entry, $uid) {
   // The DB fields of the string and context are VARCHAR(1000),
   // check that they do not exceed this length.
   if (strlen($string) > 1000 or strlen($context) > 1000) {
-    print $context . "\n";
-    print $string . "\n";
-    print "***Warning*** The string or its context is too long to be stored in the DB (more than 1000 chars); skipped.\n";
-    return NULL;
+    $msg = t(" !context\n !string\n The string or its context is too long to be stored in the DB (more than 1000 chars); skipped.\n",
+           array('!context' => $context, '!string' => $string));
+    return array(NULL, array(array($msg, 'warning')));
   }
 
   // Get the $sguid of this string.
@@ -127,7 +140,7 @@ function _get_sguid($entry, $uid) {
       ->execute();
   }
 
-  return $sguid;
+  return array($sguid, array());
 }
 
 /**
@@ -137,6 +150,7 @@ function _get_sguid($entry, $uid) {
  */
 function _add_translation($sguid, $lng, $translation, $umail) {
   $tguid = sha1($translation . $lng . $sguid);
+  $messages = array();
 
   // Check whether this translation exists.
   $query = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
@@ -145,11 +159,13 @@ function _add_translation($sguid, $lng, $translation, $umail) {
 
   if (!$result) {
     // Add the translation for this string.
-    btr::translation_add($sguid, $lng, $translation);
+    list($_, $msgs) = btr::translation_add($sguid, $lng, $translation);
+    $messages = array_merge($messages, $msgs);
   }
   else {
     // Add a vote for the translation.
-    btr::vote_add($tguid);
+    list($_, $msgs) = btr::vote_add($tguid);
+    $messages = array_merge($messages, $msgs);
     // Update the author of the translations.
     if (empty($result->umail) or $result->umail == 'admin@example.com') {
       btr_update('btr_translations')
@@ -161,4 +177,6 @@ function _add_translation($sguid, $lng, $translation, $umail) {
         ->execute();
     }
   }
+
+  return $messages;
 }

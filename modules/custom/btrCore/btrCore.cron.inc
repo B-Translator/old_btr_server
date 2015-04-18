@@ -326,7 +326,13 @@ function btrCore_import_translations($params) {
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
   // Import the PO files.
-  btr::vote_import($account->uid, $lng, $tmpdir);
+  $messages = btr::vote_import($account->uid, $lng, $tmpdir);
+
+  // Concat the messages into a text format.
+  $txt_messages = '';
+  foreach ($messages as $msg) {
+    $txt_messages .= "\n - " . $msg[1] . ': ' . $msg[0] . "\n";
+  }
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');
@@ -352,6 +358,7 @@ function btrCore_import_translations($params) {
                       'limit' => 50,
                     )
                   )),
+    'messages' => $txt_messages,
   );
   $queue->createItem((object)$params);
 

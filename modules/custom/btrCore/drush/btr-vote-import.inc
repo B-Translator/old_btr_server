@@ -51,5 +51,75 @@ function drush_btranslator_btr_vote_import($lng, $path) {
     drush_log(t('You must specify a user with the option --user.'), 'error');
     drupal_exit();
   }
-  btr::vote_import($user->uid, $lng, $path);
+
+  // Check user permissions.
+  _drush_btranslator_btr_vote_import_check_permissions($lng);
+
+  // Check the path.
+  $path = _drush_btranslator_btr_vote_import_check_path($path);
+
+  // Import translations and votes.
+  $messages = btr::vote_import($user->uid, $lng, $path);
+  foreach ($messages as $msg)  drush_log($msg[0], $msg[1]);
+}
+
+/**
+ * Check user permissions.
+ */
+function _drush_btranslator_btr_vote_import_check_permissions($lng) {
+  global $user;
+
+  // Check user access permissions.
+  if (!user_access('btranslator-suggest')) {
+    drush_log(t('User "!user" does not have enough rights for submitting translations!', array('!user' => $user->name)), 'error');
+    drupal_exit();
+  }
+
+  // Get and check the parameter 'lng'.
+  if (!in_array($lng, btr::languages_get())) {
+    drush_log(t('Language "!lng" is not supported.', array('!lng' => $lng)), 'error');
+    drupal_exit();
+  }
+
+  // Make sure that this user can make translations for the given language.
+  if ($lng != $user->translation_lng) {
+    drush_log(t('User "!user" cannot submit translations for the language "!lng"',
+        array('!user' => $user->name, '!lng' => $lng)
+      ), 'error');
+    drupal_exit();
+  }
+}
+
+/**
+ * Check the path.
+ */
+function _drush_btranslator_btr_vote_import_check_path($path) {
+  // Check that there is such a file.
+  if (!file_exists($path)) {
+    drush_log(t('File "!file" does not exist.', array('!file' => $path)), 'error');
+    drupal_exit();
+  }
+
+  if (is_dir($path))  return $path;
+
+  // Check the extension of the file.
+  $extensions = 'po tar gz tgz bz2 xz 7z zip';
+  $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
+  if (!preg_match($regex, $path)) {
+    $msg = t('Only files with the following extensions are allowed: !files-allowed.',
+           array('!files-allowed' => $extensions));
+    drush_log($msg, 'error');
+    drupal_exit();
+  }
+
+  // Extract the file in a temporary directory.
+  $file = $path;
+  $filename = basename($file);
+  $tmpdir = '/tmp/' . sha1_file($file);
+  mkdir($tmpdir, 0700);
+  exec("cp $file $tmpdir/");
+  exec("cd $tmpdir ; dtrx -q -n $filename 2>/dev/null");
+
+  // Return the directory where the files are extracted.
+  return $tmpdir;
 }
