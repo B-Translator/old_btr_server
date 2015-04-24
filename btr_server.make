@@ -40,12 +40,12 @@ projects[devel] = 1.5
 projects[diff] = 3.2
 
 ;;; Extensions
-projects[ctools] = 1.5
+projects[ctools] = 1.7
 projects[libraries] = 2.2
-projects[entity] = 1.5
+projects[entity] = 1.6
 projects[xautoload] = 4.5
-projects[token] = 1.5
-projects[rules] = 2.8
+projects[token] = 1.6
+projects[rules] = 2.9
 projects[pathauto] = 1.2
 projects[subpathauto] = 1.3
 
@@ -64,8 +64,8 @@ libraries[tinymce][download][type] = get
 libraries[tinymce][download][url] = https://github.com/tinymce/tinymce/archive/4.1.6.zip
 
 ;;; Security
-projects[captcha] = 1.2
-projects[recaptcha] = 1.11
+projects[captcha] = 1.3
+projects[recaptcha] = 1.12
 projects[honeypot] = 1.17
 projects[user_restrictions] = 1.0
 
@@ -78,7 +78,7 @@ projects[uuid] = 1.0-alpha6
 ;projects[menu_import] = 1.6
 
 ;;; Admin Utils
-projects[module_filter] = 1.8
+projects[module_filter] = 2.0
 projects[drush_language] = 1.2
 projects[delete_all] = 1.1
 projects[l10n_update] = 1.1
