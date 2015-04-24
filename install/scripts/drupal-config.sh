@@ -43,7 +43,7 @@ EOF
 
 # set base_url
 cat >> $drupal_settings << EOF
-\$base_url = "https://btr.example.org";
+\$base_url = "https://$domain";
 
 EOF
 
