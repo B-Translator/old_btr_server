@@ -107,7 +107,7 @@ libraries[phpmailer][download][url] = https://github.com/PHPMailer/PHPMailer/arc
 ; HybridAuth
 ;--------------------
 
-projects[hybridauth] = 2.9
+projects[hybridauth] = 2.12
 
 libraries[hybridauth][directory_name] = hybridauth
 libraries[hybridauth][download][type] = get
