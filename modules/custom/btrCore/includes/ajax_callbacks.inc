@@ -121,7 +121,7 @@ function btrCore_string_autocomplete($origin = '*', $project = '*', $string = ''
     $query = "SELECT string FROM {$table}
               WHERE string LIKE :string
               ORDER BY string ASC";
-    $query_args = array(':string' => $string . '%');
+    $query_args = array(':string' => '%' . $string . '%');
   }
   else {
     // Get the query arguments and the condition for joining with project.
