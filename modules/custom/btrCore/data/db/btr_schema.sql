@@ -220,7 +220,7 @@ DROP TABLE IF EXISTS `btr_mv_sample`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `btr_mv_sample` (
-  `string` varchar(1000) COLLATE utf8_bin NOT NULL,
+  `string` varchar(1000) COLLATE utf8_general_ci NOT NULL,
   KEY `string` (`string`(100))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Materialized view for strings of a vocabulary (used to speed-up autocompletion).';
 /*!40101 SET character_set_client = @saved_cs_client */;
