@@ -22,16 +22,6 @@ function btrLanguages_entity_info() {
       'path' => 'admin/languages',
       'controller class' => 'EntityDefaultUIController',
     ),
-    'fieldable' => TRUE,
-    'bundles' => array(
-      'language' => array(
-        'label' => t('Language'),
-        'admin' => array(
-          'path' => 'admin/languages',
-        ),
-      ),
-    ),
-    'views controller class' => 'EntityDefaultViewsController',
     'module' => 'btrLanguages',
   );
 
@@ -46,13 +36,13 @@ function btrLanguages_menu() {
 
   $items['languages'] = array(
     'title' => 'Our languages demo',
-    'page callback' => 'btrLanguages_languages',
+    'page callback' => 'btrLanguages_list',
     'access arguments' => array('access content'),
   );
 
   $items['language/%'] = array(
     'title' => 'Language',
-    'page callback' => 'btrLanguages_view_language',
+    'page callback' => 'btrLanguages_view',
     'page arguments' => array(1),
     'access arguments' => array('access content'),
   );
@@ -64,30 +54,29 @@ function btrLanguages_menu() {
  * Access callback for language entities.
  */
 function btrLanguages_access_callback($op, $language = NULL, $account = NULL) {
-  if ($op == 'view' || $op == 'update' || $op == 'create' || $op == 'delete') {
-    return TRUE;
-  }
-  else {
-    return FALSE;
+  switch ($op) {
+    case 'create':
+    case 'delete':
+    case 'update':
+      return in_array('administrator', $GLOBALS['user']->roles);
+      break;
+
+    case 'view':
+      return TRUE;
+      break;
+
+    default:
+      return FALSE;
+      break;
   }
 }
 
 /**
- * Callback function for our language entities test path
+ * Callback function for language entities.
  */
 function btrLanguages_languages() {
-
-
-  $languages = entity_load('language', array(1, 2, 3));
-
-  // Saving new entities
-  if (!isset($languages[3])) {
-    $entity = entity_create('language', array('id' => 3));
-    $entity->name = t('Spring House');
-    $entity->description = t('Some more lipsum.');
-    $entity->deadline = '1397501132';
-    $entity->save();
-  }
+  $languages = entity_load('language');
+  if (empty($languages))  return t('No languages.');
 
   // Listing entities
   $list = entity_view('language', $languages);
@@ -98,18 +87,16 @@ function btrLanguages_languages() {
   }
 
   return implode($output);
-
 }
 
 /**
- * Callback function for displaying the individual language page
+ * Callback function for displaying the individual language page.
  */
-function btrLanguages_view_language($id) {
-
+function btrLanguages_view($id) {
   $languages = entity_load('language', array($id));
   $language = $languages[$id];
 
-  drupal_set_title($language->name);
+  drupal_set_title('Language: ' . $language->name);
   $output = entity_view('language', array($language));
 
   return $output;
@@ -121,25 +108,34 @@ function btrLanguages_view_language($id) {
  */
 function language_form($form, &$form_state, $language = NULL) {
 
+  $form['code'] = array(
+    '#title' => t('Code'),
+    '#type' => 'textfield',
+    '#default_value' => isset($language->code) ? $language->code : '',
+    '#required' => TRUE,
+  );
+
   $form['name'] = array(
-    '#title' => t('Language name'),
+    '#title' => t('Name'),
     '#type' => 'textfield',
     '#default_value' => isset($language->name) ? $language->name : '',
     '#required' => TRUE,
   );
 
-  $form['description'] = array(
-    '#title' => t('Language description'),
-    '#type' => 'textarea',
-    '#default_value' => isset($language->description) ? $language->description : '',
-    '#required' => TRUE,
+  $form['direction'] = array(
+    '#title' => t('Direction (LTR or RTL)'),
+    '#type' => 'select',
+    '#options' => array(
+      LANGUAGE_LTR => 'Left To Right',
+      LANGUAGE_RTL => 'Right To Left',
+    ),
+    '#default_value' => isset($language->direction) ? $language->direction : LANGUAGE_LTR,
   );
 
-  $form['deadline'] = array(
-    '#title' => t('Language deadline'),
+  $form['plurals'] = array(
+    '#title' => t('Plurals'),
     '#type' => 'textfield',
-    '#default_value' => isset($language->deadline) ? $language->deadline : '',
-    '#required' => TRUE,
+    '#default_value' => isset($language->plurals) ? $language->plurals : '2',
   );
 
   field_attach_form('language', $language, $form, $form_state);
@@ -177,23 +173,33 @@ function btrLanguages_entity_property_info() {
     'schema field' => 'id',
   );
 
+  $info['language']['properties']['code'] = array(
+    'label' => t('Code'),
+    'description' => t('Code of the language.'),
+    'type' => 'text',
+    'schema field' => 'code',
+  );
   $info['language']['properties']['name'] = array(
-    'label' => t('Language name'),
+    'label' => t('Name'),
     'description' => t('Name of the language.'),
     'type' => 'text',
     'schema field' => 'name',
   );
-  $info['language']['properties']['description'] = array(
-    'label' => t('Language description'),
-    'description' => t('Description of the language.'),
-    'type' => 'text',
-    'schema field' => 'description',
+  $info['language']['properties']['direction'] = array(
+    'label' => t('Direction'),
+    'description' => t('Direction (LTR/RTL) of the language.'),
+    'type' => 'integer',
+    'options list' => array(
+      LANGUAGE_LTR => 'Left To Right',
+      LANGUAGE_RTL => 'Right To Left',
+    ),
+    'schema field' => 'direction',
   );
-  $info['language']['properties']['deadline'] = array(
-    'label' => t('Deadline'),
-    'description' => t('Language deadline.'),
-    'type' => 'date',
-    'schema field' => 'deadline',
+  $info['language']['properties']['plurals'] = array(
+    'label' => t('Plurals'),
+    'description' => t('Language plurals.'),
+    'type' => 'integer',
+    'schema field' => 'plurals',
   );
 
   return $info;
@@ -210,17 +216,29 @@ class LanguageEntityController extends EntityAPIController {
     $build = parent::buildContent($entity, $view_mode, $langcode, $content);
 
     // Our additions to the $build render array.
-    $build['description'] = array(
+    $build['code'] = array(
       '#type' => 'markup',
-      '#markup' => check_plain($entity->description),
-      '#prefix' => '<div class="language-description">',
+      '#markup' => t('Code: ') . check_plain($entity->code),
+      '#prefix' => '<div class="language-code">',
       '#suffix' => '</div>',
     );
-    $build['deadline'] = array(
+    $build['name'] = array(
       '#type' => 'markup',
-      '#markup' => date('d F, Y', check_plain($entity->deadline)),
-      '#prefix' => '<p>Deadline: ',
-      '#suffix' => '</p>',
+      '#markup' => t('Name: ') . check_plain($entity->name),
+      '#prefix' => '<div class="language-name">',
+      '#suffix' => '</div>',
+    );
+    $build['direction'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Direction: ') . check_plain($entity->direction),
+      '#prefix' => '<div class="language-direction">',
+      '#suffix' => '</div>',
+    );
+    $build['plurals'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Plurals: ') . check_plain($entity->plurals),
+      '#prefix' => '<div class="language-plurals">',
+      '#suffix' => '</div>',
     );
 
     return $build;

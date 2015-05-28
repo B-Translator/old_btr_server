@@ -16,27 +16,39 @@ function btrLanguages_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
+      'code' => array(
+        'description' => 'The code of the language (like: fr, de, etc.).',
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ),
       'name' => array(
         'description' => 'Language name.',
         'type' => 'varchar',
         'length' => 255,
         'not null' => FALSE,
       ),
-      'description' => array(
-        'description' => 'Language description.',
-        'type' => 'text',
-        'size' => 'big',
-        'not null' => FALSE,
-        'default' => NULL
-      ),
-      'deadline' => array(
-        'description' => 'Language deadline.',
+      'direction' => array(
+        'description' => 'LeftToRight=0, RightToLeft=1.',
         'type' => 'int',
-        'length' => 11,
-        'not null' => FALSE,
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'plurals' => array(
+        'description' => 'Number of plurals of the language.',
+        'type' => 'int',
+        'size' => 'tiny',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 2,
       ),
     ),
     'primary key' => array('id'),
+    'unique keys' => array(
+      'k1' => array('code'),
+    ),
   );
 
   return $schema;

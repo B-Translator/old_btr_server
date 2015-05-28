@@ -1,4 +1,7 @@
 name = B-Translator Languages
-description = Manage the list of languages supported by B-Translation.
+description = Languages supported by B-Translator.
+package = B-Translator
+
 core = 7.x
 dependencies[] = entity
+dependencies[] = btrCore
