@@ -1,0 +1,244 @@
+<?php
+
+/**
+ * Implements hook_entity_info().
+ */
+function btrLanguages_entity_info() {
+
+  $info = array();
+
+  $info['language'] = array(
+    'label' => t('Language'),
+    'base table' => 'btr_languages',
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'name',
+    ),
+    'entity class' => 'LanguageEntity',
+    'controller class' => 'LanguageEntityController',
+    'access callback' => 'btrLanguages_access_callback',
+    'uri callback' => 'entity_class_uri',
+    'admin ui' => array(
+      'path' => 'admin/languages',
+      'controller class' => 'EntityDefaultUIController',
+    ),
+    'fieldable' => TRUE,
+    'bundles' => array(
+      'language' => array(
+        'label' => t('Language'),
+        'admin' => array(
+          'path' => 'admin/languages',
+        ),
+      ),
+    ),
+    'views controller class' => 'EntityDefaultViewsController',
+    'module' => 'btrLanguages',
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_menu()
+ */
+function btrLanguages_menu() {
+  $items = array();
+
+  $items['languages'] = array(
+    'title' => 'Our languages demo',
+    'page callback' => 'btrLanguages_languages',
+    'access arguments' => array('access content'),
+  );
+
+  $items['language/%'] = array(
+    'title' => 'Language',
+    'page callback' => 'btrLanguages_view_language',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Access callback for language entities.
+ */
+function btrLanguages_access_callback($op, $language = NULL, $account = NULL) {
+  if ($op == 'view' || $op == 'update' || $op == 'create' || $op == 'delete') {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Callback function for our language entities test path
+ */
+function btrLanguages_languages() {
+
+
+  $languages = entity_load('language', array(1, 2, 3));
+
+  // Saving new entities
+  if (!isset($languages[3])) {
+    $entity = entity_create('language', array('id' => 3));
+    $entity->name = t('Spring House');
+    $entity->description = t('Some more lipsum.');
+    $entity->deadline = '1397501132';
+    $entity->save();
+  }
+
+  // Listing entities
+  $list = entity_view('language', $languages);
+
+  $output = array();
+  foreach ($list['language'] as $language) {
+    $output[] = drupal_render($language);
+  }
+
+  return implode($output);
+
+}
+
+/**
+ * Callback function for displaying the individual language page
+ */
+function btrLanguages_view_language($id) {
+
+  $languages = entity_load('language', array($id));
+  $language = $languages[$id];
+
+  drupal_set_title($language->name);
+  $output = entity_view('language', array($language));
+
+  return $output;
+
+}
+
+/**
+ * Form definition for adding / editing a language.
+ */
+function language_form($form, &$form_state, $language = NULL) {
+
+  $form['name'] = array(
+    '#title' => t('Language name'),
+    '#type' => 'textfield',
+    '#default_value' => isset($language->name) ? $language->name : '',
+    '#required' => TRUE,
+  );
+
+  $form['description'] = array(
+    '#title' => t('Language description'),
+    '#type' => 'textarea',
+    '#default_value' => isset($language->description) ? $language->description : '',
+    '#required' => TRUE,
+  );
+
+  $form['deadline'] = array(
+    '#title' => t('Language deadline'),
+    '#type' => 'textfield',
+    '#default_value' => isset($language->deadline) ? $language->deadline : '',
+    '#required' => TRUE,
+  );
+
+  field_attach_form('language', $language, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => isset($language->id) ? t('Update language') : t('Save language'),
+    '#weight' => 50,
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for the language add/edit form.
+ */
+function language_form_submit($form, &$form_state) {
+  $language = entity_ui_form_submit_build_entity($form, $form_state);
+  $language->save();
+  drupal_set_message(t('The language: @name has been saved.', array('@name' => $language->name)));
+  $form_state['redirect'] = 'admin/languages';
+}
+
+/**
+ * Implements hook_entity_property_info().
+ */
+function btrLanguages_entity_property_info() {
+
+  $info = array();
+
+  $info['language']['properties']['id'] = array(
+    'label' => t('Language ID'),
+    'description' => t('The ID of the language.'),
+    'type' => 'integer',
+    'schema field' => 'id',
+  );
+
+  $info['language']['properties']['name'] = array(
+    'label' => t('Language name'),
+    'description' => t('Name of the language.'),
+    'type' => 'text',
+    'schema field' => 'name',
+  );
+  $info['language']['properties']['description'] = array(
+    'label' => t('Language description'),
+    'description' => t('Description of the language.'),
+    'type' => 'text',
+    'schema field' => 'description',
+  );
+  $info['language']['properties']['deadline'] = array(
+    'label' => t('Deadline'),
+    'description' => t('Language deadline.'),
+    'type' => 'date',
+    'schema field' => 'deadline',
+  );
+
+  return $info;
+}
+
+
+/**
+ * Extending the EntityAPIController for the Language entity.
+ */
+class LanguageEntityController extends EntityAPIController {
+
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+
+    $build = parent::buildContent($entity, $view_mode, $langcode, $content);
+
+    // Our additions to the $build render array.
+    $build['description'] = array(
+      '#type' => 'markup',
+      '#markup' => check_plain($entity->description),
+      '#prefix' => '<div class="language-description">',
+      '#suffix' => '</div>',
+    );
+    $build['deadline'] = array(
+      '#type' => 'markup',
+      '#markup' => date('d F, Y', check_plain($entity->deadline)),
+      '#prefix' => '<p>Deadline: ',
+      '#suffix' => '</p>',
+    );
+
+    return $build;
+
+  }
+
+}
+
+/**
+ * Language entity class extending the Entity class
+ */
+class LanguageEntity extends Entity {
+
+  /**
+   * Change the default URI from default/id to language/id
+   */
+  protected function defaultUri() {
+    return array('path' => 'language/' . $this->identifier());
+  }
+
+}
