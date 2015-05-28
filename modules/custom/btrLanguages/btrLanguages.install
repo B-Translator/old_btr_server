@@ -53,3 +53,70 @@ function btrLanguages_schema() {
 
   return $schema;
 }
+
+/**
+ * Implements hook_install().
+ */
+function btrLanguages_install() {
+  $languages = _btrLanguages_language_list();
+  foreach ($languages as $lng => $language) {
+    $entity = entity_create('language', $language);
+    $entity->save();
+  }
+}
+
+/**
+ * Return a list of languages and their details.
+ */
+function _btrLanguages_language_list() {
+  return array(
+    'sq' => array(
+      'code' => 'sq',
+      'name' => 'Albanian',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'bg' => array(
+      'code' => 'bg',
+      'name' => 'Bulgarian',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'fr' => array(
+      'code' => 'fr',
+      'name' => 'French',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'de' => array(
+      'code' => 'de',
+      'name' => 'German',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'it' => array(
+      'code' => 'it',
+      'name' => 'Italian',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'es' => array(
+      'code' => 'es',
+      'name' => 'Spanish',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'fi' => array(
+      'code' => 'fi',
+      'name' => 'Finnish',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+    'tr' => array(
+      'code' => 'tr',
+      'name' => 'Turkish',
+      'direction' => LANGUAGE_LTR,
+      'plurals' => 2,
+    ),
+  );
+}
