@@ -1,0 +1,262 @@
+<?php
+
+/**
+ * Implements hook_entity_info().
+ */
+function btrLanguages_entity_info() {
+
+  $info = array();
+
+  $info['language'] = array(
+    'label' => t('Language'),
+    'base table' => 'btr_languages',
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'name',
+    ),
+    'entity class' => 'LanguageEntity',
+    'controller class' => 'LanguageEntityController',
+    'access callback' => 'btrLanguages_access_callback',
+    'uri callback' => 'entity_class_uri',
+    'admin ui' => array(
+      'path' => 'admin/languages',
+      'controller class' => 'EntityDefaultUIController',
+    ),
+    'module' => 'btrLanguages',
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_menu()
+ */
+function btrLanguages_menu() {
+  $items = array();
+
+  $items['languages'] = array(
+    'title' => 'Our languages demo',
+    'page callback' => 'btrLanguages_list',
+    'access arguments' => array('access content'),
+  );
+
+  $items['language/%'] = array(
+    'title' => 'Language',
+    'page callback' => 'btrLanguages_view',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Access callback for language entities.
+ */
+function btrLanguages_access_callback($op, $language = NULL, $account = NULL) {
+  switch ($op) {
+    case 'create':
+    case 'delete':
+    case 'update':
+      return in_array('administrator', $GLOBALS['user']->roles);
+      break;
+
+    case 'view':
+      return TRUE;
+      break;
+
+    default:
+      return FALSE;
+      break;
+  }
+}
+
+/**
+ * Callback function for language entities.
+ */
+function btrLanguages_languages() {
+  $languages = entity_load('language');
+  if (empty($languages))  return t('No languages.');
+
+  // Listing entities
+  $list = entity_view('language', $languages);
+
+  $output = array();
+  foreach ($list['language'] as $language) {
+    $output[] = drupal_render($language);
+  }
+
+  return implode($output);
+}
+
+/**
+ * Callback function for displaying the individual language page.
+ */
+function btrLanguages_view($id) {
+  $languages = entity_load('language', array($id));
+  $language = $languages[$id];
+
+  drupal_set_title('Language: ' . $language->name);
+  $output = entity_view('language', array($language));
+
+  return $output;
+
+}
+
+/**
+ * Form definition for adding / editing a language.
+ */
+function language_form($form, &$form_state, $language = NULL) {
+
+  $form['code'] = array(
+    '#title' => t('Code'),
+    '#type' => 'textfield',
+    '#default_value' => isset($language->code) ? $language->code : '',
+    '#required' => TRUE,
+  );
+
+  $form['name'] = array(
+    '#title' => t('Name'),
+    '#type' => 'textfield',
+    '#default_value' => isset($language->name) ? $language->name : '',
+    '#required' => TRUE,
+  );
+
+  $form['direction'] = array(
+    '#title' => t('Direction (LTR or RTL)'),
+    '#type' => 'select',
+    '#options' => array(
+      LANGUAGE_LTR => 'Left To Right',
+      LANGUAGE_RTL => 'Right To Left',
+    ),
+    '#default_value' => isset($language->direction) ? $language->direction : LANGUAGE_LTR,
+  );
+
+  $form['plurals'] = array(
+    '#title' => t('Plurals'),
+    '#type' => 'textfield',
+    '#default_value' => isset($language->plurals) ? $language->plurals : '2',
+  );
+
+  field_attach_form('language', $language, $form, $form_state);
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => isset($language->id) ? t('Update language') : t('Save language'),
+    '#weight' => 50,
+  );
+
+  return $form;
+}
+
+/**
+ * Submit handler for the language add/edit form.
+ */
+function language_form_submit($form, &$form_state) {
+  $language = entity_ui_form_submit_build_entity($form, $form_state);
+  $language->save();
+  drupal_set_message(t('The language: @name has been saved.', array('@name' => $language->name)));
+  $form_state['redirect'] = 'admin/languages';
+}
+
+/**
+ * Implements hook_entity_property_info().
+ */
+function btrLanguages_entity_property_info() {
+
+  $info = array();
+
+  $info['language']['properties']['id'] = array(
+    'label' => t('Language ID'),
+    'description' => t('The ID of the language.'),
+    'type' => 'integer',
+    'schema field' => 'id',
+  );
+
+  $info['language']['properties']['code'] = array(
+    'label' => t('Code'),
+    'description' => t('Code of the language.'),
+    'type' => 'text',
+    'schema field' => 'code',
+  );
+  $info['language']['properties']['name'] = array(
+    'label' => t('Name'),
+    'description' => t('Name of the language.'),
+    'type' => 'text',
+    'schema field' => 'name',
+  );
+  $info['language']['properties']['direction'] = array(
+    'label' => t('Direction'),
+    'description' => t('Direction (LTR/RTL) of the language.'),
+    'type' => 'integer',
+    'options list' => array(
+      LANGUAGE_LTR => 'Left To Right',
+      LANGUAGE_RTL => 'Right To Left',
+    ),
+    'schema field' => 'direction',
+  );
+  $info['language']['properties']['plurals'] = array(
+    'label' => t('Plurals'),
+    'description' => t('Language plurals.'),
+    'type' => 'integer',
+    'schema field' => 'plurals',
+  );
+
+  return $info;
+}
+
+
+/**
+ * Extending the EntityAPIController for the Language entity.
+ */
+class LanguageEntityController extends EntityAPIController {
+
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+
+    $build = parent::buildContent($entity, $view_mode, $langcode, $content);
+
+    // Our additions to the $build render array.
+    $build['code'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Code: ') . check_plain($entity->code),
+      '#prefix' => '<div class="language-code">',
+      '#suffix' => '</div>',
+    );
+    $build['name'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Name: ') . check_plain($entity->name),
+      '#prefix' => '<div class="language-name">',
+      '#suffix' => '</div>',
+    );
+    $build['direction'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Direction: ') . check_plain($entity->direction),
+      '#prefix' => '<div class="language-direction">',
+      '#suffix' => '</div>',
+    );
+    $build['plurals'] = array(
+      '#type' => 'markup',
+      '#markup' => t('Plurals: ') . check_plain($entity->plurals),
+      '#prefix' => '<div class="language-plurals">',
+      '#suffix' => '</div>',
+    );
+
+    return $build;
+
+  }
+
+}
+
+/**
+ * Language entity class extending the Entity class
+ */
+class LanguageEntity extends Entity {
+
+  /**
+   * Change the default URI from default/id to language/id
+   */
+  protected function defaultUri() {
+    return array('path' => 'language/' . $this->identifier());
+  }
+
+}
