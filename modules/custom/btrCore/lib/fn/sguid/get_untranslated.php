@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 include_once(dirname(__FILE__). '/get_pool_of_projects.inc');
 
@@ -29,7 +30,7 @@ function sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
   $projects = get_pool_of_projects($uid, $target_projects);
 
   // Build the WHERE condition for selecting projects.
-  list($where, $args) = _btr_projects_to_where_condition($projects);
+  list($where, $args) = btr::utils_projects_to_where_condition($projects);
   $args[':lng'] = $lng;
   if ($where == '')  $where = '(1=1)';
 

@@ -60,7 +60,7 @@ function _btrUser_form_user_profile_submit($form, &$form_state) {
     if (!$arr_projects)  return;
 
     // Get project pguid-s and for each of them insert a record.
-    list($condition, $args) = _btr_projects_to_where_condition($arr_projects);
+    list($condition, $args) = btr::utils_projects_to_where_condition($arr_projects);
     $query = "SELECT pguid FROM {btr_projects} WHERE $condition";
     $arr_pguid = btr_query($query, $args)->fetchCol();
     foreach ($arr_pguid as $pguid) {

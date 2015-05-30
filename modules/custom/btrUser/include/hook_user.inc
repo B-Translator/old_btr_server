@@ -122,7 +122,7 @@ function _btrUser_user_set_data_sequential(&$edit, $account) {
   // the strings of his preferred projects sequentially (in the same
   // order that they appear on the PO file), rather than randomly.
   $arr_projects = $obj_edit->preferred_projects;
-  list($where_condition, $args) = _btr_projects_to_where_condition($arr_projects);
+  list($where_condition, $args) = btr::utils_projects_to_where_condition($arr_projects);
   if ($where_condition == '') {
     $sequential = NULL;
   }
