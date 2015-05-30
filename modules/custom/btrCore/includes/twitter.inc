@@ -25,7 +25,7 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   // Get a translated string shorter than 50 chars.
   $i = 0;
   do {
-    list($sguid, $messages) = btr_get_random_sguid('translated', $lng, array($scope));
+    list($sguid, $messages) = btr::sguid_get('translated', $lng, array($scope));
     list($string, $translations) = btr::string_get_translations($sguid, $lng);
     $i++;
   } while (strlen($string) > 50 and $i < 10);

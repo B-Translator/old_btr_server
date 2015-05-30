@@ -150,7 +150,7 @@ function btrCore_send_strings_for_review() {
 
     // get a sguid according to the user preferencies
     module_load_include('inc', 'btrCore', 'includes/get_sguid');
-    $sguid = _btr_sguid_get_random($account->uid, array($project));
+    $sguid = btr::sguid_get_random($account->uid, array($project));
     if (!$sguid)  continue;
 
     $message_params = array(

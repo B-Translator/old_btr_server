@@ -379,7 +379,7 @@ function _btrServices_translations_search($params) {
 function _btrServices_translations_get_random_sguid($params) {
   $projects = NULL;
   if (isset($params['last_sguid'])) {
-    $projects = btr_get_projects_of_sguid($params['last_sguid']);
+    $projects = btr::sguid_get_projects($params['last_sguid']);
   }
   if (isset($params['scope'])) {
     $projects = array();
@@ -391,7 +391,7 @@ function _btrServices_translations_get_random_sguid($params) {
   }
   $target = $params['target'];
   $lng = $params['lng'];
-  list($sguid, $messages) = btr_get_random_sguid($target, $lng, $projects);
+  list($sguid, $messages) = btr::sguid_get($target, $lng, $projects);
 
   return array(
     'sguid' => $sguid,
@@ -430,7 +430,7 @@ function _btrServices_translations_get($params) {
   $sguid = $params['sguid'];
   $messages = array();
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
-    list($sguid, $messages) = btr_get_random_sguid($sguid, $lng);
+    list($sguid, $messages) = btr::sguid_get($sguid, $lng);
   }
 
   $strings = btr::string_load(array($sguid), $lng);
