@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * Module file for btrUser.
+ */
+
+module_load_include('inc', 'btrCore', 'lib/query');
+module_load_include('php', 'btrCore', 'lib/btr');
+
+require_once(dirname(__FILE__) . '/include/form_alter.inc');
+require_once(dirname(__FILE__) . '/include/hook_user.inc');
+require_once(dirname(__FILE__) . '/include/oauth2_loginprovider.inc');
+require_once(dirname(__FILE__) . '/include/hybridauth.inc');

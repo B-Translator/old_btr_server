@@ -1,12 +1,17 @@
 <?php
+/**
+ * @file
+ * Add hooks for user_load, user_insert, user_update, user_cancel, user_delete
+ * and user_presave.
+ */
 
 /**
  * Implements hook_user_load().
  * Act on user objects when loaded from the database.
  */
-function btrCore_user_load($users) {
+function btrUser_user_load($users) {
   foreach($users as $user) {
-    _btrCore_user_get_fields($user);
+    _btrUser_user_get_fields($user);
   }
 }
 
@@ -15,8 +20,8 @@ function btrCore_user_load($users) {
  * Implements hook_user_isert().
  * It is called when a new user account is created.
  */
-function btrCore_user_insert(&$edit, $account, $category) {
-  _btrCore_user_get_fields($account);
+function btrUser_user_insert(&$edit, $account, $category) {
+  _btrUser_user_get_fields($account);
   _btr_user_update(
     $umail = $account->init,  // initial email that the user used for registration
     $ulng = $account->translation_lng,
@@ -32,8 +37,8 @@ function btrCore_user_insert(&$edit, $account, $category) {
  * Implements hook_user_update().
  * It is called after a user account has been updated.
  */
-function btrCore_user_update(&$edit, $account, $category) {
-  _btrCore_user_get_fields($account);
+function btrUser_user_update(&$edit, $account, $category) {
+  _btrUser_user_get_fields($account);
   _btr_user_update(
     $umail = $account->init,
     $ulng = $account->translation_lng,
@@ -48,8 +53,8 @@ function btrCore_user_update(&$edit, $account, $category) {
 /**
  * Implements hook_user_cancel().
  */
-function btrCore_user_cancel($edit, $account, $category) {
-  _btrCore_user_get_fields($account);
+function btrUser_user_cancel($edit, $account, $category) {
+  _btrUser_user_get_fields($account);
   _btr_user_disable(
     $umail = $account->init,
     $ulng = $account->translation_lng
@@ -60,8 +65,8 @@ function btrCore_user_cancel($edit, $account, $category) {
 /**
  * Implements hook_user_delete().
  */
-function btrCore_user_delete($account) {
-  _btrCore_user_get_fields($account);
+function btrUser_user_delete($account) {
+  _btrUser_user_get_fields($account);
   _btr_user_disable(
     $umail = $account->init,
     $ulng = $account->translation_lng
@@ -73,9 +78,9 @@ function btrCore_user_delete($account) {
  * Implements hook_user_presave().
  * It is called before the user profile page is saved.
  */
-function btrCore_user_presave(&$edit, $account, $category) {
-  _btrCore_user_set_data_sequential($edit, $account);
-  _btrCore_user_set_fields($edit, $account);
+function btrUser_user_presave(&$edit, $account, $category) {
+  _btrUser_user_set_data_sequential($edit, $account);
+  _btrUser_user_set_fields($edit, $account);
 }
 
 
@@ -83,7 +88,7 @@ function btrCore_user_presave(&$edit, $account, $category) {
  * Build an index object that is needed for visiting strings
  * sequentially and set it to $edit['data_sequential'].
  */
-function _btrCore_user_set_data_sequential(&$edit, $account) {
+function _btrUser_user_set_data_sequential(&$edit, $account) {
 
   // if skip_presave is defined, then user data is being saved
   // from the code, not from the profile interface
@@ -94,7 +99,7 @@ function _btrCore_user_set_data_sequential(&$edit, $account) {
 
   $lang = LANGUAGE_NONE;
   $obj_edit = (object)$edit;
-  _btrCore_user_get_fields($obj_edit);
+  _btrUser_user_get_fields($obj_edit);
   $account = user_load($account->uid);
 
   // if string-order is random, no need for 'field_data_sequential'
@@ -149,7 +154,7 @@ function _btrCore_user_set_data_sequential(&$edit, $account) {
  * This is called after a user account is loaded,
  * in hook_user_load().
  */
-function _btrCore_user_get_fields(&$user) {
+function _btrUser_user_get_fields(&$user) {
   $lang = LANGUAGE_NONE;
 
   // field_translation_lng
@@ -231,7 +236,7 @@ function _btrCore_user_get_fields(&$user) {
  * This is called before a user account is saved,
  * in hook_user_presave().
  */
-function _btrCore_user_set_fields(&$edit, $account) {
+function _btrUser_user_set_fields(&$edit, $account) {
 
   $lang = LANGUAGE_NONE;
 

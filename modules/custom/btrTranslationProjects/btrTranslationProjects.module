@@ -138,7 +138,7 @@ function btrTranslationProjects_entity_load($entities, $type) {
 }
 
 /**
- * Callback function for our project entities test path
+ * Callback function for project entities.
  */
 function btrTranslationProjects_list() {
   $projects = entity_load('project');
@@ -156,7 +156,7 @@ function btrTranslationProjects_list() {
 }
 
 /**
- * Callback function for displaying the individual project page
+ * Callback function for displaying the individual project page.
  */
 function btrTranslationProjects_view($id) {
   $projects = entity_load('project', array($id));
