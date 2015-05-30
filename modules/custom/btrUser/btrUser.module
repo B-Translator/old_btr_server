@@ -1,0 +1,10 @@
+<?php
+/**
+ * @file
+ * Module file for btrUser.
+ */
+
+require_once(dirname(__FILE__) . '/include/form_alter.inc');
+require_once(dirname(__FILE__) . '/include/hook_user.inc');
+require_once(dirname(__FILE__) . '/include/oauth2_loginprovider.inc');
+require_once(dirname(__FILE__) . '/include/hybridauth.inc');

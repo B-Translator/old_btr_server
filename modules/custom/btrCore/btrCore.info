@@ -9,7 +9,6 @@ dependencies[] = phpmailer
 dependencies[] = entity
 dependencies[] = rules
 
-dependencies[] = edit_profile
 dependencies[] = field_sql_storage
 dependencies[] = list
 dependencies[] = options

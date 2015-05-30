@@ -1,15 +1,30 @@
 <?php
 /**
- * @file
- * This file contains functions for creating and deleting
- * user profile fields (which actually contain user preferencies).
+ * @file btrUser.install
+ * Install and update functions for the module btrUser.
  */
 
 /**
- * This function is called by hook_uninstall(), in order
- * to delete the custom fields created by btrCore.
+ * Implements hook_install().
  */
-function btrCore_delete_userprofile_fields() {
+function btrUser_install() {
+  // create custom fields for user preferencies
+  _btrUser_create_userprofile_fields();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function btrUser_uninstall() {
+  // delete the custom fields of user preferencies
+  _btrUser_delete_userprofile_fields();
+}
+
+/**
+ * This function is called by hook_uninstall(), in order
+ * to delete the custom fields created by btrUser.
+ */
+function _btrUser_delete_userprofile_fields() {
 
   $field_names = array(
     'field_translation_lng',
@@ -34,7 +49,7 @@ function btrCore_delete_userprofile_fields() {
  * to create custom fields about user preferencies for
  * B-Translator.
  */
-function btrCore_create_userprofile_fields() {
+function _btrUser_create_userprofile_fields() {
 
   // create a field and instance for 'field_translation_lng'
   field_create_field(

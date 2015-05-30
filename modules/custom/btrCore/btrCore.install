@@ -4,9 +4,6 @@
  * Install and update functions for the module btrCore.
  */
 
-// get the functions for creating/deleting user preference fields and instancies
-include drupal_get_path('module', 'btrCore') . '/btrCore.userprofile.inc';
-
 /**
  * Implements hook_enable().
  */
@@ -22,20 +19,9 @@ function btrCore_disable() {
 }
 
 /**
- * Implements hook_install().
- */
-function btrCore_install() {
-  // create custom fields for user preferencies
-  btrCore_create_userprofile_fields();
-}
-
-/**
  * Implements hook_uninstall().
  */
 function btrCore_uninstall() {
-  // delete the custom fields of user preferencies
-  btrCore_delete_userprofile_fields();
-
   // delete variables that were used for this module
   $variables = array(
     'btr_languages',
