@@ -57,7 +57,6 @@ function _btrUser_create_userprofile_fields() {
       'field_name' => 'field_translation_lng',
       'type' => 'list_text',
       'cardinality' => 1,
-      'settings' => array('allowed_values' => btr::languages_get_list()),
       'entity_types' => array('user'),
     ));
   field_create_instance(
@@ -136,7 +135,6 @@ function _btrUser_create_userprofile_fields() {
       'type' => 'list_text',
       'cardinality' => 2,
       'entity_types' => array('user'),
-      'settings' => array('allowed_values' =>  btr::languages_get_list()),
     ));
   field_create_instance(
     array(
