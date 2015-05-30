@@ -70,7 +70,7 @@ function btr_captcha_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'captcha_persistence';
-  $strongarm->value = '0';
+  $strongarm->value = '2';
   $export['captcha_persistence'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -175,14 +175,14 @@ function btr_captcha_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'honeypot_protect_all_forms';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['honeypot_protect_all_forms'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'honeypot_time_limit';
-  $strongarm->value = '3';
+  $strongarm->value = '0';
   $export['honeypot_time_limit'] = $strongarm;
 
   $strongarm = new stdClass();
