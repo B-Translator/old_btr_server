@@ -1,4 +1,7 @@
 <?php
+namespace BTranslator;
+use \btr;
+
 /**
  * Notify translators that a new term has been added to the vocabulary.
  */

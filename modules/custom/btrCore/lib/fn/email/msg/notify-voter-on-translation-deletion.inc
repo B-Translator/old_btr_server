@@ -1,4 +1,7 @@
 <?php
+namespace BTranslator;
+use \btr;
+
 /**
  * Notify the voters of a translation, when it is deleted.
  */
@@ -6,7 +9,7 @@
   $subject = t("[!prefix] Translation deleted: !translation",
              array(
                '!prefix' => $subject_prefix,
-               '!translation' => btrCore_shorten($params->translation, 30),
+               '!translation' => cut($params->translation, 30),
              ));
   $body = array(
     t("Greetings !username,

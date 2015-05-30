@@ -1,4 +1,7 @@
 <?php
+namespace BTranslator;
+use \btr;
+
 /**
  * Notify voters that a new comment has been added.
  */

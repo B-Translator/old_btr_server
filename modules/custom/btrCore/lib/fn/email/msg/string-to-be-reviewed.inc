@@ -1,4 +1,7 @@
 <?php
+namespace BTranslator;
+use \btr;
+
 /**
  * Send by email a string to be reviewed.
  */
@@ -11,7 +14,7 @@
     $url = "$app_url?lng=$lng&proj=$project#$string";
   }
 
-  $subject = "[$subject_prefix] " . btrCore_shorten($string, 60);
+  $subject = "[$subject_prefix] " . cut($string, 60);
   $body = array(
     t("Greetings !username,
 

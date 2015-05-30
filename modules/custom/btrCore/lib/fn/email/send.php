@@ -42,7 +42,6 @@ function get_sender() {
   return "$smtp_fromname <$smtp_from>";
 }
 
-
 /**
  * Returns the subject and body of the email notification:
  *    array('subject' => $subject, 'body' => $body)
@@ -76,4 +75,19 @@ function get_subject_and_body($params) {
     'subject' => $subject,
     'body' => $body,
   );
+}
+
+/**
+ * From the given (possibly long) string, returns a short string
+ * of the given length (that can be suitable for title, subject, etc.)
+ */
+function cut($string, $length) {
+  $str = strip_tags(str_replace("\n", ' ', $string));
+  if (strlen($str) > $length) {
+    $str = substr($str, 0, strrpos(substr($str, 0, $length - 3), ' '));
+    $str .= '...';
+  }
+  $str = utf8_decode($str);
+  $str = htmlentities($str);
+  return $str;
 }

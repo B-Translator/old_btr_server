@@ -1,4 +1,7 @@
 <?php
+namespace BTranslator;
+use \btr;
+
 /**
  * Notify the user that the export is ready for download.
  */

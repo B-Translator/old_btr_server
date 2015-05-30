@@ -1,4 +1,7 @@
 <?php
+namespace BTranslator;
+use \btr;
+
 /**
  * Send an email notification to a user, when a translation that he has voted
  * for is modified.
@@ -7,7 +10,7 @@
   $subject = t("[!prefix] Translation modified for: !string",
              array(
                '!prefix' => $subject_prefix,
-               '!string' => btrCore_shorten($params->string, 30),
+               '!string' => cut($params->string, 30),
              ));
   $body = array(
     t("Greetings !username,
