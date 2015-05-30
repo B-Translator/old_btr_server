@@ -4,8 +4,6 @@
  * Functions called by cron.
  */
 
-module_load_include('inc', 'btrCore', 'lib/mail_notifications');
-
 /*
  * Implements hook_cron_queue_info().
  */
@@ -32,6 +30,10 @@ function btrCore_cron_queue_info() {
     'time' => 30,
   );
   return $queues;
+}
+
+function btrCore_send_notification_by_email($params) {
+  btr::email_send($params);
 }
 
 /*

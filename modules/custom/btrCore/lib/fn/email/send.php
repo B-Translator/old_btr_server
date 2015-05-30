@@ -4,6 +4,9 @@
  * Functions that are used for sending notification emails.
  */
 
+namespace BTranslator;
+use \btr;
+
 /**
  * Sends by email a notification message.
  *
@@ -14,7 +17,7 @@
  *   $params->username, $params->sguid, $params->string,
  *   $params->translation, etc.
  */
-function btrCore_send_notification_by_email($params) {
+function email_send($params) {
   // See: http://api.drupal.org/api/drupal/includes%21mail.inc/function/drupal_mail/7
   $account = user_load($params->uid);
   drupal_mail(
