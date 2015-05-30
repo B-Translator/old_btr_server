@@ -14,7 +14,10 @@ if (isset($GLOBALS['databases']['btr_db']['default'])) {
 
 require_once(dirname(__FILE__) . '/btrCore.menu.inc');
 require_once(dirname(__FILE__) . '/btrCore.cron.inc');
-require_once(dirname(__FILE__) . '/includes/functions.inc');
+
+module_load_include('php', 'btrCore', 'lib/btr');
+module_load_include('inc', 'btrCore', 'lib/query');
+module_load_include('inc', 'btrCore', 'lib/misc');
 
 /**
  * Implements hook_help().

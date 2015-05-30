@@ -4,7 +4,7 @@
  * Functions called by cron.
  */
 
-module_load_include('inc', 'btrCore', 'includes/mail_notifications');
+module_load_include('inc', 'btrCore', 'lib/mail_notifications');
 
 /*
  * Implements hook_cron_queue_info().
