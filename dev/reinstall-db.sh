@@ -60,6 +60,7 @@ fi
 
 ### install btrClient
 drush --yes pm-enable btrClient
+drush --yes pm-enable btrVocabulary
 drush --yes pm-enable bcl_service_links
 #drush --yes pm-enable bcl_disqus
 #drush --yes features-revert bcl_disqus
