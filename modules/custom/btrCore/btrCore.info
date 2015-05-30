@@ -3,6 +3,9 @@ description = B-Translator Back-End, including data of PO files, strings, transl
 package = B-Translator
 core = 7.x
 
+dependencies[] = btrUser
+dependencies[] = btrLanguages
+
 dependencies[] = mailsystem
 dependencies[] = mimemail
 dependencies[] = phpmailer

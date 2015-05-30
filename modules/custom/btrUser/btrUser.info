@@ -3,6 +3,7 @@ description = User Profile for B-Translator, with extra fields, hybridauth login
 package = B-Translator
 core = 7.x
 
+dependencies[] = btrCore
 dependencies[] = hybridauth
 dependencies[] = edit_profile
 dependencies[] = field_sql_storage

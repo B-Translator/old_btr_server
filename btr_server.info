@@ -97,6 +97,9 @@ dependencies[] = mimemail_compress
 ; B-Translator Server
 ;--------------------
 dependencies[] = btrCore
+dependencies[] = btrUser
+dependencies[] = btrLanguages
+dependencies[] = btrTranslationProjects
 dependencies[] = btrServices
 
 ;dependencies[] = btrClient
