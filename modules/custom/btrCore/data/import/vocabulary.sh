@@ -7,22 +7,22 @@ cd $(dirname $0)
 ### set drush site
 drush="drush $1"
 
-origin='vocabulary'
-for file in $(ls vocabulary/*.po)
+for file in $(ls vocabulary/*_*.po)
 do
-    ### get project and lng from the name of the PO file
+    ### get vocabulary and lng from the name of the PO file
     filename=$(basename $file)
-    project=${filename%.po}
-    lng=${project##*_}
+    name=${filename%.po}
+    lng=${name##*_}
+    vocabulary=${name%_*}
 
-    if test $($drush btrp-ls --origin=$origin --project=$project)
+    if test $($drush btrv-ls --name=$name)
     then
-        echo "Project $origin/$project already exists; skipping."
+        echo "Vocabulary $name already exists; skipping."
         continue
     fi
 
-    echo "Importing $origin/$project."
-    ### create a project and import translations
-    $drush btrp-add $origin $project $(pwd)/$file
-    $drush btrp-import $origin $project $lng $(pwd)/$file
+    echo "Importing $name."
+    ### create a vocabulary and import translations
+    $drush btrv-add $vocabulary $lng $(pwd)/$file
+    #$drush btr-vote-import --user=dasho $lng $(pwd)/$file
 done
