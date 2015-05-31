@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Get a string from its ID.

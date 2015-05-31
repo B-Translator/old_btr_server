@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 module_load_include('php', 'btrCore', 'lib/gettext/POParser');
 module_load_include('php', 'btrCore', 'lib/gettext/POWriter');

@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Get and return an array of the latest translation suggestions,

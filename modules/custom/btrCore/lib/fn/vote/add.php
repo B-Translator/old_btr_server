@@ -1,5 +1,6 @@
 <?php
 namespace BTranslator;
+use \btr;
 
 /**
  * Add a vote for the given translation from the current user.

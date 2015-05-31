@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Return a translation from its ID.

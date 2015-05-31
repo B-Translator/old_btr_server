@@ -5,7 +5,7 @@
  */
 
 namespace BTranslator;
-
+use \btr;
 
 /**
  * Check whether the current user has a certain role on the projects of the

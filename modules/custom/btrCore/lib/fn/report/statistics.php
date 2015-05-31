@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Return an array of the statistics (number of votes

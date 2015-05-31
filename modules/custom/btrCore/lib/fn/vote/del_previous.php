@@ -1,5 +1,6 @@
 <?php
 namespace BTranslator;
+use \btr;
 
 /**
  * Clean any previous vote by this user for this translation.

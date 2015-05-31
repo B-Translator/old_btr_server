@@ -5,6 +5,7 @@
  */
 
 namespace BTranslator;
+use \btr;
 
 /**
  * Return a list of all the imported projects, filtered by origin/project.

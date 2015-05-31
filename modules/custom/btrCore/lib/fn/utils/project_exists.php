@@ -5,7 +5,7 @@
  */
 
 namespace BTranslator;
-
+use \btr;
 
 /**
  * Check weather the given origin/project exists.
