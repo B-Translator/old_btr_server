@@ -5,6 +5,7 @@ core = 7.x
 
 dependencies[] = btrUser
 dependencies[] = btrLanguages
+dependencies[] = btrTranslationProjects
 
 dependencies[] = mailsystem
 dependencies[] = mimemail
