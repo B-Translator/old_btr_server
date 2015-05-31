@@ -58,7 +58,7 @@ function cron_send_strings_for_review() {
       'username' => $account->name,
       'recipient' => $account->name .' <' . $account->mail . '>',
     );
-    $notifications[] = $message_params
+    $notifications[] = $message_params;
   }
   btr::queue('notifications', $notifications);
 }
