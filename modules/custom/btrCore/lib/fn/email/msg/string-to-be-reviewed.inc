@@ -9,7 +9,7 @@ use \btr;
   list($string, $translations) = btr::string_get_translations($params->sguid, $lng);
   // Get the url of the string.
   list($origin, $project) = explode('/', $params->project);
-  $app_url = btr_get_app_url($lng, $origin, $project);
+  $app_url = btr::utils_get_app_url($lng, $origin, $project);
   if ($app_url and $origin=='vocabulary') {
     $url = "$app_url?lng=$lng&proj=$project#$string";
   }

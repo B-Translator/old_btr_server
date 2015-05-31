@@ -66,7 +66,7 @@ function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
   }
   else {
     module_load_include('inc', 'btrCore', 'includes/sites');
-    $base_url = btr_get_base_url($lng);
+    $base_url = btr::utils_get_base_url($lng);
     $twitter .= ' ' . $base_url . "/translations/$lng/$sguid";
   }
 

@@ -37,7 +37,7 @@ function translation_add($sguid, $lng, $translation) {
   }
 
   // Don't add empty translations.
-  $translation = btr_pack_string($translation);
+  $translation = btr::string_pack($translation);
   $translation = str_replace(t('<New translation>'), '', $translation);
   if (trim($translation) == '')  {
     $msg = t('The given translation is empty.');

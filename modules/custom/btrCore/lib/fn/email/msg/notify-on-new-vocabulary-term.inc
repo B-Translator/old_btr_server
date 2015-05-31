@@ -6,7 +6,7 @@ use \btr;
  * Notify translators that a new term has been added to the vocabulary.
  */
 {
-  $app_url = btr_get_app_url($lng, 'vocabulary', $params->project);
+  $app_url = btr::utils_get_app_url($lng, 'vocabulary', $params->project);
   $subject = t("[!prefix] New term: !string",
              array(
                '!prefix' => $params->project,

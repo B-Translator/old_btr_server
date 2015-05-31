@@ -47,7 +47,7 @@ function cron_import_project($params) {
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');
-  $base_url = btr_get_base_url($lng);
+  $base_url = btr::utils_get_base_url($lng);
 
   // Notify the user that the project import is done.
   $params = array(

@@ -60,7 +60,7 @@ function get_subject_and_body($params) {
 
   // Get the base_url of the translation site.
   module_load_include('inc', 'btrCore', 'lib/sites');
-  $base_url = btr_get_base_url($lng);
+  $base_url = btr::utils_get_base_url($lng);
 
   // Get the url of the string.
   if (isset($params->sguid)) {

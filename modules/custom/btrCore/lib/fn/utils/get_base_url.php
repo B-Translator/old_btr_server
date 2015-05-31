@@ -1,23 +1,17 @@
 <?php
-
 /**
- * Return the url of the mobile application for the given project.
+ * @file
+ * Function: utils_get_base_url()
  */
-function btr_get_app_url($lng, $origin, $project) {
-  list($_, $lng) = explode('_', $project);
-  $query = 'SELECT app_url FROM {btr_translation_projects}
-            WHERE lng = :lng AND origin = :origin AND project = :project';
-  $params = array(':lng' => $lng, ':origin' => $origin, ':project' => $project);
-  $app_url = db_query($query, $params)->fetchField();
-  return $app_url;
-}
+
+namespace BTranslator;
 
 /**
  * Return the base_url of a client site,
  * or the base_url of the server
  * if the url of that site is not defined.
  */
-function btr_get_base_url($lng) {
+function utils_get_base_url($lng) {
   $sites = btr_get_sites();
   if ( isset($sites[$lng]['base_url']) ) {
     $base_url = $sites[$lng]['base_url'];
