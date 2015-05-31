@@ -81,7 +81,7 @@ function schedule_project_export($origin, $project, $lng,
     'export_mode' => $export_mode,
     'preferred_voters' => $arr_emails,
   );
-  btr_queue('export_project', array($queue_params));
+  btr::queue('export_project', array($queue_params));
 
   // Schedule a notification to the admin.
   // TODO: Send this notification to the project admin.
@@ -89,7 +89,7 @@ function schedule_project_export($origin, $project, $lng,
   if ($notify_admin) {
     $queue_params['type'] = 'notify-admin-on-export-request';
     $queue_params['recipient'] = user_load(1)->mail;
-    btr_queue_notifications(array($params));
+    btr::queue('notifications', array($queue_params));
   }
 
   // Return a notification message.

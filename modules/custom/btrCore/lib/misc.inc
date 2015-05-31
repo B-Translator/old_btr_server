@@ -54,36 +54,3 @@ function btr_pack_string($strings) {
     return $strings;
   }
 }
-
-/**
- * Queue actions for batch execution.
- * @param $queue_name
- *   Name of the queue.
- * @param $items
- *   Array of items to be queued. Each item is an associative array
- *   that provides data for the batch process.
- */
-function btr_queue($queue_name, $items) {
-  $queue = DrupalQueue::get($queue_name);
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($items as $item) {
-    $queue->createItem((object)$item);
-  }
-}
-
-/**
- * Queue notifications for sending by email.
- *
- * @param $notifications
- *   Array of notification items. Each item is an associative array
- *   containing at least 'type' and 'recipient' (email), and optionally
- *   other parameters that can be used on the notification template
- *   (depending on the type of the notification).
- */
-function btr_queue_notifications($notifications) {
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-  foreach ($notifications as $item) {
-    $queue->createItem((object)$item);
-  }
-}

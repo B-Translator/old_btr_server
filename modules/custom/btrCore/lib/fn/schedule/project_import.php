@@ -91,7 +91,7 @@ function schedule_project_import($origin, $project, $uploaded_file) {
   }
 
   // Schedule the import.
-  btr_queue('import_project', array(array(
+  btr::queue('import_project', array(array(
         'uid' => $GLOBALS['user']->uid,
         'fid' => $file->fid,
         'origin' => $origin,
@@ -101,7 +101,7 @@ function schedule_project_import($origin, $project, $uploaded_file) {
   // Schedule a notification to the admin.
   $notify_admin = variable_get('btr_import_notify_admin', TRUE);
   if ($notify_admin) {
-    btr_queue_notifications(array(array(
+    btr::queue('notifications', array(array(
           'type' => 'notify-admin-on-import-request',
           'recipient' => user_load(1)->mail,
           'username' => $GLOBALS['user']->name,

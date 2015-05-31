@@ -6,7 +6,6 @@
 
 namespace BTranslator;
 use \btr;
-use \DrupalQueue;
 
 /**
  * Add a new string to a project (useful for vocabularies).
@@ -151,10 +150,9 @@ function _btr_new_string_notification($project, $string, $sguid) {
   $users = user_load_multiple($uids);
 
   // Notify the users about the new term.
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
+  $notifications = array();
   foreach ($users as $key => $user) {
-    $notification_params = array(
+    $params = array(
       'type' => 'notify-on-new-vocabulary-term',
       'uid' => $user->uid,
       'username' => $user->name,
@@ -164,6 +162,7 @@ function _btr_new_string_notification($project, $string, $sguid) {
       'sguid' => $sguid,
       'author' => $GLOBALS['user']->name,
     );
-    $queue->createItem((object)$notification_params);
+    $notifications[] = $params;
   }
+  btr::queue('notifications', $notifications);
 }

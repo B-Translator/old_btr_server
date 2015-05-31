@@ -6,7 +6,6 @@
 
 namespace BTranslator;
 use \btr;
-use \DrupalQueue;
 
 /**
  * Send by email a string for review to all the active users.
@@ -36,9 +35,7 @@ function cron_send_strings_for_review() {
     return FALSE;
   }
 
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-
+  $notifications = array();
   $accounts = entity_load('user');
   foreach ($accounts as $account) {
     if (_btrCore_dont_send_email($account))  continue;
@@ -61,6 +58,7 @@ function cron_send_strings_for_review() {
       'username' => $account->name,
       'recipient' => $account->name .' <' . $account->mail . '>',
     );
-    $queue->createItem((object)$message_params);
+    $notifications[] = $message_params
   }
+  btr::queue('notifications', $notifications);
 }

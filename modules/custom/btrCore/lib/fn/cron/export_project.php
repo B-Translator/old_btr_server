@@ -6,7 +6,6 @@
 
 namespace BTranslator;
 use \btr;
-use \DrupalQueue;
 
 /**
  * The callback function called from cron_queue 'export_project'.
@@ -48,8 +47,6 @@ function cron_export_project($export_params) {
     $export_mode, $preferred_voters);
 
   // Notify the user that the export is done.
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
   $exports_url = url('translations/exports', array('absolute' => TRUE));
   $params = array(
     'type' => 'notify-that-export-is-done',
@@ -61,7 +58,7 @@ function cron_export_project($export_params) {
     'export_url_diff' => "$exports_url/$filename.diff",
     'export_url_ediff' => "$exports_url/$filename.ediff",
   );
-  $queue->createItem((object)$params);
+  btr::queue('notifications', array($params));
 
   // This export is done, allow any other exports to run.
   lock_release('export_project');

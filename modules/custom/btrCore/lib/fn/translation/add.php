@@ -220,7 +220,7 @@ function _notify_voters_on_translation_change($voters, $sguid, $old_translation,
     $notifications[] = $notification;
   }
 
-  btr_queue_notifications($notifications);
+  btr::queue('notifications', $notifications);
 }
 
 /**
@@ -254,5 +254,5 @@ function _notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $trans
     $notifications[] = $notification;
   }
 
-  btr_queue_notifications($notifications);
+  btr::queue('notifications', $notifications);
 }

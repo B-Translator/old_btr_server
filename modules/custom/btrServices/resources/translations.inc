@@ -723,7 +723,7 @@ function _btrServices_vote_import($params) {
     'fid' => $file->fid,
     'lng' => $lng,
   );
-  btr_queue('import_translations', array($queue_params));
+  btr::queue('import_translations', array($queue_params));
 
   // Schedule a notification to the admin.
   // TODO: Send this notification to the project admin.
@@ -733,7 +733,7 @@ function _btrServices_vote_import($params) {
     $queue_params['recipient'] = user_load(1)->mail;
     $queue_params['username'] = $GLOBALS['user']->name;
     $queue_params['filename'] = $file->filename;
-    btr_queue_notifications(array($params));
+    btr::queue('notifications', array($params));
   }
 
   // Return a notification message.

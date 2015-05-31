@@ -6,7 +6,6 @@
 
 namespace BTranslator;
 use \btr;
-use \DrupalQueue;
 
 /**
  * The callback function called from cron_queue 'import_project'.
@@ -51,9 +50,6 @@ function cron_import_project($params) {
   $base_url = btr_get_base_url($lng);
 
   // Notify the user that the project import is done.
-  $queue = DrupalQueue::get('notifications');
-  $queue->createQueue();  // There is no harm in trying to recreate existing.
-
   $params = array(
     'type' => 'notify-that-project-import-is-done',
     'uid' => $account->uid,
@@ -69,7 +65,7 @@ function cron_import_project($params) {
                     )
                   )),
   );
-  $queue->createItem((object)$params);
+  btr::queue('notifications', array($params));
 
   // Cleanup, remove the temp dir and delete the file.
   exec("rm -rf $tmpdir/");

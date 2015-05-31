@@ -127,5 +127,5 @@ function _notify_voters_on_translation_del($tguid, $author, $voters) {
     $notifications[] = $notification;
   }
 
-  btr_queue_notifications($notifications);
+  btr::queue('notifications', $notifications);
 }

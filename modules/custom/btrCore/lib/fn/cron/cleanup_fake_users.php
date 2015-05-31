@@ -6,6 +6,7 @@
 
 namespace BTranslator;
 use \EntityFieldQuery;
+use \DrupalQueue;
 
 /**
  * Cleanup the users that were registered a week ago,
