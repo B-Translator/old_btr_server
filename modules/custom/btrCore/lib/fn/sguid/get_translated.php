@@ -46,7 +46,7 @@ function sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
 	   WHERE t.sguid IS NOT NULL
          )  AS st
   ";
-  $nr_strings = btr_query($sql_count, $args)->fetchField();
+  $nr_strings = btr::db_query($sql_count, $args)->fetchField();
 
   // Get the sguid of a random translated string. We sort strings
   // by the number of translations they have, and try to select one
@@ -66,7 +66,7 @@ function sguid_get_translated($lng, $uid =NULL, $target_projects =NULL) {
          )  AS st
     LIMIT $random_row_number, 1
   ";
-  $sguid = btr_query($sql_get_sguid, $args)->fetchField();
+  $sguid = btr::db_query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }

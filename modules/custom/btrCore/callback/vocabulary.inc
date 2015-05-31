@@ -47,10 +47,10 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   $origin = 'vocabulary';
   $project = $vocabulary;
   $params = array(':pguid' => sha1($origin . $project));
-  $potid = btr_query($query, $params)->fetchField();
+  $potid = btr::db_query($query, $params)->fetchField();
 
   // Build the query for getting all the strings of this vocabulary.
-  $query = btr_select('btr_locations', 'l')
+  $query = btr::db_select('btr_locations', 'l')
     ->fields('l', array('sguid'))
     ->condition('l.potid', $potid);
   $query->leftJoin('btr_strings', 's', 's.sguid = l.sguid');

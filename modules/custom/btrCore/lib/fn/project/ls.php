@@ -21,7 +21,7 @@ namespace BTranslator;
  */
 function project_ls($origin =NULL, $project =NULL) {
   // Start building the query.
-  $query = btr_select('btr_projects', 'p')
+  $query = btr::db_select('btr_projects', 'p')
     ->fields('p', array('origin'))
     ->orderBy('origin');
 

@@ -26,7 +26,7 @@ function vote_add($tguid) {
   // Fetch the translation details from the DB.
   $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
   $args = array(':tguid' => $tguid);
-  $trans = btr_query($sql, $args)->fetchObject();
+  $trans = btr::db_query($sql, $args)->fetchObject();
 
   // If there is no such translation, return NULL.
   if (empty($trans)) {
@@ -51,7 +51,7 @@ function vote_add($tguid) {
   $nr = _vote_del_previous($tguid, $umail, $trans->sguid, $trans->lng);
 
   // Add the vote.
-  $vid = btr_insert('btr_votes')
+  $vid = btr::db_insert('btr_votes')
     ->fields(array(
         'tguid' => $tguid,
         'umail' => $umail,
@@ -62,8 +62,8 @@ function vote_add($tguid) {
 
   // Update vote count of the translation.
   $sql = 'SELECT COUNT(*) FROM {btr_votes} WHERE tguid = :tguid';
-  $count = btr_query($sql, $args)->fetchField();
-  btr_update('btr_translations')
+  $count = btr::db_query($sql, $args)->fetchField();
+  btr::db_update('btr_translations')
     ->fields(array('count' => $count))
     ->condition('tguid', $tguid)
     ->execute();

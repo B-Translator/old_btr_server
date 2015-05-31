@@ -117,7 +117,7 @@ function btrTranslationProjects_entity_load($entities, $type) {
       ':lng' => $project->lng,
       ':role' => 'admin',
     );
-    $arr_uids = btr_query($get_users, $params)->fetchCol();
+    $arr_uids = btr::db_query($get_users, $params)->fetchCol();
     $users = user_load_multiple($arr_uids);
     $arr_names = array();
     foreach ($users as $user) {
@@ -127,7 +127,7 @@ function btrTranslationProjects_entity_load($entities, $type) {
 
     // Get the moderators of the project.
     $params[':role'] = 'moderator';
-    $arr_uids = btr_query($get_users, $params)->fetchCol();
+    $arr_uids = btr::db_query($get_users, $params)->fetchCol();
     $users = user_load_multiple($arr_uids);
     $arr_names = array();
     foreach ($users as $user) {
@@ -269,7 +269,7 @@ function _btrTranslationProjects_update_admins($form_state) {
 
   // Only a site administrator can update project admins.
   if (in_array('administrator', $GLOBALS['user']->roles)) {
-    btr_delete('btr_user_project_roles')
+    btr::db_delete('btr_user_project_roles')
       ->condition('pguid', $pguid)
       ->condition('ulng', $lng)
       ->condition('role', 'admin')
@@ -278,7 +278,7 @@ function _btrTranslationProjects_update_admins($form_state) {
     $param = array(':arr_names' => $arr_admins);
     $admin_emails = db_query($q, $param)->fetchCol();
     foreach ($admin_emails as $umail) {
-      btr_insert('btr_user_project_roles')
+      btr::db_insert('btr_user_project_roles')
         ->fields(array(
             'umail' => $umail,
             'ulng' => $lng,
@@ -298,13 +298,13 @@ function _btrTranslationProjects_update_admins($form_state) {
       $q = 'SELECT init FROM {users} WHERE name IN (:arr_names) AND uid != 0';
       $param = array(':arr_names' => $arr_moderators);
       $moderator_emails = db_query($q, $param)->fetchCol();
-      btr_delete('btr_user_project_roles')
+      btr::db_delete('btr_user_project_roles')
         ->condition('pguid', $pguid)
         ->condition('ulng', $lng)
         ->condition('role', 'moderator')
         ->execute();
       foreach ($moderator_emails as $umail) {
-        btr_insert('btr_user_project_roles')
+        btr::db_insert('btr_user_project_roles')
           ->fields(array(
               'umail' => $umail,
               'ulng' => $lng,
@@ -320,7 +320,7 @@ function _btrTranslationProjects_update_admins($form_state) {
     $q = 'SELECT umail FROM {btr_user_project_roles}
           WHERE pguid = :pguid AND ulng = :ulng';
     $param = array(':pguid' => $pguid, ':ulng' => $lng);
-    $emails = btr_query($q, $param)->fetchCol();
+    $emails = btr::db_query($q, $param)->fetchCol();
     db_update('contact')
       ->fields(array(
           'recipients' => implode(',', $emails),

@@ -48,7 +48,7 @@ function schedule_project_import($origin, $project, $uploaded_file) {
   }
 
   // Check that the given project does not belong to another user.
-  $uid = btr_query(
+  $uid = btr::db_query(
     'SELECT uid FROM {btr_projects} WHERE pguid = :pguid',
     array(
       ':pguid' => sha1($origin . $project),

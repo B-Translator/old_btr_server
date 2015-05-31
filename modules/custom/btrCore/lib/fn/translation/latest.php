@@ -51,7 +51,7 @@ function translation_latest($lng, $origin =NULL, $project =NULL) {
   $get_latest_translations .= "\n    ORDER BY t.time DESC";
 
   // run the query and get the translations
-  $translations = btr_query($get_latest_translations, $args)->fetchAll();
+  $translations = btr::db_query($get_latest_translations, $args)->fetchAll();
 
   return $translations;
 }

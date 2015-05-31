@@ -22,7 +22,7 @@ use \btr;
  *   associative arrays.
  */
 function string_load($arr_sguid, $lng) {
-  $query = btr_select('btr_strings', 's')
+  $query = btr::db_select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->condition('s.sguid', $arr_sguid, 'IN');
 

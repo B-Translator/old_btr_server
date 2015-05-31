@@ -43,7 +43,7 @@ function _btrUser_form_user_profile_submit($form, &$form_state) {
 
   function _btrUser_update_user_project_roles($umail, $ulng, $projects, $role) {
     // Delete any existings records.
-    btr_delete('btr_user_project_roles')
+    btr::db_delete('btr_user_project_roles')
       ->condition('umail', $umail)
       ->condition('ulng', $ulng)
       ->condition('role', $role)
@@ -62,9 +62,9 @@ function _btrUser_form_user_profile_submit($form, &$form_state) {
     // Get project pguid-s and for each of them insert a record.
     list($condition, $args) = btr::utils_projects_to_where_condition($arr_projects);
     $query = "SELECT pguid FROM {btr_projects} WHERE $condition";
-    $arr_pguid = btr_query($query, $args)->fetchCol();
+    $arr_pguid = btr::db_query($query, $args)->fetchCol();
     foreach ($arr_pguid as $pguid) {
-      btr_insert('btr_user_project_roles')
+      btr::db_insert('btr_user_project_roles')
         ->fields(array(
             'umail' => $umail,
             'ulng' => $ulng,

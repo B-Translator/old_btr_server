@@ -28,7 +28,7 @@ function vote_del($tguid) {
   $ulng = $user->translation_lng;
 
   // Fetch the translation details from the DB.
-  $trans = btr_query(
+  $trans = btr::db_query(
     'SELECT * FROM {btr_translations} WHERE tguid = :tguid',
     array(':tguid' => $tguid))
     ->fetchObject();

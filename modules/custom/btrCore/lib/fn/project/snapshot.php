@@ -73,7 +73,7 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
  */
 function project_snapshot_get($origin, $project, $lng, $file) {
   // Get the content of the snapshot (which is a tgz file).
-  $snapshot = btr_query(
+  $snapshot = btr::db_query(
     'SELECT snapshot FROM {btr_snapshots}
      WHERE pguid = :pguid AND lng = :lng',
     array(
@@ -123,13 +123,13 @@ function project_snapshot_save($origin, $project, $lng, $file) {
   }
 
   // Remove the old one first, if it exists.
-  btr_delete('btr_snapshots')
+  btr::db_delete('btr_snapshots')
     ->condition('pguid', sha1($origin . $project))
     ->condition('lng', $lng)
     ->execute();
 
   // Save the new snapshot.
-  btr_insert('btr_snapshots')
+  btr::db_insert('btr_snapshots')
     ->fields(array(
         'pguid' => sha1($origin . $project),
         'lng' => $lng,
@@ -139,4 +139,3 @@ function project_snapshot_save($origin, $project, $lng, $file) {
       ))
     ->execute();
 }
-

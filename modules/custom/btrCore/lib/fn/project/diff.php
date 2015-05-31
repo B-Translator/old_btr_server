@@ -91,7 +91,7 @@ function project_diff($origin, $project, $lng,
 function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $comment = NULL)
 {
   // Get the max number of diffs for this project/lng.
-  $max_nr = btr_query(
+  $max_nr = btr::db_query(
     'SELECT MAX(nr) AS max_nr FROM {btr_diffs}
       WHERE pguid = :pguid AND lng = :lng',
     array(
@@ -108,7 +108,7 @@ function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $com
   }
 
   // Insert a new record of diffs for this project.
-  btr_insert('btr_diffs')
+  btr::db_insert('btr_diffs')
     ->fields(array(
         'pguid' => sha1($origin . $project),
         'lng' => $lng,
@@ -135,7 +135,7 @@ function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $com
  *   The language of the translation files.
  */
 function project_diff_list($origin, $project, $lng) {
-  $diff_list = btr_query(
+  $diff_list = btr::db_query(
     'SELECT nr, time, comment FROM {btr_diffs}
      WHERE pguid = :pguid AND lng = :lng
      ORDER BY time ASC',
@@ -153,7 +153,7 @@ function project_diff_list($origin, $project, $lng) {
  */
 function project_diff_get($origin, $project, $lng, $nr, $format = 'diff') {
   $diff_field = ($format=='ediff' ? 'ediff' : 'diff');
-  $diff = btr_query(
+  $diff = btr::db_query(
     "SELECT $diff_field FROM {btr_diffs}
      WHERE pguid = :pguid AND lng = :lng AND nr = :nr
      ORDER BY time ASC",

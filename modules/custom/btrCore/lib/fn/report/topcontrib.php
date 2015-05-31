@@ -74,7 +74,7 @@ function report_topcontrib($lng = 'fr', $period = 'week', $size = 5) {
     ORDER BY score DESC
   ";
   $args = array(':lng' => $lng, ':from_date' => $from_date);
-  $topcontrib = btr_query_range($sql_get_topcontrib, 0, $size, $args)->fetchAll();
+  $topcontrib = btr::db_query_range($sql_get_topcontrib, 0, $size, $args)->fetchAll();
 
   // Cache for 12 hours.
   cache_set("report_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btr', time() + 12*60*60);

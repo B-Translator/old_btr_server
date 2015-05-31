@@ -22,7 +22,7 @@ function sguid_get_projects($sguid) {
       LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
       WHERE l.sguid = :sguid
   ";
-  $result = btr_query($get_projects, $args)->fetchAll();
+  $result = btr::db_query($get_projects, $args)->fetchAll();
   $projects = array();
   foreach ($result as $proj) {
     $projects[] = $proj->origin . '/' . $proj->project;

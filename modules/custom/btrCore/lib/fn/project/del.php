@@ -34,14 +34,14 @@ function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TR
   if ($origin === NULL and $project === NULL)  return;
 
   // Get an array of matching projects.
-  $get_pguid = btr_select('btr_projects', 'p')->fields('p', array('pguid'));
+  $get_pguid = btr::db_select('btr_projects', 'p')->fields('p', array('pguid'));
   if ($origin != NULL)  $get_pguid->condition('origin', $origin);
   if ($project != NULL)  $get_pguid->condition('project', $project);
   $pguid_list = $get_pguid->execute()->fetchCol();
   if (empty($pguid_list))  return;
 
   // Get an array of templates related to the projects.
-  $potid_list = btr_query(
+  $potid_list = btr::db_query(
     'SELECT potid FROM {btr_templates} t
      LEFT JOIN {btr_projects} p ON (t.pguid = p.pguid)
      WHERE p.pguid IN (:pguid_list)',
@@ -58,13 +58,13 @@ function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TR
   // Delete the diffs and snapshots of each project.
   if ($erase) {
     foreach ($pguid_list as $pguid) {
-      btr_delete('btr_diffs')->condition('pguid', $pguid)->execute();
-      btr_delete('btr_snapshots')->condition('pguid', $pguid)->execute();
+      btr::db_delete('btr_diffs')->condition('pguid', $pguid)->execute();
+      btr::db_delete('btr_snapshots')->condition('pguid', $pguid)->execute();
     }
   }
 
   // Delete the projects themselves.
-  btr_delete('btr_projects')
+  btr::db_delete('btr_projects')
     ->condition('pguid', $pguid_list, 'IN')
     ->execute();
 
@@ -80,7 +80,7 @@ function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TR
  */
 function _delete_template($potid) {
   // Decrement the count of the strings related to this template.
-  btr_query(
+  btr::db_query(
     'UPDATE {btr_strings} AS s
      INNER JOIN (SELECT sguid FROM {btr_locations} WHERE potid = :potid) AS l
              ON (l.sguid = s.sguid)
@@ -88,8 +88,7 @@ function _delete_template($potid) {
     array(':potid' => $potid));
 
   // Delete the locations, files, and the template itself.
-  btr_delete('btr_locations')->condition('potid', $potid)->execute();
-  btr_delete('btr_files')->condition('potid', $potid)->execute();
-  btr_delete('btr_templates')->condition('potid', $potid)->execute();
+  btr::db_delete('btr_locations')->condition('potid', $potid)->execute();
+  btr::db_delete('btr_files')->condition('potid', $potid)->execute();
+  btr::db_delete('btr_templates')->condition('potid', $potid)->execute();
 }
-

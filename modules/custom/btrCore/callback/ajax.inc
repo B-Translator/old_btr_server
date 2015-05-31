@@ -14,7 +14,7 @@ function btrCore_project_autocomplete($string = '') {
               FROM {btr_projects}
               WHERE project LIKE :str ORDER BY project";
     $args = array(':str' => $string . '%');
-    $result = btr_query_range($query, 0, 10, $args);
+    $result = btr::db_query_range($query, 0, 10, $args);
     foreach ($result as $project) {
       $matches[$project->project] = check_plain($project->project);
     }
@@ -33,7 +33,7 @@ function btrCore_origin_autocomplete($string = '') {
               FROM {btr_projects}
               WHERE origin LIKE :str ORDER BY origin";
     $args = array(':str' => $string . '%');
-    $result = btr_query_range($query, 0, 10, $args);
+    $result = btr::db_query_range($query, 0, 10, $args);
     foreach ($result as $project) {
       $matches[$project->origin] = check_plain($project->origin);
     }
@@ -55,7 +55,7 @@ function btrCore_user_autocomplete($lng, $string = '') {
       ':str' => $string . '%',
       ':ulng' => $lng,
     );
-    $result = btr_query_range($query, 0, 10, $args);
+    $result = btr::db_query_range($query, 0, 10, $args);
     foreach ($result as $user) {
       $matches[$user->name] = check_plain($user->name);
     }
@@ -78,7 +78,7 @@ function btrCore_string_details($sguid) {
   // Get the context of this string.
   $query = "SELECT context FROM {btr_strings} WHERE sguid = :sguid";
   $args = array(':sguid' => $sguid);
-  $context = btr_query($query, $args)->fetchField();
+  $context = btr::db_query($query, $args)->fetchField();
   if (!empty($context)) {
     $output .= '<h3>' . t('Used with context: %context', array('%context' => $context)) . '</h3>';
   }
@@ -95,7 +95,7 @@ function btrCore_string_details($sguid) {
     ORDER BY p.origin, p.project
   ";
   $args = array(':sguid' => $sguid);
-  $project_list = btr_query($sql, $args)->fetchCol();
+  $project_list = btr::db_query($sql, $args)->fetchCol();
   $output .= theme('item_list', array('items' => $project_list));
 
   print $output;
@@ -148,7 +148,7 @@ function btrCore_string_autocomplete($origin = '*', $project = '*', $string = ''
   }
 
   // Run the query and get the results.
-  $result = btr_query_range($query, 0, 10, $query_args);
+  $result = btr::db_query_range($query, 0, 10, $query_args);
   $matches = array();
   foreach ($result as $str) {
     $matches[$str->string] = check_plain($str->string);

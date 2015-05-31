@@ -74,7 +74,7 @@ function project_export($origin, $project, $lng, $path, $uid = 0,
   }
 
   // Get the templates and filenames of the project.
-  $result = btr_query(
+  $result = btr::db_query(
     'SELECT t.tplname, f.filename
      FROM {btr_files} f
      LEFT JOIN {btr_templates} t ON (f.potid = t.potid)
@@ -114,7 +114,7 @@ function project_export($origin, $project, $lng, $path, $uid = 0,
 function _export_po_file($origin, $project, $lng, $tplname, $filename, $export_mode = 'most_voted', $preferred_voters = NULL) {
 
   // Get the id of the template.
-  $potid = btr_query(
+  $potid = btr::db_query(
     'SELECT potid FROM {btr_templates}
      WHERE pguid = :pguid AND tplname = :tplname',
     array(
@@ -128,7 +128,7 @@ function _export_po_file($origin, $project, $lng, $tplname, $filename, $export_m
   }
 
   // Get headers and comments of the template.
-  $row = btr_query(
+  $row = btr::db_query(
     'SELECT headers, comments FROM {btr_files}
      WHERE potid = :potid AND lng = :lng',
     array(
@@ -140,7 +140,7 @@ function _export_po_file($origin, $project, $lng, $tplname, $filename, $export_m
   $comments = isset($row->comments) ? $row->comments : NULL;
 
   // Get strings of the template.
-  $strings = btr_query(
+  $strings = btr::db_query(
     'SELECT l.sguid, s.string, s.context,
             translator_comments, extracted_comments, line_references, flags,
             previous_msgctxt, previous_msgid, previous_msgid_plural
@@ -201,7 +201,7 @@ function _export_po_file($origin, $project, $lng, $tplname, $filename, $export_m
 function _get_original_translations($potid, $lng)
 {
   // Get the content of the imported PO file.
-  $file_content = btr_query(
+  $file_content = btr::db_query(
     'SELECT content FROM {btr_files}
      WHERE potid = :potid AND lng = :lng',
     array(':potid' => $potid, ':lng' => $lng)
@@ -248,7 +248,7 @@ function _get_original_translations($potid, $lng)
 function _get_most_voted_translations($potid, $lng) {
   // Create a temporary table with the maximum vote count for each string.
   $tmp_table_translations_max_count =
-    btr_query_temporary(
+    btr::db_query_temporary(
       'SELECT t.sguid, MAX(t.count) AS max_count
        FROM {btr_locations} AS l
        LEFT JOIN {btr_translations} AS t
@@ -264,7 +264,7 @@ function _get_most_voted_translations($potid, $lng) {
   // Get the translations with the max vote count for each string.
   // The result will be an assoc array (sguid => translation).
   $most_voted_translations =
-    btr_query(
+    btr::db_query(
       "SELECT t.sguid, t.translation
        FROM {$tmp_table_translations_max_count} AS cnt
        LEFT JOIN {btr_translations} AS t
@@ -294,7 +294,7 @@ function _get_preferred_translations($potid, $lng, $arr_voters) {
   // Build a temporary table with translations
   // that have any votes from the preferred users.
   $tmp_table_voted_translations =
-    btr_query_temporary(
+    btr::db_query_temporary(
       'SELECT t.sguid, t.tguid, t.translation, COUNT(*) AS v_count
        FROM {btr_locations} AS l
        LEFT JOIN {btr_translations} AS t
@@ -313,7 +313,7 @@ function _get_preferred_translations($potid, $lng, $arr_voters) {
 
   // Build a temporary table with the maximum votes for each string.
   $tmp_table_max_vote_count =
-    btr_query_temporary(
+    btr::db_query_temporary(
       "SELECT sguid, MAX(v_count) AS max_count
        FROM {$tmp_table_voted_translations}
        GROUP BY sguid"
@@ -322,7 +322,7 @@ function _get_preferred_translations($potid, $lng, $arr_voters) {
   // Get translations with the max vote count for each string,
   // as an assoc array (sguid => translation).
   $preferred_translations =
-    btr_query(
+    btr::db_query(
       "SELECT cnt.sguid, t.translation
        FROM {$tmp_table_max_vote_count} AS cnt
        LEFT JOIN {$tmp_table_voted_translations} AS t

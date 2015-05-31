@@ -95,5 +95,5 @@ function btrCore_delete_fake_user($uid) {
   user_delete($uid);
 
   // Delete from the table 'btr_users'
-  btr_delete('btr_users')->condition('uid', $uid)->execute();
+  btr::db_delete('btr_users')->condition('uid', $uid)->execute();
 }

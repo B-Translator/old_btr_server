@@ -22,7 +22,7 @@ function process_comment($title, $link, $description) {
   list($lng, $sguid) = explode('/', $substr);
 
   // Get a list of users who have voted for this string.
-  $uids = btr_query(
+  $uids = btr::db_query(
     'SELECT u.uid FROM {btr_translations} t
      INNER JOIN {btr_votes} v ON (v.tguid = t.tguid)
      INNER JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)

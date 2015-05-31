@@ -40,7 +40,7 @@ function _vote_del_previous($tguid, $umail, $sguid, $lng) {
   else { // ($voting_mode == 'single')
     // Get the other sibling translations (translations of the same
     // string and the same language) which the user has voted.
-    $arr_tguid = btr_query(
+    $arr_tguid = btr::db_query(
       'SELECT DISTINCT t.tguid
        FROM {btr_translations} t
        LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
@@ -60,23 +60,23 @@ function _vote_del_previous($tguid, $umail, $sguid, $lng) {
   if (empty($arr_tguid))  return 0;
 
   // Insert to the trash table the votes that will be removed.
-  $query = btr_select('btr_votes', 'v')
+  $query = btr::db_select('btr_votes', 'v')
     ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
     ->condition('umail', $umail)
     ->condition('ulng', $lng)
     ->condition('tguid', $arr_tguid, 'IN');
   $query->addExpression('NOW()', 'd_time');
-  btr_insert('btr_votes_trash')->from($query)->execute();
+  btr::db_insert('btr_votes_trash')->from($query)->execute();
 
   // Remove any votes by the user for each translation in $arr_tguid.
-  $num_deleted = btr_delete('btr_votes')
+  $num_deleted = btr::db_delete('btr_votes')
     ->condition('umail', $umail)
     ->condition('ulng', $lng)
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();
 
   // Decrement the vote count for each translation in $arr_tguid.
-  $num_updated = btr_update('btr_translations')
+  $num_updated = btr::db_update('btr_translations')
     ->expression('count', 'count - 1')
     ->condition('tguid', $arr_tguid, 'IN')
     ->execute();

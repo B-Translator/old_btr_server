@@ -20,7 +20,7 @@ use \btr;
 function string_cleanup($purge = FALSE, $notify = FALSE) {
   // Create a temporary table with the dangling strings.
   $dangling_strings =
-    btr_query_temporary(
+    btr::db_query_temporary(
       'SELECT s.sguid
        FROM {btr_strings} s
        LEFT JOIN {btr_locations} l ON (l.sguid = s.sguid)
@@ -28,7 +28,7 @@ function string_cleanup($purge = FALSE, $notify = FALSE) {
     );
 
   // Count the dangling strings.
-  $count = btr_query(
+  $count = btr::db_query(
     "SELECT COUNT(*) AS cnt FROM {$dangling_strings}"
   )->fetchField();
 
@@ -36,7 +36,7 @@ function string_cleanup($purge = FALSE, $notify = FALSE) {
   if (!$count)  return;
 
   // Delete translations of dangling strings that have no votes.
-  btr_query(
+  btr::db_query(
     "DELETE t.* FROM {btr_translations} t
      INNER JOIN {$dangling_strings} d ON (d.sguid = t.sguid)
      LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
@@ -46,7 +46,7 @@ function string_cleanup($purge = FALSE, $notify = FALSE) {
   // Delete translations that have votes as well.
   if ($purge) {
     // Get a list of translations that will be deleted.
-    $tguid_list = btr_query(
+    $tguid_list = btr::db_query(
       "SELECT t.tguid FROM {btr_translations} t
        INNER JOIN {$dangling_strings} d ON (d.sguid = t.sguid)"
     )->fetchCol();
@@ -58,7 +58,7 @@ function string_cleanup($purge = FALSE, $notify = FALSE) {
   }
 
   // Delete the dangling strings itself.
-  btr_query(
+  btr::db_query(
     "DELETE s.* FROM {btr_strings} s
      INNER JOIN {$dangling_strings} d ON (d.sguid = s.sguid)"
   );

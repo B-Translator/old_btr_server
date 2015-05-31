@@ -18,40 +18,40 @@ function string_del($sguid, $project, $origin = 'vocabulary') {
   if ($origin=='vocabulary') {
     // Get the string.
     $q = 'SELECT string FROM {btr_strings} WHERE sguid = :sguid';
-    $string = btr_query($q, array(':sguid' => $sguid))->fetchField();
+    $string = btr::db_query($q, array(':sguid' => $sguid))->fetchField();
 
     // Remove it from the corresponding "mv" table.
     $table = 'btr_mv_' . strtolower($project);
-    btr_delete($table)->condition('string', $string)->execute();
+    btr::db_delete($table)->condition('string', $string)->execute();
   }
 
   // Get the template of the project.
   $pguid = sha1($origin . $project);
   $q = 'SELECT potid FROM {btr_templates} WHERE pguid = :pguid';
-  $potid = btr_query($q, array(':pguid' => $pguid))->fetchField();
+  $potid = btr::db_query($q, array(':pguid' => $pguid))->fetchField();
 
   // Remove the string from the template of the project project.
-  btr_delete('btr_locations')
+  btr::db_delete('btr_locations')
     ->condition('potid', $potid)
     ->condition('sguid', $sguid)
     ->execute();
 
   // Decrement the count of the string (which keeps the number of projects).
-  btr_update('btr_strings')
+  btr::db_update('btr_strings')
     ->expression('count', 'count - 1')
     ->condition('sguid', $sguid)
     ->execute();
 
   // If the count is 0, remove the string and any translations.
   $q = 'SELECT count FROM {btr_strings} WHERE sguid = :sguid';
-  $count = btr_query($q, array(':sguid' => $sguid))->fetchField();
+  $count = btr::db_query($q, array(':sguid' => $sguid))->fetchField();
   if (!$count) {
     // Get any translations related to the string.
     $q = 'SELECT tguid FROM {btr_translations} WHERE sguid = :sguid';
-    $tguid_list = btr_query($q, array(':sguid' => $sguid))->fetchCol();
+    $tguid_list = btr::db_query($q, array(':sguid' => $sguid))->fetchCol();
 
     // Delete the string itself.
-    btr_delete('btr_strings')->condition('sguid', $sguid)->execute();
+    btr::db_delete('btr_strings')->condition('sguid', $sguid)->execute();
 
     // Delete any translations (without notification).
     foreach ($tguid_list as $tguid) {

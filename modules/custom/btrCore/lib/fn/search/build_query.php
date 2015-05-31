@@ -43,7 +43,7 @@ use \btr;
  */
 function search_build_query($filter) {
 
-  $query = btr_select('btr_strings', 's')
+  $query = btr::db_select('btr_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
   $query->addField('s', 'sguid');
   $query->groupBy('s.sguid');
@@ -154,9 +154,9 @@ function _filter_by_author($query, $lng, $only_mine, $translated_by, $voted_by) 
   $args = array();
   $args[':ulng'] = $lng;
   $args[':name'] = $translated_by;
-  $t_umail = ($translated_by == '') ? '' : btr_query($get_umail, $args)->fetchField();
+  $t_umail = ($translated_by == '') ? '' : btr::db_query($get_umail, $args)->fetchField();
   $args[':name'] = $voted_by;
-  $v_umail = ($voted_by == '') ? '' : btr_query($get_umail, $args)->fetchField();
+  $v_umail = ($voted_by == '') ? '' : btr::db_query($get_umail, $args)->fetchField();
 
   //if it is the same user, then search for strings
   //translated OR voted by this user

@@ -60,7 +60,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
   $sguid = sha1($string . $context);
 
   // Check whether this string already exists or not.
-  $field = btr_query(
+  $field = btr::db_query(
     'SELECT sguid FROM {btr_strings} WHERE sguid = :sguid',
     array(':sguid' => $sguid)
   )->fetchField();
@@ -70,7 +70,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
   }
 
   // Insert a new string.
-  btr_insert('btr_strings')
+  btr::db_insert('btr_strings')
     ->fields(array(
         'string' => $string,
         'context' => $context,
@@ -83,7 +83,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
 
   // Get the template id.
   if (empty($tplname))  $tplname = $project;
-  $potid = btr_query(
+  $potid = btr::db_query(
     'SELECT potid FROM {btr_templates}
      WHERE pguid = :pguid AND tplname = :tplname',
     array(
@@ -93,7 +93,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
     ->fetchField();
 
   // Check that the location does not already exist.
-  $lid = btr_query(
+  $lid = btr::db_query(
     'SELECT lid FROM {btr_locations}
      WHERE sguid = :sguid AND potid = :potid',
     array(
@@ -107,7 +107,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
   }
 
   // Insert a new location.
-  btr_insert('btr_locations')
+  btr::db_insert('btr_locations')
     ->fields(array(
         'sguid' => $sguid,
         'potid' => $potid,
@@ -117,7 +117,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
   // Insert the string to the materialized view.
   if ($origin=='vocabulary') {
     $table = 'btr_mv_' . strtolower($project);
-    btr_insert($table)
+    btr::db_insert($table)
       ->fields(array('string' => $string))
       ->execute();
   }

@@ -128,7 +128,7 @@ function _get_sguid($entry, $uid) {
 
   // Make sure that such a string is stored in the DB.
   if (!btr::string_get($sguid)) {
-    btr_insert('btr_strings')
+    btr::db_insert('btr_strings')
       ->fields(array(
           'string' => $string,
           'context' => $context,
@@ -155,7 +155,7 @@ function _add_translation($sguid, $lng, $translation, $umail) {
   // Check whether this translation exists.
   $query = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
   $args = array(':tguid' => $tguid);
-  $result = btr_query($query, $args)->fetch();
+  $result = btr::db_query($query, $args)->fetch();
 
   if (!$result) {
     // Add the translation for this string.
@@ -168,7 +168,7 @@ function _add_translation($sguid, $lng, $translation, $umail) {
     $messages = array_merge($messages, $msgs);
     // Update the author of the translations.
     if (empty($result->umail) or $result->umail == 'admin@example.com') {
-      btr_update('btr_translations')
+      btr::db_update('btr_translations')
         ->fields(array(
             'umail' => $umail,
             'time' => date('Y-m-d H:i:s', REQUEST_TIME),

@@ -87,6 +87,6 @@ function sguid_get_sequential($uid =NULL) {
   // get and return the sguid
   $query = 'SELECT sguid FROM {btr_locations} WHERE lid=:lid';
   $args = array(':lid' => $lid);
-  $sguid = btr_query($query, $args)->fetchField();
+  $sguid = btr::db_query($query, $args)->fetchField();
   return array($sguid, array());
 }

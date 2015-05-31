@@ -49,7 +49,7 @@ function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
 
   // Create a project.
   $pguid = sha1($origin . $project);
-  btr_insert('btr_projects')
+  btr::db_insert('btr_projects')
     ->fields(array(
         'pguid' => $pguid,
         'origin' => $origin,
@@ -109,7 +109,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
   QUIET || print "import_pot_file: $filename\n";
 
   // Create a new template.
-  $potid = btr_insert('btr_templates')
+  $potid = btr::db_insert('btr_templates')
     ->fields(array(
         'tplname' => $tplname,
         'filename' => $filename,
@@ -163,7 +163,7 @@ function _add_string($entry) {
   $sguid = sha1($string . $context);
 
   // Increment the count of the string.
-  $count = btr_update('btr_strings')
+  $count = btr::db_update('btr_strings')
     ->expression('count', 'count + :one', array(':one' => 1))
     ->condition('sguid', $sguid)
     ->execute();
@@ -180,7 +180,7 @@ function _add_string($entry) {
   // If no record was affected, it means that such a string
   // does not exist, so insert a new string.
   if (!$count) {
-    btr_insert('btr_strings')
+    btr::db_insert('btr_strings')
       ->fields(array(
           'string' => $string,
           'context' => $context,
@@ -202,7 +202,7 @@ function _add_string($entry) {
  * Insert a new record on the locations table
  */
 function _insert_location($potid, $sguid, $entry) {
-  btr_insert('btr_locations')
+  btr::db_insert('btr_locations')
     ->fields(array(
         'sguid' => $sguid,
         'potid' => $potid,

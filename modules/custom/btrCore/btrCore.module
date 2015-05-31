@@ -16,7 +16,6 @@ require_once(dirname(__FILE__) . '/btrCore.menu.inc');
 require_once(dirname(__FILE__) . '/btrCore.cron.inc');
 
 module_load_include('php', 'btrCore', 'lib/btr');
-module_load_include('inc', 'btrCore', 'lib/query');
 
 /**
  * Implements hook_help().

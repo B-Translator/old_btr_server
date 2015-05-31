@@ -10,7 +10,7 @@ namespace BTranslator;
  * Get a string from its ID.
  */
 function string_get($sguid) {
-  $string = btr_query(
+  $string = btr::db_query(
     'SELECT string FROM {btr_strings} WHERE sguid = :sguid',
     array(':sguid' => $sguid)
   )->fetchField();

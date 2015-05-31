@@ -38,7 +38,7 @@ function sguid_get_random($uid =NULL, $target_projects =NULL) {
     LEFT JOIN {btr_locations} l ON (l.potid = tpl.potid)
     LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
   ";
-  $nr_strings = btr_query($sql_count, $args)->fetchField();
+  $nr_strings = btr::db_query($sql_count, $args)->fetchField();
 
   // Get a random row number.
   $random_row_number = rand(0, $nr_strings - 1);
@@ -52,7 +52,7 @@ function sguid_get_random($uid =NULL, $target_projects =NULL) {
     LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
     LIMIT $random_row_number, 1
   ";
-  $sguid = btr_query($sql_get_sguid, $args)->fetchField();
+  $sguid = btr::db_query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }

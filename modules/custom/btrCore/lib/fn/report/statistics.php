@@ -38,8 +38,8 @@ function report_statistics($lng) {
   foreach (array('week', 'month', 'year') as $period) {
     $from_date = date('Y-m-d', strtotime("-1 $period"));
     $args = array(':lng' => $lng, ':from_date' => $from_date);
-    $nr_votes = btr_query($sql_count_votes, $args)->fetchField();
-    $nr_translations = btr_query($sql_count_translations, $args)->fetchField();
+    $nr_votes = btr::db_query($sql_count_votes, $args)->fetchField();
+    $nr_translations = btr::db_query($sql_count_translations, $args)->fetchField();
 
     $stats[$period] = array(
       'period' => $period,

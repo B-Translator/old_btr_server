@@ -34,13 +34,13 @@ function string_details($filter_query, $lng, $alternative_langs = array()) {
   $arr_sguid = array_keys($assoc_arr_sguid);
 
   // Get strings.
-  $arr_strings = btr_query(
+  $arr_strings = btr::db_query(
     'SELECT sguid, string FROM {btr_strings} WHERE sguid IN (:arr_sguid)',
     array(':arr_sguid' => $arr_sguid)
   )->fetchAllAssoc('sguid');
 
   // Get translations.
-  $arr_translations = btr_query(
+  $arr_translations = btr::db_query(
     'SELECT s.sguid, t.tguid, t.lng, t.translation,
             t.time, u.name AS author, u.umail, u.ulng, u.uid, t.count
      FROM {btr_strings} s
@@ -57,7 +57,7 @@ function string_details($filter_query, $lng, $alternative_langs = array()) {
     $arr_votes = array();
   }
   else {
-    $arr_votes = btr_query(
+    $arr_votes = btr::db_query(
       'SELECT t.tguid, v.vid, u.name, u.umail, u.ulng, u.uid, v.time
        FROM {btr_translations} t
        LEFT OUTER JOIN {btr_votes} v ON (v.tguid = t.tguid)
@@ -74,7 +74,7 @@ function string_details($filter_query, $lng, $alternative_langs = array()) {
     $arr_alternatives = array();
   }
   else {
-    $arr_alternatives = btr_query(
+    $arr_alternatives = btr::db_query(
       'SELECT DISTINCT t.sguid, t.tguid, t.lng, t.translation, t.count
        FROM (SELECT sguid, lng, MAX(count) AS max_count
 	     FROM {btr_translations}

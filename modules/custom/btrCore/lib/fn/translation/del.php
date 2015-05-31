@@ -28,14 +28,14 @@ function translation_del($tguid, $notify = TRUE) {
   $ulng = $user->translation_lng;
 
   // Before deleting, get the author and voters (for notifications).
-  $author = btr_query(
+  $author = btr::db_query(
     'SELECT u.uid, u.name, u.umail
      FROM {btr_translations} t
      LEFT JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
      WHERE t.tguid = :tguid',
     array(':tguid' => $tguid))
     ->fetchObject();
-  $voters = btr_query(
+  $voters = btr::db_query(
     'SELECT u.uid, u.name, u.umail
      FROM {btr_votes} v
      LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
@@ -44,7 +44,7 @@ function translation_del($tguid, $notify = TRUE) {
     ->fetchAll();
 
   // Check that the current user has the right to delete translations.
-  $sguid = btr_query(
+  $sguid = btr::db_query(
     'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
     array(':tguid' => $tguid)
   )->fetchField();
@@ -58,24 +58,24 @@ function translation_del($tguid, $notify = TRUE) {
     }
 
   // Copy to the trash table the translation that will be deleted.
-  $query = btr_select('btr_translations', 't')
+  $query = btr::db_select('btr_translations', 't')
     ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $tguid);
   $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $umail));
   $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => $ulng));
   $query->addExpression('NOW()', 'd_time');
-  btr_insert('btr_translations_trash')->from($query)->execute();
+  btr::db_insert('btr_translations_trash')->from($query)->execute();
 
   // Copy to the trash table the votes that will be deleted.
-  $query = btr_select('btr_votes', 'v')
+  $query = btr::db_select('btr_votes', 'v')
     ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $tguid);
   $query->addExpression('NOW()', 'd_time');
-  btr_insert('btr_votes_trash')->from($query)->execute();
+  btr::db_insert('btr_votes_trash')->from($query)->execute();
 
   // Delete the translation and any votes related to it.
-  btr_delete('btr_translations')->condition('tguid', $tguid)->execute();
-  btr_delete('btr_votes')->condition('tguid', $tguid)->execute();
+  btr::db_delete('btr_translations')->condition('tguid', $tguid)->execute();
+  btr::db_delete('btr_votes')->condition('tguid', $tguid)->execute();
 
   // Notify the author of a translation and its voters
   // that it has been deleted.
@@ -92,7 +92,7 @@ function translation_del($tguid, $notify = TRUE) {
  */
 function _notify_voters_on_translation_del($tguid, $author, $voters) {
   // get the sguid, string and translation
-  $sguid = btr_query(
+  $sguid = btr::db_query(
     'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
     array(':tguid' => $tguid))->fetchField();
   $string = btr::string_get($sguid);

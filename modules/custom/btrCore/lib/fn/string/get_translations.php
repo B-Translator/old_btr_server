@@ -20,7 +20,7 @@ use \btr;
  *   array($string, $translations)
  */
 function string_get_translations($sguid, $lng) {
-  $query = btr_select('btr_strings', 's')
+  $query = btr::db_select('btr_strings', 's')
     ->fields('s', array('sguid'))
     ->where('s.sguid = :sguid', array(':sguid' => $sguid));
   $strings = btr::string_details($query, $lng);

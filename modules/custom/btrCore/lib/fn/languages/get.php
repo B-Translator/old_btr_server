@@ -38,7 +38,7 @@ function languages_get() {
  */
 function languages_get_list() {
   $list = array();
-  $all_langs = btr_query('SELECT * FROM btr_languages')->fetchAllAssoc('code');
+  $all_langs = btr::db_query('SELECT * FROM btr_languages')->fetchAllAssoc('code');
   $langs = btr::languages_get();
   foreach ($langs as $lng) {
     $list[$lng] = isset($all_langs[$lng]) ? $all_langs[$lng]->name : $lng;
@@ -56,7 +56,7 @@ function languages_get_list() {
  */
 function languages_get_details() {
   $lng_details = array();
-  $all_langs = btr_query('SELECT * FROM btr_languages')->fetchAllAssoc('code');
+  $all_langs = btr::db_query('SELECT * FROM btr_languages')->fetchAllAssoc('code');
   $langs = btr::languages_get();
   foreach ($langs as $lng) {
     if (isset($all_langs[$lng])) {

@@ -135,7 +135,7 @@ function _btrUser_user_set_data_sequential(&$edit, $account) {
       WHERE $where_condition
       GROUP BY p.project
     ";
-    $result = btr_query($get_all_min_and_max_locations, $args);
+    $result = btr::db_query($get_all_min_and_max_locations, $args);
     $sequential->projects = $result->fetchAll();
     $sequential->idx = 0;
     $sequential->lid = $sequential->projects[0]->lmin;
@@ -220,11 +220,11 @@ function _btrUser_user_get_fields(&$user) {
     ':ulng' => $user->translation_lng,
     ':role' => 'admin',
   );
-  $user->admin_projects = btr_query($get_managed_projects, $params)->fetchCol();
+  $user->admin_projects = btr::db_query($get_managed_projects, $params)->fetchCol();
 
   // Get the projects for which the user is a moderator.
   $params[':role'] = 'moderator';
-  $user->moderate_projects = btr_query($get_managed_projects, $params)->fetchCol();
+  $user->moderate_projects = btr::db_query($get_managed_projects, $params)->fetchCol();
 }
 
 /**
@@ -286,7 +286,7 @@ function _btrUser_user_set_fields(&$edit, $account) {
  */
 function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
   // Delete first any existing user which has the same umail and ulng.
-  btr_delete('btr_users')
+  btr::db_delete('btr_users')
     ->condition('umail', $umail)
     ->condition(db_or()
       ->condition('ulng', $ulng)
@@ -295,7 +295,7 @@ function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
     ->execute();
 
   // Insert a new user with the given fields.
-  btr_insert('btr_users')
+  btr::db_insert('btr_users')
     ->fields(array(
         'umail' => $umail,
         'ulng' => $ulng,
@@ -311,7 +311,7 @@ function _btr_user_update($umail, $ulng, $ulng_old, $uid, $name, $status) {
  * It is called when a user is cancelled or deleted.
  */
 function _btr_user_disable($umail, $ulng) {
-  btr_update('btr_users')
+  btr::db_update('btr_users')
     ->fields(array(
         'status' => 0,
       ))

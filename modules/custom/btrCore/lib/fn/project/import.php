@@ -50,7 +50,7 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
   $user = user_load($uid);
 
   // Check that the project exists.
-  $pguid = btr_query(
+  $pguid = btr::db_query(
     'SELECT pguid FROM {btr_projects} WHERE pguid = :pguid',
     array(':pguid' => sha1($origin . $project))
   )->fetchField();
@@ -106,7 +106,7 @@ function _process_po_file($origin, $project, $tplname, $lng, $file, $filename) {
   QUIET || print "import_po_file: $filename\n";
 
   // Get the template id.
-  $potid = btr_query(
+  $potid = btr::db_query(
     'SELECT potid FROM {btr_templates}
        WHERE pguid = :pguid AND tplname = :tplname ',
     array(
@@ -159,7 +159,7 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
   $hash = sha1_file($file);
 
   // Check whether the file already exists.
-  $row = btr_query(
+  $row = btr::db_query(
     'SELECT potid, lng FROM {btr_files} WHERE hash = :hash',
     array(':hash' => $hash)
   )->fetchAssoc();
@@ -172,7 +172,7 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
     }
     else {
       // file already imported for some other template or language
-      $row1 = btr_query(
+      $row1 = btr::db_query(
         'SELECT p.origin, p.project, t.tplname
          FROM {btr_templates} t
          LEFT JOIN {btr_projects} p ON (t.pguid = p.pguid)
@@ -199,7 +199,7 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
   }
 
   // Insert the file.
-  $fid = btr_insert('btr_files')
+  $fid = btr::db_insert('btr_files')
     ->fields(array(
         'filename' => $filename,
         'content' => file_get_contents($file),
@@ -235,7 +235,7 @@ function _get_string_sguid($entry) {
 
   // Check that it exists.
   $get_sguid = "SELECT sguid FROM {btr_strings} WHERE sguid = '$sguid'";
-  if ($sguid == btr_query($get_sguid)->fetchField()) {
+  if ($sguid == btr::db_query($get_sguid)->fetchField()) {
     return $sguid;
   }
   else {
@@ -260,11 +260,11 @@ function _add_translation($sguid, $lng, $translation) {
   // Check first that such a translation does not exist.
   $get_tguid = 'SELECT tguid FROM {btr_translations} WHERE tguid = :tguid';
   $args = array(':tguid' => $tguid);
-  if (btr_query($get_tguid, $args)->fetchField())  return $tguid;
+  if (btr::db_query($get_tguid, $args)->fetchField())  return $tguid;
 
   // Insert a new translations.
   $account = user_load($GLOBALS['user']->uid);
-  btr_insert('btr_translations')
+  btr::db_insert('btr_translations')
     ->fields(array(
         'sguid' => $sguid,
         'lng' => $lng,

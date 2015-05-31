@@ -64,7 +64,7 @@ function translation_add($sguid, $lng, $translation) {
   $umail = $user->init;    // email used for registration
 
   // Insert the new suggestion.
-  btr_insert('btr_translations')
+  btr::db_insert('btr_translations')
     ->fields(array(
         'sguid' => $sguid,
         'lng' => $lng,
@@ -132,20 +132,20 @@ function _remove_old_translation($sguid, $lng, $umail, $tguid) {
     ':umail' => $umail,
     ':ulng' => $lng,
     ':tguid' => $tguid);
-  $old_trans = btr_query($query, $args)->fetchObject();
+  $old_trans = btr::db_query($query, $args)->fetchObject();
   if (!$old_trans)  return;  // if there is no old translation, we are done
 
   // Copy to the trash table the old translation.
-  $query = btr_select('btr_translations', 't')
+  $query = btr::db_select('btr_translations', 't')
     ->fields('t', array('sguid', 'lng', 'translation', 'tguid', 'count', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $old_trans->tguid);
   $query->addExpression(':d_umail', 'd_umail', array(':d_umail' => $umail));
   $query->addExpression(':d_ulng', 'd_ulng', array(':d_ulng' => $lng));
   $query->addExpression('NOW()', 'd_time');
-  btr_insert('btr_translations_trash')->from($query)->execute();
+  btr::db_insert('btr_translations_trash')->from($query)->execute();
 
   // Remove the old translation.
-  btr_delete('btr_translations')
+  btr::db_delete('btr_translations')
     ->condition('tguid', $old_trans->tguid)
     ->execute();
 
@@ -156,23 +156,23 @@ function _remove_old_translation($sguid, $lng, $umail, $tguid) {
             LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
             WHERE v.tguid = :tguid AND v.umail != :umail";
   $args = array(':tguid' => $old_trans->tguid, ':umail' => $umail);
-  $votes = btr_query($query, $args)->fetchAll();
+  $votes = btr::db_query($query, $args)->fetchAll();
 
   // Insert to the trash table the votes that will be deleted.
-  $query = btr_select('btr_votes', 'v')
+  $query = btr::db_select('btr_votes', 'v')
     ->fields('v', array('vid', 'tguid', 'umail', 'ulng', 'time', 'active'))
     ->condition('tguid', $old_trans->tguid);
   $query->addExpression('NOW()', 'd_time');
-  btr_insert('btr_votes_trash')->from($query)->execute();
+  btr::db_insert('btr_votes_trash')->from($query)->execute();
 
   // Delete the votes belonging to the old translation.
-  btr_delete('btr_votes')->condition('tguid', $old_trans->tguid)->execute();
+  btr::db_delete('btr_votes')->condition('tguid', $old_trans->tguid)->execute();
 
   // Associate these votes to the new translation.
   $notification_list = array();
   foreach ($votes as $vote) {
     // Associate the vote to the new translation.
-    btr_insert('btr_votes')
+    btr::db_insert('btr_votes')
       ->fields(array(
           'tguid' => $tguid,
           'umail' => $vote->umail,
@@ -235,7 +235,7 @@ function _notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $trans
             LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
             WHERE t.sguid = :sguid AND t.lng = :lng AND t.tguid != :tguid";
   $args = array(':sguid' => $sguid, ':lng' => $lng, ':tguid' => $tguid);
-  $voters = btr_query($query, $args)->fetchAll();
+  $voters = btr::db_query($query, $args)->fetchAll();
 
   if (empty($voters))  return;
 

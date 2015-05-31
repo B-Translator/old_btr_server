@@ -44,7 +44,7 @@ function sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
     LEFT JOIN {btr_translations} t ON (t.sguid = s.sguid AND t.lng = :lng)
     WHERE t.sguid IS NULL
   ";
-  $nr_strings = btr_query($sql_count, $args)->fetchField();
+  $nr_strings = btr::db_query($sql_count, $args)->fetchField();
 
   // Get the sguid of a random untranslated. 'count' keeps in how many projects
   // a string appears. Ordering by 'count' and getting a random string
@@ -62,7 +62,7 @@ function sguid_get_untranslated($lng, $uid =NULL, $target_projects =NULL) {
     ORDER BY s.count DESC
     LIMIT $random_row_number, 1
   ";
-  $sguid = btr_query($sql_get_sguid, $args)->fetchField();
+  $sguid = btr::db_query($sql_get_sguid, $args)->fetchField();
 
   return $sguid;
 }

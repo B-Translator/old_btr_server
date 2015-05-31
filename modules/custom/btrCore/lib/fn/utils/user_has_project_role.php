@@ -29,7 +29,7 @@ function utils_user_has_project_role($role, $sguid) {
       LEFT JOIN btr_projects p ON (p.pguid = t.pguid)
       WHERE sguid = :sguid
   ";
-  $string_projects = btr_query($query, array(':sguid' => $sguid))->fetchCol();
+  $string_projects = btr::db_query($query, array(':sguid' => $sguid))->fetchCol();
 
   // Get the projects where the user has that role.
   switch ($role) {
