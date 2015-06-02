@@ -6,7 +6,7 @@
  * If the request header 'Accept: application/json' is set, then
  * the output will be in JSON, for example:
  *   curl -k -i -H 'Accept: application/json' \
- *        'https://dev.btranslator.org/translations/twitter/sq/test'
+ *        'https://dev.btranslator.org/get-tweet/sq/test'
  * This can be useful for adding your custom hashtags, url, etc.
  */
 
