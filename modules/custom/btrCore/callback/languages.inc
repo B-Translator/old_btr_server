@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Menu callback for get-languages.
+ * Menu callback for 'langs'.
  * Returns a json list of languages and their details.
  */
 function btrCore_languages() {

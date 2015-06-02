@@ -141,16 +141,16 @@ function btrCore_menu() {
   );
 
   // Return a random twitter.
-  $items['get-tweet'] = array(
+  $items['tweet'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Return a random string (and translations) in a form suitable for twitter.',
-    'page callback'   => 'btrCore_twitter',
-    'file'            => 'callback/twitter.inc',
+    'page callback'   => 'btrCore_tweet',
+    'file'            => 'callback/tweet.inc',
     'access callback' => TRUE,
   );
 
   // Return a json list of languages and their details.
-  $items['get-languages'] = array(
+  $items['langs'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Return a json list of languages and their details.',
     'page callback'   => 'btrCore_languages',
