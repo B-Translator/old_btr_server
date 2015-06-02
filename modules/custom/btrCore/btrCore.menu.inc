@@ -123,7 +123,7 @@ function btrCore_menu() {
   );
 
   // Return latest translations.
-  $items['translations/latest'] = array(
+  $items['latest'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Latest Translation Feedback',
     'page callback'   => 'btrCore_latest',
