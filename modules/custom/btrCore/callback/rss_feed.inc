@@ -35,7 +35,7 @@ function btrCore_rss_feed($lng = 'fr', $origin = NULL, $project = NULL) {
   $rss_feed = '<?xml version="1.0" encoding="utf-8"?>' . "\n";
   $rss_feed .= '<rss version="2.0">';
 
-  $link = url("translations/rss-feed/$lng", array('absolute' => TRUE));
+  $link = url("rss-feed/$lng", array('absolute' => TRUE));
   if (!empty($domain)) {
     $link .= '/' . $domain;
   }
