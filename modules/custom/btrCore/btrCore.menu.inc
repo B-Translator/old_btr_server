@@ -150,7 +150,7 @@ function btrCore_menu() {
   );
 
   // Return a json list of languages and their details.
-  $items['langs'] = array(
+  $items['languages'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Return a json list of languages and their details.',
     'page callback'   => 'btrCore_languages',
