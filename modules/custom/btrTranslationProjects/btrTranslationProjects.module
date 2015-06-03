@@ -43,13 +43,13 @@ function btrTranslationProjects_entity_info() {
 function btrTranslationProjects_menu() {
   $items = array();
 
-  $items['projects'] = array(
+  $items['btrprojects'] = array(
     'title' => 'Translation Projects',
     'page callback' => 'btrTranslationProjects_list',
     'access arguments' => array('access content'),
   );
 
-  $items['project/%'] = array(
+  $items['btrproject/%'] = array(
     'title' => 'Translation Project',
     'page callback' => 'btrTranslationProjects_view',
     'page arguments' => array(1),
@@ -438,10 +438,10 @@ class ProjectEntityController extends EntityAPIController {
 class ProjectEntity extends Entity {
 
   /**
-   * Change the default URI from default/id to project/id
+   * Change the default URI from default/id to btrproject/id
    */
   protected function defaultUri() {
-    return array('path' => 'project/' . $this->identifier());
+    return array('path' => 'btrproject/' . $this->identifier());
   }
 
 }
