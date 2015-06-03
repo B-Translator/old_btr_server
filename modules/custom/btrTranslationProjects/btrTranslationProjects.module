@@ -38,28 +38,6 @@ function btrTranslationProjects_entity_info() {
 }
 
 /**
- * Implements hook_menu()
- */
-function btrTranslationProjects_menu() {
-  $items = array();
-
-  $items['projects'] = array(
-    'title' => 'Translation Projects',
-    'page callback' => 'btrTranslationProjects_list',
-    'access arguments' => array('access content'),
-  );
-
-  $items['project/%'] = array(
-    'title' => 'Translation Project',
-    'page callback' => 'btrTranslationProjects_view',
-    'page arguments' => array(1),
-    'access arguments' => array('access content'),
-  );
-
-  return $items;
-}
-
-/**
  * Label callback for project entities.
  */
 function btrTranslationProjects_label_callback($entity, $entity_type = 'project') {
@@ -77,13 +55,10 @@ function btrTranslationProjects_access_callback($op, $project = NULL, $account =
       break;
 
     case 'update':
+    case 'view':
       if (in_array('administrator', $GLOBALS['user']->roles))  return TRUE;
       if (in_array($GLOBALS['user']->name, $project->admins))  return TRUE;
       return FALSE;
-      break;
-
-    case 'view':
-      return TRUE;
       break;
 
     default:
@@ -135,38 +110,6 @@ function btrTranslationProjects_entity_load($entities, $type) {
     }
     $project->moderators = $arr_names;
   }
-}
-
-/**
- * Callback function for project entities.
- */
-function btrTranslationProjects_list() {
-  $projects = entity_load('project');
-  if (empty($projects))  return t('No projects.');
-
-  // Listing entities
-  $list = entity_view('project', $projects);
-
-  $output = array();
-  foreach ($list['project'] as $project) {
-    $output[] = drupal_render($project);
-  }
-
-  return implode($output);
-}
-
-/**
- * Callback function for displaying the individual project page.
- */
-function btrTranslationProjects_view($id) {
-  $projects = entity_load('project', array($id));
-  $project = $projects[$id];
-
-  $label = btrTranslationProjects_label_callback($project);
-  drupal_set_title('Translation Project: ' . $label);
-  $output = entity_view('project', array($project));
-
-  return $output;
 }
 
 /**
@@ -436,12 +379,5 @@ class ProjectEntityController extends EntityAPIController {
  * Project entity class extending the Entity class
  */
 class ProjectEntity extends Entity {
-
-  /**
-   * Change the default URI from default/id to project/id
-   */
-  protected function defaultUri() {
-    return array('path' => 'project/' . $this->identifier());
-  }
 
 }

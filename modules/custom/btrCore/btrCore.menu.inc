@@ -87,7 +87,7 @@ function btrCore_menu() {
   );
 
   // Autocomplete callback for project textfields.
-  $items['translations/autocomplete/project'] = array(
+  $items['auto/project'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project autocomplete',
     'page callback'   => 'btrCore_project_autocomplete',
@@ -96,7 +96,7 @@ function btrCore_menu() {
   );
 
   // Autocomplete callback for origin textfields.
-  $items['translations/autocomplete/origin'] = array(
+  $items['auto/origin'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Origin autocomplete',
     'page callback'   => 'btrCore_origin_autocomplete',
@@ -105,7 +105,7 @@ function btrCore_menu() {
   );
 
   // Autocomplete callback for user textfields.
-  $items['translations/autocomplete/user'] = array(
+  $items['auto/user'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'User autocomplete',
     'page callback'   => 'btrCore_user_autocomplete',
@@ -114,7 +114,7 @@ function btrCore_menu() {
   );
 
   // Autocomplete callback for strings.
-  $items['translations/autocomplete/string'] = array(
+  $items['auto/string'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'String autocomplete',
     'page callback'   => 'btrCore_string_autocomplete',
@@ -123,7 +123,7 @@ function btrCore_menu() {
   );
 
   // Return latest translations.
-  $items['translations/latest'] = array(
+  $items['latest'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Latest Translation Feedback',
     'page callback'   => 'btrCore_latest',
@@ -132,7 +132,7 @@ function btrCore_menu() {
   );
 
   // Return a RSS feed.
-  $items['translations/rss-feed'] = array(
+  $items['rss-feed'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Latest Translation Feedback',
     'page callback'   => 'btrCore_rss_feed',
@@ -141,16 +141,16 @@ function btrCore_menu() {
   );
 
   // Return a random twitter.
-  $items['translations/twitter'] = array(
+  $items['tweet'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Return a random string (and translations) in a form suitable for twitter.',
-    'page callback'   => 'btrCore_twitter',
-    'file'            => 'callback/twitter.inc',
+    'page callback'   => 'btrCore_tweet',
+    'file'            => 'callback/tweet.inc',
     'access callback' => TRUE,
   );
 
   // Return a json list of languages and their details.
-  $items['translations/languages'] = array(
+  $items['languages'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Return a json list of languages and their details.',
     'page callback'   => 'btrCore_languages',

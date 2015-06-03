@@ -29,28 +29,6 @@ function btrLanguages_entity_info() {
 }
 
 /**
- * Implements hook_menu()
- */
-function btrLanguages_menu() {
-  $items = array();
-
-  $items['languages'] = array(
-    'title' => 'Our languages demo',
-    'page callback' => 'btrLanguages_list',
-    'access arguments' => array('access content'),
-  );
-
-  $items['language/%'] = array(
-    'title' => 'Language',
-    'page callback' => 'btrLanguages_view',
-    'page arguments' => array(1),
-    'access arguments' => array('access content'),
-  );
-
-  return $items;
-}
-
-/**
  * Access callback for language entities.
  */
 function btrLanguages_access_callback($op, $language = NULL, $account = NULL) {
@@ -58,49 +36,14 @@ function btrLanguages_access_callback($op, $language = NULL, $account = NULL) {
     case 'create':
     case 'delete':
     case 'update':
-      return in_array('administrator', $GLOBALS['user']->roles);
-      break;
-
     case 'view':
-      return TRUE;
+      return in_array('administrator', $GLOBALS['user']->roles);
       break;
 
     default:
       return FALSE;
       break;
   }
-}
-
-/**
- * Callback function for language entities.
- */
-function btrLanguages_languages() {
-  $languages = entity_load('language');
-  if (empty($languages))  return t('No languages.');
-
-  // Listing entities
-  $list = entity_view('language', $languages);
-
-  $output = array();
-  foreach ($list['language'] as $language) {
-    $output[] = drupal_render($language);
-  }
-
-  return implode($output);
-}
-
-/**
- * Callback function for displaying the individual language page.
- */
-function btrLanguages_view($id) {
-  $languages = entity_load('language', array($id));
-  $language = $languages[$id];
-
-  drupal_set_title('Language: ' . $language->name);
-  $output = entity_view('language', array($language));
-
-  return $output;
-
 }
 
 /**
@@ -248,15 +191,8 @@ class LanguageEntityController extends EntityAPIController {
 }
 
 /**
- * Language entity class extending the Entity class
+ * Project entity class extending the Entity class
  */
 class LanguageEntity extends Entity {
-
-  /**
-   * Change the default URI from default/id to language/id
-   */
-  protected function defaultUri() {
-    return array('path' => 'language/' . $this->identifier());
-  }
 
 }

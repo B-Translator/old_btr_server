@@ -6,11 +6,11 @@
  * If the request header 'Accept: application/json' is set, then
  * the output will be in JSON, for example:
  *   curl -k -i -H 'Accept: application/json' \
- *        'https://dev.btranslator.org/translations/twitter/sq/test'
+ *        'https://btranslator.org/tweet/sq'
  * This can be useful for adding your custom hashtags, url, etc.
  */
 
-function btrCore_twitter($lng =NULL, $origin =NULL, $project =NULL) {
+function btrCore_tweet($lng =NULL, $origin =NULL, $project =NULL) {
   if (empty($lng))  $lng = 'fr';
 
   // Get the search scope.

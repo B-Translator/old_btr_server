@@ -4,4 +4,3 @@ package = B-Translator
 
 core = 7.x
 dependencies[] = entity
-dependencies[] = btrCore
