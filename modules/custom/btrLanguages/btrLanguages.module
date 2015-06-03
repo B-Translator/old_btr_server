@@ -36,10 +36,10 @@ function btrLanguages_access_callback($op, $language = NULL, $account = NULL) {
     case 'create':
     case 'delete':
     case 'update':
+    case 'view':
       return in_array('administrator', $GLOBALS['user']->roles);
       break;
 
-    case 'view':
     default:
       return FALSE;
       break;
@@ -187,5 +187,12 @@ class LanguageEntityController extends EntityAPIController {
     return $build;
 
   }
+
+}
+
+/**
+ * Project entity class extending the Entity class
+ */
+class LanguageEntity extends Entity {
 
 }
