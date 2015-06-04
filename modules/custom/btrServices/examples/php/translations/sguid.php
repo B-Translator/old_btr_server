@@ -31,31 +31,6 @@ $result = http_request($url, $options);
 $options = array(
   'method' => 'POST',
   'data' => array(
-    'target' => 'translated',
-    'lng' => 'sq',
-    'last_sguid' => 'c7ac448a01c566680d8ffb00430a55ffc779f24b',
-  ),
-  'headers' => array(
-    'Content-type' => 'application/x-www-form-urlencoded',
-  ),
-);
-$result = http_request($url, $options);
-
-$options = array(
-  'method' => 'POST',
-  'data' => array(
-    'target' => 'next',
-    'last_sguid' => 'c7ac448a01c566680d8ffb00430a55ffc779f24b',
-  ),
-  'headers' => array(
-    'Content-type' => 'application/x-www-form-urlencoded',
-  ),
-);
-$result = http_request($url, $options);
-
-$options = array(
-  'method' => 'POST',
-  'data' => array(
     'target' => 'next',
     'scope' => 'vocabulary/ICT_sq',
   ),
