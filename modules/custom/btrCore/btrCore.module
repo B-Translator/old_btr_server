@@ -39,47 +39,6 @@ function btrCore_help($path, $args) {
 
 
 /**
- * Implementation of hook_permission().
- */
-function btrCore_permission() {
-  return array(
-    'btranslator-vote' => array(
-      'title' => t('Vote translations.'),
-      'description' => t('Can submit votes (or likes) for translation suggestions.'),
-    ),
-    'btranslator-suggest' => array(
-      'title' => t('Suggest new translations.'),
-      'description' => t('Can submit new translation suggestions.'),
-    ),
-    'btranslator-flag' => array(
-      'title' => t('Flag translations.'),
-      'description' => t('Can flag translations as inaproppriate.'),
-    ),
-    'btranslator-import' => array(
-      'title' => t('Import translation (PO) files.'),
-      'description' => t('Can import to B-Translator new translation files (in the PO format).'),
-    ),
-    'btranslator-export' => array(
-      'title' => t('Export translation files.'),
-      'description' => t('Can export translations from B-Translator (either in PO format, or as diff/ediff).'),
-    ),
-    'btranslator-stats' => array(
-      'title' => t('Statistics.'),
-      'description' => t('Can access global statistics of B-Translator.'),
-    ),
-    'btranslator-resolve' => array(
-      'title' => t('Resolve issues.'),
-      'description' => t('Can resolve flag issues and other problems.'),
-    ),
-    'btranslator-admin' => array(
-      'title' => t('Administer B-Translator.'),
-      'description' => t('Can perform administration tasks for B-Translator.'),
-    ),
-  );
-}  //  End of btrCore_permission().
-
-
-/**
  * Implement hook_mail().
  *
  * This hook defines a list of possible e-mail templates that this module can
