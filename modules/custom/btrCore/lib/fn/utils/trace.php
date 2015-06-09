@@ -15,5 +15,5 @@ function utils_trace($comment ='') {
   $trace = $e->getTraceAsString();
   $trace = preg_replace('/^#0 .*/', '', $trace);
   $trace = str_replace(DRUPAL_ROOT.'/', '', $trace);
-  btr::utils_log($trace, $comment);
+  btr::log($trace, $comment);
 }
