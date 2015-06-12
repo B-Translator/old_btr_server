@@ -44,6 +44,10 @@ h1.page-header {
     margin-bottom: 20px;
 }
 
+.breadcrumb, .page-header {
+    display: none;
+}
+
 /**
  * H2 is used for subsections of the page,
  * teaser title, block title, etc.
@@ -54,24 +58,6 @@ h2 {
 }
 h2.block-title {
     color: #009900;
-}
-
-/**
- * Correct the font of the section 'Show string details'
- * (which is below the source text on translation page).
- */
-.l10n-more-info h3 {
-    font-size: 10px;
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-
-/**
- * Align better the checkbox 'Same Project'
- * (which is on the right of the buttons Save, Next, etc.).
- */
-.form-item-same-project {
-    vertical-align: middle;
 }
 
 /**
@@ -95,43 +81,19 @@ h2.block-title {
 }
 
 /**
- * Make smaller Number of Votes
- */
-.votes legend {
-    font-size: 12px;
-    margin-left: 10px;
-    margin-bottom: 0px;
-    border-bottom-width: 0px;
-    line-height: 15px;
-}
-.votes legend a {
-    text-decoration: none;
-}
-.votes .fieldset-wrapper {
-    font-size: 12px;
-    margin-left: 10px;
-    margin-bottom: 5px;
-    border-top: 1px solid rgb(229, 229, 229);
-}
-
-/**
  * Fix the styles of the search filter.
  */
-#edit-search-container legend {
+#edit-advanced legend {
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 0px;
 }
-#edit-search-container legend a:hover {
+#edit-advanced legend a:hover {
     text-decoration: none;
 }
-#edit-search-container .fieldset-wrapper {
+#edit-advanced .fieldset-wrapper {
     border: 1px solid rgb(229, 229, 229);
     border-top: none;
     padding: 10px;
     margin-bottom: 10px;
-}
-
-.breadcrumb, .page-header {
-    display: none;
 }
