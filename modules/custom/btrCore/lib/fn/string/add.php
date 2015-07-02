@@ -136,7 +136,7 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
  */
 function _btr_new_string_notification($project, $string, $sguid) {
   // Get all the users interested on this project.
-  $uids = db_query(
+  $uids = \db_query(
     "SELECT DISTINCT p.entity_id
      FROM {field_data_field_preferred_projects} p
      INNER JOIN {field_data_field_feedback_channels} f

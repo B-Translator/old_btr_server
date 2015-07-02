@@ -22,7 +22,7 @@ function vocabulary_del($name, $lng) {
   btr::project_del($origin, $project);
 
   // Delete the contact form.
-  db_delete('contact')->condition('category', $project)->execute();
+  \db_delete('contact')->condition('category', $project)->execute();
 
   // Update mv tables.
   $path = drupal_get_path('module', 'btrCore');
