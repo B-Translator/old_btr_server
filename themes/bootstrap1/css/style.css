@@ -83,17 +83,46 @@ h2.block-title {
 /**
  * Fix the styles of the search filter.
  */
+#edit-basic .fieldset-wrapper {
+    width: 100%;
+}
+
+#edit-basic .form-item-words,
+#edit-basic .form-submit,
+#edit-basic .form-item-options {
+    display: inline-block;
+    margin: 5px;
+    margin-left: 0px;
+}
+#edit-words {
+    margin: 0px;
+}
+
 #edit-advanced legend {
     font-size: 14px;
-    line-height: 20px;
+    line-height: 30px;
     margin-bottom: 0px;
 }
+
 #edit-advanced legend a:hover {
     text-decoration: none;
 }
+
 #edit-advanced .fieldset-wrapper {
     border: 1px solid rgb(229, 229, 229);
-    border-top: none;
+    border-radius: 5px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+#edit-advanced legend {
+    border: none;
+}
+
+#edit-advanced .fieldset-legend a {
+    text-decoration: none;
+    padding: 5px;
+    background-color: #eeeeee;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
 }
