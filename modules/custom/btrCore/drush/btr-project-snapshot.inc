@@ -33,5 +33,9 @@ Also generates the diffs with the previous snapshot and saves them in DB.
  * Callback function for the command 'btr-project-snapshot'.
  */
 function drush_btranslator_btr_project_snapshot($origin, $project, $lng, $comment) {
+  // Check parameters $origin, $project, $lng.
+  _btranslator_drush_check_params($origin, $project, $lng);
+
+  // Make the snapshot.
   btr::project_snapshot($origin, $project, $lng, $comment);
 }

@@ -37,6 +37,7 @@ of the given name (from any origin) will be deleted.";
 function drush_btranslator_btr_project_delete() {
   $origin = drush_get_option('origin');
   $project = drush_get_option('project');
+  _btranslator_drush_check_params($origin, $project);
 
   $erase = drush_get_option('erase');
   $erase = ($erase == 'false' ? FALSE : TRUE);

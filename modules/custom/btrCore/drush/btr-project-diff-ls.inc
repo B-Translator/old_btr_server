@@ -30,6 +30,9 @@ function _btr_project_diff_ls_drush_help() {
  * Callback function for the command 'btr-project-diff-ls'.
  */
 function drush_btranslator_btr_project_diff_ls($origin, $project, $lng) {
+  // Check parameters $origin, $project, $lng.
+  _btranslator_drush_check_params($origin, $project, $lng);
+
   $arr_diffs = array();
   $diff_list = btr::project_diff_list($origin, $project, $lng);
   foreach ($diff_list as $diff) {

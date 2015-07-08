@@ -37,5 +37,9 @@ be imported.
  * Callback function for the command 'btr-project-import'.
  */
 function drush_btranslator_btr_project_import($origin, $project, $lng, $path) {
+  // Check parameters $origin, $project, $lng.
+  _btranslator_drush_check_params($origin, $project, $lng);
+
+  // Import the project.
   btr::project_import($origin, $project, $lng, $path, $GLOBALS['user']->uid);
 }

@@ -34,6 +34,9 @@ function _btr_project_diff_get_drush_help() {
  * Callback function for the command 'btr-project-diff-get'.
  */
 function drush_btranslator_btr_project_diff_get($origin, $project, $lng, $nr) {
+  // Check parameters $origin, $project, $lng.
+  _btranslator_drush_check_params($origin, $project, $lng);
+
   // Get the options.
   $format = drush_get_option('format');
   $format = ($format == 'ediff' ? 'ediff' : 'diff');

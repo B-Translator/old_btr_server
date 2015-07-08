@@ -50,16 +50,11 @@ project).
  * Callback function for the command 'btr-project-export'.
  */
 function drush_btranslator_btr_project_export($origin, $project, $lng, $path) {
-  $export_mode = drush_get_option('export-mode', 'most_voted');
-
-  // Make sure that the given origin and project do exist.
-  if (!btr::utils_project_exists($origin, $project)) {
-    drush_log(t("The project '!project' does not exist.",
-        array('!project' => "$origin/$project")), 'error');
-    drupal_exit();
-  }
+  // Check parameters $origin, $project, $lng.
+  _btranslator_drush_check_params($origin, $project, $lng);
 
   // Check the export_mode.
+  $export_mode = drush_get_option('export-mode', 'most_voted');
   if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
     drush_log(t("Unknown export mode '!export_mode'.",
         array('!export_mode' => $export_mode)), 'error');

@@ -52,6 +52,9 @@ function drush_btranslator_btr_vote_import($lng, $path) {
     drupal_exit();
   }
 
+  // Check that the given language exists.
+  _btranslator_drush_check_params(NULL, NULL, $lng);
+
   // Check user permissions.
   _drush_btranslator_btr_vote_import_check_permissions($lng);
 

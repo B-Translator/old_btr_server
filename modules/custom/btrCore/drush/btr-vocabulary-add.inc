@@ -29,5 +29,6 @@ function _btr_vocabulary_add_drush_help() {
  * Callback function for the command 'btr-vocabulary-add'.
  */
 function drush_btranslator_btr_vocabulary_add($name, $lng, $pot_file = NULL) {
+  _btranslator_drush_check_params(NULL, NULL, $lng);
   btr::vocabulary_add($name, $lng, $pot_file);
 }
