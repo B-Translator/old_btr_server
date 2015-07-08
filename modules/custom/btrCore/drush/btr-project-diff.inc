@@ -13,6 +13,7 @@ function _btr_project_diff_drush_command() {
     ),
     'options' => array(
       'format' => 'The diff format: \'diff\' or \'ediff\' (default \'diff\').',
+      'prefer' => 'List of comma separated users whose opinion will be preferred.',
     ),
     'examples' => array(
       'drush btrp-diff KDE kdeedu sq $(pwd)/kdeadmin-sq.diff' => '',
@@ -37,9 +38,22 @@ The format 'ediff' is generated with 'pology/poediff'.
  * Callback function for the command 'btr-project-diff'.
  */
 function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
-  $format = drush_get_option('format');
+  // Check parameters $origin, $project, $lng.
+  _btranslator_drush_check_params($origin, $project, $lng);
+
+  // Get the preferred users.
+  $prefer = drush_get_option('prefer', NULL);
+  $export_mode = ($prefer == NULL ? 'moste_voted' : 'preferred');
+  list($preferred_voters, $error_messages) = btr::utils_get_emails($prefer);
+  if (!empty($error_messages)) {
+    foreach ($error_messages as $msg) {
+      drush_log($msg[0], $msg[1]);
+    }
+    drupal_exit();
+  }
 
   // Get the names of the diff files.
+  $format = drush_get_option('format');
   if ($format == 'ediff') {
     $file_diff = tempnam('/tmp', 'file_diff_');
     $file_ediff = $file;
@@ -50,8 +64,7 @@ function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
   }
 
   // Make the diff.
-  btr::project_diff($origin, $project, $lng, $file_diff, $file_ediff);
-
+  btr::project_diff($origin, $project, $lng, $file_diff, $file_ediff, NULL, $export_mode, $preferred_voters);
 
   // Cleanup.
   if ($format == 'ediff') {

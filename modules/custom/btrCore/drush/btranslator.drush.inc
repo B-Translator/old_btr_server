@@ -98,3 +98,21 @@ function btranslator_drush_help($section) {
       return dt("Handle the import/export of PO/POT files for B-Translator.");
   }
 }
+
+/**
+ * Check that the parameters $origin, $project and $lng exist (are valid).
+ */
+function _btranslator_drush_check_params($origin, $project = NULL, $lng = NULL) {
+  // Make sure that the given origin and project do exist.
+  if (!$project !== NULL and !btr::utils_project_exists($origin, $project)) {
+    drush_log(t("The project '!project' does not exist.",
+        array('!project' => "$origin/$project")), 'error');
+    drupal_exit();
+  }
+
+  // Make sure that the given language exists.
+  if ($lng !== NULL and !in_array($lng, btr::languages_get())) {
+    drush_log(t("The language '!lng' does not exist.", ['!lng' => "$lng"]), 'error');
+    drupal_exit();
+  }
+}
