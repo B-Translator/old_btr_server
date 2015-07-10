@@ -104,7 +104,7 @@ function btranslator_drush_help($section) {
  */
 function _btranslator_drush_check_params($origin, $project = NULL, $lng = NULL) {
   // Make sure that the given origin and project do exist.
-  if (!$project !== NULL and !btr::utils_project_exists($origin, $project)) {
+  if ($project !== NULL and !btr::utils_project_exists($origin, $project)) {
     drush_log(t("The project '!project' does not exist.",
         array('!project' => "$origin/$project")), 'error');
     drupal_exit();
