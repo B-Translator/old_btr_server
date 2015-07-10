@@ -16,7 +16,7 @@ wget -O $name.zip $pootle/export/?path=/$lng/$project/$subproj/
 unzip $name.zip
 
 ### import to b-translator
-drush @btr btr-project-delete --origin=sync --project=$name --purge --erase
+set +e ; drush @btr btr-project-delete --origin=sync --project=$name --purge --erase ; set -e
 drush @btr btr-project-add     sync $name       $(pwd)/$name/
 drush @btr btr-project-import  sync $name $lng  $(pwd)/$name/
 drush @btr btr-vote-import  --user=indrit $lng  $(pwd)/$name/
