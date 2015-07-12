@@ -34,8 +34,8 @@ use \btr;
  * @param $filter
  *   Filter conditions that should be matched.
  *   It is an associated array with these keys:
- *      lng, limit, mode, words, project, origin, only_mine,
- *      translated_by, voted_by, date_filter, from_date, to_date
+ *      lng, limit, mode, words, project, origin, only_mine, translated_by,
+ *      voted_by, date_filter, from_date, to_date, list_mode
  *
  * @return
  *   A query object that corresponds to the filter.

@@ -312,6 +312,9 @@ function _btrServices_translations_index($params) {
  *       - votes         Filter Votes By Date
  *   - from_date
  *   - to_date
+ *   - list_mode
+ *       Used when listing the strings of a project.
+ *       Can be one of: 'all', 'translated', 'untranslated'
  *
  * @return
  *   Array containing search results, along with the filters
