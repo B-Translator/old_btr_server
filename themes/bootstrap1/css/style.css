@@ -98,6 +98,23 @@ h2.block-title {
     margin: 0px;
 }
 
+#form-item-options {
+    display: inline-block;
+}
+#form-item-options input[type="checkbox"] {
+    display: none;
+    width: 1px;
+}
+#form-item-options .checked {
+    display: none;
+}
+#form-item-options input[type="checkbox"]:checked ~ .checked {
+    display: inline-block;
+}
+#form-item-options input[type="checkbox"]:checked ~ .unchecked {
+    display: none;
+}
+
 #edit-advanced legend {
     font-size: 14px;
     line-height: 30px;
@@ -125,4 +142,45 @@ h2.block-title {
     background-color: #eeeeee;
     border: 1px solid #dddddd;
     border-radius: 3px;
+}
+
+
+
+
+/**
+ * Fix the styles of the list filter.
+ */
+
+#listfilter-form {
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+#btrproject-listfilter-form {
+    margin-bottom: 0px;
+}
+
+#listfilter-form .control-group {
+    display: inline-block;
+    margin-bottom: 0px;
+    margin-right: 10px;
+}
+
+#listfilter-form .control-label {
+    display: inline-block;
+    margin-bottom: 0px;
+    margin-right: 2px;
+}
+
+#listfilter-form .controls {
+    display: inline-block;
+}
+
+#listfilter-form .controls select {
+    margin-bottom: 0px;
+}
+
+#listfilter-form p.help-block {
+    display: none;
 }
