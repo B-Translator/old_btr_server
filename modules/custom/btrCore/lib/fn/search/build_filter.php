@@ -74,5 +74,10 @@ function search_build_filter($params) {
   // to_date
   $filter['to_date'] = isset($params['to_date']) ? trim($params['to_date']) : '';
 
+  // list_mode
+  $list_mode_options = ['all', 'translated', 'untranslated'];
+  $list_mode = isset($params['list_mode']) ? $params['list_mode'] : '';
+  $filter['list_mode'] = in_array($list_mode, $list_mode_options) ? $list_mode : 'all';
+
   return $filter;
 }

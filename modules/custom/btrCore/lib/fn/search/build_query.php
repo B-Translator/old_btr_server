@@ -52,6 +52,7 @@ function search_build_query($filter) {
   _filter_by_project($query, $filter['project'], $filter['origin']);
   _filter_by_author($query, $filter['lng'], $filter['only_mine'], $filter['translated_by'], $filter['voted_by']);
   _filter_by_date($query, $filter['date_filter'], $filter['from_date'], $filter['to_date']);
+  _filter_by_list_mode($query, $filter['list_mode']);
 
   //if nothing has been selected yet, then return NULL
   if (sizeof($query->conditions()) == 1) return NULL;
@@ -231,6 +232,30 @@ function _filter_by_date($query, $date_filter, $from_date, $to_date) {
     //do nothing
   }
 
+}
+
+/**
+ * Apply to the query conditions related to filtering by translated/untranslated.
+ *
+ * The first parameter, $query, is an object, so it is passed
+ * by reference.
+ *
+ * $list_mode has one of the values ('all', 'translated', 'untranslated')
+ */
+function _filter_by_list_mode($query, $list_mode) {
+  // If 'all' strings should be listed, there is no condition to be added.
+  if ($list_mode == 'all')  return;
+
+  // Join the table of translations.
+  _join_table($query, 'translations');
+
+  // Add the condition for filtering the translated/untranslated strings.
+  if ($list_mode == 'translated') {
+    $query->isNotNull('t.sguid');
+  }
+  else {
+    $query->isNull('t.sguid');
+  }
 }
 
 /**
