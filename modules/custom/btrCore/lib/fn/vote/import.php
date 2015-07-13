@@ -149,6 +149,14 @@ function _get_sguid($entry, $uid) {
  * author, if the translation has no author.
  */
 function _add_translation($sguid, $lng, $translation, $umail) {
+  // The DB field of the translation is VARCHAR(1000),
+  // check that translation does not exceed this length.
+  if (strlen($translation) > 1000) {
+    print $translation . "\n";
+    print "***Warning*** Translation is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
+    return array();
+  }
+
   $tguid = sha1($translation . $lng . $sguid);
   $messages = array();
 
