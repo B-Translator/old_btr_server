@@ -42,6 +42,8 @@ use \btr;
  *   NULL if there is nothing to select.
  */
 function search_build_query($filter) {
+  // Store the value of the language.
+  _lng($filter['lng']);
 
   $query = btr::db_select('btr_strings', 's')
     ->extend('PagerDefault')->limit($filter['limit']);
@@ -57,12 +59,18 @@ function search_build_query($filter) {
   //if nothing has been selected yet, then return NULL
   if (sizeof($query->conditions()) == 1) return NULL;
 
-  //if translations are joined, then filter by the language as well
-  if ($query->hasTag('join-translations')) {
-    $query->condition('t.lng', $filter['lng']);
-  }
-
   return $query;
+}
+
+/**
+ * Keep and return the value of language (instead of using a global variable).
+ */
+function _lng($lang = NULL) {
+  static $lng = NULL;
+  if ($lang !== NULL) {
+    $lng = $lang;
+  }
+  return $lng;
 }
 
 /**
@@ -270,7 +278,7 @@ function _join_table($query, $table) {
 
   switch ($table) {
     case 'translations':
-      $query->leftJoin("btr_translations", 't', 's.sguid = t.sguid');
+      $query->leftJoin("btr_translations", 't', 's.sguid = t.sguid AND t.lng = :lng', [':lng' => _lng()]);
       break;
     case 'votes':
       _join_table($query, 'translations');
