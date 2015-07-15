@@ -67,7 +67,7 @@ function btrCore_rss_feed($lng = 'fr', $origin = NULL, $project = NULL) {
   // Append an item for each translation.
   foreach ($translations as $translation) {
     extract(get_object_vars($translation));
-    $title = btrClient_shorten($string, 60);
+    $title = btr::utils_shorten($string, 60);
     $link = isset($_GET['url']) ?
       $_GET['url'] . "/?lng=$lng&proj=$project#$string" :
       url('translations', array('absolute' => TRUE)) . "/$lng/$sguid";
