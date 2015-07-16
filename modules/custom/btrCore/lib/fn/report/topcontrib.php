@@ -38,7 +38,7 @@ function report_topcontrib($lng = 'fr', $period = 'week', $size = 5) {
   if ($size > 20) $size = 20;
 
   // Return cache if possible.
-  $cache = cache_get("report_topcontrib:$lng:$period:$size", 'cache_btr');
+  $cache = cache_get("report_topcontrib:$lng:$period:$size", 'cache_btrCore');
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     return $cache->data;
   }
@@ -77,7 +77,7 @@ function report_topcontrib($lng = 'fr', $period = 'week', $size = 5) {
   $topcontrib = btr::db_query_range($sql_get_topcontrib, 0, $size, $args)->fetchAll();
 
   // Cache for 12 hours.
-  cache_set("report_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btr', time() + 12*60*60);
+  cache_set("report_topcontrib:$lng:$period:$size", $topcontrib, 'cache_btrCore', time() + 12*60*60);
 
   return $topcontrib;
 }

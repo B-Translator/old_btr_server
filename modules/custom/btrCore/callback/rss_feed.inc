@@ -91,7 +91,7 @@ function btrCore_rss_feed($lng = 'fr', $origin = NULL, $project = NULL) {
   $rss_feed .= "</rss>\n";
 
   // Cache for 2 hours.
-  cache_set($cid, $rss_feed, 'cache_btrClient', strtotime('+2 hours'));
+  cache_set($cid, $rss_feed, 'cache_btrCore', strtotime('+2 hours'));
 
   // Send the output.
   drupal_add_http_header('Content-Type', 'application/rss+xml; charset=utf-8');

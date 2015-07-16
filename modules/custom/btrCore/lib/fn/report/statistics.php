@@ -19,7 +19,7 @@ use \btr;
  */
 function report_statistics($lng) {
 
-  $cache = cache_get("report_statistics:$lng", 'cache_btr');
+  $cache = cache_get("report_statistics:$lng", 'cache_btrCore');
   // Return cache if possible.
   if (!empty($cache) && isset($cache->data) && !empty($cache->data)) {
     return $cache->data;
@@ -51,7 +51,7 @@ function report_statistics($lng) {
   }
 
   // Cache for 12 hours.
-  cache_set("report_statistics:$lng", $stats, 'cache_btr', time() + 12*60*60);
+  cache_set("report_statistics:$lng", $stats, 'cache_btrCore', time() + 12*60*60);
 
   return $stats;
 }
