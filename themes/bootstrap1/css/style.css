@@ -177,7 +177,8 @@ h2.block-title {
     display: inline-block;
 }
 
-#listfilter-form .controls select {
+#listfilter-form .controls select,
+#listfilter-form .controls input {
     margin-bottom: 0px;
 }
 
