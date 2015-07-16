@@ -24,7 +24,7 @@ use \btr;
  *     with these attributes:
  *         uid, name, umail, score, translations, votes
  */
-function report_topcontrib($lng = 'fr', $period = 'week', $size = 5) {
+function report_topcontrib($period = 'week', $size = 5, $lng = 'fr') {
 
   // validate parameters
   if (!in_array($lng, btr::languages_get())) {

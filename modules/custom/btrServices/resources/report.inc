@@ -161,5 +161,5 @@ function _btr_report_topcontrib($params) {
     return services_error('Period missing or not supported.', 406);
   }
 
-  return btr::report_topcontrib($lng, $period, $params['size']);
+  return btr::report_topcontrib($period, $params['size'], $lng);
 }
