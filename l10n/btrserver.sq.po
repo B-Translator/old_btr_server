@@ -16,7 +16,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 7.x-dev\n"
-"POT-Creation-Date: 2014-10-28 05:19+0000\n"
+"POT-Creation-Date: 2015-07-17 17:33+0000\n"
 "PO-Revision-Date: 2012-10-12 01:49+0200\n"
 "Last-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\n"
 "Language-Team: Albanian\n"
@@ -52,15 +52,27 @@ msgstr "Dërgo e-mail te admin kur një përdorues ndryshon llogarinë e tij"
 msgid "B-Translator Configuration"
 msgstr "Formësimi i eksporteve në B-Translator"
 
-#: modules/custom/btrCore/btrCore.admin.inc:22
+#: modules/custom/btrCore/btrCore.admin.inc:23
+#, fuzzy
+#| msgid "Translation Language"
+msgid "Translation Languages"
+msgstr "Gjuha e Përkthimit"
+
+#: modules/custom/btrCore/btrCore.admin.inc:25
+msgid ""
+"The list of translation languages supported by the server. Enter a space "
+"separated list of language codes."
+msgstr ""
+
+#: modules/custom/btrCore/btrCore.admin.inc:30
 msgid "Single"
 msgstr ""
 
-#: modules/custom/btrCore/btrCore.admin.inc:23
+#: modules/custom/btrCore/btrCore.admin.inc:31
 msgid "Multiple"
 msgstr "Shumëfish"
 
-#: modules/custom/btrCore/btrCore.admin.inc:25
+#: modules/custom/btrCore/btrCore.admin.inc:33
 msgid ""
 "When voting mode is <em>Single</em>, only one translation can be voted as "
 "suitable for each string. When voting mode is <em>Multiple</em>, more than "
@@ -75,17 +87,17 @@ msgstr ""
 "mënyra <em>Një ose më shumë</em> te <em>Vetëm një</em> mund të ketë një "
 "ndikim të keq te votat egzistuese."
 
-#: modules/custom/btrCore/btrCore.admin.inc:28
+#: modules/custom/btrCore/btrCore.admin.inc:36
 msgid "Select Voting Mode"
 msgstr "Zgjidh Mënyrën e Votimit"
 
-#: modules/custom/btrCore/btrCore.admin.inc:36
+#: modules/custom/btrCore/btrCore.admin.inc:44
 #, fuzzy
 #| msgid "B-Translator default settings"
 msgid "B-Translator Defaults"
 msgstr "Rregullimet normale të B-Translator"
 
-#: modules/custom/btrCore/btrCore.admin.inc:44
+#: modules/custom/btrCore/btrCore.admin.inc:48
 msgid ""
 "Select the projects that will be used for review and translations. Only "
 "strings from these projects will be presented to the users. <br/> You can "
@@ -111,21 +123,21 @@ msgstr ""
 "të pëlqyer, atëherë projektet e rreshtuara këtu do të përdoren. Nëse kjo "
 "listë është bosh, atëherë të gjitha projektet e importuara do të përdoren."
 
-#: modules/custom/btrCore/btrCore.admin.inc:48
+#: modules/custom/btrCore/btrCore.admin.inc:52
 msgid "The List of Projects that Will be Used for Voting and Translation"
 msgstr "Lista e Projekteve që do Përdoren për Votimet dhe Përkthimet"
 
-#: modules/custom/btrCore/btrCore.admin.inc:55
+#: modules/custom/btrCore/btrCore.admin.inc:59
 #, fuzzy
 #| msgid "B-Translator Settings"
 msgid "B-Translator Export/Import"
 msgstr "Rregullimet në B-Translator"
 
-#: modules/custom/btrCore/btrCore.admin.inc:60
+#: modules/custom/btrCore/btrCore.admin.inc:64
 msgid "Export path"
 msgstr "Vendi i eksportimeve"
 
-#: modules/custom/btrCore/btrCore.admin.inc:62
+#: modules/custom/btrCore/btrCore.admin.inc:66
 msgid ""
 "The directory where the exported projects will be placed. Must be accessable "
 "by the web server (www-data). Caution: This directory will be cleaned "
@@ -133,110 +145,25 @@ msgid ""
 "that <strong>it is not empty</strong>!"
 msgstr ""
 
-#: modules/custom/btrCore/btrCore.admin.inc:67;74
+#: modules/custom/btrCore/btrCore.admin.inc:71;78
 msgid "Notify admin"
 msgstr "Njofto administratorin"
 
-#: modules/custom/btrCore/btrCore.admin.inc:68
+#: modules/custom/btrCore/btrCore.admin.inc:72
 msgid "Send a notification email to admin on each export request."
 msgstr "Dërgo një letër njoftimi te mbikëqyrësi për çdo kërkesë eksportimi."
 
-#: modules/custom/btrCore/btrCore.admin.inc:75
+#: modules/custom/btrCore/btrCore.admin.inc:79
 #, fuzzy
 #| msgid "Send a notification email to admin on each export request."
 msgid "Send a notification email to admin on each import request."
 msgstr "Dërgo një letër njoftimi te mbikëqyrësi për çdo kërkesë eksportimi."
 
-#: modules/custom/btrCore/btrCore.menu.inc:186
+#: modules/custom/btrCore/btrCore.menu.inc:195
 #, fuzzy
 #| msgid "SMTP authentication"
 msgid "Authentication"
 msgstr "Identifikimi SMTP"
-
-#: modules/custom/btrCore/btrCore.module:38
-msgid "Vote translations."
-msgstr "Voto përkthimet."
-
-#: modules/custom/btrCore/btrCore.module:39
-msgid "Can submit votes (or likes) for translation suggestions."
-msgstr "Mund të japë vota (ose pëlqime) për përkthimet e sugjeruara."
-
-#: modules/custom/btrCore/btrCore.module:42
-msgid "Suggest new translations."
-msgstr "Sugjero përkthime të reja."
-
-#: modules/custom/btrCore/btrCore.module:43
-msgid "Can submit new translation suggestions."
-msgstr "Mund të bëjë sugjerime përkthimesh të reja."
-
-#: modules/custom/btrCore/btrCore.module:46
-msgid "Flag translations."
-msgstr "Sinjalizo përkthimet."
-
-#: modules/custom/btrCore/btrCore.module:47
-msgid "Can flag translations as inaproppriate."
-msgstr "Mund ti shënojë përkthimet si të papërshtatshme."
-
-#: modules/custom/btrCore/btrCore.module:50
-msgid "Import translation (PO) files."
-msgstr "Importo skedarët e përkthimit (skedarët PO)."
-
-#: modules/custom/btrCore/btrCore.module:51
-msgid "Can import to B-Translator new translation files (in the PO format)."
-msgstr ""
-"Mund të importojë në B-Translator skedarë të rinj përkthimi (në formatin PO)."
-
-#: modules/custom/btrCore/btrCore.module:54
-msgid "Export translation files."
-msgstr "Eksporto skedarët e përkthimit."
-
-#: modules/custom/btrCore/btrCore.module:55
-msgid ""
-"Can export translations from B-Translator (either in PO format, or as diff/"
-"ediff)."
-msgstr ""
-"Mund të eksportojë përkthimet nga B-Translator (në format PO ose si diff/"
-"ediff)."
-
-#: modules/custom/btrCore/btrCore.module:58
-msgid "Statistics."
-msgstr "Statistikat."
-
-#: modules/custom/btrCore/btrCore.module:59
-msgid "Can access global statistics of B-Translator."
-msgstr "Mund të shohë statistikat e përgjithshme në B-Translator."
-
-#: modules/custom/btrCore/btrCore.module:62
-msgid "Resolve issues."
-msgstr "Zgjidh problemet."
-
-#: modules/custom/btrCore/btrCore.module:63
-msgid "Can resolve flag issues and other problems."
-msgstr "Mund të vendosë rreth sinjalizimeve dhe për probleme të tjera."
-
-#: modules/custom/btrCore/btrCore.module:66
-msgid "Administer B-Translator."
-msgstr ""
-
-#: modules/custom/btrCore/btrCore.module:67
-msgid "Can perform administration tasks for B-Translator."
-msgstr "Mund të bëjë detyra administruese në B-Translator."
-
-#: modules/custom/btrCore/btrCore.module:215
-msgid "Translation Language"
-msgstr "Gjuha e Përkthimit"
-
-#: modules/custom/btrCore/btrCore.module:216
-#, fuzzy
-#| msgid ""
-#| "The language of translations. This site is about collecting feedback for "
-#| "the translations of this language."
-msgid ""
-"The language of translations. You will help with the translations of this "
-"language (review existing translations or submit new ones)."
-msgstr ""
-"Gjuha e përkthimit. Kjo faqe ka si qëllim rishikimin dhe përmirësimin e "
-"përkthimeve në këtë gjuhë."
 
 #: modules/custom/btrCore/btrCore.info:0
 #, fuzzy
@@ -251,81 +178,334 @@ msgid ""
 msgstr ""
 
 #: modules/custom/btrCore/btrCore.info:0
+#: modules/custom/btrLanguages/btrLanguages.info:0
 #: modules/custom/btrServices/btrServices.info:0
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.info:0
+#: modules/custom/btrUser/btrUser.info:0
 msgid "B-Translator"
 msgstr ""
 
-#: modules/custom/btrCore/drush/btr-project-export.inc:57
-#: modules/custom/btrCore/includes/project_callback.inc:114
+#: modules/custom/btrCore/callback/ajax.inc:83
+msgid "Used with context: %context"
+msgstr "Përdorur në rrethanat: %context"
+
+#: modules/custom/btrCore/callback/ajax.inc:87
+msgid "Used on these projects:"
+msgstr "Përdorur në këto projekte:"
+
+#: modules/custom/btrCore/callback/project.inc:101
+#: modules/custom/btrCore/callback/vocabulary.inc:29
+msgid "Error: Server is currently busy. Please try to export again later."
+msgstr ""
+
+#: modules/custom/btrCore/callback/project.inc:114
+#: modules/custom/btrCore/drush/btranslator.drush.inc:108
 #: modules/custom/btrCore/lib/fn/schedule/project_export.php:48
 msgid "The project '!project' does not exist."
 msgstr "Projekti '!project' nuk gjendet."
 
-#: modules/custom/btrCore/drush/btr-project-export.inc:64
-#: modules/custom/btrCore/includes/project_callback.inc:122
+#: modules/custom/btrCore/callback/project.inc:122
+#: modules/custom/btrCore/drush/btr-project-export.inc:59
 #: modules/custom/btrCore/lib/fn/schedule/project_export.php:58
 msgid "Unknown export mode '!export_mode'."
+msgstr ""
+
+#: modules/custom/btrCore/callback/project.inc:130
+msgid "For mode 'preferred' parameter 'preferred_voters' should not be empty."
+msgstr ""
+
+#: modules/custom/btrCore/callback/project.inc:222;232
+msgid "Export file '!filename' does not exist!"
+msgstr "Skedari i eksportit '!filename' nuk gjendet!"
+
+#: modules/custom/btrCore/callback/rss_feed.inc:44
+msgid "Latest translation suggestions on B-Translator"
+msgstr "Përkthimet e fundit të propozuara në B-Translator"
+
+#: modules/custom/btrCore/callback/rss_feed.inc:47
+msgid "Latest translation suggestions on B-Translator, for @domain"
+msgstr "Përkthimet më të fundit të sugjeruara në B-Translator, për @domain"
+
+#: modules/custom/btrCore/callback/tweet.inc:35
+msgid "Error: No string found!"
 msgstr ""
 
 #: modules/custom/btrCore/drush/btr-vote-import.inc:51
 msgid "You must specify a user with the option --user."
 msgstr ""
 
-#: modules/custom/btrCore/includes/ajax_callbacks.inc:83
-msgid "Used with context: %context"
-msgstr "Përdorur në rrethanat: %context"
+#: modules/custom/btrCore/drush/btr-vote-import.inc:77
+#, fuzzy
+#| msgid "You do not have enough rights for submitting votes!"
+msgid "User \"!user\" does not have enough rights for submitting translations!"
+msgstr "Nuk ke të drejta të mjaftueshme për të dhënë vota!"
 
-#: modules/custom/btrCore/includes/ajax_callbacks.inc:87
-msgid "Used on these projects:"
-msgstr "Përdorur në këto projekte:"
-
-#: modules/custom/btrCore/includes/get_sguid.inc:97
-msgid ""
-"It seems that there is something wrong with your preferences. Please <a "
-"href='@edit-profile'>check your profile</a>."
+#: modules/custom/btrCore/drush/btr-vote-import.inc:83
+msgid "Language \"!lng\" is not supported."
 msgstr ""
-"Duket se diçka nuk është në rregull me të pëlqyerat tuaja. Ju lutem <a "
-"href='@edit-profile'>kontrolloni profilin tuaj</a>."
 
-#: modules/custom/btrCore/includes/get_sguid.inc:113
+#: modules/custom/btrCore/drush/btr-vote-import.inc:89
+#, fuzzy
+#| msgid "There are no translations for the language '@lng'."
+msgid "User \"!user\" cannot submit translations for the language \"!lng\""
+msgstr "Nuk ka përkthime për gjuhën '@lng'."
+
+#: modules/custom/btrCore/drush/btr-vote-import.inc:102
+#, fuzzy
+#| msgid "Export file '!filename' does not exist!"
+msgid "File \"!file\" does not exist."
+msgstr "Skedari i eksportit '!filename' nuk gjendet!"
+
+#: modules/custom/btrCore/drush/btr-vote-import.inc:112
+msgid "Only files with the following extensions are allowed: !files-allowed."
+msgstr ""
+
+#: modules/custom/btrCore/drush/btranslator.drush.inc:115
+#, fuzzy
+#| msgid "The user '!username' does not exist."
+msgid "The language '!lng' does not exist."
+msgstr "Përdoruesi '!username' nuk egziston."
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-admin-on-export-request.inc:9
+#, fuzzy
+#| msgid "[!prefix] Export: !project"
+msgid "Export request:"
+msgstr "[!prefix] Eksportim: !project"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-admin-on-export-request.inc:13
+msgid "Export request by user !uid for '!origin/!project'."
+msgstr "Kërkesë eksportimi nga përdoruesi !uid për '!origin/!project'."
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-admin-on-import-request.inc:9
+#, fuzzy
+#| msgid "[!prefix] Export: !project"
+msgid "Import request"
+msgstr "[!prefix] Eksportim: !project"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-admin-on-import-request.inc:12
+#, fuzzy
+#| msgid "Export request by user !uid for '!origin/!project'."
+msgid "Import request by user !username (!uid): !filename."
+msgstr "Kërkesë eksportimi nga përdoruesi !uid për '!origin/!project'."
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-author-on-translation-deletion.inc:10
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-deletion.inc:10
+#, fuzzy
+#| msgid "[!prefix] Translation deleted: !translation"
+msgid "Translation deleted: !translation"
+msgstr "[!prefix] Fshirje përkthimi: !translation"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-author-on-translation-deletion.inc:14
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-disqus-comment.inc:12
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-vocabulary-term.inc:13
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-export-is-done.inc:13
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-import-is-done.inc:13
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-project-import-is-done.inc:13
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:14
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:15
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-deletion.inc:14
+#: modules/custom/btrCore/lib/fn/email/msg/string-to-be-reviewed.inc:20
+msgid "Greetings !username,"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-author-on-translation-deletion.inc:15
+msgid ""
+"A translation that you have submitted, has been deleted by a moderator.\n"
+"You can see the string and the rest of translations at this link:"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-author-on-translation-deletion.inc:18
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-disqus-comment.inc:15
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-vocabulary-term.inc:29
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-export-is-done.inc:24
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-import-is-done.inc:18
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-project-import-is-done.inc:18
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:21
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:25
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-deletion.inc:18
+#: modules/custom/btrCore/lib/fn/email/msg/string-to-be-reviewed.inc:23
+msgid "Thanks"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-author-on-translation-deletion.inc:20
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:23
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:27
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-deletion.inc:20
+#: modules/custom/btrCore/lib/fn/email/msg/string-to-be-reviewed.inc:25
+#, fuzzy
+#| msgid "Original string:"
+msgid "Original (English) String:"
+msgstr "Vargu origjinal:"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-author-on-translation-deletion.inc:21
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-deletion.inc:21
+#, fuzzy
+#| msgid "Get Translations"
+msgid "Deleted Translation:"
+msgstr "Merr Përkthime"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-disqus-comment.inc:13
+msgid "A new comment has been added to a string that you have voted."
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-disqus-comment.inc:17
+msgid "New comment:"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-vocabulary-term.inc:10
+#, fuzzy
+#| msgid "[!prefix] New term: !string"
+msgid "New term: !string"
+msgstr "[!prefix] Fjalë e re: !string"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-on-new-vocabulary-term.inc:22
+msgid ""
+"A new term has been added to the vocabulary !project by !author.\n"
+"Check it out at the mobile app: !url"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-export-is-done.inc:10
+#, fuzzy
+#| msgid "Export a Project"
+msgid "Export: !project"
+msgstr "Eksporto një Projekt"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-export-is-done.inc:14
+msgid ""
+"The export of the project '!project', that you have requested,\n"
+"is done. You can download it from these links:"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-import-is-done.inc:10
+#, fuzzy
+#| msgid "[!prefix] Export: !project"
+msgid "Import of !filename"
+msgstr "[!prefix] Eksportim: !project"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-import-is-done.inc:14
 #, fuzzy
 #| msgid ""
-#| "You have reached the end of the preferred project. Please <a href='@edit-"
-#| "profile'>visit your profile</a> and modify them."
+#| "Greetings !username,\n"
+#| "\n"
+#| "           The export of '!project', that you have requested, is done.\n"
+#| "           You can download it from these links:\n"
+#| "           * !export_url_tgz\n"
+#| "           * !export_url_diff\n"
+#| "           * !export_url_ediff\n"
+#| "           "
 msgid ""
-"You have reached the end of the preferred projects. Please <a href='@edit-"
-"profile'>visit your profile</a> and modify them."
+"The import of the file '!filename', that you have requested,\n"
+"is done. Check out the new translations here:"
 msgstr ""
-"Keni arritur fundin e projekteve të pëlqyer. Ju lutem <a href='@edit-"
-"profile'>vizitoni profilin</a> dhe i ndryshoni."
+"Përshëndetje !username,\n"
+"\n"
+"           Eksporti i '!project', që keni kërkuar, është kryer.\n"
+"           Mund ta shkarkoni nga këto lidhje:\n"
+"           * !export_url_tgz\n"
+"           * !export_url_diff\n"
+"           * !export_url_ediff\n"
+"           "
 
-#: modules/custom/btrCore/includes/mail_notifications.inc:73
-msgid "[!prefix] Translation modified for: !string"
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-import-is-done.inc:21
+msgid "Output messages:"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-project-import-is-done.inc:10
+#, fuzzy
+#| msgid "[!prefix] Export: !project"
+msgid "Import of project !project"
+msgstr "[!prefix] Eksportim: !project"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-that-project-import-is-done.inc:14
+#, fuzzy
+#| msgid ""
+#| "Greetings !username,\n"
+#| "\n"
+#| "           The export of '!project', that you have requested, is done.\n"
+#| "           You can download it from these links:\n"
+#| "           * !export_url_tgz\n"
+#| "           * !export_url_diff\n"
+#| "           * !export_url_ediff\n"
+#| "           "
+msgid ""
+"The import of the project '!project', that you have requested,\n"
+"is done. Check it out here:"
+msgstr ""
+"Përshëndetje !username,\n"
+"\n"
+"           Eksporti i '!project', që keni kërkuar, është kryer.\n"
+"           Mund ta shkarkoni nga këto lidhje:\n"
+"           * !export_url_tgz\n"
+"           * !export_url_diff\n"
+"           * !export_url_ediff\n"
+"           "
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:10
+#, fuzzy
+#| msgid "[!prefix] New translation for: !string"
+msgid "New translation for: !string"
+msgstr "[!prefix] Përkthim i ri për: !string"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:16
+msgid ""
+"A new translation has been suggested for a string\n"
+"that you have voted for. If you think that the new\n"
+"translation is more suitable than the one that you have\n"
+"voted for, then you can change your vote at this link:"
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:24
+#, fuzzy
+#| msgid "Vote Translations"
+msgid "Voted Translation:"
+msgstr "Voto Përkthimet"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-new-translation.inc:25
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:29
+#, fuzzy
+#| msgid "<New translation>"
+msgid "New Translation:"
+msgstr "<Përkthim i ri>"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:11
+#, fuzzy
+#| msgid "[!prefix] Translation modified for: !string"
+msgid "Translation modified for: !string"
 msgstr "[!prefix] Përkthimi u ndryshua për: !string"
 
-#: modules/custom/btrCore/includes/mail_notifications.inc:79
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:16
+#, fuzzy
+#| msgid ""
+#| "Greetings !username,\n"
+#| "\n"
+#| "           The following translation has been modified by its author.\n"
+#| "           You are being notified because you have voted for the old\n"
+#| "           translation and your vote now counts for the new version\n"
+#| "           of the translation.\n"
+#| "\n"
+#| "           If the new version of the translation is OK for you,\n"
+#| "           then there is nothing you should do. Otherwise, you\n"
+#| "           can change your vote at this link: !url\n"
+#| "\n"
+#| "           Thanks\n"
+#| "\n"
+#| "           ---------- Original (English) String:\n"
+#| "           !string\n"
+#| "           ---------- Old Translation:\n"
+#| "           !old_translation\n"
+#| "           ---------- New Translation:\n"
+#| "           !new_translation\n"
+#| "           ----------\n"
+#| "           "
 msgid ""
-"Greetings !username,\n"
+"The following translation has been modified by its author.\n"
+"You are being notified because you have voted for the old\n"
+"translation and your vote now counts for the new version\n"
+"of the translation.\n"
 "\n"
-"           The following translation has been modified by its author.\n"
-"           You are being notified because you have voted for the old\n"
-"           translation and your vote now counts for the new version\n"
-"           of the translation.\n"
-"\n"
-"           If the new version of the translation is OK for you,\n"
-"           then there is nothing you should do. Otherwise, you\n"
-"           can change your vote at this link: !url\n"
-"\n"
-"           Thanks\n"
-"\n"
-"           ---------- Original (English) String:\n"
-"           !string\n"
-"           ---------- Old Translation:\n"
-"           !old_translation\n"
-"           ---------- New Translation:\n"
-"           !new_translation\n"
-"           ----------\n"
-"           "
+"If the new version of the translation is OK for you,\n"
+"then there is nothing you should do. Otherwise, you\n"
+"can change your vote at this link:"
 msgstr ""
 "Përshëndetje !username,\n"
 "\n"
@@ -349,338 +529,29 @@ msgstr ""
 "           ----------\n"
 "           "
 
-#: modules/custom/btrCore/includes/mail_notifications.inc:113
-msgid "[!prefix] New translation for: !string"
-msgstr "[!prefix] Përkthim i ri për: !string"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:119
-msgid ""
-"Greetings !username,\n"
-"\n"
-"           A new translation has been suggested for a string\n"
-"           that you have voted for. If you think that the new\n"
-"           translation is more suitable than the one that you\n"
-"           have voted for, then you can change your vote\n"
-"           at this link: !url\n"
-"\n"
-"           Thanks\n"
-"\n"
-"           ---------- Original (English) String:\n"
-"           !string\n"
-"           ---------- Voted Translation:\n"
-"           !voted_translation\n"
-"           ---------- New Translation:\n"
-"           !new_translation\n"
-"           ----------\n"
-"          "
-msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"           Një përkthim i ri është sugjeruar për një varg\n"
-"           që ju keni votuar. Nëse përkthimi i ri\n"
-"           ju duket më i përshtatshëm se ai që keni votuar,\n"
-"           mund ta ndryshoni votën te kjo adresë:\n"
-"           !url\n"
-"\n"
-"           Faleminderit\n"
-"\n"
-"           ---------- Vargu Origjinal (Anglisht):\n"
-"           !string\n"
-"           ---------- Përkthimi i Votuar:\n"
-"           !voted_translation\n"
-"           ---------- Përkthimi i Ri:\n"
-"           !new_translation\n"
-"           ----------\n"
-"          "
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:149
-msgid "[!prefix] New term: !string"
-msgstr "[!prefix] Fjalë e re: !string"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:155
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-change.inc:28
 #, fuzzy
-#| msgid ""
-#| "Greetings !username,\n"
-#| "\n"
-#| "           A new term has been added to the vocabulary\n"
-#| "           by !author: !string\n"
-#| "\n"
-#| "           You can review its translation at this link:\n"
-#| "           !url\n"
-#| "\n"
-#| "           Thanks\n"
-#| "\n"
-#| "           ----------\n"
-#| "\n"
-#| "           - You can add a new term at:\n"
-#| "             !url_add_term\n"
-#| "\n"
-#| "           - You can see all the vocabulary terms at:\n"
-#| "             !url_vocabulary\n"
-#| "\n"
-#| "          "
+#| msgid "Translations"
+msgid "Old Translation:"
+msgstr "Përkthimet"
+
+#: modules/custom/btrCore/lib/fn/email/msg/notify-voter-on-translation-deletion.inc:15
 msgid ""
-"Greetings !username,\n"
-"\n"
-"           A new term has been added to the vocabulary !project\n"
-"           by !author: !string\n"
-"\n"
-"           You can review its translation at this link:\n"
-"           !url\n"
-"\n"
-"           Thanks\n"
-"\n"
-"           ----------\n"
-"\n"
-"           - You can add a new term at:\n"
-"             !url_add_term\n"
-"\n"
-"           - You can see all the vocabulary terms at:\n"
-"             !url_vocabulary\n"
-"\n"
-"          "
+"A translation that you have voted, has been deleted by a moderator.\n"
+"You can see the string and the rest of translations at this link:"
 msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"           !author ka shtuar një fjalë të re në fjalor: !string\n"
-"\n"
-"           Mund ta shikoni përkthimin te kjo lidhje:\n"
-"           !url\n"
-"\n"
-"           Faleminderit\n"
-"\n"
-"           ----------\n"
-"\n"
-"           - Mund të shtoni një fjalë të re te:\n"
-"             !url_add_term\n"
-"\n"
-"           - Mund ti shihni të gjitha fjalët e fjalorit te:\n"
-"             !url_vocabulary\n"
-"\n"
-"          "
 
-#: modules/custom/btrCore/includes/mail_notifications.inc:192;222
-msgid "[!prefix] Translation deleted: !translation"
-msgstr "[!prefix] Fshirje përkthimi: !translation"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:198
+#: modules/custom/btrCore/lib/fn/email/msg/string-to-be-reviewed.inc:21
 msgid ""
-"Greetings !username,\n"
-"\n"
-"           A translation that you have submitted, has been deleted by a "
-"moderator.\n"
-"           You can see the string and the rest of translations at this "
-"link: !url\n"
-"\n"
-"           Thanks\n"
-"\n"
-"           ---------- Original (English) String:\n"
-"           !string\n"
-"           ---------- Deleted Translation:\n"
-"           !translation\n"
-"           ----------\n"
-"           "
+"If you have time, please help to review the translation of the string at "
+"this link:"
 msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"           Një përkthim që keni bërë ju, është fshirë nga një rregullator.\n"
-"           Vargun dhe përkthimet e mbetura mund ti shihni këtu: !url\n"
-"\n"
-"           Faleminderit\n"
-"\n"
-"           ---------- Vargu Origjinal (Anglisht):\n"
-"           !string\n"
-"           ---------- Përkthimi i Fshirë:\n"
-"           !translation\n"
-"           ----------\n"
-"           "
 
-#: modules/custom/btrCore/includes/mail_notifications.inc:228
-msgid ""
-"Greetings !username,\n"
-"\n"
-"           A translation that you have voted, has been deleted by a "
-"moderator.\n"
-"           You can see the string and the rest of translations at this "
-"link: !url\n"
-"\n"
-"           Thanks\n"
-"\n"
-"           ---------- Original (English) String:\n"
-"           !string\n"
-"           ---------- Deleted Translation:\n"
-"           !translation\n"
-"           ----------\n"
-"           "
-msgstr ""
-"Përshëdetje !username,\n"
-"\n"
-"           Një votim i votuar nga ju është fshirë nga një rregullmbajtës.\n"
-"           Vargun dhe pëkthimet e tjera mund ti shihni në këtë lidhje: !url\n"
-"\n"
-"           Faleminderit\n"
-"\n"
-"           ---------- Vargu Fillestar (Anglisht):\n"
-"           !string\n"
-"           ---------- Përkthimi i Fshirë:\n"
-"           !translation\n"
-"           ----------\n"
-"           "
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:252
-msgid "[!prefix] Export request: !origin/!project"
-msgstr "[!prefix] Kërkesë eksportimi: !origin/!project"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:259
-msgid "Export request by user !uid for '!origin/!project'."
-msgstr "Kërkesë eksportimi nga përdoruesi !uid për '!origin/!project'."
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:270
+#: modules/custom/btrCore/lib/fn/email/msg/string-to-be-reviewed.inc:26
 #, fuzzy
-#| msgid "[!prefix] Export: !project"
-msgid "[!prefix] Import request"
-msgstr "[!prefix] Eksportim: !project"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:273
-#, fuzzy
-#| msgid "Export request by user !uid for '!origin/!project'."
-msgid "Import request by user !username (!uid): !filename."
-msgstr "Kërkesë eksportimi nga përdoruesi !uid për '!origin/!project'."
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:284
-msgid "[!prefix] Export: !project"
-msgstr "[!prefix] Eksportim: !project"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:290
-msgid ""
-"Greetings !username,\n"
-"\n"
-"           The export of '!project', that you have requested, is done.\n"
-"           You can download it from these links:\n"
-"           * !export_url_tgz\n"
-"           * !export_url_diff\n"
-"           * !export_url_ediff\n"
-"           "
-msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"           Eksporti i '!project', që keni kërkuar, është kryer.\n"
-"           Mund ta shkarkoni nga këto lidhje:\n"
-"           * !export_url_tgz\n"
-"           * !export_url_diff\n"
-"           * !export_url_ediff\n"
-"           "
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:311
-#, fuzzy
-#| msgid "[!prefix] Export: !project"
-msgid "[!prefix] Import of project !project"
-msgstr "[!prefix] Eksportim: !project"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:317
-#, fuzzy
-#| msgid ""
-#| "Greetings !username,\n"
-#| "\n"
-#| "           The export of '!project', that you have requested, is done.\n"
-#| "           You can download it from these links:\n"
-#| "           * !export_url_tgz\n"
-#| "           * !export_url_diff\n"
-#| "           * !export_url_ediff\n"
-#| "           "
-msgid ""
-"Greetings !username,\n"
-"\n"
-"           The import of the project '!project', that you have requested,\n"
-"           is done. Check it out here:\n"
-"           !search_url\n"
-"           "
-msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"           Eksporti i '!project', që keni kërkuar, është kryer.\n"
-"           Mund ta shkarkoni nga këto lidhje:\n"
-"           * !export_url_tgz\n"
-"           * !export_url_diff\n"
-"           * !export_url_ediff\n"
-"           "
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:334
-#, fuzzy
-#| msgid "[!prefix] Export: !project"
-msgid "[!prefix] Import of !filename"
-msgstr "[!prefix] Eksportim: !project"
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:340
-#, fuzzy
-#| msgid ""
-#| "Greetings !username,\n"
-#| "\n"
-#| "           The export of '!project', that you have requested, is done.\n"
-#| "           You can download it from these links:\n"
-#| "           * !export_url_tgz\n"
-#| "           * !export_url_diff\n"
-#| "           * !export_url_ediff\n"
-#| "           "
-msgid ""
-"Greetings !username,\n"
-"\n"
-"           The import of '!filename', that you have requested, is done.\n"
-"           Check out the new translations here:\n"
-"           !search_url\n"
-"           "
-msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"           Eksporti i '!project', që keni kërkuar, është kryer.\n"
-"           Mund ta shkarkoni nga këto lidhje:\n"
-"           * !export_url_tgz\n"
-"           * !export_url_diff\n"
-"           * !export_url_ediff\n"
-"           "
-
-#: modules/custom/btrCore/includes/mail_notifications.inc:359
-msgid ""
-"Greetings !username,\n"
-"\n"
-"       If you have time, please help to review the translation\n"
-"       of the string at this link: !url\n"
-"\n"
-"       Thanks\n"
-"\n"
-"       ---------- Original (English) String:\n"
-"       !string\n"
-"       ---------- Available Translations:\n"
-"      "
-msgstr ""
-"Përshëndetje !username,\n"
-"\n"
-"       Nëse keni kohë, ju lutem ndihmoni për të rishikuar përkthimin\n"
-"       e vargut te kjo lidhje: !url\n"
-"\n"
-"       Faleminderit\n"
-"\n"
-"       ---------- Vargu Origjinal (Anglisht):\n"
-"       !string\n"
-"       ---------- Përkthimet e Mundshme:\n"
-"      "
-
-#: modules/custom/btrCore/includes/project_callback.inc:101
-#: modules/custom/btrCore/includes/vocabulary.inc:29
-msgid "Error: Server is currently busy. Please try to export again later."
-msgstr ""
-
-#: modules/custom/btrCore/includes/project_callback.inc:130
-msgid "For mode 'preferred' parameter 'preferred_voters' should not be empty."
-msgstr ""
-
-#: modules/custom/btrCore/includes/project_callback.inc:222;232
-msgid "Export file '!filename' does not exist!"
-msgstr "Skedari i eksportit '!filename' nuk gjendet!"
-
-#: modules/custom/btrCore/includes/twitter.inc:35
-msgid "Error: No string found!"
-msgstr ""
+#| msgid "Get Translations"
+msgid "Available Translations:"
+msgstr "Merr Përkthime"
 
 #: modules/custom/btrCore/lib/fn/project/import.php:182
 msgid ""
@@ -709,12 +580,12 @@ msgid ""
 msgstr ""
 
 #: modules/custom/btrCore/lib/fn/schedule/project_import.php:66
-#: modules/custom/btrServices/resources/translations.inc:693
+#: modules/custom/btrServices/resources/translations.inc:688
 msgid "Only files with the following extensions are allowed: %files-allowed."
 msgstr ""
 
 #: modules/custom/btrCore/lib/fn/schedule/project_import.php:74
-#: modules/custom/btrServices/resources/translations.inc:701
+#: modules/custom/btrServices/resources/translations.inc:696
 msgid "Failed to move uploaded file."
 msgstr ""
 
@@ -730,9 +601,46 @@ msgstr ""
 "Eksportimi i '!project' është vënë në listë. Do të njoftoheni me email kur "
 "të jetë kryer."
 
+#: modules/custom/btrCore/lib/fn/sguid/get_next.php:58
+msgid ""
+"It seems that there is something wrong with your preferences. Please <a "
+"href='@edit-profile'>check your profile</a>."
+msgstr ""
+"Duket se diçka nuk është në rregull me të pëlqyerat tuaja. Ju lutem <a "
+"href='@edit-profile'>kontrolloni profilin tuaj</a>."
+
+#: modules/custom/btrCore/lib/fn/sguid/get_next.php:72
+#, fuzzy
+#| msgid ""
+#| "You have reached the end of the preferred project. Please <a href='@edit-"
+#| "profile'>visit your profile</a> and modify them."
+msgid ""
+"You have reached the end of the preferred projects. Please <a href='@edit-"
+"profile'>visit your profile</a> and modify them."
+msgstr ""
+"Keni arritur fundin e projekteve të pëlqyer. Ju lutem <a href='@edit-"
+"profile'>vizitoni profilin</a> dhe i ndryshoni."
+
+#: modules/custom/btrCore/lib/fn/string/add.php:39
 #: modules/custom/btrCore/lib/fn/translation/add.php:27
 msgid "You do not have enough rights for making suggestions!"
 msgstr "Nuk ke të drejta të mjaftueshme për të bërë sugjerime!"
+
+#: modules/custom/btrCore/lib/fn/string/add.php:45
+msgid "Strings can be added only to a vocabulary project."
+msgstr ""
+
+#: modules/custom/btrCore/lib/fn/string/add.php:55
+#, fuzzy
+#| msgid "Delete a term from the vocabulary."
+msgid "You cannot add terms to this vocabulary."
+msgstr "Fshi një fjalë nga fjalori."
+
+#: modules/custom/btrCore/lib/fn/string/add.php:68;105
+#, fuzzy
+#| msgid "This term already exists."
+msgid "This string already exists."
+msgstr "Kjo fjalë është e shënuar."
 
 #: modules/custom/btrCore/lib/fn/translation/add.php:35
 #, fuzzy
@@ -756,7 +664,7 @@ msgstr "Voto përkthimet."
 msgid "The given translation already exists."
 msgstr "Kjo fjalë është e shënuar."
 
-#: modules/custom/btrCore/lib/fn/translation/del.php:49
+#: modules/custom/btrCore/lib/fn/translation/del.php:58
 msgid "You are not allowed to delete this translation!"
 msgstr "Nuk ju lejohet ta fshini këtë përkthim!"
 
@@ -764,23 +672,122 @@ msgstr "Nuk ju lejohet ta fshini këtë përkthim!"
 msgid "The user '!username' does not exist."
 msgstr "Përdoruesi '!username' nuk egziston."
 
-#: modules/custom/btrCore/lib/fn/vote/add.php:22
-#: modules/custom/btrCore/lib/fn/vote/del.php:21
+#: modules/custom/btrCore/lib/fn/vote/add.php:23
+#: modules/custom/btrCore/lib/fn/vote/del.php:22
 msgid "You do not have enough rights for submitting votes!"
 msgstr "Nuk ke të drejta të mjaftueshme për të dhënë vota!"
 
-#: modules/custom/btrCore/lib/fn/vote/add.php:33
-#: modules/custom/btrCore/lib/fn/vote/del.php:38
+#: modules/custom/btrCore/lib/fn/vote/add.php:34
+#: modules/custom/btrCore/lib/fn/vote/del.php:39
 #, fuzzy
 #| msgid "The user '!username' does not exist."
 msgid "The given translation does not exist."
 msgstr "Përdoruesi '!username' nuk egziston."
 
-#: modules/custom/btrCore/lib/fn/vote/add.php:45
+#: modules/custom/btrCore/lib/fn/vote/add.php:46
 #, fuzzy
 #| msgid "There are no translations for the language '@lng'."
 msgid "You cannot vote the translations of language <strong>!lng</strong>"
 msgstr "Nuk ka përkthime për gjuhën '@lng'."
+
+#: modules/custom/btrCore/lib/fn/vote/import.php:121
+msgid ""
+" !context\n"
+" !string\n"
+" The string or its context is too long to be stored in the DB (more than "
+"1000 chars); skipped.\n"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:11
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:121
+msgid "Language"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:55;120
+msgid "Code"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:62;126
+msgid "Name"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:69
+msgid "Direction (LTR or RTL)"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:79;142
+msgid "Plurals"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:88
+msgid "Update language"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:88
+msgid "Save language"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:101
+msgid "The language: @name has been saved."
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:113
+msgid "Language ID"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:114
+msgid "The ID of the language."
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:121
+msgid "Code of the language."
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:127
+msgid "Name of the language."
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:132
+msgid "Direction"
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:133
+msgid "Direction (LTR/RTL) of the language."
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:143
+#, fuzzy
+#| msgid "Language of Translation"
+msgid "Language plurals."
+msgstr "Gjuha e Përkthimit"
+
+#: modules/custom/btrLanguages/btrLanguages.module:164
+msgid "Code: "
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:170
+msgid "Name: "
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:176
+msgid "Direction: "
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.module:182
+msgid "Plurals: "
+msgstr ""
+
+#: modules/custom/btrLanguages/btrLanguages.info:0
+#, fuzzy
+#| msgid "Translation Language"
+msgid "B-Translator Languages"
+msgstr "Gjuha e Përkthimit"
+
+#: modules/custom/btrLanguages/btrLanguages.info:0
+#, fuzzy
+#| msgid "Language of Translation"
+msgid "Languages supported by B-Translator."
+msgstr "Gjuha e Përkthimit"
 
 #: modules/custom/btrServices/btrServices.info:0
 #, fuzzy
@@ -792,23 +799,31 @@ msgstr "Rregullimet në B-Translator"
 msgid "Web Services (API-s) that are offered by B-Translator."
 msgstr ""
 
-#: modules/custom/btrServices/resources/translations.inc:611
+#: modules/custom/btrServices/resources/project.inc:253
+msgid "Insufficient permissions."
+msgstr ""
+
+#: modules/custom/btrServices/resources/translations.inc:471
+msgid "Language missing or not supported."
+msgstr ""
+
+#: modules/custom/btrServices/resources/translations.inc:607
 msgid "Action !action is not supported!"
 msgstr ""
 
-#: modules/custom/btrServices/resources/translations.inc:654
+#: modules/custom/btrServices/resources/translations.inc:650
 #, fuzzy
 #| msgid "You do not have enough rights for submitting votes!"
 msgid "You do not have enough rights for submitting translations!"
 msgstr "Nuk ke të drejta të mjaftueshme për të dhënë vota!"
 
-#: modules/custom/btrServices/resources/translations.inc:669
+#: modules/custom/btrServices/resources/translations.inc:664
 #, fuzzy
 #| msgid "There are no translations for the language '@lng'."
 msgid "You cannot submit translations for the language !lng"
 msgstr "Nuk ka përkthime për gjuhën '@lng'."
 
-#: modules/custom/btrServices/resources/translations.inc:742
+#: modules/custom/btrServices/resources/translations.inc:737
 #, fuzzy
 #| msgid ""
 #| "Export of '!project' is scheduled. You will be notified by email when it "
@@ -820,23 +835,284 @@ msgstr ""
 "Eksportimi i '!project' është vënë në listë. Do të njoftoheni me email kur "
 "të jetë kryer."
 
-#: modules/custom/btrServices/resources/translations.inc:619
+#: modules/custom/btrServices/resources/translations.inc:615
 msgid "1 suggestion saved"
 msgid_plural "@count suggestions saved"
 msgstr[0] "1 sugjerim u ruajt"
 msgstr[1] "@count sugjerime u ruajtën"
 
-#: modules/custom/btrServices/resources/translations.inc:623
+#: modules/custom/btrServices/resources/translations.inc:619
 msgid "1 vote saved"
 msgid_plural "@count votes saved"
 msgstr[0] "1 votë u ruajt"
 msgstr[1] "@count vota u ruajtën"
 
-#: modules/custom/btrServices/resources/translations.inc:627
+#: modules/custom/btrServices/resources/translations.inc:623
 msgid "1 translation deleted"
 msgid_plural "@count translations deleted"
 msgstr[0] "1 përkthim i fshirë"
 msgstr[1] "@count përkthime të fshira"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:10;27
+#, fuzzy
+#| msgid "Translation Projects"
+msgid "Translation Project"
+msgstr "Projektet e Përkthimit"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:130
+msgid "Origin"
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:138
+msgid "Project"
+msgstr "Projekti"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:146;350
+#, fuzzy
+#| msgid "Project Description"
+msgid "Description"
+msgstr "Përshkrimi i Projektit"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:152;322;356
+msgid "App URL"
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:153
+msgid "URL of the mobile app"
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:160;362
+msgid "Admins"
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:161
+msgid "Comma separated list of admin usernames."
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:168;368
+msgid "Moderators"
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:169
+msgid "Comma separated list of moderator usernames."
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:177
+#, fuzzy
+#| msgid "Project"
+msgid "Update project"
+msgstr "Projekti"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:177
+#, fuzzy
+#| msgid "Project"
+msgid "Save project"
+msgstr "Projekti"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:197
+msgid "The project: @label has been saved."
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:283
+#, fuzzy
+#| msgid "Project"
+msgid "Project ID"
+msgstr "Projekti"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:284
+#, fuzzy
+#| msgid "The name of the project."
+msgid "The ID of the project."
+msgstr "Emri i projektit."
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:290
+#, fuzzy
+#| msgid "Project Title"
+msgid "Project language"
+msgstr "Titulli i Projektit"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:291
+#, fuzzy
+#| msgid "The name of the project."
+msgid "Language of the project."
+msgstr "Emri i projektit."
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:299
+#, fuzzy
+#| msgid "Project Description"
+msgid "Project origin"
+msgstr "Përshkrimi i Projektit"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:300
+#, fuzzy
+#| msgid "The origin of the project."
+msgid "Origin of the project."
+msgstr "Prejardhja e projektit."
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:307
+#, fuzzy
+#| msgid "Project"
+msgid "Project name"
+msgstr "Projekti"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:308
+#, fuzzy
+#| msgid "The name of the project."
+msgid "Name of the project."
+msgstr "Emri i projektit."
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:315
+#, fuzzy
+#| msgid "Project Description"
+msgid "Project description"
+msgstr "Përshkrimi i Projektit"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:316
+#, fuzzy
+#| msgid "The origin of the project."
+msgid "Description of the project."
+msgstr "Prejardhja e projektit."
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.module:323
+msgid "URL of the mobile app."
+msgstr ""
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.info:0
+#, fuzzy
+#| msgid "Translation Projects"
+msgid "B-Translator Projects"
+msgstr "Projektet e Përkthimit"
+
+#: modules/custom/btrTranslationProjects/btrTranslationProjects.info:0
+#, fuzzy
+#| msgid "Drupal installation profile for B-Translator."
+msgid "Details and settings of B-Translator projects."
+msgstr "Profil instalimi Drupal për B-Translator"
+
+#: modules/custom/btrUser/btrUser.module:22
+msgid "Vote translations."
+msgstr "Voto përkthimet."
+
+#: modules/custom/btrUser/btrUser.module:23
+msgid "Can submit votes (or likes) for translation suggestions."
+msgstr "Mund të japë vota (ose pëlqime) për përkthimet e sugjeruara."
+
+#: modules/custom/btrUser/btrUser.module:26
+msgid "Suggest new translations."
+msgstr "Sugjero përkthime të reja."
+
+#: modules/custom/btrUser/btrUser.module:27
+msgid "Can submit new translation suggestions."
+msgstr "Mund të bëjë sugjerime përkthimesh të reja."
+
+#: modules/custom/btrUser/btrUser.module:30
+msgid "Flag translations."
+msgstr "Sinjalizo përkthimet."
+
+#: modules/custom/btrUser/btrUser.module:31
+msgid "Can flag translations as inaproppriate."
+msgstr "Mund ti shënojë përkthimet si të papërshtatshme."
+
+#: modules/custom/btrUser/btrUser.module:34
+msgid "Import translation (PO) files."
+msgstr "Importo skedarët e përkthimit (skedarët PO)."
+
+#: modules/custom/btrUser/btrUser.module:35
+msgid "Can import to B-Translator new translation files (in the PO format)."
+msgstr ""
+"Mund të importojë në B-Translator skedarë të rinj përkthimi (në formatin PO)."
+
+#: modules/custom/btrUser/btrUser.module:38
+msgid "Export translation files."
+msgstr "Eksporto skedarët e përkthimit."
+
+#: modules/custom/btrUser/btrUser.module:39
+msgid ""
+"Can export translations from B-Translator (either in PO format, or as diff/"
+"ediff)."
+msgstr ""
+"Mund të eksportojë përkthimet nga B-Translator (në format PO ose si diff/"
+"ediff)."
+
+#: modules/custom/btrUser/btrUser.module:42
+msgid "Statistics."
+msgstr "Statistikat."
+
+#: modules/custom/btrUser/btrUser.module:43
+msgid "Can access global statistics of B-Translator."
+msgstr "Mund të shohë statistikat e përgjithshme në B-Translator."
+
+#: modules/custom/btrUser/btrUser.module:46
+msgid "Resolve issues."
+msgstr "Zgjidh problemet."
+
+#: modules/custom/btrUser/btrUser.module:47
+msgid "Can resolve flag issues and other problems."
+msgstr "Mund të vendosë rreth sinjalizimeve dhe për probleme të tjera."
+
+#: modules/custom/btrUser/btrUser.module:50
+msgid "Administer B-Translator."
+msgstr ""
+
+#: modules/custom/btrUser/btrUser.module:51
+msgid "Can perform administration tasks for B-Translator."
+msgstr "Mund të bëjë detyra administruese në B-Translator."
+
+#: modules/custom/btrUser/btrUser.info:0
+#, fuzzy
+#| msgid "B-Translator Settings"
+msgid "B-Translator User Profile"
+msgstr "Rregullimet në B-Translator"
+
+#: modules/custom/btrUser/btrUser.info:0
+msgid ""
+"User Profile for B-Translator, with extra fields, hybridauth login and "
+"registration, etc."
+msgstr ""
+
+#: modules/custom/btrUser/include/form_alter.inc:18
+msgid "Fields that can be seen and modified only by an administrator"
+msgstr ""
+
+#: modules/custom/btrUser/include/form_alter.inc:24
+#, fuzzy
+#| msgid "The List of Projects that Will be Used for Voting and Translation"
+msgid "The list of projects that user can administrate"
+msgstr "Lista e Projekteve që do Përdoren për Votimet dhe Përkthimet"
+
+#: modules/custom/btrUser/include/form_alter.inc:25
+msgid ""
+"Set the projects that the user can admin. Enter each project on a separate "
+"line, in the form <em>origin/project</em>."
+msgstr ""
+
+#: modules/custom/btrUser/include/form_alter.inc:30
+#, fuzzy
+#| msgid "The List of Projects that Will be Used for Voting and Translation"
+msgid "The list of projects that user can moderate"
+msgstr "Lista e Projekteve që do Përdoren për Votimet dhe Përkthimet"
+
+#: modules/custom/btrUser/include/form_alter.inc:31
+msgid ""
+"Set the projects that the user can moderate. Enter each project on a "
+"separate line, in the form <em>origin/project</em>."
+msgstr ""
+
+#: modules/custom/btrUser/include/hybridauth.inc:32
+msgid "Translation Language"
+msgstr "Gjuha e Përkthimit"
+
+#: modules/custom/btrUser/include/hybridauth.inc:33
+#, fuzzy
+#| msgid ""
+#| "The language of translations. This site is about collecting feedback for "
+#| "the translations of this language."
+msgid ""
+"The language of translations. You will help with the translations of this "
+"language (review existing translations or submit new ones)."
+msgstr ""
+"Gjuha e përkthimit. Kjo faqe ka si qëllim rishikimin dhe përmirësimin e "
+"përkthimeve në këtë gjuhë."
 
 #: modules/features/btr_btr/btr_btr.info:0
 msgid "btr_btr"
@@ -1095,6 +1371,221 @@ msgstr ""
 msgid "B-Translator Server Settings"
 msgstr "Rregullimet në B-Translator"
 
+#~ msgid ""
+#~ "Greetings !username,\n"
+#~ "\n"
+#~ "           A new translation has been suggested for a string\n"
+#~ "           that you have voted for. If you think that the new\n"
+#~ "           translation is more suitable than the one that you\n"
+#~ "           have voted for, then you can change your vote\n"
+#~ "           at this link: !url\n"
+#~ "\n"
+#~ "           Thanks\n"
+#~ "\n"
+#~ "           ---------- Original (English) String:\n"
+#~ "           !string\n"
+#~ "           ---------- Voted Translation:\n"
+#~ "           !voted_translation\n"
+#~ "           ---------- New Translation:\n"
+#~ "           !new_translation\n"
+#~ "           ----------\n"
+#~ "          "
+#~ msgstr ""
+#~ "Përshëndetje !username,\n"
+#~ "\n"
+#~ "           Një përkthim i ri është sugjeruar për një varg\n"
+#~ "           që ju keni votuar. Nëse përkthimi i ri\n"
+#~ "           ju duket më i përshtatshëm se ai që keni votuar,\n"
+#~ "           mund ta ndryshoni votën te kjo adresë:\n"
+#~ "           !url\n"
+#~ "\n"
+#~ "           Faleminderit\n"
+#~ "\n"
+#~ "           ---------- Vargu Origjinal (Anglisht):\n"
+#~ "           !string\n"
+#~ "           ---------- Përkthimi i Votuar:\n"
+#~ "           !voted_translation\n"
+#~ "           ---------- Përkthimi i Ri:\n"
+#~ "           !new_translation\n"
+#~ "           ----------\n"
+#~ "          "
+
+#, fuzzy
+#~| msgid ""
+#~| "Greetings !username,\n"
+#~| "\n"
+#~| "           A new term has been added to the vocabulary\n"
+#~| "           by !author: !string\n"
+#~| "\n"
+#~| "           You can review its translation at this link:\n"
+#~| "           !url\n"
+#~| "\n"
+#~| "           Thanks\n"
+#~| "\n"
+#~| "           ----------\n"
+#~| "\n"
+#~| "           - You can add a new term at:\n"
+#~| "             !url_add_term\n"
+#~| "\n"
+#~| "           - You can see all the vocabulary terms at:\n"
+#~| "             !url_vocabulary\n"
+#~| "\n"
+#~| "          "
+#~ msgid ""
+#~ "Greetings !username,\n"
+#~ "\n"
+#~ "           A new term has been added to the vocabulary !project\n"
+#~ "           by !author: !string\n"
+#~ "\n"
+#~ "           You can review its translation at this link:\n"
+#~ "           !url\n"
+#~ "\n"
+#~ "           Thanks\n"
+#~ "\n"
+#~ "           ----------\n"
+#~ "\n"
+#~ "           - You can add a new term at:\n"
+#~ "             !url_add_term\n"
+#~ "\n"
+#~ "           - You can see all the vocabulary terms at:\n"
+#~ "             !url_vocabulary\n"
+#~ "\n"
+#~ "          "
+#~ msgstr ""
+#~ "Përshëndetje !username,\n"
+#~ "\n"
+#~ "           !author ka shtuar një fjalë të re në fjalor: !string\n"
+#~ "\n"
+#~ "           Mund ta shikoni përkthimin te kjo lidhje:\n"
+#~ "           !url\n"
+#~ "\n"
+#~ "           Faleminderit\n"
+#~ "\n"
+#~ "           ----------\n"
+#~ "\n"
+#~ "           - Mund të shtoni një fjalë të re te:\n"
+#~ "             !url_add_term\n"
+#~ "\n"
+#~ "           - Mund ti shihni të gjitha fjalët e fjalorit te:\n"
+#~ "             !url_vocabulary\n"
+#~ "\n"
+#~ "          "
+
+#~ msgid ""
+#~ "Greetings !username,\n"
+#~ "\n"
+#~ "           A translation that you have submitted, has been deleted by a "
+#~ "moderator.\n"
+#~ "           You can see the string and the rest of translations at this "
+#~ "link: !url\n"
+#~ "\n"
+#~ "           Thanks\n"
+#~ "\n"
+#~ "           ---------- Original (English) String:\n"
+#~ "           !string\n"
+#~ "           ---------- Deleted Translation:\n"
+#~ "           !translation\n"
+#~ "           ----------\n"
+#~ "           "
+#~ msgstr ""
+#~ "Përshëndetje !username,\n"
+#~ "\n"
+#~ "           Një përkthim që keni bërë ju, është fshirë nga një "
+#~ "rregullator.\n"
+#~ "           Vargun dhe përkthimet e mbetura mund ti shihni këtu: !url\n"
+#~ "\n"
+#~ "           Faleminderit\n"
+#~ "\n"
+#~ "           ---------- Vargu Origjinal (Anglisht):\n"
+#~ "           !string\n"
+#~ "           ---------- Përkthimi i Fshirë:\n"
+#~ "           !translation\n"
+#~ "           ----------\n"
+#~ "           "
+
+#~ msgid ""
+#~ "Greetings !username,\n"
+#~ "\n"
+#~ "           A translation that you have voted, has been deleted by a "
+#~ "moderator.\n"
+#~ "           You can see the string and the rest of translations at this "
+#~ "link: !url\n"
+#~ "\n"
+#~ "           Thanks\n"
+#~ "\n"
+#~ "           ---------- Original (English) String:\n"
+#~ "           !string\n"
+#~ "           ---------- Deleted Translation:\n"
+#~ "           !translation\n"
+#~ "           ----------\n"
+#~ "           "
+#~ msgstr ""
+#~ "Përshëdetje !username,\n"
+#~ "\n"
+#~ "           Një votim i votuar nga ju është fshirë nga një "
+#~ "rregullmbajtës.\n"
+#~ "           Vargun dhe pëkthimet e tjera mund ti shihni në këtë lidhje: !"
+#~ "url\n"
+#~ "\n"
+#~ "           Faleminderit\n"
+#~ "\n"
+#~ "           ---------- Vargu Fillestar (Anglisht):\n"
+#~ "           !string\n"
+#~ "           ---------- Përkthimi i Fshirë:\n"
+#~ "           !translation\n"
+#~ "           ----------\n"
+#~ "           "
+
+#~ msgid "[!prefix] Export request: !origin/!project"
+#~ msgstr "[!prefix] Kërkesë eksportimi: !origin/!project"
+
+#~ msgid "[!prefix] Export: !project"
+#~ msgstr "[!prefix] Eksportim: !project"
+
+#~ msgid ""
+#~ "Greetings !username,\n"
+#~ "\n"
+#~ "           The export of '!project', that you have requested, is done.\n"
+#~ "           You can download it from these links:\n"
+#~ "           * !export_url_tgz\n"
+#~ "           * !export_url_diff\n"
+#~ "           * !export_url_ediff\n"
+#~ "           "
+#~ msgstr ""
+#~ "Përshëndetje !username,\n"
+#~ "\n"
+#~ "           Eksporti i '!project', që keni kërkuar, është kryer.\n"
+#~ "           Mund ta shkarkoni nga këto lidhje:\n"
+#~ "           * !export_url_tgz\n"
+#~ "           * !export_url_diff\n"
+#~ "           * !export_url_ediff\n"
+#~ "           "
+
+#~ msgid ""
+#~ "Greetings !username,\n"
+#~ "\n"
+#~ "       If you have time, please help to review the translation\n"
+#~ "       of the string at this link: !url\n"
+#~ "\n"
+#~ "       Thanks\n"
+#~ "\n"
+#~ "       ---------- Original (English) String:\n"
+#~ "       !string\n"
+#~ "       ---------- Available Translations:\n"
+#~ "      "
+#~ msgstr ""
+#~ "Përshëndetje !username,\n"
+#~ "\n"
+#~ "       Nëse keni kohë, ju lutem ndihmoni për të rishikuar përkthimin\n"
+#~ "       e vargut te kjo lidhje: !url\n"
+#~ "\n"
+#~ "       Faleminderit\n"
+#~ "\n"
+#~ "       ---------- Vargu Origjinal (Anglisht):\n"
+#~ "       !string\n"
+#~ "       ---------- Përkthimet e Mundshme:\n"
+#~ "      "
+
 #~ msgid "B-Translator configuration options"
 #~ msgstr "Mundësitë e trajtësimit të B-Translator"
 
@@ -1171,17 +1662,8 @@ msgstr "Rregullimet në B-Translator"
 #~ " + <a href='@url_votes'>!nr_votes vota</a> <br/> + <a "
 #~ "href='@url_translations'>!nr_translations përkthime</a>"
 
-#~ msgid "Translation Projects"
-#~ msgstr "Projektet e Përkthimit"
-
-#~ msgid "Project Title"
-#~ msgstr "Titulli i Projektit"
-
 #~ msgid "Translating a software project."
 #~ msgstr "Përkthimi i një programi."
-
-#~ msgid "Project Description"
-#~ msgstr "Përshkrimi i Projektit"
 
 #, fuzzy
 #~| msgid "B-Translator Settings"
@@ -1199,18 +1681,6 @@ msgstr "Rregullimet në B-Translator"
 
 #~ msgid "Do you want to overwrite the current suggestion?"
 #~ msgstr "Do që ta mbishkruash sugjerimin e tanishëm?"
-
-#~ msgid "Export a Project"
-#~ msgstr "Eksporto një Projekt"
-
-#~ msgid "The origin of the project."
-#~ msgstr "Prejardhja e projektit."
-
-#~ msgid "Project"
-#~ msgstr "Projekti"
-
-#~ msgid "The name of the project."
-#~ msgstr "Emri i projektit."
 
 #~ msgid "Export Mode"
 #~ msgstr "Mënyra e Eksportimit"
@@ -1248,14 +1718,8 @@ msgstr "Rregullimet në B-Translator"
 #~ msgid "Add"
 #~ msgstr "Shto"
 
-#~ msgid "This term already exists."
-#~ msgstr "Kjo fjalë është e shënuar."
-
 #~ msgid "Delete a Term"
 #~ msgstr "Fshi një Fjalë"
-
-#~ msgid "Delete a term from the vocabulary."
-#~ msgstr "Fshi një fjalë nga fjalori."
 
 #~ msgid "String ID"
 #~ msgstr "Varg ID"
@@ -1274,9 +1738,6 @@ msgstr "Rregullimet në B-Translator"
 
 #~ msgid "Change Filter Parameters"
 #~ msgstr "Ndrysho Parametrat e Filtrit"
-
-#~ msgid "Language of Translation"
-#~ msgstr "Gjuha e Përkthimit"
 
 #~ msgid ""
 #~ "Select the language of the translations to be searched and displayed."
@@ -1393,9 +1854,6 @@ msgstr "Rregullimet në B-Translator"
 #~ msgid "Filter Votes By Date"
 #~ msgstr "Filtro Votat Sipas Datës"
 
-#~ msgid "Vote Translations"
-#~ msgstr "Voto Përkthimet"
-
 #~ msgid "Login link has expired."
 #~ msgstr "Lidhja e hyrjes ka skaduar."
 
@@ -1416,11 +1874,6 @@ msgstr "Rregullimet në B-Translator"
 
 #~ msgid "Untranslated"
 #~ msgstr "Papërkthyer"
-
-#, fuzzy
-#~| msgid "Project"
-#~ msgid "Same Project"
-#~ msgstr "Projekti"
 
 #~ msgctxt "set the page title"
 #~ msgid "String: !string"
@@ -1466,9 +1919,6 @@ msgstr "Rregullimet në B-Translator"
 #~ msgid "Source text"
 #~ msgstr "Teksti Fillestar"
 
-#~ msgid "Translations"
-#~ msgstr "Përkthimet"
-
 #~ msgid "Direct and permanent link to this string."
 #~ msgstr "Lidhje e drejtpërdrejtë dhe e përhershme te ky varg."
 
@@ -1492,12 +1942,6 @@ msgstr "Rregullimet në B-Translator"
 #~ msgstr ""
 #~ "Kërko vetëm në vargjet me përkthime të sugjeruara nga përdoruesi i "
 #~ "zgjedhur."
-
-#~ msgid "Latest translation suggestions on B-Translator"
-#~ msgstr "Përkthimet e fundit të propozuara në B-Translator"
-
-#~ msgid "Latest translation suggestions on B-Translator, for @domain"
-#~ msgstr "Përkthimet më të fundit të sugjeruara në B-Translator, për @domain"
 
 #~ msgid "Use PHPMailer to send e-mails"
 #~ msgstr "Përdor PHPMailer për të dërguar postën"
@@ -1725,9 +2169,6 @@ msgstr "Rregullimet në B-Translator"
 #~ msgstr[0] "1 muaj"
 #~ msgstr[1] "@count muaj"
 
-#~ msgid "Original string:"
-#~ msgstr "Vargu origjinal:"
-
 #~ msgid "Suggested translation:"
 #~ msgstr "Përkthimi i sugjeruar:"
 
@@ -1751,9 +2192,6 @@ msgstr "Rregullimet në B-Translator"
 #~ "Gjuha '<strong>@lng</strong>' nuk ka përkrahje akoma. Gjuhët e gjendshme "
 #~ "janë: <strong>@lng_codes</strong> . <br/> Provo më mirë të kërkosh me: "
 #~ "@search_path"
-
-#~ msgid "Get Translations"
-#~ msgstr "Merr Përkthime"
 
 #~ msgid "No strings with GUID '<strong>@sguid</strong>' found."
 #~ msgstr "Nuk ka ndonjë varg me GUID '<strong>@sguid</strong>'."
