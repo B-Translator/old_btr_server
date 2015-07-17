@@ -9,6 +9,7 @@ gitrepos="
     /var/www/bcl*/profiles/btr_client
     /var/www/btr*/profiles/btr_server
     /usr/local/src/btr_*
+    /var/www/*/profiles/btr*/modules/contrib/btrclient
 "
 for repo in $gitrepos
 do
