@@ -27,7 +27,8 @@ function translation_del($tguid, $notify = TRUE) {
   $umail = $user->init;    // email used for registration
   $ulng = $user->translation_lng;
 
-  // Before deleting, get the author and voters (for notifications).
+  // Before deleting, get the author, voters, string and translation
+  // (for notifications).
   $author = btr::db_query(
     'SELECT u.uid, u.name, u.umail
      FROM {btr_translations} t
@@ -42,12 +43,13 @@ function translation_del($tguid, $notify = TRUE) {
      WHERE v.tguid = :tguid',
     array(':tguid' => $tguid))
     ->fetchAll();
-
-  // Check that the current user has the right to delete translations.
   $sguid = btr::db_query(
     'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
-    array(':tguid' => $tguid)
-  )->fetchField();
+    array(':tguid' => $tguid))->fetchField();
+  $string = btr::string_get($sguid);
+  $translation = btr::translation_get($tguid);
+
+  // Check that the current user has the right to delete translations.
   $is_own = ($umail == $author->umail);
   if (!$is_own and !user_access('btranslator-resolve')
     and !btr::utils_user_has_project_role('admin', $sguid)
@@ -80,7 +82,7 @@ function translation_del($tguid, $notify = TRUE) {
   // Notify the author of a translation and its voters
   // that it has been deleted.
   if ($notify) {
-    _notify_voters_on_translation_del($tguid, $author, $voters);
+    _notify_voters_on_translation_del($sguid, $tguid, $string, $translation, $author, $voters);
   }
 
   return array();
@@ -90,13 +92,7 @@ function translation_del($tguid, $notify = TRUE) {
  * Notify the author of a translation and its voters
  * that it has been deleted.
  */
-function _notify_voters_on_translation_del($tguid, $author, $voters) {
-  // get the sguid, string and translation
-  $sguid = btr::db_query(
-    'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
-    array(':tguid' => $tguid))->fetchField();
-  $string = btr::string_get($sguid);
-  $translation = btr::translation_get($tguid);
+function _notify_voters_on_translation_del($sguid, $tguid, $string, $translation, $author, $voters) {
 
   $notifications = array();
 
