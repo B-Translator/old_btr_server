@@ -16,7 +16,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 7.x-dev\n"
-"POT-Creation-Date: 2015-07-17 17:33+0000\n"
+"POT-Creation-Date: 2015-07-17 17:54+0000\n"
 "PO-Revision-Date: 2012-10-12 01:49+0200\n"
 "Last-Translator: Dashamir Hoxha <dashohoxha@gmail.com>\n"
 "Language-Team: Albanian\n"
@@ -1114,211 +1114,6 @@ msgstr ""
 "Gjuha e përkthimit. Kjo faqe ka si qëllim rishikimin dhe përmirësimin e "
 "përkthimeve në këtë gjuhë."
 
-#: modules/features/btr_btr/btr_btr.info:0
-msgid "btr_btr"
-msgstr ""
-
-#: modules/features/btr_btr/btr_btr.info:0
-#: modules/features/btr_btrServices/btr_btrServices.info:0
-#: modules/features/btr_captcha/btr_captcha.info:0
-#: modules/features/btr_hybridauth/btr_hybridauth.info:0
-#: modules/features/btr_layout/btr_layout.info:0
-#: modules/features/btr_misc/btr_misc.info:0
-#: modules/features/btr_permissions/btr_permissions.info:0
-msgid "Features"
-msgstr ""
-
-#: modules/features/btr_btrServices/btr_btrServices.info:0
-msgid "btr_btrServices"
-msgstr ""
-
-#: modules/features/btr_captcha/btr_captcha.admin.inc:37
-msgid "Public Key"
-msgstr ""
-
-#: modules/features/btr_captcha/btr_captcha.admin.inc:40
-msgid ""
-"The public key given to you when you <a href=\"@url\" target=\"_blank"
-"\">registered at reCAPTCHA.net</a>."
-msgstr ""
-
-#: modules/features/btr_captcha/btr_captcha.admin.inc:46
-msgid "Private Key"
-msgstr ""
-
-#: modules/features/btr_captcha/btr_captcha.admin.inc:49
-msgid ""
-"The private key given to you when you <a href=\"@url\" target=\"_blank"
-"\">registered at reCAPTCHA.net</a>."
-msgstr ""
-
-#: modules/features/btr_captcha/btr_captcha.info:0
-msgid "btr_captcha"
-msgstr ""
-
-#: modules/features/btr_hybridauth/btr_hybridauth.info:0
-msgid "btr_hybridauth"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.context.inc:42
-msgid "Display development block to admin."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.context.inc:80
-msgid "Pages, blogs, books, etc."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.context.inc:112
-msgid "Layout of the front page."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.field.inc:391
-msgid "Body"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.field.inc:392
-msgid "Enter a comma-separated list of words to describe your content."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.field.inc:393
-msgid "Image"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.field.inc:394
-msgid "Tags"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.field.inc:395
-msgid "Upload an image to go with this article."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:38
-msgid "Article"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:40
-msgid ""
-"Use <em>articles</em> for time-sensitive content like news, press releases "
-"or blog posts."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:42;50;58
-msgid "Title"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:46
-msgid "Book page"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:48
-msgid ""
-"<em>Books</em> have a built-in hierarchical navigation. Use for handbooks or "
-"tutorials."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:54
-msgid "Basic page"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.inc:56
-msgid ""
-"Use <em>basic pages</em> for your static content, such as an 'About us' page."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.menu_custom.inc:21
-msgid "Main menu"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.menu_custom.inc:22
-msgid ""
-"The <em>Main</em> menu is used on many sites to show the major sections of "
-"the site, often in a top navigation bar."
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.features.menu_links.inc:47
-#, fuzzy
-#| msgid "Contact"
-msgid "Contact"
-msgstr "Lidhu"
-
-#: modules/features/btr_layout/btr_layout.features.menu_links.inc:48
-msgid "Home"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:84
-msgid "Master"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:85
-msgid "more"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:86
-msgid "Apply"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:87
-msgid "Reset"
-msgstr "Rivendos"
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:88
-msgid "Sort by"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:89
-msgid "Asc"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:90
-msgid "Desc"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:91
-msgid "Items per page"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:92
-msgid "- All -"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:93
-msgid "Offset"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:94
-msgid "« first"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:95
-#, fuzzy
-#| msgid "Previous"
-msgid "‹ previous"
-msgstr "Paraardhëse"
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:96
-msgid "next ›"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:97
-msgid "last »"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.views_default.inc:98
-msgid "Page"
-msgstr ""
-
-#: modules/features/btr_layout/btr_layout.info:0
-msgid "btr_layout"
-msgstr ""
-
-#: modules/features/btr_misc/btr_misc.info:0
-msgid "btr_misc"
-msgstr ""
-
-#: modules/features/btr_permissions/btr_permissions.info:0
-msgid "btr_permissions"
-msgstr ""
-
 #: themes/bootstrap1/bootstrap1.info:0
 msgid "Bootstrap Subtheme"
 msgstr ""
@@ -1370,6 +1165,19 @@ msgstr ""
 #| msgid "B-Translator Settings"
 msgid "B-Translator Server Settings"
 msgstr "Rregullimet në B-Translator"
+
+#, fuzzy
+#~| msgid "Contact"
+#~ msgid "Contact"
+#~ msgstr "Lidhu"
+
+#~ msgid "Reset"
+#~ msgstr "Rivendos"
+
+#, fuzzy
+#~| msgid "Previous"
+#~ msgid "‹ previous"
+#~ msgstr "Paraardhëse"
 
 #~ msgid ""
 #~ "Greetings !username,\n"
