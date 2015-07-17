@@ -6,26 +6,20 @@ use \btr;
  * Notify the user that the export is ready for download.
  */
 {
-  $subject = t("[!prefix] Export: !project",
-             array(
-               '!prefix' => $subject_prefix,
-               '!project' => $params->project,
-             ));
-  $body = array(
-    t("Greetings !username,
+  $subject = "[$subject_prefix] "
+    . t('Export: !project', ['!project' => $params->project]);
 
-       The export of '!project', that you have requested, is done.
-       You can download it from these links:
-       * !export_url_tgz
-       * !export_url_diff
-       * !export_url_ediff
-      ",
-      array(
-        '!username' => $params->username,
-        '!project' => $params->project,
-        '!export_url_tgz' => $params->export_url_tgz,
-        '!export_url_diff' => $params->export_url_diff,
-        '!export_url_ediff' => $params->export_url_ediff,
-      )),
-  );
+  $body = array();
+  $body[] = t('Greetings !username,', ['!username' => $params->username]);
+  $body[] = t("The export of the project '!project', that you have requested,
+is done. You can download it from these links:",
+            ['!project' => $params->project]);
+  $body[] = "
+    <ul>
+      <li>$params->export_url_tgz</li>
+      <li>$params->export_url_diff</li>
+      <li>$params->export_url_ediff</li>
+    </ul>
+  ";
+  $body[] = t('Thanks');
 }

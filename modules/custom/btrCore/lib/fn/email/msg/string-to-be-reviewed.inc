@@ -15,25 +15,28 @@ use \btr;
   }
 
   $subject = "[$subject_prefix] " . cut($string, 60);
-  $body = array(
-    t("Greetings !username,
 
-       If you have time, please help to review the translation
-       of the string at this link: !url
+  $body = array();
+  $body[] = t('Greetings !username,', ['!username' => $params->username]);
+  $body[] = t('If you have time, please help to review the translation of the string at this link:');
+  $body[] = $url;
+  $body[] = t('Thanks');
 
-       Thanks
+  $original_string = t('Original (English) String:');
+  $available_translations = t('Available Translations:');
+  $body[] = "
+    <hr/>
 
-       ---------- Original (English) String:
-       !string
-       ---------- Available Translations:
-      ",
-      array(
-        '!username' => $params->username,
-        '!url' => $url,
-        '!string' => $string,
-      )),
-  );
+    <h4>$original_string</h4>
+    <ul>
+      <li>$string</li>
+    </ul>
+
+    <h4>$available_translations</h4>
+    <ul>
+  ";
   foreach ($translations as $translation) {
-    $body[] = ' * ' . $translation;
+    $body[] = "<li>" . $translation . "</li>\n";
   }
+  $body[] = "</ul>\n";
 }

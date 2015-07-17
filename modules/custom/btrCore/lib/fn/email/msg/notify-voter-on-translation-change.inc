@@ -7,40 +7,42 @@ use \btr;
  * for is modified.
  */
 {
-  $subject = t("[!prefix] Translation modified for: !string",
-             array(
-               '!prefix' => $subject_prefix,
-               '!string' => cut($params->string, 30),
-             ));
-  $body = array(
-    t("Greetings !username,
+  $subject = "[$subject_prefix] "
+    . t("Translation modified for: !string",
+      ['!string' => cut($params->string, 30)]);
 
-       The following translation has been modified by its author.
-       You are being notified because you have voted for the old
-       translation and your vote now counts for the new version
-       of the translation.
+  $body = array();
+  $body[] = t('Greetings !username,', ['!username' => $params->username]);
+  $body[] = t("The following translation has been modified by its author.
+You are being notified because you have voted for the old
+translation and your vote now counts for the new version
+of the translation.
 
-       If the new version of the translation is OK for you,
-       then there is nothing you should do. Otherwise, you
-       can change your vote at this link: !url
+If the new version of the translation is OK for you,
+then there is nothing you should do. Otherwise, you
+can change your vote at this link:");
+  $body[] = $url;
+  $body[] = t('Thanks');
 
-       Thanks
+  $original_string = t('Original (English) String:');
+  $old_translation = t('Old Translation:');
+  $new_translation = t('New Translation:');
+  $body[] = "
+    <hr/>
 
-       ---------- Original (English) String:
-       !string
-       ---------- Old Translation:
-       !old_translation
-       ---------- New Translation:
-       !new_translation
-       ----------
-      ",
-      array(
-        '!username' => $params->username,
-        '!url' => $url,
-        '!string' => $params->string,
-        '!old_translation' => $params->old_translation,
-        '!new_translation' => $params->new_translation,
-      )),
-  );
+    <h4>$original_string:</h4>
+    <ul>
+      <li>$params->string</li>
+    </ul>
 
+    <h4>$old_translation</h4>
+    <ul>
+      <li>$params->old_translation</li>
+    </ul>
+
+    <h4>$new_translation</h4>
+    <ul>
+      <li>$params->new_translation</li>
+    </ul>
+   ";
 }

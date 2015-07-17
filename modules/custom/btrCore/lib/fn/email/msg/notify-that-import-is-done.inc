@@ -6,25 +6,24 @@ use \btr;
  * Notify the user that the import is done.
  */
 {
-  $subject = t("[!prefix] Import of !filename",
-             array(
-               '!prefix' => $subject_prefix,
-               '!filename' => $params->filename,
-             ));
-  $body = array(
-    t("Greetings !username,
+  $subject = "[$subject_prefix] "
+    . t('Import of !filename', ['!filename' => $params->filename]);
 
-       The import of '!filename', that you have requested, is done.
-       Check out the new translations here:
-       !search_url
-      ",
-      array(
-        '!username' => $params->username,
-        '!filename' => $params->filename,
-        '!search_url' => $params->search_url,
-      )),
-  );
+  $body = array();
+  $body[] = t('Greetings !username,', ['!username' => $params->username]);
+  $body[] = t("The import of the file '!filename', that you have requested,
+is done. Check out the new translations here:",
+            ['!filename' => $params->filename]);
+  $body[] = $params->search_url;
+  $body[] = t('Thanks');
+
   if ($params->messages) {
-    $body .= "\n\n" . t('Output messages:') . "\n" . $params->messages;
+    $output_messages = t('Output messages:')
+    $body[] = "
+      <hr/>
+
+      <h4>$output_messages</h4>
+      <xmp>$params->messages</xmp>
+    ";
   }
 }

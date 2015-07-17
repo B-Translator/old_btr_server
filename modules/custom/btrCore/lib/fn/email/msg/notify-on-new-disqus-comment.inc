@@ -6,27 +6,18 @@ use \btr;
  * Notify voters that a new comment has been added.
  */
 {
-  $subject = t("[!prefix] !title",
-             array(
-               '!prefix' => $subject_prefix,
-               '!title' => $params->title,
-             ));
-  $body = array(
-    t("Greetings !username,
+  $subject = "[$subject_prefix] $params->title";
 
-       A new comment has been added to a string that you have voted.
-       !link
+  $body = array();
+  $body[] = t('Greetings !username,', ['!username' => $params->username]);
+  $body[] = t('A new comment has been added to a string that you have voted.');
+  $body[] = $params->link;
+  $body[] = t('Thanks');
 
-       -----
-       !comment
-       -----
-
-       Thanks
-      ",
-      array(
-        '!username' => $params->username,
-        '!link' => $params->link,
-        '!comment' => $params->comment,
-      )),
-  );
+  $new_comment = t('New comment:');
+  $body[] = "
+    <hr/>
+    <h4>$new_comment</h4>
+    $params->comment
+  ";
 }
