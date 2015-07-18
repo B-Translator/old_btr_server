@@ -133,7 +133,9 @@ function _btr_report_statistics($params) {
  *   It contains these fields (variables):
  *   - lng: language of translations
  *   - period: period of report: day | week | month | year
- *   - size: number of results (top contributers), between 5 and 20
+ *   - size: number of results (top contributers), between 5 and 100
+ *   - origin: (optional) origin of the project
+ *   - project: (optional) name of the project
  *
  * @return
  *   Array of users, where each user is an object with these attributes:
@@ -149,17 +151,25 @@ function _btr_report_topcontrib($params) {
     'lng' => NULL,
     'period' => NULL,
     'size' => NULL,
+    'origin' => NULL,
+    'project' => NULL,
   );
 
   // get parameters and validate them
-  $lng = $params['lng'];
-  if (!in_array($lng, btr::languages_get())) {
-    return services_error('Language missing or not supported.', 406);
-  }
   $period = $params['period'];
   if (!in_array($period, array('day', 'week', 'month', 'year'))) {
     return services_error('Period missing or not supported.', 406);
   }
+  $size = (int)$params['size'];
+  if ($size < 5 or $size > 100) {
+    return services_error('Size must be between 5 and 100.', 406);
+  }
+  $lng = $params['lng'];
+  if (!in_array($lng, btr::languages_get())) {
+    return services_error('Language missing or not supported.', 406);
+  }
+  $origin = $params['origin'];
+  $project = $params['project'];
 
-  return btr::report_topcontrib($period, $params['size'], $lng);
+  return btr::report_topcontrib($period, $size, $lng, $origin, $project);
 }
