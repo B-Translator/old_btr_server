@@ -24,8 +24,8 @@ function search_build_filter($params) {
 
   // Number of results to be returned.
   $limit = isset($params['limit']) ? (int)trim($params['limit']) : 5;
-  if ($limit < 5)  $limit = 5;
-  if ($limit > 50) $limit = 50;
+  if ($limit < 1)  $limit = 1;
+  if ($limit > 100) $limit = 100;
   $filter['limit'] = $limit;
 
   // Search can be done either by similarity of l10n strings (natural
