@@ -77,7 +77,7 @@ function report_topcontrib($period = 'week', $size = 5, $lng = 'fr', $origin = N
                 1 AS translation, 0 AS vote
          FROM {$btr_translations} t
          WHERE ulng = :lng AND time > :from_date
-           AND umail!='admin@example.com'
+           AND umail!='admin@example.com' AND umail!=''
        )
        UNION ALL
        (
@@ -85,7 +85,7 @@ function report_topcontrib($period = 'week', $size = 5, $lng = 'fr', $origin = N
                 0 AS translation, 1 AS vote
          FROM {$btr_votes} v
          WHERE ulng = :lng AND time > :from_date
-           AND umail!='admin@example.com'
+           AND umail!='admin@example.com' AND umail!=''
        )
     ) AS w
     LEFT JOIN {btr_users} u
