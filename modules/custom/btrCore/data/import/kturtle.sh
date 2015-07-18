@@ -12,12 +12,12 @@ tmpdir=$(mktemp -d)
 
 ### set some variables
 origin=KDE
-project=doc_kdeedu_kturtle
+project=kdeedu_kturtle
 languages="fr sq"
 
 ### create the project
 rm -f $tmpdir/*
-cp $data_root/$origin/fr/docmessages/kdeedu/kturtle* $tmpdir/
+cp $data_root/$origin/fr/messages/kdeedu/*kturtle* $tmpdir/
 echo -e "\n==========> $origin $project"
 $drush btrp-add $origin $project $tmpdir
 
@@ -26,13 +26,13 @@ for lng in $languages
 do
     echo -e "\n----------> $origin $project $lng"  # ;  continue;  ## debug
     rm -f $tmpdir/*
-    cp $data_root/$origin/$lng/docmessages/kdeedu/kturtle* $tmpdir/
+    cp $data_root/$origin/$lng/messages/kdeedu/*kturtle* $tmpdir/
     $drush btrp-import $origin $project $lng $tmpdir
 done
 
 ### set the author of Albanian translations
 rm -f $tmpdir/*
-cp $data_root/$origin/sq/docmessages/kdeedu/kturtle* $tmpdir/
+cp $data_root/$origin/sq/messages/kdeedu/*kturtle* $tmpdir/
 $drush btr-vote --user="Dashamir Hoxha" sq $tmpdir/
 
 ### cleanup the temp dir
