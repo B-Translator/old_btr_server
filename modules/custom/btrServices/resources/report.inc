@@ -106,6 +106,8 @@ function _btr_report_retrieve($report, $params) {
  *   Parameters of the report, comming from the POST request.
  *   It contains these fields (variables):
  *   - lng: language of translations
+ *   - origin: (optional) origin of the project
+ *   - project: (optional) name of the project
  *
  * @return
  *   Array of general stats for week, month and year.
@@ -116,13 +118,21 @@ function _btr_report_retrieve($report, $params) {
  *        -d '{"lng": "sq"}'
  */
 function _btr_report_statistics($params) {
+  $params += array(
+    'lng' => NULL,
+    'origin' => NULL,
+    'project' => NULL,
+  );
+
   // get parameters and validate them
   $lng = $params['lng'];
   if (!in_array($lng, btr::languages_get())) {
     return services_error('Language missing or not supported.', 406);
   }
+  $origin = $params['origin'];
+  $project = $params['project'];
 
-  return btr::report_statistics($lng);
+  return btr::report_statistics($lng, $origin, $project);
 }
 
 /**
