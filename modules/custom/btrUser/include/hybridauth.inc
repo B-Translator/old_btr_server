@@ -53,6 +53,9 @@ function _btrUser_form_hybridauth_additional_info_form_submit($form, &$form_stat
 function btrUser_hybridauth_userinfo_alter(&$userinfo, $data) {
   $destination = drupal_parse_url($_GET['destination']);
 
+  // Fix a bug of hybridauth.
+  $userinfo['init'] = $userinfo['mail'];
+
   // Set the translation_lng on the user profile.
   if (isset($destination['query']['lng'])) {
     $userinfo['translation_lng'] = $destination['query']['lng'];
