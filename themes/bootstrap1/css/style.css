@@ -61,6 +61,18 @@ h2.block-title {
 }
 
 /**
+ * Make area around '#' clickable.
+ */
+td.sguid {
+    padding: 0px;
+}
+
+td.sguid a {
+    padding: 8px;
+    text-decoration: none;
+}
+
+/**
  * Improve the spacing and alignment of the ShareThis buttons.
  */
 .sharethis-buttons {
