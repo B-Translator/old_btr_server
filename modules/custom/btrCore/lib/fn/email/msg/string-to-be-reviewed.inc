@@ -13,6 +13,10 @@ use \btr;
   if ($app_url and $origin=='vocabulary') {
     $url = "$app_url?lng=$lng&proj=$project#$string";
   }
+  elseif ($project) {
+    $base_url = btr::utils_get_base_url($lng);
+    $url = $base_url . "/btr/project/$origin/$project/$lng/" . $params->sguid;
+  }
 
   $subject = "[$subject_prefix] " . cut($string, 60);
 
