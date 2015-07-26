@@ -82,6 +82,7 @@ projects[module_filter] = 2.0
 projects[drush_language] = 1.2
 projects[delete_all] = 1.1
 projects[l10n_update] = 1.1
+projects[advuser] = 3.x-dev
 
 ;;; Performance
 projects[boost] = 1.0
