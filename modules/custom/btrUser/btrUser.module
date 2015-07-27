@@ -52,3 +52,19 @@ function btrUser_permission() {
     ),
   );
 }
+
+/**
+ * Implements hook_drupal_goto_alter().
+ */
+function btrUser_drupal_goto_alter(&$path, &$options, &$http_response_code) {
+  if ( ($path == 'user/login') and isset($_GET['redirect_uri'])) {
+    // Add the language to the destination, so that in case of registration
+    // through external accounts, it does not stop to ask for the language.
+    switch ($_GET['redirect_uri']) {
+      case 'https://l10n.org.al/oauth2/authorized':
+          $options['query']['destination'] .= '?lng=sq';
+          break;
+      }
+  }
+}
+
