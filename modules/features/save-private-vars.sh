@@ -23,6 +23,7 @@ while read var_name
 do
     echo $var_name
     $drush vget "$var_name" --exact --pipe >> restore-private-vars.php
+    echo '' >> restore-private-vars.php
 done < $(dirname $0)/private-vars.txt
 
 cat <<EOF >> restore-private-vars.php
