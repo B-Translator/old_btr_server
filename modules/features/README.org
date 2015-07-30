@@ -88,14 +88,12 @@
   It creates a feature on the directory:
   ~/var/www/btr_dev/profiles/btr_server/modules/features/btr_layout/~
 
-  Other features that I have created are: /btr_disqus/,
-  /btr_invite/, /btr_sharethis/,
-  /btr_captcha/, /btr_drupalchat/,
-  /btr_hybridauth/, /btr_simplenews/,
-  /btr_mass_contact/, /btr_googleanalytics/, etc.  In
-  order to recreate them easily, the script =create-features.sh= can
-  be used. It will create a feature for each list of components that
-  is on the directory ~components/~.
+  Other features that I have created are: /btr_disqus/, /btr_invite/,
+  /btr_captcha/, /btr_hybridauth/, /btr_simplenews/,
+  /btr_mass_contact/, /btr_googleanalytics/, etc.  In order to
+  recreate them easily, the script =create-features.sh= can be
+  used. It will create a feature for each list of components that is
+  on the directory ~components/~.
 
   The file ~create-features.sh~ has a content like this:
   #+BEGIN_EXAMPLE
@@ -224,18 +222,17 @@
   module.
 
   Some of these modules are just wrappers to external API services,
-  like disqus, sharethis, hybridauth, recaptcha, googleanalytics,
-  etc. Usually they need some API keys or any other private attributes
-  that are different from site to site. We cannot save these private
-  attributes on the feature, because they are specific for each
-  different site. But we would like to offer the
-  administrator/maintainer of the (B-Translator) application an easy
-  way to manage them, without having to search up and down among a
-  huge number of configuration options available to the Drupal
-  admin. In order to do this, I have customized the automatically
-  generated features, taking advantage of the fact that they are just
-  Drupal modules, and anything that works for Drupal modules works for
-  them too.
+  like disqus, hybridauth, recaptcha, googleanalytics, etc. Usually
+  they need some API keys or any other private attributes that are
+  different from site to site. We cannot save these private attributes
+  on the feature, because they are specific for each different
+  site. But we would like to offer the administrator/maintainer of the
+  (B-Translator) application an easy way to manage them, without
+  having to search up and down among a huge number of configuration
+  options available to the Drupal admin. In order to do this, I have
+  customized the automatically generated features, taking advantage of
+  the fact that they are just Drupal modules, and anything that works
+  for Drupal modules works for them too.
 
   For example, for the feature /btr_googleanalytics/, I have
   added this line on ~btr_googleanalytics.module~:
@@ -332,9 +329,6 @@
   disqus_userapikey
   disqus_publickey
   disqus_secretkey
-  sharethis_publisherID
-  sharethis_twitter_handle
-  sharethis_twitter_suffix
   simplenews_from_address
   simplenews_test_address
   mass_contact_default_sender_email

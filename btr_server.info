@@ -104,7 +104,6 @@ dependencies[] = btrTranslationProjects
 dependencies[] = btrServices
 
 ;dependencies[] = btrClient
-;dependencies[] = bcl_service_links
 ;dependencies[] = bcl_disqus
 
 ;dependencies[] = btr_btrServices
