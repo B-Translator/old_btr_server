@@ -33,9 +33,15 @@ rm -rf $name/
 rm -f /var/www/downloads/$name.zip
 mv $(pwd)/$name.zip  /var/www/downloads/
 set +x
-echo 
-echo "There is no automatic upload yet."
-echo
-echo "Upload manually 'https://btranslator.org/downloads/$name.zip'"
-echo "to '$pootle/$lng/$project/$subproj/'"
-echo
+echo "
+
+There is no automatic upload yet.
+
+Download:
+    https://btranslator.org/downloads/$name.zip
+
+and import it to:
+    $pootle/$lng/$project/$subproj/
+
+"
+
