@@ -4,7 +4,74 @@
  * Simple REST API for listing and exporting projects.
  */
 
-module_load_include('inc', 'btrCore', 'includes/projects');
+
+/**
+ * Callback function for the menu 'project/synch'
+ *
+ * Synchronize the translations of a given origin/project/lng with the upstream
+ * project.
+ *
+ * Does not allow concurrent synchronizations because they may affect the
+ * performance of the server.  Parameters are received from the request (either
+ * GET or POST). They are:
+ *
+ *  - origin
+ *      Origin of the project.
+ *
+ *  - project
+ *      The name of the project.
+ *
+ *  - lng
+ *      Translation to be exported.
+ *
+ * Examples:
+ *   curl -k 'https://dev.btr.example.org/project/synch?origin=LibreOffice&project=cui&lng=sq'
+ *   curl -k https://dev.btranslator.org/project/synch \
+ *        -d origin=LibreOffice -d project=cui -d lng=sq
+ */
+function btrCore_project_synch() {
+  // The output is plain text.
+  header('Content-Type: text/plain');
+
+  // Get the parameters.
+  $origin = check_plain($_REQUEST['origin']);
+  $project = check_plain($_REQUEST['project']);
+  $lng = check_plain($_REQUEST['lng']);
+
+  // Make sure that the given origin and project do exist.
+  if (!btr::utils_project_exists($origin, $project)) {
+    print t("The project '!project' does not exist.",
+      ['!project' => "$origin/$project"]);
+    drupal_exit();
+  }
+
+  // Get the synch command.
+  if ($lng=='sq' and $origin=='LibreOffice' and in_array($project, ['sw', 'cui']))
+    {
+      $synch_cmd ="/var/www/data/synch/sq-libo_ui.sh $project";
+    }
+  else {
+    print t("There is no script for synchronizing '!project'.",
+      ['!project' => "$origin/$project/$lng"]);
+    drupal_exit();
+  }
+
+  // Try to avoid concurrent synchronizations because they
+  // may affect the performance of the server.
+  if (!lock_acquire('synch_project')) {
+    print t("Error: Server is currently busy. Please try to synchronize again later.");
+    drupal_exit();
+  }
+
+  // Synchronize the project.
+  set_time_limit(0);
+  flush();
+  passthru($synch_cmd);
+
+  // Stop Drupal execution right here.
+  lock_release('synch_project');
+  drupal_exit();
+}
 
 /**
  * Callback function for the menu translations/project/list.
