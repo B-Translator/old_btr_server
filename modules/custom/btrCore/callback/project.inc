@@ -6,7 +6,7 @@
 
 
 /**
- * Callback function for the menu 'project/synch'
+ * Callback function for the menu 'project/sync'
  *
  * Synchronize the translations of a given origin/project/lng with the upstream
  * project.
@@ -25,11 +25,11 @@
  *      Translation to be exported.
  *
  * Examples:
- *   curl -k 'https://dev.btr.example.org/project/synch?origin=LibreOffice&project=cui&lng=sq'
- *   curl -k https://dev.btranslator.org/project/synch \
+ *   curl -k 'https://dev.btr.example.org/project/sync?origin=LibreOffice&project=cui&lng=sq'
+ *   curl -k https://dev.btranslator.org/project/sync \
  *        -d origin=LibreOffice -d project=cui -d lng=sq
  */
-function btrCore_project_synch() {
+function btrCore_project_sync() {
   // The output is plain text.
   header('Content-Type: text/plain');
 
@@ -45,10 +45,10 @@ function btrCore_project_synch() {
     drupal_exit();
   }
 
-  // Get the synch command.
+  // Get the sync command.
   if ($lng=='sq' and $origin=='LibreOffice' and in_array($project, ['sw', 'cui']))
     {
-      $synch_cmd ="/var/www/data/synch/sq-libo_ui.sh $project";
+      $sync_cmd ="/var/www/data/sync/sq-libo_ui.sh $project";
     }
   else {
     print t("There is no script for synchronizing '!project'.",
@@ -58,7 +58,7 @@ function btrCore_project_synch() {
 
   // Try to avoid concurrent synchronizations because they
   // may affect the performance of the server.
-  if (!lock_acquire('synch_project')) {
+  if (!lock_acquire('sync_project')) {
     print t("Error: Server is currently busy. Please try to synchronize again later.");
     drupal_exit();
   }
@@ -66,10 +66,10 @@ function btrCore_project_synch() {
   // Synchronize the project.
   set_time_limit(0);
   flush();
-  passthru($synch_cmd);
+  passthru($sync_cmd);
 
   // Stop Drupal execution right here.
-  lock_release('synch_project');
+  lock_release('sync_project');
   drupal_exit();
 }
 

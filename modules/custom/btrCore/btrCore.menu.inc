@@ -28,10 +28,10 @@ function btrCore_menu() {
 
   // Return a list of the imported projects,
   // filtered by the given origin/project.
-  $items['project/synch'] = array(
+  $items['project/sync'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Synchronize Project',
-    'page callback'   => 'btrCore_project_synch',
+    'page callback'   => 'btrCore_project_sync',
     'file'            => 'callback/project.inc',
     'access callback' => TRUE,
   );
