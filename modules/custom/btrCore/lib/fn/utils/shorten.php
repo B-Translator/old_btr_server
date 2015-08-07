@@ -18,7 +18,5 @@ function utils_shorten($string, $length) {
     $str = substr($str, 0, strrpos(substr($str, 0, $length - 3), ' '));
     $str .= '...';
   }
-  $str = utf8_decode($str);
-  $str = htmlentities($str);
   return $str;
 }
