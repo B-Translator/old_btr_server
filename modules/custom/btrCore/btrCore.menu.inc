@@ -38,7 +38,7 @@ function btrCore_menu() {
 
   // Return a list of the imported projects,
   // filtered by the given origin/project.
-  $items['translations/project/list'] = array(
+  $items['project/list'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project List',
     'page callback'   => 'btrCore_project_list',
@@ -47,7 +47,7 @@ function btrCore_menu() {
   );
 
   // Return an archive of the PO files for a given origin/project/lng.
-  $items['translations/project/export'] = array(
+  $items['project/export'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
     'page callback'   => 'btrCore_project_export',
@@ -67,7 +67,7 @@ function btrCore_menu() {
   // Return as plain-text the diff of the PO file for a given origin/project/lng,
   // which contains the latest most-voted suggestions since the last snapshot.
   // It gets the parameters origin/project/lng[/nr[/ediff]].
-  $items['translations/project/diff'] = array(
+  $items['project/diff'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Project Export',
     'page callback'   => 'btrCore_project_diff',

@@ -89,7 +89,7 @@ function _btrUser_create_userprofile_fields() {
       'entity_type' => 'user',
       'bundle' => 'user',
       'label' => 'Preferred Projects',
-      'description' => "If you want to contribute only to one or some of the projects, you can add them here. Then only strings from these projects will be presented for review/translation. You can enter projects in the form 'Origin/Project', for example: KDE/kdeedu, Mozilla/browser, etc. Or you can include all the projects from a certain origin, like this: KDE, LibreOffice, etc. You can change the preferred projects later at any time. See a list of imported projects <a href='/translations/project/list/*/*/txt' target='_blank'>here</a>.",
+      'description' => "If you want to contribute only to one or some of the projects, you can add them here. Then only strings from these projects will be presented for review/translation. You can enter projects in the form 'Origin/Project', for example: KDE/kdeedu, Mozilla/browser, etc. Or you can include all the projects from a certain origin, like this: KDE, LibreOffice, etc. You can change the preferred projects later at any time. See a list of imported projects <a href='/project/list/*/*/txt' target='_blank'>here</a>.",
       'settings' => array(
         'text_processing' => '0',
         'user_register_form' => 1,

@@ -84,7 +84,7 @@ function btrCore_project_sync() {
 }
 
 /**
- * Callback function for the menu translations/project/list.
+ * Callback function for the menu project/list.
  *
  * Return a plain-text list of all the imported projects,
  * filtered by the given origin/project.
@@ -126,7 +126,7 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
 }
 
 /**
- * Callback function for the menu 'translations/project/export'
+ * Callback function for the menu 'project/export'
  *
  * Return an archive of PO files for a given origin/project/lng.
  *
@@ -162,10 +162,10 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
  *      Comma separated list of usernames of the preferred voters.
  *
  * Examples:
- *   curl -k 'https://dev.btr.example.org/translations/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
- *   curl -k https://dev.l10n.org.al/translations/project/export \
+ *   curl -k 'https://dev.btr.example.org/project/export?origin=test&project=kturtle&lng=sq' > test1.tgz
+ *   curl -k https://dev.btranslator.org/project/export \
  *        -d 'origin=test&project=kturtle&lng=sq&export_mode=original' > test1.tgz
- *   curl -k https://dev.l10n.org.al/translations/project/export \
+ *   curl -k https://dev.btranslator.org/project/export \
  *        -d origin=test -d project=kturtle -d lng=sq \
  *        -d export_mode=preferred \
  *        -d preferred_voters=user1,user2 > test1.tgz
@@ -246,7 +246,7 @@ function btrCore_project_export() {
 }
 
 /**
- * Callback function for the menu 'translations/project/diff'
+ * Callback function for the menu 'project/diff'
  *
  * Return the diff/ediff of the PO files for a given
  * origin/project/lng/nr.  It gets the parameters:
@@ -254,11 +254,11 @@ function btrCore_project_export() {
  * it returns a list of the saved diffs instead.
  *
  * Examples:
- *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq
- *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2 > 2.diff
- *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
- *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4 > 4.diff
- *   curl -k https://l10n.org.al/translations/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
+ *   curl -k https://btranslator.org/project/diff/LibreOffice/sw/sq
+ *   curl -k https://btranslator.org/project/diff/LibreOffice/sw/sq/2 > 2.diff
+ *   curl -k https://btranslator.org/project/diff/LibreOffice/sw/sq/2/ediff > 2.ediff
+ *   curl -k https://btranslator.org/project/diff/LibreOffice/sw/sq/4 > 4.diff
+ *   curl -k https://btranslator.org/project/diff/LibreOffice/sw/sq/4/ediff > 4.ediff
  */
 function btrCore_project_diff($origin, $project, $lng, $nr =NULL, $format =NULL) {
   $origin = check_plain($origin);

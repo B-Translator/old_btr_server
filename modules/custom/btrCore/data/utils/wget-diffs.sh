@@ -29,7 +29,7 @@ echo "$0 $origin $project $lng $nr"
 base_url="https://dev.btranslator.org/"
 #base_url="https://$lng.btranslator.org/"
 #base_url="https://dev.btr.example.org/"
-diff_url="$base_url/translations/project/diff"
+diff_url="$base_url/project/diff"
 wget="wget -q --no-check-certificate"
 
 
