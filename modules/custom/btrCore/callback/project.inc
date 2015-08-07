@@ -48,7 +48,7 @@ function btrCore_project_sync() {
   // Get the sync command.
   if ($lng=='sq' and $origin=='LibreOffice' and in_array($project, ['sw', 'cui']))
     {
-      $sync_cmd ="/var/www/data/sync/sq-libo_ui.sh $project";
+      $sync_cmd ="/var/www/data/sync/sq-libo_ui.sh $project 2>&1";
     }
   else {
     print t("There is no script for synchronizing '!project'.",
@@ -64,9 +64,19 @@ function btrCore_project_sync() {
   }
 
   // Synchronize the project.
-  set_time_limit(0);
+  print "command: $sync_cmd \n";
+  print "Synchronizing '$origin/$project/$lng', please wait... \n\n";
   flush();
-  passthru($sync_cmd);
+  set_time_limit(0);
+  //passthru($sync_cmd);
+  $handle = popen($sync_cmd, 'r');
+  while (!feof($handle)) {
+    print fgets($handle);
+    flush();
+    ob_flush();
+  }
+  pclose($handle);
+  print "\nDONE\n\n";
 
   // Stop Drupal execution right here.
   lock_release('sync_project');
