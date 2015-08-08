@@ -51,6 +51,22 @@ function _btrServices_report() {
     ),
   ) + $access;
 
+  // Getting project details and statistics.
+  $report['actions']['project_stats'] = array(
+    'help' => 'Project details and statistics.',
+    'file' => $file,
+    'callback' => '_btr_report_project_stats',
+    'args' => array(
+      array(
+        'name' => 'params',
+        'optional' => FALSE,
+        'source' => 'data',
+        'description' => 'The parameters of the report.',
+        'type' => 'array',
+      ),
+    ),
+  ) + $access;
+
   // Getting statistics about top contributors.
   $report['actions']['topcontrib'] = array(
     'help' => 'Statistics about top contributors.',
@@ -131,8 +147,53 @@ function _btr_report_statistics($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
+  if (!btr::utils_project_exists($origin, $project)) {
+    $msg = "The project '$origin/$project' does not exist.";
+    return services_error($msg, 406);
+  }
 
   return btr::report_statistics($lng, $origin, $project);
+}
+
+/**
+ * Getting project details and statistics (number of translated and untranslated
+ * strings, number of votes and translations, users and contributers, etc.)
+ *
+ * @param $params
+ *   Parameters of the report, comming from the POST request.
+ *   It contains these fields (variables):
+ *   - origin: origin of the project
+ *   - project: name of the project
+ *   - lng: language of translations
+ *
+ * @return
+ *   Array of general stats for week, month and year.
+ *
+ * @example
+ *   curl -k -i -H "Content-type: application/json"  \
+ *        -X POST https://dev.btr.example.org/public/btr/report/project_stats \
+ *        -d '{"origin": "LibreOffice", "project": "cui", "lng": "sq"}'
+ */
+function _btr_report_project_stats($params) {
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
+    'lng' => NULL,
+  );
+
+  // get parameters and validate them
+  $lng = $params['lng'];
+  if (!in_array($lng, btr::languages_get())) {
+    return services_error('Language missing or not supported.', 406);
+  }
+  $origin = $params['origin'];
+  $project = $params['project'];
+  if (!btr::utils_project_exists($origin, $project)) {
+    $msg = "The project '$origin/$project' does not exist.";
+    return services_error($msg, 406);
+  }
+
+  return btr::report_project_stats($origin, $project, $lng);
 }
 
 /**
@@ -180,6 +241,10 @@ function _btr_report_topcontrib($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
+  if (!btr::utils_project_exists($origin, $project)) {
+    $msg = "The project '$origin/$project' does not exist.";
+    return services_error($msg, 406);
+  }
 
   return btr::report_topcontrib($period, $size, $lng, $origin, $project);
 }
