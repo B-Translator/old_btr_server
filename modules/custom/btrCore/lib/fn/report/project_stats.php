@@ -21,13 +21,13 @@ use \btr;
  *
  * @return
  *   Associative array of project details and stats:
- *     - strings :: total number of strings
- *     - translated :: nr of translated strings
- *     - untranslated :: nr of untranslated strings
- *     - translations :: total number of translations
- *     - votes :: total number of votes
- *     - contributors :: total nr of contributors
- *     - subscribers :: nr of subscribed users
+ *     - strings : total number of strings
+ *     - translated : nr of translated strings
+ *     - untranslated : nr of untranslated strings
+ *     - translations : total number of translations
+ *     - votes : total number of votes
+ *     - contributors : total nr of contributors
+ *     - subscribers : nr of subscribed users
  */
 function report_project_stats($origin, $project, $lng) {
   // Return cache if possible.
