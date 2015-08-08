@@ -252,6 +252,9 @@ function btr_btrServices_default_services_endpoint() {
         'statistics' => array(
           'enabled' => '1',
         ),
+        'project_stats' => array(
+          'enabled' => '1',
+        ),
         'topcontrib' => array(
           'enabled' => '1',
         ),
