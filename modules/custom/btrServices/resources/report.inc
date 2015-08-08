@@ -147,6 +147,10 @@ function _btr_report_statistics($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
+  if (!btr::utils_project_exists($origin, $project)) {
+    $msg = "The project '$origin/$project' does not exist.";
+    return services_error($msg, 406);
+  }
 
   return btr::report_statistics($lng, $origin, $project);
 }
@@ -177,13 +181,16 @@ function _btr_report_project_stats($params) {
     'lng' => NULL,
   );
 
-  $origin = $params['origin'];
-  $project = $params['project'];
-
   // get parameters and validate them
   $lng = $params['lng'];
   if (!in_array($lng, btr::languages_get())) {
     return services_error('Language missing or not supported.', 406);
+  }
+  $origin = $params['origin'];
+  $project = $params['project'];
+  if (!btr::utils_project_exists($origin, $project)) {
+    $msg = "The project '$origin/$project' does not exist.";
+    return services_error($msg, 406);
   }
 
   return btr::report_project_stats($origin, $project, $lng);
@@ -234,6 +241,10 @@ function _btr_report_topcontrib($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
+  if (!btr::utils_project_exists($origin, $project)) {
+    $msg = "The project '$origin/$project' does not exist.";
+    return services_error($msg, 406);
+  }
 
   return btr::report_topcontrib($period, $size, $lng, $origin, $project);
 }
