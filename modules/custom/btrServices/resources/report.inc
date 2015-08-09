@@ -147,10 +147,6 @@ function _btr_report_statistics($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
-  if (!btr::utils_project_exists($origin, $project)) {
-    $msg = "The project '$origin/$project' does not exist.";
-    return services_error($msg, 406);
-  }
 
   return btr::report_statistics($lng, $origin, $project);
 }
@@ -241,10 +237,6 @@ function _btr_report_topcontrib($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
-  if (!btr::utils_project_exists($origin, $project)) {
-    $msg = "The project '$origin/$project' does not exist.";
-    return services_error($msg, 406);
-  }
 
   return btr::report_topcontrib($period, $size, $lng, $origin, $project);
 }
