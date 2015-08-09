@@ -216,8 +216,8 @@ function _btr_report_project_stats($params) {
 function _btr_report_topcontrib($params) {
   $params += array(
     'lng' => NULL,
-    'period' => NULL,
-    'size' => NULL,
+    'period' => 'week',
+    'size' => 5,
     'origin' => NULL,
     'project' => NULL,
   );
