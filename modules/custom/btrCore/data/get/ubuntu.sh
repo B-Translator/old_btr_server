@@ -27,8 +27,7 @@ wget https://translations.launchpad.net/ubuntu/$release/+latest-full-language-pa
 mv +latest-full-language-pack ubuntu-$release-translations.tar.gz
 ## Note: Find the URL of the latest update on this page:
 ##       https://translations.launchpad.net/ubuntu/$release/+language-packs
-wget http://launchpadlibrarian.net/187747673/ubuntu-$release-translations-update.tar.gz
-
+wget http://launchpadlibrarian.net/213657548/ubuntu-$release-translations-update.tar.gz
 
 ### downloaded language packs
 translations="./ubuntu-$release-translations.tar.gz"
