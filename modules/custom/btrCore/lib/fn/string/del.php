@@ -12,7 +12,8 @@ use \btr;
  * Return FALSE if permissions are not sufficient, otherwise return TRUE.
  */
 function string_del($sguid, $project, $origin = 'vocabulary') {
-  if (_cannot_delete($origin, $project))  return FALSE;
+  // Only a project admin can delete strings.
+  if (!btr::user_is_project_admin($origin, $project))  return FALSE;
 
   // Remove the string from the 'materialized view' table of the project.
   if ($origin=='vocabulary') {
@@ -59,20 +60,5 @@ function string_del($sguid, $project, $origin = 'vocabulary') {
     }
   }
 
-  return TRUE;
-}
-
-/**
- * Return TRUE if the current user cannot delete strings
- * from the given project, otherwise return FALSE.
- */
-function _cannot_delete($origin, $project) {
-  // If user has global admin permission, he can delete.
-  if (user_access('btranslator-admin'))  return FALSE;
-
-  // If user is admin on the given project, he can delete.
-  if (in_array("$origin/$project", $GLOBALS['user']->admin_projects)) return FALSE;
-
-  // Otherwise he cannot delete.
   return TRUE;
 }
