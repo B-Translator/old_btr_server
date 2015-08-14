@@ -34,6 +34,12 @@ function project_sync($origin, $project, $lng) {
     drupal_exit();
   }
 
+  // Make sure that the current user is project administrator.
+  if (!btr::user_is_project_admin($origin, $project, $lng)) {
+    print t("Only a project admin can synchronize a project.");
+    drupal_exit();
+  }
+
   // Get the sync command.
   if ($lng=='sq' and $origin=='LibreOffice' and in_array($project, ['sw', 'cui']))
     {
@@ -67,7 +73,7 @@ function project_sync($origin, $project, $lng) {
   pclose($handle);
   print "\nDONE\n\n";
 
-  // Stop Drupal execution right here.
+  // Release lock and stop Drupal execution.
   lock_release('sync_project');
   drupal_exit();
 }
