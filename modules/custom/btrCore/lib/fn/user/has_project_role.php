@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Function: utils_user_has_project_role()
+ * Function: user_has_project_role()
  */
 
 namespace BTranslator;
@@ -20,7 +20,7 @@ use \btr;
  * @return
  *   TRUE if the string belongs to projects where user has the role.
  */
-function utils_user_has_project_role($role, $sguid) {
+function user_has_project_role($role, $sguid) {
   // Get the projects to which the string belongs.
   $query = "
       SELECT CONCAT(p.origin, '/', p.project) AS project

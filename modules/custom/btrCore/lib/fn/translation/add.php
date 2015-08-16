@@ -87,8 +87,8 @@ function translation_add($sguid, $lng, $translation) {
   // The same is applied for the users with admin or moderator role in the
   // project of the string.
   if (!user_access('btranslator-import')
-    and !btr::utils_user_has_project_role('admin', $sguid)
-    and !btr::utils_user_has_project_role('moderator', $sguid))
+    and !btr::user_has_project_role('admin', $sguid)
+    and !btr::user_has_project_role('moderator', $sguid))
     {
       _remove_old_translation($sguid, $lng, $umail, $tguid);
     }

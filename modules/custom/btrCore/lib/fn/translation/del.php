@@ -52,8 +52,8 @@ function translation_del($tguid, $notify = TRUE) {
   // Check that the current user has the right to delete translations.
   $is_own = ($umail == $author->umail);
   if (!$is_own and !user_access('btranslator-resolve')
-    and !btr::utils_user_has_project_role('admin', $sguid)
-    and !btr::utils_user_has_project_role('moderator', $sguid))
+    and !btr::user_has_project_role('admin', $sguid)
+    and !btr::user_has_project_role('moderator', $sguid))
     {
       $msg = t('You are not allowed to delete this translation!');
       return array(array($msg, 'error'));
