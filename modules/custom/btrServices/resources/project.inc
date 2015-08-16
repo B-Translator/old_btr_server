@@ -362,7 +362,7 @@ function _btrServices_project_subscribe($params) {
   $project = check_plain($params['project']);
 
   // Check that this project exists.
-  if (!btr::utils_project_exists($origin, $project)) {
+  if (!btr::project_exists($origin, $project)) {
     return services_error("Project '$origin/$project' does not exist.", 406);
   };
 
@@ -388,7 +388,7 @@ function _btrServices_project_unsubscribe($params) {
   $project = check_plain($params['project']);
 
   // Check that this project exists.
-  if (!btr::utils_project_exists($origin, $project)) {
+  if (!btr::project_exists($origin, $project)) {
     return services_error("Project '$origin/$project' does not exist.", 406);
   };
 

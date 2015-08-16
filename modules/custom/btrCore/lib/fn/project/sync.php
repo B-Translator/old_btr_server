@@ -28,7 +28,7 @@ function project_sync($origin, $project, $lng) {
   header('Content-Type: text/plain');
 
   // Make sure that the given origin and project do exist.
-  if (!btr::utils_project_exists($origin, $project)) {
+  if (!btr::project_exists($origin, $project)) {
     print t("The project '!project' does not exist.",
       ['!project' => "$origin/$project"]);
     drupal_exit();

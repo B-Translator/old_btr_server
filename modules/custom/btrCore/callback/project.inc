@@ -136,7 +136,7 @@ function btrCore_project_export() {
   $preferred_voters = check_plain($_REQUEST['preferred_voters']);
 
   // Make sure that the given origin and project do exist.
-  if (!btr::utils_project_exists($origin, $project)) {
+  if (!btr::project_exists($origin, $project)) {
     print t("The project '!project' does not exist.",
       array('!project' => "$origin/$project"));
     drupal_exit();

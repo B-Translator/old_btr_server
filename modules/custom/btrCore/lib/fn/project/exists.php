@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Function: utils_project_exists()
+ * Function: project_exists()
  */
 
 namespace BTranslator;
@@ -19,7 +19,7 @@ use \btr;
  * @return
  *   TRUE if such a project exists, otherwise FALSE.
  */
-function utils_project_exists($origin, $project) {
+function project_exists($origin, $project) {
   $project = btr::db_query(
     'SELECT project FROM {btr_projects}
      WHERE BINARY origin = :origin AND BINARY project = :project',

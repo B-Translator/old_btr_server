@@ -184,7 +184,7 @@ function _btr_report_project_stats($params) {
   }
   $origin = $params['origin'];
   $project = $params['project'];
-  if (!btr::utils_project_exists($origin, $project)) {
+  if (!btr::project_exists($origin, $project)) {
     $msg = "The project '$origin/$project' does not exist.";
     return services_error($msg, 406);
   }

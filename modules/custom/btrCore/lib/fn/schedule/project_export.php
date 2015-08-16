@@ -44,7 +44,7 @@ function schedule_project_export($origin, $project, $lng,
   $export_mode = NULL, $preferred_voters = NULL)
 {
   // Make sure that the given origin and project do exist.
-  if (!btr::utils_project_exists($origin, $project)) {
+  if (!btr::project_exists($origin, $project)) {
     $msg = t("The project '!project' does not exist.",
            array('!project' => "$origin/$project"));
     return array(array($msg, 'error'));
