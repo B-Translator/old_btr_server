@@ -34,7 +34,6 @@ function _btrServices_project() {
     'args' => array($params),
   ) + $public_access;
 
-
   // Add a new string to a project (useful for vocabularies).
   $translations['actions']['add_string'] = array(
     'help' => 'Add a new string to a project.',
@@ -64,6 +63,30 @@ function _btrServices_project() {
     'access callback' => 'user_access',
     'access arguments' => array('btranslator-import'),
   );
+
+  // Subscribe to a project.
+  $translations['actions']['subscribe'] = array(
+    'help' => 'Subscribe to a project.',
+    'file' => $file,
+    'callback' => '_btrServices_project_subscribe',
+    'args' => array($params),
+  ) + $public_access;
+
+  // Unsubscribe from a project.
+  $translations['actions']['unsubscribe'] = array(
+    'help' => 'Unsubscribe from a project.',
+    'file' => $file,
+    'callback' => '_btrServices_project_unsubscribe',
+    'args' => array($params),
+  ) + $public_access;
+
+  // Get the list of subscribed projects.
+  $translations['actions']['subscriptions'] = array(
+    'help' => 'Get the list of subscribed projects.',
+    'file' => $file,
+    'callback' => '_btrServices_project_subscriptions',
+    'args' => array($params),
+  ) + $public_access;
 
   return $translations;
 }
@@ -318,4 +341,63 @@ function _btrServices_project_import($params) {
     $uploaded_file
   );
   return array('messages' => $messages);
+}
+
+/**
+ * Subscribe an authenticated user to the given project.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - origin
+ *       The origin of the project.
+ *   - project
+ *       The name of the project.
+ */
+function _btrServices_project_subscribe($params) {
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
+  );
+  $origin = check_plain($params['origin']);
+  $project = check_plain($params['project']);
+
+  // Check that this project exists.
+  if (!btr::utils_project_exists($origin, $project)) {
+    return services_error("Project '$origin/$project' does not exist.", 406);
+  };
+
+  btr::project_subscribe($origin, $project);
+}
+
+/**
+ * Unsubscribe an authenticated user from the given project.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - origin
+ *       The origin of the project.
+ *   - project
+ *       The name of the project.
+ */
+function _btrServices_project_unsubscribe($params) {
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
+  );
+  $origin = check_plain($params['origin']);
+  $project = check_plain($params['project']);
+
+  // Check that this project exists.
+  if (!btr::utils_project_exists($origin, $project)) {
+    return services_error("Project '$origin/$project' does not exist.", 406);
+  };
+
+  btr::project_unsubscribe($origin, $project);
+}
+
+/**
+ * Return the list of projects to which the user is subscribed.
+ */
+function _btrServices_project_subscriptions() {
+  return btr::project_subscriptions();
 }

@@ -86,6 +86,33 @@ function btr_btrServices_default_services_endpoint() {
             ),
           ),
         ),
+        'subscribe' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
+        'unsubscribe' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
+        'subscriptions' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
       ),
     ),
     'translations' => array(
