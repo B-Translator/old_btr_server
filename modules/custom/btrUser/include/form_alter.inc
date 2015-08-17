@@ -8,10 +8,6 @@
  * Implements hook_form_FORM_ID_alter() for user_profile_form.
  */
 function btrUser_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
-  // remove the field 'field_data_sequential' from the form
-  // it is for internal usage only
-  $form['field_data_sequential']['#access'] = FALSE;
-
   // Add fields for admin_projects and moderate_projects.
   $form['admin'] = array(
     '#type'  => 'fieldset',
@@ -124,7 +120,6 @@ function btrUser_form_user_register_form_alter(&$form, &$form_state, $form_id) {
   }
 
   // The default values will be used for the following fields.
-  $form['field_order_of_strings']['#access'] = FALSE;
   $form['field_auxiliary_languages']['#access'] = FALSE;
   $form['field_translations_per_day']['#access'] = FALSE;
   $form['field_feedback_channels']['#access'] = FALSE;

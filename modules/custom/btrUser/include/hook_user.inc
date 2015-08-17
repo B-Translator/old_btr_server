@@ -79,76 +79,13 @@ function btrUser_user_delete($account) {
  * It is called before the user profile page is saved.
  */
 function btrUser_user_presave(&$edit, $account, $category) {
-  _btrUser_user_set_data_sequential($edit, $account);
   _btrUser_user_set_fields($edit, $account);
 }
 
 
 /**
- * Build an index object that is needed for visiting strings
- * sequentially and set it to $edit['data_sequential'].
- */
-function _btrUser_user_set_data_sequential(&$edit, $account) {
-
-  // if skip_presave is defined, then user data is being saved
-  // from the code, not from the profile interface
-  if (isset($edit['skip_presave'])) {
-    unset($edit['skip_presave']);
-    return;
-  }
-
-  $lang = LANGUAGE_NONE;
-  $obj_edit = (object)$edit;
-  _btrUser_user_get_fields($obj_edit);
-  $account = user_load($account->uid);
-
-  // if string-order is random, no need for 'field_data_sequential'
-  if ($obj_edit->string_order == 'random') {
-    $edit['data_sequential'] = NULL;
-    return;
-  }
-
-  // if there is no change on the preferred projects,
-  // then there is nothing to do, just keep the existing value of 'field_data_sequential'
-  $prev_projects = implode(';', $account->preferred_projects);
-  $new_projects = implode(';', $obj_edit->preferred_projects);
-  if ($account->string_order=='sequential' and $prev_projects==$new_projects) {
-    return;
-  }
-
-  // For each preferred project, get the min and max location ids
-  // and store them in the object $sequential.
-  // The data in this object makes it possible for a user to visit
-  // the strings of his preferred projects sequentially (in the same
-  // order that they appear on the PO file), rather than randomly.
-  $arr_projects = $obj_edit->preferred_projects;
-  list($where_condition, $args) = btr::utils_projects_to_where_condition($arr_projects);
-  if ($where_condition == '') {
-    $sequential = NULL;
-  }
-  else {
-    $get_all_min_and_max_locations = "
-      SELECT min(l.lid) AS lmin, max(l.lid) AS lmax
-      FROM {btr_locations} l
-      RIGHT JOIN {btr_templates} t ON (l.potid = t.potid)
-      RIGHT JOIN {btr_projects} p ON (t.pguid = p.pguid)
-      WHERE $where_condition
-      GROUP BY p.project
-    ";
-    $result = btr::db_query($get_all_min_and_max_locations, $args);
-    $sequential->projects = $result->fetchAll();
-    $sequential->idx = 0;
-    $sequential->lid = $sequential->projects[0]->lmin;
-  }
-  $edit['data_sequential'] = $sequential;
-}
-
-
-/**
  * Get the values of the fields and put them
- * to the attributes string_order,
- * preferred_projects, data_sequential,
- * auxiliary_languages, translations_per_day
+ * to the attributes preferred_projects, auxiliary_languages, translations_per_day
  * and feedback_channels to the proper place
  * in the structure of the $user.
  * This is called after a user account is loaded,
@@ -161,12 +98,6 @@ function _btrUser_user_get_fields(&$user) {
   $user->translation_lng = 'fr';
   if (isset($user->field_translation_lng[$lang][0]['value'])) {
     $user->translation_lng = $user->field_translation_lng[$lang][0]['value'];
-  }
-
-  // field_order_of_strings
-  $user->string_order = 'random';
-  if (isset($user->field_order_of_strings[$lang][0]['value'])) {
-    $user->string_order = $user->field_order_of_strings[$lang][0]['value'];
   }
 
   // field_preferred_projects
@@ -185,12 +116,6 @@ function _btrUser_user_get_fields(&$user) {
     foreach ($field_auxiliary_languages as $language) {
       $user->auxiliary_languages[] = $language['value'];
     }
-  }
-
-  // field_data_sequential
-  $user->data_sequential = NULL;
-  if (isset($user->field_data_sequential[$lang][0]['value'])) {
-    $user->data_sequential = unserialize($user->field_data_sequential[$lang][0]['value']);
   }
 
   // field_translations_per_day
@@ -228,8 +153,7 @@ function _btrUser_user_get_fields(&$user) {
 }
 
 /**
- * Save the values of attributes string_order,
- * preferred_projects, data_sequential,
+ * Save the values of attributes preferred_projects,
  * auxiliary_languages, translations_per_day
  * and feedback_channels to the proper place
  * in the structure of the $edit.
@@ -244,10 +168,6 @@ function _btrUser_user_set_fields(&$edit, $account) {
     $edit['field_translation_lng'][$lang][0]['value'] = $edit['translation_lng'];
   }
 
-  if (isset($edit['string_order'])) {
-    $edit['field_order_of_strings'][$lang][0]['value'] = $edit['string_order'];
-  }
-
   if (isset($edit['preferred_projects']) && is_array($edit['preferred_projects'])) {
     foreach ($edit['preferred_projects'] as $project) {
       $edit['field_preferred_projects'][$lang][]['value'] = $project;
@@ -258,10 +178,6 @@ function _btrUser_user_set_fields(&$edit, $account) {
     foreach ($edit['auxiliary_languages'] as $language) {
       $edit['field_auxiliary_languages'][$lang][]['value'] = $language;
     }
-  }
-
-  if (isset($edit['data_sequential'])) {
-    $edit['field_data_sequential'][$lang][0]['value'] = serialize($edit['data_sequential']);
   }
 
   if (isset($edit['translations_per_day'])) {

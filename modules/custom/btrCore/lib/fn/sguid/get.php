@@ -30,7 +30,7 @@ function sguid_get($target, $lng =NULL, $projects =NULL) {
   switch ($target) {
     default:
     case 'next':
-      list($sguid, $messages) = btr::sguid_get_next($uid=NULL, $projects);
+      list($sguid, $messages) = btr::sguid_get_random($uid=NULL, $projects);
       break;
     case 'translated':
       $sguid = btr::sguid_get_translated($lng, $uid=NULL, $projects);
@@ -38,10 +38,6 @@ function sguid_get($target, $lng =NULL, $projects =NULL) {
     case 'untranslated':
       $sguid = btr::sguid_get_untranslated($lng, $uid=NULL, $projects);
       break;
-  }
-
-  if (!$sguid) {
-    $sguid = btr::sguid_get_random($uid=NULL, $projects);
   }
 
   return array($sguid, $messages);

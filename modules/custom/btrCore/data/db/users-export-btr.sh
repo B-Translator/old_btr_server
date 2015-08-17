@@ -14,16 +14,12 @@ table_list="
     users
     users_roles
     field_data_field_auxiliary_languages
-    field_data_field_data_sequential
     field_data_field_feedback_channels
-    field_data_field_order_of_strings
     field_data_field_preferred_projects
     field_data_field_translations_per_day
     field_data_field_translation_lng
     field_revision_field_auxiliary_languages
-    field_revision_field_data_sequential
     field_revision_field_feedback_channels
-    field_revision_field_order_of_strings
     field_revision_field_preferred_projects
     field_revision_field_translations_per_day
     field_revision_field_translation_lng
