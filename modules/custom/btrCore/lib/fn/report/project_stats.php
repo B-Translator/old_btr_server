@@ -116,12 +116,13 @@ function report_project_stats($origin, $project, $lng) {
 
   // Get the number of subscribed users.
   $sql = "
-    SELECT COUNT(DISTINCT(umail))
-    FROM {btr_user_project_roles}
-    WHERE pguid = :pguid AND ulng = :lng
+    SELECT COUNT(*)
+    FROM {field_data_field_preferred_projects}
+    WHERE field_preferred_projects_value = :project
+      AND deleted = 0
   ";
-  $args = [':lng' => $lng, ':pguid' => sha1($origin . $project) ];
-  $stats['subscribers'] = btr::db_query($sql, $args)->fetchField();
+  $args = [ ':project' => "$origin/$project" ];
+  $stats['subscribers'] = \db_query($sql, $args)->fetchField();
 
   // Cache for 12 hours.
   cache_set($cid, $stats, 'cache_btrCore', time() + 12*60*60);
