@@ -84,12 +84,10 @@ function btrUser_user_presave(&$edit, $account, $category) {
 
 
 /**
- * Get the values of the fields and put them
- * to the attributes preferred_projects, auxiliary_languages, translations_per_day
- * and feedback_channels to the proper place
- * in the structure of the $user.
- * This is called after a user account is loaded,
- * in hook_user_load().
+ * Get the values of the fields and put them to the attributes
+ * preferred_projects, auxiliary_languages to the proper place in the structure
+ * of the $user.  This is called after a user account is loaded, in
+ * hook_user_load().
  */
 function _btrUser_user_get_fields(&$user) {
   $lang = LANGUAGE_NONE;
@@ -118,21 +116,6 @@ function _btrUser_user_get_fields(&$user) {
     }
   }
 
-  // field_translations_per_day
-  $user->translations_per_day = 1;
-  if (isset($user->field_translations_per_day[$lang][0]['value'])) {
-    $user->translations_per_day = $user->field_translations_per_day[$lang][0]['value'];
-  }
-
-  // field_feedback_channels
-  $user->feedback_channels = array();
-  if ( isset($user->field_feedback_channels[$lang]) and is_array($user->field_feedback_channels[$lang]) ) {
-    $field_feedback_channels = $user->field_feedback_channels[$lang];
-    foreach ($field_feedback_channels as $channel) {
-      $user->feedback_channels[] = $channel['value'];
-    }
-  }
-
   // Get the projects for which the user is an admin.
   $get_managed_projects = "
     SELECT CONCAT(p.origin, '/', p.project) AS project
@@ -153,12 +136,9 @@ function _btrUser_user_get_fields(&$user) {
 }
 
 /**
- * Save the values of attributes preferred_projects,
- * auxiliary_languages, translations_per_day
- * and feedback_channels to the proper place
- * in the structure of the $edit.
- * This is called before a user account is saved,
- * in hook_user_presave().
+ * Save the values of attributes projects, and auxiliary_languages to the proper
+ * place in the structure of the $edit.  This is called before a user account is
+ * saved, in hook_user_presave().
  */
 function _btrUser_user_set_fields(&$edit, $account) {
 
@@ -177,16 +157,6 @@ function _btrUser_user_set_fields(&$edit, $account) {
   if (isset($edit['auxiliary_languages']) && is_array($edit['auxiliary_languages'])) {
     foreach ($edit['auxiliary_languages'] as $language) {
       $edit['field_auxiliary_languages'][$lang][]['value'] = $language;
-    }
-  }
-
-  if (isset($edit['translations_per_day'])) {
-    $edit['field_translations_per_day'][$lang][0]['value'] = $edit['translations_per_day'];
-  }
-
-  if (isset($edit['feedback_channels']) && is_array($edit['feedback_channels'])) {
-    foreach ($edit['feedback_channels'] as $channel) {
-      $edit['field_feedback_channels'][$lang][]['value'] = $channel;
     }
   }
 }

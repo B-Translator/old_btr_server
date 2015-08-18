@@ -30,8 +30,6 @@ function _btrUser_delete_userprofile_fields() {
     'field_translation_lng',
     'field_preferred_projects',
     'field_auxiliary_languages',
-    'field_translations_per_day',
-    'field_feedback_channels',
   );
 
   foreach ($field_names as $field_name) {
@@ -120,65 +118,3 @@ function _btrUser_create_userprofile_fields() {
         'type' => 'options_buttons',
       ),
     ));
-
-  // create a field and instance for 'field_translations_per_day'
-  field_create_field(
-    array(
-      'field_name' => 'field_translations_per_day',
-      'type' => 'number_integer',
-      'cardinality' => 1,
-      'entity_types' => array('user'),
-    ));
-  field_create_instance(
-    array(
-      'field_name' => 'field_translations_per_day',
-      'entity_type' => 'user',
-      'bundle' => 'user',
-      'label' => 'Translations per Day',
-      'description' => 'Each day an automatic email will be sent to you with some strings for review/translation (if you enable the email feedback channel). This is the number of strings that will be sent for review/translation each day by email.',
-      //'settings' => array('user_register_form' => 1),
-      'widget' => array(
-        'weight' => '5',
-        'type' => 'number',
-      ),
-      'default_value' => array(array('value' => '1')),
-    ));
-
-  // create a field and instance for 'field_feedback_channels'
-  field_create_field(
-    array(
-      'field_name' => 'field_feedback_channels',
-      'type' => 'list_text',
-      'cardinality' => 10,
-      'settings' => array(
-        'allowed_values' => array(
-          'website' => 'Website',
-          'email' => 'Email',
-          //'desktop' => 'Desktop App',
-          //'facebook' => 'Facebook App',
-          //'google+' => 'Google+ App',
-          //'twitter' => 'Twitter App',
-          //'android' => 'Android App',
-          //'iphone' => 'iPhone App',
-        ),
-      ),
-      'entity_types' => array('user'),
-    ));
-  field_create_instance(
-    array(
-      'field_name' => 'field_feedback_channels',
-      'entity_type' => 'user',
-      'bundle' => 'user',
-      'label' => 'Feedback Channels',
-      //'description' => "The ways that you would prefer to provide the feedback. <br/>\r\n<strong>Note</strong>: Currently only <em>Website</em> and <em>Email</em> are implemented. You will be sent an email each day with the strings to be reviewed, and you can also provide feedback through the website",
-      'settings' => array('user_register_form' => 1),
-      'widget' => array(
-        'weight' => '6',
-        'type' => 'options_buttons',
-      ),
-      'default_value' => array(
-        array('value' => 'website'),
-        array('value' => 'email'),
-      ),
-    ));
-}

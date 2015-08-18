@@ -121,8 +121,6 @@ function btrUser_form_user_register_form_alter(&$form, &$form_state, $form_id) {
 
   // The default values will be used for the following fields.
   $form['field_auxiliary_languages']['#access'] = FALSE;
-  $form['field_translations_per_day']['#access'] = FALSE;
-  $form['field_feedback_channels']['#access'] = FALSE;
 
   // Register a validation callback function,
   // where we can set the values for language and projects.

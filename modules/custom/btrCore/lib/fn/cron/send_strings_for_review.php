@@ -19,18 +19,6 @@ function cron_send_strings_for_review() {
       return TRUE;
     }
 
-    // skip users that have unchecked email on feedback_channels
-    $field_arr = $account->field_feedback_channels['und'];
-    $feedback_channels = array();
-    if (is_array($field_arr)) {
-      foreach ($field_arr as $item) {
-        $feedback_channels[] = $item['value'];
-      }
-    }
-    if ( ! in_array('email', $feedback_channels) )  {
-      return TRUE;
-    }
-
     // otherwise send email
     return FALSE;
   }
