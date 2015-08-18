@@ -118,3 +118,4 @@ function _btrUser_create_userprofile_fields() {
         'type' => 'options_buttons',
       ),
     ));
+}
