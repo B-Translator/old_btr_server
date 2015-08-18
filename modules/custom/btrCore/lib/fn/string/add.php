@@ -138,8 +138,8 @@ function _btr_new_string_notification($project, $string, $sguid) {
   // Get all the users interested on this project.
   $uids = \db_query(
     "SELECT DISTINCT entity_id
-     FROM {field_data_field_preferred_projects}
-     WHERE field_preferred_projects_value = :project",
+     FROM {field_data_field_projects}
+     WHERE field_projects_value = :project",
     [ ':project' => "vocabulary/$project" ]
   )->fetchCol();
   $users = user_load_multiple($uids);

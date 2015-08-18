@@ -85,7 +85,7 @@ function btrUser_user_presave(&$edit, $account, $category) {
 
 /**
  * Get the values of the fields and put them to the attributes
- * preferred_projects, auxiliary_languages to the proper place in the structure
+ * projects, auxiliary_languages to the proper place in the structure
  * of the $user.  This is called after a user account is loaded, in
  * hook_user_load().
  */
@@ -98,12 +98,12 @@ function _btrUser_user_get_fields(&$user) {
     $user->translation_lng = $user->field_translation_lng[$lang][0]['value'];
   }
 
-  // field_preferred_projects
-  $user->preferred_projects = array();
-  if ( isset($user->field_preferred_projects[$lang]) and is_array($user->field_preferred_projects[$lang]) ) {
-    $field_preferred_projects = $user->field_preferred_projects[$lang];
-    foreach ($field_preferred_projects as $project) {
-      $user->preferred_projects[] = $project['value'];
+  // field_projects
+  $user->projects = array();
+  if ( isset($user->field_projects[$lang]) and is_array($user->field_projects[$lang]) ) {
+    $field_projects = $user->field_projects[$lang];
+    foreach ($field_projects as $project) {
+      $user->projects[] = $project['value'];
     }
   }
 
@@ -148,9 +148,9 @@ function _btrUser_user_set_fields(&$edit, $account) {
     $edit['field_translation_lng'][$lang][0]['value'] = $edit['translation_lng'];
   }
 
-  if (isset($edit['preferred_projects']) && is_array($edit['preferred_projects'])) {
-    foreach ($edit['preferred_projects'] as $project) {
-      $edit['field_preferred_projects'][$lang][]['value'] = $project;
+  if (isset($edit['projects']) && is_array($edit['projects'])) {
+    foreach ($edit['projects'] as $project) {
+      $edit['field_projects'][$lang][]['value'] = $project;
     }
   }
 

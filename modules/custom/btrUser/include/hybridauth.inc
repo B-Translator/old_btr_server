@@ -64,9 +64,9 @@ function btrUser_hybridauth_userinfo_alter(&$userinfo, $data) {
     $userinfo['translation_lng'] = $data['translation_lng'];
   }
 
-  // Set the preferred_projects on the user profile.
+  // Set the projects on the user profile.
   if (isset($destination['query']['proj'])) {
     $arr_projects = explode(',', $destination['query']['proj']);
-    $userinfo['preferred_projects'] = $arr_projects;
+    $userinfo['projects'] = $arr_projects;
   }
 }

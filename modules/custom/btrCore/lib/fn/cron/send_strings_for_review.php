@@ -29,9 +29,9 @@ function cron_send_strings_for_review() {
     if (_btrCore_dont_send_email($account))  continue;
 
     // Get a random project from user preferences.
-    if (empty($account->preferred_projects))  continue;
-    $idx = rand(0, sizeof($account->preferred_projects) - 1);
-    $project = $account->preferred_projects[$idx];
+    if (empty($account->projects))  continue;
+    $idx = rand(0, sizeof($account->projects) - 1);
+    $project = $account->projects[$idx];
 
     // get a sguid according to the user preferencies
     module_load_include('inc', 'btrCore', 'includes/get_sguid');

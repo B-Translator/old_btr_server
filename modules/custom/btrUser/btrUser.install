@@ -28,7 +28,7 @@ function _btrUser_delete_userprofile_fields() {
 
   $field_names = array(
     'field_translation_lng',
-    'field_preferred_projects',
+    'field_projects',
     'field_auxiliary_languages',
   );
 
@@ -71,21 +71,21 @@ function _btrUser_create_userprofile_fields() {
       ),
     ));
 
-  // create a field and instance for 'field_preferred_projects'
+  // create a field and instance for 'field_projects'
   field_create_field(
     array(
-      'field_name' => 'field_preferred_projects',
+      'field_name' => 'field_projects',
       'type' => 'text',
       'cardinality' => FIELD_CARDINALITY_UNLIMITED,  //multiple (unlimited) number of values
       'entity_types' => array('user'),
     ));
   field_create_instance(
     array(
-      'field_name' => 'field_preferred_projects',
+      'field_name' => 'field_projects',
       'entity_type' => 'user',
       'bundle' => 'user',
-      'label' => 'Preferred Projects',
-      'description' => "If you want to contribute only to one or some of the projects, you can add them here. Then only strings from these projects will be presented for review/translation. You can enter projects in the form 'Origin/Project', for example: KDE/kdeedu, Mozilla/browser, etc. Or you can include all the projects from a certain origin, like this: KDE, LibreOffice, etc. You can change the preferred projects later at any time. See a list of imported projects <a href='/project/list/*/*/txt' target='_blank'>here</a>.",
+      'label' => 'Projects',
+      'description' => "List of the subscribed projects of the user.",
       'settings' => array(
         'text_processing' => '0',
         'user_register_form' => 1,

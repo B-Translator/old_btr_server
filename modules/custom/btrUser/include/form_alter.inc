@@ -8,6 +8,13 @@
  * Implements hook_form_FORM_ID_alter() for user_profile_form.
  */
 function btrUser_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  // Hide 'field_projects', it can be modified with
+  // the buttons subscribe/unsubscribe from project pages.
+  $form['field_projects']['#access'] = FALSE;
+
+  // Hide 'field_auxiliary_languages', it is not useful yet.
+  $form['field_auxiliary_languages']['#access'] = FALSE;
+
   // Add fields for admin_projects and moderate_projects.
   $form['admin'] = array(
     '#type'  => 'fieldset',
@@ -114,9 +121,9 @@ function btrUser_form_user_register_form_alter(&$form, &$form_state, $form_id) {
       $form['field_translation_lng']['#access'] = FALSE;
   }
 
-  // Hide the project field if the preferred projects are set in the url.
+  // Hide the project field if the projects are set in the url.
   if (isset($_GET['proj'])) {
-      $form['field_preferred_projects']['#access'] = FALSE;
+      $form['field_projects']['#access'] = FALSE;
   }
 
   // The default values will be used for the following fields.
@@ -138,8 +145,8 @@ function _btrUser_user_register_validate($form, &$form_state) {
       $values['field_translation_lng']['und'][0]['value'] = $_GET['lng'];
   }
 
-  // Set the value for the preferred projects.
+  // Set the value for the projects.
   if (isset($_GET['proj'])) {
-    $values['field_preferred_projects']['und'][0]['value'] = $_GET['proj'];
+    $values['field_projects']['und'][0]['value'] = $_GET['proj'];
   }
 }

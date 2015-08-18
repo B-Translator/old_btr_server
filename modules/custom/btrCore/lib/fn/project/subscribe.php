@@ -23,12 +23,12 @@ function project_subscribe($origin, $project, $uid = NULL) {
   $account = user_load($uid);
 
   $new_projects = array();
-  $projects = $account->field_preferred_projects[LANGUAGE_NONE];
+  $projects = $account->field_projects[LANGUAGE_NONE];
   foreach($projects as $p) {
     if ($p['value'] == "$origin/$project") continue;
     $new_projects[]['value'] = $p['value'];
   }
   $new_projects[]['value'] = "$origin/$project";
 
-  user_save($account, ['field_preferred_projects' => [LANGUAGE_NONE => $new_projects]]);
+  user_save($account, ['field_projects' => [LANGUAGE_NONE => $new_projects]]);
 }

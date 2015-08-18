@@ -10,7 +10,7 @@ use \btr;
 include_once(dirname(__FILE__). '/get_pool_of_projects.inc');
 
 /**
- * Get a translated sguid from the preferred projects of the given user.
+ * Get a translated sguid from the projects of the given user.
  *
  * @param $lng
  *   Language of translations.

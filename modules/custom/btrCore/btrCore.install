@@ -26,7 +26,7 @@ function btrCore_uninstall() {
   $variables = array(
     'btr_languages',
     'btr_voting_mode',
-    'btr_preferred_projects',
+    'btr_projects',
     'btr_export_path',
     'btr_export_notify_admin',
     'btr_import_notify_admin',

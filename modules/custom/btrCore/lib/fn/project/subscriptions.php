@@ -17,7 +17,7 @@ function project_subscriptions($uid = NULL) {
   $account = user_load($uid);
 
   $subscribed_projects = array();
-  $projects = $account->field_preferred_projects[LANGUAGE_NONE];
+  $projects = $account->field_projects[LANGUAGE_NONE];
   foreach($projects as $p) {
     $subscribed_projects[] = $p['value'];
   }

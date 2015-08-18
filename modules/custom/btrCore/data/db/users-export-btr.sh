@@ -14,10 +14,10 @@ table_list="
     users
     users_roles
     field_data_field_auxiliary_languages
-    field_data_field_preferred_projects
+    field_data_field_projects
     field_data_field_translation_lng
     field_revision_field_auxiliary_languages
-    field_revision_field_preferred_projects
+    field_revision_field_projects
     field_revision_field_translation_lng
 "
 table_list=$(echo $table_list | tr ' ' ,)
