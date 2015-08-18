@@ -388,12 +388,9 @@ function _btrServices_translations_get_random_sguid($params) {
   }
   $target = $params['target'];
   $lng = $params['lng'];
-  list($sguid, $messages) = btr::sguid_get($target, $lng, $projects);
+  $sguid = btr::sguid_get($target, $lng, $projects);
 
-  return array(
-    'sguid' => $sguid,
-    'messages' => $messages,
-  );
+  return [ 'sguid' => $sguid ];
 }
 
 
@@ -410,8 +407,10 @@ function _btrServices_translations_get_random_sguid($params) {
  *       The language of translations, like: 'fr', 'sq', etc.
  *
  * @return
- *   A nested structure containing the string, its
- *   translations, votes, etc.
+ *   Associative array comtaining:
+ *    - sguid
+ *        A nested structure containing the string, its
+ *        translations, votes, etc.
  *
  * @example
  *   curl -k -i -H 'Content-type: application/json' \
@@ -427,16 +426,13 @@ function _btrServices_translations_get($params) {
   $sguid = $params['sguid'];
   $messages = array();
   if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
-    list($sguid, $messages) = btr::sguid_get($sguid, $lng);
+    $sguid = btr::sguid_get($sguid, $lng);
   }
 
   $strings = btr::string_load(array($sguid), $lng);
   $string = empty($strings) ? NULL : $strings[0];
 
-  return array(
-    'string' => $string,
-    'messages' => $messages,
-  );
+  return [ 'string' => $string ];
 }
 
 /**
