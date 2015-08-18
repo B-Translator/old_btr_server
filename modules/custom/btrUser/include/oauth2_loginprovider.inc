@@ -17,12 +17,7 @@ function btrUser_oauth2_loginprovider_userprofile_alter(&$data) {
   // (without 'field_' and without the deep array structure).
   unset($data['field_translation_lng']);
   unset($data['field_preferred_projects']);
-  unset($data['field_order_of_strings']);
   unset($data['field_auxiliary_languages']);
-  unset($data['field_translations_per_day']);
-  unset($data['field_feedback_channels']);
-  unset($data['field_data_sequential']);
-  unset($data['data_sequential']);
 
   // Add to profile data the B-Translator permissions of the user.
   $data['permissions'] = _btrUser_get_btr_permissions();

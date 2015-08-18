@@ -137,16 +137,11 @@ function string_add($origin, $project, $tplname = NULL, $string, $context = NULL
 function _btr_new_string_notification($project, $string, $sguid) {
   // Get all the users interested on this project.
   $uids = \db_query(
-    "SELECT DISTINCT p.entity_id
-     FROM {field_data_field_preferred_projects} p
-     INNER JOIN {field_data_field_feedback_channels} f
-             ON (p.entity_id = f.entity_id)
-     WHERE field_preferred_projects_value = :project
-       AND field_feedback_channels_value = 'email'",
-    array(
-      ':project' => "vocabulary/$project",
-    ))
-    ->fetchCol();
+    "SELECT DISTINCT entity_id
+     FROM {field_data_field_preferred_projects}
+     WHERE field_preferred_projects_value = :project",
+    [ ':project' => "vocabulary/$project" ]
+  )->fetchCol();
   $users = user_load_multiple($uids);
 
   // Notify the users about the new term.
