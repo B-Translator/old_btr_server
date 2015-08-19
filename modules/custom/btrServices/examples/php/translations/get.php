@@ -17,7 +17,7 @@ $options = array(
 );
 $result = http_request($url, $options);
 
-$options['data']['sguid'] = 'next';
+$options['data']['sguid'] = 'random';
 $result = http_request($url, $options);
 
 $options['data']['sguid'] = 'translated';

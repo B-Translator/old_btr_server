@@ -11,7 +11,7 @@ var settings = {
 };
 http_request(url, settings);
 
-settings.data.sguid = 'next';
+settings.data.sguid = 'random';
 http_request(url, settings);
 
 settings.data.sguid = 'translated';

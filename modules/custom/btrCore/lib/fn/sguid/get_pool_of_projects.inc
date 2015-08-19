@@ -12,13 +12,13 @@
  *   The user whose preferencies will be used.
  *   If no $uid is given, then the current user is assumed.
  *
- * @param $target_projects
+ * @param $scope
  *   Array of projects to restrict the selection.
  *
  * @return
  *   Array of projects that will be used for selecting a string.
  */
-function get_pool_of_projects($uid =NULL, $target_projects =NULL) {
+function get_pool_of_projects($uid =NULL, $scope =NULL) {
   if ($uid == NULL)  { $uid = $GLOBALS['user']->uid; }
   $user = user_load($uid);
 
@@ -43,11 +43,11 @@ function get_pool_of_projects($uid =NULL, $target_projects =NULL) {
     $arr_projects = $site_projects;
   }
 
-  // Use $target_projects to restrict the list of projects.
-  if ( ! empty($target_projects)) {
-    $arr_projects = array_intersect($arr_projects, $target_projects);
+  // Use $scope to restrict the list of projects.
+  if ( ! empty($scope)) {
+    $arr_projects = array_intersect($arr_projects, $scope);
     if (empty($arr_projects)) {
-      $arr_projects = $target_projects;
+      $arr_projects = $scope;
     }
   }
 

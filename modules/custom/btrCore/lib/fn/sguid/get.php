@@ -8,7 +8,7 @@ namespace BTranslator;
 use \btr;
 
 /**
- * Returns a sguid for targets: next|translated|untranslated.
+ * Returns a sguid for targets: random|translated|untranslated.
  *
  * @param $lng
  *   Useful for 'translated' and 'untranslated' targets.
@@ -29,7 +29,7 @@ function sguid_get($target, $lng =NULL, $projects =NULL) {
 
   switch ($target) {
     default:
-    case 'next':
+    case 'random':
       $sguid = btr::sguid_get_random($uid=NULL, $projects);
       break;
     case 'translated':

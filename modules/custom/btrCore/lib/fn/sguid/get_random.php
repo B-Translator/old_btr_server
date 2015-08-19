@@ -16,15 +16,15 @@ include_once(dirname(__FILE__). '/get_pool_of_projects.inc');
  *   Select according to the preferencies of this user.
  *   If no $uid is given, then the current user is assumed.
  *
- * @param $target_projects
+ * @param $scope
  *   Array of projects to restrict selection.
  *
  * @return
  *   Randomly selected sguid.
  */
-function sguid_get_random($uid =NULL, $target_projects =NULL) {
+function sguid_get_random($uid =NULL, $scope =NULL) {
   // Get the list of projects that will be searched.
-  $projects = get_pool_of_projects($uid, $target_projects);
+  $projects = get_pool_of_projects($uid, $scope);
 
   // Build the WHERE condition for selecting projects.
   list($where, $args) = btr::utils_projects_to_where_condition($projects);

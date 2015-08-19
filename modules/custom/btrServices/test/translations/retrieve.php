@@ -10,7 +10,7 @@ $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);
 
-$url = "https://dev.btr.example.org/public/btr/translations/next?lng=sq";
+$url = "https://dev.btr.example.org/public/btr/translations/random?lng=sq";
 $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);
@@ -57,7 +57,7 @@ print "access_token = $access_token\n\n";
 // get translations from the endpoint with oauth2 authentication
 // sending the access token in the query string
 
-$url = "https://dev.btr.example.org/btr/translations/next?lng=sq&access_token=$access_token";
+$url = "https://dev.btr.example.org/btr/translations/random?lng=sq&access_token=$access_token";
 $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);
@@ -67,7 +67,7 @@ print_r($response);
 // get translations from the endpoint with oauth2 authentication
 // sending the access token in the 'Authorization' header
 
-$url = 'https://dev.btr.example.org/btr/translations/next?lng=sq';
+$url = 'https://dev.btr.example.org/btr/translations/random?lng=sq';
 $options = array(
   'headers' => array(
     //'Accept' => 'application/xml',

@@ -72,7 +72,7 @@ function _btrServices_translations() {
 
   // Get the sguid of a random string according to the target.
   $translations['actions']['get_random_sguid'] = array(
-    'help' => 'Get the sguid of a random string according to the target, which can be: next|translated|untranslated.',
+    'help' => 'Get the sguid of a random string according to the target, which can be: random|translated|untranslated.',
     'file' => $file,
     'callback' => '_btrServices_translations_get_random_sguid',
     'args' => array(
@@ -223,7 +223,7 @@ function _btrServices_translations() {
  * @param $sguid
  *   The string (globally unique) id, calculated
  *   as: $sguid = sha1($string . $context)
- *   It can also be: next|translated|untranslated
+ *   It can also be: random|translated|untranslated
  *
  * @param $lng
  *   The language of translations, like: 'fr', 'sq', etc.
@@ -234,7 +234,7 @@ function _btrServices_translations() {
  *
  * @example
  *   curl -k -i \
- *     'https://dev.btr.example.org/public/btr/translations/next?lng=sq'
+ *     'https://dev.btr.example.org/public/btr/translations/random?lng=sq'
  */
 function _btrServices_translations_retrieve($sguid, $lng) {
   $strings = _btrServices_translations_get(array(
@@ -362,7 +362,7 @@ function _btrServices_translations_search($params) {
  * @param $params
  *   Associative array of the POST data, which contains:
  *   - target
- *       Can be one of: next|translated|untranslated
+ *       Can be one of: random|translated|untranslated
  *   - lng
  *       Code of the language (required for translated and untranslated)
  *   - scope (optional)
@@ -374,7 +374,7 @@ function _btrServices_translations_search($params) {
  *   Associative array containing:
  *   - sguid
  *       ID of a random string, or the target itself
- *       if it is different from next|translated|untranslated
+ *       if it is different from random|translated|untranslated
  */
 function _btrServices_translations_get_random_sguid($params) {
   $projects = NULL;
@@ -402,7 +402,7 @@ function _btrServices_translations_get_random_sguid($params) {
  *   - sguid
  *       The string (globally unique) id, calculated
  *       as: $sguid = sha1($string . $context)
- *       It can also be: next|translated|untranslated
+ *       It can also be: random|translated|untranslated
  *   - lng
  *       The language of translations, like: 'fr', 'sq', etc.
  *
@@ -425,7 +425,7 @@ function _btrServices_translations_get($params) {
 
   $sguid = $params['sguid'];
   $messages = array();
-  if (in_array($sguid, array('next', 'translated', 'untranslated'))) {
+  if (in_array($sguid, array('random', 'translated', 'untranslated'))) {
     $sguid = btr::sguid_get($sguid, $lng);
   }
 

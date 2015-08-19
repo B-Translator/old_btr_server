@@ -8,7 +8,7 @@ $url = $base_url . '/public/btr/translations/get_random_sguid';
 $options = array(
   'method' => 'POST',
   'data' => array(
-    'target' => 'next',
+    'target' => 'random',
   ),
   'headers' => array(
     'Content-type' => 'application/x-www-form-urlencoded',
@@ -31,7 +31,7 @@ $result = http_request($url, $options);
 $options = array(
   'method' => 'POST',
   'data' => array(
-    'target' => 'next',
+    'target' => 'random',
     'scope' => 'vocabulary/ICT_sq',
   ),
   'headers' => array(
