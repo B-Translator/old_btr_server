@@ -45,8 +45,8 @@ function btr_btrServices_default_services_endpoint() {
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
-              'require_authentication' => '1',
               'scope' => '',
+              'require_authentication' => NULL,
             ),
           ),
         ),
@@ -115,14 +115,56 @@ function btr_btrServices_default_services_endpoint() {
         ),
       ),
     ),
+    'report' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'scope' => '',
+              'require_authentication' => NULL,
+            ),
+          ),
+        ),
+      ),
+      'actions' => array(
+        'statistics' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'scope' => '',
+              'require_authentication' => NULL,
+            ),
+          ),
+        ),
+        'project_stats' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'scope' => '',
+              'require_authentication' => NULL,
+            ),
+          ),
+        ),
+        'topcontrib' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'scope' => '',
+              'require_authentication' => NULL,
+            ),
+          ),
+        ),
+      ),
+    ),
     'translations' => array(
       'operations' => array(
         'retrieve' => array(
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
-              'require_authentication' => '1',
               'scope' => '',
+              'require_authentication' => NULL,
             ),
           ),
         ),
@@ -130,8 +172,8 @@ function btr_btrServices_default_services_endpoint() {
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
-              'require_authentication' => '1',
               'scope' => '',
+              'require_authentication' => NULL,
             ),
           ),
         ),
@@ -141,8 +183,8 @@ function btr_btrServices_default_services_endpoint() {
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
-              'require_authentication' => '1',
               'scope' => '',
+              'require_authentication' => NULL,
             ),
           ),
         ),
@@ -150,8 +192,8 @@ function btr_btrServices_default_services_endpoint() {
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
-              'require_authentication' => '1',
               'scope' => '',
+              'require_authentication' => NULL,
             ),
           ),
         ),
@@ -159,8 +201,8 @@ function btr_btrServices_default_services_endpoint() {
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
-              'require_authentication' => '1',
               'scope' => '',
+              'require_authentication' => NULL,
             ),
           ),
         ),
@@ -236,81 +278,6 @@ function btr_btrServices_default_services_endpoint() {
   );
   $endpoint->debug = 1;
   $export['btranslator'] = $endpoint;
-
-  $endpoint = new stdClass();
-  $endpoint->disabled = FALSE; /* Edit this to true to make a default endpoint disabled initially */
-  $endpoint->api_version = 3;
-  $endpoint->name = 'public_btranslator';
-  $endpoint->server = 'rest_server';
-  $endpoint->path = 'public/btr';
-  $endpoint->authentication = array();
-  $endpoint->server_settings = array(
-    'formatters' => array(
-      'bencode' => TRUE,
-      'json' => TRUE,
-      'jsonp' => TRUE,
-      'php' => TRUE,
-      'xml' => TRUE,
-    ),
-    'parsers' => array(
-      'application/json' => TRUE,
-      'application/vnd.php.serialized' => TRUE,
-      'application/x-www-form-urlencoded' => TRUE,
-      'application/xml' => TRUE,
-      'multipart/form-data' => TRUE,
-      'text/xml' => TRUE,
-    ),
-  );
-  $endpoint->resources = array(
-    'project' => array(
-      'actions' => array(
-        'list' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
-    'report' => array(
-      'operations' => array(
-        'retrieve' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'actions' => array(
-        'statistics' => array(
-          'enabled' => '1',
-        ),
-        'project_stats' => array(
-          'enabled' => '1',
-        ),
-        'topcontrib' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
-    'translations' => array(
-      'operations' => array(
-        'retrieve' => array(
-          'enabled' => '1',
-        ),
-        'index' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'actions' => array(
-        'search' => array(
-          'enabled' => '1',
-        ),
-        'get_random_sguid' => array(
-          'enabled' => '1',
-        ),
-        'get' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
-  );
-  $endpoint->debug = 1;
-  $export['public_btranslator'] = $endpoint;
 
   return $export;
 }
