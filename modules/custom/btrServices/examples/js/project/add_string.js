@@ -23,7 +23,7 @@ http_request(url, settings)
     });
 
 // Retrive the string.
-var url = base_url + '/public/btr/translations/' + sguid + '?lng=sq';
+var url = base_url + '/btr/translations/' + sguid + '?lng=sq';
 http_request(url, { async: false });
 
 // Delete the string that was added above.

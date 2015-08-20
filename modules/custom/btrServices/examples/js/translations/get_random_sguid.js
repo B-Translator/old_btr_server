@@ -1,5 +1,5 @@
-// POST public/btr/translations/get_random_sguid
-var url = base_url + '/public/btr/translations/get_random_sguid';
+// POST btr/translations/get_random_sguid
+var url = base_url + '/btr/translations/get_random_sguid';
 var settings = {
     //async: false,
     method: 'POST',

@@ -111,8 +111,8 @@ function _btrServices_project() {
  *   'origin/project' or just 'origin'.
  *
  * @example
- *   curl -k -i -X POST https://dev.btr.example.org/public/btr/project/list
- *   curl -k -i -X POST https://dev.btr.example.org/public/btr/project/list \
+ *   curl -k -i -X POST https://dev.btr.example.org/btr/project/list
+ *   curl -k -i -X POST https://dev.btr.example.org/btr/project/list \
  *        -H "Content-type: application/json" \
  *        -d '{"origin": "t*"}'
  */

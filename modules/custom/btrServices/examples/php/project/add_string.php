@@ -32,7 +32,7 @@ catch (Exception $e) {
 $sguid = $result['sguid'];
 
 // Retrive the string.
-$url = $base_url . "/public/btr/translations/$sguid?lng=sq";
+$url = $base_url . "/btr/translations/$sguid?lng=sq";
 $result = http_request($url);
 
 // Delete the string that was added above.

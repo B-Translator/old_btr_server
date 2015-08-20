@@ -27,7 +27,7 @@ $result = http_request($url, $options);
 $tguid = $result['tguid'];
 
 // Retrive the string and check that the new translation has been added.
-$url = $base_url . "/public/btr/translations/$sguid?lng=sq";
+$url = $base_url . "/btr/translations/$sguid?lng=sq";
 $result = http_request($url);
 
 // Delete the translation that was added above.

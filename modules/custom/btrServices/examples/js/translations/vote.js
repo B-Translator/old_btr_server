@@ -1,7 +1,7 @@
 
 // Get a random translated string an get the tguid of the first translation.
 var sguid, tguid;
-var url = base_url + '/public/btr/translations/translated?lng=sq'
+var url = base_url + '/btr/translations/translated?lng=sq'
 http_request(url, { async: false })
     .done(function(result){
         sguid = result['string']['sguid'];
@@ -20,7 +20,7 @@ http_request(base_url + '/btr/translations/vote', {
 });
 
 // Retrive the string and check that the translation has been voted.
-var url = base_url + '/public/btr/translations/' + sguid + '?lng=sq';
+var url = base_url + '/btr/translations/' + sguid + '?lng=sq';
 http_request(url, { async: false });
 
 // POST btr/translations/del_vote

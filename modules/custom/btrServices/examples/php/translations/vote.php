@@ -5,7 +5,7 @@ include_once($path . '/http_request.php');
 include_once($path . '/get_access_token.php');
 
 // Get a random translated string.
-$url = $base_url . '/public/btr/translations/translated?lng=sq';
+$url = $base_url . '/btr/translations/translated?lng=sq';
 $result = http_request($url);
 
 // Get the sguid and the tguid of the first translation.
@@ -28,7 +28,7 @@ $options = array(
 $result = http_request($url, $options);
 
 // Retrive the string and check that the translation has been voted.
-$url = $base_url . "/public/btr/translations/$sguid?lng=sq";
+$url = $base_url . "/btr/translations/$sguid?lng=sq";
 $result = http_request($url);
 
 // POST btr/translations/del_vote

@@ -5,22 +5,22 @@
 // get translations from the public endpoint
 // (no need for authentication or token)
 
-$url = "https://dev.btr.example.org/public/btr/translations/5aa37d12b93b15ea4bbf49b5eb234d70154710ab?lng=sq";
+$url = "https://dev.btr.example.org/btr/translations/5aa37d12b93b15ea4bbf49b5eb234d70154710ab?lng=sq";
 $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);
 
-$url = "https://dev.btr.example.org/public/btr/translations/random?lng=sq";
+$url = "https://dev.btr.example.org/btr/translations/random?lng=sq";
 $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);
 
-$url = "https://dev.btr.example.org/public/btr/translations/translated?lng=sq";
+$url = "https://dev.btr.example.org/btr/translations/translated?lng=sq";
 $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);
 
-$url = "https://dev.btr.example.org/public/btr/translations/untranslated?lng=sq";
+$url = "https://dev.btr.example.org/btr/translations/untranslated?lng=sq";
 $response = drupal_http_request($url);
 print "\n\n===================================================\n\n";
 print_r($response);

@@ -1,5 +1,5 @@
-// POST public/btr/translations/get
-var url = base_url + '/public/btr/translations/get';
+// POST btr/translations/get
+var url = base_url + '/btr/translations/get';
 var settings = {
     async: false,
     method: 'POST',

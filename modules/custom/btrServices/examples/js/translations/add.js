@@ -24,7 +24,7 @@ var get_string = function(response) {
     // We will need it later for deleting it.
     tguid = response.tguid;
 
-    var url = base_url + '/public/btr/translations/' + sguid + '?lng=sq';
+    var url = base_url + '/btr/translations/' + sguid + '?lng=sq';
     var request = http_request(url);
 
     // Now delete the translation.

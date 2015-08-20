@@ -1,5 +1,5 @@
-// POST public/btr/project/list
-var url = base_url + '/public/btr/project/list';
+// POST btr/project/list
+var url = base_url + '/btr/project/list';
 var settings = {
     async: false,
     method: 'POST',

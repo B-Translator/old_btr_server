@@ -1,5 +1,5 @@
-// POST public/btr/translations/search
-http_request(base_url + '/public/btr/translations/search', {
+// POST btr/translations/search
+http_request(base_url + '/btr/translations/search', {
     method: 'POST',
     data: {
         lng: 'sq',

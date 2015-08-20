@@ -3,8 +3,8 @@ $path = dirname(dirname(__FILE__));
 include_once($path . '/config.php');
 include_once($path . '/http_request.php');
 
-// POST public/btr/translations/get
-$url = $base_url . '/public/btr/translations/get';
+// POST btr/translations/get
+$url = $base_url . '/btr/translations/get';
 $options = array(
   'method' => 'POST',
   'data' => array(

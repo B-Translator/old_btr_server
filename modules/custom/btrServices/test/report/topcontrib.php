@@ -1,7 +1,7 @@
 #!/usr/bin/drush php-script
 <?php
 
-$url = 'https://dev.btr.example.org/public/btr/report/topcontrib.json';
+$url = 'https://dev.btr.example.org/btr/report/topcontrib.json';
 $params = array(
   'lng' => 'sq',
   'period' => 'week',
@@ -14,4 +14,3 @@ $options = array(
 
 $response = drupal_http_request($url, $options);
 print_r($response);
-

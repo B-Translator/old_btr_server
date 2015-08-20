@@ -3,12 +3,12 @@ $path = dirname(dirname(__FILE__));
 include_once($path . '/config.php');
 include_once($path . '/http_request.php');
 
-// GET public/btr/report/topcontrib
-$url = $base_url . '/public/btr/report/topcontrib?lng=sq&period=week';
+// GET btr/report/topcontrib
+$url = $base_url . '/btr/report/topcontrib?lng=sq&period=week';
 $result = http_request($url);
 
-// POST public/btr/report/topcontrib
-$url = $base_url . '/public/btr/report/topcontrib';
+// POST btr/report/topcontrib
+$url = $base_url . '/btr/report/topcontrib';
 $options = array(
   'method' => 'POST',
   'data' => array(
