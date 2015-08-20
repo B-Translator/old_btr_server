@@ -7,8 +7,8 @@ include_once($path . '/get_access_token.php');
 // Get an access  token.
 $access_token = get_access_token($auth);
 
-// POST btr/project/import
-$url = $base_url . '/btr/project/import';
+// POST api/project/import
+$url = $base_url . '/api/project/import';
 
 $ch = curl_init($url);
 curl_setopt_array($ch, array(
@@ -44,4 +44,3 @@ print_r($result);
 print '</xmp>';
 
 curl_close($ch);
-

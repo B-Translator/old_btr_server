@@ -7,8 +7,8 @@ include_once($path . '/get_access_token.php');
 // Get an access  token.
 $access_token = get_access_token($auth);
 
-// POST btr/project/add_string
-$url = $base_url . '/btr/project/add_string';
+// POST api/project/add_string
+$url = $base_url . '/api/project/add_string';
 $options = array(
   'method' => 'POST',
   'data' => array(
@@ -32,11 +32,11 @@ catch (Exception $e) {
 $sguid = $result['sguid'];
 
 // Retrive the string.
-$url = $base_url . "/btr/translations/$sguid?lng=sq";
+$url = $base_url . "/api/translations/$sguid?lng=sq";
 $result = http_request($url);
 
 // Delete the string that was added above.
-$url = $base_url . '/btr/project/del_string';
+$url = $base_url . '/api/project/del_string';
 $options = array(
   'method' => 'POST',
   'data' => array('sguid' => $sguid),

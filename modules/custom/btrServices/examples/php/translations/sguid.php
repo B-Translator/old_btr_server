@@ -3,8 +3,8 @@ $path = dirname(dirname(__FILE__));
 include_once($path . '/config.php');
 include_once($path . '/http_request.php');
 
-// POST btr/translations/get_random_sguid
-$url = $base_url . '/btr/translations/get_random_sguid';
+// POST api/translations/get_random_sguid
+$url = $base_url . '/api/translations/get_random_sguid';
 $options = array(
   'method' => 'POST',
   'data' => array(

@@ -7,8 +7,8 @@ include_once($path . '/get_access_token.php');
 // Get an access  token.
 $access_token = get_access_token($auth);
 
-// POST btr/translations/import
-$url = $base_url . '/btr/translations/import';
+// POST api/translations/import
+$url = $base_url . '/api/translations/import';
 
 $ch = curl_init($url);
 curl_setopt_array($ch, array(

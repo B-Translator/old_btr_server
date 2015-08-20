@@ -9,8 +9,8 @@ $sguid = '2a12b39f41bbd1ac78fdf456c25a480d2060c06b';
 // Get an access  token.
 $access_token = get_access_token($auth);
 
-// POST btr/translations/add
-$url = $base_url . '/btr/translations/add';
+// POST api/translations/add
+$url = $base_url . '/api/translations/add';
 $options = array(
   'method' => 'POST',
   'data' => array(
@@ -27,11 +27,11 @@ $result = http_request($url, $options);
 $tguid = $result['tguid'];
 
 // Retrive the string and check that the new translation has been added.
-$url = $base_url . "/btr/translations/$sguid?lng=sq";
+$url = $base_url . "/api/translations/$sguid?lng=sq";
 $result = http_request($url);
 
 // Delete the translation that was added above.
-$url = $base_url . '/btr/translations/del';
+$url = $base_url . '/api/translations/del';
 $options = array(
   'method' => 'POST',
   'data' => array('tguid' => $tguid),
