@@ -1,7 +1,7 @@
 #!/usr/bin/drush php-script
 <?php
 
-$url = 'https://dev.btr.example.org/btr/report/topcontrib.json';
+$url = 'https://dev.btr.example.org/api/report/topcontrib.json';
 $params = array(
   'lng' => 'sq',
   'period' => 'week',

@@ -1,7 +1,7 @@
 #!/usr/bin/drush php-script
 <?php
 
-$url = 'https://dev.btr.example.org/btr/report/statistics.json';
+$url = 'https://dev.btr.example.org/api/report/statistics.json';
 $options = array(
   'method' => 'POST',
   'data' => 'lng=sq',

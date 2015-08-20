@@ -3,8 +3,8 @@ $path = dirname(dirname(__FILE__));
 include_once($path . '/config.php');
 include_once($path . '/http_request.php');
 
-// POST btr/project/list
-$url = $base_url . '/btr/project/list';
+// POST api/project/list
+$url = $base_url . '/api/project/list';
 $options = array(
   'method' => 'POST',
   'data' => array(),

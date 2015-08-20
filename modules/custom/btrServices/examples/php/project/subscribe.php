@@ -7,8 +7,8 @@ include_once($path . '/get_access_token.php');
 // Get an access  token.
 $access_token = get_access_token($auth);
 
-// POST btr/project/subscribe
-$url = $base_url . '/btr/project/subscribe';
+// POST api/project/subscribe
+$url = $base_url . '/api/project/subscribe';
 $options = array(
   'method' => 'POST',
   'data' => array(
@@ -29,8 +29,8 @@ catch (Exception $e) {
   print '</xmp>';
 }
 
-// POST btr/project/subscriptions
-$url = $base_url . '/btr/project/subscriptions';
+// POST api/project/subscriptions
+$url = $base_url . '/api/project/subscriptions';
 $options = array(
   'method' => 'POST',
   'headers' => array(
@@ -47,8 +47,8 @@ catch (Exception $e) {
   print '</xmp>';
 }
 
-// POST btr/project/unsubscribe
-$url = $base_url . '/btr/project/unsubscribe';
+// POST api/project/unsubscribe
+$url = $base_url . '/api/project/unsubscribe';
 $options = array(
   'method' => 'POST',
   'data' => array(
@@ -69,8 +69,8 @@ catch (Exception $e) {
   print '</xmp>';
 }
 
-// POST btr/project/subscriptions
-$url = $base_url . '/btr/project/subscriptions';
+// POST api/project/subscriptions
+$url = $base_url . '/api/project/subscriptions';
 $options = array(
   'method' => 'POST',
   'headers' => array(

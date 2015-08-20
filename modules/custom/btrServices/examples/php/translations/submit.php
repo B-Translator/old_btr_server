@@ -39,8 +39,8 @@ $actions = array(
   ),
 );
 
-// POST btr/translations/submit
-$url = $base_url . '/btr/translations/submit';
+// POST api/translations/submit
+$url = $base_url . '/api/translations/submit';
 $options = array(
   'method' => 'POST',
   'data' => $actions,
