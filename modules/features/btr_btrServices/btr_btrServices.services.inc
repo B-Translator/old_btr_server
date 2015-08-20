@@ -15,7 +15,7 @@ function btr_btrServices_default_services_endpoint() {
   $endpoint->api_version = 3;
   $endpoint->name = 'btranslator';
   $endpoint->server = 'rest_server';
-  $endpoint->path = 'btr';
+  $endpoint->path = 'api';
   $endpoint->authentication = array(
     'oauth2_server' => array(
       'server' => 'oauth2',
