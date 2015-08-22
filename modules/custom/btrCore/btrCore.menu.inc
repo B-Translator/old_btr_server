@@ -46,6 +46,16 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a list of the languages
+  // for the given origin/project.
+  $items['project/langs'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project List',
+    'page callback'   => 'btrCore_project_langs',
+    'file'            => 'callback/project.inc',
+    'access callback' => TRUE,
+  );
+
   // Return an archive of the PO files for a given origin/project/lng.
   $items['project/export'] = array(
     'type'            => MENU_CALLBACK,

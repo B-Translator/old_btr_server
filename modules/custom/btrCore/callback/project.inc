@@ -75,6 +75,21 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
 }
 
 /**
+ * Return a list of languages for the given origin/project.
+ *
+ * @param $origin
+ *   The origin of the project.
+ *
+ * @param $project
+ *   The name of the project.
+ */
+function btrCore_project_langs($origin, $project) {
+  $project_langs = btr::project_langs($origin, $project);
+  drupal_json_output($project_langs);
+  drupal_exit();
+}
+
+/**
  * Callback function for the menu 'project/export'
  *
  * Return an archive of PO files for a given origin/project/lng.
