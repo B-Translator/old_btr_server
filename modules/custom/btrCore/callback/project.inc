@@ -75,6 +75,15 @@ function btrCore_project_list($origin =NULL, $project =NULL, $format =NULL) {
 }
 
 /**
+ * Return a full json list of all the imported projects and languages.
+ */
+function btrCore_project_list_all() {
+  $project_list = btr::project_list_all();
+  drupal_json_output($project_list);
+  drupal_exit();
+}
+
+/**
  * Return a list of languages for the given origin/project.
  *
  * @param $origin

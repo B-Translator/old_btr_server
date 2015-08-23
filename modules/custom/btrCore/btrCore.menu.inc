@@ -46,6 +46,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a full list of all the imported projects and languages.
+  $items['project/list/all'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Project List',
+    'page callback'   => 'btrCore_project_list_all',
+    'file'            => 'callback/project.inc',
+    'access callback' => TRUE,
+  );
+
   // Return a list of the languages
   // for the given origin/project.
   $items['project/langs'] = array(
