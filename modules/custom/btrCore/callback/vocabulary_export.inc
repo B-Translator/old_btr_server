@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Menu callbacks for translations/vocabulary.
+ * Menu callback for vocabulary/export.
  */
 
 
 /**
- * Callback function for the menu translations/vocabulary/export.
+ * Callback function for the menu vocabulary/export.
  *
  * Return the list of terms in a vocabulary and all the suggested translations.
  *
@@ -18,9 +18,9 @@
  *   Default is 'json'
  *
  * Examples:
- *   curl -k https://dev.l10n.org.al/translations/vocabulary/export/ICT_sq
- *   curl -k https://dev.l10n.org.al/translations/vocabulary/export/ICT_sq/txt1
- *   curl -k https://dev.l10n.org.al/translations/vocabulary/export/ICT_sq/org
+ *   curl -s https://btranslator.org/vocabulary/export/ICT_sq
+ *   curl -s https://btranslator.org/vocabulary/export/ICT_sq/txt1
+ *   curl -s https://btranslator.org/vocabulary/export/ICT_sq/org
  */
 function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   // Try to avoid concurrent exports because they

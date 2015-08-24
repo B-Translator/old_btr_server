@@ -75,11 +75,11 @@ function btrCore_menu() {
   );
 
   // Return the items of a vocabulary and all the corresponding translations.
-  $items['translations/vocabulary/export'] = array(
+  $items['vocabulary/export'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Export Vocabulary',
     'page callback'   => 'btrCore_vocabulary_export',
-    'file'            => 'callback/vocabulary.inc',
+    'file'            => 'callback/vocabulary_export.inc',
     'access callback' => TRUE,
   );
 
