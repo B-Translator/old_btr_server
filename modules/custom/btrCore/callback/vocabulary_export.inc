@@ -18,9 +18,9 @@
  *   Default is 'json'
  *
  * Examples:
- *   curl -s https://btranslator.org/vocabulary/export/ICT_sq
- *   curl -s https://btranslator.org/vocabulary/export/ICT_sq/txt1
- *   curl -s https://btranslator.org/vocabulary/export/ICT_sq/org
+ *   curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
+ *   curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
+ *   curl https://btranslator.org/vocabulary/export/ICT_sq/org
  */
 function btrCore_vocabulary_export($vocabulary, $format =NULL) {
   // Try to avoid concurrent exports because they
