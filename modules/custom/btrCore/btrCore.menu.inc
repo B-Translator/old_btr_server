@@ -189,37 +189,3 @@ function btrCore_menu() {
 
   return $items;
 }
-
-/**
- * Implements hook_menu_alter().
- *
- * Change the user account menu:
- *  - Remove the View tab.
- *  - Make the Profile tab the default one.
- *  - Change the title of hybridauth.
- */
-function btrCore_menu_alter(&$items) {
-  $user = $items['user/%user'];
-  $profile = $items['user/%user/edit-profile'];
-
-  // Remove the View tab.
-  unset($items['user/%user/view']);
-
-  // Make the Profile tab the default one.
-  $items['user/%user'] = $profile;
-  $items['user/%user']['title callback'] = $user['title callback'];
-  $items['user/%user']['title arguments'] = $user['title arguments'];
-  $items['user/%user']['menu_name'] = $user['menu_name'];
-  unset($items['user/%user']['type']);
-  unset($items['user/%user']['weight']);
-
-  $items['user/%user/edit-profile'] = array(
-    'type' =>  MENU_DEFAULT_LOCAL_TASK,
-    'title' => $profile['title'],
-    'weight' => $profile['weight'],
-    'module' => $profile['module'],
-  );
-
-  // Change the title of hybridauth.
-  $items['user/%user/hybridauth']['title'] = t('Authentication');
-}
