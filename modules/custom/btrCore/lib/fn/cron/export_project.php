@@ -47,7 +47,7 @@ function cron_export_project($export_params) {
     $export_mode, $preferred_voters);
 
   // Notify the user that the export is done.
-  $exports_url = url('translations/exports', array('absolute' => TRUE));
+  $exports_url = url('exports', array('absolute' => TRUE));
   $params = array(
     'type' => 'notify-that-export-is-done',
     'uid' => $account->uid,

@@ -95,13 +95,13 @@ function btrCore_menu() {
   );
 
   // The link that is sent to the user for downloading an exported file.
-  // The URL is of the form 'translations/exports/filename.tgz'
+  // The URL is of the form 'exports/filename.tgz'
   // and the filename is passed as a parameter to the function.
-  $items['translations/exports'] = array(
+  $items['exports'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Download Exported File',
     'page callback'   => 'btrCore_get_exported_file',
-    'file'            => 'callback/project.inc',
+    'file'            => 'callback/exports.inc',
     'access callback' => TRUE,
   );
 
