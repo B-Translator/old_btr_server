@@ -51,7 +51,6 @@
  *        -d preferred_voters=user1,user2 > test1.tgz
  */
 function btrCore_project_export() {
-
   // Try to avoid concurrent exports because they
   // may affect the performance of the server.
   if (!lock_acquire('export_project')) {
@@ -65,6 +64,12 @@ function btrCore_project_export() {
   $lng = check_plain($_REQUEST['lng']);
   $export_mode = check_plain($_REQUEST['export_mode']);
   $preferred_voters = check_plain($_REQUEST['preferred_voters']);
+
+  // Only a project admin can request a direct export.
+  if (!btr::user_is_project_admin($origin, $project, $lng)) {
+    print t("You don't have enough rights for this export.");
+    drupal_exit();
+  }
 
   // Make sure that the given origin and project do exist.
   if (!btr::project_exists($origin, $project)) {
@@ -84,8 +89,7 @@ function btrCore_project_export() {
   // Get and check the list of preferred voters.
   if ($export_mode == 'preferred') {
     if (empty($preferred_voters)) {
-      print t("For mode 'preferred' parameter 'preferred_voters' should not be empty.") . "\n";
-      drupal_exit();
+      $preferred_voters = $GLOBALS['user']->name;
     }
     list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
     if (!empty($error_messages)) {
