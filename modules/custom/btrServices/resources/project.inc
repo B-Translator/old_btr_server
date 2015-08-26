@@ -61,7 +61,7 @@ function _btrServices_project() {
     'callback' => '_btrServices_project_import',
     'args' => array($params),
     'access callback' => 'user_access',
-    'access arguments' => array('btranslator-import'),
+    'access arguments' => array('btranslator-vote'),
   );
 
   // Subscribe to a project.
