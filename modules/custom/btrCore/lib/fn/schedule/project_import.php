@@ -98,17 +98,6 @@ function schedule_project_import($origin, $project, $uploaded_file) {
         'project' => $project,
       )));
 
-  // Schedule a notification to the admin.
-  $notify_admin = variable_get('btr_import_notify_admin', TRUE);
-  if ($notify_admin) {
-    btr::queue('notifications', array(array(
-          'type' => 'notify-admin-on-import-request',
-          'recipient' => user_load(1)->mail,
-          'username' => $GLOBALS['user']->name,
-          'filename' => $file->filename,
-        )));
-  }
-
   // Return a notification message.
   $msg = t("Import of the project '!project' is scheduled. You will be notified by email when it is done.",
          array('!project' => $origin . '/' . $project));

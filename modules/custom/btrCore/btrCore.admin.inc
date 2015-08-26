@@ -63,7 +63,7 @@ function btrCore_config() {
     '#type' => 'textfield',
     '#title' => t('Export path'),
     '#default_value' => variable_get('btr_export_path', '/var/www/exports'),
-    '#description' => t('The directory where the exported projects will be placed. Must be accessable by the web server (www-data). Caution: This directory will be cleaned periodically by cron, so make sure that its value is correct, and make sure that <strong>it is not empty</strong>!'),
+    '#description' => t('The directory where the exported projects will be placed. Must be accessable by the web server (www-data).'),
   );
 
   $form['export']['btr_export_notify_admin'] = array(
@@ -71,13 +71,6 @@ function btrCore_config() {
     '#title' => t('Notify admin'),
     '#description' => t('Send a notification email to admin on each export request.'),
     '#default_value' => variable_get('btr_export_notify_admin', TRUE),
-  );
-
-  $form['export']['btr_import_notify_admin'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Notify admin'),
-    '#description' => t('Send a notification email to admin on each import request.'),
-    '#default_value' => variable_get('btr_import_notify_admin', TRUE),
   );
 
   $form = system_settings_form($form);

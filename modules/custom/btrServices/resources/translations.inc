@@ -718,17 +718,6 @@ function _btrServices_vote_import($params) {
   );
   btr::queue('import_translations', array($queue_params));
 
-  // Schedule a notification to the admin.
-  // TODO: Send this notification to the project admin.
-  $notify_admin = variable_get('btr_import_notify_admin', TRUE);
-  if ($notify_admin) {
-    $queue_params['type'] = 'notify-admin-on-import-request';
-    $queue_params['recipient'] = user_load(1)->mail;
-    $queue_params['username'] = $GLOBALS['user']->name;
-    $queue_params['filename'] = $file->filename;
-    btr::queue('notifications', array($params));
-  }
-
   // Return a notification message.
   $msg = t("Import of the file '!filename' is scheduled. You will be notified by email when it is done.",
          array('!filename' => $file->filename));
