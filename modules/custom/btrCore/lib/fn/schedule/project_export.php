@@ -83,13 +83,16 @@ function schedule_project_export($origin, $project, $lng,
   );
   btr::queue('export_project', array($queue_params));
 
-  // Schedule a notification to the admin.
-  // TODO: Send this notification to the project admin.
+  // Schedule a notification to each admin of the project.
   $notify_admin = variable_get('btr_export_notify_admin', TRUE);
   if ($notify_admin) {
     $queue_params['type'] = 'notify-admin-on-export-request';
-    $queue_params['recipient'] = user_load(1)->mail;
-    btr::queue('notifications', array($queue_params));
+    $admins = btr::project_users('admin', $origin, $project, $lng);
+    foreach ($admins as $uid => $user) {
+      $queue_params['recipient'] = $user['email'];
+      $queue_params['username'] = $user['name'];
+      btr::queue('notifications', array($queue_params));
+    }
   }
 
   // Return a notification message.

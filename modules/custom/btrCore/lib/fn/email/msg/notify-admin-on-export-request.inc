@@ -10,10 +10,16 @@ use \btr;
     . " $params->origin/$params->project";
 
   $body = array();
-  $body[] = t("Export request by user !uid for '!origin/!project'.",
-            array(
-              '!uid' => $params->uid,
-              '!project' => $params->project,
+  $body[] = t("Export request by '!user' for '!origin/!project/!lng'.", [
+              '!user' => $params->username,
               '!origin' => $params->origin,
-            ));
+              '!project' => $params->project,
+              '!lng' => $params->lng,
+            ]);
+  $body[] = "
+    <ul>
+      <li>export_mode: $params->export_mode</li>
+      <li>preferred_voters: $params->preferred_voters</li>
+    </ul>
+  ";
 }
