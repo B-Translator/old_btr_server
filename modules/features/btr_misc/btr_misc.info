@@ -94,6 +94,7 @@ features[variable][] = enable_revisions_page_blog
 features[variable][] = enable_revisions_page_book
 features[variable][] = enable_revisions_page_page
 features[variable][] = error_level
+features[variable][] = file_private_path
 features[variable][] = file_temporary_path
 features[variable][] = filter_fallback_format
 features[variable][] = image_toolkit

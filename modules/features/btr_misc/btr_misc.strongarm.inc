@@ -585,6 +585,13 @@ function btr_misc_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'file_private_path';
+  $strongarm->value = '/var/www/uploads/';
+  $export['file_private_path'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'file_temporary_path';
   $strongarm->value = '/tmp';
   $export['file_temporary_path'] = $strongarm;
@@ -642,7 +649,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'language_count';
-  $strongarm->value = 9;
+  $strongarm->value = 12;
   $export['language_count'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -758,7 +765,9 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'menu_expanded';
-  $strongarm->value = array();
+  $strongarm->value = array(
+    0 => 'main-menu',
+  );
   $export['menu_expanded'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -784,26 +793,27 @@ function btr_misc_strongarm() {
     15 => 61,
     16 => 60,
     17 => 56,
-    18 => 44,
-    19 => 31,
-    20 => 30,
-    21 => 29,
-    22 => 28,
-    23 => 27,
-    24 => 24,
-    25 => 23,
-    26 => 21,
-    27 => 15,
-    28 => 14,
-    29 => 13,
-    30 => 12,
-    31 => 11,
-    32 => 7,
-    33 => 6,
-    34 => 5,
-    35 => 3,
-    36 => 2,
-    37 => 1,
+    18 => 49,
+    19 => 44,
+    20 => 31,
+    21 => 30,
+    22 => 29,
+    23 => 28,
+    24 => 27,
+    25 => 24,
+    26 => 23,
+    27 => 21,
+    28 => 15,
+    29 => 14,
+    30 => 13,
+    31 => 12,
+    32 => 11,
+    33 => 7,
+    34 => 6,
+    35 => 5,
+    36 => 3,
+    37 => 2,
+    38 => 1,
   );
   $export['menu_masks'] = $strongarm;
 
@@ -1017,7 +1027,7 @@ function btr_misc_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'update_check_disabled';
-  $strongarm->value = 0;
+  $strongarm->value = '1';
   $export['update_check_disabled'] = $strongarm;
 
   $strongarm = new stdClass();
