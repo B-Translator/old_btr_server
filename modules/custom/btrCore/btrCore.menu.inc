@@ -83,14 +83,22 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
-  // Return as plain-text the diff of the PO file for a given origin/project/lng,
-  // which contains the latest most-voted suggestions since the last snapshot.
+  // Return as plain-text the diff of the PO file for a given origin/project/lng.
   // It gets the parameters origin/project/lng[/nr[/ediff]].
   $items['project/diff'] = array(
     'type'            => MENU_CALLBACK,
-    'title'           => 'Project Export',
+    'title'           => 'Project Diffs',
     'page callback'   => 'btrCore_project_diff',
-    'file'            => 'callback/project.inc',
+    'file'            => 'callback/diff.inc',
+    'access callback' => TRUE,
+  );
+
+  // Return as a download the diff of the PO file for a given origin/project/lng.
+  $items['project/diff-dl'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Diff Download',
+    'page callback'   => 'btrCore_project_diff_download',
+    'file'            => 'callback/diff.inc',
     'access callback' => TRUE,
   );
 
