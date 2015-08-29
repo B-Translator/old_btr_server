@@ -11,9 +11,13 @@ drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btr_server \
            $makefile $drupal_dir
 
-### fix some things on the application directory
+### copy the bootstrap library to the custom theme, etc.
 cd $drupal_dir/profiles/btr_server/
 cp -a libraries/bootstrap themes/contrib/bootstrap/
+cp -a libraries/bootstrap themes/btr_server/
+cp libraries/bootstrap/less/variables.less themes/btr_server/
+
+### copy hybridauth provider GitHub.php to the right place
 cd $drupal_dir/profiles/btr_server/libraries/hybridauth/
 cp additional-providers/hybridauth-github/Providers/GitHub.php \
    hybridauth/Hybrid/Providers/
