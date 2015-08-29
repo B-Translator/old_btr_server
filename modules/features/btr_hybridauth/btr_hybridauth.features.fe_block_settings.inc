@@ -21,10 +21,10 @@ function btr_hybridauth_default_fe_block_settings() {
     'pages' => '',
     'roles' => array(),
     'themes' => array(
-      'bootstrap1' => array(
+      'btr_server' => array(
         'region' => '',
         'status' => 0,
-        'theme' => 'bootstrap1',
+        'theme' => 'btr_server',
         'weight' => '0',
       ),
       'seven' => array(
