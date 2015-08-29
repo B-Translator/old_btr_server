@@ -1,5 +1,5 @@
-name = btranslator
-description = A Bootstrap Sub-theme for B-Translator.
+name = btr_server
+description = A Bootstrap Sub-theme for B-Translator Server.
 core = 7.x
 base theme = bootstrap
 
