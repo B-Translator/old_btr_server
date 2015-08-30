@@ -1,17 +1,9 @@
 #!/bin/bash -x
 
-### prevent robots from crawling translations
-sed -i $drupal_dir/robots.txt \
-    -e '/# B-Translator/,$ d'
-cat <<EOF >> $drupal_dir/robots.txt
-# B-Translator
-Disallow: /translations/
-Disallow: /?q=translations/
-Disallow: /vocabulary/
-Disallow: /?q=vocabulary/
-Disallow: /fb_cb/
-Disallow: /?q=fb_cb/
-Disallow: /downloads/
+### prevent robots from crawling
+cat <<EOF > $drupal_dir/robots.txt
+User-agent: *
+Disallow: /
 EOF
 
 # Protect Drupal settings from prying eyes
