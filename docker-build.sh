@@ -1,6 +1,14 @@
 #!/bin/bash -x
 ### Build a docker image.
 
+### stop on error
+set -e
+
+
+### get the start time
+start_time=$(date)
+
+### usage
 function usage {
     echo "
 Usage: $0 [<settings> options]
@@ -18,73 +26,101 @@ Examples:
     exit 0
 }
 
-### Get the project directory.
-project_dir=$(dirname $0)
-
 ### collect in a file all the settings and options
-options=$project_dir/options.sh
-cat <<EOF > $options
-#!/bin/bash
-### This file contains all the settings
-### and options given from the command line.
+function get_options {
+    options=$project_dir/options.sh
+    echo '#!/bin/bash' > $options
+    echo '### This file contains all the settings' >> $options
+    echo '### and options given from the command line.' >> $options
+    echo '' >> $options
 
-EOF
+    ### save the default settings
+    source $project_dir/install/settings.sh
+    echo "### ----- Start: $project_dir/install/settings.sh" >> $options
+    cat $project_dir/install/settings.sh >> $options
+    echo "### ----- End: $project_dir/install/settings" >> $options
+    
+    ### get command line options and save them to options.sh
+    for opt in "$@"
+    do
+        case $opt in
+            -h|--help)       usage ;;
+    
+            --git_branch=*)
+                git_branch=${opt#*=} 
+                echo git_branch="$git_branch" >> $options
+                ;;
+    
+            --*=*)
+                optvalue=${opt#*=}
+                optname=${opt%%=*}
+                optname=${optname:2}
+                eval $optname="$optvalue"
+                echo $optname="$optvalue" >> $options
+                ;;
+    
+            *)
+                if [ ${opt:0:1} = '-' ]; then usage; fi
+                if [ $opt = 'calling_myself' ]; then continue; fi
+    
+                settings=$opt
+                if ! test -f "$settings"
+                then
+                    echo "File '$settings' does not exist."
+                    exit 1
+                fi
+                source $settings
+                echo "### ----- Start: $settings" >> $options
+                cat $settings >> $options
+                echo "### ----- End: $settings" >> $options
+                echo
+                ;;
+        esac
+    done
 
-### save the default settings
-source $project_dir/install/settings.sh
-echo "### ----- Start: $project_dir/install/settings.sh" >> $options
-cat $project_dir/install/settings.sh >> $options
-echo "### ----- End: $project_dir/install/settings" >> $options
+    ### make sure that git_branch is set to some value
+    git_branch=${git_branch:-master}
+}
 
-### get command line options and save them to options.sh
-for opt in "$@"
-do
-    case $opt in
-        -h|--help)       usage ;;
+### Get the project.
+project_dir=$(dirname $0)
+project=$(basename $(ls $project_dir/*.info | sed -e 's/\.info$//'))
 
-        --git_branch=*)
-            git_branch=${opt#*=} 
-            echo git_branch="$git_branch" >> $options
-            ;;
+### get the settings and options
+get_options "$@"
 
-        --*=*)
-            optvalue=${opt#*=}
-            optname=${opt%%=*}
-            optname=${optname:2}
-            eval $optname="$optvalue"
-            echo $optname="$optvalue" >> $options
-            ;;
-
-        *)
-            if [ ${opt:0:1} = '-' ]; then usage; fi
-
-            settings=$opt
-            if ! test -f "$settings"
-            then
-                echo "File '$settings' does not exist."
-                exit 1
-            fi
-            source $settings
-            echo "### ----- Start: $settings" >> $options
-            cat $settings >> $options
-            echo "### ----- End: $settings" >> $options
-            echo
-            ;;
-    esac
-done
+### make sure that the script is called with `nohup nice ...`
+if [ "$1" != "calling_myself" ]
+then
+    # this script has *not* been called recursively by itself
+    datestamp=$(date +%F | tr -d -)
+    nohup_out=nohup/nohup-$project-$git_branch-$datestamp.out
+    mkdir -p nohup/
+    rm -f $nohup_out
+    nohup nice "$0" "calling_myself" "$@" > $nohup_out &
+    sleep 1
+    tail -f $nohup_out
+    exit
+else
+    # this script has been called recursively by itself
+    shift # remove the flag $1 that is used as a termination condition
+fi
 
 ### make sure that we are using the right git branch
-git_branch=${git_branch:-master}
 current_dir=$(pwd)
 cd $project_dir/
 git checkout $git_branch
 git pull
 cd $current_dir
 
-### start building and logging
-project=$(basename $(ls $project_dir/*.info | sed -e 's/\.info$//'))
-nohup_out=nohup-$project-$git_branch.out
-rm -f $nohup_out
-nohup nice docker build --tag=$project:$git_branch $project_dir/ > $nohup_out &
-sleep 1
-tail -f $nohup_out
+### build the docker image
+time docker build --tag=$project:$git_branch $project_dir/
+
+### print the start and end times
+end_time=$(date)
+set +x
+echo ================================================================
+echo "Start time : $start_time"
+echo "End time   : $end_time"
+echo ================================================================
+
