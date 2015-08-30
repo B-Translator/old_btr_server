@@ -29,4 +29,10 @@ export drush="drush --root=$drupal_dir"
 
 ### btranslator configuration
 $code_dir/install/config.sh
+
+### install some test translation projecs
+if [ "$development" = 'true' ]
+then
+    $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/install.sh
+fi
 exit 0

@@ -115,9 +115,3 @@ $drush --yes l10n-update
 
 ### update to the latest version of core and modules
 #$drush --yes pm-update
-
-### install some test translation projecs
-if [ "$development" = 'true' ]
-then
-    $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/install.sh
-fi
