@@ -27,7 +27,11 @@ libraries[lessphp][download][url] = https://github.com/oyejorge/less.php/archive
 ; Custom
 ;--------------------
 
-projects[btrclient] = 2.x-dev
+;projects[btrclient] = 2.x-dev
+projects[btrclient][type] = module
+projects[btrclient][download][type] = git
+projects[btrclient][download][url] = https://github.com/B-Translator/btrclient.git
+projects[btrclient][download][branch] = 7.x-2.x
 
 ;--------------------
 ; Web Services
