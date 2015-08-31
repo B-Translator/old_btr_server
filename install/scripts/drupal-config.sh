@@ -111,7 +111,9 @@ for lng in $languages
 do
     $drush language-add $lng
 done
+$drush --yes l10n-update-refresh
 $drush --yes l10n-update
 
 ### update to the latest version of core and modules
+#$drush --yes pm-refresh
 #$drush --yes pm-update
