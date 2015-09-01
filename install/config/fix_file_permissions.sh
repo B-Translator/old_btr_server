@@ -1,9 +1,8 @@
 #!/bin/bash
-### drush may create some css/js files with wrong permissions
-### fix them
+### drush may create some files with wrong (root) permissions
+### fix them (change owner to www-data)
 
-for dir in /var/www/{btr,bcl}*/sites/default/files/{css,js}
+for dir in /var/www/{btr,bcl}*/sites/default/files/*
 do
     test -d $dir && chown www-data: -R $dir
 done
-exit 0  # it is ok even if something above failed
