@@ -83,8 +83,12 @@ function get_options {
 }
 
 ### Get the project.
-project_dir=$(dirname $0)
-project=$(basename $(ls $project_dir/*.info | sed -e 's/\.info$//'))
+current_dir=$(pwd)
+cd $(dirname $0)
+cd ..
+project_dir=$(pwd)
+project=$(ls *.info | sed -e 's/\.info$//')
+cd $current_dir
 
 ### get the settings and options
 get_options "$@"
@@ -107,14 +111,13 @@ else
 fi
 
 ### make sure that we are using the right git branch
-current_dir=$(pwd)
 cd $project_dir/
 git checkout $git_branch
 git pull
 cd $current_dir
 
 ### build the docker image
-time docker build --tag=$project:$git_branch $project_dir/
+time docker build --tag=$project:$git_branch --file=$project_dir/docker/Dockerfile $project_dir/
 
 ### print the start and end times
 end_time=$(date)

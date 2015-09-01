@@ -1,6 +1,3 @@
-### This file can be used to build a docker image like this:
-###   `docker build --tag=btr_server .`
-
 FROM ubuntu-upstart:14.04
 
 ### Install packages.
