@@ -94,9 +94,10 @@ drush site-install --verbose --yes btr_server \
 mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 
-### set the list of languages for import
+### set the list of supported languages
 sed -i $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
+drush --root=$drupal_dir --yes vset btr_languages "$languages"
 
 ### add these languages to drupal
 for lng in $languages
