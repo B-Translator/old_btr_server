@@ -90,6 +90,9 @@ drush site-install --verbose --yes btr_server \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
+### fix tha DB schema and install some test data
+profiles/btr_server/modules/custom/btrCore/data/install.sh
+
 ### set propper directory permissions
 mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/

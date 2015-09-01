@@ -114,6 +114,9 @@ done
 $drush --yes l10n-update-refresh
 $drush --yes l10n-update
 
+### import the vocabulary projects
+$drupal_dir/profiles/btr_server/modules/custom/btrCore/data/import/vocabulary.sh --root=$drupal_dir
+
 ### update to the latest version of core and modules
 #$drush --yes pm-refresh
 #$drush --yes pm-update
