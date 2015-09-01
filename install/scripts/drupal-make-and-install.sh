@@ -95,7 +95,7 @@ mkdir -p $drupal_dir/sites/all/translations
 chown -R www-data: $drupal_dir/sites/all/translations
 
 ### set the list of languages for import
-sed -i $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/config.sh
+sed -i $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/config.sh \
     -e "/^languages=/c languages=\"$languages\""
 
 ### add these languages to drupal
