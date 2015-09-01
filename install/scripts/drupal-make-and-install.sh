@@ -15,7 +15,7 @@ drush make --prepare-install --force-complete \
 cd $drupal_dir/profiles/btr_server/
 cp -a libraries/bootstrap themes/contrib/bootstrap/
 cp -a libraries/bootstrap themes/btr_server/
-cp libraries/bootstrap/less/variables.less themes/btr_server/
+cp libraries/bootstrap/less/variables.less themes/btr_server/less/
 
 ### copy hybridauth provider GitHub.php to the right place
 cd $drupal_dir/profiles/btr_server/libraries/hybridauth/
@@ -90,11 +90,26 @@ drush site-install --verbose --yes btr_server \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
+### install multi-language support
+mkdir -p $drupal_dir/sites/all/translations
+chown -R www-data: $drupal_dir/sites/all/translations
+
+### set the list of languages for import
+sed -i $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/config.sh
+    -e "/^languages=/c languages=\"$languages\""
+
+### add these languages to drupal
+for lng in $languages
+do
+    drush --root=$drupal_dir language-add $lng
+done
+
 ### fix tha DB schema and install some test data
-profiles/btr_server/modules/custom/btrCore/data/install.sh
+$drupal_dir/profiles/btr_server/modules/custom/btrCore/data/install.sh
 
 ### set propper directory permissions
 mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
+
