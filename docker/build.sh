@@ -4,7 +4,6 @@
 ### stop on error
 set -e
 
-
 ### get the start time
 start_time=$(date)
 
@@ -118,6 +117,15 @@ cd $current_dir
 
 ### build the docker image
 time docker build --tag=$project:$git_branch --file=$project_dir/docker/Dockerfile $project_dir/
+
+### save image and container name to config file
+cat <<EOF > $project_dir/docker/config
+image=$project:$git_branch
+container=$project-$git_branch
+hostname=$domain
+dev=$development
+ssh=$sshd_port
+EOF
 
 ### print the start and end times
 end_time=$(date)
