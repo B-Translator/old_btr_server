@@ -2,7 +2,7 @@
 
 cd $(dirname $0)
 source ./config
-ssh=${ssh:2201}
+ssh=${ssh:-2201}
 
 docker stop $container
 docker rm $container
