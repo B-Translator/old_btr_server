@@ -95,6 +95,6 @@ function btrCore_config_set_languages() {
   // Update the cached value of btrClient_languages.
   if (module_exists('btrClient')) {
     cache_clear_all('btrClient_languages', 'cache_btrClient');
-    $languages = btrClient_get_languages();
+    $languages = btr::languages_get();
   }
 }

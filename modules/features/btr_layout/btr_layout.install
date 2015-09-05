@@ -53,12 +53,12 @@ function _btr_layout_add_login_link() {
 }
 
 function  _btr_layout_block_settings() {
-  // disable all the blocks for theme bootstrap1
+  // disable all the blocks for theme btr_server
   // their place is managed by module context
   db_update('block')
     ->fields(array(
         'status' => 0,
       ))
-    ->condition('theme', 'bootstrap1')
+    ->condition('theme', 'btr_server')
     ->execute();
 }

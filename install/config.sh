@@ -54,5 +54,5 @@ then
     $btr/config/oauth2_login.sh @bcl_dev @btr_dev
 fi
 
-### drush may create some css/js files with wrong permissions
+### drush may create some files with wrong permissions, fix them
 $btr/config/fix_file_permissions.sh

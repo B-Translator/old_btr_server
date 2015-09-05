@@ -11,9 +11,13 @@ drush make --prepare-install --force-complete \
            --contrib-destination=profiles/btr_server \
            $makefile $drupal_dir
 
-### fix some things on the application directory
+### copy the bootstrap library to the custom theme, etc.
 cd $drupal_dir/profiles/btr_server/
 cp -a libraries/bootstrap themes/contrib/bootstrap/
+cp -a libraries/bootstrap themes/btr_server/
+cp libraries/bootstrap/less/variables.less themes/btr_server/less/
+
+### copy hybridauth provider GitHub.php to the right place
 cd $drupal_dir/profiles/btr_server/libraries/hybridauth/
 cp additional-providers/hybridauth-github/Providers/GitHub.php \
    hybridauth/Hybrid/Providers/
@@ -86,14 +90,27 @@ drush site-install --verbose --yes btr_server \
       --site-name="$site_name" --site-mail="$site_mail" \
       --account-name="$account_name" --account-pass="$account_pass" --account-mail="$account_mail"
 
-### install some test translation projecs
-if [ "$development" = 'true' ]
-then
-    $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/install.sh
-fi
+### install multi-language support
+mkdir -p $drupal_dir/sites/all/translations
+chown -R www-data: $drupal_dir/sites/all/translations
+
+### set the list of supported languages
+sed -i $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/config.sh \
+    -e "/^languages=/c languages=\"$languages\""
+drush --root=$drupal_dir --yes vset btr_languages "$languages"
+
+### add these languages to drupal
+for lng in $languages
+do
+    drush --root=$drupal_dir language-add $lng
+done
+
+### fix tha DB schema and install some test data
+$drupal_dir/profiles/btr_server/modules/custom/btrCore/data/install.sh
 
 ### set propper directory permissions
 mkdir -p sites/default/files/
 chown -R www-data: sites/default/files/
 mkdir -p cache/
 chown -R www-data: cache/
+

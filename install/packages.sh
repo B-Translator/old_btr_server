@@ -12,6 +12,11 @@ apt-get -y install mysql-server ssmtp memcached php5-memcached \
          mercurial subversion translate-toolkit dtrx rsstail
 apt-get -y install screen logwatch
 
+### install nodejs and less
+apt-get -y install npm
+ln -s /usr/bin/nodejs /usr/bin/node
+npm install -g less
+
 ### install hub: http://hub.github.com/
 curl http://hub.github.com/standalone -sLo /bin/hub
 chmod +x /bin/hub

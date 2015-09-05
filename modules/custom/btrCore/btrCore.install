@@ -60,6 +60,12 @@ function btrCore_schema() {
         'length' => '250',
         'not null' => FALSE,
       ),
+      'content' => array(
+        'description' => 'The original content of the imported file.',
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => FALSE,
+      ),
       'hash' => array(
         'description' => 'The SHA1() hash of the whole file content.',
         'type' => 'char',
@@ -666,6 +672,19 @@ function btrCore_schema() {
       ),
     ),
     'primary key' => array('pguid', 'lng', 'nr'),
+  );
+
+  // Materialized view for strings of a vocabulary (used to speed-up autocompletion).
+  $schema['btr_mv_sample'] = array(
+    'description' => 'Materialized view for strings of a vocabulary (used to speed-up autocompletion).',
+    'fields' => array(
+      'string' => array(
+        'description' => 'The string to be searched.',
+        'type' => 'text',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array(array('string', 100)),
   );
 
   return $schema;

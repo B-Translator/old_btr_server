@@ -7,11 +7,8 @@ cd $(dirname $0)
 mysql=$(drush sql-connect)
 $mysql < db/btr_schema.sql
 
-### import the vocabulary projects
-import/vocabulary.sh --root=/var/www/btr
-
 ### import some PO files, just for testing/development
-test/update.sh
+test "$development" != 'false' && test/update.sh
 
 ### In order to import the real data, first of all check/modify
 ### 'config.sh', and then run 'update.sh'.

@@ -1,17 +1,9 @@
 #!/bin/bash -x
 
-### prevent robots from crawling translations
-sed -i $drupal_dir/robots.txt \
-    -e '/# B-Translator/,$ d'
-cat <<EOF >> $drupal_dir/robots.txt
-# B-Translator
-Disallow: /translations/
-Disallow: /?q=translations/
-Disallow: /vocabulary/
-Disallow: /?q=vocabulary/
-Disallow: /fb_cb/
-Disallow: /?q=fb_cb/
-Disallow: /downloads/
+### prevent robots from crawling
+cat <<EOF > $drupal_dir/robots.txt
+User-agent: *
+Disallow: /
 EOF
 
 # Protect Drupal settings from prying eyes
@@ -106,20 +98,16 @@ $drush --yes features-revert btr_captcha
 $drush --yes pm-enable btr_permissions
 $drush --yes features-revert btr_permissions
 
-### install multi-language support
-mkdir -p $drupal_dir/sites/all/translations
-chown -R www-data: $drupal_dir/sites/all/translations
-
-### set the list of languages for import
-sed -i /var/www/data/config.sh \
-    -e "/^languages=/c languages=\"$languages\""
-
-### add these languages to drupal and import their translations
-for lng in $languages
-do
-    $drush language-add $lng
-done
-$drush --yes l10n-update
+### import the vocabulary projects
+$drupal_dir/profiles/btr_server/modules/custom/btrCore/data/import/vocabulary.sh --root=$drupal_dir
 
 ### update to the latest version of core and modules
+#$drush --yes pm-refresh
 #$drush --yes pm-update
+
+### refresh and update translations
+if [ "$development" != 'true' ]
+then
+    $drush --yes l10n-update-refresh
+    $drush --yes l10n-update
+fi
