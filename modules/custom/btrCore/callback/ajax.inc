@@ -71,7 +71,7 @@ function btrCore_user_autocomplete($lng, $string = '') {
  * @param $sguid
  *   Id of the string.
  */
-function btrCore_string_details($sguid) {
+function btrCore_string_details($lng, $sguid) {
 
   $output = '';
 
@@ -83,10 +83,13 @@ function btrCore_string_details($sguid) {
     $output .= '<h3>' . t('Used with context: %context', array('%context' => $context)) . '</h3>';
   }
 
-  // List projects where this string is used.
-  $output .= '<h3>' . t('Used on these projects:') . '</h3>';
+  // Get base_url.
+  $account = user_load($GLOBALS['user']->uid);
+  $base_url = btr::utils_get_base_url($lng);
+
+  // Get the projects where this string is used.
   $sql = "
-    SELECT DISTINCT CONCAT(p.origin, ' / ', p.project) AS proj
+    SELECT DISTINCT p.origin, p.project
     FROM {btr_strings} s
     RIGHT JOIN {btr_locations} l ON (l.sguid = s.sguid)
     RIGHT JOIN {btr_templates} t ON (t.potid = l.potid)
@@ -95,7 +98,16 @@ function btrCore_string_details($sguid) {
     ORDER BY p.origin, p.project
   ";
   $args = array(':sguid' => $sguid);
-  $project_list = btr::db_query($sql, $args)->fetchCol();
+  $result = btr::db_query($sql, $args)->fetchAll();
+
+  // List the projects where this string is used.
+  $output .= '<h3>' . t('Used on these projects:') . '</h3>';
+  $project_list = array();
+  foreach ($result as $row) {
+    $project = $row->origin . '/' . $row->project;
+    $url = $base_url . '/btr/project/' . $project . '/' . $lng . '/' . $sguid;
+    $project_list[] = l($project, $url);
+  }
   $output .= theme('item_list', array('items' => $project_list));
 
   print $output;
