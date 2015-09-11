@@ -17,12 +17,12 @@ You can see the string and the rest of translations at this link:");
   $body[] = $url;
   $body[] = t('Thanks');
 
-  $original_string = t('Original (English) String:');
+  $string = t('String:');
   $deleted_translation = t('Deleted Translation:');
   $body[] = "
     <hr/>
 
-    <h4>$original_string</h4>
+    <h4>$string</h4>
     <ul>
       <li>$params->string</li>
     </ul>

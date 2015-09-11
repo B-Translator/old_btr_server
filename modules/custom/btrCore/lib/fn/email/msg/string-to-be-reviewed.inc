@@ -26,17 +26,17 @@ use \btr;
   $body[] = $url;
   $body[] = t('Thanks');
 
-  $original_string = t('Original (English) String:');
-  $available_translations = t('Available Translations:');
+  $string_header = t('String:');
+  $translations_header = t('Translations:');
   $body[] = "
     <hr/>
 
-    <h4>$original_string</h4>
+    <h4>$string_header</h4>
     <ul>
       <li>$string</li>
     </ul>
 
-    <h4>$available_translations</h4>
+    <h4>$translations_header</h4>
     <ul>
   ";
   foreach ($translations as $translation) {

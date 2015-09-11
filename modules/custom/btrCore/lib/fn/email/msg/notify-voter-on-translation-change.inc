@@ -24,13 +24,13 @@ can change your vote at this link:");
   $body[] = $url;
   $body[] = t('Thanks');
 
-  $original_string = t('Original (English) String:');
+  $string = t('String:');
   $old_translation = t('Old Translation:');
   $new_translation = t('New Translation:');
   $body[] = "
     <hr/>
 
-    <h4>$original_string:</h4>
+    <h4>$string:</h4>
     <ul>
       <li>$params->string</li>
     </ul>
