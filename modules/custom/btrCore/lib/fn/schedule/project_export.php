@@ -89,8 +89,8 @@ function schedule_project_export($origin, $project, $lng,
     $queue_params['type'] = 'notify-admin-on-export-request';
     $admins = btr::project_users('admin', $origin, $project, $lng);
     foreach ($admins as $uid => $user) {
-      $queue_params['recipient'] = $user['email'];
-      $queue_params['username'] = $user['name'];
+      $queue_params['recipient'] = $user->email;
+      $queue_params['username'] = $user->name;
       btr::queue('notifications', array($queue_params));
     }
   }
