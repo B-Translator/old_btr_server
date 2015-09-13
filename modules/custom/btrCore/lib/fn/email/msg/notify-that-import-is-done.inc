@@ -18,7 +18,7 @@ is done. Check out the new translations here:",
   $body[] = t('Thanks');
 
   if ($params->messages) {
-    $output_messages = t('Output messages:')
+    $output_messages = t('Output messages:');
     $body[] = "
       <hr/>
 
