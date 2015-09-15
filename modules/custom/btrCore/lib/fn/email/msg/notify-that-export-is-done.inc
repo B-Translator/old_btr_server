@@ -30,4 +30,5 @@ is done. You can download it from these links:",
       <h4>$output_messages</h4>
       <xmp>$params->output</xmp>
     ";
+  }
 }
