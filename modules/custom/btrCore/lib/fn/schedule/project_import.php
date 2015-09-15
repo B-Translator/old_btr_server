@@ -9,7 +9,8 @@ use \btr;
 use \stdClass, \Exception;
 
 /**
- * Create a custom project or update an existing one by importing PO/POT files.
+ * Create a project or update an existing one by importing the POT and PO files
+ * of the project.
  *
  * This is useful for creating custom translation projects. The PO/POT
  * files that are uploaded will be used for importing strings and
@@ -21,11 +22,6 @@ use \stdClass, \Exception;
  * If there are several PO/POT files, upload them as an archive (tar,
  * tgz, bz2, 7z, zip).
  *
- * If you want to create a vocabulary, use 'vocabulary' as the origin
- * of the project, and add the suffix '_lng' to the project name. Also
- * use 'msgctxt "project_name"' as the context of each string in the
- * PO/POT file.
- *
  * @param $origin
  *   The origin of the project that will be imported.
  *
@@ -34,6 +30,13 @@ use \stdClass, \Exception;
  *
  * @param $uploaded_file
  *   The file that is uploaded.
+ *   - It can be an archive of type: tgz, bz2, 7z, zip.
+ *   - The POT files should be in the subfolder 'pot/', directly in the root
+ *     folder of the archive.
+ *   - The PO files of a language should be in the subfolder named after the
+ *     code of that language (for example: sq/, de/, fr/, etc.)
+ *   - The path and name of each PO file should be the same as the corresponding
+ *     POT file, except for the extension (.po instead of .pot).
  *
  * @return
  *   Array of notification messages; each notification message
@@ -41,42 +44,49 @@ use \stdClass, \Exception;
  *   'status', 'warning', 'error'.
  */
 function schedule_project_import($origin, $project, $uploaded_file) {
+  /*
   // Check access permissions.
   if (!user_access('btranslator-import')) {
     $msg = t('You do not have enough rights for importing projects!');
     return array(array($msg, 'error'));
   }
+  */
 
   // Check that the given project does not belong to another user.
-  $uid = btr::db_query(
-    'SELECT uid FROM {btr_projects} WHERE pguid = :pguid',
-    array(
-      ':pguid' => sha1($origin . $project),
-    ))
-    ->fetchField();
+  $query = 'SELECT uid FROM {btr_projects} WHERE pguid = :pguid';
+  $args = [':pguid' => sha1($origin . $project)];
+  $uid = btr::db_query($query, $args)->fetchField();
   if ($uid && ($uid != $GLOBALS['user']->uid)) {
-    $msg = t("There is already a project '!project' created by another user! Please choose another project name.", array('!project' => "$origin/$project"));
-    return array(array($msg, 'error'));
+    $msg = t("There is already a project '!project' created by another user! Please choose another project name.", ['!project' => "$origin/$project"]);
+    return [[$msg, 'error']];
   }
 
   // Check the extension of the uploaded file.
-  $extensions = 'pot po tar gz tgz bz2 xz 7z zip';
+  $extensions = 'tgz bz2 7z zip';
   $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
   if (!preg_match($regex, $uploaded_file['name'])) {
     $msg = t('Only files with the following extensions are allowed: %files-allowed.',
-           array('%files-allowed' => $extensions));
-    return array(array($msg, 'error'));
+           ['%files-allowed' => $extensions]);
+    return [[$msg, 'error']];
   }
 
   // Move the uploaded file to 'private://' (/var/www/uploads/).
   $file_uri = 'private://' . $uploaded_file['name'];
   if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
-    return array(array(t('Failed to move uploaded file.'), 'error'));
+    return [[t('Failed to move uploaded file.'), 'error']];
+  }
+
+  // Delete the file from DB, if such a file has been saved previously.
+  $query = 'SELECT fid FROM {file_managed} WHERE uri = :uri AND uid = :uid';
+  $args = [':uri' => $file_uri, ':uid' => $uid];
+  $fid = \db_query($query, $args)->fetchField();
+  if ($fid) {
+    \db_query('DELETE FROM {file_managed} WHERE uri = :uri AND uid = :uid', $args);
   }
 
   // Save the file data to the DB.
   $file = new stdClass();
-  $file->uid = $GLOBALS['user']->uid;
+  $file->uid = $uid;
   $file->status = FILE_STATUS_PERMANENT;
   $file->filename = trim(drupal_basename($uploaded_file['name']), '.');
   $file->uri = $file_uri;
@@ -87,19 +97,19 @@ function schedule_project_import($origin, $project, $uploaded_file) {
     $messages = array();
   }
   catch (Exception $e) {
-    return array(array($e->getMessage(), 'error'));
+    return [[$e->getMessage(), 'error']];
   }
 
   // Schedule the import.
-  btr::queue('import_project', array(array(
+  btr::queue('import_project', [[
         'uid' => $GLOBALS['user']->uid,
         'fid' => $file->fid,
         'origin' => $origin,
         'project' => $project,
-      )));
+      ]]);
 
   // Return a notification message.
   $msg = t("Import of the project '!project' is scheduled. You will be notified by email when it is done.",
-         array('!project' => $origin . '/' . $project));
-  return array(array($msg, 'status'));
+         ['!project' => $origin . '/' . $project]);
+  return [[$msg, 'status']];
 }

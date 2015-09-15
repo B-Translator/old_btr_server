@@ -68,6 +68,11 @@ function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TR
     ->condition('pguid', $pguid_list, 'IN')
     ->execute();
 
+  // Delete user roles for these projects.
+  btr::db_delete('btr_user_project_roles')
+    ->condition('pguid', $pguid_list, 'IN')
+    ->execute();
+
   // Delete any dangling strings.
   if ($purge) {
     btr::string_cleanup();

@@ -21,7 +21,6 @@ is done. Check out the new translations here:",
     $output_messages = t('Output messages:');
     $body[] = "
       <hr/>
-
       <h4>$output_messages</h4>
       <xmp>$params->messages</xmp>
     ";

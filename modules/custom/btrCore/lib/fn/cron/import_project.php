@@ -29,21 +29,43 @@ function cron_import_project($params) {
   $file = file_load($params->fid);
   $origin = $params->origin;
   $project = $params->project;
-  $lng = $account->translation_lng;
+
+  // Check that the file exists.
+  if (!file_exists($file->uri)) {
+    lock_release('import_project');
+    return;
+  }
 
   // Create a temporary directory.
   $tmpdir = '/tmp/' . sha1_file($file->uri);
   mkdir($tmpdir, 0700);
 
-  // Copy the file there and extract it (if it is an archive).
+  // Copy the file there and extract it.
   file_unmanaged_copy($file->uri, $tmpdir);
-  exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
+  exec("cd $tmpdir ; dtrx -q -n -f $file->filename 2>/dev/null");
 
   // Create the project.
-  btr::project_add($origin, $project, $tmpdir, $account->uid);
+  $output = '';
+  ob_start();
+  btr::project_add($origin, $project, "$tmpdir/pot/", $account->uid);
+  $output .= ob_get_contents();
+  ob_end_clean();
 
-  // If there are any PO files, import translations from them.
-  btr::project_import($origin, $project, $lng, $tmpdir, $account->uid);
+  // Import the PO files for each language.
+  $langs = btr::languages_get();
+  $dir_list = glob("$tmpdir/*", GLOB_ONLYDIR);
+  foreach ($dir_list as $dir) {
+    $lng = basename($dir);
+    if ($lng == 'pot')  continue;
+    if (!in_array($lng, $langs))  continue;
+
+    // Import PO file and translations.
+    ob_start();
+    btr::project_import($origin, $project, $lng, "$tmpdir/$lng/", $account->uid);
+    $output .= ob_get_contents();
+    ob_end_clean();
+  }
+
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');
@@ -56,14 +78,8 @@ function cron_import_project($params) {
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
     'project' => $origin . '/' . $project,
-    'search_url' => $base_url . url('translations/search', array(
-                    'query' => array(
-                      'lng' => $lng,
-                      'origin' => $origin,
-                      'project' => $project,
-                      'limit' => 50,
-                    )
-                  )),
+    'url' => "$base_url/btr/project/$origin/$project/$lng/dashboard",
+    'output' => $output,
   );
   btr::queue('notifications', array($params));
 

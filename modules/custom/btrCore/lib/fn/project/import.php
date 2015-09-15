@@ -62,6 +62,9 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
   // Import the given PO files.
   _import_po_files($origin, $project, $lng, $path);
 
+  // Add user as admin of the project.
+  _add_project_admin($origin, $project, $lng, $user->init);
+
   // Make initial snapshots after importing PO files.
   _make_snapshots($origin, $project, $lng, $path);
 
@@ -277,6 +280,31 @@ function _add_translation($sguid, $lng, $translation) {
       ))
     ->execute();
 }
+
+/**
+ * Add the current user (that imports the project) as admin of the project.
+ */
+function _add_project_admin($origin, $project, $ulng, $umail) {
+  $pguid = sha1($origin . $project);
+
+  // Delete it first, if he exists.
+  btr::db_delete('btr_user_project_roles')
+    ->condition('umail', $umail)
+    ->condition('ulng', $ulng)
+    ->condition('role', 'admin')
+    ->execute();
+
+  // Add as admin.
+  btr::db_insert('btr_user_project_roles')
+    ->fields([
+        'umail' => $umail,
+        'ulng' => $ulng,
+        'pguid' => $pguid,
+        'role' => 'admin',
+      ])
+    ->execute();
+}
+
 
 /**
  * Make initial snapshots after importing PO files.
