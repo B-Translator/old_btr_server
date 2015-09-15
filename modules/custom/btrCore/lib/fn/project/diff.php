@@ -42,7 +42,7 @@ function project_diff($origin, $project, $lng,
   // Export the latest translations of the project.
   $export_dir = exec('mktemp -d');
   btr::project_export($origin, $project, $lng, $export_dir,
-    $GLOBALS['user']->uid, $quiet = TRUE,
+    $GLOBALS['user']->uid, $quiet = FALSE,
     $export_mode, $preferred_voters);
 
   // Archive exported files in format tgz.

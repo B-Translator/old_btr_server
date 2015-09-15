@@ -42,9 +42,13 @@ function cron_export_project($export_params) {
 
   // Get the latest translations and diffs with the last snapshot.
   exec("rm -f $file_diff $file_ediff $file_tgz");
+  $output = '';
+  ob_start();
   btr::project_diff($origin, $project, $lng,
     $file_diff, $file_ediff, $file_tgz,
     $export_mode, $preferred_voters);
+  $output .= ob_get_contents();
+  ob_end_clean();
 
   // Notify the user that the export is done.
   $exports_url = url('exports', array('absolute' => TRUE));
@@ -57,6 +61,7 @@ function cron_export_project($export_params) {
     'export_url_tgz' => "$exports_url/$filename.tgz",
     'export_url_diff' => "$exports_url/$filename.diff",
     'export_url_ediff' => "$exports_url/$filename.ediff",
+    'output' => $output,
   );
   btr::queue('notifications', array($params));
 

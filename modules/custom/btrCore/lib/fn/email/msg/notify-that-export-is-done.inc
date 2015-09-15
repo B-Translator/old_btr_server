@@ -22,4 +22,12 @@ is done. You can download it from these links:",
     </ul>
   ";
   $body[] = t('Thanks');
+
+  if ($params->output) {
+    $output_messages = t('Output messages:');
+    $body[] = "
+      <hr/>
+      <h4>$output_messages</h4>
+      <xmp>$params->output</xmp>
+    ";
 }
