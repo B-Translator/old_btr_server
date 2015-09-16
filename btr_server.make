@@ -37,7 +37,7 @@ projects[btrclient][download][branch] = 7.x-2.x
 ; Web Services
 ;--------------------
 
-projects[oauth2_loginprovider] = 1.5
+projects[oauth2_loginprovider] = 1.6
 
 ;--------------------
 ; Contrib
