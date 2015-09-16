@@ -65,6 +65,9 @@ function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE
   // Add user as admin of the project.
   _add_project_admin($origin, $project, $lng, $user->init);
 
+  // Subscribe user to this project.
+  btr::project_subscribe($origin, $project, $user->uid);
+
   // Make initial snapshots after importing PO files.
   _make_snapshots($origin, $project, $lng, $path);
 
