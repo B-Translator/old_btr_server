@@ -114,20 +114,17 @@ function _btrUser_form_user_profile_submit($form, &$form_state) {
  * Implements hook_form_FORM_ID_alter() for user_register_form.
  */
 function btrUser_form_user_register_form_alter(&$form, &$form_state, $form_id) {
-  if (!isset($_GET['lng']) and !isset($_GET['proj']))  return;
+  // Hide 'field_projects', it can be modified with
+  // the buttons subscribe/unsubscribe from project pages.
+  $form['field_projects']['#access'] = FALSE;
+
+  // Hide 'field_auxiliary_languages', it is not useful yet.
+  $form['field_auxiliary_languages']['#access'] = FALSE;
 
   // Hide the language field if the language is set in the url.
   if (isset($_GET['lng'])) {
       $form['field_translation_lng']['#access'] = FALSE;
   }
-
-  // Hide the project field if the projects are set in the url.
-  if (isset($_GET['proj'])) {
-      $form['field_projects']['#access'] = FALSE;
-  }
-
-  // The default values will be used for the following fields.
-  $form['field_auxiliary_languages']['#access'] = FALSE;
 
   // Register a validation callback function,
   // where we can set the values for language and projects.
