@@ -65,56 +65,6 @@ function btrCore_user_autocomplete($lng, $string = '') {
 }
 
 /**
- * Return string context, a list of related projects (where the string appears), etc.
- * This callback is invoked from JavaScript and is used as an AJAX provider.
- *
- * @param $sguid
- *   Id of the string.
- */
-function btrCore_string_details($lng, $sguid) {
-
-  $output = '';
-
-  // Get the context of this string.
-  $query = "SELECT context FROM {btr_strings} WHERE sguid = :sguid";
-  $args = array(':sguid' => $sguid);
-  $context = btr::db_query($query, $args)->fetchField();
-  if (!empty($context)) {
-    $output .= '<h3>' . t('Used with context: %context', array('%context' => $context)) . '</h3>';
-  }
-
-  // Get base_url.
-  $account = user_load($GLOBALS['user']->uid);
-  $base_url = btr::utils_get_base_url($lng);
-
-  // Get the projects where this string is used.
-  $sql = "
-    SELECT DISTINCT p.origin, p.project
-    FROM {btr_strings} s
-    RIGHT JOIN {btr_locations} l ON (l.sguid = s.sguid)
-    RIGHT JOIN {btr_templates} t ON (t.potid = l.potid)
-    RIGHT JOIN {btr_projects} p ON (p.pguid = t.pguid)
-    WHERE s.sguid = :sguid
-    ORDER BY p.origin, p.project
-  ";
-  $args = array(':sguid' => $sguid);
-  $result = btr::db_query($sql, $args)->fetchAll();
-
-  // List the projects where this string is used.
-  $output .= '<h3>' . t('Used on these projects:') . '</h3>';
-  $project_list = array();
-  foreach ($result as $row) {
-    $project = $row->origin . '/' . $row->project;
-    $url = $base_url . '/btr/project/' . $project . '/' . $lng . '/' . $sguid;
-    $project_list[] = l($project, $url);
-  }
-  $output .= theme('item_list', array('items' => $project_list));
-
-  print $output;
-  exit(0);
-}
-
-/**
  * Retrieve a JSON list of autocomplete suggestions for strings.
  */
 function btrCore_string_autocomplete($origin = '*', $project = '*', $string = '') {

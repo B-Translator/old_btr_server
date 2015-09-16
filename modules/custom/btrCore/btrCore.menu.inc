@@ -115,11 +115,11 @@ function btrCore_menu() {
 
 
   // Return a string context, related projects (where a string is found), etc.
-  $items['ajax/string_details'] = array(
+  $items['string_details'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'String details',
     'page callback'   => 'btrCore_string_details',
-    'file'            => 'callback/ajax.inc',
+    'file'            => 'callback/string_details.inc',
     'access callback' => TRUE,
   );
 
