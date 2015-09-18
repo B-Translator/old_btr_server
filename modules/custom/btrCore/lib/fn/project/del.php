@@ -63,20 +63,23 @@ function project_del($origin = NULL, $project = NULL, $erase = TRUE, $purge = TR
     }
   }
 
-  // Delete the projects themselves.
-  btr::db_delete('btr_projects')
-    ->condition('pguid', $pguid_list, 'IN')
-    ->execute();
+  if ($purge) {
+    // Delete any dangling strings.
+    btr::string_cleanup();
+
+    // Unsubscribe any subscribed users.
+    _unsubscribe_users($pguid_list);
+  }
 
   // Delete user roles for these projects.
   btr::db_delete('btr_user_project_roles')
     ->condition('pguid', $pguid_list, 'IN')
     ->execute();
 
-  // Delete any dangling strings.
-  if ($purge) {
-    btr::string_cleanup();
-  }
+  // Delete the projects themselves.
+  btr::db_delete('btr_projects')
+    ->condition('pguid', $pguid_list, 'IN')
+    ->execute();
 }
 
 /**
@@ -96,4 +99,23 @@ function _delete_template($potid) {
   btr::db_delete('btr_locations')->condition('potid', $potid)->execute();
   btr::db_delete('btr_files')->condition('potid', $potid)->execute();
   btr::db_delete('btr_templates')->condition('potid', $potid)->execute();
+}
+
+/**
+ * Unsubscribe any subscribed users.
+ */
+function _unsubscribe_users($pguid_list) {
+  $query = 'SELECT origin, project FROM {btr_projects} WHERE pguid IN (:pguid_list)';
+  $args = [':pguid_list' => $pguid_list];
+  $result = btr::db_query($query, $args)->fetchAll();
+
+  foreach ($result as $rec) {
+    $args = [':value' => $rec->origin . '/' . $rec->project];
+    \db_query('UPDATE {field_data_field_projects}
+               SET deleted = 1
+               WHERE field_projects_value = :value', $args);
+    \db_query('UPDATE {field_revision_field_projects}
+               SET deleted = 1
+               WHERE field_projects_value = :value', $args);
+  }
 }
