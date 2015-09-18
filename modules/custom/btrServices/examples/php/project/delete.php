@@ -9,15 +9,19 @@ $access_token = get_access_token($auth);
 
 // POST api/project/delete
 $url = $base_url . '/api/project/delete';
-$options = array(
+$options = [
   'method' => 'POST',
-  'data' => array(
+  'data' => [
     'origin' => 'test1',
     'project' => 'kturtle',
-  ),
-  'headers' => array(
+  ],
+  'headers' => [
     'Content-type' => 'application/x-www-form-urlencoded',
     'Authorization' => 'Bearer ' . $access_token,
-  ),
-);
+  ],
+];
+$result = http_request($url, $options);
+
+// Try to delete project 'test/kturtle'.
+$options['data']['origin'] = 'test';
 $result = http_request($url, $options);
