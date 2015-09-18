@@ -12,16 +12,6 @@ use \stdClass, \Exception;
  * Create a project or update an existing one by importing the POT and PO files
  * of the project.
  *
- * This is useful for creating custom translation projects. The PO/POT
- * files that are uploaded will be used for importing strings and
- * translations. If there are no POT files, then the PO files will be
- * used both for importing strings and for importing translations. If
- * there are POT files and PO files, their names have to match (except
- * for the extension).
- *
- * If there are several PO/POT files, upload them as an archive (tar,
- * tgz, bz2, 7z, zip).
- *
  * @param $origin
  *   The origin of the project that will be imported.
  *

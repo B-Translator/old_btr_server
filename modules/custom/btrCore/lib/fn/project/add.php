@@ -45,7 +45,7 @@ function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
   $user = user_load($uid);
 
   // Erase the project if it exists.
-  btr::project_del($origin, $project, $erase = TRUE, $purge = TRUE);
+  btr::project_del($origin, $project, $erase = TRUE, $purge = FALSE);
 
   // Create a project.
   $pguid = sha1($origin . $project);
