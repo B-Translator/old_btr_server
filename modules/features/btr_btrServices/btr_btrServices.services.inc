@@ -113,6 +113,15 @@ function btr_btrServices_default_services_endpoint() {
             ),
           ),
         ),
+        'delete' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
       ),
     ),
     'report' => array(

@@ -19,7 +19,7 @@ function _btrServices_project() {
   );
 
   // Get a list of existing projects.
-  $translations['actions']['list'] = array(
+  $project['actions']['list'] = array(
     'help' => 'Get a list of existing projects.',
     'file' => $file,
     'callback' => '_btrServices_project_list',
@@ -27,7 +27,7 @@ function _btrServices_project() {
   ) + $public_access;
 
   // Export a project.
-  $translations['actions']['export'] = array(
+  $project['actions']['export'] = array(
     'help' => 'Export a project.',
     'file' => $file,
     'callback' => '_btrServices_project_export',
@@ -35,7 +35,7 @@ function _btrServices_project() {
   ) + $public_access;
 
   // Add a new string to a project (useful for vocabularies).
-  $translations['actions']['add_string'] = array(
+  $project['actions']['add_string'] = array(
     'help' => 'Add a new string to a project.',
     'file' => $file,
     'callback' => '_btrServices_project_add_string',
@@ -45,7 +45,7 @@ function _btrServices_project() {
   );
 
   // Delete a string from a project (useful for vocabularies).
-  $translations['actions']['del_string'] = array(
+  $project['actions']['del_string'] = array(
     'help' => 'Delete a string from a project.',
     'file' => $file,
     'callback' => '_btrServices_project_del_string',
@@ -55,7 +55,7 @@ function _btrServices_project() {
   );
 
   // Import project from POT file(s).
-  $translations['actions']['import'] = array(
+  $project['actions']['import'] = array(
     'help' => 'Import project from PO/POT file(s).',
     'file' => $file,
     'callback' => '_btrServices_project_import',
@@ -65,7 +65,7 @@ function _btrServices_project() {
   );
 
   // Subscribe to a project.
-  $translations['actions']['subscribe'] = array(
+  $project['actions']['subscribe'] = array(
     'help' => 'Subscribe to a project.',
     'file' => $file,
     'callback' => '_btrServices_project_subscribe',
@@ -73,7 +73,7 @@ function _btrServices_project() {
   ) + $public_access;
 
   // Unsubscribe from a project.
-  $translations['actions']['unsubscribe'] = array(
+  $project['actions']['unsubscribe'] = array(
     'help' => 'Unsubscribe from a project.',
     'file' => $file,
     'callback' => '_btrServices_project_unsubscribe',
@@ -81,14 +81,22 @@ function _btrServices_project() {
   ) + $public_access;
 
   // Get the list of subscribed projects.
-  $translations['actions']['subscriptions'] = array(
+  $project['actions']['subscriptions'] = array(
     'help' => 'Get the list of subscribed projects.',
     'file' => $file,
     'callback' => '_btrServices_project_subscriptions',
     'args' => array($params),
   ) + $public_access;
 
-  return $translations;
+  // Delete a project.
+  $project['actions']['delete'] = array(
+    'help' => 'Delete a project.',
+    'file' => $file,
+    'callback' => '_btrServices_project_delete',
+    'args' => array($params),
+  ) + $public_access;
+
+  return $project;
 }
 
 /**
@@ -400,4 +408,48 @@ function _btrServices_project_unsubscribe($params) {
  */
 function _btrServices_project_subscriptions() {
   return btr::project_subscriptions();
+}
+
+/**
+ * Delete a project.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - origin
+ *       The origin of the project that will be deleted.
+ *   - project
+ *       The name of the project that will be deleted.
+ *
+ * @return
+ *   Associative array containing:
+ *   - message
+ *       Notification message, which is an array of a message and a type, where
+ *       type can be one of 'status', 'warning', 'error'.
+ */
+function _btrServices_project_delete($params) {
+  $params += array(
+    'origin' => NULL,
+    'project' => NULL,
+  );
+  $origin = check_plain($params['origin']);
+  $project = check_plain($params['project']);
+
+  // Check that this project exists.
+  if (!btr::project_exists($origin, $project)) {
+    $msg = t("Project '!project' does not exist.", ['!project' => "$origin/$project"]);
+    return ['message' => [$msg, 'error']];
+  };
+
+  // Check the rights for deleting this project.
+  $is_owner = ( btr::project_owner($origin, $project) == $GLOBALS['user']->uid );
+  $can_delete = ( $is_owner or user_access('btranslator-admin') );
+  if (!$can_delete) {
+    $msg = t('You can delete only your own projects.');
+    return ['message' => [$msg, 'error']];
+  }
+
+  // Delete the project.
+  btr::project_del($origin, $project);
+  $msg = t("Project '!project' deleted.", ['!project' => "$origin/$project"]);
+  return ['message' => [$msg, 'status']];
 }
