@@ -20,6 +20,7 @@ namespace BTranslator;
  */
 function project_subscribe($origin, $project, $uid = NULL) {
   if ($uid===NULL)  $uid = $GLOBALS['user']->uid;
+  if ($uid == 0)  return;
   $account = user_load($uid);
 
   $new_projects = array();
