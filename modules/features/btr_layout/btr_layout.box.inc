@@ -19,8 +19,8 @@ function btr_layout_default_box() {
   $box->description = 'About B-Translator';
   $box->options = array(
     'body' => array(
-      'value' => '<strong>B-Translator</strong> helps to get feedback about the translations of programs from a wide crowd of people and users. This feedback can be in terms of votes for the best translation (when there are more than one translations for the same string), or it can be a new alternative translation (for an existing translation), or it can be a new translation suggestion (for a string that is not translated yet).',
-      'format' => 'filtered_html',
+      'value' => '<p><strong><a href="http://info.btranslator.org" target="_blank">B-Translator</a></strong> helps to get feedback about the translations of programs from a wide crowd of people and users. This feedback can be in terms of votes for the best translation (when there are more than one translations for the same string), or it can be a new alternative translation (for an existing translation), or it can be a new translation suggestion (for a string that is not translated yet).</p>',
+      'format' => 'full_html',
     ),
     'additional_classes' => '',
   );
