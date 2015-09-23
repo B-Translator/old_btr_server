@@ -338,17 +338,28 @@ function _btrServices_project_import($params) {
     return services_error('Error ' . $uploaded_file['error'] . 'happened during file upload.', 406);
   }
 
-  // Schedule the project import.
+  // Get the parameters.
   $params += array(
     'origin' => NULL,
     'project' => NULL,
   );
-  $messages = btr::schedule_project_import(
-    check_plain($params['origin']),
-    check_plain($params['project']),
-    $uploaded_file
-  );
-  return array('messages' => $messages);
+  $origin = check_plain($params['origin']);
+  $project = check_plain($params['project']);
+
+  // Check the rights for re-importing an existing project.
+  if (btr::project_exists($origin, $project)) {
+    $is_owner = ( btr::project_owner($origin, $project) == $GLOBALS['user']->uid );
+    $can_reimport = ( $is_owner or user_access('btranslator-admin') );
+    if (!$can_reimport) {
+      $msg = t("The project '!project' already exists. You can re-import only your own projects.",
+             ['!project' => "$origin/$project"]);
+      return ['messages' => [[$msg, 'error']]];
+    }
+  };
+
+  // Schedule the project import.
+  $messages = btr::schedule_project_import($origin, $project, $uploaded_file);
+  return ['messages' => $messages];
 }
 
 /**
