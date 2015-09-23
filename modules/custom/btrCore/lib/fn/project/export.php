@@ -255,7 +255,6 @@ function _get_most_voted_translations($potid, $lng) {
        LEFT JOIN {btr_translations} AS t
                  ON (t.sguid = l.sguid AND t.lng = :lng)
        WHERE l.potid = :potid
-         AND t.count > 0
        GROUP BY t.sguid',
       array(
         ':potid' => $potid,
