@@ -41,5 +41,7 @@ function drush_btranslator_btr_project_import($origin, $project, $lng, $path) {
   _btranslator_drush_check_params($origin, $project, $lng);
 
   // Import the project.
-  btr::project_import($origin, $project, $lng, $path, $GLOBALS['user']->uid);
+  $uid = $GLOBALS['user']->uid;
+  if ($uid == 0)  $uid = 1;
+  btr::project_import($origin, $project, $lng, $path, $uid);
 }

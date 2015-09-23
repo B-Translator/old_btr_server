@@ -35,7 +35,7 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  * @param $quiet
  *   Don't print progress output (default FALSE).
  */
-function project_import($origin, $project, $lng, $path, $uid = 0, $quiet = FALSE) {
+function project_import($origin, $project, $lng, $path, $uid = 1, $quiet = FALSE) {
   // Define the constant QUIET inside the namespace.
   define('BTranslator\QUIET', $quiet);
 
