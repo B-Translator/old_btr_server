@@ -34,9 +34,9 @@ function get_pool_of_projects($uid =NULL, $scope =NULL) {
   }
 
   $arr_projects = array();
-  if (isset($user->projects)) {
+  if (isset($user->subscribed_projects)) {
     // get the projects of the user
-    $arr_projects = $user->projects;
+    $arr_projects = $user->subscribed_projects;
   }
   else {
     // get the site projects

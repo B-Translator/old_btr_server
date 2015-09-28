@@ -99,11 +99,11 @@ function _btrUser_user_get_fields(&$user) {
   }
 
   // field_projects
-  $user->projects = array();
+  $user->subscribed_projects = array();
   if ( isset($user->field_projects[$lang]) and is_array($user->field_projects[$lang]) ) {
     $field_projects = $user->field_projects[$lang];
     foreach ($field_projects as $project) {
-      $user->projects[] = $project['value'];
+      $user->subscribed_projects[] = $project['value'];
     }
   }
 
@@ -148,8 +148,8 @@ function _btrUser_user_set_fields(&$edit, $account) {
     $edit['field_translation_lng'][$lang][0]['value'] = $edit['translation_lng'];
   }
 
-  if (isset($edit['projects']) && is_array($edit['projects'])) {
-    foreach ($edit['projects'] as $project) {
+  if (isset($edit['subscribed_projects']) && is_array($edit['subscribed_projects'])) {
+    foreach ($edit['subscribed_projects'] as $project) {
       $edit['field_projects'][$lang][]['value'] = $project;
     }
   }

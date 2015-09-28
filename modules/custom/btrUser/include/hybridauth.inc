@@ -67,6 +67,6 @@ function btrUser_hybridauth_userinfo_alter(&$userinfo, $data) {
   // Set the projects on the user profile.
   if (isset($destination['query']['proj'])) {
     $arr_projects = explode(',', $destination['query']['proj']);
-    $userinfo['projects'] = $arr_projects;
+    $userinfo['subscribed_projects'] = $arr_projects;
   }
 }
