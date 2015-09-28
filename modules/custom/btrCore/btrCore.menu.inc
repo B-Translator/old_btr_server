@@ -102,6 +102,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return as a download the latest diff of the PO file for a given origin/project/lng.
+  $items['project/diff-latest'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Latest Diff Download',
+    'page callback'   => 'btrCore_project_diff_latest',
+    'file'            => 'callback/diff_latest.inc',
+    'access callback' => TRUE,
+  );
+
   // The link that is sent to the user for downloading an exported file.
   // The URL is of the form 'exports/filename.tgz'
   // and the filename is passed as a parameter to the function.
