@@ -4,8 +4,8 @@ git_branch='master'
 bcl_git_branch='master'
 
 ### Domain of the website.
-domain='btr-fr.example.org'
-bcl_domain='fr.example.org'
+domain='btr.example.org'
+bcl_domain='l10n.example.org'
 
 ### Drupal 'admin' password.
 admin_passwd='admin'
@@ -23,7 +23,7 @@ gmail_passwd='gmailpassword'
 languages='fr de it sq'
 
 ### Translation language of B-Translator Client.
-translation_lng='fr'
+translation_lng='all'
 
 ### Mysql passwords. Leave it as 'random'
 ### to generate a new one randomly
