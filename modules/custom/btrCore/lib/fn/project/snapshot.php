@@ -30,6 +30,9 @@ use \btr;
  *
  * @param $preferred_voters
  *   Array of email addresses of users whose translations are preferred.
+ *
+ * @return
+ *   An error message or an empty string.
  */
 function project_snapshot($origin, $project, $lng, $comment = NULL,
   $export_mode = 'most_voted', $preferred_voters = NULL)
@@ -48,11 +51,16 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
     btr::project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $comment);
     btr::project_snapshot_save($origin, $project, $lng, $export_file);
   }
+  else {
+    return t('Diffs are empty, no snapshot saved.');
+  }
 
   // Cleanup.
   unlink($export_file);
   unlink($file_diff);
   unlink($file_ediff);
+
+  return '';
 }
 
 /**

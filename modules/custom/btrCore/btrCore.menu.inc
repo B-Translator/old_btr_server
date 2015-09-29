@@ -111,6 +111,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Make a project snapshot for a given origin/project/lng.
+  $items['project/snapshot'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Make Snapshot',
+    'page callback'   => 'btrCore_project_snapshot',
+    'file'            => 'callback/snapshot.inc',
+    'access callback' => TRUE,
+  );
+
   // The link that is sent to the user for downloading an exported file.
   // The URL is of the form 'exports/filename.tgz'
   // and the filename is passed as a parameter to the function.

@@ -11,7 +11,7 @@
  * snapshot.
  *
  * Examples:
- *   curl https://btranslator.org/project/diff-latest/LibreOffice/sw/sq?format=diff
+ *   curl 'https://btranslator.org/project/diff-latest/LibreOffice/sw/sq?format=diff&export_mode=preferred_by_me&friends='
  */
 function btrCore_project_diff_latest($origin, $project, $lng) {
   // For performance reasons, this is restricted only to the project admins.
@@ -27,9 +27,6 @@ function btrCore_project_diff_latest($origin, $project, $lng) {
   if (in_array($export_mode, ['preferred_by_me', 'preferred_by_my_friends'])) {
     $export_mode = 'preferred';
   }
-
-  btr::log($preferred_voters, '$preferred_voters');
-  btr::log($export_mode, '$export_mode');
 
   // Get and check the list of preferred voters.
   if ($export_mode == 'preferred') {
