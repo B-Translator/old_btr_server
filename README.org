@@ -3,40 +3,53 @@ This is a Drupal installation profile for B-Translator Server.
 
 * Installation
 
-  Installation is done inside a Docker container.
+  Installation is done inside a Docker container. For instructions
+  about installing Docker see: https://docs.docker.com/installation/
+
+  + Create a working directory:
+    #+BEGIN_EXAMPLE
+    mkdir workdir/
+    #+END_EXAMPLE
+
+  + Link the docker directory inside the working directory:
+    #+BEGIN_EXAMPLE
+    cd workdir/
+    ln -s ../btr_server/docker .
+    #+END_EXAMPLE
 
   + Modify and customize the settings:
     #+BEGIN_EXAMPLE
-    cp btr_server/install/settings.sh cfg.sh
-    vim cfg.sh
+    cp docker/settings.sh .
+    vim settings.sh
     #+END_EXAMPLE
 
   + Build a Docker image:
     #+BEGIN_EXAMPLE
-    btr_server/docker-build.sh cfg.sh --git_branch=master
-    less -r nohup-btr_server-master.out
+    docker/build.sh settings.sh
+    tail -f logs/nohup-btr_server-master-20150929.out
+    less -r logs/nohup-btr_server-master-20150929.out
     #+END_EXAMPLE
     This will create a docker image, named =btr_server:master= with a
     minimal ubuntu system and everything that is needed for the normal
-    work of the system.
+    work of the Drupal application.
 
   + Create a Docker container like this:
     #+BEGIN_EXAMPLE
-    docker images
-    docker run -d --name=btr_server --hostname=example.org \
-	       -p 80:80 -p 443:443 btr_server:master
+    docker/create.sh
     #+END_EXAMPLE
-    Then you can stop and start the container with =docker stop btr_server=
-    and =docker start btr_server=.
+    Then you can start and stop the container with =docker/start.sh=
+    and =docker/stop.sh=, enter the shell of the container with
+    =docker/enter.sh=, etc. If =development=true= is set on the
+    settings, then the code of the profile of the application inside
+    the container will be linked to the directory ~btr_server/~.
 
-  If it is installed on a local machine (for testing or development),
-  add the domain name =example.org= on ~/etc/hosts~:
-  #+BEGIN_EXAMPLE
-  127.0.0.1 example.org
-  #+END_EXAMPLE
-  This way it can be accessed by typing =https://example.org=
-  on the browser location (not =https://127.0.0.1= or
-  =https://localhost=).
+  + If it is installed on a local machine (for testing or
+    development), add the domain name =example.org= on ~/etc/hosts~:
+    #+BEGIN_EXAMPLE
+    127.0.0.1 example.org
+    #+END_EXAMPLE
+    This way it can be accessed by typing =https://example.org:444= on the
+    browser location (not =https://127.0.0.1:444= or =https://localhost:444=).
 
 
 * What is B-Translator
