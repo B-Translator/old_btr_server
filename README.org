@@ -37,19 +37,28 @@ This is a Drupal installation profile for B-Translator Server.
     #+BEGIN_EXAMPLE
     docker/create.sh
     #+END_EXAMPLE
-    Then you can start and stop the container with =docker/start.sh=
+    It will create a container with port forwarding like this: =-p
+    80:80 -p 443:443 -p 2201:2201=. If you don't like the default port
+    forwarding, edit ~config~ and modify it.
+
+  + Now you can start and stop the container with =docker/start.sh=
     and =docker/stop.sh=, enter the shell of the container with
-    =docker/enter.sh=, etc. If =development=true= is set on the
-    settings, then the code of the profile of the application inside
-    the container will be linked to the directory ~btr_server/~.
+    =docker/enter.sh=, etc.
+
+  + If =development=true= is set on the settings, then the code of the
+    application inside the container will be linked to the directories
+    ~btr_server/~ and ~btr_client/~ inside the workdir, so that you
+    can edit and work on it easily.
 
   + If it is installed on a local machine (for testing or
-    development), add the domain name =example.org= on ~/etc/hosts~:
+    development), add the domain names =btr.example.org= and
+    =l10n.example.org= on ~/etc/hosts~, like this:
     #+BEGIN_EXAMPLE
-    127.0.0.1 example.org
+    127.0.0.1 btr.example.org
+    127.0.0.1 l10n.example.org
     #+END_EXAMPLE
-    This way it can be accessed by typing =https://example.org:444= on the
-    browser location (not =https://127.0.0.1:444= or =https://localhost:444=).
+    This way it can be accessed by typing =https://btr.example.org=
+    and =https://l10n.example.org= on the browser location.
 
 
 * What is B-Translator
