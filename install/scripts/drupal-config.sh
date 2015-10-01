@@ -92,7 +92,8 @@ $drush --yes pm-enable btr_permissions
 $drush --yes features-revert btr_permissions
 
 ### import the vocabulary projects
-$drupal_dir/profiles/btr_server/modules/custom/btrCore/data/import/vocabulary.sh --root=$drupal_dir
+#$drupal_dir/profiles/btr_server/modules/custom/btrCore/data/import/vocabulary.sh --root=$drupal_dir
+/var/www/data/import/vocabulary.sh --root=$drupal_dir
 
 ### update to the latest version of core and modules
 #$drush --yes pm-refresh

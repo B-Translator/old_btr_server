@@ -1,14 +1,14 @@
-#!/bin/bash 
+#!/bin/bash -x
 ### Import the vocabulary projects.
-
-### set drush site
-drush="drush $1"
 
 ### go to the script directory
 cd $(dirname $0)
 
 ### get $languages
 source ../config.sh
+
+### set drush site
+drush="drush $1"
 
 ### create a vocabulary for each language
 for lng in $languages
