@@ -1,14 +1,14 @@
 
 ### Git branches that will be used.
-git_branch='master'
+btr_git_branch='master'
 bcl_git_branch='master'
 
-### Domain of the website.
-domain='btr.example.org'
+### Domains of the website.
+btr_domain='btr.example.org'
 bcl_domain='l10n.example.org'
 
 ### Drupal 'admin' password.
-admin_passwd='admin'
+btr_admin_passwd='admin'
 bcl_admin_passwd='admin'
 
 ### Emails from the server are sent through the SMTP
