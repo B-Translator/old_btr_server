@@ -5,7 +5,6 @@ core = 7.x
 
 dependencies[] = btrCore
 dependencies[] = hybridauth
-dependencies[] = edit_profile
 dependencies[] = field_sql_storage
 dependencies[] = list
 dependencies[] = options
