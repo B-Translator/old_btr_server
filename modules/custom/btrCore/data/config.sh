@@ -1,4 +1,4 @@
-data_root="/data/PO_files"
+data_root="/var/www/PO_files"
 #languages="fr de it sq en_GB es"
 languages="fr de it sq"
 
