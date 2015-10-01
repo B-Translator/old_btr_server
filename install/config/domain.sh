@@ -19,7 +19,7 @@ It will modify the files:
 
 ### get the current domains
 old_bcl_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f2)
-old_bcl_domain=${old_bcl_domain:-example.org}
+old_bcl_domain=${old_bcl_domain:-l10n.example.org}
 old_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
 old_domain=${old_domain:-btr.example.org}
 

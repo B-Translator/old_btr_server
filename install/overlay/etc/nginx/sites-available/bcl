@@ -5,7 +5,7 @@ server {
 	ssl_certificate		/etc/ssl/certs/ssl-cert-snakeoil.pem;
 	ssl_certificate_key	/etc/ssl/private/ssl-cert-snakeoil.key;
 
-	server_name example.org;
+	server_name l10n.example.org;
 	root /var/www/bcl;
 
 	access_log /var/log/nginx/bcl.access.log;

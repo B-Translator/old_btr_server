@@ -11,7 +11,7 @@
 
 $aliases['bcl'] = array (
   'root' => '/var/www/bcl',
-  'uri' => 'http://example.org',
+  'uri' => 'http://l10n.example.org',
   'path-aliases' => array (
     '%profile' => 'profiles/btr_client',
     '%downloads' => '/var/www/downloads',
