@@ -40,9 +40,6 @@ $btr/config/oauth2_login.sh @bcl @btr
 #$bcl/config/translation_lng.sh
 $btr/config/languages.sh
 
-### update sites.inc
-$btr/config/update_sites.sh $translation_lng https://$bcl_domain
-
 ### regenerate ssh keys
 $btr/config/ssh_keys.sh
 
