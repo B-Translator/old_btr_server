@@ -3,7 +3,7 @@
 ### make sure that we have the right git branch on the make file
 makefile="$code_dir/build-btrserver.make"
 sed -i $makefile \
-    -e "/btr_server..download..branch/ c projects[btr_server][download][branch] = $git_branch"
+    -e "/btr_server..download..branch/ c projects[btr_server][download][branch] = $btr_git_branch"
 
 ### retrieve all the projects/modules and build the application directory
 rm -rf $drupal_dir
@@ -62,7 +62,7 @@ db_pass=btr
 site_name="B-Translator"
 site_mail="$gmail_account"
 account_name=admin
-account_pass="$admin_passwd"
+account_pass="$btr_admin_passwd"
 account_mail="$gmail_account"
 
 ### create the database and user

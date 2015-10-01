@@ -30,9 +30,9 @@ rm -f /etc/nginx/sites-{available,enabled}/$target
 rm -f /etc/apache2/sites-{available,enabled}/$target{,-ssl}.conf
 
 ### remove from /etc/hosts
-domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
+btr_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
 sub=${target#*_}
-hostname=$sub.$domain
+hostname=$sub.$btr_domain
 sed -i /etc/hosts.conf -e "/^127.0.0.1 $hostname/d"
 /etc/hosts_update.sh
 

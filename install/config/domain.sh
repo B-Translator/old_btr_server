@@ -20,8 +20,8 @@ It will modify the files:
 ### get the current domains
 old_bcl_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f2)
 old_bcl_domain=${old_bcl_domain:-l10n.example.org}
-old_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
-old_domain=${old_domain:-btr.example.org}
+old_btr_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
+old_btr_domain=${old_btr_domain:-btr.example.org}
 
 ### get the new domains
 if [ -z "${bcl_domain+xxx}" -o "$bcl_domain" = '' ]
@@ -30,16 +30,16 @@ then
     bcl_domain=${input:-$old_bcl_domain}
 fi
 
-if [ -z "${domain+xxx}" -o "$domain" = '' ]
+if [ -z "${btr_domain+xxx}" -o "$btr_domain" = '' ]
 then
-    read -p "Enter the domain name for btr_server [$old_domain]: " input
-    domain=${input:-$old_domain}
+    read -p "Enter the domain name for btr_server [$old_btr_domain]: " input
+    btr_domain=${input:-$old_btr_domain}
 fi
 
 ### update /etc/hostname and /etc/hosts.conf
 echo $bcl_domain > /etc/hostname
 sed -i /etc/hosts.conf \
-    -e "1c 127.0.0.1 $bcl_domain $domain"
+    -e "1c 127.0.0.1 $bcl_domain $btr_domain"
 /etc/hosts_update.sh
 
 ### update config files for the client
@@ -61,21 +61,21 @@ done
 ### update config files for the server
 for file in $(ls /etc/nginx/sites-available/btr*)
 do
-    sed -i $file -e "/server_name/ s/$old_domain/$domain/"
+    sed -i $file -e "/server_name/ s/$old_btr_domain/$btr_domain/"
 done
 for file in $(ls /etc/apache2/sites-available/btr*)
 do
     sed -i $file \
-        -e "/ServerName/ s/$old_domain/$domain/" \
-        -e "/RedirectPermanent/ s/$old_domain/$domain/"
+        -e "/ServerName/ s/$old_btr_domain/$btr_domain/" \
+        -e "/RedirectPermanent/ s/$old_btr_domain/$btr_domain/"
 done
 for file in $(ls /var/www/btr*/sites/default/settings.php)
 do
-    sed -i $file -e "/^\\\$base_url/ s/$old_domain/$domain/"
+    sed -i $file -e "/^\\\$base_url/ s/$old_btr_domain/$btr_domain/"
 done
 
 ### update uri on drush aliases
 sed -i /etc/drush/local_bcl.aliases.drushrc.php \
     -e "/'uri'/ s/$old_bcl_domain/$bcl_domain/"
 sed -i /etc/drush/local_btr.aliases.drushrc.php \
-    -e "/'uri'/ s/$old_domain/$domain/"
+    -e "/'uri'/ s/$old_btr_domain/$btr_domain/"

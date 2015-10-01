@@ -28,9 +28,9 @@ rm -rf $dst_dir
 cp -a $src_dir $dst_dir
 
 ### modify settings.php
-domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
+btr_domain=$(head -n 1 /etc/hosts.conf | cut -d' ' -f3)
 sub=${dst#*_}
-hostname=$sub.$domain
+hostname=$sub.$btr_domain
 sed -i $dst_dir/sites/default/settings.php \
     -e "/^\\\$databases = array/,+10  s/'database' => .*/'database' => '$dst',/" \
     -e "/^\\\$base_url/c \$base_url = \"https://$hostname\";" \
