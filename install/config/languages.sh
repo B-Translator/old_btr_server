@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 ### read $languages
 echo "

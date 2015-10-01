@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 ### Set the admin password of Drupal.
 
 ### get a password for the Drupal user 'admin'

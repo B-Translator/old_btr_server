@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 ### set passwords for the mysql users btr and btr_data
 
 ### get a new password for the mysql user 'btr'
