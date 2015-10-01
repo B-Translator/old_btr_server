@@ -4,52 +4,6 @@
 
 Development Tools, Tips and Tricks
 
-* How to access the shell
-
-  When things are still in development and testing we need to access
-  the shell of the installed system in order to check log files,
-  debug, play with changing configurations, etc.
-
-  For this we can install the command =docker-enter=:
-  #+BEGIN_EXAMPLE
-  docker run -v /usr/local/bin:/target jpetazzo/nsenter
-  #+END_EXAMPLE
-
-  Then access the shell of a running container like this:
-  #+BEGIN_EXAMPLE
-  docker-enter btr
-  #+END_EXAMPLE
-
-  See also this article:
-  http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/
-
-
-* Install sshd
-
-  We want to start a sshd server on port 2201 inside the container,
-  but when we created the container with =docker run= we did not think
-  about forwarding this port. We have to destroy this container and
-  create a new one, with an addition =-p= option for the
-  port 2201. But first we should use the command =docker commit= to
-  save to a new image any configurations and data that we already have
-  in this container.
-  #+BEGIN_EXAMPLE
-  docker stop btr
-  docker commit btr btr_server:1
-  docker images
-  docker rm btr
-  docker run -d --name=btr --hostname=example.org \
-	     -p 80:80 -p 443:443 -p 2201:2201 btr_server:1
-  #+END_EXAMPLE
-
-  Now we can enter the container and start the sshd server:
-  #+BEGIN_EXAMPLE
-  docker-enter btr
-  cd /usr/local/src/btr_server/
-  dev/install-sshd.sh 2201
-  #+END_EXAMPLE
-
-
 * Change the webserver
 
   There are two webservers installed, apache2 and nginx (with php5-fpm
