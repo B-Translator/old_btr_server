@@ -74,8 +74,8 @@ drush --yes features-revert btr_layout
 drush --yes pm-enable btr_hybridauth
 drush --yes features-revert btr_hybridauth
 
-drush --yes pm-enable btr_captcha
-drush --yes features-revert btr_captcha
+#drush --yes pm-enable btr_captcha
+#drush --yes features-revert btr_captcha
 
 drush --yes pm-enable btr_permissions
 drush --yes features-revert btr_permissions
