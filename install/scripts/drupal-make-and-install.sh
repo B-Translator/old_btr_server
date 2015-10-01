@@ -36,15 +36,6 @@ cp -a btr_server-bak/themes/contrib/ btr_server/themes/
 ### cleanup
 rm -rf btr_server-bak/
 
-### get a clone of btrclient from github
-if [ "$development" = 'true' ]
-then
-    cd $drupal_dir/profiles/btr_server/modules/contrib/btrclient
-    git clone https://github.com/B-Translator/btrclient.git
-    cp -a btrclient/.git .
-    rm -rf btrclient/
-fi
-
 ### create the directory of PO files
 mkdir -p /var/www/PO_files
 chown www-data: /var/www/PO_files

@@ -69,13 +69,6 @@ mkdir -p /var/www/uploads/
 chown www-data: /var/www/uploads/
 $drush variable-set file_private_path '/var/www/uploads/' --exact --yes
 
-### install btrClient and btrVocabulary
-$drush --yes pm-enable btrClient
-$drush --yes pm-enable btrVocabulary
-
-#$drush --yes pm-enable bcl_disqus
-#$drush --yes features-revert bcl_disqus
-
 ### install features
 $drush --yes pm-enable btr_btrServices
 $drush --yes features-revert btr_btrServices
