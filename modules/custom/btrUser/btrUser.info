@@ -4,6 +4,7 @@ package = B-Translator
 core = 7.x
 
 dependencies[] = btrCore
+dependencies[] = edit_profile
 dependencies[] = hybridauth
 dependencies[] = field_sql_storage
 dependencies[] = list
