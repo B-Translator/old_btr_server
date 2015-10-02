@@ -17,7 +17,7 @@ btr_url=$(drush $btr_alias php-eval 'print $GLOBALS["base_url"]')
 
 ### configuration variables
 server_url=$btr_url
-client_id='local_client'
+client_id='localclient'
 client_secret=$(mcookie)
 redirect_url=$bcl_url/oauth2/authorized
 skip_ssl=1

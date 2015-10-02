@@ -27,7 +27,7 @@ $client = entity_create('oauth2_server_client', array());
 $client->server = 'oauth2';
 $client->label = $client_key;
 $client->client_key = $client_key;
-$client->client_secret = $client_secret;
+$client->client_secret = oauth2_server_hash_client_secret($client_secret);
 $client->redirect_uri = $redirect_uri;
 $client->automatic_authorization = TRUE;
 $client->save();
