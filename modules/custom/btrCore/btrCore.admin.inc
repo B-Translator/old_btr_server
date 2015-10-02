@@ -44,14 +44,14 @@ function btrCore_config() {
     '#title' => t('B-Translator Defaults'),
   );
 
-  // btr_projects
+  // btr_preferred_projects
   $projects_description = t("Select the projects that will be used for review and translations. Only strings from these projects will be presented to the users. <br/> You can enter projects in the form <em>origin/project</em>, for example: <em>KDE/kdeedu</em>, <em>Mozilla/browser</em>, etc. Or you can include all the projects from a certain origin, like this: <em>KDE</em>, <em>LibreOffice</em>, etc. <br/> Enter each project on a separate line. See a list of the imported projects <a href='@project-list' target='_blank'>here</a>.<br/> <strong>Note</strong>: The user can override the projects on his profile/settings. If the user does not subscribe to any projects, then the projects listed here will be used. If this list is empty, then all the imported projects will be used.",
                                     array('@project-list' => '/project/list/*/*/txt'));
-  $form['defaults']['btr_projects'] = array(
+  $form['defaults']['btr_preferred_projects'] = array(
     '#type' => 'textarea',
     '#title' => t('The List of Projects that Will be Used for Voting and Translation'),
     '#description' => $projects_description,
-    '#default_value' => variable_get('btr_projects', ''),
+    '#default_value' => variable_get('btr_preferred_projects', ''),
   );
 
   $form['export'] = array(

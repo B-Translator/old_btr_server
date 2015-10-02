@@ -24,7 +24,7 @@ function get_pool_of_projects($uid =NULL, $scope =NULL) {
 
   // get the projects from the site config
   $site_projects = array();
-  $projects_txt = variable_get('btr_projects', '');
+  $projects_txt = variable_get('btr_preferred_projects', '');
   $lines = preg_split('#\r\n|\r|\n#', $projects_txt);
   foreach ($lines as $line) {
     $line = trim($line);
