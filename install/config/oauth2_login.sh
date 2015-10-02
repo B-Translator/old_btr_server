@@ -35,17 +35,3 @@ drush --yes $bcl_alias \
     php-script --script-path=$bcl oauth2_login.php  \
     "$server_url" "$client_id" "$client_secret" "$skip_ssl"
 drush $bcl_alias cc all
-
-### install on the server a loopback client
-server_url=$btr_url
-client_id='loopback'
-client_secret=$(mcookie)
-redirect_url=$btr_url/oauth2/authorized
-skip_ssl=1
-drush --yes $btr_alias \
-    php-script --script-path=$btr register_oauth2_client.php  \
-    "$client_id" "$client_secret" "$redirect_url"
-drush --yes $btr_alias \
-    php-script --script-path=$btr oauth2_login.php  \
-    "$server_url" "$client_id" "$client_secret" "$skip_ssl"
-drush $btr_alias cc all
