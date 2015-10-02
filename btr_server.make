@@ -27,7 +27,7 @@ libraries[lessphp][download][url] = https://github.com/oyejorge/less.php/archive
 ; Web Services
 ;--------------------
 
-projects[oauth2_loginprovider] = 1.6
+projects[oauth2_loginprovider] = 1.x-dev
 
 ;--------------------
 ; Contrib
