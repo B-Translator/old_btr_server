@@ -52,8 +52,9 @@ projects[subpathauto] = 1.3
 projects[context] = 3.6
 projects[views] = 3.11
 projects[boxes] = 1.2
-projects[edit_profile] = 1.0-beta2
+projects[edit_profile] = 1.0-beta
 projects[contact_forms] = 1.8
+projects[menu_target] = 1.4
 
 projects[wysiwyg] = 2.2
 projects[nocurrent_pass] = 1.0

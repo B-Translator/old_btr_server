@@ -62,6 +62,7 @@ dependencies[] = context_ui
 dependencies[] = views
 dependencies[] = views_ui
 dependencies[] = boxes
+dependencies[] = menu_target
 dependencies[] = edit_profile
 dependencies[] = color
 dependencies[] = jquery_update
