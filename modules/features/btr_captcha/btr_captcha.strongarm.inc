@@ -202,16 +202,9 @@ function btr_captcha_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'recaptcha_private_key';
-  $strongarm->value = '6LenROISAAAAAM-bbCjtdRMbNN02w368ScK3ShK0';
-  $export['recaptcha_private_key'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'recaptcha_public_key';
-  $strongarm->value = '6LenROISAAAAAH9roYsyHLzGaDQr76lhDZcm92gG';
-  $export['recaptcha_public_key'] = $strongarm;
+  $strongarm->name = 'recaptcha_secret_key';
+  $strongarm->value = '6LdXCw4TAAAAACff-iKvJeRyOOrf-qbcvDtY7qJo';
+  $export['recaptcha_secret_key'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -223,15 +216,22 @@ function btr_captcha_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'recaptcha_site_key';
+  $strongarm->value = '6LdXCw4TAAAAAA-RiiUriSx_XJX_kcSgAuvUuFMr';
+  $export['recaptcha_site_key'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'recaptcha_tabindex';
-  $strongarm->value = '';
+  $strongarm->value = '0';
   $export['recaptcha_tabindex'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'recaptcha_theme';
-  $strongarm->value = 'red';
+  $strongarm->value = 'light';
   $export['recaptcha_theme'] = $strongarm;
 
   return $export;
