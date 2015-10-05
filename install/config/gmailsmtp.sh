@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 ### read gmail_account and gmail_passwd
 echo "

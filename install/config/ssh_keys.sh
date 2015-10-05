@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 ### generate ssh public/private keys
 mkdir -p ~/.ssh

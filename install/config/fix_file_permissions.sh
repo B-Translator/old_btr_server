@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 ### drush may create some files with wrong (root) permissions
 ### fix them (change owner to www-data)
 

@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 ### regenerate mysql and phpmyadmin secrets
 
 ### regenerate the password of debian-sys-maint

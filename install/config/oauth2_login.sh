@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 ### get the aliases for the client and for the server
 if [ $# -ne 2 ]
