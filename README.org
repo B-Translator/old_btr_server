@@ -60,9 +60,15 @@ This is a Drupal installation profile for B-Translator Server.
     This way it can be accessed by typing =https://btr.example.org=
     and =https://l10n.example.org= on the browser location.
 
-  + To change the configuration, either run =docker/reconfig.sh= and
-    give the new settings interactively, or edit
-    ~btr_server/options.sh~ and then run =docker/reconfig.sh options.sh=.
+  + To change the configuration, either run:
+    #+BEGIN_EXAMPLE
+    docker/exec.sh install/config.sh
+    #+END_EXAMPLE
+    and give the new settings interactively, or edit
+    ~btr_server/options.sh~ and then run:
+    #+BEGIN_EXAMPLE
+    docker/exec.sh install/config.sh options.sh
+    #+END_EXAMPLE
 
 * What is B-Translator
 
