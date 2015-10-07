@@ -116,17 +116,17 @@ function btr_layout_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 0,
   );
-  // Exported menu link: main-menu_projects:https://l10n.example.org/btr/project
-  $menu_links['main-menu_projects:https://l10n.example.org/btr/project'] = array(
+  // Exported menu link: main-menu_projects:btr/project
+  $menu_links['main-menu_projects:btr/project'] = array(
     'menu_name' => 'main-menu',
-    'link_path' => 'https://l10n.example.org/btr/project',
+    'link_path' => 'btr/project',
     'router_path' => '',
     'link_title' => 'Projects',
     'options' => array(
       'attributes' => array(
         'title' => 'List of projects',
       ),
-      'identifier' => 'main-menu_projects:https://l10n.example.org/btr/project',
+      'identifier' => 'main-menu_projects:btr/project',
     ),
     'module' => 'menu',
     'hidden' => 0,

@@ -9,7 +9,7 @@ views_view:front_page
 variable:site_frontpage
 menu_custom:main-menu
 menu_links:main-menu:<front>
-menu_links:main-menu:https://l10n.example.org/btr/project
+menu_links:main-menu:btr/project
 menu_links:main-menu:contact
 menu_links:main-menu:http://info.btranslator.org/
 menu_links:main-menu:http://info.btranslator.org/api-examples-js/
