@@ -4,15 +4,15 @@
 ### stop on error
 set -e
 
-### make directories for source code and workspace
-mkdir -p /opt/src /opt/workspace
+### make directories for source code and workdir
+mkdir -p /opt/src /opt/workdir
 
 ### make sure that the script is called with `nohup nice ...`
 if [ "$1" != "--dont-fork" ]
 then
     # this script should be called recursively by itself
     datestamp=$(date +%F | tr -d -)
-    nohup_out=/opt/workspace/nohup-btr_server-$datestamp.out
+    nohup_out=/opt/workdir/nohup-btr_server-$datestamp.out
     rm -f $nohup_out
     nohup nice "$0" "--dont-fork" "$@" > $nohup_out &
     sleep 1
@@ -33,12 +33,12 @@ else
     git clone https://github.com/docker-build/wsproxy
 fi
 
-### create a link on workspace
-cd /opt/workspace/
+### create a link on workdir
+cd /opt/workdir/
 ln -sf /opt/src/wsproxy .
 
 ### build and run wsproxy
-cd /opt/workspace/
+cd /opt/workdir/
 wsproxy/rm.sh 2>/dev/null
 wsproxy/build.sh
 wsproxy/run.sh
@@ -54,12 +54,12 @@ else
 fi
 
 ### create a link on workspace
-mkdir -p /opt/workspace/btr
-cd /opt/workspace/btr/
+mkdir -p /opt/workdir/btr
+cd /opt/workdir/btr/
 ln -sf /opt/src/btr_server/docker .
 
 ### build the image
-cd /opt/workspace/
+cd /opt/workdir/
 btr/docker/build.sh --dont-fork
 
 ### create and start the container
