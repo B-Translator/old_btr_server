@@ -17,6 +17,7 @@ require_once(dirname(__FILE__) . '/btr-vote-import.inc');
 require_once(dirname(__FILE__) . '/btr-vocabulary-add.inc');
 require_once(dirname(__FILE__) . '/btr-vocabulary-del.inc');
 require_once(dirname(__FILE__) . '/btr-vocabulary-list.inc');
+require_once(dirname(__FILE__) . '/btr-vocabulary-get.inc');
 
 /**
  * Implementation of hook_drush_command().
@@ -39,6 +40,7 @@ function btranslator_drush_command() {
     'btr-vocabulary-add' => _btr_vocabulary_add_drush_command(),
     'btr-vocabulary-del' => _btr_vocabulary_del_drush_command(),
     'btr-vocabulary-list' => _btr_vocabulary_list_drush_command(),
+    'btr-vocabulary-get' => _btr_vocabulary_get_drush_command(),
   );
 
   // These will appear in the list of topics when `drush topic` is executed.
@@ -91,6 +93,8 @@ function btranslator_drush_help($section) {
       return _btr_vocabulary_del_drush_help();
     case 'drush:btr-vocabulary-list':
       return _btr_vocabulary_list_drush_help();
+    case 'drush:btr-vocabulary-get':
+      return _btr_vocabulary_get_drush_help();
 
     case 'meta:btranslator:title':
       return dt("B-Translator Commands");

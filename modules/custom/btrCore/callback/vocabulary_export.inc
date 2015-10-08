@@ -15,14 +15,14 @@
  *
  * @param $format
  *   The output format: json | txt1 | txt2 | org
- *   Default is 'json'
+ *   Default is 'json'.
  *
  * Examples:
  *   curl -s https://btranslator.org/vocabulary/export/ICT_sq | python -m json.tool
  *   curl https://btranslator.org/vocabulary/export/ICT_sq/txt1
  *   curl https://btranslator.org/vocabulary/export/ICT_sq/org
  */
-function btrCore_vocabulary_export($vocabulary, $format =NULL) {
+function btrCore_vocabulary_export($vocabulary, $format ='JSON') {
   // Try to avoid concurrent exports because they
   // may affect the performance of the server.
   if (!lock_acquire('export_project')) {
@@ -32,12 +32,7 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
 
   // Get the parameters.
   $vocabulary = check_plain($vocabulary);
-  if ($format == NULL) {
-    $format = 'JSON';
-  }
-  else {
-    $format = strtoupper(check_plain($format));
-  }
+  $format = strtoupper(check_plain($format));
 
   // Get the terms and translations.
   $vocab = preg_replace('/_[^_]*$/', '', $vocabulary);
