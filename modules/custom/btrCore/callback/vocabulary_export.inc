@@ -39,36 +39,10 @@ function btrCore_vocabulary_export($vocabulary, $format =NULL) {
     $format = strtoupper(check_plain($format));
   }
 
-  // Get the language of the project.
+  // Get the terms and translations.
+  $vocab = preg_replace('/_[^_]*$/', '', $vocabulary);
   $lng = preg_replace('/^.*_/', '', $vocabulary);
-
-  // Get the template id (potid) of this vocabulary.
-  $query = "SELECT potid FROM {btr_templates} WHERE pguid = :pguid";
-  $origin = 'vocabulary';
-  $project = $vocabulary;
-  $params = array(':pguid' => sha1($origin . $project));
-  $potid = btr::db_query($query, $params)->fetchField();
-
-  // Build the query for getting all the strings of this vocabulary.
-  $query = btr::db_select('btr_locations', 'l')
-    ->fields('l', array('sguid'))
-    ->condition('l.potid', $potid);
-  $query->leftJoin('btr_strings', 's', 's.sguid = l.sguid');
-  $query->orderBy('s.string');
-
-  // Get the strings and their translations.
-  $strings = btr::string_details($query, $lng);
-  //print '<xmp>';  print_r($strings);  print '</xmp>';  exit();
-
-  // Simplify the structure of the result.
-  $result = array();
-  foreach ($strings as $str) {
-    $translations = array();
-    foreach ($str->translations as $trans) {
-      $translations[] = $trans->translation;
-    }
-    $result[$str->string] = $translations;
-  }
+  $result = btr::vocabulary_get($vocab, $lng);
 
   // Output the result.
   switch ($format) {
