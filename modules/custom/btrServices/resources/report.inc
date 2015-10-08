@@ -142,7 +142,8 @@ function _btr_report_statistics($params) {
 
   // get parameters and validate them
   $lng = $params['lng'];
-  if (!in_array($lng, btr::languages_get())) {
+  if (!$lng)  $lng = 'all';
+  if (!in_array($lng, btr::languages_get()) and $lng != 'all') {
     return services_error('Language missing or not supported.', 406);
   }
   $origin = $params['origin'];
@@ -232,7 +233,8 @@ function _btr_report_topcontrib($params) {
     return services_error('Size must be between 5 and 100.', 406);
   }
   $lng = $params['lng'];
-  if (!in_array($lng, btr::languages_get())) {
+  if (!$lng)  $lng = 'all';
+  if (!in_array($lng, btr::languages_get()) and $lng != 'all') {
     return services_error('Language missing or not supported.', 406);
   }
   $origin = $params['origin'];
