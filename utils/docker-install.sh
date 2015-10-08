@@ -14,7 +14,7 @@ then
     datestamp=$(date +%F | tr -d -)
     nohup_out=/opt/workdir/nohup-btr_server-$datestamp.out
     rm -f $nohup_out
-    nohup nice "$0" "--dont-fork" "$@" > $nohup_out &
+    nohup nice $0 --dont-fork $@ > $nohup_out &
     sleep 1
     tail -f $nohup_out
     exit
@@ -60,7 +60,7 @@ ln -sf /opt/src/btr_server/docker .
 
 ### build the image
 cd /opt/workdir/
-btr/docker/build.sh --dont-fork
+btr/docker/build.sh --dont-fork $@
 
 ### create and start the container
 sed -i btr/config -e '/^ports=/ c ports='
