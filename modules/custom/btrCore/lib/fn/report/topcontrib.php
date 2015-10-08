@@ -30,11 +30,11 @@ use \btr;
  *     with these attributes:
  *         uid, name, umail, score, translations, votes
  */
-function report_topcontrib($period = 'week', $size = 5, $lng = 'fr', $origin = NULL, $project = NULL) {
+function report_topcontrib($period = 'week', $size = 5, $lng = NULL, $origin = NULL, $project = NULL) {
 
   // validate parameters
   if (!in_array($lng, btr::languages_get())) {
-    $lng = 'fr';
+    $lng = 'all';
   }
   if (!in_array($period, array('day', 'week', 'month', 'year'))) {
     $period = 'week';
@@ -52,7 +52,13 @@ function report_topcontrib($period = 'week', $size = 5, $lng = 'fr', $origin = N
     return $cache->data;
   }
 
-  $from_date = date('Y-m-d', strtotime("-1 $period"));
+  // Get the query condition and the arguments.
+  $condition = 'time >= :from_date';
+  $args[':from_date'] = date('Y-m-d', strtotime("-1 $period"));
+  if ($lng != 'all') {
+    $condition .= ' AND ulng = :lng';
+    $args[':lng'] = $lng;
+  }
 
   // Select translations and votes that will be used for the stats.
   if ($origin == NULL) {
@@ -74,27 +80,25 @@ function report_topcontrib($period = 'week', $size = 5, $lng = 'fr', $origin = N
            sum(w.translation) AS translations, sum(w.vote) AS votes
     FROM (
        (
-         SELECT t.umail, 5 AS weight,
-                1 AS translation, 0 AS vote
+         SELECT t.umail, t.lng as ulng,
+                5 AS weight, 1 AS translation, 0 AS vote
          FROM {$btr_translations} t
-         WHERE ulng = :lng AND time > :from_date
-           AND umail!='admin@example.com' AND umail!=''
+         WHERE $condition
        )
        UNION ALL
        (
-         SELECT v.umail, 1 AS weight,
-                0 AS translation, 1 AS vote
+         SELECT v.umail, v.ulng,
+                1 AS weight, 0 AS translation, 1 AS vote
          FROM {$btr_votes} v
-         WHERE ulng = :lng AND time > :from_date
-           AND umail!='admin@example.com' AND umail!=''
+         WHERE $condition
        )
     ) AS w
     LEFT JOIN {btr_users} u
-           ON (u.ulng = :lng AND u.umail = w.umail)
+           ON (u.ulng = w.ulng AND u.umail = w.umail)
+    WHERE u.name != 'admin'
     GROUP BY w.umail
     ORDER BY score DESC
   ";
-  $args = array(':lng' => $lng, ':from_date' => $from_date);
   $topcontrib = btr::db_query_range($sql_get_topcontrib, 0, $size, $args)->fetchAll();
 
   // Cache for 12 hours.
