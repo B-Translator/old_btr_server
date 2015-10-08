@@ -13,7 +13,7 @@ function _btr_vote_import_drush_command() {
       'user'  => 'The username of the user who has made the translations.',
     ),
     'examples' => array(
-      "drush btrp-vote --user=user1 fr \$(pwd)/kturtle_fr/" => 'Vote as user1 all the given French translations.',
+      "drush btr-vote --user=user1 fr \$(pwd)/kturtle_fr/" => 'Vote as user1 all the given French translations.',
     ),
     'aliases' => array('btr-vote'),
   );
