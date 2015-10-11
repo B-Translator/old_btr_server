@@ -28,6 +28,9 @@ function _btr_vocabulary_del_drush_help() {
  * Callback function for the command 'btr-vocabulary-del'.
  */
 function drush_btranslator_btr_vocabulary_del($name, $lng) {
-  _btranslator_drush_check_params('vocabulary', $name . '_' . $lng, $lng);
+  $origin = 'vocabulary';
+  $project = $name . '_' . $lng;
+  _btranslator_drush_check_params($origin, $project, $lng);
+
   btr::vocabulary_del($name, $lng);
 }

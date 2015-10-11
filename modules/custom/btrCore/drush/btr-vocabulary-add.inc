@@ -8,9 +8,10 @@ function _btr_vocabulary_add_drush_command() {
     'arguments' => array(
       'name' => 'The name of the vocabulary.',
       'lng' => 'The language of the vocabulary.',
-      'pot_file' => 'The POT file with the initial terms (optional).',
     ),
-    'options' => array(),
+    'options' => array(
+      'user'  => 'The username of the user that is importing the vocabulary.',
+    ),
     'examples' => array(
       "drush btrv-add ICT sq" => '',
     ),
@@ -28,7 +29,11 @@ function _btr_vocabulary_add_drush_help() {
 /**
  * Callback function for the command 'btr-vocabulary-add'.
  */
-function drush_btranslator_btr_vocabulary_add($name, $lng, $pot_file = NULL) {
+function drush_btranslator_btr_vocabulary_add($name, $lng) {
+  // Check the language.
   _btranslator_drush_check_params(NULL, NULL, $lng);
-  btr::vocabulary_add($name, $lng, $pot_file);
+
+  $uid = $GLOBALS['user']->uid;
+  if ($uid == 0)  $uid = 1;
+  btr::vocabulary_add($name, $lng, $uid);
 }
