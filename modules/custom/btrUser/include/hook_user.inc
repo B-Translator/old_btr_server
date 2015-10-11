@@ -121,11 +121,10 @@ function _btrUser_user_get_fields(&$user) {
     SELECT CONCAT(p.origin, '/', p.project) AS project
     FROM {btr_user_project_roles} r
     LEFT JOIN {btr_projects} p ON (p.pguid = r.pguid)
-    WHERE umail = :umail AND ulng = :ulng AND role = :role
+    WHERE umail = :umail AND role = :role
   ";
   $params = array(
     ':umail' => $user->init,
-    ':ulng' => $user->translation_lng,
     ':role' => 'admin',
   );
   $user->admin_projects = btr::db_query($get_managed_projects, $params)->fetchCol();
