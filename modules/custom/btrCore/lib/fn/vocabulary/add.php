@@ -16,26 +16,33 @@ use \btr;
  * @param $lng
  *   The language of the vocabulary.
  *
- * @param $pot_file (optional)
- *   The POT file with the initial terms.
+ * @param $uid
+ *   ID of the user that is creating the vocabulary.
  */
-function vocabulary_add($name, $lng, $pot_file = NULL) {
-  $path = drupal_get_path('module', 'btrCore');
-  if ($pot_file === NULL) {
-    $pot_file = $path . '/data/import/vocabulary/empty.po';
-  }
+function vocabulary_add($name, $lng, $uid = 1) {
   $origin = 'vocabulary';
   $project = $name . '_' . $lng;
-  btr::project_add($origin, $project, $pot_file);
+  $path = drupal_get_path('module', 'btrCore');
+  $pot_file = '/tmp/' . $project . '.pot';
+  touch($pot_file);
+  btr::project_add($origin, $project, $pot_file, $uid);
+  unlink($pot_file);
 
   // Create a custom contact form.
   \db_delete('contact')->condition('category', $project)->execute();
-  \db_insert('contact')->fields(array(
+  \db_insert('contact')->fields([
       'category' => $project,
       'recipients' => variable_get('site_mail'),
       'reply' => '',
-    ))->execute();
+    ])->execute();
 
   // Update mv tables.
   shell_exec($path . '/data/db/update-mv-tables.sh');
+
+  // Add user as admin of the project.
+  $user = user_load($uid);
+  btr::project_add_admin($origin, $project, $lng, $user->init);
+
+  // Subscribe user to this project.
+  btr::project_subscribe($origin, $project, $uid);
 }
