@@ -467,6 +467,18 @@ function _btrServices_translations_add($params) {
     return services_error(t('Language missing or not supported.'), 406);
   }
 
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('No rights for contributing suggestions!');
+    return ['tguid' => NULL, 'messages' => [[$msg, 'error']]];
+  }
+  // Check that the language matches the translation language of the user.
+  $account = user_load($GLOBALS['user']->uid);
+  if (!user_access('btranslator-admin') and ($lng != $account->translation_lng)) {
+    $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
+    return ['tguid' => NULL, 'messages' => [[$msg, 'error']]];
+  }
+
   list($tguid, $messages) = btr::translation_add($sguid, $lng, $translation);
   return array(
     'tguid' => $tguid,
@@ -494,7 +506,16 @@ function _btrServices_translations_add($params) {
  */
 function _btrServices_translations_vote($params) {
   $tguid = $params['tguid'];
+
+  // Check access permissions.
+  if (!user_access('btranslator-vote')) {
+    $msg = t('No rights for submitting votes!');
+    return ['vid' => NULL, 'messages' => [[$msg, 'error']]];
+  }
+
+  // Add the vote.
   list($vid, $messages) = btr::vote_add($tguid);
+
   return array(
     'vid' => $vid,
     'messages' => $messages
