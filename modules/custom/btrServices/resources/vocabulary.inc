@@ -4,8 +4,8 @@
  * Resource definition and callbacks for project.
  */
 
-function _btrServices_project() {
-  $file = array('type' => 'inc', 'module' => 'btrServices', 'name' => 'resources/project');
+function _btrServices_vocabulary() {
+  $file = array('type' => 'inc', 'module' => 'btrServices', 'name' => 'resources/vocabulary');
   $params = array(
     'name' => 'params',
     'optional' => FALSE,
@@ -18,65 +18,61 @@ function _btrServices_project() {
     'access arguments' => array('access content'),
   );
 
-  // Get a list of existing projects.
-  $project['actions']['list'] = array(
-    'help' => 'Get a list of existing projects.',
+  // Get a list of existing vocabularies.
+  $vocabulary['actions']['list'] = array(
+    'help' => 'Get a list of existing vocabularies.',
     'file' => $file,
-    'callback' => '_btrServices_project_list',
+    'callback' => '_btrServices_vocabulary_list',
     'args' => array($params),
   ) + $public_access;
 
-  // Export a project.
-  $project['actions']['export'] = array(
-    'help' => 'Export a project.',
+  // Export a vocabulary.
+  $vocabulary['actions']['export'] = array(
+    'help' => 'Export a vocabulary.',
     'file' => $file,
-    'callback' => '_btrServices_project_export',
+    'callback' => '_btrServices_vocabulary_export',
     'args' => array($params),
   ) + $public_access;
 
-  // Import project from POT file(s).
-  $project['actions']['import'] = array(
-    'help' => 'Import project from PO/POT file(s).',
+  // Add a new string to a vocabulary.
+  $vocabulary['actions']['add_string'] = array(
+    'help' => 'Add a new string to a vocabulary.',
     'file' => $file,
-    'callback' => '_btrServices_project_import',
+    'callback' => '_btrServices_vocabulary_add_string',
+    'args' => array($params),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-suggest'),
+  );
+
+  // Delete a string from a vocabulary.
+  $vocabulary['actions']['del_string'] = array(
+    'help' => 'Delete a string from a vocabulary.',
+    'file' => $file,
+    'callback' => '_btrServices_vocabulary_del_string',
+    'args' => array($params),
+    'access callback' => 'user_access',
+    'access arguments' => array('btranslator-suggest'),
+  );
+
+  // Import vocabulary from a text file.
+  $vocabulary['actions']['import'] = array(
+    'help' => 'Import vocabulary from a text file.',
+    'file' => $file,
+    'callback' => '_btrServices_vocabulary_import',
     'args' => array($params),
     'access callback' => 'user_access',
     'access arguments' => array('btranslator-vote'),
   );
 
-  // Subscribe to a project.
-  $project['actions']['subscribe'] = array(
-    'help' => 'Subscribe to a project.',
+  // Delete a vocabulary.
+  $vocabulary['actions']['delete'] = array(
+    'help' => 'Delete a vocabulary.',
     'file' => $file,
-    'callback' => '_btrServices_project_subscribe',
+    'callback' => '_btrServices_vocabulary_delete',
     'args' => array($params),
   ) + $public_access;
 
-  // Unsubscribe from a project.
-  $project['actions']['unsubscribe'] = array(
-    'help' => 'Unsubscribe from a project.',
-    'file' => $file,
-    'callback' => '_btrServices_project_unsubscribe',
-    'args' => array($params),
-  ) + $public_access;
-
-  // Get the list of subscribed projects.
-  $project['actions']['subscriptions'] = array(
-    'help' => 'Get the list of subscribed projects.',
-    'file' => $file,
-    'callback' => '_btrServices_project_subscriptions',
-    'args' => array($params),
-  ) + $public_access;
-
-  // Delete a project.
-  $project['actions']['delete'] = array(
-    'help' => 'Delete a project.',
-    'file' => $file,
-    'callback' => '_btrServices_project_delete',
-    'args' => array($params),
-  ) + $public_access;
-
-  return $project;
+  return $vocabulary;
 }
 
 /**
@@ -104,7 +100,7 @@ function _btrServices_project() {
  *        -H "Content-type: application/json" \
  *        -d '{"origin": "t*"}'
  */
-function _btrServices_project_list($params) {
+function _btrServices_vocabulary_list($params) {
   $params += array('origin' => NULL, 'project' => NULL);
 
   // Get and sanitize the parameters.
@@ -163,7 +159,7 @@ function _btrServices_project_list($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btrServices_project_export($params) {
+function _btrServices_vocabulary_export($params) {
   $params += array(
     'origin' => NULL,
     'project' => NULL,
@@ -172,7 +168,7 @@ function _btrServices_project_export($params) {
     'preferred_voters' => NULL,
   );
 
-  $messages = btr::schedule_project_export(
+  $messages = btr::schedule_vocabulary_export(
     check_plain($params['origin']),
     check_plain($params['project']),
     check_plain($params['lng']),
@@ -181,6 +177,95 @@ function _btrServices_project_export($params) {
   );
 
   return array('messages' => $messages);
+}
+
+
+/**
+ * Add a new string to a vocabulary.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - name
+ *       The name of the vocabulary.
+ *   - lng
+ *       The language of the vocabulary.
+ *   - string
+ *       String to be added.
+ *   - notify (optional)
+ *       If TRUE, notify translators about the new string. Default is TRUE.
+ *
+ * @return
+ *   array('sguid' => $sguid, 'messages' => $messages)
+ *   - $sguid is the ID of the new string,
+ *               or NULL if no string was added
+ *   - $messages is an array of notification messages; each notification
+ *               message is an array of a message and a type, where
+ *               type can be one of 'status', 'warning', 'error'
+ */
+function _btrServices_vocabulary_add_string($params) {
+  // Check access permissions.
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('No rights for contributing suggestions!');
+    return ['sguid' => NULL, 'messages' => [[$msg, 'error']]];
+  }
+  // Check that the language matches the translation language of the user.
+  $account = user_load($GLOBALS['user']->uid);
+  if (!user_access('btranslator-admin') and ($lng != $account->translation_lng)) {
+    $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
+    return ['sguid' => NULL, 'messages' => [[$msg, 'error']]];
+  }
+
+  $params += array(
+    'name' => NULL,
+    'lng' => NULL,
+    'string' => NULL,
+    'notify' => TRUE,
+  );
+  $sguid = btr::vocabulary_string_add(
+    check_plain($params['name']),
+    check_plain($params['lng']),
+    check_plain($params['string']),
+    $GLOBALS['user']->uid,
+    check_plain($params['notify'])
+  );
+  return ['sguid' => $sguid, 'messages' => []];
+}
+
+/**
+ * Delete a string from a vocabulary.
+ *
+ * @param $params
+ *   Associative array of the POST data, which contains:
+ *   - name
+ *       The name of the vocabulary.
+ *   - lng
+ *       The language of the vocabulary.
+ *   - sguid
+ *       ID of the string to be deleted.
+ *
+ * @return
+ *   Associative array containing:
+ *   - messages
+ *       Array of notification messages; each notification message
+ *       is an array of a message and a type, where type can be one of
+ *       'status', 'warning', 'error'.
+ */
+function _btrServices_vocabulary_del_string($params) {
+  $params += array(
+    'name' => NULL,
+    'lng' => NULL,
+    'sguid' => NULL,
+  );
+  $name = check_plain($params['name']);
+  $lng = check_plain($params['lng']);
+  $sguid = check_plain($params['sguid']);
+  if (btr::vocabulary_string_del($name, $lng, $sguid)) {
+    return ['messages' => []];
+  }
+  else {
+    $msg = t('Insufficient permissions.');
+    return ['messages' => [[$msg, 'error']]];
+  };
 }
 
 /**
@@ -218,7 +303,7 @@ function _btrServices_project_export($params) {
  *       is an array of a message and a type, where type can be one of
  *       'status', 'warning', 'error'.
  */
-function _btrServices_project_import($params) {
+function _btrServices_vocabulary_import($params) {
   // Get the uploaded file.
   if (!isset($_FILES['file'])) {
     return services_error('No file uploaded.', 406);
@@ -255,67 +340,8 @@ function _btrServices_project_import($params) {
   };
 
   // Schedule the project import.
-  $messages = btr::schedule_project_import($origin, $project, $uploaded_file);
+  $messages = btr::schedule_vocabulary_import($origin, $project, $uploaded_file);
   return ['messages' => $messages];
-}
-
-/**
- * Subscribe an authenticated user to the given project.
- *
- * @param $params
- *   Associative array of the POST data, which contains:
- *   - origin
- *       The origin of the project.
- *   - project
- *       The name of the project.
- */
-function _btrServices_project_subscribe($params) {
-  $params += array(
-    'origin' => NULL,
-    'project' => NULL,
-  );
-  $origin = check_plain($params['origin']);
-  $project = check_plain($params['project']);
-
-  // Check that this project exists.
-  if (!btr::project_exists($origin, $project)) {
-    return services_error("Project '$origin/$project' does not exist.", 406);
-  };
-
-  btr::project_subscribe($origin, $project);
-}
-
-/**
- * Unsubscribe an authenticated user from the given project.
- *
- * @param $params
- *   Associative array of the POST data, which contains:
- *   - origin
- *       The origin of the project.
- *   - project
- *       The name of the project.
- */
-function _btrServices_project_unsubscribe($params) {
-  $params += array(
-    'origin' => NULL,
-    'project' => NULL,
-  );
-  $origin = check_plain($params['origin']);
-  $project = check_plain($params['project']);
-
-  // Check that this project exists.
-  if (!btr::project_exists($origin, $project)) {
-    return services_error("Project '$origin/$project' does not exist.", 406);
-  };
-
-  btr::project_unsubscribe($origin, $project);
-}
-
-/**
- * Return the list of projects to which the user is subscribed.
- */
-function _btrServices_project_subscriptions() {
-  return btr::project_subscriptions();
 }
 
 /**
@@ -334,7 +360,7 @@ function _btrServices_project_subscriptions() {
  *       Notification message, which is an array of a message and a type, where
  *       type can be one of 'status', 'warning', 'error'.
  */
-function _btrServices_project_delete($params) {
+function _btrServices_vocabulary_delete($params) {
   $params += array(
     'origin' => NULL,
     'project' => NULL,
