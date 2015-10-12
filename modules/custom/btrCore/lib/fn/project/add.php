@@ -30,19 +30,12 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  * @param $quiet
  *   Don't print progress output (default FALSE).
  */
-function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
+function project_add($origin, $project, $path, $uid = 1, $quiet = FALSE) {
   // Define the constant QUIET inside the namespace.
   define('BTranslator\QUIET', $quiet);
 
   // Print progress output.
   QUIET || print "project_add: $origin/$project: $path\n";
-
-  // Switch to the given user.
-  global $user;
-  $original_user = $user;
-  $old_state = drupal_save_session();
-  drupal_save_session(FALSE);
-  $user = user_load($uid);
 
   // Erase the project if it exists.
   btr::project_del($origin, $project, $erase = TRUE, $purge = FALSE);
@@ -54,30 +47,26 @@ function project_add($origin, $project, $path, $uid = 0, $quiet = FALSE) {
         'pguid' => $pguid,
         'origin' => $origin,
         'project' => $project,
-        'uid' => $GLOBALS['user']->uid,
+        'uid' => $uid,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
 
   // Import the given POT/PO files.
-  _import_pot_files($origin, $project, $path);
-
-  // Switch back to the original user.
-  $user = $original_user;
-  drupal_save_session($old_state);
+  _import_pot_files($origin, $project, $path, $uid);
 }
 
 /**
  * Import the given POT/PO files.
  */
-function _import_pot_files($origin, $project, $path) {
+function _import_pot_files($origin, $project, $path, $uid = 1) {
   $pguid = sha1($origin . $project);
 
   // If the given $path is a single file, just process that one and stop.
   if (is_file($path)) {
     $filename = basename($path);
     $tplname = $project;
-    _process_pot_file($pguid, $tplname, $path, $filename);
+    _process_pot_file($pguid, $tplname, $path, $filename, $uid);
 
     // Done.
     return;
@@ -96,7 +85,7 @@ function _import_pot_files($origin, $project, $path) {
   foreach ($files as $file) {
     $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.pot?$#', '', $filename);
-    _process_pot_file($pguid, $tplname, $file->uri, $filename);
+    _process_pot_file($pguid, $tplname, $file->uri, $filename, $uid);
   }
 }
 
@@ -104,7 +93,7 @@ function _import_pot_files($origin, $project, $path) {
  * Create a new template, parse the POT file, insert the locations
  * and insert the strings.
  */
-function _process_pot_file($pguid, $tplname, $file, $filename) {
+function _process_pot_file($pguid, $tplname, $file, $filename, $uid = 1) {
   // Print progress output.
   QUIET || print "import_pot_file: $filename\n";
 
@@ -114,7 +103,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
         'tplname' => $tplname,
         'filename' => $filename,
         'pguid' => $pguid,
-        'uid' => $GLOBALS['user']->uid,
+        'uid' => $uid,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
@@ -126,7 +115,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
   // Process each gettext entry.
   foreach ($entries as $entry) {
     // Create a new string, or increment its count.
-    $sguid = _add_string($entry);
+    $sguid = _add_string($entry, $uid);
     if ($sguid == NULL) continue;
 
     // Insert a new location record.
@@ -144,7 +133,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename) {
  *
  * Return the sguid of the string record, or NULL.
  */
-function _add_string($entry) {
+function _add_string($entry, $uid = 1) {
   // Get the string.
   $string = $entry['msgid'];
   if ($entry['msgid_plural'] !== NULL) {
@@ -185,7 +174,7 @@ function _add_string($entry) {
           'string' => $string,
           'context' => $context,
           'sguid' => sha1($string . $context),
-          'uid' => $GLOBALS['user']->uid,
+          'uid' => $uid,
           'time' => date('Y-m-d H:i:s', REQUEST_TIME),
           'count' => 1,
         ))

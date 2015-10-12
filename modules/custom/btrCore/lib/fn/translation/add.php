@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file
+ * Function translation_add().
+ */
+
 namespace BTranslator;
 use \btr;
 
@@ -7,12 +12,21 @@ use \btr;
  *
  * @param $sguid
  *   The string ID for which a new translation should be added.
+ *
  * @param $lng
  *   The language (code) of the new translation.
+ *
  * @param $translation
  *   The new translation as a string. If the string has plural
  *   version(s) as well, they are concatenated with NULL bytes ("\0")
  *   between them.
+ *
+ * @param $uid
+ *   Id of the user that is adding the string.
+ *
+ * @param $notify (optional)
+ *   It TRUE, notify translators about the new translation.
+ *
  * @return
  *   array($tguid, $messages)
  *   - $tguid is the ID of the new translation,
@@ -21,27 +35,15 @@ use \btr;
  *               message is an array of a message and a type, where
  *               type can be one of 'status', 'warning', 'error'
  */
-function translation_add($sguid, $lng, $translation) {
-  // Check access permissions.
-  if (!user_access('btranslator-suggest')) {
-    $msg = t('You do not have enough rights for making suggestions!');
-    return array(NULL, array(array($msg, 'error')));
-  }
-
-  // Make sure that the current user can make
-  // translations for the given language.
-  $user = user_load($GLOBALS['user']->uid);
-  if ($lng != $user->translation_lng) {
-    $msg = t('You cannot give translations for the language <strong>!lng</strong>', array('!lng' => $lng));
-    return array(NULL, array(array($msg, 'error')));
-  }
+function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE) {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
 
   // Don't add empty translations.
   $translation = btr::string_pack($translation);
   $translation = str_replace(t('<New translation>'), '', $translation);
   if (trim($translation) == '')  {
     $msg = t('The given translation is empty.');
-    return array(NULL, array(array($msg, 'warning')));
+    return [NULL, [[$msg, 'warning']]];
   }
 
   // Make spacing and newlines the same in translation as in the source.
@@ -56,12 +58,18 @@ function translation_add($sguid, $lng, $translation) {
 
   // If this translation already exists, there is nothing to be added.
   if (!empty($existing))  {
-    $msg = t('The given translation already exists.');
-    return array(NULL, array(array($msg, 'warning')));
+    if ($notify) {
+      $msg = t('The given translation already exists.');
+      return [$tguid, [[$msg, 'warning']]];
+    }
+    else {
+      return [$tguid, []];
+    }
   }
 
   // Get the email of the author of the translation.
-  $umail = $user->init;    // email used for registration
+  $account = user_load($uid);
+  $umail = $account->init;    // email used for registration
 
   // Insert the new suggestion.
   btr::db_insert('btr_translations')
@@ -70,7 +78,7 @@ function translation_add($sguid, $lng, $translation) {
         'lng' => $lng,
         'translation' => $translation,
         'tguid' => $tguid,
-        'count' => 1,
+        'count' => 0,
         'umail' => $umail,
         'ulng' => $lng,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
@@ -86,21 +94,23 @@ function translation_add($sguid, $lng, $translation) {
   // for the same string.
   // The same is applied for the users with admin or moderator role in the
   // project of the string.
-  if (!user_access('btranslator-import')
-    and !btr::user_has_project_role('admin', $sguid)
-    and !btr::user_has_project_role('moderator', $sguid))
+  if (!user_access('btranslator-import', $account)
+    and !btr::user_has_project_role('admin', $sguid, $uid)
+    and !btr::user_has_project_role('moderator', $sguid, $uid))
     {
       _remove_old_translation($sguid, $lng, $umail, $tguid);
     }
 
   // Add also a vote for the new translation.
-  list($vid, $messages) = btr::vote_add($tguid);
+  list($vid, $messages) = btr::vote_add($tguid, $uid);
 
   // Notify previous voters of this string that a new translation has been
   // suggested. Maybe they would like to review it and change their vote.
-  _notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $translation);
+  if ($notify) {
+    _notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $translation);
+  }
 
-  return array($tguid, $messages);
+  return [$tguid, $messages];
 }
 
 
@@ -112,10 +122,13 @@ function translation_add($sguid, $lng, $translation) {
  *
  * @param $sguid
  *   Id of the string being translated.
+ *
  * @param $lng
  *   Language of translation.
+ *
  * @param $umail
  *   Email that identifies the user who made the translation.
+ *
  * @param $tguid
  *   Id of the new translation.
  */

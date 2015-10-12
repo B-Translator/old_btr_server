@@ -98,7 +98,7 @@ function project_snapshot_get($origin, $project, $lng, $file) {
     // Export the original version of the imported files.
     $tmpdir = exec('mktemp -d');
     btr::project_export($origin, $project, $lng, $tmpdir,
-      $GLOBALS['user']->uid, $quiet = TRUE, $export_mode = 'original');
+      $uid=1, $quiet = TRUE, $export_mode = 'original');
     exec("tar -cz -f $file -C $tmpdir .");
     exec("rm -rf $tmpdir");
   }
@@ -119,7 +119,7 @@ function project_snapshot_get($origin, $project, $lng, $file) {
  * @param $file
  *   The file that has the snapshot (format tgz).
  */
-function project_snapshot_save($origin, $project, $lng, $file) {
+function project_snapshot_save($origin, $project, $lng, $file, $uid = 1) {
   // Make sure that file does exist.
   if (!file_exists($file))  return;
 
@@ -142,7 +142,7 @@ function project_snapshot_save($origin, $project, $lng, $file) {
         'pguid' => sha1($origin . $project),
         'lng' => $lng,
         'snapshot' => file_get_contents($file),
-        'uid' => $GLOBALS['user']->uid,
+        'uid' => $uid,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();

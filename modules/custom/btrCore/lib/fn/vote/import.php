@@ -38,15 +38,25 @@ use \btr;
  *   'status', 'warning', 'error'.
  */
 function vote_import($uid, $lng, $path) {
-  // Switch to the user that has uploaded the file.
-  global $user;
-  $original_user = $user;
-  $old_state = drupal_save_session();
-  drupal_save_session(FALSE);
-  $user = user_load($uid);
+  // Check access permissions.
+  $account = user_load($uid);
+  if (!user_access('btranslator-suggest', $account)) {
+    $msg = t('No rights for contributing suggestions!');
+    return [[$msg, 'error']];
+  }
+  if (!user_access('btranslator-vote', $account)) {
+    $msg = t('No rights for submitting votes!');
+    return [[$msg, 'error']];
+  }
+  // Check that the language matches the translation language of the user.
+  if (!user_access('btranslator-admin', $account) and ($lng != $account->translation_lng)) {
+    $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
+    return [[$msg, 'error']];
+  }
 
   // Get the mail of the user.
-  $umail = $user->init;
+  $account = user_load($uid);
+  $umail = $account->init;
 
   // Get a list of all PO files on the path.
   $files = file_scan_directory($path, '/.*\.po$/');
@@ -73,14 +83,10 @@ function vote_import($uid, $lng, $path) {
       if (trim($translation) === '')  continue;
 
       // Add the translation for this string.
-      $msgs = _add_translation($sguid, $lng, $translation, $umail);
+      $msgs = _add_translation($sguid, $lng, $translation, $uid);
       $messages = array_merge($messages, $msgs);
     }
   }
-
-  // Switch back to the original user.
-  $user = $original_user;
-  drupal_save_session($old_state);
 
   // Return any messages that were generated during the import.
   return $messages;
@@ -148,7 +154,7 @@ function _get_sguid($entry, $uid) {
  * If it exists, just add a vote for the translation and set the
  * author, if the translation has no author.
  */
-function _add_translation($sguid, $lng, $translation, $umail) {
+function _add_translation($sguid, $lng, $translation, $uid) {
   // The DB field of the translation is VARCHAR(1000),
   // check that translation does not exceed this length.
   if (strlen($translation) > 1000) {
@@ -167,18 +173,20 @@ function _add_translation($sguid, $lng, $translation, $umail) {
 
   if (!$result) {
     // Add the translation for this string.
-    list($_, $msgs) = btr::translation_add($sguid, $lng, $translation);
+    list($_, $msgs) = btr::translation_add($sguid, $lng, $translation, $uid);
     $messages = array_merge($messages, $msgs);
   }
   else {
     // Add a vote for the translation.
-    list($_, $msgs) = btr::vote_add($tguid);
+    list($_, $msgs) = btr::vote_add($tguid, $uid);
     $messages = array_merge($messages, $msgs);
+
     // Update the author of the translations.
+    $account = user_load($uid);
     if (empty($result->umail) or $result->umail == 'admin@example.com') {
       btr::db_update('btr_translations')
         ->fields(array(
-            'umail' => $umail,
+            'umail' => $account->init,
             'time' => date('Y-m-d H:i:s', REQUEST_TIME),
           ))
         ->condition('tguid', $tguid)

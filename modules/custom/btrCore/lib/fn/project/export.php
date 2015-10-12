@@ -59,19 +59,13 @@ function project_export($origin, $project, $lng, $path, $uid = 0,
   // Print progress output.
   $quiet || print "project_export: $origin/$project/$lng: $path\n";
 
-  // Switch to the given user.
-  global $user;
-  $original_user = $user;
-  $old_state = drupal_save_session();
-  drupal_save_session(FALSE);
-  $user = user_load($uid);
-
   // Check arguments $export_mode and $preferred_voters.
   if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
     $export_mode = 'most_voted';
   }
   if ($export_mode == 'preferred' and $preferred_voters === NULL) {
-    $preferred_voters = array($user->init);
+    $account = user_load($uid);
+    $preferred_voters = array($account->init);
   }
 
   // Get the templates and filenames of the project.
@@ -102,10 +96,6 @@ function project_export($origin, $project, $lng, $path, $uid = 0,
     _export_po_file($origin, $project, $lng, $tplname, $po_file,
                     $export_mode, $preferred_voters);
   }
-
-  // Switch back to the original user.
-  $user = $original_user;
-  drupal_save_session($old_state);
 }
 
 

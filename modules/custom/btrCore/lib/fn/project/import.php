@@ -42,13 +42,6 @@ function project_import($origin, $project, $lng, $path, $uid = 1, $quiet = FALSE
   // Print progress output.
   QUIET || print "project_import: $origin/$project/$lng: $path\n";
 
-  // Switch to the given user.
-  global $user;
-  $original_user = $user;
-  $old_state = drupal_save_session();
-  drupal_save_session(FALSE);
-  $user = user_load($uid);
-
   // Check that the project exists.
   $pguid = btr::db_query(
     'SELECT pguid FROM {btr_projects} WHERE pguid = :pguid',
@@ -60,31 +53,28 @@ function project_import($origin, $project, $lng, $path, $uid = 1, $quiet = FALSE
   }
 
   // Import the given PO files.
-  _import_po_files($origin, $project, $lng, $path);
+  _import_po_files($origin, $project, $lng, $path, $uid);
 
   // Add user as admin of the project.
-  _add_project_admin($origin, $project, $lng, $user->init);
+  $account = user_load($uid);
+  btr::project_add_admin($origin, $project, $lng, $account->init);
 
   // Subscribe user to this project.
-  btr::project_subscribe($origin, $project, $user->uid);
+  btr::project_subscribe($origin, $project, $uid);
 
   // Make initial snapshots after importing PO files.
   _make_snapshots($origin, $project, $lng, $path);
-
-  // Switch back to the original user.
-  $user = $original_user;
-  drupal_save_session($old_state);
 }
 
 /**
  * Import the given PO files.
  */
-function _import_po_files($origin, $project, $lng, $path) {
+function _import_po_files($origin, $project, $lng, $path, $uid = 1) {
   // If the given $path is a single file, just process that one and stop.
   if (is_file($path)) {
     $filename = basename($path);
     $tplname = $project;
-    _process_po_file($origin, $project, $tplname, $lng, $path, $filename);
+    _process_po_file($origin, $project, $tplname, $lng, $path, $filename, $uid);
 
     // Done.
     return;
@@ -99,7 +89,7 @@ function _import_po_files($origin, $project, $lng, $path) {
   foreach ($files as $file) {
     $filename = preg_replace("#^$path/#", '', $file->uri);
     $tplname = preg_replace('#\.po?$#', '', $filename);
-    _process_po_file($origin, $project, $tplname, $lng, $file->uri, $filename);
+    _process_po_file($origin, $project, $tplname, $lng, $file->uri, $filename, $uid);
   }
 }
 
@@ -107,7 +97,7 @@ function _import_po_files($origin, $project, $lng, $path) {
  * Create a new template, parse the POT file, insert the locations
  * and insert the strings.
  */
-function _process_po_file($origin, $project, $tplname, $lng, $file, $filename) {
+function _process_po_file($origin, $project, $tplname, $lng, $file, $filename, $uid = 1) {
   // Print progress output.
   QUIET || print "import_po_file: $filename\n";
 
@@ -139,7 +129,7 @@ function _process_po_file($origin, $project, $tplname, $lng, $file, $filename) {
   }
 
   // Add a file and get its id.
-  $fid = _add_file($file, $filename, $potid, $lng, $headers, $comments);
+  $fid = _add_file($file, $filename, $potid, $lng, $headers, $comments, $uid);
   if ($fid === NULL)  return;
 
   // Process each gettext entry.
@@ -151,7 +141,7 @@ function _process_po_file($origin, $project, $tplname, $lng, $file, $filename) {
     // Add the translation for this string.
     $translation = is_array($entry['msgstr']) ? implode("\0", $entry['msgstr']) : $entry['msgstr'];
     if (trim($translation) != '') {
-      _add_translation($sguid, $lng, $translation);
+      _add_translation($sguid, $lng, $translation, $uid);
     }
   }
 }
@@ -160,7 +150,7 @@ function _process_po_file($origin, $project, $tplname, $lng, $file, $filename) {
  * Insert a file in the DB, if it does not already exist.
  * Return the file id.
  */
-function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
+function _add_file($file, $filename, $potid, $lng, $headers, $comments, $uid = 1) {
   // Get the sha1 hash of the file.
   $hash = sha1_file($file);
 
@@ -214,7 +204,7 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments) {
         'lng' => $lng,
         'headers' => $headers,
         'comments' => $comments,
-        'uid' => $GLOBALS['user']->uid,
+        'uid' => $uid,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
@@ -252,7 +242,7 @@ function _get_string_sguid($entry) {
 /**
  * Insert a translation into DB.
  */
-function _add_translation($sguid, $lng, $translation) {
+function _add_translation($sguid, $lng, $translation, $uid = 1) {
   // The DB field of the translation is VARCHAR(1000),
   // check that translation does not exceed this length.
   if (strlen($translation) > 1000) {
@@ -269,7 +259,7 @@ function _add_translation($sguid, $lng, $translation) {
   if (btr::db_query($get_tguid, $args)->fetchField())  return $tguid;
 
   // Insert a new translations.
-  $account = user_load($GLOBALS['user']->uid);
+  $account = user_load($uid);
   btr::db_insert('btr_translations')
     ->fields(array(
         'sguid' => $sguid,
@@ -283,31 +273,6 @@ function _add_translation($sguid, $lng, $translation) {
       ))
     ->execute();
 }
-
-/**
- * Add the current user (that imports the project) as admin of the project.
- */
-function _add_project_admin($origin, $project, $ulng, $umail) {
-  $pguid = sha1($origin . $project);
-
-  // Delete it first, if he exists.
-  btr::db_delete('btr_user_project_roles')
-    ->condition('umail', $umail)
-    ->condition('ulng', $ulng)
-    ->condition('role', 'admin')
-    ->execute();
-
-  // Add as admin.
-  btr::db_insert('btr_user_project_roles')
-    ->fields([
-        'umail' => $umail,
-        'ulng' => $ulng,
-        'pguid' => $pguid,
-        'role' => 'admin',
-      ])
-    ->execute();
-}
-
 
 /**
  * Make initial snapshots after importing PO files.
