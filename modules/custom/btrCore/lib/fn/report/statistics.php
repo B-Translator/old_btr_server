@@ -43,7 +43,7 @@ function report_statistics($lng = NULL, $origin = NULL, $project = NULL) {
   $condition = 'time >= :from_date';
   $args = array();
   if ($lng != 'all') {
-    $condition .= ' AND ulng = :lng';
+    $condition .= ' AND ulng = :ulng';
     $args[':ulng'] = $lng;
   }
 
@@ -72,7 +72,7 @@ function report_statistics($lng = NULL, $origin = NULL, $project = NULL) {
   $stats = array();
   foreach (array('week', 'month', 'year') as $period) {
     $from_date = date('Y-m-d', strtotime("-1 $period"));
-    $args['from_date'] = $from_date;
+    $args[':from_date'] = $from_date;
     $nr_votes = btr::db_query($sql_count_votes, $args)->fetchField();
     $nr_translations = btr::db_query($sql_count_translations, $args)->fetchField();
 
