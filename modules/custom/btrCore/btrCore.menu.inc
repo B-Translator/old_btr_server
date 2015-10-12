@@ -55,6 +55,15 @@ function btrCore_menu() {
     'access callback' => TRUE,
   );
 
+  // Return a list of vocabularies in JSON format.
+  $items['vocabulary/list'] = array(
+    'type'            => MENU_CALLBACK,
+    'title'           => 'Vocabulary List',
+    'page callback'   => 'btrCore_vocabulary_list',
+    'file'            => 'callback/vocabulary_list.inc',
+    'access callback' => TRUE,
+  );
+
   // Return a list of the languages
   // for the given origin/project.
   $items['project/langs'] = array(
@@ -130,7 +139,6 @@ function btrCore_menu() {
     'file'            => 'callback/exports.inc',
     'access callback' => TRUE,
   );
-
 
   // Return a string context, related projects (where a string is found), etc.
   $items['string_details'] = array(

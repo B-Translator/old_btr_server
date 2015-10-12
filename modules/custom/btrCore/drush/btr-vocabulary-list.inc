@@ -35,12 +35,12 @@ The option 'name' can contain '%' (for LIKE matches).
 function drush_btranslator_btr_vocabulary_list() {
   $name = drush_get_option('name', '%');
   $lng = drush_get_option('lng', '%');
-  $project = $name . '_' . $lng;
-  $origin = 'vocabulary';
-  $project_list = btr::project_ls($origin, $project);
 
-  foreach ($project_list as $project) {
-    $project = str_replace('vocabulary/', '', $project);
-    drush_print($project);
+  $vocabulary_list = btr::vocabulary_ls($lng, $name);
+
+  foreach ($vocabulary_list as $lng => $vocabularies) {
+    foreach ($vocabularies as $vocabulary) {
+      drush_print("$lng\t$vocabulary");
+    }
   }
 }
