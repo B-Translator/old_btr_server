@@ -148,32 +148,19 @@ function _btrServices_vocabulary_del_string($params) {
 }
 
 /**
- * Create a custom project or update an existing one by importing PO/POT files.
+ * Create a vocabulary or update an existing one.
  *
- * This is useful for creating custom translation projects. The PO/POT
- * files that are uploaded will be used for importing strings and
- * translations. If there are no POT files, then the PO files will be
- * used both for importing strings and for importing translations. If
- * there are POT files and PO files, their names have to match (except
- * for the extension).
- *
- * If there are several PO/POT files, upload them as an archive (tar,
- * tgz, bz2, 7z, zip).
- *
- * If you want to create a vocabulary, use 'vocabulary' as the origin of the
- * project, and add the suffix '_lng' to the project name.  Use 'msgctxt
- * "project_name"' as the context of each string in the PO/POT file. Also the
- * uploaded PO file must have the same name as the project, for example
- * 'ICT_sq.po'. These restrictions are needed because vocabularies are
- * pseudo-projects (for example you can add strings to them) and certain
- * assumptions are made about them.
+ * Terms and translations are uploaded from a text file
+ * which has the same format as the exported TXT1 file,
+ * where each line is like this:
+ *     term <==> translation1 / translation2 / translation3
  *
  * @param $params
  *   Associative array of the POST data, which contains:
- *   - origin
- *       The origin of the project that will be imported.
- *   - project
- *       The name of the project that will be imported.
+ *   - name
+ *       The name of the vocabulary.
+ *   - lng
+ *       The language of the vocabulary.
  *
  * @return
  *   Associative array containing:
@@ -196,42 +183,50 @@ function _btrServices_vocabulary_import($params) {
 
   // Check for any other upload errors.
   if ($uploaded_file['error'] != 0) {
-    return services_error('Error ' . $uploaded_file['error'] . 'happened during file upload.', 406);
+    return services_error('Error ' . $uploaded_file['error'] . ' happened during file upload.', 406);
   }
 
   // Get the parameters.
   $params += array(
-    'origin' => NULL,
-    'project' => NULL,
+    'lng' => NULL,
+    'name' => NULL,
   );
-  $origin = check_plain($params['origin']);
-  $project = check_plain($params['project']);
+  $lng = check_plain($params['lng']);
+  $name = check_plain($params['name']);
 
-  // Check the rights for re-importing an existing project.
+  $uid = $GLOBALS['user']->uid;
+  $origin = 'vocabulary';
+  $project = $name . '_' . $lng;
+
   if (btr::project_exists($origin, $project)) {
-    $is_owner = ( btr::project_owner($origin, $project) == $GLOBALS['user']->uid );
+    // Check the rights for updating an existing project.
+    $is_owner = ( btr::project_owner($origin, $project) == $uid );
     $can_reimport = ( $is_owner or user_access('btranslator-admin') );
     if (!$can_reimport) {
-      $msg = t("The project '!project' already exists. You can re-import only your own projects.",
-             ['!project' => "$origin/$project"]);
+      $msg = t("Vocabulary '!vocabulary' already exists. You can update only your own vocabularies.",
+             ['!vocabulary' => $project]);
       return ['messages' => [[$msg, 'error']]];
     }
-  };
+  }
+  else {
+    // Create a new vocabulary.
+    btr::vocabulary_add($name, $lng, $uid);
+  }
 
-  // Schedule the project import.
-  $messages = btr::schedule_vocabulary_import($origin, $project, $uploaded_file);
+  // Import the vocabulary.
+  $messages = btr::vocabulary_import($name, $lng, $file, $uid);
   return ['messages' => $messages];
 }
 
 /**
- * Delete a project.
+ * Delete a vocabulary.
  *
  * @param $params
  *   Associative array of the POST data, which contains:
- *   - origin
- *       The origin of the project that will be deleted.
- *   - project
- *       The name of the project that will be deleted.
+ *   - name
+ *       The name of the vocabulary.
+ *   - lng
+ *       The language of the vocabulary.
  *
  * @return
  *   Associative array containing:
@@ -241,28 +236,32 @@ function _btrServices_vocabulary_import($params) {
  */
 function _btrServices_vocabulary_delete($params) {
   $params += array(
-    'origin' => NULL,
-    'project' => NULL,
+    'lng' => NULL,
+    'name' => NULL,
   );
-  $origin = check_plain($params['origin']);
-  $project = check_plain($params['project']);
+  $lng = check_plain($params['lng']);
+  $name = check_plain($params['name']);
 
-  // Check that this project exists.
+  $uid = $GLOBALS['user']->uid;
+  $origin = 'vocabulary';
+  $project = $name . '_' . $lng;
+
+  // Check that this vocabulary exists.
   if (!btr::project_exists($origin, $project)) {
-    $msg = t("Project '!project' does not exist.", ['!project' => "$origin/$project"]);
+    $msg = t("Vocabulary '!vocabulary' does not exist.", ['!vocabulary' => $project]);
     return ['message' => [$msg, 'error']];
   };
 
   // Check the rights for deleting this project.
-  $is_owner = ( btr::project_owner($origin, $project) == $GLOBALS['user']->uid );
+  $is_owner = ( btr::project_owner($origin, $project) == $uid );
   $can_delete = ( $is_owner or user_access('btranslator-admin') );
   if (!$can_delete) {
-    $msg = t('You can delete only your own projects.');
+    $msg = t('You can delete only your own vocabularies.');
     return ['message' => [$msg, 'error']];
   }
 
   // Delete the project.
-  btr::project_del($origin, $project);
-  $msg = t("Project '!project' deleted.", ['!project' => "$origin/$project"]);
+  btr::vocabulary_del($name, $lng);
+  $msg = t("Vocabulary '!vocabulary' deleted.", ['!vocabulary' => $project]);
   return ['message' => [$msg, 'status']];
 }
