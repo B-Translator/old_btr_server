@@ -57,6 +57,7 @@ else
     ### create a container for development, sharing diectories
     ### btr_client/ and btr_server/ between the container and the host
     docker create --name=$container --hostname=$hostname \
+        -v /data/PO_files:/var/www/data \
         -v $(pwd)/btr_server:/var/www/btr/profiles/btr_server \
         -v $(pwd)/btr_client:/var/www/bcl/profiles/btr_client \
         -v /data/PO_files:/var/www/data \
