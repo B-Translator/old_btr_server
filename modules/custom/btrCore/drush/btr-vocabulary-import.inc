@@ -8,7 +8,7 @@ function _btr_vocabulary_import_drush_command() {
     'arguments' => array(
       'name' => 'The name of the vocabulary.',
       'lng' => 'The language of the vocabulary.',
-      'file' => 'The text file with terms and translations (having the same format as export TXT1).',
+      'file' => 'Text file with terms and translations (having the same format as export TXT1).',
     ),
     'options' => array(
       'user'  => 'The username of the user that is importing the vocabulary.',

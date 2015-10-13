@@ -18,22 +18,6 @@ function _btrServices_vocabulary() {
     'access arguments' => array('access content'),
   );
 
-  // Get a list of existing vocabularies.
-  $vocabulary['actions']['list'] = array(
-    'help' => 'Get a list of existing vocabularies.',
-    'file' => $file,
-    'callback' => '_btrServices_vocabulary_list',
-    'args' => array($params),
-  ) + $public_access;
-
-  // Export a vocabulary.
-  $vocabulary['actions']['export'] = array(
-    'help' => 'Export a vocabulary.',
-    'file' => $file,
-    'callback' => '_btrServices_vocabulary_export',
-    'args' => array($params),
-  ) + $public_access;
-
   // Add a new string to a vocabulary.
   $vocabulary['actions']['add_string'] = array(
     'help' => 'Add a new string to a vocabulary.',
@@ -74,111 +58,6 @@ function _btrServices_vocabulary() {
 
   return $vocabulary;
 }
-
-/**
- * Get a list of existing projects.
- *
- * @param $params
- *   Associative array of the POST data, which contains
- *   the parameters. These parameters can be:
- *   - origin
- *   - project
- *
- *   Variables $origin and $project can contain '*', which
- *   is replaced by '%' (for LIKE matches).
- *
- *   If $project=='-' then only a list of 'origin' is outputed,
- *   otherwise a list of 'origin/project'.
- *
- * @return
- *   Project list as an array, where each item can be on the form
- *   'origin/project' or just 'origin'.
- *
- * @example
- *   curl -k -i -X POST https://dev.btr.example.org/api/project/list
- *   curl -k -i -X POST https://dev.btr.example.org/api/project/list \
- *        -H "Content-type: application/json" \
- *        -d '{"origin": "t*"}'
- */
-function _btrServices_vocabulary_list($params) {
-  $params += array('origin' => NULL, 'project' => NULL);
-
-  // Get and sanitize the parameters.
-  $origin = $params['origin'];
-  $project = $params['project'];
-  if (!empty($origin)) {
-    $origin = str_replace('*', '%', $origin);
-    $origin = check_plain($origin);
-  }
-  if (!empty($project) && $project != '-') {
-    $project = str_replace('*', '%', $project);
-    $project = check_plain($project);
-  }
-
-  // Get the project list.
-  $project_list = btr::project_ls($origin, $project);
-
-  // Output it as json.
-  drupal_json_output($project_list);
-  drupal_exit();
-}
-
-/**
- * Export a project.
- *
- * Submit a request for exporting a project. When the request
- * is completed, the user will be notified by email.
- *
- * @param $params
- *   Associative array of the POST data, which contains
- *   the export parameters. These parameters are:
- *   - origin
- *       The origin of the project.
- *   - project
- *       The name of the project.
- *   - lng
- *       Translation to be exported.
- *   - export_mode
- *       The export mode that should be used. It can be one of:
- *       (original | most_voted | preferred).
- *        - The mode 'original' exports the translations of the
- *          original files that were imported.
- *        - The mode 'most_voted' exports the translations with the
- *          highest number of votes.
- *        - The mode 'preferred' gives precedence to the translations
- *          voted by a user or a list of users, despite the number of
- *          votes.
- *   - preferred_voters
- *       Comma separated list of usernames. Used only when export_mode
- *       is 'preferred'.
- *
- * @return
- *   Associative array containing:
- *   - messages
- *       Array of notification messages; each notification message
- *       is an array of a message and a type, where type can be one of
- *       'status', 'warning', 'error'.
- */
-function _btrServices_vocabulary_export($params) {
-  $params += array(
-    'origin' => NULL,
-    'project' => NULL,
-    'lng' => NULL,
-    'export_mode' => NULL,
-    'preferred_voters' => NULL,
-  );
-
-  $messages = btr::schedule_vocabulary_export(
-    check_plain($params['origin']),
-    check_plain($params['project']),
-    check_plain($params['lng']),
-    check_plain($params['export_mode']),
-    check_plain($params['preferred_voters'])
-  );
-
-  return array('messages' => $messages);
-}
-
 
 /**
  * Add a new string to a vocabulary.
