@@ -16,7 +16,7 @@ function btrServices_services_resources() {
   $resources['report'] = _btrServices_report();
   $resources['translations'] = _btrServices_translations();
   $resources['project'] = _btrServices_project();
-  $resources['project'] = _btrServices_vocabulary();
+  $resources['vocabulary'] = _btrServices_vocabulary();
   return $resources;
 }
 

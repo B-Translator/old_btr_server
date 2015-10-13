@@ -196,14 +196,6 @@ function _btrServices_project_export($params) {
  * If there are several PO/POT files, upload them as an archive (tar,
  * tgz, bz2, 7z, zip).
  *
- * If you want to create a vocabulary, use 'vocabulary' as the origin of the
- * project, and add the suffix '_lng' to the project name.  Use 'msgctxt
- * "project_name"' as the context of each string in the PO/POT file. Also the
- * uploaded PO file must have the same name as the project, for example
- * 'ICT_sq.po'. These restrictions are needed because vocabularies are
- * pseudo-projects (for example you can add strings to them) and certain
- * assumptions are made about them.
- *
  * @param $params
  *   Associative array of the POST data, which contains:
  *   - origin
@@ -252,7 +244,7 @@ function _btrServices_project_import($params) {
              ['!project' => "$origin/$project"]);
       return ['messages' => [[$msg, 'error']]];
     }
-  };
+  }
 
   // Schedule the project import.
   $messages = btr::schedule_project_import($origin, $project, $uploaded_file);
