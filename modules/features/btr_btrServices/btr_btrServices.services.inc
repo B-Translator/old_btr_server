@@ -59,24 +59,6 @@ function btr_btrServices_default_services_endpoint() {
             ),
           ),
         ),
-        'add_string' => array(
-          'enabled' => '1',
-          'settings' => array(
-            'oauth2_server' => array(
-              'require_authentication' => '1',
-              'scope' => '',
-            ),
-          ),
-        ),
-        'del_string' => array(
-          'enabled' => '1',
-          'settings' => array(
-            'oauth2_server' => array(
-              'require_authentication' => '1',
-              'scope' => '',
-            ),
-          ),
-        ),
         'import' => array(
           'enabled' => '1',
           'settings' => array(
@@ -274,6 +256,46 @@ function btr_btrServices_default_services_endpoint() {
     'user' => array(
       'actions' => array(
         'profile' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
+      ),
+    ),
+    'vocabulary' => array(
+      'actions' => array(
+        'add_string' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
+        'del_string' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
+        'import' => array(
+          'enabled' => '1',
+          'settings' => array(
+            'oauth2_server' => array(
+              'require_authentication' => '1',
+              'scope' => '',
+            ),
+          ),
+        ),
+        'delete' => array(
           'enabled' => '1',
           'settings' => array(
             'oauth2_server' => array(
