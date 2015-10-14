@@ -214,7 +214,7 @@ function _btrServices_vocabulary_import($params) {
   }
 
   // Import the vocabulary.
-  $messages = btr::vocabulary_import($name, $lng, $file, $uid);
+  $messages = btr::vocabulary_import($name, $lng, $uploaded_file['tmp_name'], $uid);
   return ['messages' => $messages];
 }
 
