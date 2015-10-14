@@ -16,16 +16,21 @@ use \btr;
  * @param $notify
  *   Notify the author and voters of the deleted translation.
  *
+ * @param $uid
+ *   Id of the user that is deleting the translation.
+ *
  * @return
  *   Array of notification messages; each notification message
  *   is an array of a message and a type, where type can be
  *   one of 'status', 'warning', 'error'
  */
-function translation_del($tguid, $notify = TRUE) {
+function translation_del($tguid, $notify = TRUE, $uid = NULL) {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+
   // Get the mail and lng of the user.
-  $user = user_load($GLOBALS['user']->uid);
-  $umail = $user->init;    // email used for registration
-  $ulng = $user->translation_lng;
+  $account = user_load($uid);
+  $umail = $account->init;    // email used for registration
+  $ulng = $account->translation_lng;
 
   // Before deleting, get the author, voters, string and translation
   // (for notifications).
@@ -51,7 +56,7 @@ function translation_del($tguid, $notify = TRUE) {
 
   // Check that the current user has the right to delete translations.
   $is_own = ($umail == $author->umail);
-  if (!$is_own and !user_access('btranslator-resolve')
+  if (!$is_own and ($uid != 1) and !user_access('btranslator-resolve')
     and !btr::user_has_project_role('admin', $sguid)
     and !btr::user_has_project_role('moderator', $sguid))
     {

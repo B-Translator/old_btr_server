@@ -51,7 +51,7 @@ function vocabulary_string_del($name, $lng, $sguid) {
   $q = 'SELECT tguid FROM {btr_translations} WHERE sguid = :sguid';
   $tguid_list = btr::db_query($q, [':sguid' => $sguid])->fetchCol();
   foreach ($tguid_list as $tguid) {
-    btr::translation_del($tguid, FALSE);
+    btr::translation_del($tguid, FALSE, $uid=1);
   }
 
   // Delete the string itself.

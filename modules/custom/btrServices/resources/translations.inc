@@ -540,9 +540,7 @@ function _btrServices_translations_vote($params) {
 function _btrServices_translations_del($params) {
   $tguid = $params['tguid'];
   $messages = btr::translation_del($tguid);
-  return array(
-    'messages' => $messages
-  );
+  return ['messages' => $messages];
 }
 
 /**

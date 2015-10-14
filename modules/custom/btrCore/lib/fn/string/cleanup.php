@@ -53,7 +53,7 @@ function string_cleanup($purge = FALSE, $notify = FALSE) {
 
     // Delete each translation (and related votes as well).
     foreach ($tguid_list as $tguid) {
-      btr::translation_del($tguid, $notify);
+      btr::translation_del($tguid, $notify, $uid=1);
     }
   }
 
