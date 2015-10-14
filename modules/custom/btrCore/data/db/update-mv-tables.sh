@@ -18,7 +18,7 @@ do
 done
 
 ### for each vocabulary create a mv table
-vocabularies=$(drush btr-vocabulary-list)
+vocabularies=$(drush btr-vocabulary-list | gawk '{print $2 "_" $1}')
 for vocabulary in $vocabularies
 do
     table="btr_mv_${vocabulary,,}"

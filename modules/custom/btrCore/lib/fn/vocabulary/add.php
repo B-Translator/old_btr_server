@@ -36,13 +36,25 @@ function vocabulary_add($name, $lng, $uid = 1) {
       'reply' => '',
     ])->execute();
 
-  // Update mv tables.
-  shell_exec($path . '/data/db/update-mv-tables.sh');
-
   // Add user as admin of the project.
   $user = user_load($uid);
   btr::project_add_admin($origin, $project, $lng, $user->init);
 
   // Subscribe user to this project.
   btr::project_subscribe($origin, $project, $uid);
+
+  // Update mv table.
+  $table = 'btr_mv_' . strtolower($project);
+  btr::db_query("DROP TABLE IF EXISTS {$table}");
+  btr::db_query("CREATE TABLE {$table} LIKE {btr_mv_sample}");
+  btr::db_query("INSERT INTO {$table}
+	SELECT DISTINCT s.string FROM {btr_strings} s
+	JOIN {btr_locations} l ON (l.sguid = s.sguid)
+	JOIN {btr_templates} t ON (t.potid = l.potid)
+	JOIN {btr_projects}  p ON (p.pguid = t.pguid)
+	WHERE p.project = :project
+	  AND p.origin = 'vocabulary'
+	ORDER BY s.string",
+    [':project' => $project]
+  );
 }
