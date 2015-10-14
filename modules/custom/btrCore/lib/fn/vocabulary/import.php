@@ -57,7 +57,7 @@ function vocabulary_import($name, $lng, $file, $uid = 1) {
 
     // Add the translations.
     foreach ($arr_translations as $translation) {
-      list($tguid, $arr_msg) = btr::translation_add($sguid, $lng, $translation, $uid, $notify=FALSE);
+      list($tguid, $arr_msg) = btr::translation_add($sguid, $lng, $translation, $uid=1, $notify=FALSE);
       $messages = array_merge($messages, $arr_msg);
     }
   }

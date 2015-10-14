@@ -101,8 +101,13 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
       _remove_old_translation($sguid, $lng, $umail, $tguid);
     }
 
-  // Add also a vote for the new translation.
-  list($vid, $messages) = btr::vote_add($tguid, $uid);
+  // Add also a vote for the new translation (but not if it is added by admin).
+  if ($uid != 1) {
+    list($vid, $messages) = btr::vote_add($tguid, $uid);
+  }
+  else {
+    $messages = [];
+  }
 
   // Notify previous voters of this string that a new translation has been
   // suggested. Maybe they would like to review it and change their vote.
