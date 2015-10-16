@@ -53,9 +53,11 @@ module_load_include('php', 'btrCore', 'lib/gettext/POWriter');
  * The export mode 'original' exports the translations of the original file
  * that was imported (useful for making an initial snapshot of the project).
  */
-function project_export($origin, $project, $lng, $path, $uid = 0,
+function project_export($origin, $project, $lng, $path, $uid = NULL,
   $quiet = FALSE, $export_mode = 'most_voted', $preferred_voters = NULL)
 {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+
   // Print progress output.
   $quiet || print "project_export: $origin/$project/$lng: $path\n";
 

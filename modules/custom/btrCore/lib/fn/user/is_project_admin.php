@@ -7,19 +7,22 @@
 namespace BTranslator;
 
 /**
- * Return TRUE if the current user can administrate the given project.
+ * Return TRUE if the user can administrate the given project.
  */
-function user_is_project_admin($origin, $project, $lng = NULL) {
+function user_is_project_admin($origin, $project, $lng = NULL, $uid = NULL) {
+  // Get the user account.
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+  $account = user_load($uid);
+
   // If user has global admin permission,
   // he can administrate this project as well.
-  if (user_access('btranslator-admin'))  return TRUE;
+  if (user_access('btranslator-admin', $account))  return TRUE;
 
   // Check that the project language matches translation_lng of the user.
-  $user = user_load($GLOBALS['user']->uid);
-  if ($lng !== NULL and $lng != $user->translation_lng) return FALSE;
+  if ($lng !== NULL and $lng != $account->translation_lng) return FALSE;
 
   // Check whether the user is an admin of the given project.
-  if (in_array("$origin/$project", $user->admin_projects)) return TRUE;
+  if (in_array("$origin/$project", $account->admin_projects)) return TRUE;
 
   // Otherwise he cannot administrate.
   return FALSE;

@@ -34,14 +34,6 @@ use \stdClass, \Exception;
  *   'status', 'warning', 'error'.
  */
 function schedule_project_import($origin, $project, $uploaded_file) {
-  /*
-  // Check access permissions.
-  if (!user_access('btranslator-import')) {
-    $msg = t('You do not have enough rights for importing projects!');
-    return array(array($msg, 'error'));
-  }
-  */
-
   // Check that the given project does not belong to another user.
   $query = 'SELECT uid FROM {btr_projects} WHERE pguid = :pguid';
   $args = [':pguid' => sha1($origin . $project)];

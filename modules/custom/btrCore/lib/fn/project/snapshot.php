@@ -31,12 +31,17 @@ use \btr;
  * @param $preferred_voters
  *   Array of email addresses of users whose translations are preferred.
  *
+ * @param $uid
+ *   Id of the user that is making the snapshot.
+ *
  * @return
  *   An error message or an empty string.
  */
 function project_snapshot($origin, $project, $lng, $comment = NULL,
-  $export_mode = 'most_voted', $preferred_voters = NULL)
+  $export_mode = 'most_voted', $preferred_voters = NULL, $uid = NULL)
 {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+
   // Export the latest most voted translations
   // and make the diffs with the last snapshot.
   $export_file = tempnam('/tmp', 'export_file_');
@@ -44,7 +49,7 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
   $file_ediff = tempnam('/tmp', 'file_ediff_');
   btr::project_diff($origin, $project, $lng,
     $file_diff, $file_ediff, $export_file,
-    $export_mode, $preferred_voters);
+    $export_mode, $preferred_voters, $uid);
 
   // If not empty, save the diffs and the new snapshot.
   if (filesize($file_diff) != 0 or filesize($file_ediff) != 0) {
@@ -118,8 +123,13 @@ function project_snapshot_get($origin, $project, $lng, $file) {
  *
  * @param $file
  *   The file that has the snapshot (format tgz).
+ *
+ * @param $uid
+ *   Id of the user that is making the snapshot.
  */
-function project_snapshot_save($origin, $project, $lng, $file, $uid = 1) {
+function project_snapshot_save($origin, $project, $lng, $file, $uid = NULL) {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+
   // Make sure that file does exist.
   if (!file_exists($file))  return;
 

@@ -46,7 +46,7 @@ function cron_export_project($export_params) {
   ob_start();
   btr::project_diff($origin, $project, $lng,
     $file_diff, $file_ediff, $file_tgz,
-    $export_mode, $preferred_voters);
+    $export_mode, $preferred_voters, $account->uid);
   $output .= ob_get_contents();
   ob_end_clean();
 

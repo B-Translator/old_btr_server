@@ -25,10 +25,11 @@ use \btr;
  *   one of 'status', 'warning', 'error'
  */
 function translation_del($tguid, $notify = TRUE, $uid = NULL) {
+  // Get the user account.
   if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+  $account = user_load($uid);
 
   // Get the mail and lng of the user.
-  $account = user_load($uid);
   $umail = $account->init;    // email used for registration
   $ulng = $account->translation_lng;
 

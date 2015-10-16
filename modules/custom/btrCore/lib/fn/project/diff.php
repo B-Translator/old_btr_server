@@ -34,16 +34,20 @@ use \btr;
  *
  * @param $preferred_voters
  *   Array of email addresses of users whose translations are preferred.
+ *
+ * @param $uid
+ *   Id of the user who is making the diff.
  */
 function project_diff($origin, $project, $lng,
   $file_diff, $file_ediff, $export_file = NULL,
-  $export_mode = 'most_voted', $preferred_voters = NULL)
+  $export_mode = 'most_voted', $preferred_voters = NULL, $uid = NULL)
 {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+
   // Export the latest translations of the project.
   $export_dir = exec('mktemp -d');
   btr::project_export($origin, $project, $lng, $export_dir,
-    $GLOBALS['user']->uid, $quiet = FALSE,
-    $export_mode, $preferred_voters);
+    $uid, $quiet = FALSE, $export_mode, $preferred_voters);
 
   // Archive exported files in format tgz.
   if ($export_file !== NULL) {
@@ -87,9 +91,14 @@ function project_diff($origin, $project, $lng,
  *
  * @param $comment
  *   User defined comment that labels the snapshot/diffs.
+ *
+ * @param $uid
+ *   Id of the user that is adding the diff.
  */
-function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $comment = NULL)
+function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $comment = NULL, $uid = NULL)
 {
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+
   // Get the max number of diffs for this project/lng.
   $max_nr = btr::db_query(
     'SELECT MAX(nr) AS max_nr FROM {btr_diffs}
@@ -116,7 +125,7 @@ function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $com
         'diff' => file_get_contents($file_diff),
         'ediff' => file_get_contents($file_ediff),
         'comment' => $comment,
-        'uid' => $GLOBALS['user']->uid,
+        'uid' => $uid,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();
