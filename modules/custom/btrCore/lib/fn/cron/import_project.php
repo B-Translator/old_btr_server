@@ -45,11 +45,8 @@ function cron_import_project($params) {
   exec("cd $tmpdir ; dtrx -q -n -f $file->filename 2>/dev/null");
 
   // Create the project.
-  $output = '';
-  ob_start();
   btr::project_add($origin, $project, "$tmpdir/pot/", $account->uid);
-  $output .= ob_get_contents();
-  ob_end_clean();
+  $output = btr::messages_cat(btr::messages());
 
   // Import the PO files for each language.
   $langs = btr::languages_get();
@@ -60,10 +57,8 @@ function cron_import_project($params) {
     if (!in_array($lng, $langs))  continue;
 
     // Import PO file and translations.
-    ob_start();
     btr::project_import($origin, $project, $lng, "$tmpdir/$lng/", $account->uid);
-    $output .= ob_get_contents();
-    ob_end_clean();
+    $output .= btr::messages_cat(btr::messages());
   }
 
 

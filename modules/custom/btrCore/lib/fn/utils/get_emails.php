@@ -21,8 +21,8 @@ namespace BTranslator;
  *   Each error message is in the format: array($error_message, 'error').
  */
 function utils_get_emails($preferred_voters) {
-  $arr_emails = array();
-  $error_messages = array();
+  $arr_emails = [];
+  $error_messages = [];
 
   $arr_names = preg_split('/\s*,\s*/', trim($preferred_voters));
   foreach ($arr_names as $username) {
@@ -32,13 +32,13 @@ function utils_get_emails($preferred_voters) {
     }
     else {
       $msg = t("The user '!username' does not exist.",
-               array('!username' => $username));
-      $error_messages[] = array($msg, 'error');
+               ['!username' => $username]);
+      $error_messages[] = [$msg, 'error'];
     }
   }
   if (empty($arr_emails)) {
     $arr_emails = NULL;
   }
 
-  return array($arr_emails, $error_messages);
+  return [$arr_emails, $error_messages];
 }

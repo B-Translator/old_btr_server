@@ -82,7 +82,7 @@ function btrCore_init() {
  * Returns an array of cache table names.
  */
 function btrCore_flush_caches() {
-  return array('cache_btrCore');
+  return ['cache_btrCore'];
 }
 
 /**
@@ -93,14 +93,11 @@ function btrCore_flush_caches() {
  * to robots.txt
  */
 function btrCore_robotstxt() {
-  return array(
-    '# B-Translator paths',
-    'Disallow: /translations/',
-    'Disallow: /?q=translations/',
-    'Disallow: /fb_cb/',
-    'Disallow: /?q=fb_cb/',
-    'Disallow: /downloads/',
-  );
+  return [
+    '# B-Translator',
+    'User-agent: *',
+    'Disallow: /',
+  ];
 }
 
 /**

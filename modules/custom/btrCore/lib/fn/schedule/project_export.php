@@ -34,11 +34,6 @@ use \btr;
  * @param preferred_voters
  *   Comma separated list of usernames. Used only when export_mode
  *   is 'preferred'.
- *
- * @return
- *   Array of notification messages; each notification message
- *   is an array of a message and a type, where type can be one of
- *   'status', 'warning', 'error'.
  */
 function schedule_project_export($origin, $project, $lng,
   $export_mode = NULL, $preferred_voters = NULL)
@@ -46,8 +41,9 @@ function schedule_project_export($origin, $project, $lng,
   // Make sure that the given origin and project do exist.
   if (!btr::project_exists($origin, $project)) {
     $msg = t("The project '!project' does not exist.",
-           array('!project' => "$origin/$project"));
-    return array(array($msg, 'error'));
+           ['!project' => "$origin/$project"]);
+    btr::messages($msg, 'error');
+    return;
   }
 
   // Check the export_mode.
@@ -56,32 +52,34 @@ function schedule_project_export($origin, $project, $lng,
   }
   if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
     $msg = t("Unknown export mode '!export_mode'.",
-             array('!export_mode' => $export_mode));
-    return array(array($msg, 'error'));
+             ['!export_mode' => $export_mode]);
+    btr::messages($msg, 'error');
+    return;
   }
 
   // Get and check the list of preferred voters.
   if ($export_mode == 'preferred') {
     list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
     if (!empty($error_messages)) {
-      return $error_messages;
+      btr::mesages($error_messages);
+      return;
     }
     if (empty($arr_emails)) {
       $account = user_load($GLOBALS['user']->uid);
-      $arr_emails = array($account->init);
+      $arr_emails = [$account->init];
     }
   }
 
   // Schedule the project export.
-  $queue_params = array(
+  $queue_params = [
     'origin' => $origin,
     'project' => $project,
     'lng' => $lng,
     'uid' => $GLOBALS['user']->uid,
     'export_mode' => $export_mode,
     'preferred_voters' => $arr_emails,
-  );
-  btr::queue('export_project', array($queue_params));
+  ];
+  btr::queue('export_project', [$queue_params]);
 
   // Schedule a notification to each admin of the project.
   $notify_admin = variable_get('btr_export_notify_admin', TRUE);
@@ -91,12 +89,12 @@ function schedule_project_export($origin, $project, $lng,
     foreach ($admins as $uid => $user) {
       $queue_params['recipient'] = $user->email;
       $queue_params['username'] = $user->name;
-      btr::queue('notifications', array($queue_params));
+      btr::queue('notifications', [$queue_params]);
     }
   }
 
   // Return a notification message.
   $msg = t("Export of '!project' is scheduled. You will be notified by email when it is done.",
-         array('!project' => "$origin/$project"));
-  return array(array($msg, 'status'));
+         ['!project' => "$origin/$project"]);
+  btr::messages($msg);
 }

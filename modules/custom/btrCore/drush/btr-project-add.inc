@@ -36,4 +36,5 @@ it will be deleted first (related data will be erased as well).
  */
 function drush_btranslator_btr_project_add($origin, $project, $path) {
   btr::project_add($origin, $project, $path, $GLOBALS['user']->uid);
+  foreach(btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }

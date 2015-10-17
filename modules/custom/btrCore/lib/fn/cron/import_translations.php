@@ -38,13 +38,8 @@ function cron_import_translations($params) {
   exec("cd $tmpdir ; dtrx -q -n $file->filename 2>/dev/null");
 
   // Import the PO files.
-  $messages = btr::vote_import($account->uid, $lng, $tmpdir);
-
-  // Concat the messages into a text format.
-  $txt_messages = '';
-  foreach ($messages as $msg) {
-    $txt_messages .= "\n - " . $msg[1] . ': ' . $msg[0] . "\n";
-  }
+  btr::vote_import($account->uid, $lng, $tmpdir);
+  $txt_messages = btr::messages_cat(btr::messages());
 
   // Get the base_url of the site.
   module_load_include('inc', 'btrCore', 'includes/sites');

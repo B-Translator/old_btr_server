@@ -46,9 +46,7 @@ function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
   $export_mode = ($prefer == NULL ? 'moste_voted' : 'preferred');
   list($preferred_voters, $error_messages) = btr::utils_get_emails($prefer);
   if (!empty($error_messages)) {
-    foreach ($error_messages as $msg) {
-      drush_log($msg[0], $msg[1]);
-    }
+    foreach ($error_messages as $msg)  drush_log($msg[0], $msg[1]);
     drupal_exit();
   }
 
@@ -65,6 +63,7 @@ function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
 
   // Make the diff.
   btr::project_diff($origin, $project, $lng, $file_diff, $file_ediff, NULL, $export_mode, $preferred_voters);
+  foreach(btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 
   // Cleanup.
   if ($format == 'ediff') {

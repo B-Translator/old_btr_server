@@ -25,7 +25,6 @@ use \btr;
  *   given parameters and to the preferencies of the user.
  */
 function sguid_get($target, $lng =NULL, $projects =NULL) {
-  $messages = array();
 
   switch ($target) {
     default:

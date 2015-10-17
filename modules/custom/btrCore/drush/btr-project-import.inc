@@ -44,4 +44,5 @@ function drush_btranslator_btr_project_import($origin, $project, $lng, $path) {
   $uid = $GLOBALS['user']->uid;
   if ($uid == 0)  $uid = 1;
   btr::project_import($origin, $project, $lng, $path, $uid);
+  foreach(btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }

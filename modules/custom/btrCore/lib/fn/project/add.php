@@ -26,16 +26,9 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *
  * @param $uid
  *   ID of the user that has requested the import.
- *
- * @param $quiet
- *   Don't print progress output (default FALSE).
  */
-function project_add($origin, $project, $path, $uid = 1, $quiet = FALSE) {
-  // Define the constant QUIET inside the namespace.
-  define('BTranslator\QUIET', $quiet);
-
-  // Print progress output.
-  QUIET || print "project_add: $origin/$project: $path\n";
+function project_add($origin, $project, $path, $uid = 1) {
+  btr::messages("Adding project: $origin/$project: $path");
 
   // Erase the project if it exists.
   btr::project_del($origin, $project, $erase = TRUE, $purge = FALSE);
@@ -67,8 +60,6 @@ function _import_pot_files($origin, $project, $path, $uid = 1) {
     $filename = basename($path);
     $tplname = $project;
     _process_pot_file($pguid, $tplname, $path, $filename, $uid);
-
-    // Done.
     return;
   }
 
@@ -94,8 +85,7 @@ function _import_pot_files($origin, $project, $path, $uid = 1) {
  * and insert the strings.
  */
 function _process_pot_file($pguid, $tplname, $file, $filename, $uid = 1) {
-  // Print progress output.
-  QUIET || print "import_pot_file: $filename\n";
+  btr::messages("Importing POT file: $filename");
 
   // Create a new template.
   $potid = btr::db_insert('btr_templates')
@@ -160,9 +150,9 @@ function _add_string($entry, $uid = 1) {
   // The DB fields of the string and context are VARCHAR(1000),
   // check that they do not exceed this length.
   if (strlen($string) > 1000 or strlen($context) > 1000) {
-    print $context . "\n";
-    print $string . "\n";
-    print "***Warning*** The string or its context is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
+    $msg = t("The string or its context is too long  to be stored in the DB (more than 1000 chars); skipped.")
+      . "\n\nContext: " . $context . "\n\nString: " . $string;
+    btr::messages($msg, 'warning');
     return NULL;
   }
 

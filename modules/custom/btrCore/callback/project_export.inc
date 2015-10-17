@@ -93,9 +93,7 @@ function btrCore_project_export() {
     }
     list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
     if (!empty($error_messages)) {
-      foreach ($error_messages as $msg) {
-        print $msg[0] . "\n";
-      }
+      foreach ($error_messages as $msg) { print $msg[0] . "\n"; }
       drupal_exit();
     }
   }
@@ -104,8 +102,7 @@ function btrCore_project_export() {
   set_time_limit(0);
   $export_dir = exec('mktemp -d');
   btr::project_export($origin, $project, $lng, $export_dir,
-    $GLOBALS['user']->uid, $quiet = TRUE,
-    $export_mode, $arr_emails);
+    $GLOBALS['user']->uid, $export_mode, $arr_emails);
   $file_tgz = tempnam('/tmp', 'export_');
   exec("tar -cz -f $file_tgz -C $export_dir .");
 

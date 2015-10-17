@@ -18,11 +18,6 @@ use \btr;
  *
  * @param $uid
  *   Id of the user that is deleting the translation.
- *
- * @return
- *   Array of notification messages; each notification message
- *   is an array of a message and a type, where type can be
- *   one of 'status', 'warning', 'error'
  */
 function translation_del($tguid, $notify = TRUE, $uid = NULL) {
   // Get the user account.
@@ -51,7 +46,8 @@ function translation_del($tguid, $notify = TRUE, $uid = NULL) {
     ->fetchAll();
   $sguid = btr::db_query(
     'SELECT sguid FROM {btr_translations} WHERE tguid = :tguid',
-    array(':tguid' => $tguid))->fetchField();
+    [':tguid' => $tguid]
+  )->fetchField();
   $string = btr::string_get($sguid);
   $translation = btr::translation_get($tguid);
 
@@ -62,7 +58,8 @@ function translation_del($tguid, $notify = TRUE, $uid = NULL) {
     and !btr::user_has_project_role('moderator', $sguid))
     {
       $msg = t('You are not allowed to delete this translation!');
-      return array(array($msg, 'error'));
+      btr::messages($msg, 'error');
+      return;
     }
 
   // Copy to the trash table the translation that will be deleted.
@@ -90,8 +87,6 @@ function translation_del($tguid, $notify = TRUE, $uid = NULL) {
   if ($notify) {
     _notify_voters_on_translation_del($sguid, $tguid, $string, $translation, $author, $voters);
   }
-
-  return array();
 }
 
 /**

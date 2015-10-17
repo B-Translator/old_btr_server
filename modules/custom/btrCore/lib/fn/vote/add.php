@@ -14,11 +14,7 @@ use \btr;
  *   ID of the user.
  *
  * @return
- *   array($vid, $messages)
- *   - $vid is the ID of the new vote, or NULL
- *   - $messages is an array of notification messages; each notification
- *               message is an array of a message and a type, where
- *               type can be one of 'status', 'warning', 'error'
+ *   ID of the new vote, or NULL.
  */
 function vote_add($tguid, $uid = NULL) {
   if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
@@ -30,7 +26,8 @@ function vote_add($tguid, $uid = NULL) {
   // If there is no such translation, return NULL.
   if (empty($trans)) {
     $msg = t('The given translation does not exist.');
-    return [NULL, [[$msg, 'error']]];
+    btr::messages($msg, 'error');
+    return NULL;
   }
 
   // Get the mail and lng of the user.
@@ -40,9 +37,9 @@ function vote_add($tguid, $uid = NULL) {
 
   // Make sure that the language of the user matches the language of the translation.
   if ($ulng != $trans->lng and !user_access('btranslator-admin', $account)) {
-    print "$account->uid";
     $msg = t('You cannot vote the translations of language <strong>!lng</strong>', ['!lng' => $trans->lng]);
-    return [NULL, [[$msg, 'error']]];
+    btr::messages($msg, 'error');
+    return NULL;
   }
 
   // Clean any previous vote.
@@ -67,5 +64,5 @@ function vote_add($tguid, $uid = NULL) {
     ->condition('tguid', $tguid)
     ->execute();
 
-  return [$vid, []];
+  return $vid;
 }

@@ -21,26 +21,23 @@ use \btr;
  *
  * @param $uid
  *   ID of the user that has requested the import.
- *
- * @return
- *   Array of messages, where each item is is an array of a message and a type,
- *   where type can be one of 'status', 'warning', 'error'.
  */
 function vocabulary_import($name, $lng, $file, $uid = 1) {
   // Check access permissions.
   $account = user_load($uid);
   if (!user_access('btranslator-suggest', $account)) {
     $msg = t('No rights for contributing suggestions!');
-    return [[$msg, 'error']];
+    btr::messages($msg, 'error');
+    return;
   }
   // Check that the language matches the translation language of the user.
   if (!user_access('btranslator-admin', $account) and ($lng != $account->translation_lng)) {
     $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
-    return [[$msg, 'error']];
+    btr::messages($msg, 'error');
+    return;
   }
 
   // Process each line of the file.
-  $messages = array();
   $lines = file($file, FILE_IGNORE_NEW_LINES);
   for ($i=0, $n = count($lines); $i < $n; $i++) {
     $line = $lines[$i];
@@ -57,11 +54,7 @@ function vocabulary_import($name, $lng, $file, $uid = 1) {
 
     // Add the translations.
     foreach ($arr_translations as $translation) {
-      list($tguid, $arr_msg) = btr::translation_add($sguid, $lng, $translation, $uid=1, $notify=FALSE);
-      $messages = array_merge($messages, $arr_msg);
+      btr::translation_add($sguid, $lng, $translation, $uid=1, $notify=FALSE);
     }
   }
-
-  // Return any messages that are collected during the import.
-  return $messages;
 }

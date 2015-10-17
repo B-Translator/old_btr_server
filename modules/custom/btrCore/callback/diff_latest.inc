@@ -36,9 +36,7 @@ function btrCore_project_diff_latest($origin, $project, $lng) {
     list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
     if (!empty($error_messages)) {
       header('Content-Type: text/plain; charset=utf-8');
-      foreach ($error_messages as $msg) {
-        print $msg[0] . "\n";
-      }
+      foreach ($error_messages as $msg) { print $msg[0] . "\n"; }
       return;
     }
   }

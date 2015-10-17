@@ -31,15 +31,11 @@ module_load_include('php', 'btrCore', 'lib/gettext/POWriter');
  * @param $uid
  *   ID of the user that has requested the export.
  *
- * @param $quiet
- *   Don't print progress output (default FALSE).
- *
  * @param $export_mode
  *   Can be 'most_voted' (default), or 'preferred', or 'original'.
  *
  * @param $preferred_voters
  *   Array of email addresses of users whose translations are preferred.
- *
  *
  * The export mode 'most_voted' (which is the default one) exports the most
  * voted translations and suggestions.
@@ -54,12 +50,11 @@ module_load_include('php', 'btrCore', 'lib/gettext/POWriter');
  * that was imported (useful for making an initial snapshot of the project).
  */
 function project_export($origin, $project, $lng, $path, $uid = NULL,
-  $quiet = FALSE, $export_mode = 'most_voted', $preferred_voters = NULL)
+  $export_mode = 'most_voted', $preferred_voters = NULL)
 {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+  btr::messages("Export project: $origin/$project/$lng: $path");
 
-  // Print progress output.
-  $quiet || print "project_export: $origin/$project/$lng: $path\n";
+  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
 
   // Check arguments $export_mode and $preferred_voters.
   if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
@@ -88,15 +83,28 @@ function project_export($origin, $project, $lng, $path, $uid = NULL,
 
   // Export each file of the project.
   foreach ($result as $row) {
+    btr::messages("Export PO file: $origin/$project/$lng: $row->filename");
+
     $tplname = $row->tplname;
     $po_file = $path . '/' . $row->filename;
 
-    // Print progress output.
-    $quiet || print "export_po_file: $origin/$project/$lng: $row->filename\n";
+    // Get the id of the template ($potid).
+    $potid = btr::db_query(
+      'SELECT potid FROM {btr_templates}
+       WHERE pguid = :pguid AND tplname = :tplname',
+      array(
+        ':pguid' => sha1($origin . $project),
+        ':tplname' => $tplname,
+      ))
+      ->fetchField();
+    if (!$potid) {
+      $msg = t("Template '!tplname' not found!", ['!tplname' => $tplname]);
+      btr::messages($msg, 'warning');
+      continue;
+    }
 
     // Export this file.
-    _export_po_file($origin, $project, $lng, $tplname, $po_file,
-                    $export_mode, $preferred_voters);
+    _export_po_file($potid, $lng, $po_file, $export_mode, $preferred_voters);
   }
 }
 
@@ -104,22 +112,7 @@ function project_export($origin, $project, $lng, $path, $uid = NULL,
 /**
  * Export a PO file.
  */
-function _export_po_file($origin, $project, $lng, $tplname, $filename, $export_mode = 'most_voted', $preferred_voters = NULL) {
-
-  // Get the id of the template.
-  $potid = btr::db_query(
-    'SELECT potid FROM {btr_templates}
-     WHERE pguid = :pguid AND tplname = :tplname',
-    array(
-      ':pguid' => sha1($origin . $project),
-      ':tplname' => $tplname,
-    ))
-    ->fetchField();
-  if (!$potid) {
-    print "Template '$tplname' not found!";
-    return;
-  }
-
+function _export_po_file($potid, $lng, $filename, $export_mode = 'most_voted', $preferred_voters = NULL) {
   // Get headers and comments of the template.
   $row = btr::db_query(
     'SELECT headers, comments FROM {btr_files}
@@ -178,7 +171,6 @@ function _export_po_file($origin, $project, $lng, $tplname, $filename, $export_m
     }
     $strings[$sguid]->translation = $translation;
   }
-  //print_r($strings);  exit(0);  //debug
 
   // Write entries to a PO file.
   exec('mkdir -p ' . dirname($filename));

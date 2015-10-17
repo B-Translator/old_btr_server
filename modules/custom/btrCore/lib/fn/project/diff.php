@@ -47,7 +47,7 @@ function project_diff($origin, $project, $lng,
   // Export the latest translations of the project.
   $export_dir = exec('mktemp -d');
   btr::project_export($origin, $project, $lng, $export_dir,
-    $uid, $quiet = FALSE, $export_mode, $preferred_voters);
+    $uid, $export_mode, $preferred_voters);
 
   // Archive exported files in format tgz.
   if ($export_file !== NULL) {
@@ -112,7 +112,8 @@ function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $com
   // The DB fields of diff and ediff are MEDIUMTEXT (16777216 bytes),
   // check that the files do not exceed this length.
   if (filesize($file_diff) > 16777216 or filesize($file_ediff) > 16777216) {
-    print "***Warning*** Diff files are too large to be stored in the DB (longer than MEDIUMTEXT); skipped.\n";
+    $msg = t("Diff files are too large to be stored in the DB (longer than MEDIUMTEXT); skipped.");
+    btr::messages($msg, 'warning');
     return;
   }
 

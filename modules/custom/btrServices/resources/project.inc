@@ -164,15 +164,15 @@ function _btrServices_project_list($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_project_export($params) {
-  $params += array(
+  $params += [
     'origin' => NULL,
     'project' => NULL,
     'lng' => NULL,
     'export_mode' => NULL,
     'preferred_voters' => NULL,
-  );
+  ];
 
-  $messages = btr::schedule_project_export(
+  btr::schedule_project_export(
     check_plain($params['origin']),
     check_plain($params['project']),
     check_plain($params['lng']),
@@ -180,7 +180,7 @@ function _btrServices_project_export($params) {
     check_plain($params['preferred_voters'])
   );
 
-  return array('messages' => $messages);
+  return ['messages' => btr::messages()];
 }
 
 /**
@@ -228,10 +228,7 @@ function _btrServices_project_import($params) {
   }
 
   // Get the parameters.
-  $params += array(
-    'origin' => NULL,
-    'project' => NULL,
-  );
+  $params += ['origin' => NULL, 'project' => NULL];
   $origin = check_plain($params['origin']);
   $project = check_plain($params['project']);
 
@@ -247,8 +244,8 @@ function _btrServices_project_import($params) {
   }
 
   // Schedule the project import.
-  $messages = btr::schedule_project_import($origin, $project, $uploaded_file);
-  return ['messages' => $messages];
+  btr::schedule_project_import($origin, $project, $uploaded_file);
+  return ['messages' => btr::messages()];
 }
 
 /**

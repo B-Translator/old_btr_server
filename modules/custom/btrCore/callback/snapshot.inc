@@ -24,8 +24,6 @@ function btrCore_project_snapshot($origin, $project, $lng) {
   $preferred_voters = check_plain($_GET['friends']);
   $export_mode = check_plain($_GET['export_mode']);
 
-  btr::log($comment, 'comment');
-
   if (in_array($export_mode, ['preferred_by_me', 'preferred_by_my_friends'])) {
     $export_mode = 'preferred';
   }
@@ -38,15 +36,13 @@ function btrCore_project_snapshot($origin, $project, $lng) {
     list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
     if (!empty($error_messages)) {
       header('Content-Type: text/plain; charset=utf-8');
-      foreach ($error_messages as $msg) {
-        print $msg[0] . "\n";
-      }
+      foreach ($error_messages as $msg) { print $msg[0] . "\n"; }
       return;
     }
   }
 
   // Make the snapshot.
-  $msg = btr::project_snapshot($origin, $project, $lng, $comment, $export_mode, $arr_voters);
+  btr::project_snapshot($origin, $project, $lng, $comment, $export_mode, $arr_voters);
 
   // Redirect back to the calling page.
   if (isset($_GET['dest'])) {

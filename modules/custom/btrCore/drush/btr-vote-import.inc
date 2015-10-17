@@ -62,8 +62,8 @@ function drush_btranslator_btr_vote_import($lng, $path) {
   $path = _drush_btranslator_btr_vote_import_check_path($path);
 
   // Import translations and votes.
-  $messages = btr::vote_import($user->uid, $lng, $path);
-  foreach ($messages as $msg)  drush_log($msg[0], $msg[1]);
+  btr::vote_import($user->uid, $lng, $path);
+  foreach (btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }
 
 /**
@@ -74,7 +74,11 @@ function _drush_btranslator_btr_vote_import_check_permissions($lng) {
 
   // Check user access permissions.
   if (!user_access('btranslator-suggest')) {
-    drush_log(t('User "!user" does not have enough rights for submitting translations!', array('!user' => $user->name)), 'error');
+    drush_log(t('User "!user" has no rights for contributing translations!', ['!user' => $user->name]), 'error');
+    drupal_exit();
+  }
+  if (!user_access('btranslator-vote')) {
+    drush_log(t('User "!user" has no rights for submiting votes!', ['!user' => $user->name]), 'error');
     drupal_exit();
   }
 
@@ -87,7 +91,7 @@ function _drush_btranslator_btr_vote_import_check_permissions($lng) {
   // Make sure that this user can make translations for the given language.
   if ($lng != $user->translation_lng) {
     drush_log(t('User "!user" cannot submit translations for the language "!lng"',
-        array('!user' => $user->name, '!lng' => $lng)
+        ['!user' => $user->name, '!lng' => $lng]
       ), 'error');
     drupal_exit();
   }
@@ -99,7 +103,7 @@ function _drush_btranslator_btr_vote_import_check_permissions($lng) {
 function _drush_btranslator_btr_vote_import_check_path($path) {
   // Check that there is such a file.
   if (!file_exists($path)) {
-    drush_log(t('File "!file" does not exist.', array('!file' => $path)), 'error');
+    drush_log(t('File "!file" does not exist.', ['!file' => $path]), 'error');
     drupal_exit();
   }
 
@@ -110,7 +114,7 @@ function _drush_btranslator_btr_vote_import_check_path($path) {
   $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
   if (!preg_match($regex, $path)) {
     $msg = t('Only files with the following extensions are allowed: !files-allowed.',
-           array('!files-allowed' => $extensions));
+           ['!files-allowed' => $extensions]);
     drush_log($msg, 'error');
     drupal_exit();
   }

@@ -424,12 +424,11 @@ function _btrServices_translations_get($params) {
   }
 
   $sguid = $params['sguid'];
-  $messages = array();
-  if (in_array($sguid, array('random', 'translated', 'untranslated'))) {
+  if (in_array($sguid, ['random', 'translated', 'untranslated'])) {
     $sguid = btr::sguid_get($sguid, $lng);
   }
 
-  $strings = btr::string_load(array($sguid), $lng);
+  $strings = btr::string_load([$sguid], $lng);
   $string = empty($strings) ? NULL : $strings[0];
 
   return [ 'string' => $string ];
@@ -479,11 +478,9 @@ function _btrServices_translations_add($params) {
     return ['tguid' => NULL, 'messages' => [[$msg, 'error']]];
   }
 
-  list($tguid, $messages) = btr::translation_add($sguid, $lng, $translation);
-  return array(
-    'tguid' => $tguid,
-    'messages' => $messages
-  );
+  // Add the translation.
+  $tguid = btr::translation_add($sguid, $lng, $translation);
+  return ['tguid' => $tguid, 'messages' => btr::messages()];
 }
 
 
@@ -514,12 +511,8 @@ function _btrServices_translations_vote($params) {
   }
 
   // Add the vote.
-  list($vid, $messages) = btr::vote_add($tguid);
-
-  return array(
-    'vid' => $vid,
-    'messages' => $messages
-  );
+  $vid = btr::vote_add($tguid);
+  return ['vid' => $vid, 'messages' => btr::messages()];
 }
 
 /**
@@ -539,8 +532,8 @@ function _btrServices_translations_vote($params) {
  */
 function _btrServices_translations_del($params) {
   $tguid = $params['tguid'];
-  $messages = btr::translation_del($tguid);
-  return ['messages' => $messages];
+  btr::translation_del($tguid);
+  return ['messages' => btr::messages()];
 }
 
 /**
@@ -560,10 +553,8 @@ function _btrServices_translations_del($params) {
  */
 function _btrServices_translations_del_vote($params) {
   $tguid = $params['tguid'];
-  $messages = btr::vote_del($tguid);
-  return array(
-    'messages' => $messages
-  );
+  btr::vote_del($tguid);
+  return ['messages' => btr::messages()];
 }
 
 /**
@@ -585,7 +576,6 @@ function _btrServices_translations_del_vote($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_translations_submit($params) {
-  $messages = array();
   $nr_votes = $nr_suggestions = $nr_deletions = 0;
   foreach ($params as $item) {
     $action = $item['action'];
@@ -594,54 +584,51 @@ function _btrServices_translations_submit($params) {
     case 'add':
       $result = _btrServices_translations_add($item['params']);
       if ($result['tguid'] != NULL)  $nr_suggestions++;
-      $messages += $result['messages'];
+      btr::messages($result['messages']);
       break;
 
     case 'vote':
       $result = _btrServices_translations_vote($item['params']);
       if ($result['vid'] != NULL)  $nr_votes++;
-      $messages += $result['messages'];
+      btr::messages($result['messages']);
       break;
 
     case 'del':
       $result = _btrServices_translations_del($item['params']);
       if (sizeof($result['messages'])==0) {
-	$nr_deletions++;
+        $nr_deletions++;
       }
       else {
-	$messages += $result['messages'];
+        btr::messages($result['messages']);
       }
       break;
 
     case 'del_vote':
       $result = _btrServices_translations_del_vote($item['params']);
-      $messages += $result['messages'];
+      btr::messages($result['messages']);
       break;
 
     default:
-      $msg = t('Action !action is not supported!',
-              array('!action' => $action));
-      $messages[] = array($msg, 'error');
+      $msg = t('Action !action is not supported!', ['!action' => $action]);
+      btr::messages($msg, 'error');
       break;
     }
   }
 
   if ($nr_suggestions > 0) {
     $msg = format_plural($nr_suggestions, '1 suggestion saved', '@count suggestions saved');
-    $messages[] = array($msg, 'status');
+    btr::messages($msg);
   }
   if ($nr_votes > 0) {
     $msg = format_plural($nr_votes, '1 vote saved', '@count votes saved');
-    $messages[] = array($msg, 'status');
+    btr::messages($msg);
   }
   if ($nr_deletions > 0) {
     $msg = format_plural($nr_deletions, '1 translation deleted', '@count translations deleted');
-    $messages[] = array($msg, 'status');
+    btr::messages($msg);
   }
 
-  return array(
-    'messages' => $messages
-  );
+  return ['messages' => btr::messages()];
 }
 
 /**
@@ -660,12 +647,6 @@ function _btrServices_translations_submit($params) {
  *       'status', 'warning', 'error'.
  */
 function _btrServices_vote_import($params) {
-  // Check access permissions.
-  if (!user_access('btranslator-suggest')) {
-    $msg = t('You do not have enough rights for submitting translations!');
-    return array('messages' => array(array($msg, 'error')));
-  }
-
   // Get and check the parameter 'lng'.
   $lng = $params['lng'];
   if (!in_array($lng, btr::languages_get())) {
@@ -676,8 +657,18 @@ function _btrServices_vote_import($params) {
   // translations for the given language.
   $user = user_load($GLOBALS['user']->uid);
   if ($lng != $user->translation_lng) {
-    $msg = t('You cannot submit translations for the language !lng', array('!lng' => $lng));
-    return array('messages' => array(array($msg, 'error')));
+    $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
+    return ['messages' => [[$msg, 'error']]];
+  }
+
+  // Check access permissions.
+  if (!user_access('btranslator-vote')) {
+    $msg = t('No rights for submitting votes!');
+    return ['messages' => [[$msg, 'error']]];
+  }
+  if (!user_access('btranslator-suggest')) {
+    $msg = t('No rights for submitting translations!');
+    return ['messages' => [[$msg, 'error']]];
   }
 
   // Get the parameters.
@@ -701,15 +692,15 @@ function _btrServices_vote_import($params) {
   $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote($extensions)) . ')$/i';
   if (!preg_match($regex, $uploaded_file['name'])) {
     $msg = t('Only files with the following extensions are allowed: %files-allowed.',
-           array('%files-allowed' => $extensions));
-    return array('messages' => array(array($msg, 'error')));
+           ['%files-allowed' => $extensions]);
+    return ['messages' => [[$msg, 'error']]];
   }
 
   // Move the uploaded file to 'private://' (/var/www/uploads/).
   $file_uri = 'private://' . $uploaded_file['name'];
   if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
-    $msg = array(t('Failed to move uploaded file.'), 'error');
-    return array('messages' => array($msg));
+    $msg = [t('Failed to move uploaded file.'), 'error'];
+    return ['messages' => [$msg]];
   }
 
   // Save the file data to the DB.
@@ -722,23 +713,22 @@ function _btrServices_vote_import($params) {
   $file->filesize = $uploaded_file['size'];
   try {
     $file = file_save($file);
-    $messages = array();
   }
   catch (Exception $e) {
-    $msg = array($e->getMessage(), 'error');
-    return array('messages' => array($msg));
+    $msg = [$e->getMessage(), 'error'];
+    return ['messages' => [$msg]];
   }
 
   // Schedule the import.
-  $queue_params = array(
+  $queue_params = [
     'uid' => $GLOBALS['user']->uid,
     'fid' => $file->fid,
     'lng' => $lng,
-  );
+  ];
   btr::queue('import_translations', array($queue_params));
 
   // Return a notification message.
   $msg = t("Import of the file '!filename' is scheduled. You will be notified by email when it is done.",
-         array('!filename' => $file->filename));
-  return array('messages' => array(array($msg, 'status')));
+         ['!filename' => $file->filename]);
+  return ['messages' => [[$msg, 'status']]];
 }

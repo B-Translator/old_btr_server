@@ -66,14 +66,12 @@ function drush_btranslator_btr_project_export($origin, $project, $lng, $path) {
     $preferred_voters = drush_get_option('preferred-voters', NULL);
     list($arr_emails, $error_messages) = btr::utils_get_emails($preferred_voters);
     if (!empty($error_messages)) {
-      foreach ($error_messages as $msg) {
-        drush_log($msg[0], $msg[1]);
-      }
+      foreach ($error_messages as $msg)  drush_log($msg[0], $msg[1]);
       drupal_exit();
     }
   }
 
   // Export the project.
   btr::project_export($origin, $project, $lng, $path,
-    $GLOBALS['user']->uid, FALSE, $export_mode, $arr_emails);
+    $GLOBALS['user']->uid, $export_mode, $arr_emails);
 }

@@ -31,16 +31,9 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  *
  * @param $uid
  *   ID of the user that has requested the import.
- *
- * @param $quiet
- *   Don't print progress output (default FALSE).
  */
-function project_import($origin, $project, $lng, $path, $uid = 1, $quiet = FALSE) {
-  // Define the constant QUIET inside the namespace.
-  define('BTranslator\QUIET', $quiet);
-
-  // Print progress output.
-  QUIET || print "project_import: $origin/$project/$lng: $path\n";
+function project_import($origin, $project, $lng, $path, $uid = 1) {
+  btr::messages("Import project: $origin/$project/$lng: $path");
 
   // Check that the project exists.
   $pguid = btr::db_query(
@@ -48,7 +41,8 @@ function project_import($origin, $project, $lng, $path, $uid = 1, $quiet = FALSE
     array(':pguid' => sha1($origin . $project))
   )->fetchField();
   if (!$pguid) {
-    QUIET || print "***Error*** The project '$origin/$project' does not exist.\n";
+    $msg = t("The project '!project' does not exist.", ['!project' => "$origin/$project"]);
+    btr::messages($msg, 'error');
     return;
   }
 
@@ -75,8 +69,6 @@ function _import_po_files($origin, $project, $lng, $path, $uid = 1) {
     $filename = basename($path);
     $tplname = $project;
     _process_po_file($origin, $project, $tplname, $lng, $path, $filename, $uid);
-
-    // Done.
     return;
   }
 
@@ -98,8 +90,7 @@ function _import_po_files($origin, $project, $lng, $path, $uid = 1) {
  * and insert the strings.
  */
 function _process_po_file($origin, $project, $tplname, $lng, $file, $filename, $uid = 1) {
-  // Print progress output.
-  QUIET || print "import_po_file: $filename\n";
+  btr::messages("Import PO file: $filename");
 
   // Get the template id.
   $potid = btr::db_query(
@@ -113,7 +104,8 @@ function _process_po_file($origin, $project, $tplname, $lng, $file, $filename, $
 
   // Check that the template exists.
   if (!$potid) {
-    QUIET ||  print "***Warning*** The template '$tplname' does not exist.\n";
+    $msg = t("The template '!tplname' does not exist.", ['!tplname' => $tplname]);
+    btr::messages($msg, 'warning');
     return;
   }
 
@@ -163,7 +155,8 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments, $uid = 1
   // If file already exists.
   if (isset($row['potid'])) {
     if ($row['potid']==$potid and $row['lng']==$lng) {
-      QUIET || print "***Warning*** Already imported, skipping: $filename\n";
+      $msg = t("Already imported, skipping: !filename", ['!filename' => $filename]);
+      btr::messages($msg, 'warning');
       return NULL;
     }
     else {
@@ -176,21 +169,22 @@ function _add_file($file, $filename, $potid, $lng, $headers, $comments, $uid = 1
         array(':potid' => $row['potid'])
       )->fetchAssoc();
       $msg = t("File '!filename' has already been imported for '!origin/!project' and language '!lng' as '!tplname'.",
-             array(
+             [
                '!filename' => $filename,
                '!origin' => $row1['origin'],
                '!project' => $row1['project'],
                '!lng' => $row['lng'],
                '!tplname' => $row1['tplname'],
-             ));
-      QUIET || print "***Warning*** $msg\n";
+             ]);
+      btr::messages($msg, 'warning');
     }
   }
 
   // The DB field of content is MEDIUMTEXT (16777216 bytes),
   // check that the file does not exceed this length.
   if (filesize($file) > 16777216) {
-    print "***Warning*** File is too large to be stored in the DB (longer than MEDIUMTEXT); skipped.\n";
+    $msg = t("File is too large to be stored in the DB (longer than MEDIUMTEXT); skipped.");
+    btr::messages($msg, 'warning');
     return NULL;
   }
 
@@ -246,8 +240,9 @@ function _add_translation($sguid, $lng, $translation, $uid = 1) {
   // The DB field of the translation is VARCHAR(1000),
   // check that translation does not exceed this length.
   if (strlen($translation) > 1000) {
-    QUIET || print $translation . "\n";
-    QUIET || print "***Warning*** Translation is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
+    $msg = t("Translation is too long  to be stored in the DB (more than 1000 chars); skipped.")
+      . "\n\nTranslation: " . $translation;
+    btr::messages($msg, 'warning');
     return;
   }
 

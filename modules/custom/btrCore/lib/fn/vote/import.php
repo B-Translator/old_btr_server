@@ -31,29 +31,8 @@ use \btr;
  *
  * @param $path
  *   A directory with PO files to be used for import.
- *
- * @return
- *   Array of notification messages; each notification message
- *   is an array of a message and a type, where type can be one of
- *   'status', 'warning', 'error'.
  */
 function vote_import($uid, $lng, $path) {
-  // Check access permissions.
-  $account = user_load($uid);
-  if (!user_access('btranslator-suggest', $account)) {
-    $msg = t('No rights for contributing suggestions!');
-    return [[$msg, 'error']];
-  }
-  if (!user_access('btranslator-vote', $account)) {
-    $msg = t('No rights for submitting votes!');
-    return [[$msg, 'error']];
-  }
-  // Check that the language matches the translation language of the user.
-  if (!user_access('btranslator-admin', $account) and ($lng != $account->translation_lng)) {
-    $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
-    return [[$msg, 'error']];
-  }
-
   // Get the mail of the user.
   $account = user_load($uid);
   $umail = $account->init;
@@ -62,7 +41,6 @@ function vote_import($uid, $lng, $path) {
   $files = file_scan_directory($path, '/.*\.po$/');
 
   // Import the PO files.
-  $messages = array();
   module_load_include('php', 'btrCore', 'lib/gettext/POParser');
   foreach ($files as $file) {
     // Parse the PO file.
@@ -72,9 +50,8 @@ function vote_import($uid, $lng, $path) {
     // Process each gettext entry.
     foreach ($entries as $entry) {
       // Get the string sguid.
-      list($sguid, $msgs) = _get_sguid($entry, $uid);
+      $sguid = _get_sguid($entry, $uid);
       if ($sguid === NULL) {
-        $messages = array_merge($messages, $msgs);
         continue;
       }
 
@@ -83,17 +60,13 @@ function vote_import($uid, $lng, $path) {
       if (trim($translation) === '')  continue;
 
       // Add the translation for this string.
-      $msgs = _add_translation($sguid, $lng, $translation, $uid);
-      $messages = array_merge($messages, $msgs);
+      _add_translation($sguid, $lng, $translation, $uid);
     }
   }
-
-  // Return any messages that were generated during the import.
-  return $messages;
 }
 
 /**
- * Returns the sguid of the string and an array of messages.
+ * Returns the sguid of the string.
  *
  * If such a string does not exist, insert it into the DB.  However,
  * if the msgid is empty (the header entry), don't add a string for
@@ -101,8 +74,6 @@ function vote_import($uid, $lng, $path) {
  * In such cases return NULL.
  */
 function _get_sguid($entry, $uid) {
-  $messages = array();
-
   // Get the string.
   $string = $entry['msgid'];
   if (isset($entry['msgid_plural'])) {
@@ -112,10 +83,10 @@ function _get_sguid($entry, $uid) {
   // Don't add the header entry as a translatable string.
   // Don't add strings like 'translator-credits' etc. as translatable strings.
   if ($string == '') {
-    return array(NULL, array());
+    return NULL;
   }
   if (preg_match('/.*translator.*credit.*/', $string)) {
-    return array(NULL, array());
+    return NULL;
   }
 
   // Get the context.
@@ -124,9 +95,10 @@ function _get_sguid($entry, $uid) {
   // The DB fields of the string and context are VARCHAR(1000),
   // check that they do not exceed this length.
   if (strlen($string) > 1000 or strlen($context) > 1000) {
-    $msg = t(" !context\n !string\n The string or its context is too long to be stored in the DB (more than 1000 chars); skipped.\n",
-           array('!context' => $context, '!string' => $string));
-    return array(NULL, array(array($msg, 'warning')));
+    $msg = t("The string or its context is too long to be stored in the DB (more than 1000 chars); skipped.")
+      . "\n\nContext: " . $context . "\n\nString: " . $string;
+    btr::messages($msg, 'warning');
+    return NULL;
   }
 
   // Get the $sguid of this string.
@@ -146,7 +118,7 @@ function _get_sguid($entry, $uid) {
       ->execute();
   }
 
-  return array($sguid, array());
+  return $sguid;
 }
 
 /**
@@ -158,13 +130,13 @@ function _add_translation($sguid, $lng, $translation, $uid) {
   // The DB field of the translation is VARCHAR(1000),
   // check that translation does not exceed this length.
   if (strlen($translation) > 1000) {
-    print $translation . "\n";
-    print "***Warning*** Translation is too long  to be stored in the DB (more than 1000 chars); skipped.\n";
-    return array();
+    $msg = t("Translation is too long  to be stored in the DB (more than 1000 chars); skipped.")
+      . "\n\nTranslation: " . $translation;
+    btr::messages($msg, 'warning');
+    return;
   }
 
   $tguid = sha1($translation . $lng . $sguid);
-  $messages = array();
 
   // Check whether this translation exists.
   $query = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';
@@ -173,13 +145,11 @@ function _add_translation($sguid, $lng, $translation, $uid) {
 
   if (!$result) {
     // Add the translation for this string.
-    list($_, $msgs) = btr::translation_add($sguid, $lng, $translation, $uid);
-    $messages = array_merge($messages, $msgs);
+    btr::translation_add($sguid, $lng, $translation, $uid);
   }
   else {
     // Add a vote for the translation.
-    list($_, $msgs) = btr::vote_add($tguid, $uid);
-    $messages = array_merge($messages, $msgs);
+    btr::vote_add($tguid, $uid);
 
     // Update the author of the translations.
     $account = user_load($uid);
@@ -193,6 +163,4 @@ function _add_translation($sguid, $lng, $translation, $uid) {
         ->execute();
     }
   }
-
-  return $messages;
 }

@@ -33,9 +33,6 @@ use \btr;
  *
  * @param $uid
  *   Id of the user that is making the snapshot.
- *
- * @return
- *   An error message or an empty string.
  */
 function project_snapshot($origin, $project, $lng, $comment = NULL,
   $export_mode = 'most_voted', $preferred_voters = NULL, $uid = NULL)
@@ -57,15 +54,13 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
     btr::project_snapshot_save($origin, $project, $lng, $export_file);
   }
   else {
-    return t('Diffs are empty, no snapshot saved.');
+    btr::messages(t('Diffs are empty, no snapshot saved.'));
   }
 
   // Cleanup.
   unlink($export_file);
   unlink($file_diff);
   unlink($file_ediff);
-
-  return '';
 }
 
 /**
@@ -103,7 +98,7 @@ function project_snapshot_get($origin, $project, $lng, $file) {
     // Export the original version of the imported files.
     $tmpdir = exec('mktemp -d');
     btr::project_export($origin, $project, $lng, $tmpdir,
-      $uid=1, $quiet = TRUE, $export_mode = 'original');
+      $uid=1, $export_mode = 'original');
     exec("tar -cz -f $file -C $tmpdir .");
     exec("rm -rf $tmpdir");
   }
@@ -136,7 +131,8 @@ function project_snapshot_save($origin, $project, $lng, $file, $uid = NULL) {
   // The DB field of snapshot is MEDIUMBLOB (16777216 bytes),
   // check that the file does not exceed this length.
   if (filesize($file) > 16777216) {
-    print "***Warning*** Snapshot file is too large to be stored in the DB (longer than MEDIUMBLOB); skipped.\n";
+    $msg = t("Snapshot file is too large to be stored in the DB (longer than MEDIUMBLOB); skipped.");
+    btr::messages($msg, 'warning');
     return;
   }
 

@@ -28,12 +28,7 @@ use \btr;
  *   It TRUE, notify translators about the new translation.
  *
  * @return
- *   array($tguid, $messages)
- *   - $tguid is the ID of the new translation,
- *               or NULL if no translation was added
- *   - $messages is an array of notification messages; each notification
- *               message is an array of a message and a type, where
- *               type can be one of 'status', 'warning', 'error'
+ *   ID of the new translation, or NULL if no translation was added.
  */
 function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE) {
   if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
@@ -43,7 +38,8 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
   $translation = str_replace(t('<New translation>'), '', $translation);
   if (trim($translation) == '')  {
     $msg = t('The given translation is empty.');
-    return [NULL, [[$msg, 'warning']]];
+    btr::messages($msg, 'warning');
+    return NULL;
   }
 
   // Make spacing and newlines the same in translation as in the source.
@@ -60,11 +56,9 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
   if (!empty($existing))  {
     if ($notify) {
       $msg = t('The given translation already exists.');
-      return [$tguid, [[$msg, 'warning']]];
+      btr::messages($msg, 'warning');
     }
-    else {
-      return [$tguid, []];
-    }
+    return $tguid;
   }
 
   // Get the email of the author of the translation.
@@ -103,10 +97,7 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
 
   // Add also a vote for the new translation (but not if it is added by admin).
   if ($uid != 1) {
-    list($vid, $messages) = btr::vote_add($tguid, $uid);
-  }
-  else {
-    $messages = [];
+    btr::vote_add($tguid, $uid);
   }
 
   // Notify previous voters of this string that a new translation has been
@@ -115,7 +106,7 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
     _notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $translation);
   }
 
-  return [$tguid, $messages];
+  return $tguid;
 }
 
 

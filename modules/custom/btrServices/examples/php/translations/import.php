@@ -31,9 +31,7 @@ $result = curl_exec($ch);
 
 // Check for any errors and get the result.
 if (curl_errno($ch)) {
-  $messages = array(
-    array(curl_error($ch), 'error'),
-  );
+  $messages = [[curl_error($ch), 'error']];
 }
 else {
   $result = json_decode($result, TRUE);

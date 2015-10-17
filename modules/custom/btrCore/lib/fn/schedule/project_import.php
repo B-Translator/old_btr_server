@@ -27,11 +27,6 @@ use \stdClass, \Exception;
  *     code of that language (for example: sq/, de/, fr/, etc.)
  *   - The path and name of each PO file should be the same as the corresponding
  *     POT file, except for the extension (.po instead of .pot).
- *
- * @return
- *   Array of notification messages; each notification message
- *   is an array of a message and a type, where type can be one of
- *   'status', 'warning', 'error'.
  */
 function schedule_project_import($origin, $project, $uploaded_file) {
   // Check that the given project does not belong to another user.
@@ -40,7 +35,8 @@ function schedule_project_import($origin, $project, $uploaded_file) {
   $uid = btr::db_query($query, $args)->fetchField();
   if ($uid && ($uid != $GLOBALS['user']->uid)) {
     $msg = t("There is already a project '!project' created by another user! Please choose another project name.", ['!project' => "$origin/$project"]);
-    return [[$msg, 'error']];
+    btr::messages($msg, 'error');
+    return;
   }
 
   // Check the extension of the uploaded file.
@@ -49,13 +45,15 @@ function schedule_project_import($origin, $project, $uploaded_file) {
   if (!preg_match($regex, $uploaded_file['name'])) {
     $msg = t('Only files with the following extensions are allowed: %files-allowed.',
            ['%files-allowed' => $extensions]);
-    return [[$msg, 'error']];
+    btr::messages($msg, 'error');
+    return;
   }
 
   // Move the uploaded file to 'private://' (/var/www/uploads/).
   $file_uri = 'private://' . $uploaded_file['name'];
   if (!drupal_move_uploaded_file($uploaded_file['tmp_name'], $file_uri)) {
-    return [[t('Failed to move uploaded file.'), 'error']];
+    btr::messages(t('Failed to move uploaded file.'), 'error');
+    return;
   }
 
   // Delete the file from DB, if such a file has been saved previously.
@@ -76,10 +74,10 @@ function schedule_project_import($origin, $project, $uploaded_file) {
   $file->filesize = $uploaded_file['size'];
   try {
     $file = file_save($file);
-    $messages = array();
   }
   catch (Exception $e) {
-    return [[$e->getMessage(), 'error']];
+    btr::messages($e->getMessage(), 'error');
+    return;
   }
 
   // Schedule the import.
@@ -90,8 +88,8 @@ function schedule_project_import($origin, $project, $uploaded_file) {
         'project' => $project,
       ]]);
 
-  // Return a notification message.
+  // Output a notification message.
   $msg = t("Import of the project '!project' is scheduled. You will be notified by email when it is done.",
          ['!project' => $origin . '/' . $project]);
-  return [[$msg, 'status']];
+  btr::messages($msg);
 }
