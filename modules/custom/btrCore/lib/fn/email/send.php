@@ -58,13 +58,13 @@ function get_subject_and_body($params) {
   $lng = $account->translation_lng;
   $subject_prefix = "l10n-$lng";
 
-  // Get the base_url of the translation site.
+  // Get the url of the translation site.
   module_load_include('inc', 'btrCore', 'lib/sites');
-  $base_url = btr::utils_get_base_url($lng);
+  $client_url = btr::utils_get_client_url($lng);
 
   // Get the url of the string.
   if (isset($params->sguid)) {
-    $url = $base_url . "/translations/$lng/" . $params->sguid;
+    $url = $client_url . "/translations/$lng/" . $params->sguid;
   }
 
   // Include the subject and body of the message.

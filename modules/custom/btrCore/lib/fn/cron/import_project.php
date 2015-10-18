@@ -62,9 +62,9 @@ function cron_import_project($params) {
   }
 
 
-  // Get the base_url of the site.
+  // Get the url of the client site.
   module_load_include('inc', 'btrCore', 'includes/sites');
-  $base_url = btr::utils_get_base_url($lng);
+  $client_url = btr::utils_get_client_url($lng);
 
   // Notify the user that the project import is done.
   $params = array(
@@ -73,7 +73,7 @@ function cron_import_project($params) {
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
     'project' => $origin . '/' . $project,
-    'url' => "$base_url/btr/project/$origin/$project/$lng/dashboard",
+    'url' => "$client_url/btr/project/$origin/$project/$lng/dashboard",
     'output' => $output,
   );
   btr::queue('notifications', array($params));

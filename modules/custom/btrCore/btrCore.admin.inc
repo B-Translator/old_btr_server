@@ -25,6 +25,14 @@ function btrCore_config() {
     '#description'   => t('The list of translation languages supported by the server. Enter a space separated list of language codes.'),
   );
 
+  // btr_client
+  $form['config']['btr_client'] = array(
+    '#type'          => 'textfield',
+    '#title'         => t('Client URL'),
+    '#default_value' => variable_get('btr_client', 'https://l10n.example.org'),
+    '#description'   => t('URL of the default client.'),
+  );
+
   // btr_voting_mode
   $voting_mode_options = array(
     'single'   => t('Single'),
@@ -91,10 +99,4 @@ function btrCore_config_set_languages() {
   $info = field_info_field('field_auxiliary_languages');
   $info['settings']['allowed_values'] = btr::languages_get_list();
   field_update_field($info);
-
-  // Update the cached value of btrClient_languages.
-  if (module_exists('btrClient')) {
-    cache_clear_all('btrClient_languages', 'cache_btrClient');
-    $languages = btr::languages_get();
-  }
 }

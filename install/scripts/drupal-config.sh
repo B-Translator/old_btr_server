@@ -63,6 +63,9 @@ comment memcache config */
 
 EOF
 
+### set variable btr_client
+$drush --yes vset btr_client "https://$bcl_domain"
+
 ### set the directory for uploads
 ### $drush is an alias for 'drush --root=/var/www/btr'
 mkdir -p /var/www/uploads/

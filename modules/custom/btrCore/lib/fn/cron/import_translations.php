@@ -41,9 +41,9 @@ function cron_import_translations($params) {
   btr::vote_import($account->uid, $lng, $tmpdir);
   $txt_messages = btr::messages_cat(btr::messages());
 
-  // Get the base_url of the site.
+  // Get the url of the client site.
   module_load_include('inc', 'btrCore', 'includes/sites');
-  $base_url = btr::utils_get_base_url($lng);
+  $client_url = btr::utils_get_client_url($lng);
 
   // Notify the user that the export is done.
   $params = array(
@@ -52,7 +52,7 @@ function cron_import_translations($params) {
     'username' => $account->name,
     'recipient' => $account->name .' <' . $account->mail . '>',
     'filename' => $file->filename,
-    'search_url' => $base_url . url('translations/search', array(
+    'search_url' => $client_url . url('translations/search', array(
                     'query' => array(
                       'lng' => $lng,
                       'translated_by' => $account->name,

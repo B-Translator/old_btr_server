@@ -61,13 +61,13 @@ function btrCore_tweet($lng =NULL, $origin =NULL, $project =NULL) {
 
   // Append the url.
   if (isset($_GET['url'])) {
-    $base_url = $_GET['url'];
-    $twitter .= ' ' . $base_url . "/#$string";
+    $url = $_GET['url'];
+    $twitter .= ' ' . $url . "/#$string";
   }
   else {
     module_load_include('inc', 'btrCore', 'includes/sites');
-    $base_url = btr::utils_get_base_url($lng);
-    $twitter .= ' ' . $base_url . "/translations/$lng/$sguid";
+    $client_url = btr::utils_get_client_url($lng);
+    $twitter .= ' ' . $client_url . "/translations/$lng/$sguid";
   }
 
   print $twitter;

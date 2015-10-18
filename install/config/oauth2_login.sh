@@ -35,3 +35,6 @@ drush --yes $bcl_alias \
     php-script --script-path=$bcl oauth2_login.php  \
     "$server_url" "$client_id" "$client_secret" "$skip_ssl"
 drush $bcl_alias cc all
+
+### set the variable btr_client of the server
+drush --yes $btr_alias vset btr_client "$bcl_url"
