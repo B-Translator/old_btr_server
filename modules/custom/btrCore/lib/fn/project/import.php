@@ -49,12 +49,14 @@ function project_import($origin, $project, $lng, $path, $uid = 1) {
   // Import the given PO files.
   _import_po_files($origin, $project, $lng, $path, $uid);
 
-  // Add user as admin of the project.
-  $account = user_load($uid);
-  btr::project_add_admin($origin, $project, $lng, $account->init);
+  if ($uid != 1) {
+    // Add user as admin of the project.
+    $account = user_load($uid);
+    btr::project_add_admin($origin, $project, $lng, $account->init);
 
-  // Subscribe user to this project.
-  btr::project_subscribe($origin, $project, $uid);
+    // Subscribe user to this project.
+    btr::project_subscribe($origin, $project, $uid);
+  }
 
   // Make initial snapshots after importing PO files.
   _make_snapshots($origin, $project, $lng, $path);
