@@ -1,8 +1,0 @@
-{ "rules_redirect_user_to_the_dashboard_on_login" : {
-    "LABEL" : "Redirect user to the Dashboard on Login",
-    "PLUGIN" : "reaction rule",
-    "REQUIRES" : [ "rules" ],
-    "ON" : [ "user_login" ],
-    "DO" : [ { "redirect" : { "url" : "user\/login?destination=dashboard" } } ]
-  }
-}
