@@ -21,22 +21,20 @@ fi
 output_dir=$1
 project_list=$2
 
-### suppress verbose output during exports
-export QUIET=true
-
-### go to the script directory
-cd $(dirname $0)
-
 ### export each project that is on the list
 while read line
 do
     origin=$(echo $line | cut -d'/' -f1)
     project=$(echo $line | cut -d'/' -f2)
     lng=$(echo $line | cut -d'/' -f3)
-    #echo ./export_tgz.sh $origin $project $lng ; continue  ## debug
     if [ "$project" = '' ]; then continue; fi
-    ../modules/custom/btrCore/data/export/export_tgz.sh $origin $project $lng
+
+    cd /tmp
     filename=$origin-$project-$lng
-    mv -f /tmp/$filename.tgz $output_dir/$filename.tgz
+    rm -rf $filename/
+    mkdir -p $filename/
+    drush @btr btrp-export $origin $project $lng /tmp/$filename/
+    tar cfz $filename.tgz $filename/
+    mv -f $filename.tgz $output_dir/$filename.tgz
 done < $project_list
 
