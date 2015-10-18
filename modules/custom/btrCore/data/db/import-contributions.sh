@@ -113,7 +113,7 @@ $mysql -e "
     FROM $A.btr_translations
     INNER JOIN $B.btr_translations
         ON ($A.btr_translations.tguid = $B.btr_translations.tguid)
-    WHERE $B.btr_translations.umail = 'admin@example.com';
+    WHERE $B.btr_translations.umail = '';
 
     INSERT INTO $B.btr_translations
         SELECT T1.* FROM $A.btr_translations T1

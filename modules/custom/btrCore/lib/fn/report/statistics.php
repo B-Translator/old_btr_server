@@ -63,7 +63,7 @@ function report_statistics($lng = NULL, $origin = NULL, $project = NULL) {
   $sql_count_translations =
      "SELECT count(*) as cnt FROM {$btr_translations}
       WHERE $condition
-      AND umail NOT IN ('admin@example.com', 'admin@btranslator.org', '')";
+      AND umail != ''";
   $sql_count_votes =
      "SELECT count(*) as cnt FROM {$btr_votes}
       WHERE $condition";

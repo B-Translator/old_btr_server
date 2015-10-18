@@ -28,7 +28,7 @@ function translation_latest($lng, $origin =NULL, $project =NULL) {
     LEFT JOIN {btr_locations} l ON (l.sguid = s.sguid)
     LEFT JOIN {btr_templates} tpl ON (tpl.potid = l.potid)
     LEFT JOIN {btr_projects} p ON (p.pguid = tpl.pguid)
-    WHERE t.umail != 'admin@example.com' AND t.lng = :lng AND t.time > :from_date
+    WHERE t.umail != '' AND t.lng = :lng AND t.time > :from_date
     ";
 
   $args = array(

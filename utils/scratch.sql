@@ -8,5 +8,5 @@ inner join (
     ) as v1
 on (t.tguid = v1.tguid)
 set t.umail = v1.umail, t.time = v1.min_time
-where t.umail = 'admin@example.com'
+where t.umail = ''
 

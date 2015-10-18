@@ -15,9 +15,8 @@ date2=$(date +%Y%m%d)
 dump_file=contributions-$date1-$date2.sql
 
 ### dump translations and votes
-not_admin="umail NOT IN ('admin@example.com')"
 $mysqldump --tables btr_translations \
-    --where="time > '$from_date' AND $not_admin" > $dump_file
+    --where="time > '$from_date' AND umail != ''" > $dump_file
 $mysqldump --tables btr_votes \
     --where="time > '$from_date'" >> $dump_file
 

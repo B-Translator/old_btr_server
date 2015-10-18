@@ -64,6 +64,7 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
   // Get the email of the author of the translation.
   $account = user_load($uid);
   $umail = $account->init;    // email used for registration
+  if ($uid==1) $umail = '';   // for admin leave it empty
 
   // Insert the new suggestion.
   btr::db_insert('btr_translations')

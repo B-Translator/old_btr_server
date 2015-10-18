@@ -153,7 +153,7 @@ function _add_translation($sguid, $lng, $translation, $uid) {
 
     // Update the author of the translations.
     $account = user_load($uid);
-    if (empty($result->umail) or $result->umail == 'admin@example.com') {
+    if (empty($result->umail)) {
       btr::db_update('btr_translations')
         ->fields(array(
             'umail' => $account->init,
