@@ -35,8 +35,6 @@ function drush_btranslator_btr_vocabulary_import($name, $lng, $file) {
   _btranslator_drush_check_params(NULL, NULL, $lng);
 
   // Import the vocabulary.
-  $uid = $GLOBALS['user']->uid;
-  if ($uid == 0)  $uid = 1;
-  btr::vocabulary_import($name, $lng, $file, $uid);
+  btr::vocabulary_import($name, $lng, $file);
   foreach (btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }

@@ -12,10 +12,9 @@ function _btr_project_export_drush_command() {
       'path' => 'The directory where the PO files will be exported.',
     ),
     'options' => array(
-      'user' => 'The username of the user who has requested the export.',
-      'quiet' => 'Don\'t print progress output.',
       'export-mode' => "'most_voted' (default) or 'preferred' or 'original'",
       'preferred-voters' => 'Comma separated list of the preferred users.',
+      'user' => 'The username of the user who is requesting the export.',
     ),
     'examples' => array(
       "drush btrp-export KDE kdeedu sq $(pwd)/kdeedu/" => 'Export KDE/kdeedu/sq into kdeedu/.',
@@ -55,9 +54,9 @@ function drush_btranslator_btr_project_export($origin, $project, $lng, $path) {
 
   // Check the export_mode.
   $export_mode = drush_get_option('export-mode', 'most_voted');
-  if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
+  if (!in_array($export_mode, ['most_voted', 'preferred', 'original'])) {
     drush_log(t("Unknown export mode '!export_mode'.",
-        array('!export_mode' => $export_mode)), 'error');
+        ['!export_mode' => $export_mode]), 'error');
     drupal_exit();
   }
 
@@ -72,6 +71,6 @@ function drush_btranslator_btr_project_export($origin, $project, $lng, $path) {
   }
 
   // Export the project.
-  btr::project_export($origin, $project, $lng, $path,
-    $GLOBALS['user']->uid, $export_mode, $arr_emails);
+  btr::project_export($origin, $project, $lng, $path, $export_mode, $arr_emails);
+  foreach (btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }

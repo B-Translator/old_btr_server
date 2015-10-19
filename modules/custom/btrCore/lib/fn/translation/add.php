@@ -31,8 +31,6 @@ use \btr;
  *   ID of the new translation, or NULL if no translation was added.
  */
 function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE) {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
-
   // Don't add empty translations.
   $translation = btr::string_pack($translation);
   $translation = str_replace(t('<New translation>'), '', $translation);
@@ -62,9 +60,12 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
   }
 
   // Get the email of the author of the translation.
-  $account = user_load($uid);
-  $umail = $account->init;    // email used for registration
-  if ($uid==1) $umail = '';   // for admin leave it empty
+  $uid = btr::user_check($uid);
+  if ($uid==1)  $umail = '';
+  else {
+    $account = user_load($uid);
+    $umail = $account->init;
+  }
 
   // Insert the new suggestion.
   btr::db_insert('btr_translations')
@@ -97,7 +98,7 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
     }
 
   // Add also a vote for the new translation (but not if it is added by admin).
-  if ($uid != 1) {
+  if ($uid > 1) {
     btr::vote_add($tguid, $uid);
   }
 

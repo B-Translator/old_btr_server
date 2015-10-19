@@ -27,11 +27,14 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function project_add($origin, $project, $path, $uid = 1) {
+function project_add($origin, $project, $path, $uid = NULL) {
   btr::messages("Adding project: $origin/$project: $path");
 
   // Erase the project if it exists.
   btr::project_del($origin, $project, $erase = TRUE, $purge = FALSE);
+
+  // Make sure that the user is not NULL or 0 (anonymous).
+  $uid = btr::user_check($uid);
 
   // Create a project.
   $pguid = sha1($origin . $project);
@@ -52,7 +55,7 @@ function project_add($origin, $project, $path, $uid = 1) {
 /**
  * Import the given POT/PO files.
  */
-function _import_pot_files($origin, $project, $path, $uid = 1) {
+function _import_pot_files($origin, $project, $path, $uid) {
   $pguid = sha1($origin . $project);
 
   // If the given $path is a single file, just process that one and stop.
@@ -84,7 +87,7 @@ function _import_pot_files($origin, $project, $path, $uid = 1) {
  * Create a new template, parse the POT file, insert the locations
  * and insert the strings.
  */
-function _process_pot_file($pguid, $tplname, $file, $filename, $uid = 1) {
+function _process_pot_file($pguid, $tplname, $file, $filename, $uid) {
   btr::messages("Importing POT file: $filename");
 
   // Create a new template.
@@ -123,7 +126,7 @@ function _process_pot_file($pguid, $tplname, $file, $filename, $uid = 1) {
  *
  * Return the sguid of the string record, or NULL.
  */
-function _add_string($entry, $uid = 1) {
+function _add_string($entry, $uid) {
   // Get the string.
   $string = $entry['msgid'];
   if ($entry['msgid_plural'] !== NULL) {

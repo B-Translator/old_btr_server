@@ -12,6 +12,7 @@ function _btr_project_snapshot_drush_command() {
       'comment' => 'A comment about the snapshot.',
     ),
     'options' => array(
+      'user'  => 'The username of the user that is making the snapshot.',
     ),
     'examples' => array(
       'drush btrp-snapshot KDE kdeedu sq "Comment"' => '',
@@ -38,4 +39,5 @@ function drush_btranslator_btr_project_snapshot($origin, $project, $lng, $commen
 
   // Make the snapshot.
   btr::project_snapshot($origin, $project, $lng, $comment);
+  foreach(btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }

@@ -16,15 +16,17 @@ namespace BTranslator;
  *   The name of the project.
  *
  * @param $uid
- *   (Optional) ID of the user.
+ *   ID of the user.
  */
 function project_unsubscribe($origin, $project, $uid = NULL) {
   if ($uid===NULL)  $uid = $GLOBALS['user']->uid;
-  if ($uid == 0)  return;
-  $account = user_load($uid);
 
-  $new_projects = array();
+  // Don't unsubscribe anonymous and admin users.
+  if ($uid == 0 or $uid == 1)  return;
+
+  $account = user_load($uid);
   $projects = $account->field_projects[LANGUAGE_NONE];
+  $new_projects = array();
   foreach($projects as $p) {
     if ($p['value'] == "$origin/$project") continue;
     $new_projects[]['value'] = $p['value'];

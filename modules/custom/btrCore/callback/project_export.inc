@@ -101,8 +101,7 @@ function btrCore_project_export() {
   // Export translations of the project.
   set_time_limit(0);
   $export_dir = exec('mktemp -d');
-  btr::project_export($origin, $project, $lng, $export_dir,
-    $GLOBALS['user']->uid, $export_mode, $arr_emails);
+  btr::project_export($origin, $project, $lng, $export_dir, $export_mode, $arr_emails);
   $file_tgz = tempnam('/tmp', 'export_');
   exec("tar -cz -f $file_tgz -C $export_dir .");
 

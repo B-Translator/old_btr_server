@@ -19,15 +19,13 @@ function vote_del($tguid, $uid = NULL) {
   $account = user_load($uid);
 
   // Check access permissions.
-  if (!user_access('btranslator-vote', $account)) {
-    $msg = t('No rights for submitting votes!');
-    btr::messages($msg, 'error');
-    return;
-  }
-
-  // Get the mail and lng of the user.
-  $umail = $account->init;    // email used for registration
-  $ulng = $account->translation_lng;
+  if (!user_access('btranslator-vote', $account)
+    and !user_access('btranslator-admin', $account))
+    {
+      $msg = t('No rights for deleting votes!');
+      btr::messages($msg, 'error');
+      return;
+    }
 
   // Fetch the translation details from the DB.
   $trans = btr::db_query(
@@ -43,6 +41,7 @@ function vote_del($tguid, $uid = NULL) {
   }
 
   // Clean any previous vote.
+  $umail = $account->init;    // email used for registration
   include_once(dirname(__FILE__) . '/del_previous.php');
   $nr = _vote_del_previous($tguid, $umail, $trans->sguid, $trans->lng);
 }

@@ -42,12 +42,10 @@ function project_diff($origin, $project, $lng,
   $file_diff, $file_ediff, $export_file = NULL,
   $export_mode = 'most_voted', $preferred_voters = NULL, $uid = NULL)
 {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
-
   // Export the latest translations of the project.
   $export_dir = exec('mktemp -d');
   btr::project_export($origin, $project, $lng, $export_dir,
-    $uid, $export_mode, $preferred_voters);
+    $export_mode, $preferred_voters, $uid);
 
   // Archive exported files in format tgz.
   if ($export_file !== NULL) {
@@ -97,8 +95,6 @@ function project_diff($origin, $project, $lng,
  */
 function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $comment = NULL, $uid = NULL)
 {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
-
   // Get the max number of diffs for this project/lng.
   $max_nr = btr::db_query(
     'SELECT MAX(nr) AS max_nr FROM {btr_diffs}
@@ -126,7 +122,7 @@ function project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $com
         'diff' => file_get_contents($file_diff),
         'ediff' => file_get_contents($file_ediff),
         'comment' => $comment,
-        'uid' => $uid,
+        'uid' => btr::user_check($uid),
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();

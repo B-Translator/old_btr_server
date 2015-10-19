@@ -17,7 +17,9 @@ use \btr;
  *   ID of the new vote, or NULL.
  */
 function vote_add($tguid, $uid = NULL) {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
+  // Don't add a vote for anonymous and admin users.
+  $uid = btr::user_check($uid);
+  if ($uid == 1)  return NULL;
 
   // Fetch the translation details from the DB.
   $sql = 'SELECT * FROM {btr_translations} WHERE tguid = :tguid';

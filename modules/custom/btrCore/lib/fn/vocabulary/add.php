@@ -19,7 +19,8 @@ use \btr;
  * @param $uid
  *   ID of the user that is creating the vocabulary.
  */
-function vocabulary_add($name, $lng, $uid = 1) {
+function vocabulary_add($name, $lng, $uid = NULL) {
+  $uid = btr::user_check($uid);
   $origin = 'vocabulary';
   $project = $name . '_' . $lng;
   $path = drupal_get_path('module', 'btrCore');
@@ -37,8 +38,7 @@ function vocabulary_add($name, $lng, $uid = 1) {
     ])->execute();
 
   // Add user as admin of the project.
-  $user = user_load($uid);
-  btr::project_add_admin($origin, $project, $lng, $user->init);
+  btr::project_add_admin($origin, $project, $lng, $uid);
 
   // Subscribe user to this project.
   btr::project_subscribe($origin, $project, $uid);

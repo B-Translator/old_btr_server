@@ -33,7 +33,7 @@ function drush_btranslator_btr_vocabulary_add($name, $lng) {
   // Check the language.
   _btranslator_drush_check_params(NULL, NULL, $lng);
 
-  $uid = $GLOBALS['user']->uid;
-  if ($uid == 0)  $uid = 1;
-  btr::vocabulary_add($name, $lng, $uid);
+  // Add the vocabulary.
+  btr::vocabulary_add($name, $lng);
+  foreach(btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 }

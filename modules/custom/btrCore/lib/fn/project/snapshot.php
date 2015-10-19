@@ -37,8 +37,6 @@ use \btr;
 function project_snapshot($origin, $project, $lng, $comment = NULL,
   $export_mode = 'most_voted', $preferred_voters = NULL, $uid = NULL)
 {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
-
   // Export the latest most voted translations
   // and make the diffs with the last snapshot.
   $export_file = tempnam('/tmp', 'export_file_');
@@ -51,7 +49,7 @@ function project_snapshot($origin, $project, $lng, $comment = NULL,
   // If not empty, save the diffs and the new snapshot.
   if (filesize($file_diff) != 0 or filesize($file_ediff) != 0) {
     btr::project_diff_add($origin, $project, $lng, $file_diff, $file_ediff, $comment);
-    btr::project_snapshot_save($origin, $project, $lng, $export_file);
+    btr::project_snapshot_save($origin, $project, $lng, $export_file, $uid);
   }
   else {
     btr::messages(t('Diffs are empty, no snapshot saved.'));
@@ -97,8 +95,7 @@ function project_snapshot_get($origin, $project, $lng, $file) {
   else {
     // Export the original version of the imported files.
     $tmpdir = exec('mktemp -d');
-    btr::project_export($origin, $project, $lng, $tmpdir,
-      $uid=1, $export_mode = 'original');
+    btr::project_export($origin, $project, $lng, $tmpdir, $export_mode='original');
     exec("tar -cz -f $file -C $tmpdir .");
     exec("rm -rf $tmpdir");
   }
@@ -123,8 +120,6 @@ function project_snapshot_get($origin, $project, $lng, $file) {
  *   Id of the user that is making the snapshot.
  */
 function project_snapshot_save($origin, $project, $lng, $file, $uid = NULL) {
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
-
   // Make sure that file does exist.
   if (!file_exists($file))  return;
 
@@ -148,7 +143,7 @@ function project_snapshot_save($origin, $project, $lng, $file, $uid = NULL) {
         'pguid' => sha1($origin . $project),
         'lng' => $lng,
         'snapshot' => file_get_contents($file),
-        'uid' => $uid,
+        'uid' => btr::user_check($uid),
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
     ->execute();

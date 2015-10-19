@@ -62,7 +62,8 @@ function drush_btranslator_btr_project_diff($origin, $project, $lng, $file) {
   }
 
   // Make the diff.
-  btr::project_diff($origin, $project, $lng, $file_diff, $file_ediff, NULL, $export_mode, $preferred_voters);
+  btr::project_diff($origin, $project, $lng, $file_diff, $file_ediff,
+    $export_file=NULL, $export_mode, $preferred_voters);
   foreach(btr::messages() as $msg)  drush_log($msg[0], $msg[1]);
 
   // Cleanup.

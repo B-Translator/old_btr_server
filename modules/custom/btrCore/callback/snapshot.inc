@@ -43,6 +43,7 @@ function btrCore_project_snapshot($origin, $project, $lng) {
 
   // Make the snapshot.
   btr::project_snapshot($origin, $project, $lng, $comment, $export_mode, $arr_voters);
+  foreach(btr::messages() as $msg)  drupal_set_message($msg[0], $msg[1]);
 
   // Redirect back to the calling page.
   if (isset($_GET['dest'])) {

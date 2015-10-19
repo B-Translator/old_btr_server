@@ -22,16 +22,17 @@ use \btr;
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function vocabulary_import($name, $lng, $file, $uid = 1) {
+function vocabulary_import($name, $lng, $file, $uid = NULL) {
   // Check access permissions.
+  $uid = btr::user_check($uid);
   $account = user_load($uid);
-  if (!user_access('btranslator-suggest', $account)) {
+  if (!user_access('btranslator-suggest', $account) and !user_access('btranslator-admin', $account)) {
     $msg = t('No rights for contributing suggestions!');
     btr::messages($msg, 'error');
     return;
   }
   // Check that the language matches the translation language of the user.
-  if (!user_access('btranslator-admin', $account) and ($lng != $account->translation_lng)) {
+  if (($lng != $account->translation_lng) and !user_access('btranslator-admin', $account)) {
     $msg = t('No rights for contributing to language <strong>!lng</strong>.', ['!lng' => $lng]);
     btr::messages($msg, 'error');
     return;

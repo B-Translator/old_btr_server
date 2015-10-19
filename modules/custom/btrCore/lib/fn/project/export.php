@@ -28,14 +28,14 @@ module_load_include('php', 'btrCore', 'lib/gettext/POWriter');
  * @param $path
  *   The directory where the translation files will be saved.
  *
- * @param $uid
- *   ID of the user that has requested the export.
- *
  * @param $export_mode
  *   Can be 'most_voted' (default), or 'preferred', or 'original'.
  *
  * @param $preferred_voters
  *   Array of email addresses of users whose translations are preferred.
+ *
+ * @param $uid
+ *   ID of the user that has requested the export.
  *
  * The export mode 'most_voted' (which is the default one) exports the most
  * voted translations and suggestions.
@@ -49,20 +49,18 @@ module_load_include('php', 'btrCore', 'lib/gettext/POWriter');
  * The export mode 'original' exports the translations of the original file
  * that was imported (useful for making an initial snapshot of the project).
  */
-function project_export($origin, $project, $lng, $path, $uid = NULL,
-  $export_mode = 'most_voted', $preferred_voters = NULL)
+function project_export($origin, $project, $lng, $path, $export_mode = 'most_voted',
+  $preferred_voters = NULL, $uid = NULL)
 {
   btr::messages("Export project: $origin/$project/$lng: $path");
 
-  if ($uid === NULL)  $uid = $GLOBALS['user']->uid;
-
   // Check arguments $export_mode and $preferred_voters.
-  if (!in_array($export_mode, array('most_voted', 'preferred', 'original'))) {
+  if (!in_array($export_mode, ['most_voted', 'preferred', 'original'])) {
     $export_mode = 'most_voted';
   }
-  if ($export_mode == 'preferred' and $preferred_voters === NULL) {
-    $account = user_load($uid);
-    $preferred_voters = array($account->init);
+  if ($export_mode == 'preferred' and empty($preferred_voters)) {
+    $account = user_load(btr::user_check($uid));
+    $preferred_voters = [$account->init];
   }
 
   // Get the templates and filenames of the project.
@@ -74,11 +72,11 @@ function project_export($origin, $project, $lng, $path, $uid = NULL,
      WHERE p.origin = :origin
        AND p.project = :project
        AND f.lng = :lng',
-    array(
+    [
       ':origin' => $origin,
       ':project' => $project,
       ':lng' => $lng,
-    ))
+    ])
     ->fetchAll();
 
   // Export each file of the project.
@@ -92,10 +90,10 @@ function project_export($origin, $project, $lng, $path, $uid = NULL,
     $potid = btr::db_query(
       'SELECT potid FROM {btr_templates}
        WHERE pguid = :pguid AND tplname = :tplname',
-      array(
+      [
         ':pguid' => sha1($origin . $project),
         ':tplname' => $tplname,
-      ))
+      ])
       ->fetchField();
     if (!$potid) {
       $msg = t("Template '!tplname' not found!", ['!tplname' => $tplname]);
@@ -117,10 +115,7 @@ function _export_po_file($potid, $lng, $filename, $export_mode = 'most_voted', $
   $row = btr::db_query(
     'SELECT headers, comments FROM {btr_files}
      WHERE potid = :potid AND lng = :lng',
-    array(
-      ':potid' => $potid,
-      ':lng' => $lng,
-    ))
+    [':potid' => $potid, ':lng' => $lng])
     ->fetch();
   $headers = isset($row->headers) ? $row->headers : NULL;
   $comments = isset($row->comments) ? $row->comments : NULL;
@@ -133,7 +128,7 @@ function _export_po_file($potid, $lng, $filename, $export_mode = 'most_voted', $
      FROM {btr_locations} l
      LEFT JOIN {btr_strings} s ON (s.sguid = l.sguid)
      WHERE l.potid = :potid',
-    array(':potid' => $potid)
+    [':potid' => $potid]
   )->fetchAllAssoc('sguid');
 
   // Get translations.
@@ -189,11 +184,11 @@ function _get_original_translations($potid, $lng)
   $file_content = btr::db_query(
     'SELECT content FROM {btr_files}
      WHERE potid = :potid AND lng = :lng',
-    array(':potid' => $potid, ':lng' => $lng)
+    [':potid' => $potid, ':lng' => $lng]
   )->fetchField();
 
   if (!$file_content) {
-    return array();
+    return [];
   }
 
   // Write it content to a temporary file.
@@ -206,7 +201,7 @@ function _get_original_translations($potid, $lng)
   unlink($tmpfile);
 
   // Process each gettext entry.
-  $arr_translations = array();
+  $arr_translations = [];
   foreach ($entries as $entry)
     {
       // Get the string sguid.
@@ -240,10 +235,7 @@ function _get_most_voted_translations($potid, $lng) {
                  ON (t.sguid = l.sguid AND t.lng = :lng)
        WHERE l.potid = :potid
        GROUP BY t.sguid',
-      array(
-        ':potid' => $potid,
-        ':lng' => $lng,
-      ));
+      [':potid' => $potid, ':lng' => $lng]);
 
   // Get the translations with the max vote count for each string.
   // The result will be an assoc array (sguid => translation).
@@ -256,7 +248,7 @@ function _get_most_voted_translations($potid, $lng) {
              AND  t.count = cnt.max_count
              AND  t.lng = :lng )
        GROUP BY t.sguid",
-      array(':lng' => $lng)
+      [':lng' => $lng]
     )
     ->fetchAllKeyed();
 
@@ -272,7 +264,7 @@ function _get_most_voted_translations($potid, $lng) {
  */
 function _get_preferred_translations($potid, $lng, $arr_voters) {
   if (empty($arr_voters)) {
-    return array();
+    return [];
   }
 
   // Build a temporary table with translations
@@ -289,11 +281,11 @@ function _get_preferred_translations($potid, $lng, $arr_voters) {
          AND v.umail IN (:voters)
        GROUP BY t.tguid
        HAVING COUNT(*) > 0',
-      array(
+      [
         ':potid' => $potid,
         ':lng' => $lng,
         ':voters' => $arr_voters,
-      ));
+      ]);
 
   // Build a temporary table with the maximum votes for each string.
   $tmp_table_max_vote_count =

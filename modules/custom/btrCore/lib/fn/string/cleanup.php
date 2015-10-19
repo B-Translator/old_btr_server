@@ -13,11 +13,8 @@ use \btr;
  *
  * @param $purge
  *   If true, delete as well translations that have votes.
- *
- * @param $notify
- *   Notify the voters of the deleted translations.
  */
-function string_cleanup($purge = FALSE, $notify = FALSE) {
+function string_cleanup($purge = FALSE) {
   // Create a temporary table with the dangling strings.
   $dangling_strings =
     btr::db_query_temporary(
@@ -53,7 +50,7 @@ function string_cleanup($purge = FALSE, $notify = FALSE) {
 
     // Delete each translation (and related votes as well).
     foreach ($tguid_list as $tguid) {
-      btr::translation_del($tguid, $notify, $uid=1);
+      btr::translation_del($tguid, $notify=FALSE, $uid=1);
     }
   }
 

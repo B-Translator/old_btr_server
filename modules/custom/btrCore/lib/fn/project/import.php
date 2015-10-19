@@ -32,7 +32,7 @@ module_load_include('php', 'btrCore', 'lib/gettext/POParser');
  * @param $uid
  *   ID of the user that has requested the import.
  */
-function project_import($origin, $project, $lng, $path, $uid = 1) {
+function project_import($origin, $project, $lng, $path, $uid = NULL) {
   btr::messages("Import project: $origin/$project/$lng: $path");
 
   // Check that the project exists.
@@ -46,20 +46,20 @@ function project_import($origin, $project, $lng, $path, $uid = 1) {
     return;
   }
 
+  // Make sure that $uid is not NULL or 0 (anonymous).
+  $uid = btr::user_check($uid);
+
   // Import the given PO files.
   _import_po_files($origin, $project, $lng, $path, $uid);
 
-  if ($uid != 1) {
-    // Add user as admin of the project.
-    $account = user_load($uid);
-    btr::project_add_admin($origin, $project, $lng, $account->init);
+  // Add user as admin of the project.
+  btr::project_add_admin($origin, $project, $lng, $uid);
 
-    // Subscribe user to this project.
-    btr::project_subscribe($origin, $project, $uid);
-  }
+  // Subscribe user to this project.
+  btr::project_subscribe($origin, $project, $uid);
 
   // Make initial snapshots after importing PO files.
-  _make_snapshots($origin, $project, $lng, $path);
+  _make_snapshots($origin, $project, $lng, $path, $uid);
 }
 
 /**
@@ -255,8 +255,16 @@ function _add_translation($sguid, $lng, $translation, $uid = 1) {
   $args = array(':tguid' => $tguid);
   if (btr::db_query($get_tguid, $args)->fetchField())  return $tguid;
 
+  // Get the email of the author.
+  if ($uid == 1) {
+    $umail = '';
+  }
+  else {
+    $account = user_load($uid);
+    $umail = $account->init;
+  }
+
   // Insert a new translations.
-  $account = user_load($uid);
   btr::db_insert('btr_translations')
     ->fields(array(
         'sguid' => $sguid,
@@ -264,7 +272,7 @@ function _add_translation($sguid, $lng, $translation, $uid = 1) {
         'translation' => $translation,
         'tguid' => $tguid,
         'count' => 0,
-        'umail' => $account->init,
+        'umail' => $umail,
         'ulng' => $lng,
         'time' => date('Y-m-d H:i:s', REQUEST_TIME),
       ))
@@ -287,7 +295,7 @@ function _add_translation($sguid, $lng, $translation, $uid = 1) {
  * The diff that will be generated (if any), will contain all the
  * previous suggestions (before the import).
  */
-function _make_snapshots($origin, $project, $lng, $path) {
+function _make_snapshots($origin, $project, $lng, $path, $uid) {
   // Store the imported files into the DB as an initial snapshot.
   $snapshot_file = tempnam('/tmp', 'snapshot_file_');
   if (is_file($path)) {
@@ -298,16 +306,16 @@ function _make_snapshots($origin, $project, $lng, $path) {
   else {
     exec("tar -cz -f $snapshot_file -C $path .");
   }
-  btr::project_snapshot_save($origin, $project, $lng, $snapshot_file);
+  btr::project_snapshot_save($origin, $project, $lng, $snapshot_file, $uid);
   unlink($snapshot_file);
 
   // Make a second snapshot, which will generate a diff
   // with the initial snapshot, and save it into the DB.
   $diff_comment = 'Import diff. Contains formating changes, any skiped entries, etc.';
-  btr::project_snapshot($origin, $project, $lng, $diff_comment, $export_mode = 'original');
+  btr::project_snapshot($origin, $project, $lng, $diff_comment, $export_mode = 'original', $uid);
 
   // Make another snapshot, which will contain all the previous
   // suggestions (before the import), in a single diff.
   $diff_comment = 'Initial diff after import. Contains all the previous suggestions (before the last import).';
-  btr::project_snapshot($origin, $project, $lng, $diff_comment, $export_mode = 'most_voted');
+  btr::project_snapshot($origin, $project, $lng, $diff_comment, $export_mode = 'most_voted', $uid);
 }
