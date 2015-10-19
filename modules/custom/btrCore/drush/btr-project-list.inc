@@ -38,5 +38,9 @@ function drush_btranslator_btr_project_list() {
   $project = drush_get_option('project');
 
   $project_list = btr::project_ls($origin, $project);
-  foreach($project_list as $project)  drush_print($project);
+  foreach($project_list as $project)  {
+    // Exclude vocabularies.
+    if (preg_match('#^vocabulary/#', $project))  continue;
+    drush_print($project);
+  }
 }
