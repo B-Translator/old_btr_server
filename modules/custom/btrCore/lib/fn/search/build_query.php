@@ -59,7 +59,29 @@ function search_build_query($filter) {
   //if nothing has been selected yet, then return NULL
   if (sizeof($query->conditions()) == 1) return NULL;
 
+  //btr::log(_get_query_string($query), '$query');  //debug
   return $query;
+}
+
+/**
+ * Return the query as a string (for debug).
+ */
+function _get_query_string(\SelectQueryInterface $query) {
+  $string = (string) $query;
+  $arguments = $query->arguments();
+
+  if (!empty($arguments) && is_array($arguments)) {
+    foreach ($arguments as $placeholder => &$value) {
+      if (is_string($value)) {
+        $value = "'$value'";
+      }
+    }
+    $arguments += ['{' => '', '}' => ''];
+
+    $string = strtr($string, $arguments);
+  }
+
+  return $string;
 }
 
 /**
@@ -161,11 +183,20 @@ function _filter_by_author($query, $lng, $only_mine, $translated_by, $voted_by) 
   //get the umail for $translated_by and $voted_by
   $get_umail = 'SELECT umail FROM {btr_users} WHERE name = :name AND ulng = :ulng';
   $args = array();
-  $args[':ulng'] = $lng;
-  $args[':name'] = $translated_by;
-  $t_umail = ($translated_by == '') ? '' : btr::db_query($get_umail, $args)->fetchField();
-  $args[':name'] = $voted_by;
-  $v_umail = ($voted_by == '') ? '' : btr::db_query($get_umail, $args)->fetchField();
+  if ($translated_by == '') $t_umail = '';
+  else {
+    $account = user_load_by_name($translated_by);
+    $args[':ulng'] = $account->translation_lng;
+    $args[':name'] = $translated_by;
+    $t_umail = btr::db_query($get_umail, $args)->fetchField();
+  }
+  if ($voted_by == '') $v_umail = '';
+  else {
+    $account = user_load_by_name($voted_by);
+    $args[':ulng'] = $account->translation_lng;
+    $args[':name'] = $voted_by;
+    $v_umail = btr::db_query($get_umail, $args)->fetchField();
+  }
 
   //if it is the same user, then search for strings
   //translated OR voted by this user
