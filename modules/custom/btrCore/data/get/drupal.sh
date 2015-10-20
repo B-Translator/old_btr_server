@@ -12,7 +12,10 @@ change_dir Drupal
 #po_dir=$drupal_dir/$l10n_store
 
 ### get the latest translations
-drush --yes l10n-update
+drush @btr --yes l10n-update-refresh
+drush @btr --yes l10n-update
+drush @bcl --yes l10n-update-refresh
+drush @bcl --yes l10n-update
 
 ### copy PO files
 po_dir=/var/www/btr/sites/all/translations

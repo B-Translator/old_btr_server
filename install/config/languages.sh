@@ -27,4 +27,8 @@ for lng in $languages
 do
     drush @local_btr --yes language-add $lng
 done
-drush @local_btr --yes l10n-update
+if [ "$development" != 'true' ]
+then
+    drush @local_btr --yes l10n-update-refresh
+    drush @local_btr --yes l10n-update
+fi
