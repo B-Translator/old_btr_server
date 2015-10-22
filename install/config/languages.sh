@@ -26,9 +26,12 @@ drush @local_btr --yes php-eval "module_load_include('inc', 'btrCore', 'btrCore.
 for lng in $languages
 do
     drush @local_btr --yes language-add $lng
+    drush @local_bcl --yes language-add $lng
 done
 if [ "$development" != 'true' ]
 then
     drush @local_btr --yes l10n-update-refresh
     drush @local_btr --yes l10n-update
+    drush @local_bcl --yes l10n-update-refresh
+    drush @local_bcl --yes l10n-update
 fi
