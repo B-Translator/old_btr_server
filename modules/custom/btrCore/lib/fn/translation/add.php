@@ -61,11 +61,8 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
 
   // Get the email of the author of the translation.
   $uid = btr::user_check($uid);
-  if ($uid==1)  $umail = '';
-  else {
-    $account = user_load($uid);
-    $umail = $account->init;
-  }
+  $account = user_load($uid);
+  $umail = ($uid==1 ?  $umail = '' : $account->init);
 
   // Insert the new suggestion.
   btr::db_insert('btr_translations')
@@ -90,7 +87,7 @@ function translation_add($sguid, $lng, $translation, $uid = NULL, $notify = TRUE
   // for the same string.
   // The same is applied for the users with admin or moderator role in the
   // project of the string.
-  if (!user_access('btranslator-import', $account)
+  if (!user_access('btranslator-import', $account) and $uid > 1
     and !btr::user_has_project_role('admin', $sguid, $uid)
     and !btr::user_has_project_role('moderator', $sguid, $uid))
     {
