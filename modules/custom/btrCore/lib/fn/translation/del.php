@@ -25,14 +25,14 @@ function translation_del($tguid, $notify = TRUE, $uid = NULL) {
   $author = btr::db_query(
     'SELECT u.uid, u.name, u.umail
      FROM {btr_translations} t
-     LEFT JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+     JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
      WHERE t.tguid = :tguid',
     array(':tguid' => $tguid))
     ->fetchObject();
   $voters = btr::db_query(
     'SELECT u.uid, u.name, u.umail
      FROM {btr_votes} v
-     LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+     JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
      WHERE v.tguid = :tguid',
     array(':tguid' => $tguid))
     ->fetchAll();
@@ -97,19 +97,22 @@ function _notify_voters_on_translation_del($sguid, $tguid, $string, $translation
   $notifications = array();
 
   // Notify the author of the translation about the deletion.
-  $notification = array(
-    'type' => 'notify-author-on-translation-deletion',
-    'uid' => $author->uid,
-    'username' => $author->name,
-    'recipient' => $author->name . ' <' . $author->umail . '>',
-    'sguid' => $sguid,
-    'string' => $string,
-    'translation' => $translation,
-  );
-  $notifications[] = $notification;
+  if ($author->uid) {
+    $notification = array(
+      'type' => 'notify-author-on-translation-deletion',
+      'uid' => $author->uid,
+      'username' => $author->name,
+      'recipient' => $author->name . ' <' . $author->umail . '>',
+      'sguid' => $sguid,
+      'string' => $string,
+      'translation' => $translation,
+    );
+    $notifications[] = $notification;
+  }
 
   // Notify the voters of the translation as well.
   foreach ($voters as $voter) {
+    if (!$voter->uid)  continue;
     if ($voter->name == $author->name)  continue;  // don't send a second message to the author
     $notification = array(
       'type' => 'notify-voter-on-translation-deletion',

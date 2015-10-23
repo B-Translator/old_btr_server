@@ -164,7 +164,7 @@ function _remove_old_translation($sguid, $lng, $umail, $tguid) {
   $query = "SELECT v.tguid, v.time, u.umail, u.ulng, u.uid,
                    u.name AS user_name, u.status AS user_status
             FROM {btr_votes} v
-            LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+            JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
             WHERE v.tguid = :tguid AND v.umail != :umail";
   $args = array(':tguid' => $old_trans->tguid, ':umail' => $umail);
   $votes = btr::db_query($query, $args)->fetchAll();
@@ -242,8 +242,8 @@ function _notify_voters_on_new_translation($sguid, $lng, $tguid, $string, $trans
 
   $query = "SELECT u.umail, u.ulng, u.uid, u.name, u.status, t.translation
             FROM {btr_translations} t
-            LEFT JOIN {btr_votes} v ON (v.tguid = t.tguid)
-            LEFT JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+            JOIN {btr_votes} v ON (v.tguid = t.tguid)
+            JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
             WHERE t.sguid = :sguid AND t.lng = :lng AND t.tguid != :tguid";
   $args = array(':sguid' => $sguid, ':lng' => $lng, ':tguid' => $tguid);
   $voters = btr::db_query($query, $args)->fetchAll();

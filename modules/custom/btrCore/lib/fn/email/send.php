@@ -18,8 +18,10 @@ use \btr;
  *   $params->translation, etc.
  */
 function email_send($params) {
-  // See: http://api.drupal.org/api/drupal/includes%21mail.inc/function/drupal_mail/7
+  if (!$params->uid or !$params->recipient)  return;
+
   $account = user_load($params->uid);
+  // See: http://api.drupal.org/api/drupal/includes%21mail.inc/function/drupal_mail/7
   drupal_mail(
     $module   = 'btrCore',
     $key      = 'notifications',
