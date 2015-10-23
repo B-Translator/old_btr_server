@@ -50,6 +50,9 @@ function project_add($origin, $project, $path, $uid = NULL) {
 
   // Import the given POT/PO files.
   _import_pot_files($origin, $project, $path, $uid);
+
+  // Subscribe user to this project.
+  btr::project_subscribe($origin, $project, $uid);
 }
 
 /**
