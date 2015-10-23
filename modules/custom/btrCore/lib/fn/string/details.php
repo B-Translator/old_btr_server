@@ -45,8 +45,8 @@ function string_details($filter_query, $lng, $alternative_langs = array()) {
     'SELECT s.sguid, t.tguid, t.lng, t.translation,
             t.time, u.name AS author, u.umail, u.ulng, u.uid, t.count
      FROM {btr_strings} s
-     LEFT OUTER JOIN {btr_translations} t ON (s.sguid = t.sguid)
-     LEFT OUTER JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
+     JOIN {btr_translations} t ON (s.sguid = t.sguid)
+     LEFT JOIN {btr_users} u ON (u.umail = t.umail AND u.ulng = t.ulng)
      WHERE (t.lng = :lng) AND s.sguid IN (:arr_sguid)
      ORDER BY t.count DESC',
     array(':lng' => $lng, ':arr_sguid' => $arr_sguid)
@@ -61,8 +61,8 @@ function string_details($filter_query, $lng, $alternative_langs = array()) {
     $arr_votes = btr::db_query(
       'SELECT t.tguid, v.vid, u.name, u.umail, u.ulng, u.uid, v.time
        FROM {btr_translations} t
-       LEFT OUTER JOIN {btr_votes} v ON (v.tguid = t.tguid)
-       LEFT OUTER JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
+       JOIN {btr_votes} v ON (v.tguid = t.tguid)
+       JOIN {btr_users} u ON (u.umail = v.umail AND u.ulng = v.ulng)
        WHERE t.tguid IN (:arr_tguid)
        ORDER BY v.time DESC',
       array(':arr_tguid' => $arr_tguid)
