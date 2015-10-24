@@ -63,8 +63,8 @@ function btrCore_schema() {
       ),
       'content' => array(
         'description' => 'The original content of the imported file.',
-        'type' => 'text',
-        'size' => 'medium',
+        'type' => 'blob',
+        'size' => 'normal',
         'not null' => FALSE,
       ),
       'hash' => array(
@@ -302,7 +302,7 @@ function btrCore_schema() {
       'count' => array(
         'description' => 'How often this string is encountered in all the projects. Can be useful for any heuristics that try to find out which strings should be translated first.',
         'type' => 'int',
-        'size' => 'tiny',
+        'size' => 'medium',
         'not null' => FALSE,
         'default' => 1,
       ),
@@ -354,7 +354,7 @@ function btrCore_schema() {
       'count' => array(
         'description' => 'Count of votes received so far. This can be counted on the table Votes, but for convenience is stored here as well.',
         'type' => 'int',
-        'size' => 'tiny',
+        'size' => 'medium',
         'not null' => FALSE,
         'default' => 1,
       ),
@@ -646,12 +646,12 @@ function btrCore_schema() {
       ),
       'diff' => array(
         'description' => 'The content of the unified diff (diff -u).',
-        'type' => 'text',
+        'type' => 'blob',
         'not null' => TRUE,
       ),
       'ediff' => array(
         'description' => 'The embedded diff (generated with the command poediff of pology).',
-        'type' => 'text',
+        'type' => 'blob',
         'not null' => TRUE,
       ),
       'comment' => array(
