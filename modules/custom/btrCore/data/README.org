@@ -71,6 +71,7 @@
    To get more details about the arguments etc. use =drush help
    command=.
 
+
 ** Import scripts
 
    The scripts in the directory [[https://github.com/B-Translator/btr_server/tree/master/modules/custom/btrCore/data/import][import/]] are used to import projects
@@ -84,6 +85,7 @@
 
    In the import scripts, usually the French (fr) translation files
    are used as template files.
+
 
 ** Example script
 
@@ -117,6 +119,31 @@
    directory of these translation files will be passed as an argument
    to the commands =drush btrp-add= and =drush btrp-import=, instead
    of the translation file.
+
+
+* Vocabularies
+
+  Vocabularies are similar to translation projects, however their
+  strings (terms) are not extracted from a program but added
+  manually. They serve as a collection/dictionary of interesting,
+  important and frequently used terms and their suggested
+  translations.
+
+  Vocabularies can be created, deleted and managed from the web UI
+  and with drush commands.
+
+  Drush commands that are used for vocabularies are:
+
+  - btr-vocabulary-list (btrv-ls) :: List vocabularies.
+  - btr-vocabulary-add (btrv-add) :: Create a new empty vocabulary.
+  - btr-vocabulary-import (btrv-import) :: Import the terms and
+       translations of a vocabulary from a text file.
+  - btr-vocabulary-get (btrv-get) :: Export vocabulary to a text file.
+  - btr-vocabulary-del (btrv-del) :: Delete a vocabulary.
+
+  To get more details about the arguments etc. use =drush help
+  command=.
+
 
 * Bulk import of translations and votes
 
@@ -173,6 +200,7 @@
   project. This merge can be simply done by ~msgmerge~, or by tools
   like ~lokalize~ that facilitate merging of PO files.
 
+
 * Snapshots and diffs
 
   A /snapshot/ is an export from the DB of the current PO files of a
@@ -227,6 +255,7 @@
    translations that have been already suggested to him will not be
    suggested again.
 
+
 ** Drush commands for snapshots and diffs
 
    - btr-project-snapshot (btrp-snapshot) :: Make a snapshot of the PO
@@ -243,6 +272,7 @@
         last snapshot and the current state of the project.
 
    To get more details about the arguments etc. use =drush help command=.
+
 
 ** Getting diffs from the web (wget_diff.sh)
 
