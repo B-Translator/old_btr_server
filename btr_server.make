@@ -12,7 +12,7 @@ defaults[projects][subdir] = contrib
 ;--------------------
 
 projects[bootstrap] = 3.0
-projects[jquery_update] = 3.0-alpha2
+projects[jquery_update] = 3.0-alpha3
 projects[less] = 4.0
 
 libraries[bootstrap][directory_name] = bootstrap
@@ -27,7 +27,7 @@ libraries[lessphp][download][url] = https://github.com/oyejorge/less.php/archive
 ; Web Services
 ;--------------------
 
-projects[oauth2_loginprovider] = 1.x-dev
+projects[oauth2_loginprovider] = 1.6
 
 ;--------------------
 ; Contrib
@@ -45,7 +45,7 @@ projects[entity] = 1.6
 projects[xautoload] = 5.5
 projects[token] = 1.6
 projects[rules] = 2.9
-projects[pathauto] = 1.2
+projects[pathauto] = 1.3
 projects[subpathauto] = 1.3
 
 ;;; User interface
@@ -70,11 +70,11 @@ projects[honeypot] = 1.21
 projects[user_restrictions] = 1.0
 
 ;;; Features
-projects[features] = 2.6
+projects[features] = 2.7
 projects[strongarm] = 2.0
 projects[features_extra] = 1.0
 projects[node_export] = 3.0
-projects[uuid] = 1.0-alpha6
+projects[uuid] = 1.0-beta1
 ;projects[menu_import] = 1.6
 
 ;;; Admin Utils
