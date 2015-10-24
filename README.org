@@ -82,18 +82,18 @@ This is a Drupal installation profile for B-Translator Server.
   certain conventions for directory names etc.
   #+BEGIN_EXAMPLE
   vim utils/docker-install.sh
-  utils/docker-install.sh --domain=test.example.org
+  utils/docker-install.sh --bcl_domain=test.example.org
   or
   utils/docker-install.sh $(pwd)/settings.sh \
-      --git_branch=test --domain=test.example.org
+      --git_branch=test --bcl_domain=test.example.org
   #+END_EXAMPLE
 
   This script also installs [[https://github.com/docker-build/wsproxy][wsproxy]], which allows to run more that one
   containers with ports 80/443. For this to work, the variable =ports=
   on ~config~ is set to empty, so that docker does not forward the
-  ports 80 and 443 to the containers (the HTTP request forward to the
+  ports 80 and 443 to the containers. The HTTP request forward to the
   correct website container is handled by the *wsproxy* container,
-  based on the domain name).
+  based on the domain name.
 
   *NOTE:* Although [[https://github.com/B-Translator/btr_server/blob/master/utils/docker-install.sh][utils/docker-install.sh]] is handy for making a quick
   installation, it is highly recommended to read and understand this
@@ -103,8 +103,8 @@ This is a Drupal installation profile for B-Translator Server.
 
 * Change configuration
 
-  To change the configuration of the server after it has build, or in
-  case of using a pre-built image, run:
+  To change the configuration of the server after it has been built,
+  or in case of using a pre-built image, run:
   #+BEGIN_EXAMPLE
   docker/exec.sh install/config.sh
   #+END_EXAMPLE
