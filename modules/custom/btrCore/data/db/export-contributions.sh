@@ -26,5 +26,8 @@ $mysqldump --tables btr_translations_trash \
 $mysqldump --tables btr_votes_trash \
     --where="d_time > '$from_date'" >> $dump_file
 
+### dump also the list of projects
+$mysqldump --tables btr_translation_projects >> $dump_file
+
 ### compress the dump file
 gzip $dump_file

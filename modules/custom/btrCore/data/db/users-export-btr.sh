@@ -19,6 +19,8 @@ table_list="
     field_revision_field_auxiliary_languages
     field_revision_field_projects
     field_revision_field_translation_lng
+    hybridauth_identity
+    hybridauth_session
 "
 table_list=$(echo $table_list | tr ' ' ,)
 

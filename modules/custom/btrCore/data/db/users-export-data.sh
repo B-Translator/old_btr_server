@@ -9,5 +9,5 @@ dump_file=$(pwd)/users-data-$date.sql
 alias=${1:-@btr}
 drush="drush $alias"
 
-### dump all the users of 'btr_data'
-$drush sql-dump --database=btr_db --tables-list=btr_users --result-file=$dump_file --gzip
+### dump all the users and roles of 'btr_data'
+$drush sql-dump --database=btr_db --tables-list=btr_users,btr_user_project_roles --result-file=$dump_file --gzip
