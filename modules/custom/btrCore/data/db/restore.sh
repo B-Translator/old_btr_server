@@ -14,5 +14,7 @@ db_name=$1
 sql_file=$2
 
 ### restore the tables
-mysql -p -D $db_name < $sql_file
+#mysql -p -D $db_name < $sql_file
+mysql='mysql --defaults-file=/etc/mysql/debian.cnf'
+$mysql -D $db_name < $sql_file
 
