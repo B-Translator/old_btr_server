@@ -35,7 +35,7 @@ if [ "$dev" = 'false' ]
 then
     ### create a container for production
     mkdir -p downloads uploads exports
-    docker create --name=$container --hostname=$hostname \
+    docker create --name=$container --hostname=$hostname --restart=always \
         -v /data/PO_files:/var/www/data \
         -v $(pwd)/downloads:/var/www/downloads \
         -v $(pwd)/uploads:/var/www/uploads \
@@ -56,7 +56,7 @@ else
 
     ### create a container for development, sharing diectories
     ### btr_client/ and btr_server/ between the container and the host
-    docker create --name=$container --hostname=$hostname \
+    docker create --name=$container --hostname=$hostname --restart=always \
         -v /data/PO_files:/var/www/PO_files \
         -v $(pwd)/btr_server:/var/www/btr/profiles/btr_server \
         -v $(pwd)/btr_client:/var/www/bcl/profiles/btr_client \
