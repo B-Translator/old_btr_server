@@ -55,6 +55,7 @@ projects[boxes] = 1.2
 projects[edit_profile] = 1.0-beta2
 projects[contact_forms] = 1.8
 projects[menu_target] = 1.4
+projects[empty_front_page] = 1.0
 
 projects[wysiwyg] = 2.2
 projects[nocurrent_pass] = 1.0
