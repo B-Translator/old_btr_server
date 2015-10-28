@@ -40,7 +40,7 @@ then
         -v $(pwd)/downloads:/var/www/downloads \
         -v $(pwd)/uploads:/var/www/uploads \
         -v $(pwd)/exports:/var/www/exports \
-        $ports $image
+        -w /var/www/data $ports $image
 else
     ### remove the directories btr_client/ and btr_server/ if they exist
     remove_dir btr_client
