@@ -1,7 +1,7 @@
 btr_preferred_projects
 btr_export_notify_admin
-recaptcha_private_key
-recaptcha_public_key
+recaptcha_site_key
+recaptcha_secret_key
 cron_key
 date_default_timezone
 date_first_day
