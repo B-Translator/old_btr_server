@@ -10,7 +10,7 @@
 function btr_layout_menu_default_menu_links() {
   $menu_links = array();
 
-  // Exported menu link: main-menu_about:http://info.btranslator.org/
+  // Exported menu link: main-menu_about:http://info.btranslator.org/.
   $menu_links['main-menu_about:http://info.btranslator.org/'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'http://info.btranslator.org/',
@@ -33,7 +33,7 @@ function btr_layout_menu_default_menu_links() {
     'weight' => -47,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_api-examples:http://info.btranslator.org/api-examples-js/
+  // Exported menu link: main-menu_api-examples:http://info.btranslator.org/api-examples-js/.
   $menu_links['main-menu_api-examples:http://info.btranslator.org/api-examples-js/'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'http://info.btranslator.org/api-examples-js/',
@@ -56,7 +56,7 @@ function btr_layout_menu_default_menu_links() {
     'weight' => -46,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_api-reference:http://info.btranslator.org/api/
+  // Exported menu link: main-menu_api-reference:http://info.btranslator.org/api/.
   $menu_links['main-menu_api-reference:http://info.btranslator.org/api/'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'http://info.btranslator.org/api/',
@@ -79,7 +79,7 @@ function btr_layout_menu_default_menu_links() {
     'weight' => -45,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_contact:contact
+  // Exported menu link: main-menu_contact:contact.
   $menu_links['main-menu_contact:contact'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'contact',
@@ -99,7 +99,7 @@ function btr_layout_menu_default_menu_links() {
     'weight' => -48,
     'customized' => 1,
   );
-  // Exported menu link: main-menu_home:<front>
+  // Exported menu link: main-menu_home:<front>.
   $menu_links['main-menu_home:<front>'] = array(
     'menu_name' => 'main-menu',
     'link_path' => '<front>',
@@ -116,7 +116,7 @@ function btr_layout_menu_default_menu_links() {
     'weight' => -50,
     'customized' => 0,
   );
-  // Exported menu link: main-menu_projects:btr/project
+  // Exported menu link: main-menu_projects:btr/project.
   $menu_links['main-menu_projects:btr/project'] = array(
     'menu_name' => 'main-menu',
     'link_path' => 'btr/project',
@@ -130,7 +130,7 @@ function btr_layout_menu_default_menu_links() {
     ),
     'module' => 'menu',
     'hidden' => 0,
-    'external' => 1,
+    'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
     'weight' => -49,

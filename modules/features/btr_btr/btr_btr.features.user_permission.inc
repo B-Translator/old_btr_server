@@ -10,82 +10,82 @@
 function btr_btr_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: btranslator-admin.
+  // Exported permission: 'btranslator-admin'.
   $permissions['btranslator-admin'] = array(
     'name' => 'btranslator-admin',
     'roles' => array(
-      0 => 'administrator',
+      'administrator' => 'administrator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-export.
+  // Exported permission: 'btranslator-export'.
   $permissions['btranslator-export'] = array(
     'name' => 'btranslator-export',
     'roles' => array(
-      0 => 'translator',
+      'translator' => 'translator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-flag.
+  // Exported permission: 'btranslator-flag'.
   $permissions['btranslator-flag'] = array(
     'name' => 'btranslator-flag',
     'roles' => array(
-      0 => 'contributor',
-      1 => 'moderator',
-      2 => 'translator',
+      'contributor' => 'contributor',
+      'moderator' => 'moderator',
+      'translator' => 'translator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-import.
+  // Exported permission: 'btranslator-import'.
   $permissions['btranslator-import'] = array(
     'name' => 'btranslator-import',
     'roles' => array(
-      0 => 'translator',
+      'translator' => 'translator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-resolve.
+  // Exported permission: 'btranslator-resolve'.
   $permissions['btranslator-resolve'] = array(
     'name' => 'btranslator-resolve',
     'roles' => array(
-      0 => 'moderator',
+      'moderator' => 'moderator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-stats.
+  // Exported permission: 'btranslator-stats'.
   $permissions['btranslator-stats'] = array(
     'name' => 'btranslator-stats',
     'roles' => array(
-      0 => 'anonymous user',
-      1 => 'authenticated user',
-      2 => 'moderator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+      'moderator' => 'moderator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-suggest.
+  // Exported permission: 'btranslator-suggest'.
   $permissions['btranslator-suggest'] = array(
     'name' => 'btranslator-suggest',
     'roles' => array(
-      0 => 'contributor',
-      1 => 'moderator',
-      2 => 'translator',
+      'contributor' => 'contributor',
+      'moderator' => 'moderator',
+      'translator' => 'translator',
     ),
     'module' => 'btrUser',
   );
 
-  // Exported permission: btranslator-vote.
+  // Exported permission: 'btranslator-vote'.
   $permissions['btranslator-vote'] = array(
     'name' => 'btranslator-vote',
     'roles' => array(
-      0 => 'contributor',
-      1 => 'moderator',
-      2 => 'translator',
+      'contributor' => 'contributor',
+      'moderator' => 'moderator',
+      'translator' => 'translator',
     ),
     'module' => 'btrUser',
   );

@@ -1,7 +1,6 @@
 name = btr_btr
 core = 7.x
 package = Features
-php = 5.2.4
 dependencies[] = btrCore
 dependencies[] = btrUser
 dependencies[] = ctools
@@ -9,7 +8,7 @@ dependencies[] = features
 dependencies[] = rules
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
-features[features_api][] = api:1
+features[features_api][] = api:2
 features[rules_config][] = rules_assign_contributor_role
 features[user_permission][] = btranslator-admin
 features[user_permission][] = btranslator-export

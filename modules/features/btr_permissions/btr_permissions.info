@@ -1,7 +1,6 @@
 name = btr_permissions
 core = 7.x
 package = Features
-php = 5.2.4
 dependencies[] = aggregator
 dependencies[] = block
 dependencies[] = book
@@ -34,7 +33,7 @@ dependencies[] = toolbar
 dependencies[] = user
 dependencies[] = uuid
 dependencies[] = views
-features[features_api][] = api:1
+features[features_api][] = api:2
 features[user_permission][] = access administration pages
 features[user_permission][] = access all views
 features[user_permission][] = access comments

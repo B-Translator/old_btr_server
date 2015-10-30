@@ -13,25 +13,25 @@ function btr_btr_user_default_roles() {
   // Exported role: administrator.
   $roles['administrator'] = array(
     'name' => 'administrator',
-    'weight' => '2',
+    'weight' => 2,
   );
 
   // Exported role: contributor.
   $roles['contributor'] = array(
     'name' => 'contributor',
-    'weight' => '4',
+    'weight' => 4,
   );
 
   // Exported role: moderator.
   $roles['moderator'] = array(
     'name' => 'moderator',
-    'weight' => '5',
+    'weight' => 5,
   );
 
   // Exported role: translator.
   $roles['translator'] = array(
     'name' => 'translator',
-    'weight' => '3',
+    'weight' => 3,
   );
 
   return $roles;
