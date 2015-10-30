@@ -84,10 +84,12 @@ projects[drush_language] = 1.5
 projects[delete_all] = 1.1
 projects[l10n_update] = 2.0
 projects[advuser] = 3.x-dev
+projects[google_analytics] = 2.1
 
 ;;; Performance
 projects[boost] = 1.0
 projects[memcache] = 1.5
+
 
 ;--------------------
 ; Sending Emails

@@ -1,0 +1,8 @@
+<?php
+/**
+ * @file
+ * Code for the btr_googleanalytics feature.
+ */
+
+include_once 'btr_googleanalytics.admin.inc';
+include_once 'btr_googleanalytics.features.inc';
