@@ -1,7 +1,6 @@
 name = btr_hybridauth
 core = 7.x
 package = Features
-php = 5.2.4
 dependencies[] = ctools
 dependencies[] = fe_block
 dependencies[] = features
@@ -9,7 +8,7 @@ dependencies[] = hybridauth
 dependencies[] = strongarm
 features[ctools][] = strongarm:strongarm:1
 features[fe_block_settings][] = hybridauth-hybridauth
-features[features_api][] = api:1
+features[features_api][] = api:2
 features[user_permission][] = use hybridauth
 features[variable][] = hybridauth_debug
 features[variable][] = hybridauth_destination

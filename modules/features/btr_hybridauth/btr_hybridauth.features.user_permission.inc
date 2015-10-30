@@ -10,13 +10,13 @@
 function btr_hybridauth_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: use hybridauth.
+  // Exported permission: 'use hybridauth'.
   $permissions['use hybridauth'] = array(
     'name' => 'use hybridauth',
     'roles' => array(
-      0 => 'administrator',
-      1 => 'anonymous user',
-      2 => 'authenticated user',
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'hybridauth',
   );
