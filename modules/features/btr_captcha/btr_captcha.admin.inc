@@ -28,25 +28,23 @@ function btr_captcha_menu() {
  *   An array containing form items to place on the module settings page.
  */
 function btr_captcha_config() {
-  // Load the recaptcha library.
-  _recaptcha_load_library();
-
-  $form = array();
-  $form['recaptcha_public_key'] = array(
+  $form['recaptcha_site_key'] = array(
     '#type' => 'textfield',
-    '#title' => t('Public Key'),
-    '#default_value' => variable_get('recaptcha_public_key', ''),
+    '#title' => t('Site key'),
+    '#default_value' => variable_get('recaptcha_site_key', ''),
     '#maxlength' => 40,
-    '#description' => t('The public key given to you when you <a href="@url" target="_blank">registered at reCAPTCHA.net</a>.', array('@url' => url(recaptcha_get_signup_url($_SERVER['SERVER_NAME'], variable_get('site_name', ''))))),
+    '#description' => t('The site key given to you when you <a href="@url">register for reCAPTCHA</a>.', array('@url' => 'http://www.\
+google.com/recaptcha/admin')),
     '#required' => TRUE,
   );
 
-  $form['recaptcha_private_key'] = array(
+  $form['recaptcha_secret_key'] = array(
     '#type' => 'textfield',
-    '#title' => t('Private Key'),
-    '#default_value' => variable_get('recaptcha_private_key', ''),
+    '#title' => t('Secret key'),
+    '#default_value' => variable_get('recaptcha_secret_key', ''),
     '#maxlength' => 40,
-    '#description' => t('The private key given to you when you <a href="@url" target="_blank">registered at reCAPTCHA.net</a>.', array('@url' => url(recaptcha_get_signup_url($_SERVER['SERVER_NAME'], variable_get('site_name', ''))))),
+    '#description' => t('The secret key given to you when you <a href="@url">register for reCAPTCHA</a>.', array('@url' => 'http://ww\
+w.google.com/recaptcha/admin')),
     '#required' => TRUE,
   );
 
