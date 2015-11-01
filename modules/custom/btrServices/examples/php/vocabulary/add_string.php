@@ -7,13 +7,13 @@ include_once($path . '/get_access_token.php');
 // Get an access  token.
 $access_token = get_access_token($auth);
 
-// POST api/project/add_string
-$url = $base_url . '/api/project/add_string';
+// POST api/vocabulary/add_string
+$url = $base_url . '/api/vocabulary/add_string';
 $options = array(
   'method' => 'POST',
   'data' => array(
-    'origin' => 'test',
-    'project' => 'pingus',
+    'name' => 'ICT',
+    'lng' => 'sq',
     'string' => 'Test string ' . rand(1, 10),
   ),
   'headers' => array(
@@ -22,7 +22,7 @@ $options = array(
   ),
 );
 try {
-$result = http_request($url, $options);
+  $result = http_request($url, $options);
 }
 catch (Exception $e) {
   print '<xmp>';
@@ -36,10 +36,14 @@ $url = $base_url . "/api/translations/$sguid?lng=sq";
 $result = http_request($url);
 
 // Delete the string that was added above.
-$url = $base_url . '/api/project/del_string';
+$url = $base_url . '/api/vocabulary/del_string';
 $options = array(
   'method' => 'POST',
-  'data' => array('sguid' => $sguid),
+  'data' => array(
+    'name' => 'ICT',
+    'lng' => 'sq',
+    'sguid' => $sguid,
+  ),
   'headers' => array(
     'Content-type' => 'application/x-www-form-urlencoded',
     'Authorization' => 'Bearer ' . $access_token,
