@@ -71,7 +71,7 @@ function _btrServices_vocabulary() {
  *   - string
  *       String to be added.
  *   - notify (optional)
- *       If TRUE, notify translators about the new string. Default is TRUE.
+ *       If TRUE, notify subscribers about the new string. Default is TRUE.
  *
  * @return
  *   array('sguid' => $sguid, 'messages' => $messages)
@@ -82,6 +82,18 @@ function _btrServices_vocabulary() {
  *               type can be one of 'status', 'warning', 'error'
  */
 function _btrServices_vocabulary_add_string($params) {
+  $params += array(
+    'name' => NULL,
+    'lng' => NULL,
+    'string' => NULL,
+    'notify' => TRUE,
+  );
+  $name = check_plain($params['name']),
+  $lng = check_plain($params['lng']),
+  $string = check_plain($params['string']),
+  $uid = $GLOBALS['user']->uid,
+  $notify = check_plain($params['notify'])
+
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
     $msg = t('No rights for contributing suggestions!');
@@ -94,19 +106,7 @@ function _btrServices_vocabulary_add_string($params) {
     return ['sguid' => NULL, 'messages' => [[$msg, 'error']]];
   }
 
-  $params += array(
-    'name' => NULL,
-    'lng' => NULL,
-    'string' => NULL,
-    'notify' => TRUE,
-  );
-  $sguid = btr::vocabulary_string_add(
-    check_plain($params['name']),
-    check_plain($params['lng']),
-    check_plain($params['string']),
-    $GLOBALS['user']->uid,
-    check_plain($params['notify'])
-  );
+  $sguid = btr::vocabulary_string_add($name, $lng, $string, $uid, $notify);
   return ['sguid' => $sguid, 'messages' => []];
 }
 
