@@ -88,11 +88,11 @@ function _btrServices_vocabulary_add_string($params) {
     'string' => NULL,
     'notify' => TRUE,
   );
-  $name = check_plain($params['name']),
-  $lng = check_plain($params['lng']),
-  $string = check_plain($params['string']),
-  $uid = $GLOBALS['user']->uid,
-  $notify = check_plain($params['notify'])
+  $name = check_plain($params['name']);
+  $lng = check_plain($params['lng']);
+  $string = check_plain($params['string']);
+  $uid = $GLOBALS['user']->uid;
+  $notify = check_plain($params['notify']);
 
   // Check access permissions.
   if (!user_access('btranslator-suggest')) {
