@@ -1,0 +1,105 @@
+Vocabulary <==> Fjalorth / Fjalori
+about <==> për / ç'është
+active <==> vepror / veprues
+alignment <==> radhitje
+alignment (left or right) <==> radhitja (majtas apo djathtas) / rreshtimi (majtas apo djathtas) / mbështetja (majtas apo djathtas)
+ascending <==> hypës / në ngritje / përpjet / në rritje / në ngjitje
+authentication <==> vërtetësim / autencitet / përligjje / vërtetim i identitetit / autentikim / mirëfilltësim / identifikim
+automatically <==> vetvetiu / me veteveprim
+autoscrolling <==> vetlëvizje
+available <==> në dispozicion / i gatshëm
+background <==> rrethina / Prapaskenë / sfondi / mjedisi
+bookmark <==> faqembajtës / faqeruajtës / libërshënues
+boolean (logic, value) <==> vërtetësie (llogjikë, vlerë) / buleane (llogjikë, vlerë) / buljane (llogjikë, vlerë)
+character <==> shkronja
+clipboard <==> tabelë mbajtëse / kujtesa
+computer <==> kompjuter / dijepunues / maqinë llogaritëse / llogaritës / kompjutër / ordinator
+configuration <==> trajtësim / renditje / konfigurim / konfiguracion / formësim
+configure <==> konfiguro / formëso / trajtëso
+contact <==> kontakt / lidhu
+context <==> rrethana
+cookie <==> gjurmues / kulaç / biskotë / sheqerkë / karamele
+copy-paste <==> kap-e-qit / kap-e-vi / kap-e-vendos
+customize <==> përshtat / adapto
+debug (a program) <==> heto (një program)
+debugging <==> hetim / gjetje e gabimeve / heqje e gabimeve
+default <==> paracaktuar / implicite ??? / parazgjedhur / zakonisht
+descending <==> zhdrypës / përposht / në zbritje / në zvogëlim
+dimension <==> përmasë
+document <==> shkresë
+edit <==> tëharr / ndreq / redakto / edito / ndrysho
+editor <==> ndryshues / tëharrës / editor / shkrues / editues
+email <==> posta elektronike / postel / letër / posta
+encrypted connection <==> lidhje e kriptuar / ndërlidhje e sigurtë / koneksion i enkriptuar / lidhje e sigurtë
+endless loop <==> vërtitje pambarim / cikel i pafund / lakim i pafund / rrotullim pa fund
+entries <==> zërat / të dhënat, paraqitjet / hyrjet / futje / të hyra
+file <==> fletë / skedar / fajll
+font family <==> familja e fontit / lloji i shkronjave
+fonts <==> shkronjat / gërmat
+footnote <==> shënim / fusnotë / shënim fundor / poshtëshënim / nënshënim / futnotë
+frame <==> kornizë / kuadër
+fullscreen <==> gjithekrani / ekran i plotë
+graphic objects <==> sende pamore
+heading (of section) <==> titullim (i pjesës) / kokëzim (i pjesës) / kreu (i seksionit) / kryetitull (i pjesës) / kryesimi (i ndarjes)
+ignore <==> shpërfill / injoro
+indents <==> dhëmbëzimet
+index <==> tregues / indeks
+information <==> njohuri / informacion / të dhëna
+initials <==> nistoret
+insert <==> fut / ndërfut / shti / vendos
+interactive <==> ndërveprues / bashkëveprues
+is not running <==> nuk punon / nuk është në punë / nuk po punon
+iteration <==> përsëritje
+link <==> vegëz / lidhje / lidhkë / fije
+mail merge <==> ndërthurja e letrave
+mail server <==> shërbyesi postar / shërbyesi i postës
+merge <==> ndërthur
+moderator <==> moderator / drejtues / rregullator / rregullmbajtës
+my username <==> emri që përdor / emërndorimi im / paracukla ime / emërdorimi im / pseudonimi im / emri i përdoruesit
+next <==> tutje / tjetra
+object <==> send / objekt
+options <==> zgjedhshmëritë / mundësitë
+original <==> fillestar
+outline <==> përvijim
+parameter <==> parametër / përcaktues / kufizues
+path <==> shteg / rrugëzim
+pattern <==> veçori / model
+position <==> pozicion / vendodhja
+preferencies <==> Zgjedhjet e pëlqyera / preferencat / pëlqimet / shijet
+preview <==> pamja / para-shikim / shikim paraprak / Pamje paraprake / parashfaqja / parashikim / parapamja / dukja
+print preview <==> paraqitja e shtypjes / parashfaqje e shtypjes / parashfaqje e të shtypurit / parashfaqje printimi / pamja e shtypjes / si do duket shtypja / dukja e shtypjes / si duket shtypja
+properties <==> vetitë / veçoritë / tiparet
+read-only <==> vetëm-lexim / vetëm për lexim, pos për lexim / vetëm i lexueshëm / i pandryshueshëm
+read-write <==> lexim-shkrim / i ndryshueshëm
+reference <==> përmendje / adresim
+relative <==> relativ / krahasore
+relatively <==> varësisht / relativisht
+reset <==> rifillo
+resolution (of screen) <==> rezolucioni (i ekranit) / imtësia (e ekranit)
+restore <==> rikthe / rivendos / restauro
+run (a program) <==> nis (një program) / ekzekuto (nje program) / grah (një program) / zbato (një program)
+scope <==> shtrirja
+screenshot <==> kapje ekrani / pamje ekrani / kapje ekrani, ekran i kapur
+scroll <==> lëviz
+section <==> seksion / pjesë
+selection <==> përzgjedhje
+set (the value of an attribute) <==> cakto (vlerën e një vetie) / vendos (vlerën e një vetie)
+settings <==> përcaktimet / vendosjet / rregullimet
+setup <==> themelimi
+shortcut <==> shkurtore
+skip <==> Kaloje / anashkalo
+software <==> softuer / soft / gjëebutë / program
+subject <==> Subjekti / Subjekt / çështja / tema / subjekt
+tab <==> llapë / vesh / veshore
+tab stop <==> ndalesa tab / ndalesa e llapës
+table cell <==> kuti tabele
+tabs <==> llapat / veshoret
+text <==> shkrim / tekst
+theme <==> temë
+tutorial <==> ushtrues / praktikues
+type <==> lloji / tipi
+uninstallation <==> deinstalim / heqje / c'instalim
+untitled <==> patitull / i patitull / i paemër / paemër
+user <==> përdorues / ndorues / shfrytëzues
+web <==> rrjet / ueb
+wizard <==> udhëzues / magjistar
