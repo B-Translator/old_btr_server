@@ -26,8 +26,7 @@ function btrCore_menu() {
     'file'             => 'btrCore.admin.inc',
   );
 
-  // Return a list of the imported projects,
-  // filtered by the given origin/project.
+  // Synchronize a project with the upstream one.
   $items['project/sync'] = array(
     'type'            => MENU_CALLBACK,
     'title'           => 'Synchronize Project',
