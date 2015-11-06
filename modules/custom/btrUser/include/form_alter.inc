@@ -8,9 +8,25 @@
  * Implements hook_form_FORM_ID_alter() for user_profile_form.
  */
 function btrUser_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
-  // Hide 'field_projects', it can be modified with
-  // the buttons subscribe/unsubscribe from project pages.
-  $form['field_projects']['#access'] = FALSE;
+  // Replace 'field_projects' with a list of subscribed projects.
+  $arr_projects = field_get_items('user', $form['#user'], 'field_projects');
+  if ($arr_projects) {
+    $lng = $form['#user']->translation_lng;
+    $base_url = btr::utils_get_client_url($lng);
+    $items = [];
+    foreach ($arr_projects as $proj) {
+      $project = $proj['value'];
+      $url = "$base_url/btr/project/$project/$lng/dashboard";
+      $items[] = "<a href='$url' class='btn btn-default' target='_blank'>$project/$lng</a>";
+    }
+    $form['field_projects'] = [
+      '#type'  => 'fieldset',
+      '#title' => t('Subscribed Projects'),
+      'subscribed_projects' => [
+        '#markup' => implode(' ', $items),
+      ],
+    ];
+  }
 
   // Hide 'field_auxiliary_languages', it is not useful yet.
   $form['field_auxiliary_languages']['#access'] = FALSE;
