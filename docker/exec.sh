@@ -12,4 +12,4 @@ fi
 source ./config
 
 ### run exec
-docker exec -it $container $@
+docker exec -it $container env TERM=xterm $@
