@@ -55,5 +55,6 @@ drush @btr sql-dump --database=default --tables-list=$table_list \
 
 ### create an archive
 cd /tmp
+rm -f $backup.tgz
 tar cfz $backup.tgz $backup/
 rm -rf $backup
