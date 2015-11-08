@@ -26,6 +26,15 @@ function btrCore_menu() {
     'file'             => 'btrCore.admin.inc',
   );
 
+  $items['admin/config/btr/data'] = array(
+    'title'            => 'BTR Data',
+    'description'      => 'B-Translator Backup/Restore.',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => ['btrCore_backup'],
+    'access arguments' => ['btranslator-admin'],
+    'file'            => 'callback/backup.inc',
+  );
+
   // Synchronize a project with the upstream one.
   $items['project/sync'] = array(
     'type'            => MENU_CALLBACK,
