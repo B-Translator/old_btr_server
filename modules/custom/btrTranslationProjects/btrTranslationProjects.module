@@ -8,7 +8,7 @@ function btrTranslationProjects_entity_info() {
 
   $info['project'] = array(
     'label' => t('Translation Project'),
-    'base table' => 'btr_translation_projects',
+    'base table' => 'translation_projects',
     'entity keys' => array(
       'id' => 'id',
     ),

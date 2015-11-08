@@ -7,7 +7,7 @@ function btrTranslationProjects_schema() {
 
   $schema = array();
 
-  $schema['btr_translation_projects'] = array(
+  $schema['translation_projects'] = array(
     'description' => 'The base table for the Project entity',
     'fields' => array(
       'id' => array(
