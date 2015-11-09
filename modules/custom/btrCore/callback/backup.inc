@@ -46,41 +46,96 @@ function btrCore_backup() {
   return $form;
 }
 
+/**
+ * Implement of hook form_submit() for the form btrCore_backup.
+ */
 function btrCore_backup_submit($form, &$form_state) {
   $form_values = $form_state['values'];
   $op = $form_values['op'];
 
   if ($op == t('Backup')) {
-    // Allow the backup script to run until completion.
-    set_time_limit(0);
-
-    // Execute the backup script.
-    $path = drupal_get_path('module', 'btrCore');
-    exec("$path/data/db/backup.sh");
-
-    // Get the name of the backup file.
-    $date = date('Ymd');
-    $backup_file = "/tmp/btr-backup-$date.tgz";
-
-    // Send the headers.
-    $filename = basename($backup_file);
-    header('Content-Type: application/x-compressed');
-    header('Content-Disposition: attachment; filename="' . $filename . '"');
-    header('Content-Transfer-Encoding: binary');
-    header("Content-Length: " . filesize($backup_file));
-
-    // Open the file in a binary mode and send it to the browser.
-    $fp = fopen($backup_file, 'rb');
-    fpassthru($fp);
-
-    // Cleanup.
-    unlink($backup_file);
-
-    // Stop execution.
-    drupal_exit();
+    // Make a backup.
+    _btrCore_backup_make();
   }
 
   if ($op == t('Restore')) {
-    drupal_set_message('Restore');
+    // Restore a backup.
+    _btrCore_backup_restore();
   }
+}
+
+/**
+ * Make a backup.
+ */
+function _btrCore_backup_make() {
+  // Allow the backup script to run until completion.
+  set_time_limit(0);
+
+  // Execute the backup script.
+  $path = drupal_get_path('module', 'btrCore');
+  exec("$path/data/db/backup.sh");
+
+  // Get the name of the backup file.
+  $date = date('Ymd');
+  $backup_file = "/tmp/btr-backup-$date.tgz";
+
+  // Send the headers.
+  $filename = basename($backup_file);
+  header('Content-Type: application/x-compressed');
+  header('Content-Disposition: attachment; filename="' . $filename . '"');
+  header('Content-Transfer-Encoding: binary');
+  header("Content-Length: " . filesize($backup_file));
+
+  // Open the file in a binary mode and send it to the browser.
+  $fp = fopen($backup_file, 'rb');
+  fpassthru($fp);
+
+  // Cleanup.
+  unlink($backup_file);
+
+  // Stop execution.
+  drupal_exit();
+}
+
+/**
+ * Restore a backup.
+ */
+function _btrCore_backup_restore() {
+  // Get the uploaded file.
+  if (!isset($_FILES['file'])) {
+    drupal_set_message(t('No file uploaded.'), 'error');
+    return;
+  }
+  $uploaded_file = $_FILES['file'];
+
+  // Check that a file is uploaded.
+  if (!$uploaded_file['tmp_name']) {
+    drupal_set_message(t('File upload failed.'), 'error');
+    return;
+  }
+
+  // Check for any other upload errors.
+  if ($uploaded_file['error'] != 0) {
+    drupal_set_message(t("Error '!error' happened during file upload.", ['!error' => $uploaded_file['error']]), 'error');
+    return;
+  }
+
+  // Restore the backup.
+  $filename = $uploaded_file['tmp_name'];
+  $path = drupal_get_path('module', 'btrCore');
+  exec("$path/data/db/restore.sh $filename", $output, $return_var);
+
+  // Display any notification messages.
+  if ($return_var) {
+    drupal_set_message(t('There was an error while restoring the backup.'), 'error');
+  }
+  else {
+    drupal_set_message(t('Backup restored successfully.'));
+  }
+  if (!empty($output)) {
+    drupal_set_message(implode("<br/>\n", $output), 'error');
+  }
+
+  // Cleanup.
+  unlink($filename);
 }

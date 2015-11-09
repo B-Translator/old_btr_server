@@ -1,20 +1,29 @@
 #!/bin/bash
-### restore the tables of the module btrCore
+### Restore the backup made with backup.sh
 
-### check the parameters
-if [ $# -ne 2 ]
+### get the backup file
+if [ $# -ne 1 ]
 then
-  echo "Usage: $0 db_name dump_file.sql"
-  echo
-  exit 1
+    echo "Usage: $0 backup-file.tgz"
+    exit 1
 fi
 
-### get the DB name and the dump file
-db_name=$1
-sql_file=$2
+backup_file=$1
+if ! test -f $backup_file
+then
+    echo "File '$backup_file' does not exist"
+    exit 2
+fi
 
-### restore the tables
-#mysql -p -D $db_name < $sql_file
+### extract the backup file on /tmp
+tar xz -C /tmp/ -f $backup_file
+backup_dir="/tmp/$(basename ${backup_file%.tgz})"
+
+### execute the sql scripts of the backup
 mysql='mysql --defaults-file=/etc/mysql/debian.cnf'
-$mysql -D $db_name < $sql_file
+$mysql --database=bcl < $backup_dir/bcl.sql
+$mysql --database=btr < $backup_dir/btr.sql
+$mysql --database=btr_data < $backup_dir/btr_data.sql
 
+### cleanup
+rm -rf $backup_dir
