@@ -17,13 +17,12 @@ fi
 
 ### extract the backup file on /tmp
 tar xz -C /tmp/ -f $backup_file
-backup_dir="/tmp/$(basename ${backup_file%.tgz})"
+backup_dir=$(ls -dt /tmp/btr-backup-*/ | head -n 1)
 
 ### execute the sql scripts of the backup
-mysql='mysql --defaults-file=/etc/mysql/debian.cnf'
-$mysql --database=bcl < $backup_dir/bcl.sql
-$mysql --database=btr < $backup_dir/btr.sql
-$mysql --database=btr_data < $backup_dir/btr_data.sql
+drush @bcl sql-query --file=$backup_dir/bcl.sql
+drush @btr sql-query --file=$backup_dir/btr.sql
+$(drush @btr sql-connect --database=btr_db) < $backup_dir/btr_data.sql
 
 ### cleanup
 rm -rf $backup_dir

@@ -73,7 +73,13 @@ function _btrCore_backup_make() {
 
   // Execute the backup script.
   $path = drupal_get_path('module', 'btrCore');
-  exec("$path/data/db/backup.sh");
+  exec("$path/data/db/backup.sh 2>&1", $output);
+
+  // Display any notification messages.
+  if (!empty($output)) {
+    drupal_set_message(implode("<br/>\n", $output), 'error');
+    return;
+  }
 
   // Get the name of the backup file.
   $date = date('Ymd');
@@ -101,39 +107,30 @@ function _btrCore_backup_make() {
  * Restore a backup.
  */
 function _btrCore_backup_restore() {
-  // Get the uploaded file.
-  if (!isset($_FILES['file'])) {
-    drupal_set_message(t('No file uploaded.'), 'error');
-    return;
-  }
-  $uploaded_file = $_FILES['file'];
-
   // Check that a file is uploaded.
-  if (!$uploaded_file['tmp_name']) {
-    drupal_set_message(t('File upload failed.'), 'error');
+  if (!$_FILES['files']['tmp_name']['file']) {
+    drupal_set_message(t('No file is uploaded.'), 'error');
     return;
   }
-
   // Check for any other upload errors.
-  if ($uploaded_file['error'] != 0) {
-    drupal_set_message(t("Error '!error' happened during file upload.", ['!error' => $uploaded_file['error']]), 'error');
+  if ($_FILES['files']['error']['file'] != 0) {
+    drupal_set_message(t("Error !error happened during file upload.",
+        ['!error' => $_FILES['files']['error']['file']]), 'error');
     return;
   }
 
   // Restore the backup.
-  $filename = $uploaded_file['tmp_name'];
+  $filename = $_FILES['files']['tmp_name']['file'];
   $path = drupal_get_path('module', 'btrCore');
-  exec("$path/data/db/restore.sh $filename", $output, $return_var);
+  exec("$path/data/db/restore.sh $filename 2>&1", $output);
 
   // Display any notification messages.
-  if ($return_var) {
+  if (!empty($output)) {
     drupal_set_message(t('There was an error while restoring the backup.'), 'error');
+    drupal_set_message(implode("<br/>\n", $output), 'error');
   }
   else {
     drupal_set_message(t('Backup restored successfully.'));
-  }
-  if (!empty($output)) {
-    drupal_set_message(implode("<br/>\n", $output), 'error');
   }
 
   // Cleanup.
