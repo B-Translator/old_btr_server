@@ -27,6 +27,9 @@ function btrUser_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
       ],
     ];
   }
+  else {
+    $form['field_projects']['#access'] = user_access('btranslator-admin');
+  }
 
   // Hide 'field_auxiliary_languages', it is not useful yet.
   $form['field_auxiliary_languages']['#access'] = FALSE;
