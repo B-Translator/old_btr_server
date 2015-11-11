@@ -23,7 +23,7 @@ function btrCore_menu() {
     'page callback'    => 'drupal_get_form',
     'page arguments'   => array('btrCore_config'),
     'access arguments' => array('btranslator-admin'),
-    'file'             => 'btrCore.admin.inc',
+    'file'             => 'admin/core.inc',
   );
 
   $items['admin/config/btr/data'] = array(
@@ -32,7 +32,7 @@ function btrCore_menu() {
     'page callback'    => 'drupal_get_form',
     'page arguments'   => ['btrCore_backup'],
     'access arguments' => ['btranslator-admin'],
-    'file'            => 'callback/backup.inc',
+    'file'            => 'admin/data.inc',
   );
 
   // Synchronize a project with the upstream one.
