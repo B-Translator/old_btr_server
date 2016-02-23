@@ -20,7 +20,7 @@ sed -i /var/www/data/config.sh \
 
 ### update drupal configuration
 drush @local_btr --yes vset btr_languages "$languages"
-drush @local_btr --yes php-eval "module_load_include('inc', 'btrCore', 'btrCore.admin'); btrCore_config_set_languages();"
+drush @local_btr --yes php-eval "module_load_include('inc', 'btrCore', 'admin/core'); btrCore_config_set_languages();"
 
 ### add these languages to drupal and import their translations
 for lng in $languages
