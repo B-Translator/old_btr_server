@@ -91,6 +91,7 @@ sed -i $drupal_dir/profiles/btr_server/modules/custom/btrCore/data/config.sh \
 drush --root=$drupal_dir --yes vset btr_languages "$languages"
 
 ### add these languages to drupal
+drush dl drush_language
 for lng in $languages
 do
     drush --root=$drupal_dir language-add $lng
