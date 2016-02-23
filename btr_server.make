@@ -11,13 +11,13 @@ defaults[projects][subdir] = contrib
 ; Bootstrap Theme
 ;--------------------
 
-projects[bootstrap] = 3.0
+projects[bootstrap] = 3.4
 projects[jquery_update] = 3.0-alpha3
 projects[less] = 4.0
 
 libraries[bootstrap][directory_name] = bootstrap
 libraries[bootstrap][download][type] = get
-libraries[bootstrap][download][url] = https://github.com/twbs/bootstrap/archive/v3.3.5.zip
+libraries[bootstrap][download][url] = https://github.com/twbs/bootstrap/archive/v3.3.6.zip
 
 libraries[lessphp][directory_name] = lessphp
 libraries[lessphp][download][type] = get
@@ -50,7 +50,7 @@ projects[subpathauto] = 1.3
 
 ;;; User interface
 projects[context] = 3.6
-projects[views] = 3.11
+projects[views] = 3.13
 projects[boxes] = 1.2
 projects[edit_profile] = 1.0-beta2
 projects[contact_forms] = 1.8
