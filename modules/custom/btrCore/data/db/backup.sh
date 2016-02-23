@@ -24,7 +24,7 @@ table_list="
     btr_user_project_roles
     btr_languages
 "
-$mysqldump --tables $table_list > $backup_dir/btr_data.sql
+$mysqldump --tables $table_list >> $backup_dir/btr_data.sql
 
 ### fix 'CREATE TABLE' on the sql file
 sed -i $backup_dir/btr_data.sql \
