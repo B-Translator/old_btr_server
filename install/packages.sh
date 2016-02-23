@@ -44,8 +44,10 @@ mkdir -p /etc/php5/conf.d/
 echo "extension = uploadprogress.so" > /etc/php5/conf.d/uploadprogress.ini
 
 ### install drush
-pear channel-discover pear.drush.org
-pear install pear.drush.org/drush-6.2.0.0
+wget http://files.drush.org/drush.phar
+chmod +x drush.phar
+sudo mv drush.phar /usr/local/bin/drush
+drush --yes init
 
 ### get pology (used for making embedded diffs)
 rm -rf /usr/local/lib/pology
