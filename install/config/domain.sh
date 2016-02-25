@@ -39,7 +39,9 @@ fi
 ### update /etc/hostname and /etc/hosts.conf
 echo $bcl_domain > /etc/hostname
 sed -i /etc/hosts.conf \
-    -e "1c 127.0.0.1 $bcl_domain $btr_domain"
+    -e "1c 127.0.0.1 $bcl_domain $btr_domain" \
+    -e "/127.0.0.1 dev.$old_bcl_domain/c 127.0.0.1 dev.$bcl_domain/" \
+    -e "/127.0.0.1 dev.$old_btr_domain/c 127.0.0.1 dev.$btr_domain/"
 /etc/hosts_update.sh
 
 ### update config files for the client
