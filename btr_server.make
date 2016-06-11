@@ -27,7 +27,7 @@ libraries[lessphp][download][url] = https://github.com/oyejorge/less.php/archive
 ; Web Services
 ;--------------------
 
-projects[oauth2_loginprovider] = 1.7
+projects[oauth2_loginprovider] = 1.8
 
 ;--------------------
 ; Contrib
@@ -40,16 +40,16 @@ projects[diff] = 3.2
 
 ;;; Extensions
 projects[ctools] = 1.9
-projects[libraries] = 2.2
-projects[entity] = 1.6
-projects[xautoload] = 5.5
+projects[libraries] = 2.3
+projects[entity] = 1.7
+projects[xautoload] = 5.7
 projects[token] = 1.6
 projects[rules] = 2.9
 projects[pathauto] = 1.3
 projects[subpathauto] = 1.3
 
 ;;; User interface
-projects[context] = 3.6
+projects[context] = 3.7
 projects[views] = 3.13
 projects[boxes] = 1.2
 projects[edit_profile] = 1.0-beta2
@@ -66,15 +66,15 @@ libraries[tinymce][download][url] = https://github.com/tinymce/tinymce/archive/4
 
 ;;; Security
 projects[captcha] = 1.3
-projects[recaptcha] = 2.0
-projects[honeypot] = 1.21
+projects[recaptcha] = 2.1
+projects[honeypot] = 1.22
 projects[user_restrictions] = 1.0
 
 ;;; Features
-projects[features] = 2.7
+projects[features] = 2.10
 projects[strongarm] = 2.0
 projects[features_extra] = 1.0
-projects[node_export] = 3.0
+projects[node_export] = 3.1
 projects[uuid] = 1.0-beta1
 ;projects[menu_import] = 1.6
 
@@ -87,7 +87,7 @@ projects[advuser] = 3.x-dev
 projects[google_analytics] = 2.1
 
 ;;; Performance
-projects[boost] = 1.0
+projects[boost] = 1.1
 projects[memcache] = 1.5
 
 
@@ -111,7 +111,7 @@ libraries[phpmailer][download][url] = https://github.com/PHPMailer/PHPMailer/arc
 ; HybridAuth
 ;--------------------
 
-projects[hybridauth] = 2.14
+projects[hybridauth] = 2.15
 
 libraries[hybridauth][directory_name] = hybridauth
 libraries[hybridauth][download][type] = get
