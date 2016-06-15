@@ -8,7 +8,7 @@ apt-get -y upgrade
 apt-get -y install aptitude tasksel vim nano psmisc cron
 apt-get -y install mysql-server ssmtp memcached php5-memcached \
          php5-mysql php5-gd php-db php5-dev php-pear php5-curl php-apc \
-         make ssl-cert gawk unzip wget curl diffutils phpmyadmin git ruby \
+         make ssl-cert gawk zip unzip wget curl diffutils phpmyadmin git ruby \
          mercurial subversion translate-toolkit dtrx rsstail
 apt-get -y install screen logwatch
 
