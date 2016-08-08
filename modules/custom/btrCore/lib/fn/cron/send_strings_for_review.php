@@ -44,7 +44,7 @@ function cron_send_strings_for_review() {
       'sguid' => $sguid,
       'project' => $project,
       'username' => $account->name,
-      'recipient' => $account->name .' <' . $account->mail . '>',
+      'recipient' => $account->name .' <' . $account->init . '>',
     );
     $notifications[] = $message_params;
   }
