@@ -105,6 +105,7 @@ function _btr_new_string_notification($project, $string, $sguid, $uid) {
   // Notify the users about the new term.
   $notifications = array();
   foreach ($users as $key => $user) {
+    if ($user->status == 0) continue;
     $params = array(
       'type' => 'notify-on-new-vocabulary-term',
       'uid' => $user->uid,
