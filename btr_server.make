@@ -12,7 +12,7 @@ defaults[projects][subdir] = contrib
 ;--------------------
 
 projects[bootstrap] = 3.4
-projects[jquery_update] = 3.0-alpha3
+projects[jquery_update] = 3.0-alpha5
 projects[less] = 4.0
 
 libraries[bootstrap][directory_name] = bootstrap
@@ -44,20 +44,20 @@ projects[libraries] = 2.3
 projects[entity] = 1.8
 projects[xautoload] = 5.7
 projects[token] = 1.7
-projects[rules] = 2.9
+projects[rules] = 2.10
 projects[pathauto] = 1.3
 projects[subpathauto] = 1.3
 
 ;;; User interface
 projects[context] = 3.7
-projects[views] = 3.15
+projects[views] = 3.16
 projects[boxes] = 1.2
 projects[edit_profile] = 1.0-beta2
 projects[contact_forms] = 1.8
 projects[menu_target] = 1.6
 projects[empty_front_page] = 1.0
 
-projects[wysiwyg] = 2.3
+projects[wysiwyg] = 2.4
 projects[nocurrent_pass] = 1.0
 
 libraries[tinymce][directory_name] = tinymce
@@ -75,7 +75,7 @@ projects[features] = 2.10
 projects[strongarm] = 2.0
 projects[features_extra] = 1.0
 projects[node_export] = 3.1
-projects[uuid] = 1.0-beta2
+projects[uuid] = 1.0
 ;projects[menu_import] = 1.6
 
 ;;; Admin Utils
@@ -96,10 +96,10 @@ projects[memcache] = 1.5
 ;--------------------
 
 projects[mailsystem] = 2.34
-projects[mimemail] = 1.0-beta4
+projects[mimemail] = 1.0
 projects[reroute_email] = 1.2
 
-projects[phpmailer] = 3.0-beta1
+projects[phpmailer] = 3.0-beta2
 
 libraries[phpmailer][directory_name] = phpmailer
 libraries[phpmailer][download][type] = get
