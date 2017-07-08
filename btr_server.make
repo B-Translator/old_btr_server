@@ -79,7 +79,7 @@ projects[uuid] = 1.0
 ;projects[menu_import] = 1.6
 
 ;;; Admin Utils
-projects[module_filter] = 2.0
+projects[module_filter] = 2.1
 projects[drush_language] = 1.5
 projects[delete_all] = 1.1
 projects[l10n_update] = 2.1
@@ -99,7 +99,7 @@ projects[mailsystem] = 2.34
 projects[mimemail] = 1.0
 projects[reroute_email] = 1.2
 
-projects[phpmailer] = 3.0-beta2
+projects[phpmailer] = 3.0-beta3
 
 libraries[phpmailer][directory_name] = phpmailer
 libraries[phpmailer][download][type] = get
